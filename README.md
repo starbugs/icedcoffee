@@ -10,6 +10,8 @@ all kinds of rich and dynamic application frontends.
 
 IcedCoffee is open source and free for both non-commercial and commercial use (MIT license.)
 
+	Note: This is an early release meaning that some things aren't quite finished yet.
+
 
 Getting Started
 ---------------
@@ -30,6 +32,7 @@ Main Features
     chain design similar to that found in Cocoa/CocoaTouch    
   * Shader-based picking/selection of nodes (support for arbitrary picking shapes)
   * Render to texture, picking through (potentially nested) texture FBOs
+  * Render to texture and picking with depth buffer support
   * Texture loading on separate thread via GCD
   * Rendering via display link thread
   * Retina display support for all suitable devices
