@@ -16,9 +16,9 @@ Getting Started
 
 1. Download the code from github
 
-2. Run the 'install-templates.sh' script
+2. Open icedcoffee.xcworkspace using Xcode 4.2+
 
-3. Open Xcode -> New -> New Project -> IcedCoffee
+3. Run the tests and have fun!
 
 
 Main Features
