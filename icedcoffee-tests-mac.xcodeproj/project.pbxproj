@@ -1,0 +1,1393 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
+		D21F889D1533068E00E2496C /* KazmathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D21F889A1533068E00E2496C /* KazmathTests.m */; };
+		D21F88A01533071300E2496C /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D21F889E1533070500E2496C /* SenTestingKit.framework */; };
+		D21F88A11533071800E2496C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D21F88A21533071C00E2496C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D21F88A31533072000E2496C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D21F88A41533072C00E2496C /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D24314A2151296C500E6AF37 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D24314A3151296CD00E6AF37 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D24314A4151296CD00E6AF37 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D24314A5151296CD00E6AF37 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2AA0E50152882A400F98623 /* 061212-nordkapp.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */; };
+		D2AA0E51152882A400F98623 /* Arianit_Brod_image149.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */; };
+		D2AA0E52152882A400F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */; };
+		D2AA0E53152882A400F98623 /* Autumn_scenery.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3C15287E9500F98623 /* Autumn_scenery.jpg */; };
+		D2AA0E54152882A400F98623 /* Hunkubakka.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3D15287E9500F98623 /* Hunkubakka.jpg */; };
+		D2AA0E55152882A400F98623 /* Island1984_078.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3E15287E9500F98623 /* Island1984_078.jpg */; };
+		D2AA0E56152882A400F98623 /* Molisacasablanca.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E4015287E9500F98623 /* Molisacasablanca.jpg */; };
+		D2AA0E57152882A400F98623 /* Serra_de_Tramuntana_express.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E4115287E9500F98623 /* Serra_de_Tramuntana_express.jpg */; };
+		D2AA0E58152882A400F98623 /* sundown2.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E4215287E9500F98623 /* sundown2.jpg */; };
+		D2AA0E59152882A400F98623 /* Zwei_Baeume_IMG_5267.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E4315287E9500F98623 /* Zwei_Baeume_IMG_5267.jpg */; };
+		D2AA0E5C152887AE00F98623 /* ImageSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AA0E5B152887AE00F98623 /* ImageSprite.m */; };
+		D2AA0E5F1528984B00F98623 /* TextureCacheTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AA0E5E1528984B00F98623 /* TextureCacheTestScene.m */; };
+		D2E64896150436A600D71A6D /* ResponsiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E64895150436A600D71A6D /* ResponsiveView.m */; };
+		D2F34FB3151E2FEA00DF2D5B /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A614F0EFC4006A9A90 /* Picking.fsh */; };
+		D2F34FB4151E2FEA00DF2D5B /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A714F0EFC4006A9A90 /* PositionTextureColor.fsh */; };
+		D2F34FB5151E2FEA00DF2D5B /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A814F0EFC4006A9A90 /* PositionTextureColor.vsh */; };
+		D2F34FB8151E338B00DF2D5B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FB6151E337A00DF2D5B /* PositionTextureA8Color.fsh */; };
+		D2F34FB9151E338B00DF2D5B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FB7151E337A00DF2D5B /* PositionTextureA8Color.vsh */; };
+		D2F34FC0151F098A00DF2D5B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2F34FE3151F09BF00DF2D5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F34FDA151F09BF00DF2D5B /* AppDelegate.m */; };
+		D2F34FE4151F09BF00DF2D5B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FDB151F09BF00DF2D5B /* Credits.rtf */; };
+		D2F34FE5151F09BF00DF2D5B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FDD151F09BF00DF2D5B /* InfoPlist.strings */; };
+		D2F34FE6151F09BF00DF2D5B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FDF151F09BF00DF2D5B /* MainMenu.xib */; };
+		D2F34FE7151F09BF00DF2D5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F34FE1151F09BF00DF2D5B /* main.m */; };
+		D2F34FE9151F0A5800DF2D5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2F34FEA151F0A5B00DF2D5B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2F34FEB151F0A5E00DF2D5B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2F34FEE151F0A6D00DF2D5B /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D2F34FF4151F2F7A00DF2D5B /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FEF151F2F6500DF2D5B /* Picking.fsh */; };
+		D2F34FF5151F2F7D00DF2D5B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF0151F2F6500DF2D5B /* PositionTextureA8Color.fsh */; };
+		D2F34FF6151F2F8000DF2D5B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF1151F2F6500DF2D5B /* PositionTextureA8Color.vsh */; };
+		D2F34FF7151F2F8200DF2D5B /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF2151F2F6500DF2D5B /* PositionTextureColor.fsh */; };
+		D2F34FF8151F2F8500DF2D5B /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF3151F2F6500DF2D5B /* PositionTextureColor.vsh */; };
+		D2F34FFA151F2FA100DF2D5B /* gradient-white-transparent.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF9151F2FA100DF2D5B /* gradient-white-transparent.png */; };
+		D2F35001151F563800DF2D5B /* iced-coffee-npot.png in Resources */ = {isa = PBXBuildFile; fileRef = D2F35000151F563800DF2D5B /* iced-coffee-npot.png */; };
+		D2F3500D15285D8600DF2D5B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2F3502F15285DCD00DF2D5B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F3502515285DCD00DF2D5B /* AppDelegate.m */; };
+		D2F3503015285DCD00DF2D5B /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D2F3502615285DCD00DF2D5B /* Credits.rtf */; };
+		D2F3503115285DCD00DF2D5B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F3502815285DCD00DF2D5B /* InfoPlist.strings */; };
+		D2F3503215285DCD00DF2D5B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2F3502A15285DCD00DF2D5B /* MainMenu.xib */; };
+		D2F3503315285DCD00DF2D5B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F3502C15285DCD00DF2D5B /* main.m */; };
+		D2F3503815286A6900DF2D5B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2F3503915286A6E00DF2D5B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2F3503A15286A6E00DF2D5B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2F3503B15286A7700DF2D5B /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D2F3504315286E1E00DF2D5B /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F3503C15286E0300DF2D5B /* Picking.fsh */; };
+		D2F3504415286E2100DF2D5B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F3503D15286E0300DF2D5B /* PositionTextureA8Color.fsh */; };
+		D2F3504515286E2400DF2D5B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F3503E15286E0300DF2D5B /* PositionTextureA8Color.vsh */; };
+		D2F3504615286E2700DF2D5B /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F3503F15286E0300DF2D5B /* PositionTextureColor.fsh */; };
+		D2F3504715286E2900DF2D5B /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F3504015286E0300DF2D5B /* PositionTextureColor.vsh */; };
+		D2F350881511623500A56B8D /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2F350AA151162CA00A56B8D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F350A0151162CA00A56B8D /* AppDelegate.m */; };
+		D2F350AB151162CA00A56B8D /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D2F350A1151162CA00A56B8D /* Credits.rtf */; };
+		D2F350AC151162CA00A56B8D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2F350A3151162CA00A56B8D /* InfoPlist.strings */; };
+		D2F350AD151162CA00A56B8D /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2F350A5151162CA00A56B8D /* MainMenu.xib */; };
+		D2F350AF151162CA00A56B8D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F350A9151162CA00A56B8D /* main.m */; };
+		D2FD860814F0E5EE006A9A90 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2FD864714F0E6C6006A9A90 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD863D14F0E6C6006A9A90 /* AppDelegate.m */; };
+		D2FD864914F0E6C6006A9A90 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2FD864014F0E6C6006A9A90 /* InfoPlist.strings */; };
+		D2FD864A14F0E6C6006A9A90 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FD864214F0E6C6006A9A90 /* MainMenu.xib */; };
+		D2FD864B14F0E6C6006A9A90 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD864414F0E6C6006A9A90 /* main.m */; };
+		D2FD865014F0E79B006A9A90 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D2FD865314F0E7B4006A9A90 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2FD865A14F0EC50006A9A90 /* ResponsiveSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD865914F0EC50006A9A90 /* ResponsiveSprite.m */; };
+		D2FD869C14F0ED24006A9A90 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2FD86A314F0ED95006A9A90 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2FD86A514F0EFBA006A9A90 /* thiswayup.png in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A414F0EFBA006A9A90 /* thiswayup.png */; };
+		D2FD86A914F0EFC4006A9A90 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A614F0EFC4006A9A90 /* Picking.fsh */; };
+		D2FD86AA14F0EFC4006A9A90 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A714F0EFC4006A9A90 /* PositionTextureColor.fsh */; };
+		D2FD86AB14F0EFC4006A9A90 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD86A814F0EFC4006A9A90 /* PositionTextureColor.vsh */; };
+		D2FEE8261539D762004CFF62 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2FEE8481539D7A4004CFF62 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FEE83E1539D7A4004CFF62 /* AppDelegate.m */; };
+		D2FEE84A1539D7A4004CFF62 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8411539D7A4004CFF62 /* Credits.rtf */; };
+		D2FEE84B1539D7A4004CFF62 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8431539D7A4004CFF62 /* InfoPlist.strings */; };
+		D2FEE84C1539D7A4004CFF62 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8451539D7A4004CFF62 /* MainMenu.xib */; };
+		D2FEE84D1539D7A4004CFF62 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FEE8471539D7A4004CFF62 /* main.m */; };
+		D2FEE8501539D816004CFF62 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2FEE8511539D819004CFF62 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2FEE8521539D81D004CFF62 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2FEE8551539DD41004CFF62 /* thiswayup.png in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8541539DD41004CFF62 /* thiswayup.png */; };
+		D2FEE85B1539DD57004CFF62 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8561539DD4B004CFF62 /* Picking.fsh */; };
+		D2FEE85C1539DD5A004CFF62 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8571539DD4B004CFF62 /* PositionTextureA8Color.fsh */; };
+		D2FEE85D1539DD5C004CFF62 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8581539DD4B004CFF62 /* PositionTextureA8Color.vsh */; };
+		D2FEE85E1539DD5F004CFF62 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE8591539DD4B004CFF62 /* PositionTextureColor.fsh */; };
+		D2FEE85F1539DD62004CFF62 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE85A1539DD4B004CFF62 /* PositionTextureColor.vsh */; };
+		D2FEE8601539DD6D004CFF62 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D21F88921533065500E2496C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D24314A0151296BC00E6AF37 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D2F34FEC151F0A6600DF2D5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D2F3503515285DE400DF2D5B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D2FD860014F0E5A5006A9A90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D24BAF3214EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D2FD864E14F0E791006A9A90 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D2FEE84E1539D809004CFF62 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D2AA0E4F1528827500F98623 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = landscapes;
+			dstSubfolderSpec = 7;
+			files = (
+				D2AA0E50152882A400F98623 /* 061212-nordkapp.jpg in CopyFiles */,
+				D2AA0E51152882A400F98623 /* Arianit_Brod_image149.jpg in CopyFiles */,
+				D2AA0E52152882A400F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg in CopyFiles */,
+				D2AA0E53152882A400F98623 /* Autumn_scenery.jpg in CopyFiles */,
+				D2AA0E54152882A400F98623 /* Hunkubakka.jpg in CopyFiles */,
+				D2AA0E55152882A400F98623 /* Island1984_078.jpg in CopyFiles */,
+				D2AA0E56152882A400F98623 /* Molisacasablanca.jpg in CopyFiles */,
+				D2AA0E57152882A400F98623 /* Serra_de_Tramuntana_express.jpg in CopyFiles */,
+				D2AA0E58152882A400F98623 /* sundown2.jpg in CopyFiles */,
+				D2AA0E59152882A400F98623 /* Zwei_Baeume_IMG_5267.jpg in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		D21F88811533064A00E2496C /* KazmathTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazmathTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		D21F88961533068E00E2496C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D21F88971533068E00E2496C /* KazmathTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "KazmathTests-Info.plist"; sourceTree = "<group>"; };
+		D21F88981533068E00E2496C /* KazmathTests-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KazmathTests-Prefix.pch"; sourceTree = "<group>"; };
+		D21F88991533068E00E2496C /* KazmathTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KazmathTests.h; sourceTree = "<group>"; };
+		D21F889A1533068E00E2496C /* KazmathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KazmathTests.m; sourceTree = "<group>"; };
+		D21F889E1533070500E2496C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "061212-nordkapp.jpg"; sourceTree = "<group>"; };
+		D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Arianit_Brod_image149.jpg; sourceTree = "<group>"; };
+		D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Autumn_scene_at_Woodleigh_(3_of_7).jpg"; sourceTree = "<group>"; };
+		D2AA0E3C15287E9500F98623 /* Autumn_scenery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Autumn_scenery.jpg; sourceTree = "<group>"; };
+		D2AA0E3D15287E9500F98623 /* Hunkubakka.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Hunkubakka.jpg; sourceTree = "<group>"; };
+		D2AA0E3E15287E9500F98623 /* Island1984_078.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Island1984_078.jpg; sourceTree = "<group>"; };
+		D2AA0E3F15287E9500F98623 /* LICENSE_landscapes.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE_landscapes.txt; sourceTree = "<group>"; };
+		D2AA0E4015287E9500F98623 /* Molisacasablanca.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Molisacasablanca.jpg; sourceTree = "<group>"; };
+		D2AA0E4115287E9500F98623 /* Serra_de_Tramuntana_express.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Serra_de_Tramuntana_express.jpg; sourceTree = "<group>"; };
+		D2AA0E4215287E9500F98623 /* sundown2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sundown2.jpg; sourceTree = "<group>"; };
+		D2AA0E4315287E9500F98623 /* Zwei_Baeume_IMG_5267.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Zwei_Baeume_IMG_5267.jpg; sourceTree = "<group>"; };
+		D2AA0E5A152887AE00F98623 /* ImageSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageSprite.h; sourceTree = "<group>"; };
+		D2AA0E5B152887AE00F98623 /* ImageSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageSprite.m; sourceTree = "<group>"; };
+		D2AA0E5D1528984B00F98623 /* TextureCacheTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCacheTestScene.h; sourceTree = "<group>"; };
+		D2AA0E5E1528984B00F98623 /* TextureCacheTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCacheTestScene.m; sourceTree = "<group>"; };
+		D2E64894150436A600D71A6D /* ResponsiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveView.h; path = "tests-shared-src/PickingTest/ResponsiveView.h"; sourceTree = SOURCE_ROOT; };
+		D2E64895150436A600D71A6D /* ResponsiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveView.m; path = "tests-shared-src/PickingTest/ResponsiveView.m"; sourceTree = SOURCE_ROOT; };
+		D2F34FB0151E2FE300DF2D5B /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FB1151E2FE300DF2D5B /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FB2151E2FE300DF2D5B /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2F34FB6151E337A00DF2D5B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FB7151E337A00DF2D5B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2F34FBE151F098A00DF2D5B /* AlphaBlendingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AlphaBlendingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F34FD7151F09BF00DF2D5B /* AlphaBlendingTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AlphaBlendingTest-Info.plist"; sourceTree = "<group>"; };
+		D2F34FD8151F09BF00DF2D5B /* AlphaBlendingTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AlphaBlendingTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2F34FD9151F09BF00DF2D5B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2F34FDA151F09BF00DF2D5B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2F34FDC151F09BF00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2F34FDE151F09BF00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2F34FE0151F09BF00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2F34FE1151F09BF00DF2D5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2F34FEF151F2F6500DF2D5B /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FF0151F2F6500DF2D5B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FF1151F2F6500DF2D5B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2F34FF2151F2F6500DF2D5B /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2F34FF3151F2F6500DF2D5B /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2F34FF9151F2FA100DF2D5B /* gradient-white-transparent.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gradient-white-transparent.png"; path = "resources/images/gradient-white-transparent.png"; sourceTree = SOURCE_ROOT; };
+		D2F35000151F563800DF2D5B /* iced-coffee-npot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "iced-coffee-npot.png"; path = "resources/images/iced-coffee-npot.png"; sourceTree = SOURCE_ROOT; };
+		D2F3500B15285D8500DF2D5B /* TextureCacheTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TextureCacheTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F3502415285DCD00DF2D5B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2F3502515285DCD00DF2D5B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2F3502715285DCD00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2F3502915285DCD00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2F3502B15285DCD00DF2D5B /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2F3502C15285DCD00DF2D5B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2F3502D15285DCD00DF2D5B /* TextureCacheTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TextureCacheTest-Info.plist"; sourceTree = "<group>"; };
+		D2F3502E15285DCD00DF2D5B /* TextureCacheTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TextureCacheTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2F3503C15286E0300DF2D5B /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2F3503D15286E0300DF2D5B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2F3503E15286E0300DF2D5B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2F3503F15286E0300DF2D5B /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2F3504015286E0300DF2D5B /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2F350861511623500A56B8D /* FontRenderingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontRenderingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2F3509F151162CA00A56B8D /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2F350A0151162CA00A56B8D /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2F350A2151162CA00A56B8D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2F350A4151162CA00A56B8D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2F350A6151162CA00A56B8D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2F350A7151162CA00A56B8D /* FontRenderingTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FontRenderingTest-Info.plist"; sourceTree = "<group>"; };
+		D2F350A8151162CA00A56B8D /* FontRenderingTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FontRenderingTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2F350A9151162CA00A56B8D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D2FD85DA14F0E4A6006A9A90 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D2FD85DB14F0E4A6006A9A90 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D2FD85DC14F0E4A6006A9A90 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "icedcoffee-mac.xcodeproj"; sourceTree = "<group>"; };
+		D2FD860614F0E5EE006A9A90 /* PickingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PickingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2FD863C14F0E6C6006A9A90 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2FD863D14F0E6C6006A9A90 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2FD864114F0E6C6006A9A90 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2FD864314F0E6C6006A9A90 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2FD864414F0E6C6006A9A90 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2FD864514F0E6C6006A9A90 /* PickingTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PickingTest-Info.plist"; sourceTree = "<group>"; };
+		D2FD864614F0E6C6006A9A90 /* PickingTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PickingTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2FD865114F0E7AB006A9A90 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D2FD865814F0EC50006A9A90 /* ResponsiveSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveSprite.h; path = "tests-shared-src/PickingTest/ResponsiveSprite.h"; sourceTree = SOURCE_ROOT; };
+		D2FD865914F0EC50006A9A90 /* ResponsiveSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveSprite.m; path = "tests-shared-src/PickingTest/ResponsiveSprite.m"; sourceTree = SOURCE_ROOT; };
+		D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		D2FD86A214F0ED95006A9A90 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		D2FD86A414F0EFBA006A9A90 /* thiswayup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thiswayup.png; path = resources/images/thiswayup.png; sourceTree = SOURCE_ROOT; };
+		D2FD86A614F0EFC4006A9A90 /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2FD86A714F0EFC4006A9A90 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2FD86A814F0EFC4006A9A90 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2FEE8241539D762004CFF62 /* DepthBufferTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DepthBufferTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2FEE83D1539D7A4004CFF62 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2FEE83E1539D7A4004CFF62 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2FEE83F1539D7A4004CFF62 /* DepthBufferTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "DepthBufferTest-Info.plist"; sourceTree = "<group>"; };
+		D2FEE8401539D7A4004CFF62 /* DepthBufferTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DepthBufferTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2FEE8421539D7A4004CFF62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2FEE8441539D7A4004CFF62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2FEE8461539D7A4004CFF62 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2FEE8471539D7A4004CFF62 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2FEE8541539DD41004CFF62 /* thiswayup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thiswayup.png; path = resources/images/thiswayup.png; sourceTree = SOURCE_ROOT; };
+		D2FEE8561539DD4B004CFF62 /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2FEE8571539DD4B004CFF62 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2FEE8581539DD4B004CFF62 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2FEE8591539DD4B004CFF62 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2FEE85A1539DD4B004CFF62 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D21F887D1533064A00E2496C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21F88A01533071300E2496C /* SenTestingKit.framework in Frameworks */,
+				D21F88A11533071800E2496C /* Carbon.framework in Frameworks */,
+				D21F88A21533071C00E2496C /* CoreVideo.framework in Frameworks */,
+				D21F88A31533072000E2496C /* OpenGL.framework in Frameworks */,
+				D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */,
+				D21F88A41533072C00E2496C /* libicedcoffee-mac.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F34FBB151F098A00DF2D5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F34FEE151F0A6D00DF2D5B /* libicedcoffee-mac.a in Frameworks */,
+				D2F34FE9151F0A5800DF2D5B /* Carbon.framework in Frameworks */,
+				D2F34FEA151F0A5B00DF2D5B /* CoreVideo.framework in Frameworks */,
+				D2F34FEB151F0A5E00DF2D5B /* OpenGL.framework in Frameworks */,
+				D2F34FC0151F098A00DF2D5B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F3500815285D8500DF2D5B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F3503B15286A7700DF2D5B /* libicedcoffee-mac.a in Frameworks */,
+				D2F3503815286A6900DF2D5B /* Carbon.framework in Frameworks */,
+				D2F3503915286A6E00DF2D5B /* CoreVideo.framework in Frameworks */,
+				D2F3503A15286A6E00DF2D5B /* OpenGL.framework in Frameworks */,
+				D2F3500D15285D8600DF2D5B /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F350831511623500A56B8D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D24314A2151296C500E6AF37 /* libicedcoffee-mac.a in Frameworks */,
+				D24314A3151296CD00E6AF37 /* Carbon.framework in Frameworks */,
+				D24314A4151296CD00E6AF37 /* CoreVideo.framework in Frameworks */,
+				D24314A5151296CD00E6AF37 /* OpenGL.framework in Frameworks */,
+				D2F350881511623500A56B8D /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FD860314F0E5EE006A9A90 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FD86A314F0ED95006A9A90 /* Carbon.framework in Frameworks */,
+				D2FD869C14F0ED24006A9A90 /* CoreVideo.framework in Frameworks */,
+				D2FD865014F0E79B006A9A90 /* libicedcoffee-mac.a in Frameworks */,
+				D2FD860814F0E5EE006A9A90 /* Cocoa.framework in Frameworks */,
+				D2FD865314F0E7B4006A9A90 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FEE8211539D762004CFF62 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FEE8601539DD6D004CFF62 /* libicedcoffee-mac.a in Frameworks */,
+				D2FEE8501539D816004CFF62 /* Carbon.framework in Frameworks */,
+				D2FEE8511539D819004CFF62 /* CoreVideo.framework in Frameworks */,
+				D2FEE8521539D81D004CFF62 /* OpenGL.framework in Frameworks */,
+				D2FEE8261539D762004CFF62 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D21F88941533068E00E2496C /* KazmathTests */ = {
+			isa = PBXGroup;
+			children = (
+				D21F88951533068E00E2496C /* InfoPlist.strings */,
+				D21F88971533068E00E2496C /* KazmathTests-Info.plist */,
+				D21F88981533068E00E2496C /* KazmathTests-Prefix.pch */,
+				D21F88991533068E00E2496C /* KazmathTests.h */,
+				D21F889A1533068E00E2496C /* KazmathTests.m */,
+			);
+			name = KazmathTests;
+			path = "tests-mac/KazmathTests";
+			sourceTree = "<group>";
+		};
+		D2AA0E3815287E9500F98623 /* landscapes */ = {
+			isa = PBXGroup;
+			children = (
+				D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */,
+				D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */,
+				D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */,
+				D2AA0E3C15287E9500F98623 /* Autumn_scenery.jpg */,
+				D2AA0E3D15287E9500F98623 /* Hunkubakka.jpg */,
+				D2AA0E3E15287E9500F98623 /* Island1984_078.jpg */,
+				D2AA0E3F15287E9500F98623 /* LICENSE_landscapes.txt */,
+				D2AA0E4015287E9500F98623 /* Molisacasablanca.jpg */,
+				D2AA0E4115287E9500F98623 /* Serra_de_Tramuntana_express.jpg */,
+				D2AA0E4215287E9500F98623 /* sundown2.jpg */,
+				D2AA0E4315287E9500F98623 /* Zwei_Baeume_IMG_5267.jpg */,
+			);
+			name = landscapes;
+			path = resources/images/landscapes;
+			sourceTree = SOURCE_ROOT;
+		};
+		D2F34FD6151F09BF00DF2D5B /* AlphaBlendingTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2F34FD9151F09BF00DF2D5B /* AppDelegate.h */,
+				D2F34FDA151F09BF00DF2D5B /* AppDelegate.m */,
+				D2F34FDF151F09BF00DF2D5B /* MainMenu.xib */,
+				D2F34FE8151F09F300DF2D5B /* Supporting Files */,
+			);
+			name = AlphaBlendingTest;
+			path = "tests-mac/AlphaBlendingTest";
+			sourceTree = "<group>";
+		};
+		D2F34FE8151F09F300DF2D5B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2F35000151F563800DF2D5B /* iced-coffee-npot.png */,
+				D2F34FF9151F2FA100DF2D5B /* gradient-white-transparent.png */,
+				D2F34FEF151F2F6500DF2D5B /* Picking.fsh */,
+				D2F34FF0151F2F6500DF2D5B /* PositionTextureA8Color.fsh */,
+				D2F34FF1151F2F6500DF2D5B /* PositionTextureA8Color.vsh */,
+				D2F34FF2151F2F6500DF2D5B /* PositionTextureColor.fsh */,
+				D2F34FF3151F2F6500DF2D5B /* PositionTextureColor.vsh */,
+				D2F34FD7151F09BF00DF2D5B /* AlphaBlendingTest-Info.plist */,
+				D2F34FD8151F09BF00DF2D5B /* AlphaBlendingTest-Prefix.pch */,
+				D2F34FDB151F09BF00DF2D5B /* Credits.rtf */,
+				D2F34FDD151F09BF00DF2D5B /* InfoPlist.strings */,
+				D2F34FE1151F09BF00DF2D5B /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2F3502315285DCD00DF2D5B /* TextureCacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2F3502415285DCD00DF2D5B /* AppDelegate.h */,
+				D2F3502515285DCD00DF2D5B /* AppDelegate.m */,
+				D2AA0E5A152887AE00F98623 /* ImageSprite.h */,
+				D2AA0E5B152887AE00F98623 /* ImageSprite.m */,
+				D2AA0E5D1528984B00F98623 /* TextureCacheTestScene.h */,
+				D2AA0E5E1528984B00F98623 /* TextureCacheTestScene.m */,
+				D2F3502A15285DCD00DF2D5B /* MainMenu.xib */,
+				D2F35037152865C800DF2D5B /* Supporting Files */,
+			);
+			name = TextureCacheTest;
+			path = "tests-mac/TextureCacheTest";
+			sourceTree = "<group>";
+		};
+		D2F35037152865C800DF2D5B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2AA0E3815287E9500F98623 /* landscapes */,
+				D2F3503C15286E0300DF2D5B /* Picking.fsh */,
+				D2F3503D15286E0300DF2D5B /* PositionTextureA8Color.fsh */,
+				D2F3503E15286E0300DF2D5B /* PositionTextureA8Color.vsh */,
+				D2F3503F15286E0300DF2D5B /* PositionTextureColor.fsh */,
+				D2F3504015286E0300DF2D5B /* PositionTextureColor.vsh */,
+				D2F3502C15285DCD00DF2D5B /* main.m */,
+				D2F3502615285DCD00DF2D5B /* Credits.rtf */,
+				D2F3502815285DCD00DF2D5B /* InfoPlist.strings */,
+				D2F3502D15285DCD00DF2D5B /* TextureCacheTest-Info.plist */,
+				D2F3502E15285DCD00DF2D5B /* TextureCacheTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2F3509E151162CA00A56B8D /* FontRenderingTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2F3509F151162CA00A56B8D /* AppDelegate.h */,
+				D2F350A0151162CA00A56B8D /* AppDelegate.m */,
+				D2F350A1151162CA00A56B8D /* Credits.rtf */,
+				D2F350A5151162CA00A56B8D /* MainMenu.xib */,
+				D2F350B0151162D200A56B8D /* Supporting Files */,
+			);
+			name = FontRenderingTest;
+			path = "tests-mac/FontRenderingTest";
+			sourceTree = "<group>";
+		};
+		D2F350B0151162D200A56B8D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2F34FB0151E2FE300DF2D5B /* Picking.fsh */,
+				D2F34FB6151E337A00DF2D5B /* PositionTextureA8Color.fsh */,
+				D2F34FB7151E337A00DF2D5B /* PositionTextureA8Color.vsh */,
+				D2F34FB1151E2FE300DF2D5B /* PositionTextureColor.fsh */,
+				D2F34FB2151E2FE300DF2D5B /* PositionTextureColor.vsh */,
+				D2F350A9151162CA00A56B8D /* main.m */,
+				D2F350A3151162CA00A56B8D /* InfoPlist.strings */,
+				D2F350A7151162CA00A56B8D /* FontRenderingTest-Info.plist */,
+				D2F350A8151162CA00A56B8D /* FontRenderingTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2FD85C814F0E4A5006A9A90 = {
+			isa = PBXGroup;
+			children = (
+				D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */,
+				D2F34FD6151F09BF00DF2D5B /* AlphaBlendingTest */,
+				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
+				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
+				D21F88941533068E00E2496C /* KazmathTests */,
+				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
+				D2F3502315285DCD00DF2D5B /* TextureCacheTest */,
+				D2FD85D614F0E4A6006A9A90 /* Frameworks */,
+				D2FD85D414F0E4A6006A9A90 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D2FD85D414F0E4A6006A9A90 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD860614F0E5EE006A9A90 /* PickingTest.app */,
+				D2F350861511623500A56B8D /* FontRenderingTest.app */,
+				D2F34FBE151F098A00DF2D5B /* AlphaBlendingTest.app */,
+				D2F3500B15285D8500DF2D5B /* TextureCacheTest.app */,
+				D21F88811533064A00E2496C /* KazmathTests.octest */,
+				D2FEE8241539D762004CFF62 /* DepthBufferTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2FD85D614F0E4A6006A9A90 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD86A214F0ED95006A9A90 /* Carbon.framework */,
+				D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */,
+				D2FD865114F0E7AB006A9A90 /* OpenGL.framework */,
+				D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */,
+				D21F889E1533070500E2496C /* SenTestingKit.framework */,
+				D2FD85D914F0E4A6006A9A90 /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2FD85D914F0E4A6006A9A90 /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD85DA14F0E4A6006A9A90 /* AppKit.framework */,
+				D2FD85DB14F0E4A6006A9A90 /* CoreData.framework */,
+				D2FD85DC14F0E4A6006A9A90 /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D2FD85FA14F0E5A5006A9A90 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2FD863B14F0E6C6006A9A90 /* PickingTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD863C14F0E6C6006A9A90 /* AppDelegate.h */,
+				D2FD863D14F0E6C6006A9A90 /* AppDelegate.m */,
+				D2FD865814F0EC50006A9A90 /* ResponsiveSprite.h */,
+				D2FD865914F0EC50006A9A90 /* ResponsiveSprite.m */,
+				D2E64894150436A600D71A6D /* ResponsiveView.h */,
+				D2E64895150436A600D71A6D /* ResponsiveView.m */,
+				D2FD864214F0E6C6006A9A90 /* MainMenu.xib */,
+				D2FD864D14F0E6CB006A9A90 /* Supporting Files */,
+			);
+			name = PickingTest;
+			path = "tests-mac/PickingTest";
+			sourceTree = "<group>";
+		};
+		D2FD864D14F0E6CB006A9A90 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD86A614F0EFC4006A9A90 /* Picking.fsh */,
+				D2FD86A714F0EFC4006A9A90 /* PositionTextureColor.fsh */,
+				D2FD86A814F0EFC4006A9A90 /* PositionTextureColor.vsh */,
+				D2FD86A414F0EFBA006A9A90 /* thiswayup.png */,
+				D2FD864014F0E6C6006A9A90 /* InfoPlist.strings */,
+				D2FD864414F0E6C6006A9A90 /* main.m */,
+				D2FD864514F0E6C6006A9A90 /* PickingTest-Info.plist */,
+				D2FD864614F0E6C6006A9A90 /* PickingTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2FEE83D1539D7A4004CFF62 /* AppDelegate.h */,
+				D2FEE83E1539D7A4004CFF62 /* AppDelegate.m */,
+				D2FEE8451539D7A4004CFF62 /* MainMenu.xib */,
+				D2FEE8531539D86F004CFF62 /* Supporting Files */,
+			);
+			name = DepthBufferTest;
+			path = "tests-mac/DepthBufferTest";
+			sourceTree = "<group>";
+		};
+		D2FEE8531539D86F004CFF62 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2FEE8561539DD4B004CFF62 /* Picking.fsh */,
+				D2FEE8571539DD4B004CFF62 /* PositionTextureA8Color.fsh */,
+				D2FEE8581539DD4B004CFF62 /* PositionTextureA8Color.vsh */,
+				D2FEE8591539DD4B004CFF62 /* PositionTextureColor.fsh */,
+				D2FEE85A1539DD4B004CFF62 /* PositionTextureColor.vsh */,
+				D2FEE8541539DD41004CFF62 /* thiswayup.png */,
+				D2FEE83F1539D7A4004CFF62 /* DepthBufferTest-Info.plist */,
+				D2FEE8401539D7A4004CFF62 /* DepthBufferTest-Prefix.pch */,
+				D2FEE8411539D7A4004CFF62 /* Credits.rtf */,
+				D2FEE8431539D7A4004CFF62 /* InfoPlist.strings */,
+				D2FEE8471539D7A4004CFF62 /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D21F88801533064A00E2496C /* KazmathTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */;
+			buildPhases = (
+				D21F887C1533064A00E2496C /* Sources */,
+				D21F887D1533064A00E2496C /* Frameworks */,
+				D21F887E1533064A00E2496C /* Resources */,
+				D21F887F1533064A00E2496C /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D21F88931533065500E2496C /* PBXTargetDependency */,
+			);
+			name = KazmathTests;
+			productName = KazmathTests;
+			productReference = D21F88811533064A00E2496C /* KazmathTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+		D2F34FBD151F098A00DF2D5B /* AlphaBlendingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2F34FD3151F098A00DF2D5B /* Build configuration list for PBXNativeTarget "AlphaBlendingTest" */;
+			buildPhases = (
+				D2F34FBA151F098A00DF2D5B /* Sources */,
+				D2F34FBB151F098A00DF2D5B /* Frameworks */,
+				D2F34FBC151F098A00DF2D5B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2F34FED151F0A6600DF2D5B /* PBXTargetDependency */,
+			);
+			name = AlphaBlendingTest;
+			productName = AlphaBlendingTest;
+			productReference = D2F34FBE151F098A00DF2D5B /* AlphaBlendingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2F3500A15285D8500DF2D5B /* TextureCacheTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2F3502015285D8600DF2D5B /* Build configuration list for PBXNativeTarget "TextureCacheTest" */;
+			buildPhases = (
+				D2F3500715285D8500DF2D5B /* Sources */,
+				D2F3500815285D8500DF2D5B /* Frameworks */,
+				D2F3500915285D8500DF2D5B /* Resources */,
+				D2AA0E4F1528827500F98623 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2F3503615285DE400DF2D5B /* PBXTargetDependency */,
+			);
+			name = TextureCacheTest;
+			productName = TextureCacheTest;
+			productReference = D2F3500B15285D8500DF2D5B /* TextureCacheTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2F350851511623500A56B8D /* FontRenderingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2F3509B1511623600A56B8D /* Build configuration list for PBXNativeTarget "FontRenderingTest" */;
+			buildPhases = (
+				D2F350821511623500A56B8D /* Sources */,
+				D2F350831511623500A56B8D /* Frameworks */,
+				D2F350841511623500A56B8D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D24314A1151296BC00E6AF37 /* PBXTargetDependency */,
+			);
+			name = FontRenderingTest;
+			productName = FontRenderingTest;
+			productReference = D2F350861511623500A56B8D /* FontRenderingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2FD860514F0E5EE006A9A90 /* PickingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2FD861B14F0E5EF006A9A90 /* Build configuration list for PBXNativeTarget "PickingTest" */;
+			buildPhases = (
+				D2FD860214F0E5EE006A9A90 /* Sources */,
+				D2FD860314F0E5EE006A9A90 /* Frameworks */,
+				D2FD860414F0E5EE006A9A90 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2FD864F14F0E791006A9A90 /* PBXTargetDependency */,
+			);
+			name = PickingTest;
+			productName = PickingTest;
+			productReference = D2FD860614F0E5EE006A9A90 /* PickingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2FEE8231539D762004CFF62 /* DepthBufferTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2FEE8391539D763004CFF62 /* Build configuration list for PBXNativeTarget "DepthBufferTest" */;
+			buildPhases = (
+				D2FEE8201539D762004CFF62 /* Sources */,
+				D2FEE8211539D762004CFF62 /* Frameworks */,
+				D2FEE8221539D762004CFF62 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2FEE84F1539D809004CFF62 /* PBXTargetDependency */,
+			);
+			name = DepthBufferTest;
+			productName = DepthBufferTest;
+			productReference = D2FEE8241539D762004CFF62 /* DepthBufferTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D2FD85CA14F0E4A5006A9A90 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "UJAM Development GmbH";
+			};
+			buildConfigurationList = D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D2FD85C814F0E4A5006A9A90;
+			productRefGroup = D2FD85D414F0E4A6006A9A90 /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D2FD85FA14F0E5A5006A9A90 /* Products */;
+					ProjectRef = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				D2F34FBD151F098A00DF2D5B /* AlphaBlendingTest */,
+				D2FEE8231539D762004CFF62 /* DepthBufferTest */,
+				D2F350851511623500A56B8D /* FontRenderingTest */,
+				D2FD860514F0E5EE006A9A90 /* PickingTest */,
+				D2F3500A15285D8500DF2D5B /* TextureCacheTest */,
+				D21F88801533064A00E2496C /* KazmathTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libicedcoffee-mac.a";
+			remoteRef = D2FD860014F0E5A5006A9A90 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D21F887E1533064A00E2496C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F34FBC151F098A00DF2D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F34FF4151F2F7A00DF2D5B /* Picking.fsh in Resources */,
+				D2F34FF5151F2F7D00DF2D5B /* PositionTextureA8Color.fsh in Resources */,
+				D2F34FF6151F2F8000DF2D5B /* PositionTextureA8Color.vsh in Resources */,
+				D2F34FF7151F2F8200DF2D5B /* PositionTextureColor.fsh in Resources */,
+				D2F34FF8151F2F8500DF2D5B /* PositionTextureColor.vsh in Resources */,
+				D2F34FE4151F09BF00DF2D5B /* Credits.rtf in Resources */,
+				D2F34FE5151F09BF00DF2D5B /* InfoPlist.strings in Resources */,
+				D2F34FE6151F09BF00DF2D5B /* MainMenu.xib in Resources */,
+				D2F34FFA151F2FA100DF2D5B /* gradient-white-transparent.png in Resources */,
+				D2F35001151F563800DF2D5B /* iced-coffee-npot.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F3500915285D8500DF2D5B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F3504315286E1E00DF2D5B /* Picking.fsh in Resources */,
+				D2F3504415286E2100DF2D5B /* PositionTextureA8Color.fsh in Resources */,
+				D2F3504515286E2400DF2D5B /* PositionTextureA8Color.vsh in Resources */,
+				D2F3504615286E2700DF2D5B /* PositionTextureColor.fsh in Resources */,
+				D2F3504715286E2900DF2D5B /* PositionTextureColor.vsh in Resources */,
+				D2F3503015285DCD00DF2D5B /* Credits.rtf in Resources */,
+				D2F3503115285DCD00DF2D5B /* InfoPlist.strings in Resources */,
+				D2F3503215285DCD00DF2D5B /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F350841511623500A56B8D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F34FB8151E338B00DF2D5B /* PositionTextureA8Color.fsh in Resources */,
+				D2F34FB9151E338B00DF2D5B /* PositionTextureA8Color.vsh in Resources */,
+				D2F34FB3151E2FEA00DF2D5B /* Picking.fsh in Resources */,
+				D2F34FB4151E2FEA00DF2D5B /* PositionTextureColor.fsh in Resources */,
+				D2F34FB5151E2FEA00DF2D5B /* PositionTextureColor.vsh in Resources */,
+				D2F350AB151162CA00A56B8D /* Credits.rtf in Resources */,
+				D2F350AC151162CA00A56B8D /* InfoPlist.strings in Resources */,
+				D2F350AD151162CA00A56B8D /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FD860414F0E5EE006A9A90 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FD864914F0E6C6006A9A90 /* InfoPlist.strings in Resources */,
+				D2FD864A14F0E6C6006A9A90 /* MainMenu.xib in Resources */,
+				D2FD86A514F0EFBA006A9A90 /* thiswayup.png in Resources */,
+				D2FD86A914F0EFC4006A9A90 /* Picking.fsh in Resources */,
+				D2FD86AA14F0EFC4006A9A90 /* PositionTextureColor.fsh in Resources */,
+				D2FD86AB14F0EFC4006A9A90 /* PositionTextureColor.vsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FEE8221539D762004CFF62 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FEE85B1539DD57004CFF62 /* Picking.fsh in Resources */,
+				D2FEE85C1539DD5A004CFF62 /* PositionTextureA8Color.fsh in Resources */,
+				D2FEE85D1539DD5C004CFF62 /* PositionTextureA8Color.vsh in Resources */,
+				D2FEE85E1539DD5F004CFF62 /* PositionTextureColor.fsh in Resources */,
+				D2FEE85F1539DD62004CFF62 /* PositionTextureColor.vsh in Resources */,
+				D2FEE84A1539D7A4004CFF62 /* Credits.rtf in Resources */,
+				D2FEE84B1539D7A4004CFF62 /* InfoPlist.strings in Resources */,
+				D2FEE84C1539D7A4004CFF62 /* MainMenu.xib in Resources */,
+				D2FEE8551539DD41004CFF62 /* thiswayup.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		D21F887F1533064A00E2496C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D21F887C1533064A00E2496C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D21F889D1533068E00E2496C /* KazmathTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F34FBA151F098A00DF2D5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F34FE3151F09BF00DF2D5B /* AppDelegate.m in Sources */,
+				D2F34FE7151F09BF00DF2D5B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F3500715285D8500DF2D5B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F3502F15285DCD00DF2D5B /* AppDelegate.m in Sources */,
+				D2F3503315285DCD00DF2D5B /* main.m in Sources */,
+				D2AA0E5C152887AE00F98623 /* ImageSprite.m in Sources */,
+				D2AA0E5F1528984B00F98623 /* TextureCacheTestScene.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2F350821511623500A56B8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2F350AA151162CA00A56B8D /* AppDelegate.m in Sources */,
+				D2F350AF151162CA00A56B8D /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FD860214F0E5EE006A9A90 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FD864714F0E6C6006A9A90 /* AppDelegate.m in Sources */,
+				D2FD864B14F0E6C6006A9A90 /* main.m in Sources */,
+				D2FD865A14F0EC50006A9A90 /* ResponsiveSprite.m in Sources */,
+				D2E64896150436A600D71A6D /* ResponsiveView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2FEE8201539D762004CFF62 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FEE8481539D7A4004CFF62 /* AppDelegate.m in Sources */,
+				D2FEE84D1539D7A4004CFF62 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		D21F88931533065500E2496C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D21F88921533065500E2496C /* PBXContainerItemProxy */;
+		};
+		D24314A1151296BC00E6AF37 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D24314A0151296BC00E6AF37 /* PBXContainerItemProxy */;
+		};
+		D2F34FED151F0A6600DF2D5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2F34FEC151F0A6600DF2D5B /* PBXContainerItemProxy */;
+		};
+		D2F3503615285DE400DF2D5B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2F3503515285DE400DF2D5B /* PBXContainerItemProxy */;
+		};
+		D2FD864F14F0E791006A9A90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2FD864E14F0E791006A9A90 /* PBXContainerItemProxy */;
+		};
+		D2FEE84F1539D809004CFF62 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2FEE84E1539D809004CFF62 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		D21F88951533068E00E2496C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D21F88961533068E00E2496C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2F34FDB151F09BF00DF2D5B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F34FDC151F09BF00DF2D5B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2F34FDD151F09BF00DF2D5B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F34FDE151F09BF00DF2D5B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2F34FDF151F09BF00DF2D5B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F34FE0151F09BF00DF2D5B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2F3502615285DCD00DF2D5B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F3502715285DCD00DF2D5B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2F3502815285DCD00DF2D5B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F3502915285DCD00DF2D5B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2F3502A15285DCD00DF2D5B /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F3502B15285DCD00DF2D5B /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2F350A1151162CA00A56B8D /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F350A2151162CA00A56B8D /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2F350A3151162CA00A56B8D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F350A4151162CA00A56B8D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2F350A5151162CA00A56B8D /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2F350A6151162CA00A56B8D /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2FD864014F0E6C6006A9A90 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FD864114F0E6C6006A9A90 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2FD864214F0E6C6006A9A90 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FD864314F0E6C6006A9A90 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2FEE8411539D7A4004CFF62 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FEE8421539D7A4004CFF62 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2FEE8431539D7A4004CFF62 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FEE8441539D7A4004CFF62 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2FEE8451539D7A4004CFF62 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FEE8461539D7A4004CFF62 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D21F88901533064B00E2496C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		D21F88911533064B00E2496C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+		D2F34FD4151F098A00DF2D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2F34FD5151F098A00DF2D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2F3502115285D8600DF2D5B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2F3502215285D8600DF2D5B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2F3509C1511623600A56B8D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2F3509D1511623600A56B8D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2FD85EF14F0E4A6006A9A90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D2FD85F014F0E4A6006A9A90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D2FD861C14F0E5EF006A9A90 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2FD861D14F0E5EF006A9A90 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2FEE83A1539D763004CFF62 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2FEE83B1539D763004CFF62 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D21F88901533064B00E2496C /* Debug */,
+				D21F88911533064B00E2496C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2F34FD3151F098A00DF2D5B /* Build configuration list for PBXNativeTarget "AlphaBlendingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2F34FD4151F098A00DF2D5B /* Debug */,
+				D2F34FD5151F098A00DF2D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2F3502015285D8600DF2D5B /* Build configuration list for PBXNativeTarget "TextureCacheTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2F3502115285D8600DF2D5B /* Debug */,
+				D2F3502215285D8600DF2D5B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2F3509B1511623600A56B8D /* Build configuration list for PBXNativeTarget "FontRenderingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2F3509C1511623600A56B8D /* Debug */,
+				D2F3509D1511623600A56B8D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2FD85EF14F0E4A6006A9A90 /* Debug */,
+				D2FD85F014F0E4A6006A9A90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2FD861B14F0E5EF006A9A90 /* Build configuration list for PBXNativeTarget "PickingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2FD861C14F0E5EF006A9A90 /* Debug */,
+				D2FD861D14F0E5EF006A9A90 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2FEE8391539D763004CFF62 /* Build configuration list for PBXNativeTarget "DepthBufferTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2FEE83A1539D763004CFF62 /* Debug */,
+				D2FEE83B1539D763004CFF62 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D2FD85CA14F0E4A5006A9A90 /* Project object */;
+}

@@ -1,0 +1,198 @@
+//  
+// Copyright (C) 2012 Tobias Lensing
+//  
+// Permission is hereby granted, free of charge, to any person obtaining a copy of
+// this software and associated documentation files (the "Software"), to deal in
+// the Software without restriction, including without limitation the rights to
+// use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+// of the Software, and to permit persons to whom the Software is furnished to do
+// so, subject to the following conditions:
+//  
+// The above copyright notice and this permission notice shall be included in all
+// copies or substantial portions of the Software.
+//  
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+// AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+// LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+// OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+// SOFTWARE.
+//  
+/* BASED ON:
+ *
+ * cocos2d for iPhone: http://www.cocos2d-iphone.org
+ *
+ * Copyright (c) 2008-2010 Ricardo Quesada
+ * Copyright (c) 2011 Zynga Inc.
+ *
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ *
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
+
+#import "../../icMacros.h"
+
+#ifdef __IC_PLATFORM_IOS
+
+#import <QuartzCore/QuartzCore.h>
+
+#import "ICHostViewControllerIOS.h"
+#import "ICTouchEventDispatcher.h"
+#import "ICScene.h"
+#import "icGL.h"
+#import "ICESRenderer.h"
+
+@interface ICHostViewControllerIOS (Private)
+- (void)threadMainLoop;
+- (void)mainLoop:(id)sender;
+@end
+
+@implementation ICHostViewControllerIOS
+
+- (id)init
+{
+    if ((self = [super init])) {
+        _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [_touchEventDispatcher release];
+    [super dealloc];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [self setViewSize:self.view.frame.size];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [self startAnimation];
+}
+
+- (void)startAnimation
+{
+    if (!self.isRunning) {
+        _isRunning = YES;
+    
+        ICLOG(@"IcedCoffee: animation started");
+        
+        _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
+
+        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
+        [_thread start];
+    }
+}
+
+- (void)stopAnimation
+{
+    ICLOG(@"IcedCoffee: animation stopped");
+    
+    [_thread cancel];
+    [_thread release];
+    _thread = nil;
+    
+    [_displayLink invalidate];
+    _displayLink = nil;
+}
+
+- (void)threadMainLoop
+{
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    
+	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
+    
+	// start the run loop
+	[[NSRunLoop currentRunLoop] run];
+    
+	[pool release];
+}
+
+- (void)mainLoop:(id)sender
+{
+	[self drawScene];
+}
+
+- (void)drawScene
+{
+	// We draw on a secondary thread through the display link
+	// When resizing the view, -reshape is called automatically on the main thread
+	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
+    
+	ICGLView *openGLview = (ICGLView*)self.view;
+/*    if (openGLview.depthFormat && ![openGLview.renderer depthBuffer]) {
+        // FIXME: this may lead to issues, e.g. blank screen when we switch from continuous to
+        // on demand rendering of the screen FBO!
+        return; // depth buffer not ready
+    }*/
+    
+	[EAGLContext setCurrentContext:[openGLview context]];
+
+	glViewport(0, 0,
+               openGLview.bounds.size.width * self.contentScaleFactor,
+               openGLview.bounds.size.height * self.contentScaleFactor);
+
+    // Render final scene
+    [self.scene visit];
+    
+    [openGLview swapBuffers];
+}
+
+- (NSArray *)hitTest:(CGPoint)point
+{
+    NSArray *resultNodeStack;
+    
+	ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext: [openGLview context]];
+
+    resultNodeStack = [self.scene hitTest:point];
+    
+    return resultNodeStack;
+}
+
+- (void)setContentScaleFactor:(float)contentScaleFactor
+{
+    [super setContentScaleFactor:contentScaleFactor];
+}
+
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_touchEventDispatcher touchesBegan:touches withEvent:event];
+}
+
+- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_touchEventDispatcher touchesCancelled:touches withEvent:event];
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_touchEventDispatcher touchesEnded:touches withEvent:event];
+}
+
+- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    [_touchEventDispatcher touchesMoved:touches withEvent:event];
+}
+
+@end
+
+#endif // __IC_PLATFORM_IOS

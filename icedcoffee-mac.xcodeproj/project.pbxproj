@@ -1,0 +1,676 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D24BAF3614EDB05D000E65AA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAF3514EDB05D000E65AA /* Cocoa.framework */; };
+		D24BAF8D14EDB142000E65AA /* ICCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF4B14EDB142000E65AA /* ICCamera.h */; };
+		D24BAF8E14EDB142000E65AA /* ICCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF4C14EDB142000E65AA /* ICCamera.m */; };
+		D24BAF8F14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF4D14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h */; };
+		D24BAF9014EDB142000E65AA /* ICCameraPointsToPixelsPerspective.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF4E14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.m */; };
+		D24BAF9114EDB142000E65AA /* icConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF4F14EDB142000E65AA /* icConfig.h */; };
+		D24BAF9214EDB142000E65AA /* ICConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5014EDB142000E65AA /* ICConfiguration.h */; };
+		D24BAF9314EDB142000E65AA /* ICConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5114EDB142000E65AA /* ICConfiguration.m */; };
+		D24BAF9414EDB142000E65AA /* icDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5214EDB142000E65AA /* icDefaults.h */; };
+		D24BAF9514EDB142000E65AA /* IcedCoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5314EDB142000E65AA /* IcedCoffee.h */; };
+		D24BAF9614EDB142000E65AA /* ICEventDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5414EDB142000E65AA /* ICEventDelegate.h */; };
+		D24BAF9714EDB142000E65AA /* icGLState.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5514EDB142000E65AA /* icGLState.h */; };
+		D24BAF9814EDB142000E65AA /* icGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5614EDB142000E65AA /* icGLState.m */; };
+		D24BAF9914EDB142000E65AA /* ICHostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5714EDB142000E65AA /* ICHostViewController.h */; };
+		D24BAF9A14EDB142000E65AA /* ICHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5814EDB142000E65AA /* ICHostViewController.m */; };
+		D24BAF9B14EDB142000E65AA /* ICIdentifiable.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5914EDB142000E65AA /* ICIdentifiable.h */; };
+		D24BAF9C14EDB142000E65AA /* ICIdentifiable.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5A14EDB142000E65AA /* ICIdentifiable.m */; };
+		D24BAF9D14EDB142000E65AA /* icMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5B14EDB142000E65AA /* icMacros.h */; };
+		D24BAF9E14EDB142000E65AA /* ICMouseEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5C14EDB142000E65AA /* ICMouseEventDispatcher.h */; };
+		D24BAF9F14EDB142000E65AA /* ICMouseEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5D14EDB142000E65AA /* ICMouseEventDispatcher.m */; };
+		D24BAFA014EDB142000E65AA /* ICMouseResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5E14EDB142000E65AA /* ICMouseResponder.h */; };
+		D24BAFA114EDB142000E65AA /* ICNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5F14EDB142000E65AA /* ICNode.h */; };
+		D24BAFA214EDB142000E65AA /* ICNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6014EDB142000E65AA /* ICNode.m */; };
+		D24BAFA314EDB142000E65AA /* ICNodeVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6114EDB142000E65AA /* ICNodeVisitor.h */; };
+		D24BAFA414EDB142000E65AA /* ICNodeVisitor.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6214EDB142000E65AA /* ICNodeVisitor.m */; };
+		D24BAFA514EDB142000E65AA /* ICNodeVisitorDrawing.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6314EDB142000E65AA /* ICNodeVisitorDrawing.h */; };
+		D24BAFA614EDB142000E65AA /* ICNodeVisitorDrawing.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6414EDB142000E65AA /* ICNodeVisitorDrawing.m */; };
+		D24BAFA714EDB142000E65AA /* ICNodeVisitorPicking.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6514EDB142000E65AA /* ICNodeVisitorPicking.h */; };
+		D24BAFA814EDB142000E65AA /* ICNodeVisitorPicking.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */; };
+		D24BAFA914EDB142000E65AA /* ICRenderTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6714EDB142000E65AA /* ICRenderTexture.h */; };
+		D24BAFAA14EDB142000E65AA /* ICRenderTexture.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6814EDB142000E65AA /* ICRenderTexture.m */; };
+		D24BAFAB14EDB142000E65AA /* ICResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6914EDB142000E65AA /* ICResponder.h */; };
+		D24BAFAC14EDB142000E65AA /* ICResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6A14EDB142000E65AA /* ICResponder.m */; };
+		D24BAFAD14EDB142000E65AA /* ICScene.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6B14EDB142000E65AA /* ICScene.h */; };
+		D24BAFAE14EDB142000E65AA /* ICScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6C14EDB142000E65AA /* ICScene.m */; };
+		D24BAFAF14EDB142000E65AA /* ICShaderCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6D14EDB142000E65AA /* ICShaderCache.h */; };
+		D24BAFB014EDB142000E65AA /* ICShaderCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF6E14EDB142000E65AA /* ICShaderCache.m */; };
+		D24BAFB114EDB142000E65AA /* ICShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF6F14EDB142000E65AA /* ICShaderProgram.h */; };
+		D24BAFB214EDB142000E65AA /* ICShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7014EDB142000E65AA /* ICShaderProgram.m */; };
+		D24BAFB314EDB142000E65AA /* ICSprite.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7114EDB142000E65AA /* ICSprite.h */; };
+		D24BAFB414EDB142000E65AA /* ICSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7214EDB142000E65AA /* ICSprite.m */; };
+		D24BAFB514EDB142000E65AA /* ICTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7314EDB142000E65AA /* ICTexture2D.h */; };
+		D24BAFB614EDB142000E65AA /* ICTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7414EDB142000E65AA /* ICTexture2D.m */; };
+		D24BAFB714EDB142000E65AA /* ICTextureCache.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7514EDB142000E65AA /* ICTextureCache.h */; };
+		D24BAFB814EDB142000E65AA /* ICTextureCache.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7614EDB142000E65AA /* ICTextureCache.m */; };
+		D24BAFB914EDB142000E65AA /* ICTextureLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7714EDB142000E65AA /* ICTextureLoader.h */; };
+		D24BAFBA14EDB142000E65AA /* ICTextureLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7814EDB142000E65AA /* ICTextureLoader.m */; };
+		D24BAFBB14EDB142000E65AA /* ICTouchResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7914EDB142000E65AA /* ICTouchResponder.h */; };
+		D24BAFBC14EDB142000E65AA /* icTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7A14EDB142000E65AA /* icTypes.h */; };
+		D24BAFBD14EDB142000E65AA /* icUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7B14EDB142000E65AA /* icUtils.h */; };
+		D24BAFBE14EDB142000E65AA /* icUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF7C14EDB142000E65AA /* icUtils.m */; };
+		D24BAFBF14EDB142000E65AA /* icGL.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7E14EDB142000E65AA /* icGL.h */; };
+		D24BAFC014EDB142000E65AA /* icNS.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF7F14EDB142000E65AA /* icNS.h */; };
+		D24BAFC814EDB142000E65AA /* ICGLView.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF8914EDB142000E65AA /* ICGLView.h */; };
+		D24BAFC914EDB142000E65AA /* ICGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF8A14EDB142000E65AA /* ICGLView.m */; };
+		D24BAFCA14EDB142000E65AA /* ICHostViewControllerMac.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */; };
+		D24BAFCB14EDB142000E65AA /* ICHostViewControllerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */; };
+		D24BAFCD14EDB1FF000E65AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */; };
+		D2E6489115042F3700D71A6D /* ICView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E6488F15042F3700D71A6D /* ICView.h */; };
+		D2E6489215042F3700D71A6D /* ICView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E6489015042F3700D71A6D /* ICView.m */; };
+		D2F34FFD151F3E0A00DF2D5B /* ICLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F34FFB151F3E0900DF2D5B /* ICLabel.h */; };
+		D2F34FFE151F3E0A00DF2D5B /* ICLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F34FFC151F3E0900DF2D5B /* ICLabel.m */; };
+		D2F3504915286EFC00DF2D5B /* ICAsyncTextureCacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */; };
+		D2FD867E14F0ECFE006A9A90 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD865E14F0ECFE006A9A90 /* aabb.h */; };
+		D2FD867F14F0ECFE006A9A90 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866014F0ECFE006A9A90 /* mat4stack.h */; };
+		D2FD868014F0ECFE006A9A90 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866114F0ECFE006A9A90 /* matrix.h */; };
+		D2FD868114F0ECFE006A9A90 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866214F0ECFE006A9A90 /* kazmath.h */; };
+		D2FD868214F0ECFE006A9A90 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866314F0ECFE006A9A90 /* mat3.h */; };
+		D2FD868314F0ECFE006A9A90 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866414F0ECFE006A9A90 /* mat4.h */; };
+		D2FD868414F0ECFE006A9A90 /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866514F0ECFE006A9A90 /* neon_matrix_impl.h */; };
+		D2FD868514F0ECFE006A9A90 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866614F0ECFE006A9A90 /* plane.h */; };
+		D2FD868614F0ECFE006A9A90 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866714F0ECFE006A9A90 /* quaternion.h */; };
+		D2FD868714F0ECFE006A9A90 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866814F0ECFE006A9A90 /* ray2.h */; };
+		D2FD868814F0ECFE006A9A90 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866914F0ECFE006A9A90 /* utility.h */; };
+		D2FD868914F0ECFE006A9A90 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866A14F0ECFE006A9A90 /* vec2.h */; };
+		D2FD868A14F0ECFE006A9A90 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866B14F0ECFE006A9A90 /* vec3.h */; };
+		D2FD868B14F0ECFE006A9A90 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866C14F0ECFE006A9A90 /* vec4.h */; };
+		D2FD868C14F0ECFE006A9A90 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD866E14F0ECFE006A9A90 /* aabb.c */; };
+		D2FD868D14F0ECFE006A9A90 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867214F0ECFE006A9A90 /* mat4stack.c */; };
+		D2FD868E14F0ECFE006A9A90 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867314F0ECFE006A9A90 /* matrix.c */; };
+		D2FD868F14F0ECFE006A9A90 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867414F0ECFE006A9A90 /* mat3.c */; };
+		D2FD869014F0ECFE006A9A90 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867514F0ECFE006A9A90 /* mat4.c */; };
+		D2FD869114F0ECFE006A9A90 /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867614F0ECFE006A9A90 /* neon_matrix_impl.c */; };
+		D2FD869214F0ECFE006A9A90 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867714F0ECFE006A9A90 /* plane.c */; };
+		D2FD869314F0ECFE006A9A90 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867814F0ECFE006A9A90 /* quaternion.c */; };
+		D2FD869414F0ECFE006A9A90 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867914F0ECFE006A9A90 /* ray2.c */; };
+		D2FD869514F0ECFE006A9A90 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867A14F0ECFE006A9A90 /* utility.c */; };
+		D2FD869614F0ECFE006A9A90 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867B14F0ECFE006A9A90 /* vec2.c */; };
+		D2FD869714F0ECFE006A9A90 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867C14F0ECFE006A9A90 /* vec3.c */; };
+		D2FD869814F0ECFE006A9A90 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD867D14F0ECFE006A9A90 /* vec4.c */; };
+		D2FEE81815338B74004CFF62 /* ICScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FEE81615338B74004CFF62 /* ICScheduler.h */; };
+		D2FEE81915338B74004CFF62 /* ICScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FEE81715338B74004CFF62 /* ICScheduler.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D24BAF3214EDB05D000E65AA /* libicedcoffee-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libicedcoffee-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D24BAF3514EDB05D000E65AA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D24BAF3814EDB05D000E65AA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D24BAF3914EDB05D000E65AA /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D24BAF3A14EDB05D000E65AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D24BAF4B14EDB142000E65AA /* ICCamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICCamera.h; path = icedcoffee/ICCamera.h; sourceTree = "<group>"; };
+		D24BAF4C14EDB142000E65AA /* ICCamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICCamera.m; path = icedcoffee/ICCamera.m; sourceTree = "<group>"; };
+		D24BAF4D14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICCameraPointsToPixelsPerspective.h; path = icedcoffee/ICCameraPointsToPixelsPerspective.h; sourceTree = "<group>"; };
+		D24BAF4E14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICCameraPointsToPixelsPerspective.m; path = icedcoffee/ICCameraPointsToPixelsPerspective.m; sourceTree = "<group>"; };
+		D24BAF4F14EDB142000E65AA /* icConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icConfig.h; path = icedcoffee/icConfig.h; sourceTree = "<group>"; };
+		D24BAF5014EDB142000E65AA /* ICConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICConfiguration.h; path = icedcoffee/ICConfiguration.h; sourceTree = "<group>"; };
+		D24BAF5114EDB142000E65AA /* ICConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICConfiguration.m; path = icedcoffee/ICConfiguration.m; sourceTree = "<group>"; };
+		D24BAF5214EDB142000E65AA /* icDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icDefaults.h; path = icedcoffee/icDefaults.h; sourceTree = "<group>"; };
+		D24BAF5314EDB142000E65AA /* IcedCoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IcedCoffee.h; path = icedcoffee/IcedCoffee.h; sourceTree = "<group>"; };
+		D24BAF5414EDB142000E65AA /* ICEventDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICEventDelegate.h; path = icedcoffee/ICEventDelegate.h; sourceTree = "<group>"; };
+		D24BAF5514EDB142000E65AA /* icGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icGLState.h; path = icedcoffee/icGLState.h; sourceTree = "<group>"; };
+		D24BAF5614EDB142000E65AA /* icGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = icGLState.m; path = icedcoffee/icGLState.m; sourceTree = "<group>"; };
+		D24BAF5714EDB142000E65AA /* ICHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICHostViewController.h; path = icedcoffee/ICHostViewController.h; sourceTree = "<group>"; };
+		D24BAF5814EDB142000E65AA /* ICHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICHostViewController.m; path = icedcoffee/ICHostViewController.m; sourceTree = "<group>"; };
+		D24BAF5914EDB142000E65AA /* ICIdentifiable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICIdentifiable.h; path = icedcoffee/ICIdentifiable.h; sourceTree = "<group>"; };
+		D24BAF5A14EDB142000E65AA /* ICIdentifiable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICIdentifiable.m; path = icedcoffee/ICIdentifiable.m; sourceTree = "<group>"; };
+		D24BAF5B14EDB142000E65AA /* icMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icMacros.h; path = icedcoffee/icMacros.h; sourceTree = "<group>"; };
+		D24BAF5C14EDB142000E65AA /* ICMouseEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMouseEventDispatcher.h; path = icedcoffee/ICMouseEventDispatcher.h; sourceTree = "<group>"; };
+		D24BAF5D14EDB142000E65AA /* ICMouseEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMouseEventDispatcher.m; path = icedcoffee/ICMouseEventDispatcher.m; sourceTree = "<group>"; };
+		D24BAF5E14EDB142000E65AA /* ICMouseResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMouseResponder.h; path = icedcoffee/ICMouseResponder.h; sourceTree = "<group>"; };
+		D24BAF5F14EDB142000E65AA /* ICNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNode.h; path = icedcoffee/ICNode.h; sourceTree = "<group>"; };
+		D24BAF6014EDB142000E65AA /* ICNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNode.m; path = icedcoffee/ICNode.m; sourceTree = "<group>"; };
+		D24BAF6114EDB142000E65AA /* ICNodeVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeVisitor.h; path = icedcoffee/ICNodeVisitor.h; sourceTree = "<group>"; };
+		D24BAF6214EDB142000E65AA /* ICNodeVisitor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeVisitor.m; path = icedcoffee/ICNodeVisitor.m; sourceTree = "<group>"; };
+		D24BAF6314EDB142000E65AA /* ICNodeVisitorDrawing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeVisitorDrawing.h; path = icedcoffee/ICNodeVisitorDrawing.h; sourceTree = "<group>"; };
+		D24BAF6414EDB142000E65AA /* ICNodeVisitorDrawing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeVisitorDrawing.m; path = icedcoffee/ICNodeVisitorDrawing.m; sourceTree = "<group>"; };
+		D24BAF6514EDB142000E65AA /* ICNodeVisitorPicking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeVisitorPicking.h; path = icedcoffee/ICNodeVisitorPicking.h; sourceTree = "<group>"; };
+		D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeVisitorPicking.m; path = icedcoffee/ICNodeVisitorPicking.m; sourceTree = "<group>"; };
+		D24BAF6714EDB142000E65AA /* ICRenderTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICRenderTexture.h; path = icedcoffee/ICRenderTexture.h; sourceTree = "<group>"; };
+		D24BAF6814EDB142000E65AA /* ICRenderTexture.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICRenderTexture.m; path = icedcoffee/ICRenderTexture.m; sourceTree = "<group>"; };
+		D24BAF6914EDB142000E65AA /* ICResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICResponder.h; path = icedcoffee/ICResponder.h; sourceTree = "<group>"; };
+		D24BAF6A14EDB142000E65AA /* ICResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICResponder.m; path = icedcoffee/ICResponder.m; sourceTree = "<group>"; };
+		D24BAF6B14EDB142000E65AA /* ICScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScene.h; path = icedcoffee/ICScene.h; sourceTree = "<group>"; };
+		D24BAF6C14EDB142000E65AA /* ICScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScene.m; path = icedcoffee/ICScene.m; sourceTree = "<group>"; };
+		D24BAF6D14EDB142000E65AA /* ICShaderCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderCache.h; path = icedcoffee/ICShaderCache.h; sourceTree = "<group>"; };
+		D24BAF6E14EDB142000E65AA /* ICShaderCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderCache.m; path = icedcoffee/ICShaderCache.m; sourceTree = "<group>"; };
+		D24BAF6F14EDB142000E65AA /* ICShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderProgram.h; path = icedcoffee/ICShaderProgram.h; sourceTree = "<group>"; };
+		D24BAF7014EDB142000E65AA /* ICShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderProgram.m; path = icedcoffee/ICShaderProgram.m; sourceTree = "<group>"; };
+		D24BAF7114EDB142000E65AA /* ICSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICSprite.h; path = icedcoffee/ICSprite.h; sourceTree = "<group>"; };
+		D24BAF7214EDB142000E65AA /* ICSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICSprite.m; path = icedcoffee/ICSprite.m; sourceTree = "<group>"; };
+		D24BAF7314EDB142000E65AA /* ICTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTexture2D.h; path = icedcoffee/ICTexture2D.h; sourceTree = "<group>"; };
+		D24BAF7414EDB142000E65AA /* ICTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTexture2D.m; path = icedcoffee/ICTexture2D.m; sourceTree = "<group>"; };
+		D24BAF7514EDB142000E65AA /* ICTextureCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextureCache.h; path = icedcoffee/ICTextureCache.h; sourceTree = "<group>"; };
+		D24BAF7614EDB142000E65AA /* ICTextureCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextureCache.m; path = icedcoffee/ICTextureCache.m; sourceTree = "<group>"; };
+		D24BAF7714EDB142000E65AA /* ICTextureLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextureLoader.h; path = icedcoffee/ICTextureLoader.h; sourceTree = "<group>"; };
+		D24BAF7814EDB142000E65AA /* ICTextureLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextureLoader.m; path = icedcoffee/ICTextureLoader.m; sourceTree = "<group>"; };
+		D24BAF7914EDB142000E65AA /* ICTouchResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTouchResponder.h; path = icedcoffee/ICTouchResponder.h; sourceTree = "<group>"; };
+		D24BAF7A14EDB142000E65AA /* icTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icTypes.h; path = icedcoffee/icTypes.h; sourceTree = "<group>"; };
+		D24BAF7B14EDB142000E65AA /* icUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icUtils.h; path = icedcoffee/icUtils.h; sourceTree = "<group>"; };
+		D24BAF7C14EDB142000E65AA /* icUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = icUtils.m; path = icedcoffee/icUtils.m; sourceTree = "<group>"; };
+		D24BAF7E14EDB142000E65AA /* icGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icGL.h; sourceTree = "<group>"; };
+		D24BAF7F14EDB142000E65AA /* icNS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = icNS.h; sourceTree = "<group>"; };
+		D24BAF8914EDB142000E65AA /* ICGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGLView.h; sourceTree = "<group>"; };
+		D24BAF8A14EDB142000E65AA /* ICGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICGLView.m; sourceTree = "<group>"; };
+		D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICHostViewControllerMac.h; sourceTree = "<group>"; };
+		D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICHostViewControllerMac.m; sourceTree = "<group>"; };
+		D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D2E6488F15042F3700D71A6D /* ICView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICView.h; path = icedcoffee/ICView.h; sourceTree = "<group>"; };
+		D2E6489015042F3700D71A6D /* ICView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICView.m; path = icedcoffee/ICView.m; sourceTree = "<group>"; };
+		D2F34FFB151F3E0900DF2D5B /* ICLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLabel.h; path = icedcoffee/ICLabel.h; sourceTree = "<group>"; };
+		D2F34FFC151F3E0900DF2D5B /* ICLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLabel.m; path = icedcoffee/ICLabel.m; sourceTree = "<group>"; };
+		D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAsyncTextureCacheDelegate.h; path = icedcoffee/ICAsyncTextureCacheDelegate.h; sourceTree = "<group>"; };
+		D2FD865E14F0ECFE006A9A90 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		D2FD866014F0ECFE006A9A90 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
+		D2FD866114F0ECFE006A9A90 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		D2FD866214F0ECFE006A9A90 /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		D2FD866314F0ECFE006A9A90 /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
+		D2FD866414F0ECFE006A9A90 /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		D2FD866514F0ECFE006A9A90 /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
+		D2FD866614F0ECFE006A9A90 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
+		D2FD866714F0ECFE006A9A90 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
+		D2FD866814F0ECFE006A9A90 /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
+		D2FD866914F0ECFE006A9A90 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		D2FD866A14F0ECFE006A9A90 /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
+		D2FD866B14F0ECFE006A9A90 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		D2FD866C14F0ECFE006A9A90 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
+		D2FD866E14F0ECFE006A9A90 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
+		D2FD866F14F0ECFE006A9A90 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
+		D2FD867014F0ECFE006A9A90 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		D2FD867214F0ECFE006A9A90 /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
+		D2FD867314F0ECFE006A9A90 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
+		D2FD867414F0ECFE006A9A90 /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
+		D2FD867514F0ECFE006A9A90 /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
+		D2FD867614F0ECFE006A9A90 /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
+		D2FD867714F0ECFE006A9A90 /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
+		D2FD867814F0ECFE006A9A90 /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
+		D2FD867914F0ECFE006A9A90 /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
+		D2FD867A14F0ECFE006A9A90 /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
+		D2FD867B14F0ECFE006A9A90 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
+		D2FD867C14F0ECFE006A9A90 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		D2FD867D14F0ECFE006A9A90 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		D2FEE81615338B74004CFF62 /* ICScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScheduler.h; path = icedcoffee/ICScheduler.h; sourceTree = "<group>"; };
+		D2FEE81715338B74004CFF62 /* ICScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScheduler.m; path = icedcoffee/ICScheduler.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D24BAF2F14EDB05D000E65AA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D24BAFCD14EDB1FF000E65AA /* OpenGL.framework in Frameworks */,
+				D24BAF3614EDB05D000E65AA /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D24BAF2714EDB05D000E65AA = {
+			isa = PBXGroup;
+			children = (
+				D2FD869A14F0ED02006A9A90 /* 3rd-party */,
+				D24BAF4A14EDB123000E65AA /* icedcoffee */,
+				D24BAF3414EDB05D000E65AA /* Frameworks */,
+				D24BAF3314EDB05D000E65AA /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D24BAF3314EDB05D000E65AA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D24BAF3214EDB05D000E65AA /* libicedcoffee-mac.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D24BAF3414EDB05D000E65AA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */,
+				D24BAF3514EDB05D000E65AA /* Cocoa.framework */,
+				D24BAF3714EDB05D000E65AA /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D24BAF3714EDB05D000E65AA /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D24BAF3814EDB05D000E65AA /* AppKit.framework */,
+				D24BAF3914EDB05D000E65AA /* CoreData.framework */,
+				D24BAF3A14EDB05D000E65AA /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		D24BAF4A14EDB123000E65AA /* icedcoffee */ = {
+			isa = PBXGroup;
+			children = (
+				D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */,
+				D24BAF4B14EDB142000E65AA /* ICCamera.h */,
+				D24BAF4C14EDB142000E65AA /* ICCamera.m */,
+				D24BAF4D14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h */,
+				D24BAF4E14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.m */,
+				D24BAF4F14EDB142000E65AA /* icConfig.h */,
+				D24BAF5014EDB142000E65AA /* ICConfiguration.h */,
+				D24BAF5114EDB142000E65AA /* ICConfiguration.m */,
+				D24BAF5214EDB142000E65AA /* icDefaults.h */,
+				D24BAF5314EDB142000E65AA /* IcedCoffee.h */,
+				D24BAF5414EDB142000E65AA /* ICEventDelegate.h */,
+				D24BAF5514EDB142000E65AA /* icGLState.h */,
+				D24BAF5614EDB142000E65AA /* icGLState.m */,
+				D24BAF5714EDB142000E65AA /* ICHostViewController.h */,
+				D24BAF5814EDB142000E65AA /* ICHostViewController.m */,
+				D24BAF5914EDB142000E65AA /* ICIdentifiable.h */,
+				D24BAF5A14EDB142000E65AA /* ICIdentifiable.m */,
+				D2F34FFB151F3E0900DF2D5B /* ICLabel.h */,
+				D2F34FFC151F3E0900DF2D5B /* ICLabel.m */,
+				D24BAF5B14EDB142000E65AA /* icMacros.h */,
+				D24BAF5C14EDB142000E65AA /* ICMouseEventDispatcher.h */,
+				D24BAF5D14EDB142000E65AA /* ICMouseEventDispatcher.m */,
+				D24BAF5E14EDB142000E65AA /* ICMouseResponder.h */,
+				D24BAF5F14EDB142000E65AA /* ICNode.h */,
+				D24BAF6014EDB142000E65AA /* ICNode.m */,
+				D24BAF6114EDB142000E65AA /* ICNodeVisitor.h */,
+				D24BAF6214EDB142000E65AA /* ICNodeVisitor.m */,
+				D24BAF6314EDB142000E65AA /* ICNodeVisitorDrawing.h */,
+				D24BAF6414EDB142000E65AA /* ICNodeVisitorDrawing.m */,
+				D24BAF6514EDB142000E65AA /* ICNodeVisitorPicking.h */,
+				D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */,
+				D24BAF6714EDB142000E65AA /* ICRenderTexture.h */,
+				D24BAF6814EDB142000E65AA /* ICRenderTexture.m */,
+				D24BAF6914EDB142000E65AA /* ICResponder.h */,
+				D24BAF6A14EDB142000E65AA /* ICResponder.m */,
+				D24BAF6B14EDB142000E65AA /* ICScene.h */,
+				D24BAF6C14EDB142000E65AA /* ICScene.m */,
+				D2FEE81615338B74004CFF62 /* ICScheduler.h */,
+				D2FEE81715338B74004CFF62 /* ICScheduler.m */,
+				D24BAF6D14EDB142000E65AA /* ICShaderCache.h */,
+				D24BAF6E14EDB142000E65AA /* ICShaderCache.m */,
+				D24BAF6F14EDB142000E65AA /* ICShaderProgram.h */,
+				D24BAF7014EDB142000E65AA /* ICShaderProgram.m */,
+				D24BAF7114EDB142000E65AA /* ICSprite.h */,
+				D24BAF7214EDB142000E65AA /* ICSprite.m */,
+				D24BAF7314EDB142000E65AA /* ICTexture2D.h */,
+				D24BAF7414EDB142000E65AA /* ICTexture2D.m */,
+				D24BAF7514EDB142000E65AA /* ICTextureCache.h */,
+				D24BAF7614EDB142000E65AA /* ICTextureCache.m */,
+				D24BAF7714EDB142000E65AA /* ICTextureLoader.h */,
+				D24BAF7814EDB142000E65AA /* ICTextureLoader.m */,
+				D24BAF7914EDB142000E65AA /* ICTouchResponder.h */,
+				D24BAF7A14EDB142000E65AA /* icTypes.h */,
+				D24BAF7B14EDB142000E65AA /* icUtils.h */,
+				D24BAF7C14EDB142000E65AA /* icUtils.m */,
+				D2E6488F15042F3700D71A6D /* ICView.h */,
+				D2E6489015042F3700D71A6D /* ICView.m */,
+				D24BAF7D14EDB142000E65AA /* Platforms */,
+			);
+			name = icedcoffee;
+			sourceTree = "<group>";
+		};
+		D24BAF7D14EDB142000E65AA /* Platforms */ = {
+			isa = PBXGroup;
+			children = (
+				D24BAF7E14EDB142000E65AA /* icGL.h */,
+				D24BAF7F14EDB142000E65AA /* icNS.h */,
+				D24BAF8814EDB142000E65AA /* Mac */,
+			);
+			name = Platforms;
+			path = icedcoffee/Platforms;
+			sourceTree = "<group>";
+		};
+		D24BAF8814EDB142000E65AA /* Mac */ = {
+			isa = PBXGroup;
+			children = (
+				D24BAF8914EDB142000E65AA /* ICGLView.h */,
+				D24BAF8A14EDB142000E65AA /* ICGLView.m */,
+				D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */,
+				D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */,
+			);
+			path = Mac;
+			sourceTree = "<group>";
+		};
+		D2FD865B14F0ECFE006A9A90 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD865C14F0ECFE006A9A90 /* include */,
+				D2FD866D14F0ECFE006A9A90 /* src */,
+			);
+			name = kazmath;
+			path = "3rd-party/kazmath";
+			sourceTree = "<group>";
+		};
+		D2FD865C14F0ECFE006A9A90 /* include */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD865D14F0ECFE006A9A90 /* kazmath */,
+			);
+			path = include;
+			sourceTree = "<group>";
+		};
+		D2FD865D14F0ECFE006A9A90 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD865E14F0ECFE006A9A90 /* aabb.h */,
+				D2FD865F14F0ECFE006A9A90 /* GL */,
+				D2FD866214F0ECFE006A9A90 /* kazmath.h */,
+				D2FD866314F0ECFE006A9A90 /* mat3.h */,
+				D2FD866414F0ECFE006A9A90 /* mat4.h */,
+				D2FD866514F0ECFE006A9A90 /* neon_matrix_impl.h */,
+				D2FD866614F0ECFE006A9A90 /* plane.h */,
+				D2FD866714F0ECFE006A9A90 /* quaternion.h */,
+				D2FD866814F0ECFE006A9A90 /* ray2.h */,
+				D2FD866914F0ECFE006A9A90 /* utility.h */,
+				D2FD866A14F0ECFE006A9A90 /* vec2.h */,
+				D2FD866B14F0ECFE006A9A90 /* vec3.h */,
+				D2FD866C14F0ECFE006A9A90 /* vec4.h */,
+			);
+			path = kazmath;
+			sourceTree = "<group>";
+		};
+		D2FD865F14F0ECFE006A9A90 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD866014F0ECFE006A9A90 /* mat4stack.h */,
+				D2FD866114F0ECFE006A9A90 /* matrix.h */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		D2FD866D14F0ECFE006A9A90 /* src */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD866E14F0ECFE006A9A90 /* aabb.c */,
+				D2FD866F14F0ECFE006A9A90 /* ChangeLog */,
+				D2FD867014F0ECFE006A9A90 /* CMakeLists.txt */,
+				D2FD867114F0ECFE006A9A90 /* GL */,
+				D2FD867414F0ECFE006A9A90 /* mat3.c */,
+				D2FD867514F0ECFE006A9A90 /* mat4.c */,
+				D2FD867614F0ECFE006A9A90 /* neon_matrix_impl.c */,
+				D2FD867714F0ECFE006A9A90 /* plane.c */,
+				D2FD867814F0ECFE006A9A90 /* quaternion.c */,
+				D2FD867914F0ECFE006A9A90 /* ray2.c */,
+				D2FD867A14F0ECFE006A9A90 /* utility.c */,
+				D2FD867B14F0ECFE006A9A90 /* vec2.c */,
+				D2FD867C14F0ECFE006A9A90 /* vec3.c */,
+				D2FD867D14F0ECFE006A9A90 /* vec4.c */,
+			);
+			path = src;
+			sourceTree = "<group>";
+		};
+		D2FD867114F0ECFE006A9A90 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD867214F0ECFE006A9A90 /* mat4stack.c */,
+				D2FD867314F0ECFE006A9A90 /* matrix.c */,
+			);
+			path = GL;
+			sourceTree = "<group>";
+		};
+		D2FD869A14F0ED02006A9A90 /* 3rd-party */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD865B14F0ECFE006A9A90 /* kazmath */,
+			);
+			name = "3rd-party";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D24BAF3014EDB05D000E65AA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D24BAF8D14EDB142000E65AA /* ICCamera.h in Headers */,
+				D24BAF8F14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h in Headers */,
+				D24BAF9114EDB142000E65AA /* icConfig.h in Headers */,
+				D24BAF9214EDB142000E65AA /* ICConfiguration.h in Headers */,
+				D24BAF9414EDB142000E65AA /* icDefaults.h in Headers */,
+				D24BAF9514EDB142000E65AA /* IcedCoffee.h in Headers */,
+				D24BAF9614EDB142000E65AA /* ICEventDelegate.h in Headers */,
+				D24BAF9714EDB142000E65AA /* icGLState.h in Headers */,
+				D24BAF9914EDB142000E65AA /* ICHostViewController.h in Headers */,
+				D24BAF9B14EDB142000E65AA /* ICIdentifiable.h in Headers */,
+				D24BAF9D14EDB142000E65AA /* icMacros.h in Headers */,
+				D24BAF9E14EDB142000E65AA /* ICMouseEventDispatcher.h in Headers */,
+				D24BAFA014EDB142000E65AA /* ICMouseResponder.h in Headers */,
+				D24BAFA114EDB142000E65AA /* ICNode.h in Headers */,
+				D24BAFA314EDB142000E65AA /* ICNodeVisitor.h in Headers */,
+				D24BAFA514EDB142000E65AA /* ICNodeVisitorDrawing.h in Headers */,
+				D24BAFA714EDB142000E65AA /* ICNodeVisitorPicking.h in Headers */,
+				D24BAFA914EDB142000E65AA /* ICRenderTexture.h in Headers */,
+				D24BAFAB14EDB142000E65AA /* ICResponder.h in Headers */,
+				D24BAFAD14EDB142000E65AA /* ICScene.h in Headers */,
+				D24BAFAF14EDB142000E65AA /* ICShaderCache.h in Headers */,
+				D24BAFB114EDB142000E65AA /* ICShaderProgram.h in Headers */,
+				D24BAFB314EDB142000E65AA /* ICSprite.h in Headers */,
+				D24BAFB514EDB142000E65AA /* ICTexture2D.h in Headers */,
+				D24BAFB714EDB142000E65AA /* ICTextureCache.h in Headers */,
+				D24BAFB914EDB142000E65AA /* ICTextureLoader.h in Headers */,
+				D24BAFBB14EDB142000E65AA /* ICTouchResponder.h in Headers */,
+				D24BAFBC14EDB142000E65AA /* icTypes.h in Headers */,
+				D24BAFBD14EDB142000E65AA /* icUtils.h in Headers */,
+				D24BAFBF14EDB142000E65AA /* icGL.h in Headers */,
+				D24BAFC014EDB142000E65AA /* icNS.h in Headers */,
+				D24BAFC814EDB142000E65AA /* ICGLView.h in Headers */,
+				D24BAFCA14EDB142000E65AA /* ICHostViewControllerMac.h in Headers */,
+				D2FD867E14F0ECFE006A9A90 /* aabb.h in Headers */,
+				D2FD867F14F0ECFE006A9A90 /* mat4stack.h in Headers */,
+				D2FD868014F0ECFE006A9A90 /* matrix.h in Headers */,
+				D2FD868114F0ECFE006A9A90 /* kazmath.h in Headers */,
+				D2FD868214F0ECFE006A9A90 /* mat3.h in Headers */,
+				D2FD868314F0ECFE006A9A90 /* mat4.h in Headers */,
+				D2FD868414F0ECFE006A9A90 /* neon_matrix_impl.h in Headers */,
+				D2FD868514F0ECFE006A9A90 /* plane.h in Headers */,
+				D2FD868614F0ECFE006A9A90 /* quaternion.h in Headers */,
+				D2FD868714F0ECFE006A9A90 /* ray2.h in Headers */,
+				D2FD868814F0ECFE006A9A90 /* utility.h in Headers */,
+				D2FD868914F0ECFE006A9A90 /* vec2.h in Headers */,
+				D2FD868A14F0ECFE006A9A90 /* vec3.h in Headers */,
+				D2FD868B14F0ECFE006A9A90 /* vec4.h in Headers */,
+				D2E6489115042F3700D71A6D /* ICView.h in Headers */,
+				D2F34FFD151F3E0A00DF2D5B /* ICLabel.h in Headers */,
+				D2F3504915286EFC00DF2D5B /* ICAsyncTextureCacheDelegate.h in Headers */,
+				D2FEE81815338B74004CFF62 /* ICScheduler.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		D24BAF3114EDB05D000E65AA /* icedcoffee-mac */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D24BAF4314EDB05D000E65AA /* Build configuration list for PBXNativeTarget "icedcoffee-mac" */;
+			buildPhases = (
+				D24BAF2E14EDB05D000E65AA /* Sources */,
+				D24BAF2F14EDB05D000E65AA /* Frameworks */,
+				D24BAF3014EDB05D000E65AA /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "icedcoffee-mac";
+			productName = "icedcoffee-mac";
+			productReference = D24BAF3214EDB05D000E65AA /* libicedcoffee-mac.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D24BAF2914EDB05D000E65AA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "UJAM Development GmbH";
+			};
+			buildConfigurationList = D24BAF2C14EDB05D000E65AA /* Build configuration list for PBXProject "icedcoffee-mac" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D24BAF2714EDB05D000E65AA;
+			productRefGroup = D24BAF3314EDB05D000E65AA /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D24BAF3114EDB05D000E65AA /* icedcoffee-mac */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D24BAF2E14EDB05D000E65AA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D24BAF8E14EDB142000E65AA /* ICCamera.m in Sources */,
+				D24BAF9014EDB142000E65AA /* ICCameraPointsToPixelsPerspective.m in Sources */,
+				D24BAF9314EDB142000E65AA /* ICConfiguration.m in Sources */,
+				D24BAF9814EDB142000E65AA /* icGLState.m in Sources */,
+				D24BAF9A14EDB142000E65AA /* ICHostViewController.m in Sources */,
+				D24BAF9C14EDB142000E65AA /* ICIdentifiable.m in Sources */,
+				D24BAF9F14EDB142000E65AA /* ICMouseEventDispatcher.m in Sources */,
+				D24BAFA214EDB142000E65AA /* ICNode.m in Sources */,
+				D24BAFA414EDB142000E65AA /* ICNodeVisitor.m in Sources */,
+				D24BAFA614EDB142000E65AA /* ICNodeVisitorDrawing.m in Sources */,
+				D24BAFA814EDB142000E65AA /* ICNodeVisitorPicking.m in Sources */,
+				D24BAFAA14EDB142000E65AA /* ICRenderTexture.m in Sources */,
+				D24BAFAC14EDB142000E65AA /* ICResponder.m in Sources */,
+				D24BAFAE14EDB142000E65AA /* ICScene.m in Sources */,
+				D24BAFB014EDB142000E65AA /* ICShaderCache.m in Sources */,
+				D24BAFB214EDB142000E65AA /* ICShaderProgram.m in Sources */,
+				D24BAFB414EDB142000E65AA /* ICSprite.m in Sources */,
+				D24BAFB614EDB142000E65AA /* ICTexture2D.m in Sources */,
+				D24BAFB814EDB142000E65AA /* ICTextureCache.m in Sources */,
+				D24BAFBA14EDB142000E65AA /* ICTextureLoader.m in Sources */,
+				D24BAFBE14EDB142000E65AA /* icUtils.m in Sources */,
+				D24BAFC914EDB142000E65AA /* ICGLView.m in Sources */,
+				D24BAFCB14EDB142000E65AA /* ICHostViewControllerMac.m in Sources */,
+				D2FD868C14F0ECFE006A9A90 /* aabb.c in Sources */,
+				D2FD868D14F0ECFE006A9A90 /* mat4stack.c in Sources */,
+				D2FD868E14F0ECFE006A9A90 /* matrix.c in Sources */,
+				D2FD868F14F0ECFE006A9A90 /* mat3.c in Sources */,
+				D2FD869014F0ECFE006A9A90 /* mat4.c in Sources */,
+				D2FD869114F0ECFE006A9A90 /* neon_matrix_impl.c in Sources */,
+				D2FD869214F0ECFE006A9A90 /* plane.c in Sources */,
+				D2FD869314F0ECFE006A9A90 /* quaternion.c in Sources */,
+				D2FD869414F0ECFE006A9A90 /* ray2.c in Sources */,
+				D2FD869514F0ECFE006A9A90 /* utility.c in Sources */,
+				D2FD869614F0ECFE006A9A90 /* vec2.c in Sources */,
+				D2FD869714F0ECFE006A9A90 /* vec3.c in Sources */,
+				D2FD869814F0ECFE006A9A90 /* vec4.c in Sources */,
+				D2E6489215042F3700D71A6D /* ICView.m in Sources */,
+				D2F34FFE151F3E0A00DF2D5B /* ICLabel.m in Sources */,
+				D2FEE81915338B74004CFF62 /* ICScheduler.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		D24BAF4114EDB05D000E65AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		D24BAF4214EDB05D000E65AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		D24BAF4414EDB05D000E65AA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				HEADER_SEARCH_PATHS = "./3rd-party/kazmath/include";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		D24BAF4514EDB05D000E65AA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
+				HEADER_SEARCH_PATHS = "./3rd-party/kazmath/include";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D24BAF2C14EDB05D000E65AA /* Build configuration list for PBXProject "icedcoffee-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D24BAF4114EDB05D000E65AA /* Debug */,
+				D24BAF4214EDB05D000E65AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D24BAF4314EDB05D000E65AA /* Build configuration list for PBXNativeTarget "icedcoffee-mac" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D24BAF4414EDB05D000E65AA /* Debug */,
+				D24BAF4514EDB05D000E65AA /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D24BAF2914EDB05D000E65AA /* Project object */;
+}

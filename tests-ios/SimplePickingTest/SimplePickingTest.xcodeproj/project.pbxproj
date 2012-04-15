@@ -1,0 +1,307 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		D24BAFD414EF9FC8000E65AA /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAFD314EF9FC8000E65AA /* libicedcoffee-ios.a */; };
+		D2FAC48C14E7AA0B0022BB3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC48B14E7AA0B0022BB3B /* UIKit.framework */; };
+		D2FAC48E14E7AA0B0022BB3B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC48D14E7AA0B0022BB3B /* Foundation.framework */; };
+		D2FAC49614E7AA0B0022BB3B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2FAC49414E7AA0B0022BB3B /* InfoPlist.strings */; };
+		D2FAC49814E7AA0B0022BB3B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FAC49714E7AA0B0022BB3B /* main.m */; };
+		D2FAC49C14E7AA0B0022BB3B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FAC49B14E7AA0B0022BB3B /* AppDelegate.m */; };
+		D2FD855914EFACBE006A9A90 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD855714EFACAC006A9A90 /* OpenGLES.framework */; };
+		D2FD855C14EFAD32006A9A90 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD855A14EFAD21006A9A90 /* QuartzCore.framework */; };
+		D2FD856714F06F75006A9A90 /* ResponsiveSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD856614F06F75006A9A90 /* ResponsiveSprite.m */; };
+		D2FD856914F0721F006A9A90 /* thiswayup.png in Resources */ = {isa = PBXBuildFile; fileRef = D2FD856814F0721F006A9A90 /* thiswayup.png */; };
+		D2FD856D14F0722F006A9A90 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD856A14F0722F006A9A90 /* Picking.fsh */; };
+		D2FD856E14F0722F006A9A90 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD856B14F0722F006A9A90 /* PositionTextureColor.fsh */; };
+		D2FD856F14F0722F006A9A90 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FD856C14F0722F006A9A90 /* PositionTextureColor.vsh */; };
+		D2FD85AF14F072B0006A9A90 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC48F14E7AA0B0022BB3B /* CoreGraphics.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		D24BAFD314EF9FC8000E65AA /* libicedcoffee-ios.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libicedcoffee-ios.a"; path = "../../build/Release-iphoneos/libicedcoffee-ios.a"; sourceTree = "<group>"; };
+		D2FAC48714E7AA0B0022BB3B /* SimplePickingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimplePickingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2FAC48B14E7AA0B0022BB3B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		D2FAC48D14E7AA0B0022BB3B /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2FAC48F14E7AA0B0022BB3B /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		D2FAC49314E7AA0B0022BB3B /* SimplePickingTest-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "SimplePickingTest-Info.plist"; sourceTree = "<group>"; };
+		D2FAC49514E7AA0B0022BB3B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2FAC49714E7AA0B0022BB3B /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2FAC49914E7AA0B0022BB3B /* SimplePickingTest-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SimplePickingTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2FAC49A14E7AA0B0022BB3B /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2FAC49B14E7AA0B0022BB3B /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2FD855714EFACAC006A9A90 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		D2FD855A14EFAD21006A9A90 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		D2FD856514F06F75006A9A90 /* ResponsiveSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResponsiveSprite.h; sourceTree = "<group>"; };
+		D2FD856614F06F75006A9A90 /* ResponsiveSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResponsiveSprite.m; sourceTree = "<group>"; };
+		D2FD856814F0721F006A9A90 /* thiswayup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thiswayup.png; path = ../../../resources/images/thiswayup.png; sourceTree = "<group>"; };
+		D2FD856A14F0722F006A9A90 /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = ../../../resources/shaders/Picking.fsh; sourceTree = "<group>"; };
+		D2FD856B14F0722F006A9A90 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = ../../../resources/shaders/PositionTextureColor.fsh; sourceTree = "<group>"; };
+		D2FD856C14F0722F006A9A90 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = ../../../resources/shaders/PositionTextureColor.vsh; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		D2FAC48414E7AA0B0022BB3B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FD85AF14F072B0006A9A90 /* CoreGraphics.framework in Frameworks */,
+				D24BAFD414EF9FC8000E65AA /* libicedcoffee-ios.a in Frameworks */,
+				D2FD855C14EFAD32006A9A90 /* QuartzCore.framework in Frameworks */,
+				D2FD855914EFACBE006A9A90 /* OpenGLES.framework in Frameworks */,
+				D2FAC48C14E7AA0B0022BB3B /* UIKit.framework in Frameworks */,
+				D2FAC48E14E7AA0B0022BB3B /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		D2FAC47C14E7AA0B0022BB3B = {
+			isa = PBXGroup;
+			children = (
+				D24BAFD314EF9FC8000E65AA /* libicedcoffee-ios.a */,
+				D2FAC49114E7AA0B0022BB3B /* SimplePickingTest */,
+				D2FAC48A14E7AA0B0022BB3B /* Frameworks */,
+				D2FAC48814E7AA0B0022BB3B /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		D2FAC48814E7AA0B0022BB3B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2FAC48714E7AA0B0022BB3B /* SimplePickingTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D2FAC48A14E7AA0B0022BB3B /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD855A14EFAD21006A9A90 /* QuartzCore.framework */,
+				D2FD855714EFACAC006A9A90 /* OpenGLES.framework */,
+				D2FAC48B14E7AA0B0022BB3B /* UIKit.framework */,
+				D2FAC48D14E7AA0B0022BB3B /* Foundation.framework */,
+				D2FAC48F14E7AA0B0022BB3B /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D2FAC49114E7AA0B0022BB3B /* SimplePickingTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2FAC49A14E7AA0B0022BB3B /* AppDelegate.h */,
+				D2FAC49B14E7AA0B0022BB3B /* AppDelegate.m */,
+				D2FD856514F06F75006A9A90 /* ResponsiveSprite.h */,
+				D2FD856614F06F75006A9A90 /* ResponsiveSprite.m */,
+				D2FAC49214E7AA0B0022BB3B /* Supporting Files */,
+			);
+			path = SimplePickingTest;
+			sourceTree = "<group>";
+		};
+		D2FAC49214E7AA0B0022BB3B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2FD856A14F0722F006A9A90 /* Picking.fsh */,
+				D2FD856B14F0722F006A9A90 /* PositionTextureColor.fsh */,
+				D2FD856C14F0722F006A9A90 /* PositionTextureColor.vsh */,
+				D2FD856814F0721F006A9A90 /* thiswayup.png */,
+				D2FAC49314E7AA0B0022BB3B /* SimplePickingTest-Info.plist */,
+				D2FAC49414E7AA0B0022BB3B /* InfoPlist.strings */,
+				D2FAC49714E7AA0B0022BB3B /* main.m */,
+				D2FAC49914E7AA0B0022BB3B /* SimplePickingTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D2FAC48614E7AA0B0022BB3B /* SimplePickingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2FAC49F14E7AA0B0022BB3B /* Build configuration list for PBXNativeTarget "SimplePickingTest" */;
+			buildPhases = (
+				D2FAC48314E7AA0B0022BB3B /* Sources */,
+				D2FAC48414E7AA0B0022BB3B /* Frameworks */,
+				D2FAC48514E7AA0B0022BB3B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SimplePickingTest;
+			productName = SimplePickingTest;
+			productReference = D2FAC48714E7AA0B0022BB3B /* SimplePickingTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D2FAC47E14E7AA0B0022BB3B /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "UJAM Development GmbH";
+			};
+			buildConfigurationList = D2FAC48114E7AA0B0022BB3B /* Build configuration list for PBXProject "SimplePickingTest" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = D2FAC47C14E7AA0B0022BB3B;
+			productRefGroup = D2FAC48814E7AA0B0022BB3B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2FAC48614E7AA0B0022BB3B /* SimplePickingTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		D2FAC48514E7AA0B0022BB3B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FAC49614E7AA0B0022BB3B /* InfoPlist.strings in Resources */,
+				D2FD856914F0721F006A9A90 /* thiswayup.png in Resources */,
+				D2FD856D14F0722F006A9A90 /* Picking.fsh in Resources */,
+				D2FD856E14F0722F006A9A90 /* PositionTextureColor.fsh in Resources */,
+				D2FD856F14F0722F006A9A90 /* PositionTextureColor.vsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		D2FAC48314E7AA0B0022BB3B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2FAC49814E7AA0B0022BB3B /* main.m in Sources */,
+				D2FAC49C14E7AA0B0022BB3B /* AppDelegate.m in Sources */,
+				D2FD856714F06F75006A9A90 /* ResponsiveSprite.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		D2FAC49414E7AA0B0022BB3B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2FAC49514E7AA0B0022BB3B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		D2FAC49D14E7AA0B0022BB3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		D2FAC49E14E7AA0B0022BB3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		D2FAC4A014E7AA0B0022BB3B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimplePickingTest/SimplePickingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					../../icedcoffee,
+					"../../3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "SimplePickingTest/SimplePickingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2FAC4A114E7AA0B0022BB3B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SimplePickingTest/SimplePickingTest-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					../../icedcoffee,
+					"../../3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "SimplePickingTest/SimplePickingTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		D2FAC48114E7AA0B0022BB3B /* Build configuration list for PBXProject "SimplePickingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2FAC49D14E7AA0B0022BB3B /* Debug */,
+				D2FAC49E14E7AA0B0022BB3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2FAC49F14E7AA0B0022BB3B /* Build configuration list for PBXNativeTarget "SimplePickingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2FAC4A014E7AA0B0022BB3B /* Debug */,
+				D2FAC4A114E7AA0B0022BB3B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D2FAC47E14E7AA0B0022BB3B /* Project object */;
+}

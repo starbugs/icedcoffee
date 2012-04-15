@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'PickingTest' target in the 'PickingTest' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

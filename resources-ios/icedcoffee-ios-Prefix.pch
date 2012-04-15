@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'icedcoffee-ios' target in the 'icedcoffee-ios' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <CoreGraphics/CoreGraphics.h>
+#endif
