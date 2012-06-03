@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'StencilTest' target in the 'StencilTest' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif
