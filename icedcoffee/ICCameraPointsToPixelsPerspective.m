@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -31,9 +31,9 @@
 @synthesize eyeOffset = _eyeOffset;
 @synthesize lookAtOffset = _lookAtOffset;
 
-- (id)init
+- (id)initWithViewport:(CGRect)viewport
 {
-    if ((self = [super init])) {
+    if ((self = [super initWithViewport:viewport])) {
         self.zoomFactor = 1;
     }
     return self;
@@ -41,11 +41,8 @@
 
 - (void)setupScreen
 {    
-    GLint viewport[4];
-    glGetIntegerv(GL_VIEWPORT, viewport);
-    
-    float w = viewport[2];
-    float h = viewport[3];
+    float w = _viewport[2];
+    float h = _viewport[3];
         
     float halfFov, theTan, screenFov, aspectRatio;
     screenFov 		= 60.0f;

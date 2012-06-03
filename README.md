@@ -1,5 +1,5 @@
-IcedCoffee
-==========
+IcedCoffee v0.4
+===============
 
 IcedCoffee is a lightweight framework for building stunning user interfaces based on OpenGL ES 2.
 It is written in Objective-C and runs on iOS and Mac OS X.
@@ -27,18 +27,22 @@ Main Features
 -------------
 
   * Minimalistic scene graph: scene node infrastructure with arbitrary 3D transforms,
-	  easily extensible via encapsulated node visitation
+    easily extensible via node visitation
   * Full event handling support for nodes (touch, mouse, keyboard, motion), responder
-    chain design similar to that found in Cocoa/CocoaTouch    
+    chain design similar to that found in Cocoa/CocoaTouch
+  * Perspective GUI rendering (XY world plane matches the screen plane)
   * Shader-based picking/selection of nodes (support for arbitrary picking shapes)
   * Render to texture, picking through (potentially nested) texture FBOs
   * Render to texture and picking with depth buffer support
-  * Texture loading on separate thread via GCD
-  * Rendering via display link thread
+  * View hierarchy backed by render textures
+  * Font rendering via CoreGraphics
+  * Scale9 sprites for scaling background images and sprite textures
+  * Texture loading on a separate thread via GCD
+  * Rendering via dedicated display link thread
   * Retina display support for all suitable devices
-  * View/view controller architecture basis for easy integration with Cocoa/CocoaTouch
+  * View/view controller architecture for easy integration with Cocoa/CocoaTouch
   * Minimalistic design with little dependencies: very easy to integrate into existing
-    OpenGL and non-OpenGL applications
+    OpenGL and non-OpenGL applications or games
 
 
 Copyright and License

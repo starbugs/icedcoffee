@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -22,10 +22,22 @@
 
 #import "ICSprite.h"
 
-@interface ICLabel : ICSprite
+#define ICLabelTextDidChange @"ICLabelTextDidChange"
+#define ICLabelFontDidChange @"ICLabelFontDidChange"
 
-+ (id)labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
+@interface ICLabel : ICSprite {
+@protected
+    NSString *_text;
+    NSString *_fontName;
+    CGFloat _fontSize;
+}
 
-- (id)initWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size;
++ (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
+
+- (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
+
+@property (nonatomic, copy, setter=setText:) NSString *text;
+@property (nonatomic, copy, setter=setFontName:) NSString *fontName;
+@property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
 
 @end

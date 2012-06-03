@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -35,6 +35,7 @@
 
 @synthesize color = _color;
 @synthesize texture = _texture;
+@synthesize maskTexture = _maskTexture;
 @synthesize blendFunc = _blendFunc;
 
 + (id)sprite
@@ -109,13 +110,17 @@
 {
     if (!self.isVisible)
         return;
-
+    
     [self applyStandardDrawSetupWithVisitor:visitor];
     
     // Set texture (unless we're in picking mode)
-    ICTexture2D *texture = [self texture];
-    if (texture && visitor.visitorType != kICPickingNodeVisitor) {
-        glBindTexture(GL_TEXTURE_2D, [texture name]);
+    if (_texture && visitor.visitorType != kICPickingNodeVisitor) {
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, [_texture name]);
+        if (_maskTexture) {
+            glActiveTexture(GL_TEXTURE1);
+            glBindTexture(GL_TEXTURE_2D, [_maskTexture name]);
+        }
         CHECK_GL_ERROR_DEBUG();
     }
     
@@ -144,13 +149,18 @@
 	diff = offsetof(icV3F_C4B_T2F, color);
 	glVertexAttribPointer(kICVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
-	// texCoods
+	// texCoords
 	diff = offsetof(icV3F_C4B_T2F, texCoords);
 	glVertexAttribPointer(kICVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-        
+            
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     CHECK_GL_ERROR_DEBUG();
-    
+
+    if (_maskTexture) {
+        glActiveTexture(GL_TEXTURE1);
+        glBindTexture(GL_TEXTURE_2D, 0);
+    }
+    glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
     CHECK_GL_ERROR_DEBUG();
 }
@@ -160,7 +170,27 @@
     [_texture release];
     _texture = [texture retain];
 
-    [self setQuadSize:CGSizeMake([texture contentSize].width, [texture contentSize].height)];
+    [self setContentSize:(kmVec3){[texture contentSize].width, [texture contentSize].height, 0}];
+}
+
+- (void)setMaskTexture:(ICTexture2D *)maskTexture
+{
+    [_maskTexture release];
+    _maskTexture = [maskTexture retain];
+    
+    if (_maskTexture) {
+        self.shaderProgram = [[ICShaderCache defaultShaderCache]
+                              shaderProgramForKey:kICShader_SpriteTextureMask];
+    } else {
+        self.shaderProgram = [[ICShaderCache defaultShaderCache]
+                              shaderProgramForKey:kICShader_PositionTextureColor];
+    }
+}
+
+- (void)setContentSize:(kmVec3)contentSize
+{
+    [self setQuadSize:CGSizeMake(contentSize.x, contentSize.y)];
+    [super setContentSize:contentSize];
 }
 
 - (void)setQuadSize:(CGSize)size
@@ -174,8 +204,6 @@
     kmVec3Fill(&_quad.br.vect, x2, y1, 0);
     kmVec3Fill(&_quad.tl.vect, x1, y2, 0);
     kmVec3Fill(&_quad.tr.vect, x2, y2, 0);    
-
-    [self setContentSize:(kmVec3){ x2, y2, 1.0f }];
 }
 
 - (void)flipTextureHorizontally
@@ -234,39 +262,5 @@
 {
     return YES;
 }
-
-#ifdef __IC_PLATFORM_DESKTOP
-
-// FIXME: remove this
-// Testing
-
-/*
-- (void)mouseDragged:(NSEvent *)event
-{
-    NSLog(@"%@, %@", [event description], [self description]);
-}
-
-- (void)mouseExited:(NSEvent *)event
-{
-    NSLog(@"%@, %@", [event description], [self description]);    
-}
-
-- (void)mouseEntered:(NSEvent *)event
-{
-    NSLog(@"%@, %@", [event description], [self description]);    
-}
-
-- (void)scrollWheel:(NSEvent *)event
-{
-    //NSLog(@"%@, %@", [event description], [self description]);    
-    float delta = [event deltaY] / 100.0f;
-    _quad.tl.texCoords.y += delta;
-    _quad.bl.texCoords.y += delta;
-    _quad.tr.texCoords.y += delta;
-    _quad.br.texCoords.y += delta;
-}
- */
-
-#endif
 
 @end

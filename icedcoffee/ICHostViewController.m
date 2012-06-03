@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -28,7 +28,9 @@
 #import "ICScheduler.h"
 #import "ICCamera.h"
 #import "ICEventDelegate.h"
+#import "ICTargetActionDispatcher.h"
 #import "icDefaults.h"
+#import "icConfig.h"
 #import "sys/time.h"
 
 // Global content scale factor (applies to all ICHostViewController instances)
@@ -52,6 +54,8 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 @synthesize thread = _thread;
 @synthesize currentFirstResponder = _currentFirstResponder;
 @synthesize scheduler = _scheduler;
+@synthesize targetActionDispatcher = _targetActionDispatcher;
+@synthesize frameUpdateMode = _frameUpdateMode;
 
 + (ICHostViewController *)platformSpecificHostViewController
 {
@@ -63,6 +67,11 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     if ((self = [super init])) {
         _eventDelegates = [[NSMutableArray alloc] init];
         _scheduler = [[ICScheduler alloc] init];
+        _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
+        _lastUpdate.tv_sec = 0;
+        _lastUpdate.tv_usec = 0;
+        _frameUpdateMode = kICFrameUpdateMode_Synchronized;
+        _needsDisplay = YES;
     }
     return self;
 }
@@ -74,6 +83,7 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     [_eventDelegates release];
     [_textureCache release];
     [_scheduler release];
+    [_targetActionDispatcher release];
     
     [super dealloc];
 }
@@ -91,22 +101,33 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 - (void)calculateDeltaTime
 {
-    struct timeval now;
-    if (gettimeofday(&now, NULL) != 0) {
-        ICLOG(@"IcedCoffee: error occurred in gettimeofday");
-        _deltaTime = 0;
-        return;
+    @synchronized (self) {
+        struct timeval now;
+        if (gettimeofday(&now, NULL) != 0) {
+            ICLOG(@"IcedCoffee: error occurred in gettimeofday");
+            _deltaTime = 0;
+            return;
+        }
+        
+        if (_lastUpdate.tv_sec == 0 && _lastUpdate.tv_usec == 0) {
+            _deltaTime = 0;
+        } else {
+            _deltaTime = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
+            _deltaTime = MAX(0, _deltaTime);
+        }
+        
+        _lastUpdate = now;
     }
-    
-    _deltaTime = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0f;
-    _deltaTime = MAX(0, _deltaTime);
-    
-    _lastUpdate = now;
+}
+
+- (void)setNeedsDisplay
+{
+    _needsDisplay = YES;
 }
 
 - (void)drawScene
 {
-    // Override in subclass    
+    // Override in subclass
 }
 
 - (void)runWithScene:(ICScene *)scene
@@ -127,8 +148,12 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 - (void)reshape:(CGSize)newViewSize
 {
-    self.scene.camera.dirty = YES;
-    [self setViewSize:newViewSize];
+    CGRect newViewport = CGRectMake(0, 0, newViewSize.width, newViewSize.height);
+    [self.scene.camera setViewport:newViewport]; // sets camera dirty automatically
+
+    [self.scene setNeedsDisplay];
+
+    [self setViewSize:newViewSize]; // FIXME: viewsize needed?
 }
 
 - (void)setView:(ICGLView *)view
@@ -196,6 +221,16 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     return NO;
 #endif
 }
+
+
+#ifdef __IC_PLATFORM_MAC
+
+- (void)setCursor:(NSCursor *)cursor
+{
+    [(ICGLView *)[self view] setCursor:cursor];
+}
+
+#endif // __IC_PLATFORM_MAC
 
 
 // Private

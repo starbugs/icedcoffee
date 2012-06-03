@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -39,7 +39,11 @@
     if ((self = [super init])) {
         _visitorType = kICPickingNodeVisitor;
         _nodeIndex = 1;
-        _renderTexture = [[ICRenderTexture alloc] initWithWidth:1 height:1 pixelFormat:kICTexture2DPixelFormat_RGBA8888];
+        // FIXME: enable depth buffer only if host view controller provides depth buffer support(?)
+        _renderTexture = [[ICRenderTexture alloc] initWithWidth:1
+                                                         height:1
+                                                    pixelFormat:kICPixelFormat_RGBA8888
+                                              depthBufferFormat:kICDepthBufferFormat_16];
         _resultNodeStack = [[NSMutableArray alloc] init];
         _appendNodesToStack = [[NSMutableArray alloc] init];
         _pickPoint = CGPointMake(0, 0);

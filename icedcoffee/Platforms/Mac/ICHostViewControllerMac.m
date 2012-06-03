@@ -49,6 +49,8 @@
 #import "ICScene.h"
 #import "ICRenderTexture.h"
 #import "icGL.h"
+#import "ICScheduler.h"
+#import "icConfig.h"
 
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
@@ -150,28 +152,42 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene
 {
-	// We draw on a secondary thread through the display link
-	// When resizing the view, -reshape is called automatically on the main thread
-	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
+    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand && !_needsDisplay) {
+        return; // nothing to draw
+    }
     
-	ICGLView *openGLview = (ICGLView*)self.view;
-	CGLLockContext([[openGLview openGLContext] CGLContextObj]);
-	[[openGLview openGLContext] makeCurrentContext];
+    [self calculateDeltaTime];
+
+    // We draw on a secondary thread through the display link
+    // When resizing the view, -reshape is called automatically on the main thread
+    // Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
     
-	glViewport(0, 0,
+    ICGLView *openGLview = (ICGLView*)self.view;
+    CGLLockContext([[openGLview openGLContext] CGLContextObj]);
+    [[openGLview openGLContext] makeCurrentContext];
+
+    [[self scheduler] update:_deltaTime];    
+
+    glViewport(0, 0,
                openGLview.bounds.size.width * self.contentScaleFactor,
                openGLview.bounds.size.height * self.contentScaleFactor);
     
     // Render final scene
-    [self.scene visit];
-	[[openGLview openGLContext] flushBuffer];
+    [self.scene visit];  
+    
+    // Flush OpenGL buffer
+    [[openGLview openGLContext] flushBuffer];
 
     if ([NSThread currentThread] == self.thread) {
         // Let mouse event dispatcher update state for mouseEntered/mouseExited events
         [_mouseEventDispatcher updateMouseOverState];
     }
     
-	CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);    
+    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand) {
+        _needsDisplay = NO;
+    }
+    
+    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);    
 }
 
 - (NSArray *)hitTest:(CGPoint)point

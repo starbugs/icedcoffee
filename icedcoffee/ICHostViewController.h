@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -27,6 +27,7 @@
 #import "ICEventDelegate.h"
 
 #import "icMacros.h"
+#import "icTypes.h"
 
 @class ICScene;
 @class ICGLView;
@@ -34,6 +35,7 @@
 @class ICRenderTexture;
 @class ICResponder;
 @class ICScheduler;
+@class ICTargetActionDispatcher;
 
 
 #if defined(__IC_PLATFORM_MAC)
@@ -88,6 +90,7 @@
     
     ICTextureCache *_textureCache;
     ICScheduler *_scheduler;
+    ICTargetActionDispatcher *_targetActionDispatcher;
     
     ICResponder *_currentFirstResponder;
     NSMutableArray *_eventDelegates;
@@ -100,6 +103,9 @@
 
     icTime _deltaTime;
     struct timeval _lastUpdate;
+    
+    ICFrameUpdateMode _frameUpdateMode;
+    BOOL _needsDisplay;
 }
 
 
@@ -138,6 +144,36 @@
 
 #pragma mark - Run Loop, Drawing and Animation
 /** @name Run Loop, Drawing and Animation */
+
+/**
+ @brief Called by the framework to calculate the delta time between two consecutive frames
+ */
+- (void)calculateDeltaTime;
+
+/**
+ @brief The frame update mode used to present the host view controller's scene
+ 
+ An ICFrameUpdateMode enumerated value defining when the host view controller should draw
+ the scene's contents. Setting this property to kICFrameUpdateMode_Synchronized lets the
+ host view controller draw the scene's contents continuously, synchronized with the display
+ refresh rate. Setting it to kICFrameUpdateMode_OnDemand lets the host view controller draw
+ the scene's contents on demand only, when one or multiple nodes' ICNode::setNeedsDisplay
+ method has been called.
+ 
+ The default value for this property is kICFrameUpdateMode_Synchronized.
+ 
+ @remarks You should use synchronized updates for scenes that change frequently and on demand
+ updates for those that change rarely. Setting the frame update mode to on demand drawing
+ has effects on update messages scheduled with ICHostViewController::scheduler. Update messages
+ will only be sent when a frame is acutally drawn, that is, you cannot rely on ICScheduler
+ for scheduling animation updates in this case.
+ */
+@property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+
+/**
+ @brief Called by the framework to indicate that the host view's contents needs to be redrawn
+ */
+- (void)setNeedsDisplay;
 
 /**
  @brief The thread used to draw the scene and process HID events
@@ -182,10 +218,12 @@
 - (void)reshape:(CGSize)newViewSize;
 
 
-#pragma mark - Update Scheduling
-/** @name Update Scheduling */
+#pragma mark - Update Scheduling and Target-Action Dispatch
+/** @name Update Scheduling and Target-Action Dispatch */
 
 @property (nonatomic, readonly) ICScheduler *scheduler;
+
+@property (nonatomic, readonly) ICTargetActionDispatcher *targetActionDispatcher;
 
 
 #pragma mark - Host View
@@ -243,9 +281,28 @@
 
 /**
  @brief Sets the current content scale factor
+ 
+ @param contentScaleFactor A float value defining the new content scale factor
  */
 - (void)setContentScaleFactor:(float)contentScaleFactor;
 
+
+#ifdef __IC_PLATFORM_MAC
+
+#pragma mark - Mouse Cursor
+/** @name Mouse Cursor */
+
+/**
+ @brief Sets the mouse cursor (Mac only)
+ 
+ Use this method to change the mouse cursor over the host view's frame. The set mouse cursor
+ will only appear when the application is active and the host view's window is key.
+ 
+ @param cursor An NSCursor object defining the cursor to be set.
+ */
+- (void)setCursor:(NSCursor *)cursor;
+
+#endif // __IC_PLATFORM_MAC
 
 @end
 

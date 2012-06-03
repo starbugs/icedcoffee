@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -26,6 +26,8 @@
 
 #import "ICResponder.h"
 #import "ICNodeVisitor.h"
+
+#import "icConfig.h"
 
 @class ICNodeVisitor;
 @class ICShaderProgram;
@@ -231,6 +233,8 @@
  */
 - (NSArray *)ancestorsWithType:(Class)classType;
 
+- (ICNode *)firstAncestorWithType:(Class)classType;
+
 /**
  @brief An array containing all descendant nodes, ordered descending beginning with the first child
  
@@ -400,6 +404,11 @@
 - (void)setAnchorPoint:(kmVec3)anchorPoint;
 
 /**
+ @brief Centers the anchor point of the node based on its ICNode::contentSize property
+ */
+- (void)centerAnchorPoint;
+
+/**
  @brief The anchor point of the node in its own untransformed space
  */
 - (kmVec3)anchorPoint;
@@ -507,8 +516,48 @@
 
 /**
  @brief The node's axis-aligned bounding box
+ 
+ This method calculates the node's axis-aligned bounding box in its parent node's coordinate space.
+ 
+ @remarks The calculations performed by this method are based on the ICNode::position and
+ ICNode::contentSize properties. For this method to work correctly, the following preconditions
+ must be met:
+ <ul>
+     <li>The receiver's ICNode::contentSize property must be set correctly, that is, covering
+     the whole (cubic) space occupied by the receiver's visible contents.</li>
+     <li>The receiver must have been added to a valid ICScene object before this method is
+     called.</li>
+ </ul>
+ 
+ @return Returns an kmAABB object defining the node's axis-aligned bounding box. If the method
+ fails to calculate the node's bounding box, a zero kmAABB is returned. When this happens,
+ most likely one or many of the preconditions mentioned above have not been met.
  */
 - (kmAABB)aabb;
+
+/**
+ @brief The rectangle occupied by the node on its parent scene's frame buffer
+ 
+ This method calculates the origin and size of the rectangle occupied by the node on its parent
+ scene's frame buffer. The rectangle is always aligned to the frame buffer's axes. All coordinates
+ are expressed in points rather than pixels.
+
+ @remarks The calculations performed by this method are based on the ICNode::position and
+ ICNode::contentSize properties. For this method to work correctly, the following preconditions
+ must be met:
+ <ul>
+    <li>The receiver's ICNode::contentSize property must be set correctly, that is, covering
+    the whole (cubic) space occupied by the receiver's visible contents.</li>
+    <li>The receiver must have been added to a valid ICScene object before this method is
+    called.</li>
+    <li>The parent scene of the receiver must have a valid target frame buffer.</li>
+ </ul>
+ 
+ @return Returns a CGRect defining the rectangle (in points) occupied by the node's visible
+ contents. If the method fails to calculate the node's frame rect, a zero CGRect is returned.
+ When this happens, most likely one or many of the preconditions outlined above have not been met.
+ */
+- (CGRect)frameRect;
 
 
 #pragma mark - Drawing and Picking
@@ -577,11 +626,20 @@
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
+ @brief Called when all children of the node have been drawn
+ 
+ Called by the framework when all children nodes have been drawn completely. You may override
+ this method to reset states that have been set in ICNode::drawWithVisitor: and were not reset
+ for drawing the node's children.
+ */
+- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor;
+
+/**
  @brief Informs the framework that the node needs to be redrawn
  
  This method needs to be called only if the node is part of a drawing environment that does not
- redraw all its contents continuously. The default implementation simple calls
- ICNode::setNeedsDisplay on its parent. Specialized nodes implementing updatable frame buffers
+ redraw all its contents continuously. The default implementation simply calls
+ ICNode::setNeedsDisplay on its parent. Specialized classes implementing updatable frame buffers
  such as ICRenderTexture should override this method in order to implement conditional redrawing.
  */
 - (void)setNeedsDisplay;

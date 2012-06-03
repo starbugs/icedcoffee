@@ -101,7 +101,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat_Default;
+static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 #pragma mark -
 #pragma mark ICTexture2D - Main
@@ -111,7 +111,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 @synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
 
-- (id) initWithData:(const void*)data pixelFormat:(ICTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
 {
 	if((self = [super init])) {        
 		glGenTextures(1, &name_);
@@ -123,19 +123,19 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 		
 		switch(pixelFormat)
 		{
-			case kICTexture2DPixelFormat_RGBA8888:
+			case kICPixelFormat_RGBA8888:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				break;
-			case kICTexture2DPixelFormat_RGBA4444:
+			case kICPixelFormat_RGBA4444:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 				break;
-			case kICTexture2DPixelFormat_RGB5A1:
+			case kICPixelFormat_RGB5A1:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 				break;
-			case kICTexture2DPixelFormat_RGB565:
+			case kICPixelFormat_RGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kICTexture2DPixelFormat_A8:
+			case kICPixelFormat_A8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			default:
@@ -220,7 +220,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 	BOOL					hasAlpha;
 	CGImageAlphaInfo		info;
 	CGSize					imageSize;
-	ICTexture2DPixelFormat	pixelFormat;
+	ICPixelFormat	pixelFormat;
     
 	if(cgImage == NULL) {
 		ICLOG(@"IcedCoffee: ICTexture2D. Can't create Texture. cgImage is nil");
@@ -261,12 +261,12 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 			pixelFormat = defaultAlphaPixelFormat_;
 		else {
 			ICLOG(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
-			pixelFormat = kICTexture2DPixelFormat_RGB565;
+			pixelFormat = kICPixelFormat_RGB565;
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
 		ICLOG(@"IcedCoffee: ICTexture2D: Using A8 texture since image is a mask");
-		pixelFormat = kICTexture2DPixelFormat_A8;
+		pixelFormat = kICPixelFormat_A8;
 	}
     
 	imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
@@ -274,9 +274,9 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 	// Create the bitmap graphics context
     
 	switch(pixelFormat) {
-		case kICTexture2DPixelFormat_RGBA8888:
-		case kICTexture2DPixelFormat_RGBA4444:
-		case kICTexture2DPixelFormat_RGB5A1:
+		case kICPixelFormat_RGBA8888:
+		case kICPixelFormat_RGBA4444:
+		case kICPixelFormat_RGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
@@ -285,14 +285,14 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 			CGColorSpaceRelease(colorSpace);
 			break;
             
-		case kICTexture2DPixelFormat_RGB565:
+		case kICPixelFormat_RGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
 			info = kCGImageAlphaNoneSkipLast;
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
-		case kICTexture2DPixelFormat_A8:
+		case kICPixelFormat_A8:
 			data = malloc(POTHigh * POTWide);
 			info = kCGImageAlphaOnly;
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
@@ -308,7 +308,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
     
 	// Repack the pixel data into the right format
     
-	if(pixelFormat == kICTexture2DPixelFormat_RGB565) {
+	if(pixelFormat == kICPixelFormat_RGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -319,7 +319,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 		data = tempData;
         
 	}
-	else if (pixelFormat == kICTexture2DPixelFormat_RGBA4444) {
+	else if (pixelFormat == kICPixelFormat_RGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -336,7 +336,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 		data = tempData;
         
 	}
-	else if (pixelFormat == kICTexture2DPixelFormat_RGB5A1) {
+	else if (pixelFormat == kICPixelFormat_RGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -425,9 +425,9 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 	UIGraphicsPopContext();
 	
 #if USE_TEXT_WITH_A8_TEXTURES
-	self = [self initWithData:data pixelFormat:kICTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 #else
-	self = [self initWithData:data pixelFormat:kICTexture2DPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kICPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 #endif
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -482,7 +482,7 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
                 data[c++] = data[i*bytesPerRow+j*4+3];
 		
 		//data = (unsigned char*)[self keepData:data length:textureSize];
-		self = [self initWithData:data pixelFormat:kICTexture2DPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+		self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
 		
 		[bitmap release];
 		[image release]; 
@@ -642,12 +642,12 @@ static ICTexture2DPixelFormat defaultAlphaPixelFormat_ = kICTexture2DPixelFormat
 // Texture options for images that contains alpha
 //
 @implementation ICTexture2D (PixelFormat)
-+(void) setDefaultAlphaPixelFormat:(ICTexture2DPixelFormat)format
++(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format
 {
 	defaultAlphaPixelFormat_ = format;
 }
 
-+(ICTexture2DPixelFormat) defaultAlphaPixelFormat
++(ICPixelFormat) defaultAlphaPixelFormat
 {
 	return defaultAlphaPixelFormat_;
 }

@@ -66,12 +66,14 @@
 {
     _hostViewController = hostViewController; // assign
     
+    // FIXME: make this configurable?
     NSOpenGLPixelFormatAttribute attribs[] =
     {
 		NSOpenGLPFAAccelerated,
 		NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
+        NSOpenGLPFAStencilSize, 8,
 		0
     };
     
@@ -106,7 +108,6 @@
 
 - (void)reshape
 {
-    NSLog(@"glview: reshape");
     NSOpenGLContext *openGLContext = [self openGLContext];
     
     if (openGLContext) {
@@ -160,6 +161,19 @@ DISPATCH_EVENT(otherMouseUp)
 DISPATCH_EVENT(otherMouseDragged)
 
 DISPATCH_EVENT(scrollWheel)
+
+- (void)setCursor:(NSCursor *)cursor
+{
+    [self.window invalidateCursorRectsForView:self];
+    [_cursor release];
+    _cursor = [cursor retain];
+}
+
+- (void)resetCursorRects
+{
+    if (_cursor)
+        [self addCursorRect:self.bounds cursor:_cursor];
+}
 
 @end
 

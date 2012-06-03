@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -43,14 +43,14 @@
  
  By default, the contents of a view are updated only when needed, that is, when setNeedsDisplay
  was called or when the view's contents have not been rendered yet. You may change this behavior
- by setting the underlying render texture display mode to kICRenderTextureDisplayMode_Always
+ by setting the underlying render texture frame update mode to kICFrameUpdateMode_OnDemand
  using the setDisplayMode: method. This makes the view update its content whenever its parent
  frame buffer is updated.
  
  You may add nodes to a view by explicitly addressing the view's sub scene, that is, by sending an
- addChild: message to subScene. Do not add children directly to the view. You may add or remove
- sub views conveniently using the addSubView: and removeSubView: methods. Note that
- <code>[view.subScene addSubView:subView]</code> is identical to
+ ICNode::addChild: message to ICRenderTexture::subScene. Do not add children directly to the view
+ You may add or remove sub views conveniently using the addSubView: and removeSubView: methods.
+ Note that <code>[view.subScene addSubView:subView]</code> is identical to
  <code>[view.subScene addChild:subView]</code>.
  
  <h3>Drawing the View's Contents</h3>
@@ -81,9 +81,37 @@
  */
 @interface ICView : ICRenderTexture
 
-- (id)initWithWidth:(int)w height:(int)h;
++ (id)viewWithWidth:(int)w
+             height:(int)h;
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format;
++ (id)viewWithWidth:(int)w
+             height:(int)h 
+        depthBuffer:(BOOL)depthBuffer;
+
++ (id)viewWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat;
+
++ (id)viewWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
+
+- (id)initWithWidth:(int)w
+             height:(int)h;
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        depthBuffer:(BOOL)depthBuffer;
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)format;
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)format
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
 
 /**
  @brief Adds the specified sub view to the view hierarchy

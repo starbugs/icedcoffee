@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -26,10 +26,23 @@
 
 @synthesize window = _window;
 @synthesize hostViewController = _hostViewController;
+@synthesize label = _label;
 
 - (void)dealloc
 {
     [super dealloc];
+}
+
+- (void)buttonLeftMouseDown:(id)sender
+{
+    self.label.color = (icColor4B){255,0,255,255};
+    ((ICButton *)sender).label.text = @"Mouse Down";
+}
+
+- (void)buttonLeftMouseUpInside:(id)sender
+{
+    self.label.color = (icColor4B){255,255,255,255};
+    ((ICButton *)sender).label.text = @"Test Button";
 }
 
 - (void)setupScene
@@ -38,13 +51,22 @@
     [scene setClearColor:(icColor4B){0,0,0,255}];
     [scene setContentSize:(kmVec3){self.hostViewController.viewSize.width, self.hostViewController.viewSize.height}];
     
-    ICLabel *label = [ICLabel labelWithString:@"The quick brown fox jumps over the lazy dog"
-                                     fontName:@"Lucida Grande"
-                                     fontSize:16];
-    [label setColor:(icColor4B){255,255,255,255}];
-    [scene addChild:label];
-    [label centerNodeInParentNodeSpace];
+    self.label = [ICLabel labelWithText:@"The quick brown fox jumps over the lazy dog"
+                               fontName:@"Lucida Grande"
+                               fontSize:16];
+    [self.label setColor:(icColor4B){255,255,255,255}];
+    [scene addChild:self.label];
+    [self.label centerNodeInParentNodeSpace];
    
+    ICButton *button = [[ICButton alloc] initWithWidth:160 height:21];
+    [button setPositionX:300];
+    [button setPositionY:50];
+    button.label.text = @"Test Button";
+    [scene addChild:button];    
+    
+    [button addTarget:self action:@selector(buttonLeftMouseDown:) forControlEvents:ICControlEventLeftMouseDown];
+    [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];
+    
     [self.hostViewController runWithScene:scene];
 }
 

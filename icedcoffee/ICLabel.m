@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -27,19 +27,53 @@
 
 @implementation ICLabel
 
-+ (id)labelWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size
+@synthesize text = _text;
+@synthesize fontName = _fontName;
+@synthesize fontSize = _fontSize;
+
++ (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
-    return [[[[self class] alloc] initWithString:string fontName:name fontSize:size] autorelease];
+    return [[[[self class] alloc] initWithText:text fontName:fontName fontSize:fontSize] autorelease];
 }
 
-- (id)initWithString:(NSString *)string fontName:(NSString *)name fontSize:(CGFloat)size
+- (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
-    ICTexture2D *texture = [[ICTexture2D alloc] initWithString:string fontName:name fontSize:size];
-    self = [self initWithTexture:texture];
-    [self setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
-    [self setShaderProgram:[[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];    
-    [texture release];
+    if ((self = [super init])) {
+        [self setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
+        [self setShaderProgram:[[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
+        
+        self.fontName = fontName;
+        self.fontSize = fontSize;
+        self.text = text;
+    }
     return self;
+}
+
+- (void)setText:(NSString *)text
+{
+    [_text release];
+    _text = [text copy];
+    
+    ICTexture2D *texture = [[ICTexture2D alloc] initWithString:_text fontName:self.fontName fontSize:self.fontSize];
+    self.texture = texture;
+    [texture release];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelTextDidChange object:self];
+}
+
+- (void)setFontName:(NSString *)fontName
+{
+    [_fontName release];
+    _fontName = [fontName copy];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];
+}
+
+- (void)setFontSize:(CGFloat)fontSize
+{
+    _fontSize = fontSize;
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
 }
 
 @end

@@ -29,6 +29,16 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
+		<key>Scale9SpriteTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>13</integer>
+		</dict>
+		<key>StencilTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
 		<key>TextureCacheTest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -43,6 +53,16 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>D21F88801533064A00E2496C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D253D9BE15663DE20027DA6C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2EDC3401572BB8900EBB417</key>
 		<dict>
 			<key>primary</key>
 			<true/>

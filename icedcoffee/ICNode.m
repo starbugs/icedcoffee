@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -24,9 +24,11 @@
 
 #import "icGL.h"
 #import "icTypes.h"
+#import "icUtils.h"
 #import "kazmath/kazmath.h"
 
 #import "ICScene.h"
+#import "ICCamera.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
 #import "ICNodeVisitorPicking.h"
@@ -38,6 +40,7 @@
 - (void)setParent:(ICNode *)parent;
 - (void)setChildren:(NSMutableArray *)children;
 - (NSMutableArray *)mutableChildren;
+- (void)setNeedsDisplayForNode:(ICNode *)node;
 @end
 
 
@@ -78,6 +81,8 @@
         
         // Enable user interaction by default
         self.userInteractionEnabled = YES;
+        
+        [self setNeedsDisplay];
     }
     return self;
 }
@@ -148,6 +153,15 @@
 - (NSArray *)ancestorsWithType:(Class)classType
 {
     return [self ancestorsWithType:classType stopAfterFirstAncestor:NO];
+}
+
+- (ICNode *)firstAncestorWithType:(Class)classType
+{
+    NSArray *ancestors = [self ancestorsWithType:classType stopAfterFirstAncestor:YES];
+    if ([ancestors count]) {
+        return [ancestors objectAtIndex:0];
+    }
+    return nil;
 }
 
 - (NSArray *)ancestors
@@ -223,7 +237,9 @@
 - (ICScene *)parentScene
 {
     NSArray *sceneAncestors = [self ancestorsWithType:[ICScene class]];
-    return [sceneAncestors objectAtIndex:0];
+    if ([sceneAncestors count] > 0)
+        return [sceneAncestors objectAtIndex:0];
+    return nil;
 }
 
 - (ICHostViewController *)hostViewController
@@ -339,6 +355,12 @@
 {
     _anchorPoint = anchorPoint;
     _transformDirty = YES;
+}
+
+- (void)centerAnchorPoint
+{
+    kmVec3 ap = (kmVec3){_contentSize.x/2, _contentSize.y/2, _contentSize.z/2};
+    [self setAnchorPoint:ap];
 }
 
 - (kmVec3)anchorPoint
@@ -478,11 +500,45 @@
 
 - (kmAABB)aabb
 {
-    // Override in subclass, default implementation returns null aabb
+    kmVec3 vertices[2];
+    vertices[0] = _position;
+    kmVec3Add(&vertices[1], &_position, &_contentSize);
+    return icComputeAABBFromVertices(vertices, 2);
+}
+
+- (CGRect)frameRect
+{
+    kmVec3 world[8], view[8];
     
-    kmAABB nullAabb;
-    bzero(&nullAabb, sizeof(kmAABB));
-    return nullAabb;
+    world[0] = _position;
+    world[1] = (kmVec3){_position.x + _contentSize.x, _position.y, _position.z};
+    world[2] = (kmVec3){_position.x + _contentSize.x, _position.y + _contentSize.y, _position.z};
+    world[3] = (kmVec3){_position.x + _contentSize.x, _position.y + _contentSize.y, _position.z + _contentSize.z};
+    world[4] = (kmVec3){_position.x, _position.y + _contentSize.y, _position.z};
+    world[5] = (kmVec3){_position.x, _position.y + _contentSize.y, _position.z + _contentSize.z};
+    world[6] = (kmVec3){_position.x, _position.y, _position.z + _contentSize.z};
+    world[7] = (kmVec3){_position.x + _contentSize.x, _position.y, _position.z + _contentSize.z};
+
+    ICScene *scene = [self parentScene];
+    if (!scene && [self isKindOfClass:[ICScene class]] && !_parent) {
+        scene = (ICScene *)self;
+    } else if (!scene) {
+        NSAssert(nil, @"Could not get scene for frame rect calculation");
+    }
+    
+    for (int i=0; i<8; i++) {
+        kmVec3 w = world[i];
+        if (_parent)
+            w = [self convertToWorldSpace:world[i]];
+        [scene.camera projectWorld:w toView:&view[i]];
+        view[i].x = (int)view[i].x;
+        view[i].y = (int)view[i].y;
+        view[i].x /= IC_CONTENT_SCALE_FACTOR();
+        view[i].y /= IC_CONTENT_SCALE_FACTOR();
+    }
+    
+    kmAABB aabb = icComputeAABBFromVertices(view, 8);
+    return CGRectMake(aabb.min.x, aabb.min.y, aabb.max.x - aabb.min.x,  aabb.max.y - aabb.min.y);
 }
 
 
@@ -515,9 +571,20 @@
     // Implement custom drawing code in subclass
 }
 
+- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
+{
+    // Implement custom code to reset states after drawing children in subclass
+}
+
+// Private
+- (void)setNeedsDisplayForNode:(ICNode *)node
+{
+    [[self parent] setNeedsDisplayForNode:node];
+}
+
 - (void)setNeedsDisplay
 {
-    [self.parent setNeedsDisplay];
+    [self setNeedsDisplayForNode:self];
 }
 
 

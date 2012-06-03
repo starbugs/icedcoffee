@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -46,7 +46,7 @@
         self.textureFiles = files;        
         
         ICSprite *backgroundSprite = [ICSprite sprite];
-        [backgroundSprite setQuadSize:CGSizeMake(624, 624)];
+        [backgroundSprite setContentSize:(kmVec3){624, 624, 0}];
         [backgroundSprite setColor:(icColor4B){0,0,0,10}];
         [self addChild:backgroundSprite];
         
@@ -86,7 +86,7 @@
         scaledSize.width  = contentSize.width / contentSize.height * scaledSize.height;
     }
     
-    [sprite setQuadSize:scaledSize];
+    [sprite setContentSize:(kmVec3){scaledSize.width, scaledSize.height, 0}];
     [sprite setPositionX:sprite.position.x + (maxSize.width - scaledSize.width) / 2];
     [sprite setPositionY:sprite.position.y + (maxSize.height - scaledSize.height) / 2];    
 }

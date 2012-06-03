@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -27,7 +27,18 @@
 
 #import "ICMouseResponder.h"
 
+enum {
+    ICMouseDown     = 1 << 0,
+    ICMouseUp       = 1 << 1,
+    ICMouseDragged  = 1 << 2
+};
+typedef NSUInteger ICAbstractMouseEventType;
+
+
 @class ICHostViewController;
+@class ICResponder;
+@class ICNode;
+@class ICControl;
 
 @interface ICMouseEventDispatcher : NSObject <ICMouseResponder>
 {
@@ -36,6 +47,9 @@
     NSMutableArray *_overNodes;
     CGPoint _lastMouseLocation;
     NSUInteger _lastMouseModifierFlags;
+    ICNode *_lastMouseDownNode;
+    ICControl *_lastMouseDownControl;
+    BOOL _isDragging;
     NSUInteger _eventNumber;
     BOOL _acceptsMouseMovedEvents;
 }

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -38,7 +38,7 @@
 {
     ICScene *scene = [[[ICScene alloc] initWithHostViewController:self.hostViewController] autorelease];
     
-    ((ICCameraPointsToPixelsPerspective *)scene.camera).eyeOffset = (kmVec3){200,-200,0};
+    ((ICCameraPointsToPixelsPerspective *)scene.camera).eyeOffset = (kmVec3){200,-300,0};
     ((ICCameraPointsToPixelsPerspective *)scene.camera).lookAtOffset = (kmVec3){-50,-50,0};
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
@@ -95,6 +95,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
+    [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
@@ -102,7 +103,7 @@
                                     hostViewController:self.hostViewController];
     
     self.window.contentView = glView;
-    [self.window setAcceptsMouseMovedEvents:YES];
+    [self.window setAcceptsMouseMovedEvents:NO];
     [self.window makeFirstResponder:self.window.contentView];
 
     [self setupScene];

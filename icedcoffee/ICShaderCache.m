@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -69,6 +69,8 @@ ICShaderCache *g_defaultShaderCache = nil;
     NSString *positionTextureA8ColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureA8Color.vsh"];
     NSString *positionTextureA8ColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureA8Color.fsh"];
     NSString *pickingFSH = [resourcePath stringByAppendingPathComponent:@"Picking.fsh"];
+    NSString *stencilMaskFSH = [resourcePath stringByAppendingPathComponent:@"StencilMask.fsh"];
+    NSString *spriteTextureMaskFSH = [resourcePath stringByAppendingPathComponent:@"SpriteTextureMask.fsh"];
 
     // Standard position texture color shader
     ICShaderProgram *p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
@@ -111,9 +113,34 @@ ICShaderCache *g_defaultShaderCache = nil;
     
     [self setShaderProgram:p forKey:kICShader_Picking];
     [p release];
+
+    // Standard stencil mask shader
+    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
+                                       fragmentShaderFilename:stencilMaskFSH];
     
+	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
+	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
+	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
     
+	[p link];
+	[p updateUniforms];
     
+    [self setShaderProgram:p forKey:kICShader_StencilMask];
+    [p release];
+    
+    // Sprite multi texture masking shader
+    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
+                                       fragmentShaderFilename:spriteTextureMaskFSH];
+    
+	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
+	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
+	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+    
+	[p link];
+	[p updateUniforms];
+    
+    [self setShaderProgram:p forKey:kICShader_SpriteTextureMask];
+    [p release];
 }
 
 - (void)setShaderProgram:(ICShaderProgram *)program forKey:(id)key

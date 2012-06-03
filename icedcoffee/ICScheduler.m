@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -23,5 +23,79 @@
 #import "ICScheduler.h"
 
 @implementation ICScheduler
+
+- (id)init
+{
+    if ((self = [super init])) {
+        _targets = [[NSMutableArray alloc] init];
+        _targetsWithHighPriority = [[NSMutableArray alloc] init];
+        _targetsWithLowPriority = [[NSMutableArray alloc] init];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    [_targets release];
+    [_targetsWithLowPriority release];
+    [_targetsWithHighPriority release];
+    
+    [super dealloc];
+}
+
+- (void)scheduleUpdateForTarget:(id<ICUpdatable>)target
+{
+    [self scheduleUpdateForTarget:target withPriority:kICSchedulerPriority_Default];
+}
+
+- (void)scheduleUpdateForTarget:(id<ICUpdatable>)target withPriority:(ICSchedulerPriority)priority
+{
+    if (!target) {
+        [NSException raise:NSInvalidArgumentException format:@"Target must not be nil"];
+        return;
+    }
+    
+    switch (priority) {
+        case kICSchedulerPriority_Default:
+            [_targets addObject:target];
+            break;
+        case kICSchedulerPriority_Low:
+            [_targetsWithLowPriority addObject:target];
+            break;
+        case kICSchedulerPriority_High:
+            [_targetsWithHighPriority addObject:target];
+            break;
+            
+        default:
+            [NSException raise:NSInvalidArgumentException
+                        format:@"Invalid priority value"];
+            break;
+    }
+}
+
+- (void)unscheduleUpdateForTarget:(id<ICUpdatable>)target
+{
+    if ([_targets containsObject:target])
+        [_targets removeObject:target];
+    if ([_targetsWithLowPriority containsObject:target])
+        [_targetsWithLowPriority removeObject:target];
+    if ([_targetsWithHighPriority containsObject:target])
+        [_targetsWithHighPriority removeObject:target];
+}
+
+- (void)update:(icTime)dt
+{
+    for (id<ICUpdatable> target in _targetsWithHighPriority) {
+        [target update:dt];
+    }
+    
+    for (id<ICUpdatable> target in _targets) {
+        [target update:dt];
+    }
+
+    for (id<ICUpdatable> target in _targetsWithLowPriority) {
+        [target update:dt];
+    }
+}
 
 @end

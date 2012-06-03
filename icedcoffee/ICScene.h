@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -109,7 +109,11 @@
     ICNodeVisitor *_drawingVisitor;
     ICNodeVisitor *_pickingVisitor;
     icColor4B _clearColor;
-    BOOL _depthTestingEnabled;
+    BOOL _clearsColorBuffer;
+    BOOL _clearsDepthBuffer;
+    BOOL _clearsStencilBuffer;
+    BOOL _performsDepthTesting;
+    BOOL _performsFaceCulling;
 }
 
 /**
@@ -138,13 +142,27 @@
  */
 @property (nonatomic, assign) icColor4B clearColor;
 
+@property (nonatomic, assign) BOOL clearsColorBuffer;
+
+@property (nonatomic, assign) BOOL clearsDepthBuffer;
+
+@property (nonatomic, assign) BOOL clearsStencilBuffer;
+
 /**
- @brief A boolean flag indicating whether depth testing is enabled
+ @brief A boolean flag indicating whether depth testing is performed
  
- If depth testing is enabled, ICScene will enable the GL_DEPTH_TEST state before drawing
- the scene's contents. The default value for this flag is NO.
+ If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
+ GL_DEPTH_TEST state before drawing the scene's contents. The default value for this flag is NO.
  */
-@property (nonatomic, assign) BOOL depthTestingEnabled;
+@property (nonatomic, assign) BOOL performsDepthTesting;
+
+/**
+ @brief A boolean flag indicating whether face culling is performed
+
+ If face culling is enabled, ICScene will enable the GL_CULL_FACE state before drawing the
+ scene's contents. The default value for this flag is YES.
+ */
+@property (nonatomic, assign) BOOL performsFaceCulling;
 
 /**
  @brief Returns an autoreleased scene associated with the given ICHostViewController object
@@ -190,10 +208,16 @@
 - (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 
 /**
- @brief Sets up the scene's drawing environment, draws its contents using the drawing visitor,
+ @brief Sets up the scene's drawing environment, draws all its contents using the drawing visitor,
  and finally tears down the scene's drawing environment
  */
 - (void)visit;
+
+/**
+ @brief Sets up the scene's drawing environment, draws the given node using the drawing visitor,
+ and finally tears down the scene's drawing environment
+ */
+- (void)visitNode:(ICNode *)node;
 
 /**
  @brief Performs a hit test on the scene's node hierarchy
@@ -207,6 +231,8 @@
  with the respective top-most node rendered to the frame buffer.
  */
 - (NSArray *)hitTest:(CGPoint)point;
+
+- (CGRect)frameRect;
 
 /**
  @brief Returns the size of the parent frame buffer in points

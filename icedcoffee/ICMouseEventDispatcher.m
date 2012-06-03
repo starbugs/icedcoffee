@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -25,6 +25,7 @@
 #import "ICResponder.h"
 #import "ICScene.h"
 #import "ICEventDelegate.h"
+#import "ICControl.h"
 
 
 #ifdef __IC_PLATFORM_MAC
@@ -39,13 +40,13 @@
         [self dispatchEvent:event withSelector:@selector(eventMethod:)]; \
     }
 
-#define DISPATCH_DRAGGED_EVENT_TO_FIRST_RESPONDER(eventMethod) \
+#define DISPATCH_DRAGGED_EVENT_TO_MOUSE_RESPONDER(eventMethod) \
     - (void)eventMethod:(NSEvent *)event \
     { \
         _lastMouseLocation = [event locationInWindow]; \
         _lastMouseModifierFlags = [event modifierFlags]; \
         [self dispatchEventToDelegates:event withSelector:@selector(eventMethod:)]; \
-        [_hostViewController.currentFirstResponder eventMethod:event]; \
+        [_lastMouseDownNode eventMethod:event]; \
     }
 
 
@@ -55,6 +56,10 @@
 - (NSEvent *)enterExitEventWithType:(NSEventType)eventType;
 - (void)dispatchEvent:(NSEvent *)event withSelector:(SEL)selector;
 - (void)dispatchEventToDelegates:(NSEvent *)event withSelector:(SEL)selector;
+- (ICControlEvents)processControlEventsForEventType:(ICAbstractMouseEventType)eventType
+                                        mouseButton:(ICMouseButton)mouseButton
+                                            control:(ICControl *)control
+                                              event:(NSEvent *)event;
 @end
 
 
@@ -177,30 +182,156 @@
     // Perform hit test with event location
     CGPoint location = [self locationFromEvent:event];
     NSArray *hitNodes = [_hostViewController hitTest:location];
+
+    // Get the deepest object the mouse cursor is over
+    ICNode *deepest = (ICNode *)[hitNodes lastObject];
     
     // If event is mouseDown, store last mouse location and modifier flags
     if ([event type] == NSLeftMouseDown ||
         [event type] == NSRightMouseDown ||
         [event type] == NSOtherMouseDown)
     {
+        _lastMouseDownNode = deepest;
         _lastMouseLocation = location;
         _lastMouseModifierFlags = [event modifierFlags];
     }
     
     // Dispatch event to deepest node and assign new first responder if applicable
-    ICResponder *deepest = (ICResponder *)[hitNodes lastObject];
     if (deepest)
     {
+        // Get the control of the deepest hit node
+        ICControl *control = nil;
+        if ([deepest isKindOfClass:[ICControl class]]) {
+            control = (ICControl *)deepest;
+        } else {
+            control = (ICControl *)[deepest firstAncestorWithType:[ICControl class]];;
+        }
+
         if (([event type] == NSLeftMouseDown ||
              [event type] == NSRightMouseDown ||
-             [event type] == NSOtherMouseDown) &&
-            [deepest acceptsFirstResponder])
+             [event type] == NSOtherMouseDown))
         {
-            _hostViewController.currentFirstResponder = deepest;
+            if ([deepest acceptsFirstResponder]) {
+                _hostViewController.currentFirstResponder = deepest;
+            } else {
+                NSArray *ancestors = [deepest ancestors];
+                for (ICNode *ancestor in ancestors) {
+                    if ([ancestor acceptsFirstResponder]) {
+                        _hostViewController.currentFirstResponder = ancestor;
+                        break;
+                    }
+                }
+            }
+            
+            if (control) {
+                _lastMouseDownControl = control;
+            }
         }
         
-        [deepest performSelector:selector withObject:event];
+        // Peform event selector on deepest node
+        if ([deepest respondsToSelector:selector])
+            [deepest performSelector:selector withObject:event];
+
+        // FIXME: need to implement repeated mouse down events
+        if (control) {
+            ICControlEvents controlEvent = 0;
+            switch ([event type]) {
+                case NSLeftMouseDown:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDown
+                                                              mouseButton:ICLeftMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSLeftMouseUp:
+                    controlEvent = [self processControlEventsForEventType:ICMouseUp
+                                                              mouseButton:ICLeftMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSLeftMouseDragged:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDragged
+                                                              mouseButton:ICLeftMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSRightMouseDown:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDown
+                                                              mouseButton:ICRightMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSRightMouseUp:
+                    controlEvent = [self processControlEventsForEventType:ICMouseUp
+                                                              mouseButton:ICRightMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSRightMouseDragged:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDragged
+                                                              mouseButton:ICRightMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSOtherMouseDown:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDown
+                                                              mouseButton:ICOtherMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSOtherMouseUp:
+                    controlEvent = [self processControlEventsForEventType:ICMouseUp
+                                                              mouseButton:ICOtherMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+                case NSOtherMouseDragged:
+                    controlEvent = [self processControlEventsForEventType:ICMouseDragged
+                                                              mouseButton:ICOtherMouseButton
+                                                                  control:control
+                                                                    event:event];
+                    break;
+            }
+            [control sendActionsForControlEvent:controlEvent forEvent:event];
+        }
     }
+}
+
+- (ICControlEvents)processControlEventsForEventType:(ICAbstractMouseEventType)eventType
+                                        mouseButton:(ICMouseButton)mouseButton
+                                            control:(ICControl *)control
+                                              event:(NSEvent *)event
+{
+    ICControlEvents controlEvent;
+    switch (eventType) {
+        case ICMouseDown:
+            controlEvent = ICControlEventLeftMouseDown;
+            break;
+        case ICMouseUp:
+            if (_isDragging) {
+                [control sendActionsForControlEvent:ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseDragExit)
+                                           forEvent:event];
+                _isDragging = NO;
+            }
+            if (control == _lastMouseDownControl) {
+                controlEvent = ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseUpInside);
+            } else {
+                controlEvent = ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseUpOutside);
+            }
+            break;
+        case ICMouseDragged:
+            if (!_isDragging) {
+                [control sendActionsForControlEvent:ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseDragEnter)
+                                           forEvent:event];
+                _isDragging = YES;
+            }
+            if (control == _lastMouseDownControl) {
+                controlEvent = ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseDragInside);
+            } else {
+                controlEvent = ICConcreteControlEvent(mouseButton, ICAbstractControlEventMouseDragOutside);
+            }
+            break;
+    }    
+    return controlEvent;
 }
 
 - (void)mouseMoved:(NSEvent *)event
@@ -210,6 +341,10 @@
     // send entered and exited events.
     _lastMouseLocation = [event locationInWindow];
     _lastMouseModifierFlags = [event modifierFlags];
+    
+    if (self.acceptsMouseMovedEvents) {
+        [self dispatchEvent:event withSelector:@selector(mouseMoved:)];
+    }
 }
 
 - (void)mouseEntered:(NSEvent *)event
@@ -248,13 +383,13 @@ DISPATCH_EVENT_TO_NODE_OVER_MOUSE_CURSOR(rightMouseUp)
 DISPATCH_EVENT_TO_NODE_OVER_MOUSE_CURSOR(otherMouseDown)
 DISPATCH_EVENT_TO_NODE_OVER_MOUSE_CURSOR(otherMouseUp)
 
-// Dragged events are sent to the current first responder only. This ensures that we
+// Dragged events are sent to the current mouse responder only. This ensures that we
 // do not lose dragged events when the mouse is dragged outside of dragged objects.
 // Note that lastMouseLocation and lastMouseModifierFlags is updated here as well
 // to ensure that entered/exited events are handled correctly when dragging objects.
-DISPATCH_DRAGGED_EVENT_TO_FIRST_RESPONDER(mouseDragged)
-DISPATCH_DRAGGED_EVENT_TO_FIRST_RESPONDER(rightMouseDragged)
-DISPATCH_DRAGGED_EVENT_TO_FIRST_RESPONDER(otherMouseDragged)
+DISPATCH_DRAGGED_EVENT_TO_MOUSE_RESPONDER(mouseDragged)
+DISPATCH_DRAGGED_EVENT_TO_MOUSE_RESPONDER(rightMouseDragged)
+DISPATCH_DRAGGED_EVENT_TO_MOUSE_RESPONDER(otherMouseDragged)
 
 @end
 

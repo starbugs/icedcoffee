@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -36,6 +36,11 @@
 #endif
 
 
+@interface ICNode (Private)
+- (void)setNeedsDisplayForNode:(ICNode *)node;
+@end
+
+
 @implementation ICScene
 
 @synthesize hostViewController = _hostViewController;
@@ -43,7 +48,11 @@
 @synthesize drawingVisitor = _drawingVisitor;
 @synthesize pickingVisitor = _pickingVisitor;
 @synthesize clearColor = _clearColor;
-@synthesize depthTestingEnabled = _depthTestingEnabled;
+@synthesize clearsColorBuffer = _clearsColorBuffer;
+@synthesize clearsDepthBuffer = _clearsDepthBuffer;
+@synthesize clearsStencilBuffer = _clearsStencilBuffer;
+@synthesize performsDepthTesting = _performsDepthTesting;
+@synthesize performsFaceCulling = _performsFaceCulling;
 
 + (id)sceneWithHostViewController:(ICHostViewController *)hostViewController
 {
@@ -64,8 +73,14 @@
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
 {
-    return [self initWithHostViewController:hostViewController
-                                     camera:[[[ICDEFAULT_CAMERA alloc] init] autorelease]];
+    // Prepare a viewport for the scene's camera. Note that this may be reset later on when
+    // the scene is added to another scene
+    CGRect viewport = CGRectMake(0, 0,
+                                 hostViewController.view.bounds.size.width,
+                                 hostViewController.view.bounds.size.height);
+    
+    ICCamera *camera = [[[ICDEFAULT_CAMERA alloc] initWithViewport:viewport] autorelease];
+    return [self initWithHostViewController:hostViewController camera:camera];
 }
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
@@ -76,8 +91,15 @@
         self.camera = camera;
         self.drawingVisitor = [[[ICDEFAULT_DRAWING_VISITOR alloc] init] autorelease];
         self.pickingVisitor = [[[ICDEFAULT_PICKING_VISITOR alloc] init] autorelease];
+        [self setContentSize:(kmVec3){hostViewController.view.bounds.size.width,
+                                      hostViewController.view.bounds.size.height,
+                                      0}];
         _clearColor = (icColor4B){255,255,255,255};
-        _depthTestingEnabled = NO;
+        _clearsColorBuffer = YES;
+        _clearsDepthBuffer = YES;
+        _clearsStencilBuffer = YES;
+        _performsDepthTesting = NO;
+        _performsFaceCulling = YES;
     }
     return self;
 }
@@ -96,19 +118,28 @@
     icGLPurgeStateCache();
     CHECK_GL_ERROR_DEBUG();
     
-    glClearColor((float)_clearColor.r/255.0f,
-                 (float)_clearColor.g/255.0f,
-                 (float)_clearColor.b/255.0f,
-                 (float)_clearColor.a/255.0f);
-    glClearDepth(1.0f);
+    // Clear buffers as configured
+    if (_clearsColorBuffer)
+        glClearColor((float)_clearColor.r/255.0f,
+                     (float)_clearColor.g/255.0f,
+                     (float)_clearColor.b/255.0f,
+                     (float)_clearColor.a/255.0f);
+    if (_clearsDepthBuffer)
+        glClearDepth(1.0f);
+    if (_clearsStencilBuffer)
+        glClearStencil(0);
     
     GLbitfield clearFlags = GL_COLOR_BUFFER_BIT;
-    if (_depthTestingEnabled)
+    if (_clearsDepthBuffer)
         clearFlags |= GL_DEPTH_BUFFER_BIT;
+    if (_clearsStencilBuffer)
+        clearFlags |= GL_STENCIL_BUFFER_BIT;
     glClear(clearFlags);
     CHECK_GL_ERROR_DEBUG();
     
-    glEnable(GL_CULL_FACE);
+    // Enable face culling by default
+    if (_performsFaceCulling)
+        glEnable(GL_CULL_FACE);
     
     // FIXME
     
@@ -120,23 +151,26 @@
     /*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);*/
     
+    // Set up pixel alignment
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     glPixelStorei(GL_PACK_ALIGNMENT, 1);
-            
+    
+    // Set up alpha blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
     
-    if (self.depthTestingEnabled) {
+    if (_performsDepthTesting) {
+        // Enable depth testing
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
     }
 
     CHECK_GL_ERROR_DEBUG();
 
+    // Set up projection and model-view matrix based on camera options
     [self.camera apply];
 }
 
-// FIXME: needed?
 - (void)tearDownSceneForDrawing
 {
     glDisable(GL_DEPTH_TEST);
@@ -144,18 +178,27 @@
 
 - (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 {
+    // Clear color and (optionally) depth buffers
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glClearDepth(1.0f);
     
+    GLbitfield clearFlags = GL_COLOR_BUFFER_BIT;
+    if (_performsDepthTesting)
+        clearFlags |= GL_DEPTH_BUFFER_BIT;
+    glClear(clearFlags);
+    CHECK_GL_ERROR_DEBUG();
+
+    // Disable alpha blending
     glDisable(GL_BLEND);
     
+    // Apply the camera with an additional pick matrix that scales the viewport to a 1x1
+    // area at the given point
     [self.camera applyPickMatrix:point viewport:viewport];
     
     kmGLMatrixMode(GL_MODELVIEW);
 
     // FIXME: code duplication
-    if (self.depthTestingEnabled) {
+    if (_performsDepthTesting) {
         glEnable(GL_DEPTH_TEST);
         glDepthFunc(GL_LEQUAL);
     }
@@ -163,9 +206,22 @@
 
 - (void)visit
 {
+    [self visitNode:self];
+}
+
+- (void)visitNode:(ICNode *)node
+{
     [self setUpSceneForDrawing];
-    [self.drawingVisitor visit:self];
-    [self tearDownSceneForDrawing];
+    if ([node parent] && ![node isKindOfClass:[ICScene class]]) {
+        kmMat4 matTransform = [[node parent] nodeToWorldTransform];
+        kmGLPushMatrix();
+        kmGLMultMatrix(&matTransform);
+    }
+    [self.drawingVisitor visit:node];
+    if ([node parent] && ![node isKindOfClass:[ICScene class]]) {
+        kmGLPopMatrix();
+    }
+    [self tearDownSceneForDrawing];    
 }
 
 // Must be in valid GL context
@@ -195,6 +251,15 @@
     return _hostViewController;
 }
 
+- (CGRect)frameRect
+{
+    if (!_parent) {
+        CGSize frameBufferSize = [self frameBufferSize];
+        return CGRectMake(0, 0, frameBufferSize.width, frameBufferSize.height);
+    }
+    return [super frameRect];
+}
+
 - (CGSize)frameBufferSize
 {
     if (self.parent == nil) {
@@ -205,6 +270,28 @@
     NSArray *renderTextureAncestors = [self ancestorsWithType:[ICRenderTexture class]];
     ICRenderTexture *parentRenderTexture = [renderTextureAncestors objectAtIndex:0];
     return parentRenderTexture.texture.contentSize;
+}
+
+- (void)setParent:(ICNode *)parent
+{
+    [super setParent:parent];
+    
+    CGSize frameBufferSize = [self frameBufferSize];
+    CGRect viewport = CGRectMake(0, 0,
+                                 frameBufferSize.width * IC_CONTENT_SCALE_FACTOR(),
+                                 frameBufferSize.height * IC_CONTENT_SCALE_FACTOR());
+    [self.camera setViewport:viewport];
+    
+    [self setContentSize:(kmVec3){frameBufferSize.width, frameBufferSize.height, 0}];
+}
+
+- (void)setNeedsDisplayForNode:(ICNode *)node
+{
+    if (!_parent) {
+        [self.hostViewController setNeedsDisplay];
+    } else {
+        [super setNeedsDisplayForNode:node];
+    }
 }
 
 @end

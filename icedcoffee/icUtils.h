@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -22,6 +22,7 @@
 
 #import "Platforms/icGL.h"
 #import "kazmath/vec4.h"
+#import "icTypes.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,12 +41,28 @@ extern "C" {
     /**
      @brief Unprojects a point from view to world coordinates using the specified viewport,
      projection and model-view matrices
+     
+     @return Returns YES if the unprojection could be performed successfully or NO otherwise.
      */
     BOOL icUnproject(kmVec3 *viewVect,
                      kmVec3 *resultVect, 
                      GLint *viewport,
                      kmMat4 *matProjection,
                      kmMat4 *matModelView);
+    
+    /**
+     @brief Projects a point from world to view coordinates using the specified viewport,
+     projection and model-view matrices
+     
+     @return Returns YES if the projection could be performed successfully or NO otherwise.
+     */
+    BOOL icProject(kmVec3 *worldVect,
+                   kmVec3 *resultVect,
+                   GLint *viewport,
+                   kmMat4 *matProjection,
+                   kmMat4 *matModelView);
+    
+    kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count);
     
 #ifdef __cplusplus
 }

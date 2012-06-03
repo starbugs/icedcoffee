@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -68,5 +68,7 @@
  @brief An offset vector applied on the camera's ICCamera::lookAt
  */
 @property (nonatomic, assign, getter=lookAtOffset, setter=setLookAtOffset:) kmVec3 lookAtOffset;
+
+- (id)initWithViewport:(CGRect)viewport;
 
 @end

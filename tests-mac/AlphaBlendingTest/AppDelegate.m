@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -35,7 +35,6 @@
 - (void)setupScene
 {
     ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
-    [scene setContentSize:(kmVec3){self.hostViewController.viewSize.width, self.hostViewController.viewSize.height}];
     [scene setClearColor:(icColor4B){128,128,128,255}];
     
     NSString *gradientWhite = [[NSBundle mainBundle] pathForImageResource:@"gradient-white-transparent"];
@@ -56,6 +55,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
+    [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame

@@ -36,6 +36,7 @@
 {
 @private
     ICHostViewController *_hostViewController;
+    NSCursor *_cursor;
 }
 
 @property (nonatomic, readonly) ICHostViewController *hostViewController;
@@ -43,6 +44,8 @@
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)context
  hostViewController:(ICHostViewController *)hostViewController;
+
+- (void)setCursor:(NSCursor *)cursor;
 
 @end
 

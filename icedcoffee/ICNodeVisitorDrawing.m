@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -23,6 +23,7 @@
 #import "ICNodeVisitorDrawing.h"
 #import "ICNode.h"
 #import "icGL.h"
+#import "icConfig.h"
 
 @implementation ICNodeVisitorDrawing
 
@@ -51,6 +52,12 @@
     if ([node isVisible]) {
         [node drawWithVisitor:self];
     }
+}
+
+- (void)visitChildrenOfNode:(ICNode *)node
+{
+    [super visitChildrenOfNode:node];
+    [node childrenDidDrawWithVisitor:self];
 }
 
 - (void)postVisitNode:(ICNode *)node

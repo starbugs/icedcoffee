@@ -3,6 +3,7 @@
  */
 
 #import "icUtils.h"
+#import "icMacros.h"
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
@@ -26,7 +27,9 @@ void icPickMatrix(GLfloat x, GLfloat y, GLfloat deltax, GLfloat deltay, GLint vi
     
     /* Translate and scale the picked region to the entire window */
     kmMat4 matTranslate, matScale;
-    kmMat4Translation(&matTranslate, (viewport[2] - 2 * (x - viewport[0])) / deltax, (viewport[3] - 2 * (y - viewport[1])) / deltay, 0);
+    float translateX = (viewport[2] - 2 * (x - viewport[0])) / deltax - 1;
+    float translateY = (viewport[3] - 2 * (y - viewport[1])) / deltay - 1;
+    kmMat4Translation(&matTranslate, translateX, translateY, 0);
     kmMat4Scaling(&matScale, viewport[2] / deltax, viewport[3] / deltay, 1.0);
     kmGLMultMatrix(&matTranslate);
     kmGLMultMatrix(&matScale);
@@ -64,4 +67,73 @@ BOOL icUnproject(kmVec3 *viewVect,
     return YES;
 }
 
+// Translated and adapted from: http://www.opengl.org/wiki/GluProject_and_gluUnProject_code
+BOOL icProject(kmVec3 *worldVect,
+               kmVec3 *resultVect,
+               GLint *viewport,
+               kmMat4 *matProjection,
+               kmMat4 *matModelView)
+{
+    float objx = worldVect->x, objy = worldVect->y, objz = worldVect->z;
+    float *modelview = matModelView->mat;
+    float *projection = matProjection->mat;
+    
+    //Transformation vectors
+    float fTempo[8];
+    //Modelview transform
+    fTempo[0]=modelview[0]*objx+modelview[4]*objy+modelview[8]*objz+modelview[12];  //w is always 1
+    fTempo[1]=modelview[1]*objx+modelview[5]*objy+modelview[9]*objz+modelview[13];
+    fTempo[2]=modelview[2]*objx+modelview[6]*objy+modelview[10]*objz+modelview[14];
+    fTempo[3]=modelview[3]*objx+modelview[7]*objy+modelview[11]*objz+modelview[15];
+    //Projection transform, the final row of projection matrix is always [0 0 -1 0]
+    //so we optimize for that.
+    fTempo[4]=projection[0]*fTempo[0]+projection[4]*fTempo[1]+projection[8]*fTempo[2]+projection[12]*fTempo[3];
+    fTempo[5]=projection[1]*fTempo[0]+projection[5]*fTempo[1]+projection[9]*fTempo[2]+projection[13]*fTempo[3];
+    fTempo[6]=projection[2]*fTempo[0]+projection[6]*fTempo[1]+projection[10]*fTempo[2]+projection[14]*fTempo[3];
+    fTempo[7]=-fTempo[2];
+    //The result normalizes between -1 and 1
+    if(fTempo[7]==0.0)	//The w value
+        return 0;
+    fTempo[7]=1.0/fTempo[7];
+    //Perspective division
+    fTempo[4]*=fTempo[7];
+    fTempo[5]*=fTempo[7];
+    fTempo[6]*=fTempo[7];
+    //Window coordinates
+    //Map x, y to range 0-1
+    resultVect->x=(fTempo[4]*0.5+0.5)*viewport[2]+viewport[0];
+    resultVect->y=(fTempo[5]*0.5+0.5)*viewport[3]+viewport[1];
+    //This is only correct when glDepthRange(0.0, 1.0)
+    resultVect->z=(1.0+fTempo[6])*0.5;	//Between 0 and 1
+    return 1;
+}
 
+kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count)
+{
+    int i, j;
+    kmVec3 aabbMin = (kmVec3){IC_HUGE, IC_HUGE, IC_HUGE};
+    kmVec3 aabbMax = (kmVec3){-IC_HUGE, -IC_HUGE, -IC_HUGE};
+    float *minComps = (float*)&aabbMin;
+    float *maxComps = (float*)&aabbMax;
+    
+    // min components
+    for(i=0; i<3; i++) {
+        for(j=0; j<count; j++) {
+            kmVec3 *v = &vertices[j];
+            float comp = *(((float*)v)+i);
+            if(comp < *(minComps+i))
+                ((float*)&aabbMin)[i] = comp;
+        }
+    }
+    // max components
+    for(i=0; i<3; i++) {
+        for(j=0; j<count; j++) {
+            kmVec3 *v = &vertices[j];
+            float comp = *(((float*)v)+i);
+            if(comp > *(maxComps+i))
+                ((float*)&aabbMax)[i] = comp;
+        }
+    }
+    
+    return (kmAABB){ aabbMin, aabbMax };   
+}

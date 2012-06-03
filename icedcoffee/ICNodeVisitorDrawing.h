@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -29,6 +29,8 @@
 - (void)preVisitNode:(ICNode *)node;
 
 - (void)visitSingleNode:(ICNode *)node;
+
+- (void)visitChildrenOfNode:(ICNode *)node;
 
 - (void)postVisitNode:(ICNode *)node;
 

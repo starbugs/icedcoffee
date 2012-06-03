@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; };
+		D216CC8D154FDC29009FCDC4 /* ICControl.h in Headers */ = {isa = PBXBuildFile; fileRef = D216CC8B154FDC29009FCDC4 /* ICControl.h */; };
+		D216CC8E154FDC29009FCDC4 /* ICControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D216CC8C154FDC29009FCDC4 /* ICControl.m */; };
+		D24BAB8815503BA4003BCF94 /* ICTargetActionDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */; };
+		D24BAB8915503BA4003BCF94 /* ICTargetActionDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */; };
+		D24BAB92155067D0003BCF94 /* ICButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAB90155067D0003BCF94 /* ICButton.h */; };
+		D24BAB93155067D0003BCF94 /* ICButton.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAB91155067D0003BCF94 /* ICButton.m */; };
 		D24BAF3614EDB05D000E65AA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAF3514EDB05D000E65AA /* Cocoa.framework */; };
 		D24BAF8D14EDB142000E65AA /* ICCamera.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF4B14EDB142000E65AA /* ICCamera.h */; };
 		D24BAF8E14EDB142000E65AA /* ICCamera.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF4C14EDB142000E65AA /* ICCamera.m */; };
@@ -65,6 +72,10 @@
 		D24BAFCA14EDB142000E65AA /* ICHostViewControllerMac.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */; };
 		D24BAFCB14EDB142000E65AA /* ICHostViewControllerMac.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */; };
 		D24BAFCD14EDB1FF000E65AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */; };
+		D253DA0115666DDD0027DA6C /* ICPlanarNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */; };
+		D253DA0215666DDD0027DA6C /* ICPlanarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D253DA0015666DDD0027DA6C /* ICPlanarNode.m */; };
+		D2CD4D781556EDEC00106F08 /* ICScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = D2CD4D761556EDEC00106F08 /* ICScale9Sprite.h */; };
+		D2CD4D791556EDEC00106F08 /* ICScale9Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */; };
 		D2E6489115042F3700D71A6D /* ICView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E6488F15042F3700D71A6D /* ICView.h */; };
 		D2E6489215042F3700D71A6D /* ICView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E6489015042F3700D71A6D /* ICView.m */; };
 		D2F34FFD151F3E0A00DF2D5B /* ICLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F34FFB151F3E0900DF2D5B /* ICLabel.h */; };
@@ -102,6 +113,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
+		D216CC8B154FDC29009FCDC4 /* ICControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICControl.h; path = icedcoffee/ICControl.h; sourceTree = "<group>"; };
+		D216CC8C154FDC29009FCDC4 /* ICControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICControl.m; path = icedcoffee/ICControl.m; sourceTree = "<group>"; };
+		D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTargetActionDispatcher.h; path = icedcoffee/ICTargetActionDispatcher.h; sourceTree = "<group>"; };
+		D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTargetActionDispatcher.m; path = icedcoffee/ICTargetActionDispatcher.m; sourceTree = "<group>"; };
+		D24BAB90155067D0003BCF94 /* ICButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICButton.h; path = icedcoffee/ICButton.h; sourceTree = "<group>"; };
+		D24BAB91155067D0003BCF94 /* ICButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICButton.m; path = icedcoffee/ICButton.m; sourceTree = "<group>"; };
 		D24BAF3214EDB05D000E65AA /* libicedcoffee-mac.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libicedcoffee-mac.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D24BAF3514EDB05D000E65AA /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		D24BAF3814EDB05D000E65AA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -164,6 +182,10 @@
 		D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICHostViewControllerMac.h; sourceTree = "<group>"; };
 		D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICHostViewControllerMac.m; sourceTree = "<group>"; };
 		D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPlanarNode.h; path = icedcoffee/ICPlanarNode.h; sourceTree = "<group>"; };
+		D253DA0015666DDD0027DA6C /* ICPlanarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPlanarNode.m; path = icedcoffee/ICPlanarNode.m; sourceTree = "<group>"; };
+		D2CD4D761556EDEC00106F08 /* ICScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9Sprite.h; path = icedcoffee/ICScale9Sprite.h; sourceTree = "<group>"; };
+		D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9Sprite.m; path = icedcoffee/ICScale9Sprite.m; sourceTree = "<group>"; };
 		D2E6488F15042F3700D71A6D /* ICView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICView.h; path = icedcoffee/ICView.h; sourceTree = "<group>"; };
 		D2E6489015042F3700D71A6D /* ICView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICView.m; path = icedcoffee/ICView.m; sourceTree = "<group>"; };
 		D2F34FFB151F3E0900DF2D5B /* ICLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLabel.h; path = icedcoffee/ICLabel.h; sourceTree = "<group>"; };
@@ -257,6 +279,8 @@
 			isa = PBXGroup;
 			children = (
 				D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */,
+				D24BAB90155067D0003BCF94 /* ICButton.h */,
+				D24BAB91155067D0003BCF94 /* ICButton.m */,
 				D24BAF4B14EDB142000E65AA /* ICCamera.h */,
 				D24BAF4C14EDB142000E65AA /* ICCamera.m */,
 				D24BAF4D14EDB142000E65AA /* ICCameraPointsToPixelsPerspective.h */,
@@ -264,6 +288,8 @@
 				D24BAF4F14EDB142000E65AA /* icConfig.h */,
 				D24BAF5014EDB142000E65AA /* ICConfiguration.h */,
 				D24BAF5114EDB142000E65AA /* ICConfiguration.m */,
+				D216CC8B154FDC29009FCDC4 /* ICControl.h */,
+				D216CC8C154FDC29009FCDC4 /* ICControl.m */,
 				D24BAF5214EDB142000E65AA /* icDefaults.h */,
 				D24BAF5314EDB142000E65AA /* IcedCoffee.h */,
 				D24BAF5414EDB142000E65AA /* ICEventDelegate.h */,
@@ -287,10 +313,14 @@
 				D24BAF6414EDB142000E65AA /* ICNodeVisitorDrawing.m */,
 				D24BAF6514EDB142000E65AA /* ICNodeVisitorPicking.h */,
 				D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */,
+				D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */,
+				D253DA0015666DDD0027DA6C /* ICPlanarNode.m */,
 				D24BAF6714EDB142000E65AA /* ICRenderTexture.h */,
 				D24BAF6814EDB142000E65AA /* ICRenderTexture.m */,
 				D24BAF6914EDB142000E65AA /* ICResponder.h */,
 				D24BAF6A14EDB142000E65AA /* ICResponder.m */,
+				D2CD4D761556EDEC00106F08 /* ICScale9Sprite.h */,
+				D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */,
 				D24BAF6B14EDB142000E65AA /* ICScene.h */,
 				D24BAF6C14EDB142000E65AA /* ICScene.m */,
 				D2FEE81615338B74004CFF62 /* ICScheduler.h */,
@@ -301,6 +331,8 @@
 				D24BAF7014EDB142000E65AA /* ICShaderProgram.m */,
 				D24BAF7114EDB142000E65AA /* ICSprite.h */,
 				D24BAF7214EDB142000E65AA /* ICSprite.m */,
+				D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */,
+				D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */,
 				D24BAF7314EDB142000E65AA /* ICTexture2D.h */,
 				D24BAF7414EDB142000E65AA /* ICTexture2D.m */,
 				D24BAF7514EDB142000E65AA /* ICTextureCache.h */,
@@ -309,6 +341,7 @@
 				D24BAF7814EDB142000E65AA /* ICTextureLoader.m */,
 				D24BAF7914EDB142000E65AA /* ICTouchResponder.h */,
 				D24BAF7A14EDB142000E65AA /* icTypes.h */,
+				A6D9B4F515430075008BF293 /* ICUpdatable.h */,
 				D24BAF7B14EDB142000E65AA /* icUtils.h */,
 				D24BAF7C14EDB142000E65AA /* icUtils.m */,
 				D2E6488F15042F3700D71A6D /* ICView.h */,
@@ -483,6 +516,12 @@
 				D2F34FFD151F3E0A00DF2D5B /* ICLabel.h in Headers */,
 				D2F3504915286EFC00DF2D5B /* ICAsyncTextureCacheDelegate.h in Headers */,
 				D2FEE81815338B74004CFF62 /* ICScheduler.h in Headers */,
+				A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */,
+				D216CC8D154FDC29009FCDC4 /* ICControl.h in Headers */,
+				D24BAB8815503BA4003BCF94 /* ICTargetActionDispatcher.h in Headers */,
+				D24BAB92155067D0003BCF94 /* ICButton.h in Headers */,
+				D2CD4D781556EDEC00106F08 /* ICScale9Sprite.h in Headers */,
+				D253DA0115666DDD0027DA6C /* ICPlanarNode.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -512,7 +551,7 @@
 		D24BAF2914EDB05D000E65AA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
+				LastUpgradeCheck = 0430;
 				ORGANIZATIONNAME = "UJAM Development GmbH";
 			};
 			buildConfigurationList = D24BAF2C14EDB05D000E65AA /* Build configuration list for PBXProject "icedcoffee-mac" */;
@@ -576,6 +615,11 @@
 				D2E6489215042F3700D71A6D /* ICView.m in Sources */,
 				D2F34FFE151F3E0A00DF2D5B /* ICLabel.m in Sources */,
 				D2FEE81915338B74004CFF62 /* ICScheduler.m in Sources */,
+				D216CC8E154FDC29009FCDC4 /* ICControl.m in Sources */,
+				D24BAB8915503BA4003BCF94 /* ICTargetActionDispatcher.m in Sources */,
+				D24BAB93155067D0003BCF94 /* ICButton.m in Sources */,
+				D2CD4D791556EDEC00106F08 /* ICScale9Sprite.m in Sources */,
+				D253DA0215666DDD0027DA6C /* ICPlanarNode.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

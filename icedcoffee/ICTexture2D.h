@@ -71,31 +71,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/ICGL.h" // OpenGL stuff
 #import "Platforms/ICNS.h" // Next-Step stuff
 #import "icMacros.h"
-
-//CONSTANTS:
-
-/** @typedef ICTexture2DPixelFormat
- Possible texture pixel formats
- */
-typedef enum {
-	kICTexture2DPixelFormat_Automatic = 0,
-	//! 32-bit texture: RGBA8888
-	kICTexture2DPixelFormat_RGBA8888,
-	//! 16-bit texture without Alpha channel
-	kICTexture2DPixelFormat_RGB565,
-	//! 8-bit textures used as masks
-	kICTexture2DPixelFormat_A8,
-	//! 16-bit textures: RGBA4444
-	kICTexture2DPixelFormat_RGBA4444,
-	//! 16-bit textures: RGB5A1
-	kICTexture2DPixelFormat_RGB5A1,	
-
-	//! Default texture format: RGBA8888
-	kICTexture2DPixelFormat_Default = kICTexture2DPixelFormat_RGBA8888,
-	
-} ICTexture2DPixelFormat;
-
-//CLASS INTERFACES:
+#import "icTypes.h"
 
 /** ICTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
@@ -109,21 +85,21 @@ typedef enum {
 	CGSize						size_;
 	NSUInteger					width_,
 								height_;
-	ICTexture2DPixelFormat		format_;
+	ICPixelFormat		format_;
 	GLfloat						maxS_,
 								maxT_;
 	BOOL						hasPremultipliedAlpha_;
 }
 
 /** Intializes with a texture2d with data */
-- (id) initWithData:(const void*)data pixelFormat:(ICTexture2DPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
 
 /** These functions are needed to create mutable textures */
 - (void) releaseData:(void*)data;
 - (void*) keepData:(void*)data length:(NSUInteger)length;
 
 /** pixel format of the texture */
-@property(nonatomic,readonly) ICTexture2DPixelFormat pixelFormat;
+@property(nonatomic,readonly) ICPixelFormat pixelFormat;
 /** width in pixels */
 @property(nonatomic,readonly) NSUInteger pixelsWide;
 /** hight in pixels */
@@ -217,11 +193,11 @@ typedef struct _ICTexParams {
 @interface ICTexture2D (PixelFormat)
 /** sets the default pixel format for UIImages that contains alpha channel.
  If the UIImage contains alpha channel, then the options are:
-	- generate 32-bit textures: kICTexture2DPixelFormat_RGBA8888 (default one)
-	- generate 16-bit textures: kICTexture2DPixelFormat_RGBA4444
-	- generate 16-bit textures: kICTexture2DPixelFormat_RGB5A1
-	- generate 16-bit textures: kICTexture2DPixelFormat_RGB565
-	- generate 8-bit textures: kICTexture2DPixelFormat_A8 (only use it if you use just 1 color)
+	- generate 32-bit textures: kICPixelFormat_RGBA8888 (default one)
+	- generate 16-bit textures: kICPixelFormat_RGBA4444
+	- generate 16-bit textures: kICPixelFormat_RGB5A1
+	- generate 16-bit textures: kICPixelFormat_RGB565
+	- generate 8-bit textures: kICPixelFormat_A8 (only use it if you use just 1 color)
 
  How does it work ?
    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
@@ -231,12 +207,12 @@ typedef struct _ICTexParams {
  
  @since v0.8
  */
-+(void) setDefaultAlphaPixelFormat:(ICTexture2DPixelFormat)format;
++(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format;
 
 /** returns the alpha pixel format
  @since v0.8
  */
-+(ICTexture2DPixelFormat) defaultAlphaPixelFormat;
++(ICPixelFormat) defaultAlphaPixelFormat;
 @end
 
 

@@ -21,60 +21,163 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Adapted and extended for IcedCoffee
+ * Adapted and extended for IcedCoffee by Tobias Lensing, mail@tlensing.org
  */
 
-#import "ICNode.h"
+#import "ICPlanarNode.h"
 #import "ICTexture2D.h"
 #import "icTypes.h"
+#import "icConfig.h"
 
 @class ICSprite;
 @class ICScene;
 
-typedef enum _ICRenderTextureDisplayMode {
-    kICRenderTextureDisplayMode_Always = 0,
-    kICRenderTextureDisplayMode_Conditional = 1
-} ICRenderTextureDisplayMode;
-
 /**
  @brief A node that renders a sub-scene to a texture render target and displays the result
+ using a built-in sprite
  
  <h3>Overview</h3>
  
  The ICRenderTexture class implements a mechanism for rendering a scene represented by an
- ICScene object into a texture. The texture is displayed using an ICSprite object.
- ICRenderTexture itself is a subclass of ICNode, that is you add it to an arbitrary
- scene graph and do not have to care about further details.
+ ICScene object into a frame buffer object (FBO) backed by a texture. The class comes with
+ built-in support for depth and stencil buffer attachments to the FBO. It supports picking
+ and event handling implicitly, i.e. all nodes added to the render texture's sub scene
+ will be capable of picking and handling user interaction events automatically. The
+ ICRenderTexture class furthermore allows for conditional redrawing of its contents.
  
- ICRenderTexture has been designed to integrate with IcedCofee's visitation system.
- Thus it supports picking and event handling via ICScene and ICHostViewController.
+ <h3>Setup</h3>
  
- ICRenderTexture objects may be nested in arbitrary sub scene graphs,
- which is particularly useful for implementing view hierarchies backed by OpenGL
- frame buffers. To make this concept even more powerful, ICRenderTexture adds functionality
- for conditional drawing (frame buffer updates on demand only) to the IcedCoffee scene
- graph framework. Conditional drawing can be configured using the <code>displayMode</code>
- property. If <code>displayMode</code> is set to
- <code>kICRenderTextureDisplayMode_Conditional</code>, the visitation system will draw
- the sub scene of the render texture only if <code>setNeedsDisplay</code> was called in
- the current run loop slice. If <code>displayMode</code> is set to
- <code>kICRenderTextureDisplayMode_Always</code>, the framework will render the sub scene
- to the render texture on each frame update of the current host view controller scene.
+ You set up an ICRenderTexture by initializing it with the desired width, height, and,
+ optionally, buffer formats. You then define the sub scene rendered by the render texture.
+ The render texture itself is finally added to a scene. It automatically displays its texture
+ using a built-in sprite.
+ 
+ Example:
+ @code
+ // Initialize an autoreleased render texture object with a size of 320x240 points.
+ // As we did not specify any buffer formats, the render texture will be created with a
+ // default (RGBA8888) color buffer and no depth/stencil buffers.
+ ICRenderTexture *myRenderTexture = [ICRenderTexture renderTextureWithWidth:320 height:240];
+ 
+ // Now specify the scene the render texture should present on screen. We will just add an
+ // examplary sprite to the scene here
+ myRenderTexture.subScene = [ICScene sceneWithHostViewController:(self.hostViewController)];
+ ICSprite *mySprite = [ICSprite spriteWithTexture:someTexture];
+ [myRenderTexture.subScene addChild:mySprite];
+ 
+ // Finally, add the render texture to our scene
+ [self.scene addChild:myRenderTexture];
+ @endcode
+ 
+ @note The example above assumes that you have set up an ICTexture2D object named
+ <code>someTexture</code>, that <code>self.hostViewController</code> is a valid reference
+ to the host view controller used to present the scene and that <code>self.scene</code>
+ is a reference to the scene the render texture should be added to as a child.
+ 
+ <h3>Resizing</h3>
+ 
+ You may resize an ICRenderTexture object by changing its ICRenderTexture::contentSize property.
+ The render texture will then re-create its internal buffers automatically.
+ 
+ <h3>Conditional Drawing</h3>
+ 
+ ICRenderTexture adds functionality for conditional drawing (frame buffer updates on demand only)
+ to the IcedCoffee scene graph. Conditional drawing can be configured using the
+ ICRenderTexture::frameUpdateMode property. If ICRenderTexture::frameUpdateMode is set to
+ <code>kICFrameUpdateMode_OnDemand</code>, the visitation system will draw the sub scene of
+ the render texture only if ICNode::setNeedsDisplay was called within the current run loop
+ slice. If <code>frameUpdateMode</code> is set to <code>kICFrameUpdateMode_Synchronized</code>,
+ the framework will render the sub scene to the render texture on each time the parent
+ scene is drawn.
+ 
+ Note that by default render textures are initialized with
+ <code>kICFrameUpdateMode_Synchronized</code>. For sub scenes that do not change frequently,
+ you should set the frame update mode to on demand drawing.
+ 
+ @code
+ // As the sprite we have added in the previous example isn't updated frequently, improve
+ // rendering performance by only drawing it when really required:
+ myRenderTexture.frameUpdateMode = kICFrameUpdateMode_OnDemand;
+ @endcode
+ 
+ At a later point in your application code, when the render texture's contents are changed,
+ you must call ICNode::setNeedsDisplay on the object that was changed. This tells the framework
+ that the render texture's contents must be redrawn the next time its parent scene is rendered:
+ 
+ @code
+ // Assume we are at a position in your code where changing the position of the sprite in
+ // the render texture's sub scene is required...
+ 
+ // First, set the sprite's position:
+ [mySprite setPositionX:10];
+ 
+ // Now tell the framework to update the render texture's contents to reflect the sprite's
+ // position change inside the render texture's frame buffer.
+ [mySprite setNeedsDisplay];
+ @endcode
+ 
+ <h3>Nesting Render Textures</h3>
+ 
+ ICRenderTexture objects may be nested in arbitrary sub scene graphs, which is particularly
+ useful for implementing view hierarchies backed by OpenGL frame buffers. Nesting works out
+ of the box, intuitively and without any further settings required:
+ 
+ @code
+ // Add a new render texture inside our existing one:
+ ICRenderTexture *innerRenderTexture = [ICRenderTexture renderTextureWithWidth:120 height:20];
+ [myRenderTexture addChild:innerRenderTexture];
+ 
+ // Add contents to the inner render texture
+ innerRenderTexture.subScene = [ICScene sceneWithHostViewController:self.hostViewController];
+ ICSprite *anotherSprite = [ICSprite spriteWithTexture:anotherTexture];
+ [innerRenderTexture addChild:anotherSprite];
+ @endcode
+ 
+ <h3>Depth and Stencil Buffers</h3>
+ 
+ ICRenderTexture allows for convenient depth and stencil buffer attachments as required by
+ your application. There are a number of convenience initializers available you may use to
+ create render textures with depth and/or stencil buffer attachments:
+ 
+ <ul>
+    <li>ICRenderTexture::initWithWidth:height:depthBuffer: creates a default depth buffer
+    attachment if depthBuffer is set to YES.</li>
+    <li>ICRenderTexture::initWithWidth:height:depthBuffer:stencilBuffer: additionally creates
+    a default stencil buffer if stencilBuffer is set to YES.</li>
+    <li>ICRenderTexture::initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
+    allows you to exactly define the formats for each buffer.</li>
+ </ul>
+ 
+ <h3>Subclassing</h3>
+ 
+ You may subclass ICRenderTexture to extend or customize the render texture's functionality.
+ Subclasses providing customized initialization should override the
+ ICRenderTexture::initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
+ method, which is the designated initializer of ICRenderTexture.
+ 
+ The IcedCoffee framework uses ICRenderTexture to implement view hierarchies for utilization
+ in user interfaces. The ICView subclass adds convenient view hierarchies to ICRenderTexture.
+ The ICControl class implements the target-action design pattern known from Cocoa on top of it.
+ Many IcedCoffee UI controls inherit from either ICView or ICControl.
  */
-@interface ICRenderTexture : ICNode {
+@interface ICRenderTexture : ICPlanarNode {
 @protected
 	GLuint      _fbo;
 	GLint		_oldFBO;
     GLint       _oldFBOViewport[4];
     GLuint      _depthRBO;
+    GLuint      _stencilRBO;
     GLint       _oldRBO;
 	ICTexture2D *_texture;
 	ICSprite    *_sprite;
     ICScene     *_subScene;
 	GLenum		_pixelFormat;
+    GLenum      _depthBufferFormat;
+    GLenum      _stencilBufferFormat;
     BOOL        _isInRenderTextureDrawContext;
     
-    ICRenderTextureDisplayMode _displayMode;
+    ICFrameUpdateMode _frameUpdateMode;
+    
     BOOL _needsDisplay;
 }
 
@@ -100,46 +203,152 @@ typedef enum _ICRenderTextureDisplayMode {
 @property (nonatomic, readonly) BOOL isInRenderTextureDrawContext;
 
 /**
- @brief A display mode defining when to update the render texture contents
+ @brief A mode defining when to update the render texture contents
  */
-@property (nonatomic, assign) ICRenderTextureDisplayMode displayMode;
+@property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+
++ (id)renderTextureWithWidth:(int)w height:(int)h;
+
++ (id)renderTextureWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer;
+
++ (id)renderTextureWithWidth:(int)w
+                      height:(int)h
+                 depthBuffer:(BOOL)depthBuffer
+               stencilBuffer:(BOOL)stencilBuffer;
 
 /**
  @brief Returns an autoreleased render texture initialized with the given width, height,
  and pixel format
  @sa initWithWidth:height:pixelFormat:
  */
-+ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format;
++ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format;
 
 + (id)renderTextureWithWidth:(int)w
                       height:(int)h
-                 pixelFormat:(ICTexture2DPixelFormat)format
-           enableDepthBuffer:(BOOL)enableDepthBuffer;
+                 pixelFormat:(ICPixelFormat)pixelFormat
+           depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
+
++ (id)renderTextureWithWidth:(int)w
+                      height:(int)h
+                 pixelFormat:(ICPixelFormat)pixelFormat
+           depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+         stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
+
+/**
+ @brief Initializes a render texture with the given width and height
+ 
+ @param w The width of the texture in points
+ @param h The height of the texture in points
+ 
+ The render texture will be initialized with a color buffer backing only. Neither a depth buffer
+ nor a stencil buffer will be attached. The render texture's pixel format will be set to
+ kICPixelFormat_Default.
+ */
+- (id)initWithWidth:(int)w height:(int)h;
+
+/**
+ @brief Initializes a render texture with the given width and height and optionally attaches
+ a default depth buffer
+ 
+ @param w The width of the texture in points
+ @param h The height of the texture in points
+ @param depthBuffer A boolean flag indicating whether a depth buffer should be attached to the
+ texture
+ 
+ The render texture will be initialized with a default color buffer and, if depthBuffer is set
+ to YES, with a default depth buffer. No stencil buffer will be attached.
+ */
+- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer;
+
+/**
+ @brief Initializes a render texture with the given width and height and optionally attaches
+ a default depth buffer and/or stencil buffer
+ 
+ @param w The width of the texture in points
+ @param h The height of the texture in points
+ @param depthBuffer A boolean flag indicating whether a depth buffer should be attached to the
+ texture
+ @param stencilBuffer A boolean flag indicating whether a stencil buffer should be attached
+ to the texture
+ 
+ The render texture will be initialized with a default color buffer and, if depthBuffer is set
+ to YES, with a default depth buffer. A default stencil buffer will be attached if stencilBuffer
+ is set to YES.
+ */
+- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer;
 
 /**
  @brief Initializes a render texture with the given width, height, and pixel format
  
  @param w The width of the texture in points
  @param h The height of the texture in points
- @param format An ICTexture2DPixelFormat enumerated type value indicating the texture's
- pixel format
+ @param format An ICPixelFormat enumerated type value indicating the texture's pixel format
+ 
+ The render texture will be initialized with a color buffer backing only. Neither a depth buffer
+ nor a stencil buffer will be attached.
  */
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format;
-
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICTexture2DPixelFormat)format
-  enableDepthBuffer:(BOOL)enableDepthBuffer;
+- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format;
 
 /**
- @brief Sets the render texture's FBO as the current frame buffer and adjusts the current
- viewport accordingly
+ @brief Initializes a render texture with the given width, height, pixel format, and depth
+ buffer format
+ 
+ @param w The width of the texture in points
+ @param h The height of the texture in points
+ @param pixelFormat An ICPixelFormat enumerated type value indicating the texture's pixel format
+ @param depthBufferFormat An ICDepthBufferFormat enumerated type value defining the texture's
+ depth buffer format
+
+ The render texture will be initialized with a color and depth buffer. No stencil buffer will
+ be attached.
+ */
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
+
+/**
+ @brief Initializes a render texture with the given width, height, pixel format, depth
+ buffer format, and stencil buffer format
+ 
+ @param w The width of the texture in points
+ @param h The height of the texture in points
+ @param pixelFormat An ICPixelFormat enumerated type value indicating the texture's pixel format
+ @param depthBufferFormat An ICDepthBufferFormat enumerated type value defining the texture's
+ depth buffer format
+ @param stencilBufferFormat An ICStencilBufferFormat enumerated type value defining the texture's
+ stencil buffer format
+ 
+ The render texture will be initialized with a color, depth and stencil buffer as specified
+ by the format arguments.
+ */
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
+
+/**
+ @brief Sets the content size of the render texture and automatically re-creates its buffers
+ if necessary
+ */
+- (void)setContentSize:(kmVec3)contentSize;
+
+/**
+ @brief Sets the render texture's FBO as the current frame buffer and adjusts the viewport
+ accordingly
+ 
+ You do not need to call this method directly. It is called by the framework when the render
+ texture's sub scene needs to be redrawn.
  */
 - (void)begin;
 
 /**
- @brief Sets the previously selected FBO as the current frame buffer and resets the current
- viewport accordingly
+ @brief Sets the previously selected FBO as the current frame buffer and resets the viewport
+ accordingly
+ 
+ You do not need to call this method directly. It is called by the framework after the render
+ texture's sub scene has been redrawn.
  */
 - (void)end;
 
@@ -150,8 +359,10 @@ typedef enum _ICRenderTextureDisplayMode {
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 
 /**
- @brief Tells the framework that the texture's contents need to be redrawn
+ @brief The render texture's plane in local coordinate space
+ 
+ This method essentially returns the render texture's sprite plane.
  */
-- (void)setNeedsDisplay;
+- (kmPlane)plane;
 
 @end

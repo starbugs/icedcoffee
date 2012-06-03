@@ -33,7 +33,12 @@
 #import "ICScene.h"
 #import "ICCamera.h"
 #import "ICHostViewController.h"
+#import "ICNodeVisitorPicking.h"
 #import "icGL.h"
+
+@interface ICNode (Private)
+- (void)setNeedsDisplayForNode:(ICNode *)node;
+@end
 
 @implementation ICRenderTexture
 
@@ -41,116 +46,127 @@
 @synthesize sprite = _sprite;
 @synthesize subScene = _subScene;
 @synthesize isInRenderTextureDrawContext = _isInRenderTextureDrawContext;
-@synthesize displayMode = _displayMode;
+@synthesize frameUpdateMode = _frameUpdateMode;
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format
++ (id)renderTextureWithWidth:(int)w height:(int)h
+{
+    return [[[[self class] alloc] initWithWidth:w height:h] autorelease];
+}
+
++ (id)renderTextureWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer
+{
+    return [[[[self class] alloc] initWithWidth:w height:h depthBuffer:depthBuffer] autorelease];
+}
+
++ (id)renderTextureWithWidth:(int)w
+                      height:(int)h
+                 depthBuffer:(BOOL)depthBuffer
+               stencilBuffer:(BOOL)stencilBuffer
+{
+    return [[[[self class] alloc] initWithWidth:w
+                                         height:h
+                                    depthBuffer:depthBuffer
+                                  stencilBuffer:stencilBuffer] autorelease];
+}
+
++ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format
 {
     return [[[[self class] alloc] initWithWidth:w height:h pixelFormat:format] autorelease];
 }
 
 + (id)renderTextureWithWidth:(int)w
                       height:(int)h
-                 pixelFormat:(ICTexture2DPixelFormat)format
-           enableDepthBuffer:(BOOL)enableDepthBuffer
+                 pixelFormat:(ICPixelFormat)pixelFormat
+           depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 {
     return [[[[self class] alloc] initWithWidth:w
                                          height:h
-                                    pixelFormat:format
-                              enableDepthBuffer:enableDepthBuffer]
+                                    pixelFormat:pixelFormat
+                              depthBufferFormat:depthBufferFormat]
             autorelease];
 }
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format
++ (id)renderTextureWithWidth:(int)w
+                      height:(int)h
+                 pixelFormat:(ICPixelFormat)pixelFormat
+           depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+         stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 {
-    return [self initWithWidth:w height:h pixelFormat:format enableDepthBuffer:NO];
+    return [[[[self class] alloc] initWithWidth:w
+                                         height:h
+                                    pixelFormat:pixelFormat
+                              depthBufferFormat:depthBufferFormat
+                            stencilBufferFormat:stencilBufferFormat]
+            autorelease];    
+}
+
+- (id)initWithWidth:(int)w height:(int)h
+{
+    return [self initWithWidth:w height:h pixelFormat:kICPixelFormat_Default];
+}
+
+- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer
+{
+    return [self initWithWidth:w
+                        height:h
+                   pixelFormat:kICPixelFormat_Default
+             depthBufferFormat:depthBuffer ? kICDepthBufferFormat_Default : kICDepthBufferFormat_None];
+}
+
+- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer
+{
+    return [self initWithWidth:w
+                        height:h
+                   pixelFormat:kICPixelFormat_Default
+             depthBufferFormat:depthBuffer ? kICDepthBufferFormat_Default : kICDepthBufferFormat_None
+           stencilBufferFormat:stencilBuffer ? kICStencilBufferFormat_Default : kICStencilBufferFormat_None];
+}
+
+- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format
+{
+    return [self initWithWidth:w
+                        height:h
+                   pixelFormat:format
+             depthBufferFormat:kICDepthBufferFormat_None];
 }
 
 - (id)initWithWidth:(int)w
              height:(int)h
-        pixelFormat:(ICTexture2DPixelFormat)format
-  enableDepthBuffer:(BOOL)enableDepthBuffer
+        pixelFormat:(ICPixelFormat)format
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 {
-	if ((self = [super init]))
-	{
-		NSAssert(format != kICTexture2DPixelFormat_A8,
+    return [self initWithWidth:w
+                        height:h
+                   pixelFormat:format
+             depthBufferFormat:depthBufferFormat
+           stencilBufferFormat:kICStencilBufferFormat_None];
+}
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
+{
+	if ((self = [super init])) {
+		NSAssert(pixelFormat != kICPixelFormat_A8,
                  @"Only RGB and RGBA formats are valid for a render texture");
         
-		w *= IC_CONTENT_SCALE_FACTOR();
-		h *= IC_CONTENT_SCALE_FACTOR();
-        
-		// Textures must be power of two unless we have NPOT support
-		NSUInteger powW;
-		NSUInteger powH;
-        
-		if( [[ICConfiguration sharedConfiguration] supportsNPOT] ) {
-			powW = w;
-			powH = h;
-		} else {
-			powW = icNextPOT(w);
-			powH = icNextPOT(h);
-		}        
-        
-		glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
-        
-		// Generate an FBO
-		glGenFramebuffers(1, &_fbo);
-		glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+        // Store formats
+        _pixelFormat = pixelFormat;
+        _depthBufferFormat = depthBufferFormat;
+        _stencilBufferFormat = stencilBufferFormat;
 
-		void *data = malloc((int)(powW * powH * 4));
-		memset(data, 0, (int)(powW * powH * 4));
-		_pixelFormat = format;
-        
-		_texture = [[ICTexture2D alloc] initWithData:data
-                                         pixelFormat:_pixelFormat
-                                          pixelsWide:powW
-                                          pixelsHigh:powH
-                                         contentSize:CGSizeMake(w, h)];
-		free(data);
-        
-        // Associate texture with FBO
-		glFramebufferTexture2D(GL_FRAMEBUFFER,
-                               GL_COLOR_ATTACHMENT0,
-                               GL_TEXTURE_2D,
-                               _texture.name,
-                               0);
-        
-        if (enableDepthBuffer) {
-            GLint oldRBO;
-            glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
-            glGenRenderbuffers(1, &_depthRBO);
-            glBindRenderbuffer(GL_RENDERBUFFER, _depthRBO);
-            glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT16, (GLsizei)powW, (GLsizei)powH);
-            glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                      GL_DEPTH_ATTACHMENT,
-                                      GL_RENDERBUFFER,
-                                      _depthRBO);
-            glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
-        }
+        // Set the render texture's content size -- this implicitly creates the required FBO
+        [self setContentSize:(kmVec3){w, h, 0}];
 
-		NSAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,
-                 @"Could not attach texture to framebuffer");
-        
-		[_texture setAliasTexParameters];
-        
+        // Set up a sprite for displaying the render texture in the scene
 		_sprite = [ICSprite spriteWithTexture:_texture];
-        
-		[_texture release];
         [_sprite flipTextureVertically];
 		[self addChild:_sprite];
         
-        // FIXME: need to set blend func (?)
-//		[_sprite setBlendFunc:(ccBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
-        
-		glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-        
-        CHECK_GL_ERROR_DEBUG();
-        
-        // By default, set the display mode to kICRenderTextureDisplayMode_Always
-        self.displayMode = kICRenderTextureDisplayMode_Always;
-        
-        // Render the sub scene on first call to draw (only applies when displayMode is set
-        // to kICRenderTextureDisplayMode_Conditional)
-        [self setNeedsDisplay];
+        // By default, set the display mode to kICFrameUpdateMode_Synchronized
+        self.frameUpdateMode = kICFrameUpdateMode_Synchronized;
 	}
 	return self;
 }
@@ -160,7 +176,119 @@
 	glDeleteFramebuffers(1, &_fbo);
     self.subScene = nil;
     
+    [_texture release];
+    
 	[super dealloc];
+}
+
+- (void)setContentSize:(kmVec3)contentSize
+{
+    NSUInteger w = contentSize.x;
+    NSUInteger h = contentSize.y;
+    
+    if (w == (NSUInteger)_contentSize.x &&
+        h == (NSUInteger)_contentSize.y)
+        return; // content size not changed -- do nothing
+
+    [super setContentSize:contentSize];
+    
+    w *= IC_CONTENT_SCALE_FACTOR();
+    h *= IC_CONTENT_SCALE_FACTOR();
+    
+    // Textures must be power of two unless we have NPOT support
+    NSUInteger powW;
+    NSUInteger powH;
+    
+    if( [[ICConfiguration sharedConfiguration] supportsNPOT] ) {
+        powW = w;
+        powH = h;
+    } else {
+        powW = icNextPOT(w);
+        powH = icNextPOT(h);
+    }        
+    
+    glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
+    
+    // Generate an FBO
+    glGenFramebuffers(1, &_fbo);
+    glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
+    
+    void *data = malloc((int)(powW * powH * 4));
+    memset(data, 0, (int)(powW * powH * 4));
+    
+    _texture = [[ICTexture2D alloc] initWithData:data
+                                     pixelFormat:_pixelFormat
+                                      pixelsWide:powW
+                                      pixelsHigh:powH
+                                     contentSize:CGSizeMake(w, h)];
+    free(data);
+    
+    // Associate texture with FBO
+    glFramebufferTexture2D(GL_FRAMEBUFFER,
+                           GL_COLOR_ATTACHMENT0,
+                           GL_TEXTURE_2D,
+                           _texture.name,
+                           0);
+    
+    // Attach a depth buffer if required
+    if (_depthBufferFormat) {
+        GLint depthComponent;
+        switch (_depthBufferFormat) {
+            case kICDepthBufferFormat_16:
+                depthComponent = GL_DEPTH_COMPONENT16;
+                break;
+            case kICDepthBufferFormat_24:
+#ifdef __IC_PLATFORM_MAC
+                depthComponent = GL_DEPTH_COMPONENT24;
+#elif defined(__IC_PLATFORM_IOS)
+                depthComponent = GL_DEPTH_COMPONENT24_OES;                    
+#endif
+                break;
+            default:
+                [NSException raise:NSInvalidArgumentException format:@"Invalid depth buffer format"];
+                break;
+        }
+        
+        GLint oldRBO;
+        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+        glGenRenderbuffers(1, &_depthRBO);
+        glBindRenderbuffer(GL_RENDERBUFFER, _depthRBO);
+        glRenderbufferStorage(GL_RENDERBUFFER, depthComponent, (GLsizei)powW, (GLsizei)powH);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER,
+                                  GL_DEPTH_ATTACHMENT,
+                                  GL_RENDERBUFFER,
+                                  _depthRBO);
+        glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
+    }
+    
+    // Attach a stencil buffer if required
+    if (_stencilBufferFormat) {
+        GLint oldRBO;
+        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+        glGenRenderbuffers(1, &_stencilRBO);
+        glBindRenderbuffer(GL_RENDERBUFFER, _stencilRBO);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, (GLsizei)powW, (GLsizei)powH);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER,
+                                  GL_STENCIL_ATTACHMENT,
+                                  GL_RENDERBUFFER,
+                                  _stencilRBO);
+        glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);            
+    }
+    
+    NSAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,
+             @"Could not attach texture to framebuffer");
+    
+    // Bind old frame buffer
+    glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
+    CHECK_GL_ERROR_DEBUG();
+    
+    [_texture setAliasTexParameters];    
+    
+    if (_sprite) {
+        [_sprite setTexture:_texture];
+    }
+    
+    [self setNeedsDisplay];
 }
 
 - (void)begin
@@ -228,63 +356,25 @@
         
         // Perform picking on inner texture scene
         
-        // Get pick point (frame buffer space)
-        kmVec3 pickVect;
+        // Get and transform pick point (frame buffer space)
         CGPoint pickPoint = ((ICNodeVisitorPicking *)visitor).pickPoint;
-        kmVec3Fill(&pickVect, pickPoint.x, pickPoint.y, 0);
-        
-        // FIXME: this is rather ineffecient and should be encapsulated somewhere
-        // can we have something like view:toWorld:withPlane:withViewport:?
-        // Transform point from frame buffer space to world space
-        kmVec3 projectPoint1, projectPoint2;
-        kmVec3 unprojectPoint1, unprojectPoint2;
-        projectPoint1 = pickVect;
-        projectPoint2 = pickVect;
-        projectPoint2.z = 1;
-        
-        ICScene *parentScene = [self parentScene];
-        GLint parentFBOViewport[4];
-        parentFBOViewport[0] = parentFBOViewport[1] = 0;
-        parentFBOViewport[2] = [parentScene frameBufferSize].width * IC_CONTENT_SCALE_FACTOR();
-        parentFBOViewport[3] = [parentScene frameBufferSize].height * IC_CONTENT_SCALE_FACTOR();
-        [[parentScene camera] unprojectView:projectPoint1
-                                    toWorld:&unprojectPoint1
-                                   viewport:parentFBOViewport];
-        [[parentScene camera] unprojectView:projectPoint2
-                                    toWorld:&unprojectPoint2
-                                   viewport:parentFBOViewport];
-        
-        // FIXME: assumes XY-plane at Z=0, this should essentially be the plane in
-        // sprite used to present the render texture in the parent node space of the
-        // render texture(?)
-        kmVec3 p1 = (kmVec3){0,0,0};
-        kmVec3 p2 = (kmVec3){1,0,0};
-        kmVec3 p3 = (kmVec3){1,1,0};
-        
-        kmPlane p;
-        kmPlaneFromPoints(&p, &p1, &p2, &p3);
-        kmVec3 intersection;
-        kmPlaneIntersectLine(&intersection, &p, &unprojectPoint1, &unprojectPoint2);
-        
-        // Transform pick point from world to local node space
-        kmVec3 transformedPickVect;
-        transformedPickVect = [self convertToNodeSpace:intersection];
+        CGPoint localPoint = [self hostViewToNodeLocation:pickPoint];
         
         // Perform the inner hit test
-        NSArray *innerHitTestNodes = [self.subScene hitTest:CGPointMake(transformedPickVect.x, transformedPickVect.y)];
+        NSArray *innerHitTestNodes = [self.subScene hitTest:localPoint];
         
         // Append nodes after(!) the next successful hit in the parent scene, which will be
         // the hit of the render texture's sprite
         [(ICNodeVisitorPicking *)visitor appendNodesToResultStack:innerHitTestNodes];
         
-    } else if(self.displayMode == kICRenderTextureDisplayMode_Always ||
-              (self.displayMode == kICRenderTextureDisplayMode_Conditional && _needsDisplay)) {
+    } else if (self.frameUpdateMode == kICFrameUpdateMode_Synchronized ||
+              (self.frameUpdateMode == kICFrameUpdateMode_OnDemand && _needsDisplay)) {
         
         // Visit inner scene for drawing
         [self.subScene visit];
         
         // Reset needsDisplay property if applicable
-        if (self.displayMode == kICRenderTextureDisplayMode_Conditional && _needsDisplay) {
+        if (self.frameUpdateMode == kICFrameUpdateMode_OnDemand && _needsDisplay) {
             _needsDisplay = NO;
         }
         
@@ -306,10 +396,22 @@
     [_subScene setParent:self.sprite];
 }
 
-- (void)setNeedsDisplay
+- (void)setNeedsDisplayForNode:(ICNode *)node
 {
+    // Note that this render texture needs to redraw its contents
     _needsDisplay = YES;
-    [super setNeedsDisplay];
+    [super setNeedsDisplayForNode:node];
+}
+
+- (void)setParent:(ICNode *)parent
+{
+    [super setParent:parent];
+    [self setNeedsDisplay];
+}
+
+- (kmPlane)plane
+{
+    return [self.sprite plane];
 }
 
 @end

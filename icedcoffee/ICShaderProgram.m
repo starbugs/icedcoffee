@@ -137,9 +137,11 @@ typedef void (*GLLogFunction) (GLuint program,
     
 	_uniforms[kICUniformMVPMatrix] = glGetUniformLocation(_program, kICUniformMVPMatrix_s);
 	_uniforms[kICUniformSampler] = glGetUniformLocation(_program, kICUniformSampler_s);
-        
+	_uniforms[kICUniformSampler2] = glGetUniformLocation(_program, kICUniformSampler2_s);
+    
 	glUseProgram(_program);
 	glUniform1i(_uniforms[kICUniformSampler], 0);
+	glUniform1i(_uniforms[kICUniformSampler2], 1);
 }
 
 - (BOOL)link

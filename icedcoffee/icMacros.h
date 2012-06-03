@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -54,7 +54,11 @@
 
 
 #import "icGLState.h"
-#import "ICNodeVisitorPicking.h"
+
+
+// Constants
+
+#define IC_HUGE 1.0e+38f
 
 
 // Retina display support
@@ -68,7 +72,7 @@ extern float g_icContentScaleFactor;
  multiplied by this factor to transform them to pixel coordinates. Consequently, pixel coordinates
  may be divided by this factor to yield point coordinates.
  
- The default content scale factors on all platforms is 1.0. On iOS, you may enable retina display
+ The default content scale factor on all platforms is 1.0. On iOS, you may enable retina display
  support using ICHostViewController::enableRetinaDisplaySupport:. If the device's software and
  hardware support the retina display, the content scale factor will be set to 2.0.
  

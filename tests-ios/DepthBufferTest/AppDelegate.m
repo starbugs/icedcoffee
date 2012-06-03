@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -21,6 +21,7 @@
 //  
 
 #import "AppDelegate.h"
+#import "ResponsiveSprite.h"
 
 @implementation AppDelegate
 
@@ -35,25 +36,29 @@
     [super dealloc];
 }
 
-- (void)timer:(NSTimer *)timer
+- (void)update:(icTime)dt
 {
     static float posz = 0.0f;
+    static float angle = 0.0f;
     [_foregroundSprite setPositionZ:posz];
+    [_foregroundSprite setRotationAngle:angle axis:(kmVec3){0,1,1}];
     [_tsForegroundSprite setPositionZ:posz];
-    posz -= 0.25f;
+    [_tsForegroundSprite setRotationAngle:angle axis:(kmVec3){0,1,1}];
+    posz -= dt * 10;
+    angle += dt;
 }
 
 - (void)setupScene
 {
     ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
-    scene.depthTestingEnabled = YES;
+    scene.performsDepthTesting = YES;
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
     ICTexture2D *texture = [self.hostViewController.textureCache loadTextureFromFile:filename];
-    _foregroundSprite = [ICSprite spriteWithTexture:texture];
+    _foregroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [_foregroundSprite setPositionX:10.0f];
     [_foregroundSprite setPositionY:10.0f];
-    ICSprite *backgroundSprite = [ICSprite spriteWithTexture:texture];
+    ICSprite *backgroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [backgroundSprite flipTextureVertically];
     [backgroundSprite setPositionZ:-100.0f];
     [scene addChild:_foregroundSprite];
@@ -61,14 +66,14 @@
     
     ICRenderTexture *renderTexture = [ICRenderTexture renderTextureWithWidth:128
                                                                       height:128
-                                                                 pixelFormat:kICTexture2DPixelFormat_RGBA8888
-                                                           enableDepthBuffer:YES];
+                                                                 pixelFormat:kICPixelFormat_RGBA8888
+                                                           depthBufferFormat:kICDepthBufferFormat_16];
     ICScene *textureScene = [ICScene sceneWithHostViewController:self.hostViewController];
-    textureScene.depthTestingEnabled = YES;
-    _tsForegroundSprite = [ICSprite spriteWithTexture:texture];
+    textureScene.performsDepthTesting = YES;
+    _tsForegroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [_tsForegroundSprite setPositionX:10.0f];
     [_tsForegroundSprite setPositionY:10.0f];
-    ICSprite *tsBackgroundSprite = [ICSprite spriteWithTexture:texture];
+    ICSprite *tsBackgroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [tsBackgroundSprite flipTextureVertically];
     [tsBackgroundSprite setPositionZ:-100.0f];
     [textureScene addChild:_tsForegroundSprite];
@@ -78,9 +83,8 @@
     [scene addChild:renderTexture];
     
     self.hostViewController.scene = scene;
-    
-    NSTimer *timer = [NSTimer timerWithTimeInterval:0.05 target:self selector:@selector(timer:) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+   
+    [self.hostViewController.scheduler scheduleUpdateForTarget:self];
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions

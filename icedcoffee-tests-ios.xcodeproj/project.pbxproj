@@ -10,6 +10,7 @@
 		D21C980414F302320059BBBE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C97FE14F302320059BBBE /* AppDelegate.m */; };
 		D21C980514F302320059BBBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21C97FF14F302320059BBBE /* InfoPlist.strings */; };
 		D21C980614F302320059BBBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C980114F302320059BBBE /* main.m */; };
+		D24F9CBB1544C06600658F28 /* ResponsiveSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D24F9CBA1544C06500658F28 /* ResponsiveSprite.m */; };
 		D2732867152F9F0F0004F557 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773414F939110028CD04 /* UIKit.framework */; };
 		D2732868152F9F0F0004F557 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773714F939260028CD04 /* Foundation.framework */; };
 		D2732869152F9F0F0004F557 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB774214F9396B0028CD04 /* CoreGraphics.framework */; };
@@ -100,6 +101,12 @@
 		D21C980114F302320059BBBE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D21C980214F302320059BBBE /* PickingTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PickingTest-Info.plist"; sourceTree = "<group>"; };
 		D21C980314F302320059BBBE /* PickingTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PickingTest-Prefix.pch"; sourceTree = "<group>"; };
+		D24F9CB91544C06500658F28 /* ResponsiveSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveSprite.h; path = "tests-shared-src/PickingTest/ResponsiveSprite.h"; sourceTree = SOURCE_ROOT; };
+		D24F9CBA1544C06500658F28 /* ResponsiveSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveSprite.m; path = "tests-shared-src/PickingTest/ResponsiveSprite.m"; sourceTree = SOURCE_ROOT; };
+		D253D98615663D9F0027DA6C /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		D253D98915663D9F0027DA6C /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		D253D98A15663D9F0027DA6C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		D253D98B15663D9F0027DA6C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2732865152F9F0E0004F557 /* RetinaDisplaySupportTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RetinaDisplaySupportTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D273287A152F9F3A0004F557 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D273287B152F9F3A0004F557 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -233,6 +240,8 @@
 				D2AB773F14F939530028CD04 /* OpenGLES.framework */,
 				D2AB773714F939260028CD04 /* Foundation.framework */,
 				D2AB773414F939110028CD04 /* UIKit.framework */,
+				D253D98615663D9F0027DA6C /* Cocoa.framework */,
+				D253D98815663D9F0027DA6C /* Other Frameworks */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -263,6 +272,16 @@
 				D21C980314F302320059BBBE /* PickingTest-Prefix.pch */,
 			);
 			name = "Supporting FIles";
+			sourceTree = "<group>";
+		};
+		D253D98815663D9F0027DA6C /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				D253D98915663D9F0027DA6C /* AppKit.framework */,
+				D253D98A15663D9F0027DA6C /* CoreData.framework */,
+				D253D98B15663D9F0027DA6C /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
 			sourceTree = "<group>";
 		};
 		D2732879152F9F3A0004F557 /* RetinaDisplaySupportTest */ = {
@@ -314,6 +333,8 @@
 			children = (
 				D2FEE87A153ABD5B004CFF62 /* AppDelegate.h */,
 				D2FEE87B153ABD5B004CFF62 /* AppDelegate.m */,
+				D24F9CB91544C06500658F28 /* ResponsiveSprite.h */,
+				D24F9CBA1544C06500658F28 /* ResponsiveSprite.m */,
 				D2FEE885153ABD73004CFF62 /* Supporting Files */,
 			);
 			name = DepthBufferTest;
@@ -537,6 +558,7 @@
 			files = (
 				D2FEE881153ABD5B004CFF62 /* AppDelegate.m in Sources */,
 				D2FEE884153ABD5B004CFF62 /* main.m in Sources */,
+				D24F9CBB1544C06600658F28 /* ResponsiveSprite.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

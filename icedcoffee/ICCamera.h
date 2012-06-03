@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -60,14 +60,21 @@
  
  <b>Subclassing</b>
  
- The ICCamera class may be used as a base class for specialized camera classes. If you add
- properties that may have an effect on the internal transform matrix calculations of ICCamera,
- you must call <code>setDirty:YES</code> in your property setter. You may also have to override
- the setupScreen method to implement custom transformation computation code.
+ The ICCamera class may be used as a base class for specialized camera classes. The designated
+ initializer for ICCamera is ICCamera::initWithEye:lookAt:upVector:fov:aspect:zNear:zFar:viewport:
+ for generic cameras or ICCamera::initWithViewport: for cameras setting up projection and look-at
+ based on internal computations. The framework will always call ICCamera::initWithViewport: to
+ initialize newly created cameras.
+ 
+ If you add properties that may have an effect on the internal transform matrix calculations
+ of ICCamera, you must call <code>setDirty:YES</code> in your property setter. You may also have
+ to override the ICCamera::setupScreen method to implement custom transformations.
  */
 @interface ICCamera : NSObject
 {
 @protected
+    GLint _viewport[4];
+    
     kmVec3 _eye;
     kmVec3 _lookAt;
     kmVec3 _upVector;
@@ -134,9 +141,9 @@
 
 
 /**
- @brief Convenience method returning an autoreleased ICCamera object
+ @brief Convenience method returning an autoreleased ICCamera object with the given viewport
  */
-+ (id)camera;
++ (id)cameraWithViewport:(CGRect)viewport;
 
 /**
  @brief Convenience method returning an autoreleased ICCamera object with the specified attributes
@@ -147,12 +154,13 @@
                 fov:(float)fov
              aspect:(float)aspect
               zNear:(float)zNear
-               zFar:(float)zFar;
+               zFar:(float)zFar
+           viewport:(CGRect)viewport;
 
 /**
- @brief Initializes a default camera object
+ @brief Initializes a default camera object with the given viewport
  */
-- (id)init;
+- (id)initWithViewport:(CGRect)viewport;
 
 /**
  @brief Initializes a camera object with the given attributes
@@ -163,7 +171,18 @@
               fov:(float)fov
            aspect:(float)aspect
             zNear:(float)zNear
-             zFar:(float)zFar;
+             zFar:(float)zFar
+         viewport:(CGRect)viewport;
+
+/**
+ @brief Sets the camera's viewport
+ */
+- (void)setViewport:(CGRect)viewport;
+
+/**
+ @brief Returns the camera's viewport
+ */
+- (CGRect)viewport;
 
 /**
  @brief Applies the camera's projection and look-at matrices to the projection and model-view
@@ -181,7 +200,7 @@
 - (void)setupScreen;
 
 /**
- @brief Apply a pick matrix at the given point using the specified viewport
+ @brief Apply a pick matrix at the given point in the specified viewport
  
  @param point A location specified in points
  @param viewport The OpenGL viewport (in pixels) the pick matrix is applied on
@@ -190,10 +209,33 @@
  */
 - (void)applyPickMatrix:(CGPoint)point viewport:(GLint *)viewport;
 
+- (void)applyPickMatrixToFrame:(CGRect)pickFrame viewport:(GLint *)viewport;
+
 /**
  @brief Unproject point in view coordinates to world coordinates using the camera's projection
  and look-at matrices
+ 
+ @param viewVect A kmVec3 pointer referencing the point in the view's coordinate system (pixels)
+ @param resultVect A kmVec3 pointer referencing the object receiving the resulting unprojected
+ point in world coordinates
+
+ @return Returns YES on success or NO otherwise. The resulting world vector is written into
+ resultVect.
  */
-- (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect viewport:(GLint *)viewport;
+- (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect;
+
+/**
+ @brief Project the given vector in world coordinates to view coordinates using the camera's
+ projection and look-at matrices
+ 
+ @param worldVect A kmVec3 pointer referencing the point to project in world coordinates
+ @param resultVect A kmVec3 pointer referencing the object receiving the resulting vector in
+ view coordinates (pixels)
+ 
+ @return Returns YES on success or NO otherwise. The resulting view vector is written into
+ resultVect. Note that you may need to round its coordinates so as to compensate for limited
+ floating point precision.
+ */
+- (BOOL)projectWorld:(kmVec3)worldVect toView:(kmVec3 *)resultVect;
 
 @end

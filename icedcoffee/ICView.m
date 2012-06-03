@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -25,18 +25,69 @@
 
 @implementation ICView
 
-- (id)initWithWidth:(int)w height:(int)h
++ (id)viewWithWidth:(int)w
+             height:(int)h
 {
-    return [self initWithWidth:w height:h pixelFormat:kICTexture2DPixelFormat_RGBA8888];
+    return [[[[self class] alloc] initWithWidth:w height:h] autorelease];
 }
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICTexture2DPixelFormat)format
++ (id)viewWithWidth:(int)w
+             height:(int)h 
+        depthBuffer:(BOOL)depthBuffer
 {
-    if ((self = [super initWithWidth:w height:h pixelFormat:format])) {
+    return [[[[self class] alloc] initWithWidth:w height:h depthBuffer:depthBuffer] autorelease];    
+}
+
++ (id)viewWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+{
+    return [[[[self class] alloc] initWithWidth:w height:h pixelFormat:pixelFormat] autorelease];
+}
+
++ (id)viewWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+{
+    return [[[[self class] alloc] initWithWidth:w
+                                         height:h
+                                    pixelFormat:pixelFormat
+                              depthBufferFormat:depthBufferFormat] autorelease];    
+}
+
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+{
+    return [super initWithWidth:w height:h];
+}
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        depthBuffer:(BOOL)depthBuffer
+{
+    return [super initWithWidth:w height:h depthBuffer:depthBuffer];
+}
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)format
+{
+    return [super initWithWidth:w height:h pixelFormat:format];
+}
+
+- (id)initWithWidth:(int)w
+             height:(int)h
+        pixelFormat:(ICPixelFormat)format
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+{
+    if ((self = [super initWithWidth:w height:h pixelFormat:format depthBufferFormat:depthBufferFormat])) {
         self.subScene = [[[ICScene alloc] initWithHostViewController:nil] autorelease];
-        [self setDisplayMode:kICRenderTextureDisplayMode_Conditional];
+        [self.subScene setClearColor:(icColor4B){0,0,0,0}];
+        [self setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
     }
-    return self;
+    return self;    
 }
 
 - (void)dealloc

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -22,7 +22,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ICNode.h"
+#import "ICPlanarNode.h"
 #import "ICTexture2D.h"
 #import "icTypes.h"
 
@@ -30,14 +30,16 @@
  @brief A colored and textured 2D sprite
  
  ICSprite defines a rectangular quad (icQuad) which may be drawn in an arbitrary 3D scene.
+ The quad consists of two polygons and is rendered as a static triangle strip.
  You may set a color and a texture which is used to render the quad's fragments.
  The quad's size is by default set to the size of the texture (in points.) If no
  texture is set, the quad's size defaults to (w=1,h=1).
  */
-@interface ICSprite : ICNode
+@interface ICSprite : ICPlanarNode
 {
-@private
+@protected
     ICTexture2D *_texture;
+    ICTexture2D *_maskTexture;
     icQuad       _quad;
     icColor4B    _color;
     icBlendFunc  _blendFunc;
@@ -51,7 +53,12 @@
 /**
  @brief The sprite's texture
  */
-@property (nonatomic, retain) ICTexture2D *texture;
+@property (nonatomic, retain, setter=setTexture:) ICTexture2D *texture;
+
+/**
+ @brief The sprite's mask texture
+ */
+@property (nonatomic, retain, setter=setMaskTexture:) ICTexture2D *maskTexture;
 
 /**
  @brief The sprite's blending function

@@ -56,6 +56,7 @@
 #import "ICScene.h"
 #import "icGL.h"
 #import "ICESRenderer.h"
+#import "ICScheduler.h"
 
 @interface ICHostViewControllerIOS (Private)
 - (void)threadMainLoop;
@@ -80,7 +81,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [self setViewSize:self.view.frame.size];
+    [self reshape:self.view.bounds.size];
 }
 
 - (void)viewDidLayoutSubviews
@@ -133,6 +134,8 @@
 
 - (void)drawScene
 {
+    [self calculateDeltaTime];
+
 	// We draw on a secondary thread through the display link
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
@@ -145,6 +148,8 @@
     }*/
     
 	[EAGLContext setCurrentContext:[openGLview context]];
+
+    [[self scheduler] update:_deltaTime];
 
 	glViewport(0, 0,
                openGLview.bounds.size.width * self.contentScaleFactor,

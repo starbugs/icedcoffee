@@ -22,18 +22,18 @@
 //
 //
 // Adapted for cocos2d http://www.cocos2d-iphone.org
-// Then adapted for IcedCoffee
+// Then adapted for IcedCoffee http://www.icedcoffee-framework.org
 
 #import "icGLState.h"
 
 enum {
 	kICUniformMVPMatrix,
 	kICUniformSampler,
+    kICUniformSampler2,
     
 	kICUniform_MAX,
 };
 
-// FIXME: cleanup (do we need all of these?)
 #define kICShader_PositionTextureColor			@"ShaderPositionTextureColor"
 #define kICShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
 #define kICShader_PositionColor					@"ShaderPositionColor"
@@ -41,10 +41,13 @@ enum {
 #define kICShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
 #define kICShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
 #define kICShader_Picking                       @"ShaderPicking"
+#define kICShader_StencilMask                   @"ShaderStencilMask"
+#define kICShader_SpriteTextureMask             @"ShaderSpriteTextureMask"
 
 // uniform names
 #define kICUniformMVPMatrix_s			"u_MVPMatrix"
 #define kICUniformSampler_s				"u_texture"
+#define kICUniformSampler2_s            "u_texture2"
 #define kICUniformAlphaTestValue		"u_alpha_value"
 
 // Attribute names
@@ -78,13 +81,6 @@ enum {
 
 - (void)use;
 
-/* It will create 3 uniforms:
- - kCCUniformPMatrix
- - kCCUniformMVMatrix
- - kCCUniformSampler
- 
- And it will bind "kCCUniformSampler" to 0
- */
 - (void)updateUniforms;
 
 - (NSString *)vertexShaderLog;
