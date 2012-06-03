@@ -23,6 +23,13 @@ Getting Started
 3. Run the tests and have fun!
 
 
+Documentation
+-------------
+
+Find a work-in-progress version of the [IcedCoffee API reference](http://icedcoffee-framework.org/docs)
+on [icedcoffee-framework.org](http://icedcoffee-framework.org).
+
+
 Main Features
 -------------
 
