@@ -33,6 +33,21 @@
 #import "Platforms/icGL.h"
 #import "kazmath/kazmath.h"
 
+// IcedCoffee extensions to kazmath
+
+#define kmNullVec2 (kmVec2){0,0}
+#define kmNullVec3 (kmVec3){0,0,0}
+#define kmVec2Make(x,y) (kmVec2){x,y}
+#define kmVec3Make(x,y,z) (kmVec3){x,y,z}
+#define kmVec3Description(v) \
+    ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
+#define kmMat4Description(m) \
+    ([NSString stringWithFormat:@"[ %f, %f, %f, %f,\n  %f, %f, %f, %f\n  %f, %f, %f, %f\n  %f, %f, %f, %f ]", \
+     (m).mat[0], (m).mat[4], (m).mat[8], (m).mat[12], \
+     (m).mat[1], (m).mat[5], (m).mat[9], (m).mat[13], \
+     (m).mat[2], (m).mat[6], (m).mat[10], (m).mat[14], \
+     (m).mat[3], (m).mat[7], (m).mat[11], (m).mat[15]])
+
 /** @name Frame Updates */
 
 typedef enum _ICFrameUpdateMode {

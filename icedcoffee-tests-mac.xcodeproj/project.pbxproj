@@ -53,6 +53,23 @@
 		D2AA0E59152882A400F98623 /* Zwei_Baeume_IMG_5267.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E4315287E9500F98623 /* Zwei_Baeume_IMG_5267.jpg */; };
 		D2AA0E5C152887AE00F98623 /* ImageSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AA0E5B152887AE00F98623 /* ImageSprite.m */; };
 		D2AA0E5F1528984B00F98623 /* TextureCacheTestScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AA0E5E1528984B00F98623 /* TextureCacheTestScene.m */; };
+		D2ADCFC8157EB34A00B6E519 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2ADCFEA157EB37400B6E519 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2ADCFE0157EB37400B6E519 /* AppDelegate.m */; };
+		D2ADCFEC157EB37400B6E519 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFE3157EB37400B6E519 /* InfoPlist.strings */; };
+		D2ADCFED157EB37400B6E519 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFE5157EB37400B6E519 /* MainMenu.xib */; };
+		D2ADCFEE157EB37400B6E519 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2ADCFE7157EB37400B6E519 /* main.m */; };
+		D2ADCFF2157EB38F00B6E519 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2ADCFF3157EB39200B6E519 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2ADCFF4157EB39500B6E519 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2ADCFFD157EB46600B6E519 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFF6157EB45200B6E519 /* Picking.fsh */; };
+		D2ADCFFE157EB46900B6E519 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFF7157EB45200B6E519 /* PositionTextureA8Color.fsh */; };
+		D2ADCFFF157EB47B00B6E519 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFF8157EB45200B6E519 /* PositionTextureA8Color.vsh */; };
+		D2ADD000157EB47B00B6E519 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFF9157EB45200B6E519 /* PositionTextureColor.fsh */; };
+		D2ADD001157EB47B00B6E519 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFFA157EB45200B6E519 /* PositionTextureColor.vsh */; };
+		D2ADD002157EB47B00B6E519 /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFFB157EB45200B6E519 /* SpriteTextureMask.fsh */; };
+		D2ADD003157EB47B00B6E519 /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2ADCFFC157EB45200B6E519 /* StencilMask.fsh */; };
+		D2ADD004157EB4B500B6E519 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D2ADD006157EB53F00B6E519 /* Autumn_scenery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D2ADD005157EB53F00B6E519 /* Autumn_scenery.jpg */; };
 		D2E64896150436A600D71A6D /* ResponsiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2E64895150436A600D71A6D /* ResponsiveView.m */; };
 		D2EDC3431572BB8A00EBB417 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D2EDC3651572BBD200EBB417 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2EDC35B1572BBD200EBB417 /* AppDelegate.m */; };
@@ -171,6 +188,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		D2ADCFF0157EB38400B6E519 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		D2EDC36B1572BC2300EBB417 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -283,6 +307,23 @@
 		D2AA0E5B152887AE00F98623 /* ImageSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageSprite.m; sourceTree = "<group>"; };
 		D2AA0E5D1528984B00F98623 /* TextureCacheTestScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextureCacheTestScene.h; sourceTree = "<group>"; };
 		D2AA0E5E1528984B00F98623 /* TextureCacheTestScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextureCacheTestScene.m; sourceTree = "<group>"; };
+		D2ADCFC6157EB34A00B6E519 /* ScrollViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScrollViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2ADCFDF157EB37400B6E519 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2ADCFE0157EB37400B6E519 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2ADCFE2157EB37400B6E519 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2ADCFE4157EB37400B6E519 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2ADCFE6157EB37400B6E519 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D2ADCFE7157EB37400B6E519 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2ADCFE8157EB37400B6E519 /* ScrollViewTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ScrollViewTest-Info.plist"; sourceTree = "<group>"; };
+		D2ADCFE9157EB37400B6E519 /* ScrollViewTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ScrollViewTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2ADCFF6157EB45200B6E519 /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFF7157EB45200B6E519 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFF8157EB45200B6E519 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFF9157EB45200B6E519 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFFA157EB45200B6E519 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFFB157EB45200B6E519 /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		D2ADCFFC157EB45200B6E519 /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
+		D2ADD005157EB53F00B6E519 /* Autumn_scenery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Autumn_scenery.jpg; path = resources/images/landscapes/Autumn_scenery.jpg; sourceTree = SOURCE_ROOT; };
 		D2E64894150436A600D71A6D /* ResponsiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveView.h; path = "tests-shared-src/PickingTest/ResponsiveView.h"; sourceTree = SOURCE_ROOT; };
 		D2E64895150436A600D71A6D /* ResponsiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveView.m; path = "tests-shared-src/PickingTest/ResponsiveView.m"; sourceTree = SOURCE_ROOT; };
 		D2EDC3411572BB8900EBB417 /* StencilTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StencilTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -412,6 +453,18 @@
 				D253D9C115663DE20027DA6C /* Cocoa.framework in Frameworks */,
 				D253D9EA15663E430027DA6C /* CoreVideo.framework in Frameworks */,
 				D253D9E915663E3F0027DA6C /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2ADCFC3157EB34A00B6E519 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2ADD004157EB4B500B6E519 /* libicedcoffee-mac.a in Frameworks */,
+				D2ADCFF2157EB38F00B6E519 /* Carbon.framework in Frameworks */,
+				D2ADCFC8157EB34A00B6E519 /* Cocoa.framework in Frameworks */,
+				D2ADCFF3157EB39200B6E519 /* CoreVideo.framework in Frameworks */,
+				D2ADCFF4157EB39500B6E519 /* OpenGL.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -555,6 +608,38 @@
 			path = resources/images/landscapes;
 			sourceTree = SOURCE_ROOT;
 		};
+		D2ADCFDE157EB37400B6E519 /* ScrollViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2ADCFDF157EB37400B6E519 /* AppDelegate.h */,
+				D2ADCFE0157EB37400B6E519 /* AppDelegate.m */,
+				D2ADCFE5157EB37400B6E519 /* MainMenu.xib */,
+				D2ADCFF5157EB3E800B6E519 /* Supporting Files */,
+			);
+			name = ScrollViewTest;
+			path = "tests-mac/ScrollViewTest";
+			sourceTree = "<group>";
+		};
+		D2ADCFF5157EB3E800B6E519 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2ADD005157EB53F00B6E519 /* Autumn_scenery.jpg */,
+				D2ADCFF6157EB45200B6E519 /* Picking.fsh */,
+				D2ADCFF7157EB45200B6E519 /* PositionTextureA8Color.fsh */,
+				D2ADCFF8157EB45200B6E519 /* PositionTextureA8Color.vsh */,
+				D2ADCFF9157EB45200B6E519 /* PositionTextureColor.fsh */,
+				D2ADCFFA157EB45200B6E519 /* PositionTextureColor.vsh */,
+				D2ADCFFB157EB45200B6E519 /* SpriteTextureMask.fsh */,
+				D2ADCFFC157EB45200B6E519 /* StencilMask.fsh */,
+				D2ADCFE3157EB37400B6E519 /* InfoPlist.strings */,
+				D2ADCFE7157EB37400B6E519 /* main.m */,
+				D2ADCFE8157EB37400B6E519 /* ScrollViewTest-Info.plist */,
+				D2ADCFE9157EB37400B6E519 /* ScrollViewTest-Prefix.pch */,
+				D2ADCFE1157EB37400B6E519 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D2EDC3591572BBD200EBB417 /* StencilTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -695,6 +780,7 @@
 				D21F88941533068E00E2496C /* KazmathTests */,
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
 				D253D9D715663DFD0027DA6C /* Scale9SpriteTest */,
+				D2ADCFDE157EB37400B6E519 /* ScrollViewTest */,
 				D2EDC3591572BBD200EBB417 /* StencilTest */,
 				D2F3502315285DCD00DF2D5B /* TextureCacheTest */,
 				D2FD85D614F0E4A6006A9A90 /* Frameworks */,
@@ -713,6 +799,7 @@
 				D2FEE8241539D762004CFF62 /* DepthBufferTest.app */,
 				D253D9BF15663DE20027DA6C /* Scale9SpriteTest.app */,
 				D2EDC3411572BB8900EBB417 /* StencilTest.app */,
+				D2ADCFC6157EB34A00B6E519 /* ScrollViewTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -852,6 +939,24 @@
 			name = Scale9SpriteTest;
 			productName = Scale9SpriteTest;
 			productReference = D253D9BF15663DE20027DA6C /* Scale9SpriteTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2ADCFC5157EB34A00B6E519 /* ScrollViewTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2ADCFDB157EB34A00B6E519 /* Build configuration list for PBXNativeTarget "ScrollViewTest" */;
+			buildPhases = (
+				D2ADCFC2157EB34A00B6E519 /* Sources */,
+				D2ADCFC3157EB34A00B6E519 /* Frameworks */,
+				D2ADCFC4157EB34A00B6E519 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2ADCFF1157EB38400B6E519 /* PBXTargetDependency */,
+			);
+			name = ScrollViewTest;
+			productName = ScrollViewTest;
+			productReference = D2ADCFC6157EB34A00B6E519 /* ScrollViewTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D2EDC3401572BB8900EBB417 /* StencilTest */ = {
@@ -998,6 +1103,7 @@
 				D21F88801533064A00E2496C /* KazmathTests */,
 				D253D9BE15663DE20027DA6C /* Scale9SpriteTest */,
 				D2EDC3401572BB8900EBB417 /* StencilTest */,
+				D2ADCFC5157EB34A00B6E519 /* ScrollViewTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1035,6 +1141,23 @@
 				D253D9E615663DFD0027DA6C /* MainMenu.xib in Resources */,
 				D253D9F4156641630027DA6C /* button_light_normal.png in Resources */,
 				D253DA0C1566ECCE0027DA6C /* dropshadow_rounded_5px.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2ADCFC4157EB34A00B6E519 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2ADCFFF157EB47B00B6E519 /* PositionTextureA8Color.vsh in Resources */,
+				D2ADD000157EB47B00B6E519 /* PositionTextureColor.fsh in Resources */,
+				D2ADD001157EB47B00B6E519 /* PositionTextureColor.vsh in Resources */,
+				D2ADD002157EB47B00B6E519 /* SpriteTextureMask.fsh in Resources */,
+				D2ADD003157EB47B00B6E519 /* StencilMask.fsh in Resources */,
+				D2ADCFEC157EB37400B6E519 /* InfoPlist.strings in Resources */,
+				D2ADCFED157EB37400B6E519 /* MainMenu.xib in Resources */,
+				D2ADCFFD157EB46600B6E519 /* Picking.fsh in Resources */,
+				D2ADCFFE157EB46900B6E519 /* PositionTextureA8Color.fsh in Resources */,
+				D2ADD006157EB53F00B6E519 /* Autumn_scenery.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1173,6 +1296,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2ADCFC2157EB34A00B6E519 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2ADCFEA157EB37400B6E519 /* AppDelegate.m in Sources */,
+				D2ADCFEE157EB37400B6E519 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2EDC33D1572BB8900EBB417 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1251,6 +1383,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = D253D9ED15663E680027DA6C /* PBXContainerItemProxy */;
 		};
+		D2ADCFF1157EB38400B6E519 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2ADCFF0157EB38400B6E519 /* PBXContainerItemProxy */;
+		};
 		D2EDC36C1572BC2300EBB417 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1307,6 +1444,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				D253D9DF15663DFD0027DA6C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2ADCFE1157EB37400B6E519 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2ADCFE2157EB37400B6E519 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2ADCFE3157EB37400B6E519 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2ADCFE4157EB37400B6E519 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D2ADCFE5157EB37400B6E519 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2ADCFE6157EB37400B6E519 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -1509,6 +1670,38 @@
 					"3rd-party/kazmath/include",
 				);
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2ADCFDC157EB34A00B6E519 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2ADCFDD157EB34A00B6E519 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -1760,6 +1953,15 @@
 			buildConfigurations = (
 				D253D9D515663DE20027DA6C /* Debug */,
 				D253D9D615663DE20027DA6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2ADCFDB157EB34A00B6E519 /* Build configuration list for PBXNativeTarget "ScrollViewTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2ADCFDC157EB34A00B6E519 /* Debug */,
+				D2ADCFDD157EB34A00B6E519 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

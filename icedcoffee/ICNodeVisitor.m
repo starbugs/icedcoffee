@@ -66,7 +66,10 @@
 
 - (void)visitChildrenOfNode:(ICNode *)node
 {
-    for (ICNode *child in node.children) {
+    // Important: using ICNode's _children ivar for enumeration since ICView may re-route
+    // ICNode::children (and other composition related methods) to its render texture
+    // backing scene's children.    
+    for (ICNode *child in node->_children) {
         [self visitNode:child];
     }    
 }

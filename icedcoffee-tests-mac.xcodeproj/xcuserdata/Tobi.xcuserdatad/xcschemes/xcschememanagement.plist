@@ -34,6 +34,11 @@
 			<key>orderHint</key>
 			<integer>13</integer>
 		</dict>
+		<key>ScrollViewTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>15</integer>
+		</dict>
 		<key>StencilTest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -58,6 +63,11 @@
 			<true/>
 		</dict>
 		<key>D253D9BE15663DE20027DA6C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2ADCFC5157EB34A00B6E519</key>
 		<dict>
 			<key>primary</key>
 			<true/>

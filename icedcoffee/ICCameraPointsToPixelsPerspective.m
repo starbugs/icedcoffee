@@ -23,6 +23,7 @@
 #import "ICCameraPointsToPixelsPerspective.h"
 #import "ICHostViewController.h"
 #import "icGL.h"
+#import "icTypes.h"
 #import "icMacros.h"
 
 @implementation ICCameraPointsToPixelsPerspective

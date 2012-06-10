@@ -69,7 +69,7 @@
 
 - (void)updateMultiQuad
 {
-    if (_contentSize.x == 0 && _contentSize.y == 0)
+    if (_size.x == 0 && _size.y == 0)
         return;
     if (_scale9Rect.origin.x == 0 && _scale9Rect.origin.y == 0 &&
         _scale9Rect.size.width == 0 && _scale9Rect.size.height == 0)
@@ -95,17 +95,17 @@
     float y1 = 0;
     float x2 = _scale9Rect.origin.x;
     float y2 = _scale9Rect.origin.y;
-    float x3 = _contentSize.x - (_texture.contentSize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
-    float y3 = _contentSize.y - (_texture.contentSize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
-    float x4 = _contentSize.x;
-    float y4 = _contentSize.y;
+    float x3 = _size.x - (_texture.size.width - _scale9Rect.origin.x - _scale9Rect.size.width);
+    float y3 = _size.y - (_texture.size.height - _scale9Rect.origin.y - _scale9Rect.size.height);
+    float x4 = _size.x;
+    float y4 = _size.y;
     float z = 0;
     float tx1 = 0;
     float ty1 = 1.0f;
-    float tx2 = _scale9Rect.origin.x / _texture.contentSize.width;
-    float ty2 = (_scale9Rect.origin.y + _scale9Rect.size.height) / _texture.contentSize.height;
-    float tx3 = (_scale9Rect.origin.x + _scale9Rect.size.width) / _texture.contentSize.width;
-    float ty3 = _scale9Rect.origin.y / _texture.contentSize.height;
+    float tx2 = _scale9Rect.origin.x / _texture.size.width;
+    float ty2 = (_scale9Rect.origin.y + _scale9Rect.size.height) / _texture.size.height;
+    float tx3 = (_scale9Rect.origin.x + _scale9Rect.size.width) / _texture.size.width;
+    float ty3 = _scale9Rect.origin.y / _texture.size.height;
     float tx4 = 1.0f;
     float ty4 = 0.0f;
     
@@ -220,9 +220,9 @@
     [self updateMultiQuad];
 }
 
-- (void)setContentSize:(kmVec3)contentSize
+- (void)setSize:(kmVec3)size
 {
-    [super setContentSize:contentSize];
+    [super setSize:size];
     [self updateMultiQuad];
 }
 

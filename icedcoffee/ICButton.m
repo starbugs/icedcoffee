@@ -39,12 +39,9 @@
 @synthesize label = _label;
 @synthesize background = _background;
 
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)format
-  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+- (id)initWithSize:(CGSize)size
 {
-    if ((self = [super initWithWidth:w height:h pixelFormat:format depthBufferFormat:depthBufferFormat])) {
+    if ((self = [super initWithSize:size])) {
         self.label = [ICLabel labelWithText:@"Button" fontName:@"Lucida Grande" fontSize:12];
         self.label.color = (icColor4B){0,0,0,255};
 
@@ -58,10 +55,10 @@
                                                      name:ICLabelFontDidChange
                                                    object:self.label];
         
-        NSString *textureFile = [[NSBundle mainBundle] pathForImageResource:@"button_light_normal.png"];
+        NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
         ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:textureFile];
         self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];
-        [self.background setContentSize:self.contentSize];
+        [self.background setSize:self.size];
         
         [self addChild:self.background];
         [self addChild:self.label];
@@ -87,7 +84,7 @@
 
 - (void)centerLabel
 {
-    [self.label centerNodeInParentNodeSpace];
+    [self.label centerNode];
     [self.label setPositionY:self.label.position.y + 1];    
 }
 

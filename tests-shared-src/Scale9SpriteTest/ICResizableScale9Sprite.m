@@ -48,10 +48,10 @@ enum {
     return self;
 }
 
-- (void)setContentSize:(kmVec3)contentSize
+- (void)setSize:(kmVec3)size
 {
-    [super setContentSize:contentSize];
-    [[self.children objectAtIndex:0] centerNodeInParentNodeSpace];
+    [super setSize:size];
+    [[self.children objectAtIndex:0] centerNode];
 }
 
 - (uint)resizeEdgeWithLocalLocation:(CGPoint)localLocation
@@ -60,13 +60,13 @@ enum {
     if (localLocation.x < RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeLeft;
     } 
-    if (localLocation.x >= self.contentSize.x - RESIZE_BAR_THICKNESS) {
+    if (localLocation.x >= self.size.x - RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeRight;
     } 
     if (localLocation.y < RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeBottom;
     }
-    if (localLocation.y >= self.contentSize.y - RESIZE_BAR_THICKNESS) {
+    if (localLocation.y >= self.size.y - RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeTop;
     }
     return resizeEdge;
@@ -104,7 +104,7 @@ enum {
     
     _dragStartLocation = location;
     _dragStartPosition = [self position];
-    _dragStartContentSize = [self contentSize];
+    _dragStartsize = [self size];
     
     _isDragging = YES;
     
@@ -193,14 +193,14 @@ enum {
     [self setPositionX:_dragStartPosition.x + dragOffset.x];
     [self setPositionY:_dragStartPosition.y + dragOffset.y];
     
-    kmVec3 newContentSize;
-    newContentSize.x = _dragStartContentSize.x + sizeOffset.x;
-    newContentSize.y = _dragStartContentSize.y + sizeOffset.y;
-    [self setContentSize:newContentSize];    
+    kmVec3 newsize;
+    newsize.x = _dragStartsize.x + sizeOffset.x;
+    newsize.y = _dragStartsize.y + sizeOffset.y;
+    [self setSize:newsize];    
     
     [_dropShadowSprite setPositionX:self.position.x - 22];
     [_dropShadowSprite setPositionY:self.position.y - 22];
-    [_dropShadowSprite setContentSize:(kmVec3){self.contentSize.x + 44, self.contentSize.y + 44, 0}];
+    [_dropShadowSprite setSize:(kmVec3){self.size.x + 44, self.size.y + 44, 0}];
 }
 
 @end

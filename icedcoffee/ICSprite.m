@@ -170,7 +170,7 @@
     [_texture release];
     _texture = [texture retain];
 
-    [self setContentSize:(kmVec3){[texture contentSize].width, [texture contentSize].height, 0}];
+    [self setSize:(kmVec3){[texture size].width, [texture size].height, 0}];
 }
 
 - (void)setMaskTexture:(ICTexture2D *)maskTexture
@@ -187,10 +187,10 @@
     }
 }
 
-- (void)setContentSize:(kmVec3)contentSize
+- (void)setSize:(kmVec3)size
 {
-    [self setQuadSize:CGSizeMake(contentSize.x, contentSize.y)];
-    [super setContentSize:contentSize];
+    [self setQuadSize:CGSizeMake(size.x, size.y)];
+    [super setSize:size];
 }
 
 - (void)setQuadSize:(CGSize)size

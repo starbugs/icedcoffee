@@ -39,7 +39,6 @@
 @interface ICNode (Private)
 - (void)setParent:(ICNode *)parent;
 - (void)setChildren:(NSMutableArray *)children;
-- (NSMutableArray *)mutableChildren;
 - (void)setNeedsDisplayForNode:(ICNode *)node;
 @end
 
@@ -62,7 +61,7 @@
         // Anchor point is the same as default position initially
         [self setAnchorPoint:defaultPosition];
         // Content size is null also
-        [self setContentSize:defaultPosition];
+        [self setSize:defaultPosition];
         
         kmVec3 defaultScale;
         kmVec3Fill(&defaultScale, 1, 1, 1);
@@ -103,37 +102,49 @@
 {
     [child setParent:self];
     
-    if (!self.children) {
-        self.children = [NSMutableArray arrayWithCapacity:1];
+    if (!_children) {
+        _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
-    [self.mutableChildren addObject:child];    
+    [(NSMutableArray *)_children addObject:child];
 }
 
 - (void)insertChild:(ICNode *)child atIndex:(uint)index
 {
-    if (!self.children) {
-        self.children = [NSMutableArray arrayWithCapacity:1];
+    if (!_children) {
+        _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
-    [self.mutableChildren insertObject:child atIndex:index];
+    [(NSMutableArray *)_children insertObject:child atIndex:index];
 }
 
 - (void)removeChild:(ICNode *)child
 {
-    if (self.children) {
-        [self.mutableChildren removeObject:child];
+    if (_children) {
+        [(NSMutableArray *)_children removeObject:child];
     }
 }
 
 - (void)removeChildAtIndex:(uint)index
 {
-    if (self.children) {
-        [self.mutableChildren removeObjectAtIndex:index];
+    if (_children) {
+        [(NSMutableArray *)_children removeObjectAtIndex:index];
+    }
+}
+
+- (void)removeAllChildren
+{
+    if (_children) {
+        [(NSMutableArray *)_children removeAllObjects];
     }
 }
 
 - (BOOL)hasChildren
 {
-    return self.children.count > 0;
+    return _children.count > 0;
+}
+
+- (NSArray *)children
+{
+    return _children;
 }
 
 - (NSArray *)ancestorsWithType:(Class)classType stopAfterFirstAncestor:(BOOL)stopAfterFirstAncestor
@@ -338,10 +349,26 @@
     _transformDirty = YES;
 }
 
-- (void)centerNodeInParentNodeSpace
+- (void)centerNode
 {
-    kmVec3 center = (kmVec3){floorf(self.parent.contentSize.x/2 - self.contentSize.x/2),
-                             floorf(self.parent.contentSize.y/2 - self.contentSize.y/2),
+    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
+                             floorf(self.parent.size.y/2 - self.size.y/2),
+                             0};
+    [self setPosition:center];
+}
+
+- (void)centerNodeVertically
+{
+    kmVec3 center = (kmVec3){_position.x,
+                             floorf(self.parent.size.y/2 - self.size.y/2),
+                             0};
+    [self setPosition:center];
+}
+
+- (void)centerNodeHorizontally
+{
+    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
+                             _position.y,
                              0};
     [self setPosition:center];
 }
@@ -359,7 +386,7 @@
 
 - (void)centerAnchorPoint
 {
-    kmVec3 ap = (kmVec3){_contentSize.x/2, _contentSize.y/2, _contentSize.z/2};
+    kmVec3 ap = (kmVec3){_size.x/2, _size.y/2, _size.z/2};
     [self setAnchorPoint:ap];
 }
 
@@ -368,17 +395,17 @@
     return _anchorPoint;
 }
 
-- (void)setContentSize:(kmVec3)contentSize
+- (void)setSize:(kmVec3)size
 {
-    _contentSize = contentSize;
+    _size = size;
     if (_autoCenterAnchorPoint) {
-        _anchorPoint = (kmVec3){ _contentSize.x/2, _contentSize.y/2, _contentSize.z/2 };
+        _anchorPoint = (kmVec3){ _size.x/2, _size.y/2, _size.z/2 };
     }
 }
 
-- (kmVec3)contentSize
+- (kmVec3)size
 {
-    return _contentSize;
+    return _size;
 }
 
 - (void)setScale:(kmVec3)scale
@@ -465,8 +492,8 @@
 
 - (void)orderFront
 {
-    [self.parent.mutableChildren exchangeObjectAtIndex:[self order]
-                                     withObjectAtIndex:[self.parent.children count]-1];
+    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
+                                                withObjectAtIndex:[self.parent.children count]-1];
 }
 
 - (void)orderForward
@@ -475,8 +502,8 @@
     if ([self.parent.children count] <= order+1)
         return;
     
-    [self.parent.mutableChildren exchangeObjectAtIndex:order
-                                     withObjectAtIndex:order+1];
+    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
+                                                withObjectAtIndex:order+1];
 }
 
 - (void)orderBackward
@@ -485,14 +512,14 @@
     if (order == 0)
         return;
     
-    [self.parent.mutableChildren exchangeObjectAtIndex:order
-                                     withObjectAtIndex:order-1];
+    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
+                                                withObjectAtIndex:order-1];
 }
 
 - (void)orderBack
 {
-    [self.parent.mutableChildren exchangeObjectAtIndex:[self order]
-                                     withObjectAtIndex:0];
+    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
+                                                withObjectAtIndex:0];
 }
 
 
@@ -502,7 +529,7 @@
 {
     kmVec3 vertices[2];
     vertices[0] = _position;
-    kmVec3Add(&vertices[1], &_position, &_contentSize);
+    kmVec3Add(&vertices[1], &_position, &_size);
     return icComputeAABBFromVertices(vertices, 2);
 }
 
@@ -511,13 +538,13 @@
     kmVec3 world[8], view[8];
     
     world[0] = _position;
-    world[1] = (kmVec3){_position.x + _contentSize.x, _position.y, _position.z};
-    world[2] = (kmVec3){_position.x + _contentSize.x, _position.y + _contentSize.y, _position.z};
-    world[3] = (kmVec3){_position.x + _contentSize.x, _position.y + _contentSize.y, _position.z + _contentSize.z};
-    world[4] = (kmVec3){_position.x, _position.y + _contentSize.y, _position.z};
-    world[5] = (kmVec3){_position.x, _position.y + _contentSize.y, _position.z + _contentSize.z};
-    world[6] = (kmVec3){_position.x, _position.y, _position.z + _contentSize.z};
-    world[7] = (kmVec3){_position.x + _contentSize.x, _position.y, _position.z + _contentSize.z};
+    world[1] = (kmVec3){_position.x + _size.x, _position.y, _position.z};
+    world[2] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z};
+    world[3] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z + _size.z};
+    world[4] = (kmVec3){_position.x, _position.y + _size.y, _position.z};
+    world[5] = (kmVec3){_position.x, _position.y + _size.y, _position.z + _size.z};
+    world[6] = (kmVec3){_position.x, _position.y, _position.z + _size.z};
+    world[7] = (kmVec3){_position.x + _size.x, _position.y, _position.z + _size.z};
 
     ICScene *scene = [self parentScene];
     if (!scene && [self isKindOfClass:[ICScene class]] && !_parent) {
@@ -597,7 +624,8 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@>", [self class], self, self.name];    
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@>",
+            [self class], self, self.name, [_parent class]];
 }
 
 
@@ -613,11 +641,6 @@
 {
     [_children release];
     _children = [children retain];
-}
-
-- (NSMutableArray *)mutableChildren
-{
-    return (NSMutableArray *)self.children;
 }
 
 @end

@@ -223,7 +223,7 @@
 - (void)setupScreen
 {
     kmMat4PerspectiveProjection(&_matProjection, _fov, _aspect, _zNear, _zFar);
-    kmMat4LookAt(&_matLookAt, &_eye, &_lookAt, &_upVector);    
+    kmMat4LookAt(&_matLookAt, &_eye, &_lookAt, &_upVector);
 }
 
 - (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect

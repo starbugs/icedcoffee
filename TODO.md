@@ -1,6 +1,7 @@
 IcedCoffee Todos
 ================
 
+* Implement high resolution textures
 * Implement texture masking in ICSprite
 * Implement resizable views
 * Switch default depth buffer format to 24 bits when tested on devices

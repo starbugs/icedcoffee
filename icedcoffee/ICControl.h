@@ -154,10 +154,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
     ICControlState _state;
 }
 
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)pixelFormat
-  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
+- (id)initWithSize:(CGSize)size;
 
 #ifdef __IC_PLATFORM_MAC
 - (void)sendAction:(SEL)action to:(id)target forEvent:(NSEvent *)event;

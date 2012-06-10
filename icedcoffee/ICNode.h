@@ -128,16 +128,17 @@
  */
 @interface ICNode : ICResponder
 {
+@public
+    NSMutableArray *_children;    
+    
 @protected
-    // Composition
     ICNode *_parent;
-    NSMutableArray *_children;
     
     // Transform
     kmMat4 _transform;
     kmVec3 _position;
     kmVec3 _anchorPoint;
-    kmVec3 _contentSize;
+    kmVec3 _size;
     kmVec3 _scale;
     kmVec3 _rotationAxis;
     float _rotationAngle;
@@ -170,13 +171,18 @@
 /**
  @brief An NSArray containing the node's children
  */
-@property (nonatomic, readonly) NSArray *children;
+@property (nonatomic, readonly, getter=children) NSArray *children;
 
 /**
  @brief The node's parent
  
  The parent property is nil for root nodes. Usually, there is no need to set this
- property from the outside manually; it it set automatically by the addChild method.
+ property manually, it is set automatically by ICNode::addChild.
+ 
+ Subclasses that need to be notified when the node's parent changes may override
+ ICNode::setParent: to implement custom program logic. When overriding, you should
+ always call <code>[super setParent:parent]</code> to ensure the parent is set
+ appropriately in ICNode.
  */
 @property (nonatomic, assign, setter=setParent:) ICNode *parent;
 
@@ -209,6 +215,11 @@
  the object will be released.
  */
 - (void)removeChildAtIndex:(uint)index;
+
+/**
+ @brief Removes all children
+ */
+- (void)removeAllChildren;
 
 /**
  @brief A boolean value indicating whether the node has children
@@ -389,9 +400,26 @@
 /**
  @brief Sets the position of the node so as to center it in its parent node's space
  
- @note The parent node must have a valid ICNode::contentSize for this method to work correctly.
+ @note Both the node and its parent must have a valid ICNode::size for this method
+ to work correctly.
  */
-- (void)centerNodeInParentNodeSpace;
+- (void)centerNode;
+
+/**
+ @brief Sets the position of the node so as to center it vertically in its parent node's space
+ 
+ @note Both the node and its parent must have a valid ICNode::size for this method
+ to work correctly.
+ */
+- (void)centerNodeVertically;
+
+/**
+ @brief Sets the position of the node so as to center it horizontally in its parent node's space
+ 
+ @note Both the node and its parent must have a valid ICNode::size for this method
+ to work correctly.
+ */
+- (void)centerNodeHorizontally;
 
 /**
  @brief Returns the position of the node in the parent node space
@@ -404,7 +432,7 @@
 - (void)setAnchorPoint:(kmVec3)anchorPoint;
 
 /**
- @brief Centers the anchor point of the node based on its ICNode::contentSize property
+ @brief Centers the anchor point of the node based on its ICNode::size property
  */
 - (void)centerAnchorPoint;
 
@@ -416,12 +444,12 @@
 /**
  @brief Sets the content size of the node in its own untransformed space
  */
-- (void)setContentSize:(kmVec3)contentSize;
+- (void)setSize:(kmVec3)size;
 
 /**
  @brief Returns the content size of the node in its own untransformed space
  */
-- (kmVec3)contentSize;
+- (kmVec3)size;
 
 /**
  @brief Sets the node's scale
@@ -477,7 +505,7 @@
 
 /**
  @brief A BOOL property indicating whether the anchor point should be auto-centered based on
- the node's contentSize property
+ the node's size property
  */
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
@@ -520,10 +548,10 @@
  This method calculates the node's axis-aligned bounding box in its parent node's coordinate space.
  
  @remarks The calculations performed by this method are based on the ICNode::position and
- ICNode::contentSize properties. For this method to work correctly, the following preconditions
+ ICNode::size properties. For this method to work correctly, the following preconditions
  must be met:
  <ul>
-     <li>The receiver's ICNode::contentSize property must be set correctly, that is, covering
+     <li>The receiver's ICNode::size property must be set correctly, that is, covering
      the whole (cubic) space occupied by the receiver's visible contents.</li>
      <li>The receiver must have been added to a valid ICScene object before this method is
      called.</li>
@@ -543,10 +571,10 @@
  are expressed in points rather than pixels.
 
  @remarks The calculations performed by this method are based on the ICNode::position and
- ICNode::contentSize properties. For this method to work correctly, the following preconditions
+ ICNode::size properties. For this method to work correctly, the following preconditions
  must be met:
  <ul>
-    <li>The receiver's ICNode::contentSize property must be set correctly, that is, covering
+    <li>The receiver's ICNode::size property must be set correctly, that is, covering
     the whole (cubic) space occupied by the receiver's visible contents.</li>
     <li>The receiver must have been added to a valid ICScene object before this method is
     called.</li>

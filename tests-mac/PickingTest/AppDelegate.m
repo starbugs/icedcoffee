@@ -46,48 +46,48 @@
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [scene addChild:rs];
     
-    ResponsiveView *rv = [[[ResponsiveView alloc] initWithWidth:128 height:128] autorelease];
+    ResponsiveView *rv = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [rv setPositionX:150];
     [scene addChild:rv];
     
-    ResponsiveView *nestedRV = [[[ResponsiveView alloc] initWithWidth:128 height:128] autorelease];
+    ResponsiveView *nestedRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [nestedRV setPositionY:150];
     [scene addChild:nestedRV];
     
-    ResponsiveView *innerRV = [[[ResponsiveView alloc] initWithWidth:48 height:48] autorelease];
+    ResponsiveView *innerRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
     [innerRV setPositionX:10];
     [innerRV setPositionY:10];
-    [nestedRV addSubView:innerRV];
+    [nestedRV addChild:innerRV];
     
-    ResponsiveView *innerRV2 = [[[ResponsiveView alloc] initWithWidth:48 height:48] autorelease];
+    ResponsiveView *innerRV2 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
     [innerRV2 setPositionX:70];
     [innerRV2 setPositionY:10];
-    [nestedRV addSubView:innerRV2];
+    [nestedRV addChild:innerRV2];
 
-    ResponsiveView *innerRV3 = [[[ResponsiveView alloc] initWithWidth:48 height:48] autorelease];
+    ResponsiveView *innerRV3 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
     [innerRV3 setPositionX:10];
     [innerRV3 setPositionY:70];
-    [nestedRV addSubView:innerRV3];
+    [nestedRV addChild:innerRV3];
 
-    ResponsiveView *innerRV4 = [[[ResponsiveView alloc] initWithWidth:48 height:48] autorelease];
+    ResponsiveView *innerRV4 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
     [innerRV4 setPositionX:70];
     [innerRV4 setPositionY:70];
-    [nestedRV addSubView:innerRV4];
+    [nestedRV addChild:innerRV4];
 
-    ResponsiveView *nestedRV2 = [[[ResponsiveView alloc] initWithWidth:128 height:128] autorelease];
+    ResponsiveView *nestedRV2 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [nestedRV2 setPositionX:150];
     [nestedRV2 setPositionY:150];
     [scene addChild:nestedRV2];
     
-    ResponsiveView *innerRV5 = [[[ResponsiveView alloc] initWithWidth:108 height:108] autorelease];
+    ResponsiveView *innerRV5 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(108, 108)] autorelease];
     [innerRV5 setPositionX:10];
     [innerRV5 setPositionY:10];
-    [nestedRV2 addSubView:innerRV5];
+    [nestedRV2 addChild:innerRV5];
     
-    ResponsiveView *innerRV6 = [[[ResponsiveView alloc] initWithWidth:88 height:88] autorelease];
+    ResponsiveView *innerRV6 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(88, 88)] autorelease];
     [innerRV6 setPositionX:10];
     [innerRV6 setPositionY:10];
-    [innerRV5 addSubView:innerRV6];
+    [innerRV5 addChild:innerRV6];
     
     [self.hostViewController runWithScene:scene];
 }
@@ -96,14 +96,14 @@
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
     [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
-    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
+    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
                                           shareContext:nil
                                     hostViewController:self.hostViewController];
     
     self.window.contentView = glView;
-    [self.window setAcceptsMouseMovedEvents:NO];
+    [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
 
     [self setupScene];

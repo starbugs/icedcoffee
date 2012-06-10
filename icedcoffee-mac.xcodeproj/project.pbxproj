@@ -74,6 +74,13 @@
 		D24BAFCD14EDB1FF000E65AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */; };
 		D253DA0115666DDD0027DA6C /* ICPlanarNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */; };
 		D253DA0215666DDD0027DA6C /* ICPlanarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D253DA0015666DDD0027DA6C /* ICPlanarNode.m */; };
+		D2ADCFBF157EA80600B6E519 /* ICScrollView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2ADCFBD157EA80600B6E519 /* ICScrollView.h */; };
+		D2ADCFC0157EA80600B6E519 /* ICScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2ADCFBE157EA80600B6E519 /* ICScrollView.m */; };
+		D2B8AD9D1582AE53006F6419 /* ICTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B8AD9B1582AE53006F6419 /* ICTableView.h */; };
+		D2B8AD9E1582AE53006F6419 /* ICTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B8AD9C1582AE53006F6419 /* ICTableView.m */; };
+		D2B8ADA11582AE9A006F6419 /* ICTableViewDataSource.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B8ADA01582AE9A006F6419 /* ICTableViewDataSource.h */; };
+		D2B8ADA41582AF69006F6419 /* ICTableViewCell.h in Headers */ = {isa = PBXBuildFile; fileRef = D2B8ADA21582AF69006F6419 /* ICTableViewCell.h */; };
+		D2B8ADA51582AF69006F6419 /* ICTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D2B8ADA31582AF69006F6419 /* ICTableViewCell.m */; };
 		D2CD4D781556EDEC00106F08 /* ICScale9Sprite.h in Headers */ = {isa = PBXBuildFile; fileRef = D2CD4D761556EDEC00106F08 /* ICScale9Sprite.h */; };
 		D2CD4D791556EDEC00106F08 /* ICScale9Sprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */; };
 		D2E6489115042F3700D71A6D /* ICView.h in Headers */ = {isa = PBXBuildFile; fileRef = D2E6488F15042F3700D71A6D /* ICView.h */; };
@@ -184,6 +191,13 @@
 		D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPlanarNode.h; path = icedcoffee/ICPlanarNode.h; sourceTree = "<group>"; };
 		D253DA0015666DDD0027DA6C /* ICPlanarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPlanarNode.m; path = icedcoffee/ICPlanarNode.m; sourceTree = "<group>"; };
+		D2ADCFBD157EA80600B6E519 /* ICScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScrollView.h; path = icedcoffee/ICScrollView.h; sourceTree = "<group>"; };
+		D2ADCFBE157EA80600B6E519 /* ICScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScrollView.m; path = icedcoffee/ICScrollView.m; sourceTree = "<group>"; };
+		D2B8AD9B1582AE53006F6419 /* ICTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTableView.h; path = icedcoffee/ICTableView.h; sourceTree = "<group>"; };
+		D2B8AD9C1582AE53006F6419 /* ICTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTableView.m; path = icedcoffee/ICTableView.m; sourceTree = "<group>"; };
+		D2B8ADA01582AE9A006F6419 /* ICTableViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTableViewDataSource.h; path = icedcoffee/ICTableViewDataSource.h; sourceTree = "<group>"; };
+		D2B8ADA21582AF69006F6419 /* ICTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTableViewCell.h; path = icedcoffee/ICTableViewCell.h; sourceTree = "<group>"; };
+		D2B8ADA31582AF69006F6419 /* ICTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTableViewCell.m; path = icedcoffee/ICTableViewCell.m; sourceTree = "<group>"; };
 		D2CD4D761556EDEC00106F08 /* ICScale9Sprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9Sprite.h; path = icedcoffee/ICScale9Sprite.h; sourceTree = "<group>"; };
 		D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9Sprite.m; path = icedcoffee/ICScale9Sprite.m; sourceTree = "<group>"; };
 		D2E6488F15042F3700D71A6D /* ICView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICView.h; path = icedcoffee/ICView.h; sourceTree = "<group>"; };
@@ -323,6 +337,8 @@
 				D2CD4D771556EDEC00106F08 /* ICScale9Sprite.m */,
 				D24BAF6B14EDB142000E65AA /* ICScene.h */,
 				D24BAF6C14EDB142000E65AA /* ICScene.m */,
+				D2ADCFBD157EA80600B6E519 /* ICScrollView.h */,
+				D2ADCFBE157EA80600B6E519 /* ICScrollView.m */,
 				D2FEE81615338B74004CFF62 /* ICScheduler.h */,
 				D2FEE81715338B74004CFF62 /* ICScheduler.m */,
 				D24BAF6D14EDB142000E65AA /* ICShaderCache.h */,
@@ -331,6 +347,11 @@
 				D24BAF7014EDB142000E65AA /* ICShaderProgram.m */,
 				D24BAF7114EDB142000E65AA /* ICSprite.h */,
 				D24BAF7214EDB142000E65AA /* ICSprite.m */,
+				D2B8ADA01582AE9A006F6419 /* ICTableViewDataSource.h */,
+				D2B8AD9B1582AE53006F6419 /* ICTableView.h */,
+				D2B8AD9C1582AE53006F6419 /* ICTableView.m */,
+				D2B8ADA21582AF69006F6419 /* ICTableViewCell.h */,
+				D2B8ADA31582AF69006F6419 /* ICTableViewCell.m */,
 				D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */,
 				D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */,
 				D24BAF7314EDB142000E65AA /* ICTexture2D.h */,
@@ -522,6 +543,10 @@
 				D24BAB92155067D0003BCF94 /* ICButton.h in Headers */,
 				D2CD4D781556EDEC00106F08 /* ICScale9Sprite.h in Headers */,
 				D253DA0115666DDD0027DA6C /* ICPlanarNode.h in Headers */,
+				D2ADCFBF157EA80600B6E519 /* ICScrollView.h in Headers */,
+				D2B8AD9D1582AE53006F6419 /* ICTableView.h in Headers */,
+				D2B8ADA11582AE9A006F6419 /* ICTableViewDataSource.h in Headers */,
+				D2B8ADA41582AF69006F6419 /* ICTableViewCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -620,6 +645,9 @@
 				D24BAB93155067D0003BCF94 /* ICButton.m in Sources */,
 				D2CD4D791556EDEC00106F08 /* ICScale9Sprite.m in Sources */,
 				D253DA0215666DDD0027DA6C /* ICPlanarNode.m in Sources */,
+				D2ADCFC0157EA80600B6E519 /* ICScrollView.m in Sources */,
+				D2B8AD9E1582AE53006F6419 /* ICTableView.m in Sources */,
+				D2B8ADA51582AF69006F6419 /* ICTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

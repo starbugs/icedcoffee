@@ -49,16 +49,16 @@
 {
     ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
     [scene setClearColor:(icColor4B){0,0,0,255}];
-    [scene setContentSize:(kmVec3){self.hostViewController.viewSize.width, self.hostViewController.viewSize.height}];
+    [scene setSize:(kmVec3){self.hostViewController.viewSize.width, self.hostViewController.viewSize.height}];
     
     self.label = [ICLabel labelWithText:@"The quick brown fox jumps over the lazy dog"
                                fontName:@"Lucida Grande"
                                fontSize:16];
     [self.label setColor:(icColor4B){255,255,255,255}];
     [scene addChild:self.label];
-    [self.label centerNodeInParentNodeSpace];
+    [self.label centerNode];
    
-    ICButton *button = [[ICButton alloc] initWithWidth:160 height:21];
+    ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
     [button setPositionX:300];
     [button setPositionY:50];
     button.label.text = @"Test Button";

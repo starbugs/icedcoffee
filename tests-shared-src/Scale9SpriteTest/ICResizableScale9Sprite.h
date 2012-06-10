@@ -26,7 +26,7 @@
     uint _resizeEdge;
     CGPoint _dragStartLocation;
     kmVec3 _dragStartPosition;
-    kmVec3 _dragStartContentSize;
+    kmVec3 _dragStartsize;
     BOOL _isDragging;
     ICSprite *_dropShadowSprite;
 }

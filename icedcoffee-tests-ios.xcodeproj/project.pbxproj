@@ -20,6 +20,7 @@
 		D2732886152F9F9D0004F557 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB774514F9397A0028CD04 /* QuartzCore.framework */; };
 		D2732887152F9F9F0004F557 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773F14F939530028CD04 /* OpenGLES.framework */; };
 		D273288A152F9FCE0004F557 /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
+		D2A9AD6C15848CE5007EB224 /* ResponsiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */; };
 		D2AB773614F9391A0028CD04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773414F939110028CD04 /* UIKit.framework */; };
 		D2AB773914F939330028CD04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773714F939260028CD04 /* Foundation.framework */; };
 		D2AB774114F939620028CD04 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773F14F939530028CD04 /* OpenGLES.framework */; };
@@ -114,6 +115,8 @@
 		D273287E152F9F3A0004F557 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D273287F152F9F3A0004F557 /* RetinaDisplaySupportTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RetinaDisplaySupportTest-Info.plist"; sourceTree = "<group>"; };
 		D2732880152F9F3A0004F557 /* RetinaDisplaySupportTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RetinaDisplaySupportTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2A9AD6A15848CE5007EB224 /* ResponsiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveView.h; path = "tests-shared-src/PickingTest/ResponsiveView.h"; sourceTree = SOURCE_ROOT; };
+		D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveView.m; path = "tests-shared-src/PickingTest/ResponsiveView.m"; sourceTree = SOURCE_ROOT; };
 		D2AB773414F939110028CD04 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		D2AB773714F939260028CD04 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		D2AB773F14F939530028CD04 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/OpenGLES.framework; sourceTree = DEVELOPER_DIR; };
@@ -253,6 +256,8 @@
 				D21C97FE14F302320059BBBE /* AppDelegate.m */,
 				D2AB774B14F93AA20028CD04 /* ResponsiveSprite.h */,
 				D2AB774C14F93AA20028CD04 /* ResponsiveSprite.m */,
+				D2A9AD6A15848CE5007EB224 /* ResponsiveView.h */,
+				D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */,
 				D21C980814F3025B0059BBBE /* Supporting FIles */,
 			);
 			name = PickingTest;
@@ -531,6 +536,7 @@
 				D21C980414F302320059BBBE /* AppDelegate.m in Sources */,
 				D21C980614F302320059BBBE /* main.m in Sources */,
 				D2AB774D14F93AA20028CD04 /* ResponsiveSprite.m in Sources */,
+				D2A9AD6C15848CE5007EB224 /* ResponsiveView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -640,6 +646,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -667,6 +674,7 @@
 				INFOPLIST_FILE = "tests-ios/PickingTest/PickingTest-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -678,6 +686,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -699,6 +708,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
@@ -837,6 +847,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -860,6 +871,7 @@
 				INFOPLIST_FILE = "tests-ios/DepthBufferTest/DepthBufferTest-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = app;
@@ -871,6 +883,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
@@ -888,6 +901,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;

@@ -76,7 +76,7 @@
  
  <h3>Resizing</h3>
  
- You may resize an ICRenderTexture object by changing its ICRenderTexture::contentSize property.
+ You may resize an ICRenderTexture object by changing its ICRenderTexture::size property.
  The render texture will then re-create its internal buffers automatically.
  
  <h3>Conditional Drawing</h3>
@@ -135,18 +135,21 @@
  
  <h3>Depth and Stencil Buffers</h3>
  
- ICRenderTexture allows for convenient depth and stencil buffer attachments as required by
- your application. There are a number of convenience initializers available you may use to
- create render textures with depth and/or stencil buffer attachments:
+ ICRenderTexture supports depth buffer and packed depth-stencil buffer attachments.
+ There are a number of convenience initializers available you may use to create render
+ textures with depth or depth-stencil buffer attachments:
  
  <ul>
     <li>ICRenderTexture::initWithWidth:height:depthBuffer: creates a default depth buffer
     attachment if depthBuffer is set to YES.</li>
-    <li>ICRenderTexture::initWithWidth:height:depthBuffer:stencilBuffer: additionally creates
-    a default stencil buffer if stencilBuffer is set to YES.</li>
+    <li>ICRenderTexture::initWithWidth:height:depthBuffer:stencilBuffer: creates a default
+    depth-stencil buffer if stencilBuffer is set to YES.</li>
     <li>ICRenderTexture::initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
     allows you to exactly define the formats for each buffer.</li>
  </ul>
+ 
+ Note that due to compatibility reasons, ICRenderTexture does only support stencil buffers
+ as part of a packed depth-stencil buffer.
  
  <h3>Subclassing</h3>
  
@@ -272,8 +275,10 @@
  to the texture
  
  The render texture will be initialized with a default color buffer and, if depthBuffer is set
- to YES, with a default depth buffer. A default stencil buffer will be attached if stencilBuffer
- is set to YES.
+ to YES, with a default depth buffer. If stencilBuffer is set to YES, a default depth-stencil
+ buffer will be created.
+ 
+ @sa initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
  */
 - (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer;
 
@@ -320,7 +325,11 @@
  stencil buffer format
  
  The render texture will be initialized with a color, depth and stencil buffer as specified
- by the format arguments.
+ by the format arguments. Due to compatibility reasons, it is not possible to create a
+ render texture with a stencil buffer if no depth buffer is attached. Therefore, if a
+ stencil buffer format is defined, a packed depth-stencil buffer will be attached to the
+ render texture. In this case, the depth format will default to kICDepthBufferFormat_24 and
+ the stencil buffer format will be kICStencilBufferFormat_8.
  */
 - (id)initWithWidth:(int)w
              height:(int)h
@@ -332,7 +341,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
  @brief Sets the content size of the render texture and automatically re-creates its buffers
  if necessary
  */
-- (void)setContentSize:(kmVec3)contentSize;
+- (void)setSize:(kmVec3)size;
 
 /**
  @brief Sets the render texture's FBO as the current frame buffer and adjusts the viewport

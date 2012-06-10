@@ -46,7 +46,7 @@
         self.textureFiles = files;        
         
         ICSprite *backgroundSprite = [ICSprite sprite];
-        [backgroundSprite setContentSize:(kmVec3){624, 624, 0}];
+        [backgroundSprite setSize:(kmVec3){624, 624, 0}];
         [backgroundSprite setColor:(icColor4B){0,0,0,10}];
         [self addChild:backgroundSprite];
         
@@ -76,17 +76,17 @@
     
     CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
     CGSize scaledSize;
-    CGSize contentSize = [texture contentSize];
+    CGSize size = [texture size];
     
-    if (contentSize.width >= contentSize.height) {
-        scaledSize.width = contentSize.width > maxSize.width ? maxSize.width : contentSize.width;
-        scaledSize.height = contentSize.height / contentSize.width * scaledSize.width;
+    if (size.width >= size.height) {
+        scaledSize.width = size.width > maxSize.width ? maxSize.width : size.width;
+        scaledSize.height = size.height / size.width * scaledSize.width;
     } else {
-        scaledSize.height = contentSize.height > maxSize.height ? maxSize.height : contentSize.height;
-        scaledSize.width  = contentSize.width / contentSize.height * scaledSize.height;
+        scaledSize.height = size.height > maxSize.height ? maxSize.height : size.height;
+        scaledSize.width  = size.width / size.height * scaledSize.height;
     }
     
-    [sprite setContentSize:(kmVec3){scaledSize.width, scaledSize.height, 0}];
+    [sprite setSize:(kmVec3){scaledSize.width, scaledSize.height, 0}];
     [sprite setPositionX:sprite.position.x + (maxSize.width - scaledSize.width) / 2];
     [sprite setPositionY:sprite.position.y + (maxSize.height - scaledSize.height) / 2];    
 }

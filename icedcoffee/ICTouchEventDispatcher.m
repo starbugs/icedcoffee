@@ -26,6 +26,7 @@
 
 #import "ICTouchEventDispatcher.h"
 #import "ICHostViewController.h"
+#import "ICNode.h"
 
 @implementation ICTouchEventDispatcher
 
@@ -46,7 +47,8 @@
         CGPoint touchLocation = [touch locationInView:[_hostViewController view]];
         touchLocation.y = [_hostViewController viewSize].height - touchLocation.y;
         NSArray *hitNodes = [_hostViewController hitTest:touchLocation];
-        [[hitNodes lastObject] performSelector:selector withObject:touches withObject:event];
+        ICNode *deepest = [hitNodes lastObject];
+        [deepest performSelector:selector withObject:touches withObject:event];
     }    
 }
 

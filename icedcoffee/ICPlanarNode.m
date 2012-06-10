@@ -23,6 +23,7 @@
 #import "ICPlanarNode.h"
 #import "ICCamera.h"
 #import "ICScene.h"
+#import "icTypes.h"
 #import "kazmath/vec4.h"
 
 @implementation ICPlanarNode
@@ -75,10 +76,11 @@
 {
     kmVec3 projectPoint1, projectPoint2;
     kmVec3 unprojectPoint1, unprojectPoint2;
-    projectPoint1 = (kmVec3){hostViewLocation.x, hostViewLocation.y, 0};
-    projectPoint2 = (kmVec3){hostViewLocation.x, hostViewLocation.y, 1};
+    projectPoint1 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
+                               hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 0);
+    projectPoint2 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
+                               hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 1);
     
-    // FIXME: check for points vs. pixels with retina display
     ICScene *parentScene = [self parentScene];
     [[parentScene camera] unprojectView:projectPoint1
                                 toWorld:&unprojectPoint1];
@@ -93,7 +95,8 @@
     localIntersection.y = floorf(localIntersection.y);
     kmVec3Transform(&localIntersection, &intersection, &worldToNodeTransform);
     
-    return CGPointMake(localIntersection.x, localIntersection.y);
+    return CGPointMake(localIntersection.x / IC_CONTENT_SCALE_FACTOR(),
+                       localIntersection.y / IC_CONTENT_SCALE_FACTOR());
 }
 
 @end

@@ -22,6 +22,7 @@
 
 #import "AppDelegate.h"
 #import "ResponsiveSprite.h"
+#import "ResponsiveView.h"
 
 @implementation AppDelegate
 
@@ -43,6 +44,10 @@
     ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:filename];
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [scene addChild:rs];
+    
+    ResponsiveView *rv = [ResponsiveView viewWithSize:CGSizeMake(128, 128)];
+    [rv setPositionY:150];
+    [scene addChild:rv];
     
     [self.hostViewController runWithScene:scene];
 }

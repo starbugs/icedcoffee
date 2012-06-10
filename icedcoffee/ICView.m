@@ -22,99 +22,203 @@
 
 #import "ICView.h"
 #import "ICScene.h"
+#import "ICSprite.h"
 
 @implementation ICView
 
-+ (id)viewWithWidth:(int)w
-             height:(int)h
+@synthesize backing = _backing;
+@synthesize clipsChildren = _clipsChildren;
+
++ (id)viewWithSize:(CGSize)size
 {
-    return [[[[self class] alloc] initWithWidth:w height:h] autorelease];
+    return [[[[self class] alloc] initWithSize:size] autorelease];
 }
 
-+ (id)viewWithWidth:(int)w
-             height:(int)h 
-        depthBuffer:(BOOL)depthBuffer
+- (id)initWithSize:(CGSize)size
 {
-    return [[[[self class] alloc] initWithWidth:w height:h depthBuffer:depthBuffer] autorelease];    
-}
-
-+ (id)viewWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)pixelFormat
-{
-    return [[[[self class] alloc] initWithWidth:w height:h pixelFormat:pixelFormat] autorelease];
-}
-
-+ (id)viewWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)pixelFormat
-  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
-{
-    return [[[[self class] alloc] initWithWidth:w
-                                         height:h
-                                    pixelFormat:pixelFormat
-                              depthBufferFormat:depthBufferFormat] autorelease];    
-}
-
-
-- (id)initWithWidth:(int)w
-             height:(int)h
-{
-    return [super initWithWidth:w height:h];
-}
-
-- (id)initWithWidth:(int)w
-             height:(int)h
-        depthBuffer:(BOOL)depthBuffer
-{
-    return [super initWithWidth:w height:h depthBuffer:depthBuffer];
-}
-
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)format
-{
-    return [super initWithWidth:w height:h pixelFormat:format];
-}
-
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)format
-  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
-{
-    if ((self = [super initWithWidth:w height:h pixelFormat:format depthBufferFormat:depthBufferFormat])) {
-        self.subScene = [[[ICScene alloc] initWithHostViewController:nil] autorelease];
-        [self.subScene setClearColor:(icColor4B){0,0,0,0}];
-        [self setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
+    if ((self = [super init])) {
+        self.size = kmVec3Make(size.width, size.height, 0);
+        _clippingMask = [[ICSprite alloc] init];
+        _clippingMask.size = self.size;
+        _clippingMask.color = (icColor4B){255,255,255,255};
     }
-    return self;    
+    return self;
 }
 
 - (void)dealloc
 {
+    [_backing release];
+    _backing = nil;
+    
+    [_clippingMask release];
+    _clippingMask = nil;
+    
     [super dealloc];
 }
 
-- (void)addSubView:(ICView *)subView
+- (void)setSize:(kmVec3)size
 {
-    [self.subScene addChild:subView];
+    [super setSize:size];
+    [_backing setSize:size];
 }
 
-- (void)removeSubView:(ICView *)subView
+- (void)setWantsRenderTextureBacking:(BOOL)wantsRenderTextureBacking
 {
-    [self.subScene removeChild:subView];
-}
-
-- (NSArray *)subViews
-{
-    NSMutableArray *subViews = [NSMutableArray arrayWithCapacity:[self.subScene.children count]];
-    for (ICNode *child in self.subScene.children) {
-        if ([child isKindOfClass:[ICView class]]) {
-            [subViews addObject:child];
-        }
+    if (wantsRenderTextureBacking) {
+        [self setBacking:[ICRenderTexture renderTextureWithWidth:self.size.x
+                                                          height:self.size.y
+                                                     pixelFormat:kICPixelFormat_Default
+                                               depthBufferFormat:kICDepthBufferFormat_Default
+                                             stencilBufferFormat:kICStencilBufferFormat_Default]];
+        _backing.frameUpdateMode = kICFrameUpdateMode_OnDemand;
+    } else {
+        [self setBacking:nil];
     }
-    return subViews;
 }
 
+// FIXME: doesn't support exchanging an existing backing yet
+- (void)setBacking:(ICRenderTexture *)renderTexture
+{
+    if (_backing && renderTexture) {
+        NSAssert(nil, @"Replacing an existing backing is currently not supported");
+    }
+    
+    if (renderTexture && !renderTexture.subScene) {
+        renderTexture.subScene = [ICScene sceneWithHostViewController:nil];
+        renderTexture.subScene.clearColor = (icColor4B){0,0,0,0};
+    }
+    
+    if (_backing && !renderTexture) {
+        // Move render texture children back to self
+        for (ICNode *child in _backing.subScene.children) {
+            [super addChild:child];
+        }
+        [_backing.subScene removeAllChildren];
+    }
+    
+    if (!_backing && renderTexture) {
+        for (ICNode *child in _children) {
+            [renderTexture.subScene addChild:child];
+        }
+        [self removeAllChildren];
+    }
+    
+    if (_backing) {
+        [self removeChild:_backing];        
+    }
+    
+    [_backing release];
+    _backing = [renderTexture retain];
+    
+    if (_backing)
+        [super addChild:_backing];
+}
+
+- (ICRenderTexture *)backing
+{
+    return _backing;
+}
+
+- (BOOL)clipsChildren
+{
+    if (_backing)
+        return YES;
+    
+    return _clipsChildren;
+}
+
+- (void)setClipsChildren:(BOOL)clipsChildren
+{
+    _clipsChildren = clipsChildren;
+}
+
+- (void)setNeedsDisplay
+{
+    [_backing setNeedsDisplay];
+    [super setNeedsDisplay];
+}
+
+- (void)drawWithVisitor:(ICNodeVisitor *)visitor
+{
+    if (_clipsChildren && !_backing) {
+        glClearStencil(0);
+        glClear(GL_STENCIL_BUFFER_BIT);
+        
+        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+        glDepthMask(GL_FALSE);
+        glEnable(GL_STENCIL_TEST);
+        
+        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+        glStencilFunc(GL_ALWAYS, 1, 1);
+        
+        // Draw solid sprite in rectangular region of the view
+        [_clippingMask drawWithVisitor:visitor];
+        
+        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+        glDepthMask(GL_TRUE);
+        glStencilFunc(GL_EQUAL, 1, 1);
+    }
+}
+
+- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
+{
+    if (_clipsChildren && !_backing) {
+        glDisable(GL_STENCIL_TEST);
+    }    
+}
+
+- (void)addChild:(ICNode *)child
+{
+    if (!_backing) {
+        [super addChild:child];
+    } else {
+        [self.backing.subScene addChild:child];
+    }
+}
+
+- (void)insertChild:(ICNode *)child atIndex:(uint)index
+{
+    if (!_backing) {
+        [super insertChild:child atIndex:index];
+    } else {
+        [self.backing.subScene insertChild:child atIndex:index];
+    }
+}
+
+- (void)removeChild:(ICNode *)child
+{
+    if (!_backing) {
+        [super removeChild:child];
+    } else {
+        [self.backing.subScene removeChild:child];
+    }
+}
+
+- (void)removeChildAtIndex:(uint)index
+{
+    if (!_backing) {
+        [super removeChildAtIndex:index];
+    } else {
+        [self.backing.subScene removeChildAtIndex:index];
+    }
+}
+
+- (void)removeAllChildren
+{
+    if (!_backing) {
+        [super removeAllChildren];
+    } else {
+        [self.backing.subScene removeAllChildren];
+    }
+}
+
+- (NSArray *)children
+{
+    if (!_backing) {
+        return [super children];
+    } else {
+        return self.backing.subScene.children;
+    }
+}
 
 @end

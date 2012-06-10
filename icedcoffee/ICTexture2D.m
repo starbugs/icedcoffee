@@ -87,6 +87,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif// IC_FONT_LABEL_SUPPORT
 
 
+// FIXME: ICLabel support for 32-bit textures
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
 #if defined(__ARM_NEON__) && IC_USE_RGBA32_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0
@@ -108,10 +109,10 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 @implementation ICTexture2D
 
-@synthesize contentSizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
+@synthesize sizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
 @synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
 
-- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size
+- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height size:(CGSize)size
 {
 	if((self = [super init])) {        
 		glGenTextures(1, &name_);
@@ -190,7 +191,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
 }
 
--(CGSize) contentSize
+-(CGSize) size
 {
 	CGSize ret;
 	ret.width = size_.width; // / IC_CONTENT_SCALE_FACTOR();
@@ -352,7 +353,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		free(data);
 		data = tempData;
 	}
-	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh contentSize:imageSize];
+	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh size:imageSize];
     
 	// should be after calling super init
 	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
@@ -425,9 +426,9 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	UIGraphicsPopContext();
 	
 #if USE_TEXT_WITH_A8_TEXTURES
-	self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 #else
-	self = [self initWithData:data pixelFormat:kICPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+	self = [self initWithData:data pixelFormat:kICPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 #endif
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -482,7 +483,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
                 data[c++] = data[i*bytesPerRow+j*4+3];
 		
 		//data = (unsigned char*)[self keepData:data length:textureSize];
-		self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh contentSize:dimensions];
+		self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 		
 		[bitmap release];
 		[image release]; 

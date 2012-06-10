@@ -25,6 +25,8 @@
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
 
+// FIXME: ICLabel support for 32-bit textures
+
 @implementation ICLabel
 
 @synthesize text = _text;

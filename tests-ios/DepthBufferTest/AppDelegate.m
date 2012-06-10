@@ -74,6 +74,7 @@
     [_tsForegroundSprite setPositionX:10.0f];
     [_tsForegroundSprite setPositionY:10.0f];
     ICSprite *tsBackgroundSprite = [ResponsiveSprite spriteWithTexture:texture];
+    [tsBackgroundSprite setScale:kmVec3Make(2, 2, 1)];
     [tsBackgroundSprite flipTextureVertically];
     [tsBackgroundSprite setPositionZ:-100.0f];
     [textureScene addChild:_tsForegroundSprite];
@@ -94,7 +95,7 @@
     // Initialize a GL view with depth buffer support
     ICGLView *glView = [ICGLView viewWithFrame:[self.window bounds]
                                    pixelFormat:kEAGLColorFormatRGBA8
-                                   depthFormat:GL_DEPTH_COMPONENT16
+                                   depthFormat:GL_DEPTH_COMPONENT24_OES
                             preserveBackbuffer:NO
                                     sharegroup:nil
                                  multiSampling:NO

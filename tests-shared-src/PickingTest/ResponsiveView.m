@@ -25,15 +25,14 @@
 
 @implementation ResponsiveView
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format
+- (id)initWithSize:(CGSize)size
 {
-    if ((self = [super initWithWidth:w height:h pixelFormat:format])) {
-        self.frameUpdateMode = kICFrameUpdateMode_OnDemand;
-        
+    if ((self = [super initWithSize:size])) {
+        [self setWantsRenderTextureBacking:YES];
         NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
         ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:filename];        
         ResponsiveSprite *responsiveSprite = [[ResponsiveSprite alloc] initWithTexture:texture];
-        [self.subScene addChild:responsiveSprite];
+        [self addChild:responsiveSprite];
         [responsiveSprite release];
     }
     return self;

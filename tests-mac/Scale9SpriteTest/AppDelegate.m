@@ -40,16 +40,16 @@
     NSString *dropShadowFile = [[NSBundle mainBundle] pathForImageResource:@"dropshadow_rounded_5px.png"];
     ICTexture2D *dropShadowTexture = [ICTextureLoader loadTextureFromFile:dropShadowFile];
     ICScale9Sprite *dropShadowSprite = [ICScale9Sprite spriteWithTexture:dropShadowTexture scale9Rect:CGRectMake(22, 22, 34, 30)];
-    [dropShadowSprite setContentSize:(kmVec3){444,344,0}];
+    [dropShadowSprite setSize:(kmVec3){444,344,0}];
     [scene addChild:dropShadowSprite];
-    [dropShadowSprite centerNodeInParentNodeSpace];
+    [dropShadowSprite centerNode];
     
     NSString *textureFile = [[NSBundle mainBundle] pathForImageResource:@"button_light_normal.png"];
     ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:textureFile];
     ICResizableScale9Sprite *resizableSprite = [ICResizableScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];
-    [resizableSprite setContentSize:(kmVec3){400,300,0}];
+    [resizableSprite setSize:(kmVec3){400,300,0}];
     [scene addChild:resizableSprite];
-    [resizableSprite centerNodeInParentNodeSpace];
+    [resizableSprite centerNode];
     resizableSprite.dropShadowSprite = dropShadowSprite;
         
     [self.hostViewController runWithScene:scene];

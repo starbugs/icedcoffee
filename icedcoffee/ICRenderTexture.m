@@ -158,7 +158,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         _stencilBufferFormat = stencilBufferFormat;
 
         // Set the render texture's content size -- this implicitly creates the required FBO
-        [self setContentSize:(kmVec3){w, h, 0}];
+        [self setSize:(kmVec3){w, h, 0}];
 
         // Set up a sprite for displaying the render texture in the scene
 		_sprite = [ICSprite spriteWithTexture:_texture];
@@ -181,16 +181,16 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 	[super dealloc];
 }
 
-- (void)setContentSize:(kmVec3)contentSize
+- (void)setSize:(kmVec3)size
 {
-    NSUInteger w = contentSize.x;
-    NSUInteger h = contentSize.y;
+    NSUInteger w = size.x;
+    NSUInteger h = size.y;
     
-    if (w == (NSUInteger)_contentSize.x &&
-        h == (NSUInteger)_contentSize.y)
+    if (w == (NSUInteger)_size.x &&
+        h == (NSUInteger)_size.y)
         return; // content size not changed -- do nothing
 
-    [super setContentSize:contentSize];
+    [super setSize:size];
     
     w *= IC_CONTENT_SCALE_FACTOR();
     h *= IC_CONTENT_SCALE_FACTOR();
@@ -220,7 +220,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                                      pixelFormat:_pixelFormat
                                       pixelsWide:powW
                                       pixelsHigh:powH
-                                     contentSize:CGSizeMake(w, h)];
+                                     size:CGSizeMake(w, h)];
     free(data);
     
     // Associate texture with FBO
@@ -230,53 +230,57 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                            _texture.name,
                            0);
     
-    // Attach a depth buffer if required
-    if (_depthBufferFormat) {
-        GLint depthComponent;
-        switch (_depthBufferFormat) {
-            case kICDepthBufferFormat_16:
-                depthComponent = GL_DEPTH_COMPONENT16;
-                break;
-            case kICDepthBufferFormat_24:
-#ifdef __IC_PLATFORM_MAC
-                depthComponent = GL_DEPTH_COMPONENT24;
-#elif defined(__IC_PLATFORM_IOS)
-                depthComponent = GL_DEPTH_COMPONENT24_OES;                    
-#endif
-                break;
-            default:
-                [NSException raise:NSInvalidArgumentException format:@"Invalid depth buffer format"];
-                break;
-        }
+    // Attach a depth (and stencil) buffer if required
+    if (_depthBufferFormat || _stencilBufferFormat) {
+        GLint depthFormat = 0;
         
+        if (!_stencilBufferFormat) {
+            // Depth buffer only formats
+            switch (_depthBufferFormat) {
+                case kICDepthBufferFormat_16: {
+                    depthFormat = GL_DEPTH_COMPONENT16;
+                    break;
+                }
+                case kICDepthBufferFormat_24: {
+#ifdef __IC_PLATFORM_MAC
+                    depthFormat = GL_DEPTH_COMPONENT24;
+#elif defined(__IC_PLATFORM_IOS)
+                    depthFormat = GL_DEPTH_COMPONENT24_OES;                    
+#endif
+                    break;
+                }
+                default: {
+                    [NSException raise:NSInvalidArgumentException format:@"Invalid depth buffer format"];
+                    break;
+                }
+            }
+        } else {
+            // Depth-stencil packed format, the only supported format is GL_DEPTH24_STENCIL8
+            _depthBufferFormat = kICDepthBufferFormat_24;
+#ifdef __IC_PLATFORM_MAC
+            depthFormat = GL_DEPTH24_STENCIL8;
+#elif defined(__IC_PLATFORM_IOS)
+            depthFormat = GL_DEPTH24_STENCIL8_OES;
+#endif
+        }
+
         GLint oldRBO;
         glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
+                        
         glGenRenderbuffers(1, &_depthRBO);
         glBindRenderbuffer(GL_RENDERBUFFER, _depthRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, depthComponent, (GLsizei)powW, (GLsizei)powH);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                  GL_DEPTH_ATTACHMENT,
-                                  GL_RENDERBUFFER,
-                                  _depthRBO);
+        glRenderbufferStorage(GL_RENDERBUFFER, depthFormat, (GLsizei)powW, (GLsizei)powH);
+        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRBO);
+        if (_stencilBufferFormat) {
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRBO);
+        }
+        
         glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);
     }
     
-    // Attach a stencil buffer if required
-    if (_stencilBufferFormat) {
-        GLint oldRBO;
-        glGetIntegerv(GL_RENDERBUFFER_BINDING, &oldRBO);
-        glGenRenderbuffers(1, &_stencilRBO);
-        glBindRenderbuffer(GL_RENDERBUFFER, _stencilRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_STENCIL_INDEX8, (GLsizei)powW, (GLsizei)powH);
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER,
-                                  GL_STENCIL_ATTACHMENT,
-                                  GL_RENDERBUFFER,
-                                  _stencilRBO);
-        glBindRenderbuffer(GL_RENDERBUFFER, oldRBO);            
-    }
-    
-    NSAssert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE,
-             @"Could not attach texture to framebuffer");
+    GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+    NSAssert(fboStatus == GL_FRAMEBUFFER_COMPLETE,
+             @"Could not attach texture to framebuffer (fbo status: %x", fboStatus);
     
     // Bind old frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
@@ -286,6 +290,10 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     
     if (_sprite) {
         [_sprite setTexture:_texture];
+    }
+    
+    if (_subScene) {
+        [[_subScene camera] setViewport:CGRectMake(0, 0, powW, powH)];
     }
     
     [self setNeedsDisplay];
@@ -303,7 +311,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     glGetIntegerv(GL_VIEWPORT, _oldFBOViewport);
         
 	// Adjust the viewport
-	CGSize texSize = [_texture contentSizeInPixels];
+	CGSize texSize = [_texture sizeInPixels];
 	glViewport(0, 0, texSize.width, texSize.height);
 
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
@@ -363,8 +371,8 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         // Perform the inner hit test
         NSArray *innerHitTestNodes = [self.subScene hitTest:localPoint];
         
-        // Append nodes after(!) the next successful hit in the parent scene, which will be
-        // the hit of the render texture's sprite
+        // Append nodes after(!) the next successfully hit node in the parent scene,
+        // which will be the hit of the render texture's sprite
         [(ICNodeVisitorPicking *)visitor appendNodesToResultStack:innerHitTestNodes];
         
     } else if (self.frameUpdateMode == kICFrameUpdateMode_Synchronized ||

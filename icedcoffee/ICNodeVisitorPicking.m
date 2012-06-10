@@ -73,6 +73,8 @@
 
 - (void)visit:(ICNode *)node
 {
+    //NSLog(@"Picking visitor visit: %@", [node description]);
+    
     [_resultNodeStack removeAllObjects];
     [super visit:node];
     _nodeIndex = 1;
@@ -80,14 +82,16 @@
 
 - (void)visitSingleNode:(ICNode *)node
 {
-    if ([node isVisible] && [node userInteractionEnabled]) {        
-        [node drawWithVisitor:self];
+    if ([node isVisible] && [node userInteractionEnabled]) {
+        //NSLog(@"Picking visitor visitSingleNode: %@", [node description]);
         
+        [node drawWithVisitor:self];
         glFlush();
         
         icColor4B color = [_renderTexture colorOfPixelAtLocation:CGPointMake(0, 0)];
         ICNode *resultNode = [self nodeForPickColor:color];
         if (resultNode && ![_resultNodeStack containsObject:resultNode]) {
+            //NSLog(@"Picking visitor: hit node %@", [resultNode description]);
             // Push result node on stack
             [_resultNodeStack addObject:resultNode];
             // Append nodes picked from a render texture FBO after adding the result node
@@ -97,6 +101,7 @@
             }
             [_appendNodesToStack removeAllObjects];
         }
+                
         _nodeIndex++;
     }
 }
@@ -114,7 +119,10 @@
         return node;
     }
     
-    for (ICNode *child in node.children) {
+    // Important: using ICNode's _children ivar for enumeration since ICView may re-route
+    // ICNode::children (and other composition related methods) to its render texture
+    // backing scene's children.
+    for (ICNode *child in node->_children) {
         (*index)++;
         ICNode *resultNode = [self findNodeForPickColor:color withNode:child index:index];
         if (resultNode) {

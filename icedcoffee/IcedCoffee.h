@@ -49,6 +49,7 @@
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
 #import "ICView.h"
+#import "ICScrollView.h"
 #import "icTypes.h"
 
 #ifdef __IC_PLATFORM_MAC
@@ -64,7 +65,7 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.4)
+ @mainpage IcedCoffee Framework Documentation (v0.5)
 
  <h2>Abstract</h2>
  
@@ -114,8 +115,8 @@
  <h2>Building</h2>
  
  IcedCoffee comes with a convenient Xcode workspace and a number of Xcode projects. Once you have
- downloaded the source, open icedcoffee.xcworkspace using Apple's Xcode 4.2 or newer, select a
- test application from the available schemes and hit Cmd+R to build and run the test.
+ downloaded the source, open <code>icedcoffee.xcworkspace</code> using Apple's Xcode 4.2 or newer,
+ select a test application from the available schemes and hit Cmd+R to build and run the test.
 
  <h2>Getting Started</h2>
  
@@ -155,6 +156,21 @@
  IcedCoffee has borrowed ideas and source from <a href="http://cocos2d-iphone.org">cocos2d</a>
  and several other great frameworks. See the
  <a href="https://github.com/starbugs/icedcoffee/blob/master/README.md">README</a> for details.
+ 
+ <h2>Imprint</h2>
+ 
+ German law requires me to put this here:
+ 
+ Responsible for the contents of this web site: Tobias Lensing, Grenzstr. 50, 28217 Bremen,
+ Tel: +49 421 3979999, @htmlonly<script type="text/javascript">document.write("<a href='");
+ document.write("ma");document.write("il");document.write("to");document.write(":");
+ document.write("ma");document.write("il");document.write("@");document.write("tl");
+ document.write("e");document.write("n");document.write("si");document.write("ng");
+ document.write(".");document.write("o");document.write("rg");document.write("'>");
+ document.write("ma");document.write("il");document.write("@");document.write("tl");
+ document.write("e");document.write("n");document.write("si");document.write("ng");
+ document.write(".");document.write("o");document.write("rg");document.write("</a>");
+ </script>.@endhtmlonly
  
  */
 

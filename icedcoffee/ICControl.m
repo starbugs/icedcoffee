@@ -77,12 +77,9 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 
 @synthesize state = _state;
 
-- (id)initWithWidth:(int)w
-             height:(int)h
-        pixelFormat:(ICPixelFormat)format
-  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+- (id)initWithSize:(CGSize)size
 {
-    if ((self = [super initWithWidth:w height:h pixelFormat:format depthBufferFormat:depthBufferFormat])) {
+    if ((self = [super initWithSize:size])) {
         _actions = [[NSMutableDictionary alloc] init];
         _state = ICControlStateNormal;
     }

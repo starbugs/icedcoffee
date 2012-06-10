@@ -55,8 +55,13 @@
  look-at matrices. Whenever a parameter is changed, the look-at and/or projection matrices
  will be recalculated the next time ICCamera::apply is called.
  
- The ICScene class creates and manages a designated camera object for each scene by default.
- You should use this camera object instead of defining your own unless you really need to do so.
+ <b>Setup</b>
+
+ ICCamera should be initialized using the
+ ICCamera::initWithEye:lookAt:upVector:fov:aspect:zNear:zFar:viewport: method. The ICScene
+ class by default creates an ICCameraPointsToPixelsPerspective camera object for you. If
+ you need a different camera, instanciate your own ICCamera object and initialize ICScene
+ using ICScene::initWithHostViewController:camera:.
  
  <b>Subclassing</b>
  

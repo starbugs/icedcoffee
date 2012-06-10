@@ -29,7 +29,7 @@
  @brief A sprite capable of scaling texture regions based on a so-called scale-9 rect
  
  This class implements a sprite consisting of 9 quads (18 polygons) that are defined by
- the sprite's contentSize (see ICNode::contentSize) and a scale-9 rectangle
+ the sprite's size (see ICNode::size) and a scale-9 rectangle
  (see ICScale9Sprite::scale9Rect). Just as with the ICSprite class, the content size property
  defines the extends of the sprite in world coordinates (points). While the naive implementation
  of the ICSprite class simply scales or repeats its texture so that it fits the sprite's quad

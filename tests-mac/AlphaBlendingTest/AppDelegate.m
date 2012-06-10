@@ -46,7 +46,7 @@
     ICTexture2D *npotTex = [self.hostViewController.textureCache loadTextureFromFile:npot];
     ICSprite *npotSprite = [ICSprite spriteWithTexture:npotTex];
     [scene addChild:npotSprite];
-    [npotSprite centerNodeInParentNodeSpace];
+    [npotSprite centerNode];
     
     [self.hostViewController runWithScene:scene];
     

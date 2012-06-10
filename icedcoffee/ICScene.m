@@ -91,9 +91,9 @@
         self.camera = camera;
         self.drawingVisitor = [[[ICDEFAULT_DRAWING_VISITOR alloc] init] autorelease];
         self.pickingVisitor = [[[ICDEFAULT_PICKING_VISITOR alloc] init] autorelease];
-        [self setContentSize:(kmVec3){hostViewController.view.bounds.size.width,
-                                      hostViewController.view.bounds.size.height,
-                                      0}];
+        [self setSize:(kmVec3){hostViewController.view.bounds.size.width,
+                               hostViewController.view.bounds.size.height,
+                               0}];
         _clearColor = (icColor4B){255,255,255,255};
         _clearsColorBuffer = YES;
         _clearsDepthBuffer = YES;
@@ -269,7 +269,7 @@
     
     NSArray *renderTextureAncestors = [self ancestorsWithType:[ICRenderTexture class]];
     ICRenderTexture *parentRenderTexture = [renderTextureAncestors objectAtIndex:0];
-    return parentRenderTexture.texture.contentSize;
+    return CGSizeMake(parentRenderTexture.size.x, parentRenderTexture.size.y);
 }
 
 - (void)setParent:(ICNode *)parent
@@ -282,7 +282,7 @@
                                  frameBufferSize.height * IC_CONTENT_SCALE_FACTOR());
     [self.camera setViewport:viewport];
     
-    [self setContentSize:(kmVec3){frameBufferSize.width, frameBufferSize.height, 0}];
+    [self setSize:(kmVec3){frameBufferSize.width, frameBufferSize.height, 0}];
 }
 
 - (void)setNeedsDisplayForNode:(ICNode *)node

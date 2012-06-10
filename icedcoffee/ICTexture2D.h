@@ -76,7 +76,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** ICTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
  * The created ICTexture2D object will always have power-of-two dimensions. 
- * Depending on how you create the ICTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "contentSize" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
+ * Depending on how you create the ICTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "size" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
  * Be aware that the content of the generated textures will be upside-down!
  */
 @interface ICTexture2D : NSObject
@@ -92,7 +92,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 }
 
 /** Intializes with a texture2d with data */
-- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height contentSize:(CGSize)size;
+- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height size:(CGSize)size;
 
 /** These functions are needed to create mutable textures */
 - (void) releaseData:(void*)data;
@@ -109,7 +109,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) GLuint name;
 
 /** returns content size of the texture in pixels */
-@property(nonatomic,readonly, nonatomic) CGSize contentSizeInPixels;
+@property(nonatomic,readonly, nonatomic) CGSize sizeInPixels;
 
 /** texture max S */
 @property(nonatomic,readwrite) GLfloat maxS;
@@ -119,7 +119,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
 
 /** returns the content size of the texture in points */
--(CGSize) contentSize;
+-(CGSize) size;
 @end
 
 /**

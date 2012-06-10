@@ -1,6 +1,19 @@
 Changelog
 =========
 
+*v0.5*
+
+* Redesigned the ICView class to allow for buffer backed and unbacked (direct) drawing,
+  including stencil based clipping for unbacked views.
+* Added the ICScrollView class which extends ICView so as to enable scrolling the view's contents.
+* Fixed a bug in ICRenderTexture that would not allow for the stencil buffer attachments.
+  ICRenderTexture does now support packed depth-stencil buffers of format GL_DEPTH24_STENCIL8.
+* Fixed a bug in ICScene::frameBufferSize that would return the wrong size of render texture
+  parents on retina displays.
+* Fixed a bug in ICPlanarNode::hostViewToNodeLocation: that would cause wrong transformation
+  results on retina displays.
+* Added and reworked parts of the documentation.
+
 *v0.4*
 
 * Introduced full depth buffer support in ICRenderTexture, refactored initializers for
