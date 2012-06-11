@@ -1,4 +1,4 @@
-IcedCoffee v0.4
+IcedCoffee v0.5
 ===============
 
 IcedCoffee is a lightweight framework for building stunning user interfaces based on OpenGL ES 2.
