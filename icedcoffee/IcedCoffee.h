@@ -65,7 +65,7 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.5)
+ @mainpage IcedCoffee Framework Documentation (v0.4)
 
  <h2>Abstract</h2>
  

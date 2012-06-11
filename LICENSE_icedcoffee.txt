@@ -1,4 +1,4 @@
-IcedCoffee Framework v0.5
+IcedCoffee Framework v0.1
 
 Copyright (C) 2012 Tobias Lensing
 

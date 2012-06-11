@@ -1,4 +1,4 @@
-IcedCoffee v0.5
+IcedCoffee v0.4
 ===============
 
 IcedCoffee is a lightweight framework for building stunning user interfaces based on OpenGL ES 2.
@@ -40,8 +40,8 @@ Main Features
   * Perspective GUI rendering (XY world plane matches the screen plane)
   * Shader-based picking/selection of nodes (support for arbitrary picking shapes)
   * Render to texture, picking through (potentially nested) texture FBOs
-  * Render to texture and picking with depth and stencil buffer support
-  * View hierarchy with stencil-based clipping, optionally backed by render textures
+  * Render to texture and picking with depth buffer support
+  * View hierarchy backed by render textures
   * Font rendering via CoreGraphics
   * Scale9 sprites for scaling background images and sprite textures
   * Texture loading on a separate thread via GCD
