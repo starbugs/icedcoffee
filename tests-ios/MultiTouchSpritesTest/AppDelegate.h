@@ -20,6 +20,9 @@
 //  SOFTWARE.
 //  
 
+
+// STUB: THIS TEST HAS NOT BEEN IMLPEMENTED YET
+
 #import <UIKit/UIKit.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

@@ -43,6 +43,12 @@
     [super dealloc];
 }
 
+- (void)setDataSource:(id<ICTableViewDataSource>)dataSource
+{
+    _dataSource = dataSource;
+    [self reloadData]; 
+}
+
 - (ICTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier
 {
     return nil;
@@ -54,8 +60,9 @@
         NSInteger numRows = [_dataSource numberOfRowsInTableView:self];
         for (NSInteger i=0; i<numRows; i++) {
             ICTableViewCell *cell = [_dataSource tableView:self cellForRowAtIndex:i];
-            [cell setPositionY:i * cell.size.y];
             [self addChild:cell];
+            [cell setPositionY:i * cell.size.y];
+            [cell setSize:kmVec3Make(self.size.x, cell.size.y, 0)];
         }
         [self setNeedsDisplay];
     }

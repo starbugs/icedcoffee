@@ -79,9 +79,7 @@
         self.autoCenterAnchorPoint = YES;
         
         // Enable user interaction by default
-        self.userInteractionEnabled = YES;
-        
-        [self setNeedsDisplay];
+        self.userInteractionEnabled = YES;        
     }
     return self;
 }
@@ -142,12 +140,34 @@
     return _children.count > 0;
 }
 
+- (NSArray *)childrenOfType:(Class)classType
+{
+    NSMutableArray *children = [NSMutableArray array];
+    for (ICNode *child in _children) {
+        if ([child isKindOfClass:classType]) {
+            [children addObject:child];
+        }
+    }
+    return children;
+}
+
+- (NSArray *)childrenNotOfType:(Class)classType
+{
+    NSMutableArray *children = [NSMutableArray array];
+    for (ICNode *child in _children) {
+        if (![child isKindOfClass:classType]) {
+            [children addObject:child];
+        }
+    }
+    return children;
+}
+
 - (NSArray *)children
 {
     return _children;
 }
 
-- (NSArray *)ancestorsWithType:(Class)classType stopAfterFirstAncestor:(BOOL)stopAfterFirstAncestor
+- (NSArray *)ancestorsOfType:(Class)classType stopAfterFirstAncestor:(BOOL)stopAfterFirstAncestor
 {
     ICNode *node = self;
     NSMutableArray* ancestors = [[[NSMutableArray alloc] init] autorelease];
@@ -161,14 +181,14 @@
     return ancestors;        
 }
 
-- (NSArray *)ancestorsWithType:(Class)classType
+- (NSArray *)ancestorsOfType:(Class)classType
 {
-    return [self ancestorsWithType:classType stopAfterFirstAncestor:NO];
+    return [self ancestorsOfType:classType stopAfterFirstAncestor:NO];
 }
 
-- (ICNode *)firstAncestorWithType:(Class)classType
+- (ICNode *)firstAncestorOfType:(Class)classType
 {
-    NSArray *ancestors = [self ancestorsWithType:classType stopAfterFirstAncestor:YES];
+    NSArray *ancestors = [self ancestorsOfType:classType stopAfterFirstAncestor:YES];
     if ([ancestors count]) {
         return [ancestors objectAtIndex:0];
     }
@@ -177,7 +197,7 @@
 
 - (NSArray *)ancestors
 {
-    return [self ancestorsWithType:nil];
+    return [self ancestorsOfType:nil];
 }
 
 - (void)accumulateDescendants:(NSMutableArray*)descendants
@@ -187,7 +207,7 @@
     if([node hasChildren]) {
         int i;
         for(i=0; i<[[node children] count]; i++) {
-            if(!classType || ![node isKindOfClass: classType])
+            if(!classType || ![[[node children] objectAtIndex:i] isKindOfClass: classType])
                 [descendants addObject: [[node children] objectAtIndex: i]];
             [self accumulateDescendants: descendants
                                withNode: [[node children] objectAtIndex: i]
@@ -205,30 +225,42 @@
 
 - (void)accumulateDescendants:(NSMutableArray*)descendants
                      withNode:(ICNode *)node
-                     withType:(Class)classType
+                       ofType:(Class)classType
 {
     if([node hasChildren]) {
         int i;
         for(i=0; i<[[node children] count]; i++) {
-            if(!classType || [node isKindOfClass:classType])
+            if(!classType || [[[node children] objectAtIndex:i] isKindOfClass:classType])
                 [descendants addObject:[[node children] objectAtIndex:i]];
             [self accumulateDescendants:descendants
                                withNode:[[node children] objectAtIndex:i]
-                               withType:classType];
+                                 ofType:classType];
         }
     }
 }
 
-- (NSArray *)descendantsWithType:(Class)classType
+- (NSArray *)descendantsOfType:(Class)classType
 {
     NSMutableArray* descendants = [[[NSMutableArray alloc] init] autorelease];
-    [self accumulateDescendants:descendants withNode: self withType:classType];
+    [self accumulateDescendants:descendants withNode:self ofType:classType];
     return descendants;
 }
 
 - (NSArray *)descendants
 {
-    return [self descendantsWithType:nil];
+    return [self descendantsOfType:nil];
+}
+
+- (uint)level
+{
+    uint level = 0;
+    ICNode *parent = _parent;
+    do {
+        if (parent)
+            level++;
+    } while ((parent = [parent parent]));
+    
+    return level;
 }
 
 - (ICNode *)root
@@ -247,7 +279,7 @@
 
 - (ICScene *)parentScene
 {
-    NSArray *sceneAncestors = [self ancestorsWithType:[ICScene class]];
+    NSArray *sceneAncestors = [self ancestorsOfType:[ICScene class]];
     if ([sceneAncestors count] > 0)
         return [sceneAncestors objectAtIndex:0];
     return nil;
@@ -333,20 +365,17 @@
 
 - (void)setPositionX:(float)positionX
 {
-    _position.x = positionX;
-    _transformDirty = YES;
+    [self setPosition:kmVec3Make(positionX, _position.y, _position.z)];
 }
 
 - (void)setPositionY:(float)positionY
 {
-    _position.y = positionY;
-    _transformDirty = YES;    
+    [self setPosition:kmVec3Make(_position.x, positionY, _position.z)];
 }
 
 - (void)setPositionZ:(float)positionZ
 {
-    _position.z = positionZ;
-    _transformDirty = YES;
+    [self setPosition:kmVec3Make(_position.x, _position.y, positionZ)];
 }
 
 - (void)centerNode
@@ -408,6 +437,21 @@
     return _size;
 }
 
+- (void)setWidth:(float)width
+{
+    [self setSize:kmVec3Make(width, _size.y, _size.z)];
+}
+
+- (void)setHeight:(float)height
+{
+    [self setSize:kmVec3Make(_size.x, height, _size.z)];
+}
+
+- (void)setDepth:(float)depth
+{
+    [self setSize:kmVec3Make(_size.x, _size.y, depth)];
+}
+
 - (void)setScale:(kmVec3)scale
 {
     _scale = scale;
@@ -456,6 +500,7 @@
     *axis = _rotationAxis;
 }
 
+// respected by visitor
 @synthesize computesTransform = _computesTransform;
 
 - (void)computeTransform
@@ -626,6 +671,25 @@
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@>",
             [self class], self, self.name, [_parent class]];
+}
+
+// private
+- (void)debugLogBranchWithRoot:(ICNode *)root node:(ICNode *)node
+{
+    uint level = [node level] - [root level];
+    NSMutableString *indent = [NSMutableString stringWithCapacity:level];
+    for (uint i=0; i<level; i++) {
+        [indent appendString:@" "];
+    }
+    NSLog(@"%@ - %@", indent, [node description]);
+    for (ICNode *child in _children) {
+        [child debugLogBranchWithRoot:root node:child];
+    }
+}
+
+- (void)debugLogBranch
+{
+    [self debugLogBranchWithRoot:self node:self];
 }
 
 

@@ -30,7 +30,7 @@
 
 #import "icMacros.h"
 #import "ICCamera.h"
-#import "ICCameraPointsToPixelsPerspective.h"
+#import "ICUICamera.h"
 #import "ICConfiguration.h"
 #import "icDefaults.h"
 #import "ICHostViewController.h"
@@ -39,12 +39,15 @@
 #import "ICButton.h"
 #import "ICLabel.h"
 #import "ICScene.h"
+#import "ICUIScene.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
 #import "ICSprite.h"
 #import "ICScale9Sprite.h"
 #import "ICRenderTexture.h"
 #import "ICScheduler.h"
+#import "ICTableView.h"
+#import "ICTableViewCell.h"
 #import "ICTexture2D.h"
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
@@ -65,7 +68,7 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.5)
+ @mainpage IcedCoffee Framework Documentation (v0.6)
 
  <h2>Abstract</h2>
  
@@ -98,8 +101,8 @@
  <h2>Status of This Documentation</h2>
  
  This documentation is preliminary, incomplete and parts of it are subject to change as the
- framework changes and evolves. I am doing my best to keep this documentation up to date with
- the framework sources and to fill the gaps over time.
+ framework evolves. I am doing my best to keep this documentation up to date with the framework
+ sources and to fill the gaps over time.
  
  <h2>Getting the Source</h2>
  

@@ -15,6 +15,29 @@
 		D21F88A21533071C00E2496C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		D21F88A31533072000E2496C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		D21F88A41533072C00E2496C /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D22F255B1587D53B0049268C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D22F257D1587D5EF0049268C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D22F25731587D5EE0049268C /* AppDelegate.m */; };
+		D22F257F1587D5EF0049268C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D22F25761587D5EE0049268C /* InfoPlist.strings */; };
+		D22F25801587D5EF0049268C /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D22F25781587D5EE0049268C /* MainMenu.xib */; };
+		D22F25811587D5EF0049268C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D22F257A1587D5EE0049268C /* main.m */; };
+		D22F25831587D6870049268C /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D22F25841587D68A0049268C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D22F25851587D68C0049268C /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D22F25861587D6990049268C /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D22F258F1587D7270049268C /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25881587D7270049268C /* Picking.fsh */; };
+		D22F25901587D7270049268C /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25891587D7270049268C /* PositionTextureA8Color.fsh */; };
+		D22F25911587D7270049268C /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F258A1587D7270049268C /* PositionTextureA8Color.vsh */; };
+		D22F25921587D7270049268C /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F258B1587D7270049268C /* PositionTextureColor.fsh */; };
+		D22F25931587D7270049268C /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F258C1587D7270049268C /* PositionTextureColor.vsh */; };
+		D22F25941587D7270049268C /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F258D1587D7270049268C /* SpriteTextureMask.fsh */; };
+		D22F25951587D7270049268C /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F258E1587D7270049268C /* StencilMask.fsh */; };
+		D22F259A1587E9770049268C /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25981587E9650049268C /* PositionColor.fsh */; };
+		D22F259B1587E97A0049268C /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25991587E9650049268C /* PositionColor.vsh */; };
+		D22F259F158807970049268C /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F259D1588078B0049268C /* PositionColor.fsh */; };
+		D22F25A01588079A0049268C /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F259E1588078B0049268C /* PositionColor.vsh */; };
+		D22F25A3158877060049268C /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25A1158877060049268C /* PositionColor.fsh */; };
+		D22F25A4158877060049268C /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25A2158877060049268C /* PositionColor.vsh */; };
+		D22F25A61588772E0049268C /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D22F25A51588772E0049268C /* StencilMask.fsh */; };
 		D24314A2151296C500E6AF37 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
 		D24314A3151296CD00E6AF37 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
 		D24314A4151296CD00E6AF37 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
@@ -41,6 +64,27 @@
 		D253D9FD156641780027DA6C /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF2151F2F6500DF2D5B /* PositionTextureColor.fsh */; };
 		D253D9FE156641780027DA6C /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2F34FF3151F2F6500DF2D5B /* PositionTextureColor.vsh */; };
 		D253DA0C1566ECCE0027DA6C /* dropshadow_rounded_5px.png in Resources */ = {isa = PBXBuildFile; fileRef = D253DA0B1566ECCE0027DA6C /* dropshadow_rounded_5px.png */; };
+		D2735AF8158DCB3400216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF4158DCAD800216F1B /* PositionColor.fsh */; };
+		D2735AF9158DCB3800216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF5158DCAD800216F1B /* PositionColor.vsh */; };
+		D2850485158B204E00CD71ED /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D28504A7158B209300CD71ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D285049D158B209300CD71ED /* AppDelegate.m */; };
+		D28504A9158B209300CD71ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D28504A0158B209300CD71ED /* InfoPlist.strings */; };
+		D28504AA158B209300CD71ED /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D28504A2158B209300CD71ED /* MainMenu.xib */; };
+		D28504AB158B209300CD71ED /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D28504A4158B209300CD71ED /* main.m */; };
+		D28504B0158B20DB00CD71ED /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D28504B1158B20DD00CD71ED /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D28504B2158B20E100CD71ED /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D28504B3158B20F900CD71ED /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D28504BD158B212200CD71ED /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B4158B211000CD71ED /* Picking.fsh */; };
+		D28504BE158B212200CD71ED /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B5158B211000CD71ED /* PositionColor.fsh */; };
+		D28504BF158B212200CD71ED /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B6158B211000CD71ED /* PositionColor.vsh */; };
+		D28504C0158B212200CD71ED /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B7158B211000CD71ED /* PositionTextureA8Color.fsh */; };
+		D28504C1158B212200CD71ED /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B8158B211000CD71ED /* PositionTextureA8Color.vsh */; };
+		D28504C2158B212200CD71ED /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504B9158B211000CD71ED /* PositionTextureColor.fsh */; };
+		D28504C3158B212200CD71ED /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504BA158B211000CD71ED /* PositionTextureColor.vsh */; };
+		D28504C4158B212200CD71ED /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504BB158B211000CD71ED /* SpriteTextureMask.fsh */; };
+		D28504C5158B212200CD71ED /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504BC158B211000CD71ED /* StencilMask.fsh */; };
+		D28504EB158B297100CD71ED /* Autumn_scenery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28504EA158B297100CD71ED /* Autumn_scenery.jpg */; };
 		D2AA0E50152882A400F98623 /* 061212-nordkapp.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */; };
 		D2AA0E51152882A400F98623 /* Arianit_Brod_image149.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */; };
 		D2AA0E52152882A400F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */; };
@@ -174,6 +218,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		D22F25961587D7540049268C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		D24314A0151296BC00E6AF37 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -182,6 +233,13 @@
 			remoteInfo = "icedcoffee-mac";
 		};
 		D253D9ED15663E680027DA6C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
+		D28504AE158B20C000CD71ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
 			proxyType = 1;
@@ -269,6 +327,29 @@
 		D21F88991533068E00E2496C /* KazmathTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KazmathTests.h; sourceTree = "<group>"; };
 		D21F889A1533068E00E2496C /* KazmathTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KazmathTests.m; sourceTree = "<group>"; };
 		D21F889E1533070500E2496C /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		D22F25591587D53B0049268C /* TableViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TableViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D22F25721587D5EE0049268C /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D22F25731587D5EE0049268C /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D22F25751587D5EE0049268C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D22F25771587D5EE0049268C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D22F25791587D5EE0049268C /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D22F257A1587D5EE0049268C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D22F257B1587D5EF0049268C /* TableViewTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "TableViewTest-Info.plist"; sourceTree = "<group>"; };
+		D22F257C1587D5EF0049268C /* TableViewTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TableViewTest-Prefix.pch"; sourceTree = "<group>"; };
+		D22F25881587D7270049268C /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D22F25891587D7270049268C /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D22F258A1587D7270049268C /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D22F258B1587D7270049268C /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D22F258C1587D7270049268C /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D22F258D1587D7270049268C /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		D22F258E1587D7270049268C /* StencilMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
+		D22F25981587E9650049268C /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D22F25991587E9650049268C /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D22F259D1588078B0049268C /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D22F259E1588078B0049268C /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D22F25A1158877060049268C /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D22F25A2158877060049268C /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D22F25A51588772E0049268C /* StencilMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D24BAB941551E83C003BCF94 /* button_light_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_light_normal.png; path = resources/images/button_light_normal.png; sourceTree = SOURCE_ROOT; };
 		D24BAB961551ED36003BCF94 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
 		D24BAB971551ED36003BCF94 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
@@ -292,6 +373,27 @@
 		D253D9F81566416C0027DA6C /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
 		D253D9F91566416C0027DA6C /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
 		D253DA0B1566ECCE0027DA6C /* dropshadow_rounded_5px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropshadow_rounded_5px.png; path = resources/images/dropshadow_rounded_5px.png; sourceTree = SOURCE_ROOT; };
+		D2735AF4158DCAD800216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2735AF5158DCAD800216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2850483158B204E00CD71ED /* ViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D285049C158B209300CD71ED /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D285049D158B209300CD71ED /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D285049F158B209300CD71ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D28504A1158B209300CD71ED /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D28504A3158B209300CD71ED /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		D28504A4158B209300CD71ED /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D28504A5158B209300CD71ED /* ViewTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ViewTest-Info.plist"; sourceTree = "<group>"; };
+		D28504A6158B209300CD71ED /* ViewTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ViewTest-Prefix.pch"; sourceTree = "<group>"; };
+		D28504B4158B211000CD71ED /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D28504B5158B211000CD71ED /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D28504B6158B211000CD71ED /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D28504B7158B211000CD71ED /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D28504B8158B211000CD71ED /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D28504B9158B211000CD71ED /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D28504BA158B211000CD71ED /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D28504BB158B211000CD71ED /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		D28504BC158B211000CD71ED /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
+		D28504EA158B297100CD71ED /* Autumn_scenery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Autumn_scenery.jpg; path = resources/images/landscapes/Autumn_scenery.jpg; sourceTree = SOURCE_ROOT; };
 		D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "061212-nordkapp.jpg"; sourceTree = "<group>"; };
 		D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Arianit_Brod_image149.jpg; sourceTree = "<group>"; };
 		D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Autumn_scene_at_Woodleigh_(3_of_7).jpg"; sourceTree = "<group>"; };
@@ -444,6 +546,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D22F25561587D53B0049268C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D22F25861587D6990049268C /* libicedcoffee-mac.a in Frameworks */,
+				D22F25831587D6870049268C /* Carbon.framework in Frameworks */,
+				D22F255B1587D53B0049268C /* Cocoa.framework in Frameworks */,
+				D22F25841587D68A0049268C /* CoreVideo.framework in Frameworks */,
+				D22F25851587D68C0049268C /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D253D9BC15663DE20027DA6C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -453,6 +567,18 @@
 				D253D9C115663DE20027DA6C /* Cocoa.framework in Frameworks */,
 				D253D9EA15663E430027DA6C /* CoreVideo.framework in Frameworks */,
 				D253D9E915663E3F0027DA6C /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2850480158B204E00CD71ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D28504B0158B20DB00CD71ED /* Carbon.framework in Frameworks */,
+				D2850485158B204E00CD71ED /* Cocoa.framework in Frameworks */,
+				D28504B1158B20DD00CD71ED /* CoreVideo.framework in Frameworks */,
+				D28504B2158B20E100CD71ED /* OpenGL.framework in Frameworks */,
+				D28504B3158B20F900CD71ED /* libicedcoffee-mac.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +682,39 @@
 			path = "tests-mac/KazmathTests";
 			sourceTree = "<group>";
 		};
+		D22F25711587D5EE0049268C /* TableViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				D22F25721587D5EE0049268C /* AppDelegate.h */,
+				D22F25731587D5EE0049268C /* AppDelegate.m */,
+				D22F25781587D5EE0049268C /* MainMenu.xib */,
+				D22F25871587D6B00049268C /* Supporting Files */,
+			);
+			name = TableViewTest;
+			path = "tests-mac/TableViewTest";
+			sourceTree = "<group>";
+		};
+		D22F25871587D6B00049268C /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D22F25881587D7270049268C /* Picking.fsh */,
+				D22F25981587E9650049268C /* PositionColor.fsh */,
+				D22F25991587E9650049268C /* PositionColor.vsh */,
+				D22F25891587D7270049268C /* PositionTextureA8Color.fsh */,
+				D22F258A1587D7270049268C /* PositionTextureA8Color.vsh */,
+				D22F258B1587D7270049268C /* PositionTextureColor.fsh */,
+				D22F258C1587D7270049268C /* PositionTextureColor.vsh */,
+				D22F258D1587D7270049268C /* SpriteTextureMask.fsh */,
+				D22F258E1587D7270049268C /* StencilMask.fsh */,
+				D22F25761587D5EE0049268C /* InfoPlist.strings */,
+				D22F257A1587D5EE0049268C /* main.m */,
+				D22F25741587D5EE0049268C /* Credits.rtf */,
+				D22F257B1587D5EF0049268C /* TableViewTest-Info.plist */,
+				D22F257C1587D5EF0049268C /* TableViewTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		D253D9D715663DFD0027DA6C /* Scale9SpriteTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -585,6 +744,40 @@
 				D253D9E015663DFD0027DA6C /* main.m */,
 				D253D9E115663DFD0027DA6C /* Scale9SpriteTest-Info.plist */,
 				D253D9E215663DFD0027DA6C /* Scale9SpriteTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D285049B158B209300CD71ED /* ViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				D285049C158B209300CD71ED /* AppDelegate.h */,
+				D285049D158B209300CD71ED /* AppDelegate.m */,
+				D28504A2158B209300CD71ED /* MainMenu.xib */,
+				D28504AD158B209800CD71ED /* Supporting Files */,
+			);
+			name = ViewTest;
+			path = "tests-mac/ViewTest";
+			sourceTree = "<group>";
+		};
+		D28504AD158B209800CD71ED /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D28504EA158B297100CD71ED /* Autumn_scenery.jpg */,
+				D28504B4158B211000CD71ED /* Picking.fsh */,
+				D28504B5158B211000CD71ED /* PositionColor.fsh */,
+				D28504B6158B211000CD71ED /* PositionColor.vsh */,
+				D28504B7158B211000CD71ED /* PositionTextureA8Color.fsh */,
+				D28504B8158B211000CD71ED /* PositionTextureA8Color.vsh */,
+				D28504B9158B211000CD71ED /* PositionTextureColor.fsh */,
+				D28504BA158B211000CD71ED /* PositionTextureColor.vsh */,
+				D28504BB158B211000CD71ED /* SpriteTextureMask.fsh */,
+				D28504BC158B211000CD71ED /* StencilMask.fsh */,
+				D285049E158B209300CD71ED /* Credits.rtf */,
+				D28504A0158B209300CD71ED /* InfoPlist.strings */,
+				D28504A4158B209300CD71ED /* main.m */,
+				D28504A5158B209300CD71ED /* ViewTest-Info.plist */,
+				D28504A6158B209300CD71ED /* ViewTest-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -623,14 +816,16 @@
 		D2ADCFF5157EB3E800B6E519 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				D2ADD005157EB53F00B6E519 /* Autumn_scenery.jpg */,
 				D2ADCFF6157EB45200B6E519 /* Picking.fsh */,
+				D22F259D1588078B0049268C /* PositionColor.fsh */,
+				D22F259E1588078B0049268C /* PositionColor.vsh */,
 				D2ADCFF7157EB45200B6E519 /* PositionTextureA8Color.fsh */,
 				D2ADCFF8157EB45200B6E519 /* PositionTextureA8Color.vsh */,
 				D2ADCFF9157EB45200B6E519 /* PositionTextureColor.fsh */,
 				D2ADCFFA157EB45200B6E519 /* PositionTextureColor.vsh */,
 				D2ADCFFB157EB45200B6E519 /* SpriteTextureMask.fsh */,
 				D2ADCFFC157EB45200B6E519 /* StencilMask.fsh */,
+				D2ADD005157EB53F00B6E519 /* Autumn_scenery.jpg */,
 				D2ADCFE3157EB37400B6E519 /* InfoPlist.strings */,
 				D2ADCFE7157EB37400B6E519 /* main.m */,
 				D2ADCFE8157EB37400B6E519 /* ScrollViewTest-Info.plist */,
@@ -727,6 +922,8 @@
 			children = (
 				D2AA0E3815287E9500F98623 /* landscapes */,
 				D2F3503C15286E0300DF2D5B /* Picking.fsh */,
+				D2735AF4158DCAD800216F1B /* PositionColor.fsh */,
+				D2735AF5158DCAD800216F1B /* PositionColor.vsh */,
 				D2F3503D15286E0300DF2D5B /* PositionTextureA8Color.fsh */,
 				D2F3503E15286E0300DF2D5B /* PositionTextureA8Color.vsh */,
 				D2F3503F15286E0300DF2D5B /* PositionTextureColor.fsh */,
@@ -782,7 +979,9 @@
 				D253D9D715663DFD0027DA6C /* Scale9SpriteTest */,
 				D2ADCFDE157EB37400B6E519 /* ScrollViewTest */,
 				D2EDC3591572BBD200EBB417 /* StencilTest */,
+				D22F25711587D5EE0049268C /* TableViewTest */,
 				D2F3502315285DCD00DF2D5B /* TextureCacheTest */,
+				D285049B158B209300CD71ED /* ViewTest */,
 				D2FD85D614F0E4A6006A9A90 /* Frameworks */,
 				D2FD85D414F0E4A6006A9A90 /* Products */,
 			);
@@ -800,6 +999,8 @@
 				D253D9BF15663DE20027DA6C /* Scale9SpriteTest.app */,
 				D2EDC3411572BB8900EBB417 /* StencilTest.app */,
 				D2ADCFC6157EB34A00B6E519 /* ScrollViewTest.app */,
+				D22F25591587D53B0049268C /* TableViewTest.app */,
+				D2850483158B204E00CD71ED /* ViewTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -855,11 +1056,14 @@
 			isa = PBXGroup;
 			children = (
 				D24BAB941551E83C003BCF94 /* button_light_normal.png */,
+				D22F25A1158877060049268C /* PositionColor.fsh */,
+				D22F25A2158877060049268C /* PositionColor.vsh */,
 				D24BAB961551ED36003BCF94 /* PositionTextureA8Color.fsh */,
 				D24BAB971551ED36003BCF94 /* PositionTextureA8Color.vsh */,
 				D2FD86A614F0EFC4006A9A90 /* Picking.fsh */,
 				D2FD86A714F0EFC4006A9A90 /* PositionTextureColor.fsh */,
 				D2FD86A814F0EFC4006A9A90 /* PositionTextureColor.vsh */,
+				D22F25A51588772E0049268C /* StencilMask.fsh */,
 				D2FD86A414F0EFBA006A9A90 /* thiswayup.png */,
 				D2FD864014F0E6C6006A9A90 /* InfoPlist.strings */,
 				D2FD864414F0E6C6006A9A90 /* main.m */,
@@ -923,6 +1127,24 @@
 			productReference = D21F88811533064A00E2496C /* KazmathTests.octest */;
 			productType = "com.apple.product-type.bundle";
 		};
+		D22F25581587D53B0049268C /* TableViewTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D22F256E1587D53B0049268C /* Build configuration list for PBXNativeTarget "TableViewTest" */;
+			buildPhases = (
+				D22F25551587D53B0049268C /* Sources */,
+				D22F25561587D53B0049268C /* Frameworks */,
+				D22F25571587D53B0049268C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D22F25971587D7540049268C /* PBXTargetDependency */,
+			);
+			name = TableViewTest;
+			productName = TableViewTest;
+			productReference = D22F25591587D53B0049268C /* TableViewTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D253D9BE15663DE20027DA6C /* Scale9SpriteTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D253D9D415663DE20027DA6C /* Build configuration list for PBXNativeTarget "Scale9SpriteTest" */;
@@ -939,6 +1161,24 @@
 			name = Scale9SpriteTest;
 			productName = Scale9SpriteTest;
 			productReference = D253D9BF15663DE20027DA6C /* Scale9SpriteTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2850482158B204E00CD71ED /* ViewTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2850498158B204F00CD71ED /* Build configuration list for PBXNativeTarget "ViewTest" */;
+			buildPhases = (
+				D285047F158B204E00CD71ED /* Sources */,
+				D2850480158B204E00CD71ED /* Frameworks */,
+				D2850481158B204E00CD71ED /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D28504AF158B20C000CD71ED /* PBXTargetDependency */,
+			);
+			name = ViewTest;
+			productName = ViewTest;
+			productReference = D2850483158B204E00CD71ED /* ViewTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D2ADCFC5157EB34A00B6E519 /* ScrollViewTest */ = {
@@ -1075,7 +1315,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastUpgradeCheck = 0430;
-				ORGANIZATIONNAME = "UJAM Development GmbH";
+				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1104,6 +1344,8 @@
 				D253D9BE15663DE20027DA6C /* Scale9SpriteTest */,
 				D2EDC3401572BB8900EBB417 /* StencilTest */,
 				D2ADCFC5157EB34A00B6E519 /* ScrollViewTest */,
+				D22F25581587D53B0049268C /* TableViewTest */,
+				D2850482158B204E00CD71ED /* ViewTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1127,6 +1369,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D22F25571587D53B0049268C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D22F257F1587D5EF0049268C /* InfoPlist.strings in Resources */,
+				D22F25801587D5EF0049268C /* MainMenu.xib in Resources */,
+				D22F258F1587D7270049268C /* Picking.fsh in Resources */,
+				D22F259A1587E9770049268C /* PositionColor.fsh in Resources */,
+				D22F259B1587E97A0049268C /* PositionColor.vsh in Resources */,
+				D22F25901587D7270049268C /* PositionTextureA8Color.fsh in Resources */,
+				D22F25911587D7270049268C /* PositionTextureA8Color.vsh in Resources */,
+				D22F25921587D7270049268C /* PositionTextureColor.fsh in Resources */,
+				D22F25931587D7270049268C /* PositionTextureColor.vsh in Resources */,
+				D22F25941587D7270049268C /* SpriteTextureMask.fsh in Resources */,
+				D22F25951587D7270049268C /* StencilMask.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D253D9BD15663DE20027DA6C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1144,10 +1404,31 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2850481158B204E00CD71ED /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D28504BD158B212200CD71ED /* Picking.fsh in Resources */,
+				D28504BE158B212200CD71ED /* PositionColor.fsh in Resources */,
+				D28504BF158B212200CD71ED /* PositionColor.vsh in Resources */,
+				D28504C0158B212200CD71ED /* PositionTextureA8Color.fsh in Resources */,
+				D28504C1158B212200CD71ED /* PositionTextureA8Color.vsh in Resources */,
+				D28504C2158B212200CD71ED /* PositionTextureColor.fsh in Resources */,
+				D28504C3158B212200CD71ED /* PositionTextureColor.vsh in Resources */,
+				D28504C4158B212200CD71ED /* SpriteTextureMask.fsh in Resources */,
+				D28504C5158B212200CD71ED /* StencilMask.fsh in Resources */,
+				D28504A9158B209300CD71ED /* InfoPlist.strings in Resources */,
+				D28504AA158B209300CD71ED /* MainMenu.xib in Resources */,
+				D28504EB158B297100CD71ED /* Autumn_scenery.jpg in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2ADCFC4157EB34A00B6E519 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D22F259F158807970049268C /* PositionColor.fsh in Resources */,
+				D22F25A01588079A0049268C /* PositionColor.vsh in Resources */,
 				D2ADCFFF157EB47B00B6E519 /* PositionTextureA8Color.vsh in Resources */,
 				D2ADD000157EB47B00B6E519 /* PositionTextureColor.fsh in Resources */,
 				D2ADD001157EB47B00B6E519 /* PositionTextureColor.vsh in Resources */,
@@ -1201,6 +1482,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2F3504315286E1E00DF2D5B /* Picking.fsh in Resources */,
+				D2735AF8158DCB3400216F1B /* PositionColor.fsh in Resources */,
+				D2735AF9158DCB3800216F1B /* PositionColor.vsh in Resources */,
 				D2F3504415286E2100DF2D5B /* PositionTextureA8Color.fsh in Resources */,
 				D2F3504515286E2400DF2D5B /* PositionTextureA8Color.vsh in Resources */,
 				D2F3504615286E2700DF2D5B /* PositionTextureColor.fsh in Resources */,
@@ -1235,6 +1518,9 @@
 				D2FD864A14F0E6C6006A9A90 /* MainMenu.xib in Resources */,
 				D2FD86A514F0EFBA006A9A90 /* thiswayup.png in Resources */,
 				D2FD86A914F0EFC4006A9A90 /* Picking.fsh in Resources */,
+				D22F25A3158877060049268C /* PositionColor.fsh in Resources */,
+				D22F25A4158877060049268C /* PositionColor.vsh in Resources */,
+				D22F25A61588772E0049268C /* StencilMask.fsh in Resources */,
 				D24BAB981551ED4A003BCF94 /* PositionTextureA8Color.fsh in Resources */,
 				D24BAB991551ED4D003BCF94 /* PositionTextureA8Color.vsh in Resources */,
 				D2FD86AA14F0EFC4006A9A90 /* PositionTextureColor.fsh in Resources */,
@@ -1286,6 +1572,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D22F25551587D53B0049268C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D22F257D1587D5EF0049268C /* AppDelegate.m in Sources */,
+				D22F25811587D5EF0049268C /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D253D9BB15663DE20027DA6C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1293,6 +1588,15 @@
 				D253D9E315663DFD0027DA6C /* AppDelegate.m in Sources */,
 				D253D9E715663DFD0027DA6C /* main.m in Sources */,
 				D253D9F215663FE00027DA6C /* ICResizableScale9Sprite.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D285047F158B204E00CD71ED /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D28504A7158B209300CD71ED /* AppDelegate.m in Sources */,
+				D28504AB158B209300CD71ED /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1373,6 +1677,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = D21F88921533065500E2496C /* PBXContainerItemProxy */;
 		};
+		D22F25971587D7540049268C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D22F25961587D7540049268C /* PBXContainerItemProxy */;
+		};
 		D24314A1151296BC00E6AF37 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1382,6 +1691,11 @@
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
 			targetProxy = D253D9ED15663E680027DA6C /* PBXContainerItemProxy */;
+		};
+		D28504AF158B20C000CD71ED /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D28504AE158B20C000CD71ED /* PBXContainerItemProxy */;
 		};
 		D2ADCFF1157EB38400B6E519 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1424,6 +1738,30 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
+		D22F25741587D5EE0049268C /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D22F25751587D5EE0049268C /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D22F25761587D5EE0049268C /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D22F25771587D5EE0049268C /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D22F25781587D5EE0049268C /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D22F25791587D5EE0049268C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		D253D9DA15663DFD0027DA6C /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1444,6 +1782,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				D253D9DF15663DFD0027DA6C /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D285049E158B209300CD71ED /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D285049F158B209300CD71ED /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D28504A0158B209300CD71ED /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D28504A1158B209300CD71ED /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		D28504A2158B209300CD71ED /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D28504A3158B209300CD71ED /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -1643,6 +2005,44 @@
 			};
 			name = Release;
 		};
+		D22F256F1587D53B0049268C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D22F25701587D53B0049268C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		D253D9D515663DE20027DA6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1675,11 +2075,48 @@
 			};
 			name = Release;
 		};
+		D2850499158B204F00CD71ED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D285049A158B204F00CD71ED /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		D2ADCFDC157EB34A00B6E519 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"ICEDCOFFEE_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = (
 					icedcoffee,
@@ -1948,11 +2385,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		D22F256E1587D53B0049268C /* Build configuration list for PBXNativeTarget "TableViewTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D22F256F1587D53B0049268C /* Debug */,
+				D22F25701587D53B0049268C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D253D9D415663DE20027DA6C /* Build configuration list for PBXNativeTarget "Scale9SpriteTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D253D9D515663DE20027DA6C /* Debug */,
 				D253D9D615663DE20027DA6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2850498158B204F00CD71ED /* Build configuration list for PBXNativeTarget "ViewTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2850499158B204F00CD71ED /* Debug */,
+				D285049A158B204F00CD71ED /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

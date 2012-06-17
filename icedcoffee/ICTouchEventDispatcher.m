@@ -45,7 +45,7 @@
     NSArray *allTouches = [touches allObjects];
     for (UITouch *touch in allTouches) {
         CGPoint touchLocation = [touch locationInView:[_hostViewController view]];
-        touchLocation.y = [_hostViewController viewSize].height - touchLocation.y;
+        touchLocation.y = _hostViewController.view.bounds.size.height - touchLocation.y;
         NSArray *hitNodes = [_hostViewController hitTest:touchLocation];
         ICNode *deepest = [hitNodes lastObject];
         [deepest performSelector:selector withObject:touches withObject:event];

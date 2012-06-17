@@ -43,14 +43,24 @@
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #endif
 
+#import "icMacros.h"
 #import "kazmath/GL/matrix.h"
+
+#ifdef __IC_PLATFORM_MAC
+#define IC_PLATFORM_GL_CONTEXT NSOpenGLContext
+#elif defined(__IC_PLATFORM_IOS)
+#define IC_PLATFORM_GL_CONTEXT EAGLContext
+#endif
+
+NSString *NSStringFromGLError(GLenum error);
 
 #if DEBUG
 #define CHECK_GL_ERROR_DEBUG() \
     ({ \
         GLenum __error = glGetError(); \
         if(__error) { \
-            printf("OpenGL error 0x%04X in %s %d\n", __error, __FUNCTION__, __LINE__); \
+            NSLog(@"OpenGL error 0x%04X in %s %d: %@\n", __error, __FUNCTION__, __LINE__, \
+                  NSStringFromGLError(__error)); \
         } \
     })
 #else
@@ -58,14 +68,14 @@
 #endif
 
 // iOS
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#ifdef __IC_PLATFORM_IOS
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
 #define glBindVertexArray			glBindVertexArrayOES
 
 // Mac
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#elif defined(__IC_PLATFORM_MAC)
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE

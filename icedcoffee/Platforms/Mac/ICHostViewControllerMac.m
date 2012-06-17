@@ -61,7 +61,6 @@
 
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
-- (void)setViewSize:(CGSize)viewSize;
 @end
 
 
@@ -165,29 +164,31 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     ICGLView *openGLview = (ICGLView*)self.view;
     CGLLockContext([[openGLview openGLContext] CGLContextObj]);
     [[openGLview openGLContext] makeCurrentContext];
-
-    [[self scheduler] update:_deltaTime];    
-
-    glViewport(0, 0,
-               openGLview.bounds.size.width * self.contentScaleFactor,
-               openGLview.bounds.size.height * self.contentScaleFactor);
     
-    // Render final scene
-    [self.scene visit];  
-    
-    // Flush OpenGL buffer
-    [[openGLview openGLContext] flushBuffer];
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+        [[self scheduler] update:_deltaTime];    
 
-    if ([NSThread currentThread] == self.thread) {
-        // Let mouse event dispatcher update state for mouseEntered/mouseExited events
-        [_mouseEventDispatcher updateMouseOverState];
+        glViewport(0, 0,
+                   openGLview.bounds.size.width * self.contentScaleFactor,
+                   openGLview.bounds.size.height * self.contentScaleFactor);
+        
+        // Render final scene
+        [self.scene visit];  
+        
+        // Flush OpenGL buffer
+        [[openGLview openGLContext] flushBuffer];
+
+        if ([NSThread currentThread] == self.thread) {
+            // Let mouse event dispatcher update state for mouseEntered/mouseExited events
+            [_mouseEventDispatcher updateMouseOverState];
+        }
+        
+        if (_frameUpdateMode == kICFrameUpdateMode_OnDemand) {
+            _needsDisplay = NO;
+        }        
     }
     
-    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand) {
-        _needsDisplay = NO;
-    }
-    
-    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);    
+    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
 }
 
 - (NSArray *)hitTest:(CGPoint)point

@@ -102,6 +102,15 @@
 @property (nonatomic, assign, getter=clipsChildren, setter=setClipsChildren:) BOOL clipsChildren;
 
 /**
+ @brief Whether the view's layout needs to be udpated
+ */
+@property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
+
+@property (nonatomic, assign, setter=setAutoResizingMask:) NSUInteger autoresizingMask;
+
+@property (nonatomic, assign) BOOL autoresizesSubviews;
+
+/**
  @brief Creates a new autoreleased view with the given size
  
  @sa initWithSize:
@@ -134,29 +143,59 @@
 - (void)setWantsRenderTextureBacking:(BOOL)wantsRenderTextureBacking;
 
 /**
- @brief Adds a child to the view
+ @brief Returns the superview of the receiver
+ 
+ This method traverses the view's ancestor nodes and returns the first ancestor that is
+ a view (kind of class ICView).
+ */
+- (ICView *)superview;
+
+/**
+ @brief Returns all immediate subviews of the receiver
+ 
+ This method enumerates all children of the view, checks whether a child is a view (kind of
+ class ICView) and returns an array with all children that passed the test.
+ */
+- (NSArray *)subviews;
+
+/**
+ @brief Adds a child node to the receiver
  */
 - (void)addChild:(ICNode *)child;
 
 /**
- @brief Inserts a child at the specified index to the view
+ @brief Inserts a child at the specified index to the receiver
  */
 - (void)insertChild:(ICNode *)child atIndex:(uint)index;
 
 /**
- @brief Removes the given child from the view
+ @brief Removes the given child from the receiver
  */
 - (void)removeChild:(ICNode *)child;
 
 /**
- @brief Removes the child at the specified index
+ @brief Removes the child at the specified index from the receiver
  */
 - (void)removeChildAtIndex:(uint)index;
 
+- (NSArray *)childrenOfType:(Class)classType;
+
 /**
- @brief Returns the view's children
+ @brief Returns the receiver's children
  */
 - (NSArray *)children;
 
+/**
+ @brief Short hand for ICView::setNeedsLayout:YES
+ */
+- (void)setNeedsLayout;
+
+/**
+ @brief Layouts the receiver's children
+ 
+ You should not call this method directly. Instead, mark the view for layouting by setting
+ its ICView::needsLayout property to <code>YES</code>.
+ */
+- (void)layoutChildren;
 
 @end

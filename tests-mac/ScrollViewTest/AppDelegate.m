@@ -34,19 +34,23 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
     
     NSString *textureFile = [[NSBundle mainBundle] pathForImageResource:@"Autumn_scenery"];
     ICTexture2D *texture = [self.hostViewController.textureCache loadTextureFromFile:textureFile];
 
     ICSprite *scrollableSprite = [ICSprite spriteWithTexture:texture];
+    [scrollableSprite setName:@"sprite1"];
     ICScrollView *scrollView = [ICScrollView viewWithSize:CGSizeMake(300, 400)];
+    [scrollView setName:@"scrollView1"];
     [scrollableSprite setPosition:(kmVec3){-200,-200,0}];
     [scrollView addChild:scrollableSprite];
     [scene addChild:scrollView];
 
     ICSprite *scrollableSprite2 = [ICSprite spriteWithTexture:texture];    
+    [scrollableSprite2 setName:@"sprite2"];
     ICScrollView *scrollView2 = [ICScrollView viewWithSize:CGSizeMake(300, 400)];
+    [scrollView2 setName:@"scrollView2"];
     [scrollView2 addChild:scrollableSprite2];
     [scrollView2 setPositionX:350];
     [scene addChild:scrollView2];

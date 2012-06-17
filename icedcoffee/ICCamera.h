@@ -59,7 +59,7 @@
 
  ICCamera should be initialized using the
  ICCamera::initWithEye:lookAt:upVector:fov:aspect:zNear:zFar:viewport: method. The ICScene
- class by default creates an ICCameraPointsToPixelsPerspective camera object for you. If
+ class by default creates an ICUICamera camera object for you. If
  you need a different camera, instanciate your own ICCamera object and initialize ICScene
  using ICScene::initWithHostViewController:camera:.
  
@@ -180,12 +180,12 @@
          viewport:(CGRect)viewport;
 
 /**
- @brief Sets the camera's viewport
+ @brief Sets the camera's viewport (viewport coordinates are in points)
  */
 - (void)setViewport:(CGRect)viewport;
 
 /**
- @brief Returns the camera's viewport
+ @brief Returns the camera's viewport (viewport coordinates are in points)
  */
 - (CGRect)viewport;
 
@@ -226,6 +226,8 @@
 
  @return Returns YES on success or NO otherwise. The resulting world vector is written into
  resultVect.
+ 
+ @remarks View coordinates are to be understood as frame buffer coordinates in pixels.
  */
 - (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect;
 
@@ -240,6 +242,8 @@
  @return Returns YES on success or NO otherwise. The resulting view vector is written into
  resultVect. Note that you may need to round its coordinates so as to compensate for limited
  floating point precision.
+ 
+ @remarks View coordinates are to be understood as frame buffer coordinates in pixels.
  */
 - (BOOL)projectWorld:(kmVec3)worldVect toView:(kmVec3 *)resultVect;
 

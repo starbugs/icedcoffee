@@ -41,12 +41,12 @@
  */
 #define ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR 2.f
 
-#import "ICCameraPointsToPixelsPerspective.h"
+#import "ICUICamera.h"
 /**
  @def ICDEFAULT_CAMERA
  @brief The default camera instanciated and set by ICScene::initWithHostViewController:
  */
-#define ICDEFAULT_CAMERA ICCameraPointsToPixelsPerspective
+#define ICDEFAULT_CAMERA ICUICamera
 
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/ICHostViewControllerMac.h"

@@ -20,13 +20,17 @@
 //  SOFTWARE.
 //  
 
-#import "ICSprite.h"
+#import "ICView.h"
+
+@class ICSprite;
 
 #define ICLabelTextDidChange @"ICLabelTextDidChange"
 #define ICLabelFontDidChange @"ICLabelFontDidChange"
 
-@interface ICLabel : ICSprite {
+@interface ICLabel : ICView {
 @protected
+    ICSprite *_sprite;
+    icColor4B _color;
     NSString *_text;
     NSString *_fontName;
     CGFloat _fontSize;
@@ -39,5 +43,6 @@
 @property (nonatomic, copy, setter=setText:) NSString *text;
 @property (nonatomic, copy, setter=setFontName:) NSString *fontName;
 @property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
+@property (nonatomic, assign, getter=color, setter=setColor:) icColor4B color;
 
 @end

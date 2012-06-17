@@ -48,6 +48,7 @@ typedef NSUInteger ICAbstractMouseEventType;
     CGPoint _lastMouseLocation;
     NSUInteger _lastMouseModifierFlags;
     ICNode *_lastMouseDownNode;
+    ICNode *_lastScrollNode;
     ICControl *_lastMouseDownControl;
     BOOL _isDragging;
     NSUInteger _eventNumber;

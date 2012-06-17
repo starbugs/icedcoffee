@@ -28,6 +28,8 @@
 #import "ICScheduler.h"
 #import "ICCamera.h"
 #import "ICEventDelegate.h"
+#import "ICRenderContext.h"
+#import "ICContextManager.h"
 #import "ICTargetActionDispatcher.h"
 #import "icDefaults.h"
 #import "icConfig.h"
@@ -49,11 +51,8 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 @synthesize eventDelegates = _eventDelegates;
 @synthesize scene = _scene;
 @synthesize isRunning = _isRunning;
-@synthesize textureCache = _textureCache;
-@synthesize viewSize = _viewSize;
 @synthesize thread = _thread;
 @synthesize currentFirstResponder = _currentFirstResponder;
-@synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
 
@@ -65,8 +64,9 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 - (id)init
 {
     if ((self = [super init])) {
+        _renderContext = [[ICRenderContext alloc] init];
+        _renderContext.scheduler = [[[ICScheduler alloc] init] autorelease];        
         _eventDelegates = [[NSMutableArray alloc] init];
-        _scheduler = [[ICScheduler alloc] init];
         _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
         _lastUpdate.tv_sec = 0;
         _lastUpdate.tv_usec = 0;
@@ -78,11 +78,18 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 - (void)dealloc
 {
+#ifdef __IC_PLATFORM_MAC
+    [[ICContextManager defaultContextManager]
+     unregisterRenderContextForOpenGLContext:[[self view] openGLContext]];
+#elif defined(__IC_PLATFORM_IOS)
+    [[ICContextManager defaultContextManager]
+     unregisterRenderContextForOpenGLContext:[((ICGLView *)[self view]) context]];
+#endif
+    
     self.scene = nil;
     [_currentFirstResponder release];
     [_eventDelegates release];
-    [_textureCache release];
-    [_scheduler release];
+    [_renderContext release];
     [_targetActionDispatcher release];
     
     [super dealloc];
@@ -133,6 +140,7 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 - (void)runWithScene:(ICScene *)scene
 {
     self.scene = scene;
+    scene.hostViewController = self;
     [self startAnimation];
 }
 
@@ -148,12 +156,8 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 - (void)reshape:(CGSize)newViewSize
 {
-    CGRect newViewport = CGRectMake(0, 0, newViewSize.width, newViewSize.height);
-    [self.scene.camera setViewport:newViewport]; // sets camera dirty automatically
-
-    [self.scene setNeedsDisplay];
-
-    [self setViewSize:newViewSize]; // FIXME: viewsize needed?
+    // Adjust the root scene to the new size of the host view
+    [self.scene setSize:kmVec3Make(newViewSize.width, newViewSize.height, 0)];
 }
 
 - (void)setView:(ICGLView *)view
@@ -164,9 +168,20 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     // Mac host view controller implements this in its own subclass
     
     // Create a texture cache bound to this view (required for auxiliary OpenGL context)
-    if (!_textureCache) {
-        _textureCache = [[ICTextureCache alloc] initWithHostViewController:self];
+    if (!self.textureCache) {
+        _renderContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
+                                       autorelease];
     }
+    
+    // OpenGL context became available: register our render context for it, so it's possible
+    // for other components to retrieve it via the OpenGL context globally
+#ifdef __IC_PLATFORM_MAC
+    [[ICContextManager defaultContextManager] registerRenderContext:_renderContext
+                                                   forOpenGLContext:[view openGLContext]];
+#elif defined(__IC_PLATFORM_IOS)
+    [[ICContextManager defaultContextManager] registerRenderContext:_renderContext
+                                                   forOpenGLContext:[(ICGLView *)view context]];
+#endif
 }
 
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -222,6 +237,16 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 #endif
 }
 
+- (ICScheduler *)scheduler
+{
+    return _renderContext.scheduler;
+}
+
+- (ICTextureCache *)textureCache
+{
+    return _renderContext.textureCache;
+}
+
 
 #ifdef __IC_PLATFORM_MAC
 
@@ -238,11 +263,6 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 - (void)setIsRunning:(BOOL)isRunning
 {
     _isRunning = isRunning;
-}
-
-- (void)setViewSize:(CGSize)viewSize
-{
-    _viewSize = viewSize;
 }
 
 - (NSArray *)hitTest:(CGPoint)point

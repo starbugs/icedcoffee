@@ -49,7 +49,7 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
@@ -67,7 +67,7 @@
                                                                       height:128
                                                                  pixelFormat:kICPixelFormat_RGBA8888
                                                            depthBufferFormat:kICDepthBufferFormat_16];
-    ICScene *textureScene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *textureScene = [ICScene scene];
     textureScene.performsDepthTesting = YES;
     _tsForegroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [_tsForegroundSprite setPositionX:10.0f];

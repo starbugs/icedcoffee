@@ -55,6 +55,8 @@
 #endif
 }
 
++ (id)currentTextureCache;
+
 /**
  @brief Initializes the texture cache with the given host view controller
  */

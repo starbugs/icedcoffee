@@ -99,6 +99,7 @@ enum {
 {
     CGPoint location = [event locationInWindow];
     CGPoint localLocation = [self hostViewToNodeLocation:location];
+    location.y = self.hostViewController.view.bounds.size.height - location.y;
 
     _resizeEdge = [self resizeEdgeWithLocalLocation:localLocation];
     
@@ -123,6 +124,7 @@ enum {
 - (void)mouseDragged:(NSEvent *)event
 {
     CGPoint location = [event locationInWindow];
+    location.y = self.hostViewController.view.bounds.size.height - location.y;
     
     CGPoint dragOffset;
     CGPoint sizeOffset;
@@ -193,10 +195,12 @@ enum {
     [self setPositionX:_dragStartPosition.x + dragOffset.x];
     [self setPositionY:_dragStartPosition.y + dragOffset.y];
     
-    kmVec3 newsize;
+    kmVec3 newsize = kmNullVec3;
     newsize.x = _dragStartsize.x + sizeOffset.x;
     newsize.y = _dragStartsize.y + sizeOffset.y;
-    [self setSize:newsize];    
+    [self setSize:newsize];
+    
+    NSLog(@"%@", kmVec3Description(self.size));
     
     [_dropShadowSprite setPositionX:self.position.x - 22];
     [_dropShadowSprite setPositionY:self.position.y - 22];

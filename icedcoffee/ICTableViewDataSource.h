@@ -27,6 +27,8 @@
 
 @protocol ICTableViewDataSource <NSObject>
 
+@required
+
 - (NSInteger)numberOfRowsInTableView:(ICTableView *)tableView;
 
 - (ICTableViewCell *)tableView:(ICTableView *)tableView cellForRowAtIndex:(NSInteger)rowIndex;

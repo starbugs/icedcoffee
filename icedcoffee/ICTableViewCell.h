@@ -27,15 +27,22 @@
 
 @interface ICTableViewCell : ICView {
 @protected
+    NSString *_identifier;
     ICSprite *_background;
     ICLabel *_label;
     BOOL _selected;
 }
+
+@property (nonatomic, readonly) NSString *identifier;
 
 @property (nonatomic, retain) ICSprite *background;
 
 @property (nonatomic, retain) ICLabel *label;
 
 @property (nonatomic, assign, setter=setSelected:) BOOL selected;
+
++ (id)cellWithIdentifier:(NSString *)identifier;
+
+- (id)initWithIdentifier:(NSString *)identifier;
 
 @end

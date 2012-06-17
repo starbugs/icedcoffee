@@ -28,9 +28,11 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        [self setWantsRenderTextureBacking:YES];
+        //[self setWantsRenderTextureBacking:YES];
+        [self setClipsChildren:YES];
+        
         NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
-        ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:filename];        
+        ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];        
         ResponsiveSprite *responsiveSprite = [[ResponsiveSprite alloc] initWithTexture:texture];
         [self addChild:responsiveSprite];
         [responsiveSprite release];

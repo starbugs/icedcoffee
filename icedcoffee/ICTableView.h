@@ -31,7 +31,7 @@
     NSMutableDictionary *_reusableCells;
 }
 
-@property (nonatomic, retain) id<ICTableViewDataSource> dataSource;
+@property (nonatomic, assign) id<ICTableViewDataSource> dataSource;
 
 - (ICTableViewCell *)dequeueReusableCellWithIdentifier:(NSString *)identifier;
 

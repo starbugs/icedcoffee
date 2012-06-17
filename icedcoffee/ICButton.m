@@ -23,7 +23,7 @@
 #import "ICButton.h"
 #import "ICLabel.h"
 #import "ICScale9Sprite.h"
-#import "ICTextureLoader.h"
+#import "ICTextureCache.h"
 
 @interface ICButton (Private)
 - (void)centerLabel;
@@ -56,14 +56,11 @@
                                                    object:self.label];
         
         NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
-        ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:textureFile];
+        ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:textureFile];
         self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];
-        [self.background setSize:self.size];
         
         [self addChild:self.background];
-        [self addChild:self.label];
-        
-        [self centerLabel];
+        [self addChild:self.label];        
     }
     return self;
 }
@@ -78,6 +75,12 @@
     [super dealloc];
 }
 
+- (void)layoutChildren
+{
+    [self centerLabel];    
+    [self.background setSize:self.size];
+}
+
 @end
 
 @implementation ICButton (Private)
@@ -85,7 +88,6 @@
 - (void)centerLabel
 {
     [self.label centerNode];
-    [self.label setPositionY:self.label.position.y + 1];    
 }
 
 @end
@@ -94,14 +96,12 @@
 
 - (void)labelTextDidChange:(NSNotification *)notification
 {
-    [self centerLabel];
-    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 
 - (void)labelFontDidChange:(NSNotification *)notification
 {
-    [self centerLabel];
-    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 
 @end

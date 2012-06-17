@@ -95,42 +95,42 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @synthesize hostViewController = _hostViewController;
 @synthesize renderer = renderer_;
 
-+ (Class) layerClass
++ (Class)layerClass
 {
 	return [CAEAGLLayer class];
 }
 
-+ (id) viewWithFrame:(CGRect)frame
++ (id)viewWithFrame:(CGRect)frame
 {
 	return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
++ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
++ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
 }
 
-+ (id) viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
++ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
 }
 
-- (id) initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame
 {
 	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
+- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
 {
 	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
 }
 
-- (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
+- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{
@@ -144,6 +144,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[self release];
 			return nil;
 		}
+        
+        // FIXME
+        // Set up pixel alignment
+        //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        //glPixelStorei(GL_PACK_ALIGNMENT, 1);        
 
 		CHECK_GL_ERROR_DEBUG();
 	}
@@ -167,6 +172,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			[self release];
 			return nil;
 		}
+        
+        // FIXME
+        // Set up pixel alignment
+        //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        //glPixelStorei(GL_PACK_ALIGNMENT, 1);          
 
 		CHECK_GL_ERROR_DEBUG();
     }
@@ -205,7 +215,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return YES;
 }
 
-- (void) dealloc
+- (void)dealloc
 {
 	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
 
@@ -213,14 +223,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	[super dealloc];
 }
 
-- (void) layoutSubviews
+- (void)layoutSubviews
 {
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
-
-	// Issue #914 #924
-/*	[director reshapeProjection:size_];*/ // FIXME: remove, not applicable for IcedCoffee's camera system
-
+    
 	// Avoid flicker
     if (self.hostViewController.thread) {
         [self.hostViewController performSelector:@selector(drawScene)
@@ -233,7 +240,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     [self.hostViewController viewDidLayoutSubviews];
 }
 
-- (void) swapBuffers
+- (void)swapBuffers
 {
 	// IMPORTANT:
 	// - preconditions

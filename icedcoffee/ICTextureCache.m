@@ -25,8 +25,17 @@
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
 #import "ICHostViewController.h"
+#import "ICContextManager.h"
+#import "ICRenderContext.h"
 
 @implementation ICTextureCache
+
++ (id)currentTextureCache
+{
+    return [[[ICContextManager defaultContextManager]
+             renderContextForCurrentOpenGLContext]
+            textureCache];
+}
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
 {
@@ -105,7 +114,7 @@
         
 #ifdef __IC_PLATFORM_MAC
 		[_auxGLContext makeCurrentContext];
-        
+                
 		asyncTexture = [self loadTextureFromFile:path];
         
 		glFlush();
@@ -115,6 +124,7 @@
 		});
         
 		[NSOpenGLContext clearCurrentContext];
+        
 #elif __IC_PLATFORM_IOS
 		if ([EAGLContext setCurrentContext:_auxGLContext]) {
 			asyncTexture = [self loadTextureFromFile:path];

@@ -43,14 +43,15 @@
  built-in support for depth and stencil buffer attachments to the FBO. It supports picking
  and event handling implicitly, i.e. all nodes added to the render texture's sub scene
  will be capable of picking and handling user interaction events automatically. The
- ICRenderTexture class furthermore allows for conditional redrawing of its contents.
+ ICRenderTexture class furthermore allows for conditional ('on-demand') redrawing of its
+ contents.
  
  <h3>Setup</h3>
  
- You set up an ICRenderTexture by initializing it with the desired width, height, and,
- optionally, buffer formats. You then define the sub scene rendered by the render texture.
- The render texture itself is finally added to a scene. It automatically displays its texture
- using a built-in sprite.
+ You set up an ICRenderTexture by initializing it with the desired size and, optionally,
+ buffer formats. You then define the sub scene that presents the contents of the render texture.
+ The render texture itself is finally added to a scene. It then automatically draws the contents
+ defined in the sub scene to its texture and displays it using a built-in sprite.
  
  Example:
  @code
@@ -210,12 +211,12 @@
  */
 @property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h;
++ (id)renderTextureWithWidth:(float)w height:(float)h;
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer;
++ (id)renderTextureWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer;
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  depthBuffer:(BOOL)depthBuffer
                stencilBuffer:(BOOL)stencilBuffer;
 
@@ -224,15 +225,15 @@
  and pixel format
  @sa initWithWidth:height:pixelFormat:
  */
-+ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format;
++ (id)renderTextureWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format;
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
          stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
@@ -247,7 +248,7 @@
  nor a stencil buffer will be attached. The render texture's pixel format will be set to
  kICPixelFormat_Default.
  */
-- (id)initWithWidth:(int)w height:(int)h;
+- (id)initWithWidth:(float)w height:(float)h;
 
 /**
  @brief Initializes a render texture with the given width and height and optionally attaches
@@ -261,7 +262,7 @@
  The render texture will be initialized with a default color buffer and, if depthBuffer is set
  to YES, with a default depth buffer. No stencil buffer will be attached.
  */
-- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer;
+- (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer;
 
 /**
  @brief Initializes a render texture with the given width and height and optionally attaches
@@ -280,7 +281,7 @@
  
  @sa initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
  */
-- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer;
+- (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer;
 
 /**
  @brief Initializes a render texture with the given width, height, and pixel format
@@ -292,7 +293,7 @@
  The render texture will be initialized with a color buffer backing only. Neither a depth buffer
  nor a stencil buffer will be attached.
  */
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format;
+- (id)initWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format;
 
 /**
  @brief Initializes a render texture with the given width, height, pixel format, and depth
@@ -307,8 +308,8 @@
  The render texture will be initialized with a color and depth buffer. No stencil buffer will
  be attached.
  */
-- (id)initWithWidth:(int)w
-             height:(int)h
+- (id)initWithWidth:(float)w
+             height:(float)h
         pixelFormat:(ICPixelFormat)pixelFormat
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
 
@@ -331,8 +332,8 @@
  render texture. In this case, the depth format will default to kICDepthBufferFormat_24 and
  the stencil buffer format will be kICStencilBufferFormat_8.
  */
-- (id)initWithWidth:(int)w
-             height:(int)h
+- (id)initWithWidth:(float)w
+             height:(float)h
         pixelFormat:(ICPixelFormat)pixelFormat
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;

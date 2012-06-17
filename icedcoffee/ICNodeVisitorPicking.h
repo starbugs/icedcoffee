@@ -40,13 +40,18 @@
     NSMutableArray *_resultNodeStack;
     NSMutableArray *_appendNodesToStack;
     CGPoint _pickPoint;
+    GLint _viewport[4];
 }
 
 @property (nonatomic, readonly) NSArray *resultNodeStack;
 
-@property (nonatomic, readonly) CGPoint pickPoint;
+@property (nonatomic, assign) CGPoint pickPoint;
 
-- (void)beginWithPickPoint:(CGPoint)point;
+@property (nonatomic, assign, getter=viewport, setter=setViewport:) GLint *viewport;
+
+- (void)beginWithPickPoint:(CGPoint)point viewport:(GLint *)viewport;
+
+- (BOOL)isInPickingContext;
 
 - (void)end;
 

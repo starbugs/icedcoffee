@@ -23,6 +23,7 @@
 #import "ICPlanarNode.h"
 #import "ICCamera.h"
 #import "ICScene.h"
+#import "ICRenderTexture.h"
 #import "icTypes.h"
 #import "kazmath/vec4.h"
 
@@ -74,13 +75,15 @@
 
 - (CGPoint)hostViewToNodeLocation:(CGPoint)hostViewLocation
 {
+    // Projected points are in frame buffer (pixel) coordinates
     kmVec3 projectPoint1, projectPoint2;
-    kmVec3 unprojectPoint1, unprojectPoint2;
     projectPoint1 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
                                hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 0);
     projectPoint2 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
                                hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 1);
-    
+
+    // Unprojected points are in world coordinates (points)
+    kmVec3 unprojectPoint1, unprojectPoint2;
     ICScene *parentScene = [self parentScene];
     [[parentScene camera] unprojectView:projectPoint1
                                 toWorld:&unprojectPoint1];
@@ -91,12 +94,19 @@
     kmVec3 intersection, localIntersection;
     kmPlaneIntersectLine(&intersection, &p, &unprojectPoint1, &unprojectPoint2);
     kmMat4 worldToNodeTransform = [self worldToNodeTransform];
-    localIntersection.x = floorf(localIntersection.x);
-    localIntersection.y = floorf(localIntersection.y);
     kmVec3Transform(&localIntersection, &intersection, &worldToNodeTransform);
+    localIntersection.x = roundf(localIntersection.x);
+    localIntersection.y = roundf(localIntersection.y);
+        
+    if ([self isKindOfClass:[ICRenderTexture class]]) {
+        // ICUICamera inverts the framebuffer's y axis via projection scaling.
+        // For render textures, that texture has already been flipped vertically,
+        // so this needs to be undone here by inverting y again.
+        localIntersection.y = self.size.y - localIntersection.y;
+    }
     
-    return CGPointMake(localIntersection.x / IC_CONTENT_SCALE_FACTOR(),
-                       localIntersection.y / IC_CONTENT_SCALE_FACTOR());
+    return CGPointMake(localIntersection.x,
+                       localIntersection.y);
 }
 
 @end

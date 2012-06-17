@@ -77,7 +77,7 @@
     
     float w = viewport.size.width;
     float h = viewport.size.height;
-    float aspect = h / w;
+    float aspect = w != 0 ? h / w : 0;
     
     return [self initWithEye:eye
                       lookAt:lookAt
@@ -127,6 +127,9 @@
     _viewport[1] = (GLint)viewport.origin.y * IC_CONTENT_SCALE_FACTOR();
     _viewport[2] = _viewport[0] + (GLint)viewport.size.width * IC_CONTENT_SCALE_FACTOR();
     _viewport[3] = _viewport[1] + (GLint)viewport.size.height * IC_CONTENT_SCALE_FACTOR();
+    float w = _viewport[2] - _viewport[0];
+    float h = _viewport[3] - _viewport[1];
+    self.aspect = w != 0 ? h / w : 0;
     _dirty = YES;
 }
 

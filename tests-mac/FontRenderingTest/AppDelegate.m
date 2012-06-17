@@ -47,9 +47,10 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
     [scene setClearColor:(icColor4B){0,0,0,255}];
-    [scene setSize:(kmVec3){self.hostViewController.viewSize.width, self.hostViewController.viewSize.height}];
+    [scene setSize:(kmVec3){self.hostViewController.view.bounds.size.width,
+                            self.hostViewController.view.bounds.size.height, 0}];
     
     self.label = [ICLabel labelWithText:@"The quick brown fox jumps over the lazy dog"
                                fontName:@"Lucida Grande"

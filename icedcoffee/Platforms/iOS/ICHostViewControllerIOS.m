@@ -79,19 +79,16 @@
     [super dealloc];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [self reshape:self.view.bounds.size];
-}
-
 - (void)viewDidLayoutSubviews
 {
+    _openGLReady = YES;
+    [self reshape:self.view.bounds.size];
     [self startAnimation];
 }
 
 - (void)startAnimation
 {
-    if (!self.isRunning) {
+    if (_openGLReady && !self.isRunning) {
         _isRunning = YES;
     
         ICLOG(@"IcedCoffee: animation started");
@@ -105,14 +102,18 @@
 
 - (void)stopAnimation
 {
-    ICLOG(@"IcedCoffee: animation stopped");
-    
-    [_thread cancel];
-    [_thread release];
-    _thread = nil;
-    
-    [_displayLink invalidate];
-    _displayLink = nil;
+    if (self.isRunning) {
+        _isRunning = NO;
+        
+        ICLOG(@"IcedCoffee: animation stopped");
+        
+        [_thread cancel];
+        [_thread release];
+        _thread = nil;
+        
+        [_displayLink invalidate];
+        _displayLink = nil;
+    }
 }
 
 - (void)threadMainLoop
@@ -149,16 +150,18 @@
     
 	[EAGLContext setCurrentContext:[openGLview context]];
 
-    [[self scheduler] update:_deltaTime];
+    if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+        [[self scheduler] update:_deltaTime];
 
-	glViewport(0, 0,
-               openGLview.bounds.size.width * self.contentScaleFactor,
-               openGLview.bounds.size.height * self.contentScaleFactor);
+        glViewport(0, 0,
+                   openGLview.bounds.size.width * self.contentScaleFactor,
+                   openGLview.bounds.size.height * self.contentScaleFactor);
 
-    // Render final scene
-    [self.scene visit];
-    
-    [openGLview swapBuffers];
+        // Render final scene
+        [self.scene visit];
+        
+        [openGLview swapBuffers];
+    }
 }
 
 - (NSArray *)hitTest:(CGPoint)point

@@ -34,7 +34,9 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
+    [scene setSize:kmVec3Make(self.hostViewController.view.bounds.size.width,
+                              self.hostViewController.view.bounds.size.height, 0)];    
     [scene setClearColor:(icColor4B){128,128,128,255}];
     
     NSString *gradientWhite = [[NSBundle mainBundle] pathForImageResource:@"gradient-white-transparent"];

@@ -84,7 +84,7 @@
     
 	if ((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]])) {
         [self.hostViewController setView:self];
-        [self.hostViewController reshape:self.bounds.size];
+//        [self.hostViewController reshape:self.bounds.size];
         
 		if (context)
 			[self setOpenGLContext:context];
@@ -92,6 +92,10 @@
 		// Synchronize buffer swaps with vertical refresh rate (vsync)
 		GLint swapInt = 1;
 		[[self openGLContext] setValues:&swapInt forParameter:NSOpenGLCPSwapInterval];
+        
+        // Set up pixel alignment
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);        
         
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];

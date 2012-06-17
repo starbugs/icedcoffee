@@ -48,18 +48,18 @@
 @synthesize isInRenderTextureDrawContext = _isInRenderTextureDrawContext;
 @synthesize frameUpdateMode = _frameUpdateMode;
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h
++ (id)renderTextureWithWidth:(float)w height:(float)h
 {
     return [[[[self class] alloc] initWithWidth:w height:h] autorelease];
 }
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer
++ (id)renderTextureWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer
 {
     return [[[[self class] alloc] initWithWidth:w height:h depthBuffer:depthBuffer] autorelease];
 }
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  depthBuffer:(BOOL)depthBuffer
                stencilBuffer:(BOOL)stencilBuffer
 {
@@ -69,13 +69,13 @@
                                   stencilBuffer:stencilBuffer] autorelease];
 }
 
-+ (id)renderTextureWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format
++ (id)renderTextureWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format
 {
     return [[[[self class] alloc] initWithWidth:w height:h pixelFormat:format] autorelease];
 }
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 {
@@ -86,8 +86,8 @@
             autorelease];
 }
 
-+ (id)renderTextureWithWidth:(int)w
-                      height:(int)h
++ (id)renderTextureWithWidth:(float)w
+                      height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
          stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
@@ -100,12 +100,12 @@
             autorelease];    
 }
 
-- (id)initWithWidth:(int)w height:(int)h
+- (id)initWithWidth:(float)w height:(float)h
 {
     return [self initWithWidth:w height:h pixelFormat:kICPixelFormat_Default];
 }
 
-- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer
+- (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer
 {
     return [self initWithWidth:w
                         height:h
@@ -113,7 +113,7 @@
              depthBufferFormat:depthBuffer ? kICDepthBufferFormat_Default : kICDepthBufferFormat_None];
 }
 
-- (id)initWithWidth:(int)w height:(int)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer
+- (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer
 {
     return [self initWithWidth:w
                         height:h
@@ -122,7 +122,7 @@
            stencilBufferFormat:stencilBuffer ? kICStencilBufferFormat_Default : kICStencilBufferFormat_None];
 }
 
-- (id)initWithWidth:(int)w height:(int)h pixelFormat:(ICPixelFormat)format
+- (id)initWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format
 {
     return [self initWithWidth:w
                         height:h
@@ -130,8 +130,8 @@
              depthBufferFormat:kICDepthBufferFormat_None];
 }
 
-- (id)initWithWidth:(int)w
-             height:(int)h
+- (id)initWithWidth:(float)w
+             height:(float)h
         pixelFormat:(ICPixelFormat)format
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 {
@@ -142,8 +142,8 @@
            stencilBufferFormat:kICStencilBufferFormat_None];
 }
 
-- (id)initWithWidth:(int)w
-             height:(int)h
+- (id)initWithWidth:(float)w
+             height:(float)h
         pixelFormat:(ICPixelFormat)pixelFormat
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
@@ -159,11 +159,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
         // Set the render texture's content size -- this implicitly creates the required FBO
         [self setSize:(kmVec3){w, h, 0}];
-
+        
         // Set up a sprite for displaying the render texture in the scene
-		_sprite = [ICSprite spriteWithTexture:_texture];
+		_sprite = [[ICSprite alloc] initWithTexture:_texture];
+        [_sprite setSize:self.size];
         [_sprite flipTextureVertically];
-		[self addChild:_sprite];
+		[self addChild:_sprite];        
         
         // By default, set the display mode to kICFrameUpdateMode_Synchronized
         self.frameUpdateMode = kICFrameUpdateMode_Synchronized;
@@ -173,9 +174,8 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (void)dealloc
 {
-	glDeleteFramebuffers(1, &_fbo);
     self.subScene = nil;
-    
+    [_sprite release];
     [_texture release];
     
 	[super dealloc];
@@ -183,11 +183,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (void)setSize:(kmVec3)size
 {
-    NSUInteger w = size.x;
-    NSUInteger h = size.y;
+    float w = size.x;
+    float h = size.y;
     
-    if (w == (NSUInteger)_size.x &&
-        h == (NSUInteger)_size.y)
+    if (w == _size.x &&
+        h == _size.y)
         return; // content size not changed -- do nothing
 
     [super setSize:size];
@@ -209,6 +209,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     
+    // Delete old FBO, if any
+    if (_fbo) {
+        glDeleteFramebuffers(1, &_fbo);
+    }
+    
     // Generate an FBO
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
@@ -216,11 +221,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     void *data = malloc((int)(powW * powH * 4));
     memset(data, 0, (int)(powW * powH * 4));
     
+    [_texture release];
     _texture = [[ICTexture2D alloc] initWithData:data
                                      pixelFormat:_pixelFormat
                                       pixelsWide:powW
                                       pixelsHigh:powH
-                                     size:CGSizeMake(w, h)];
+                                            size:CGSizeMake(w, h)];
     free(data);
     
     // Associate texture with FBO
@@ -286,16 +292,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
     CHECK_GL_ERROR_DEBUG();
     
-    [_texture setAliasTexParameters];    
+    //[_texture setAliasTexParameters];    
     
-    if (_sprite) {
-        [_sprite setTexture:_texture];
-    }
-    
-    if (_subScene) {
-        [[_subScene camera] setViewport:CGRectMake(0, 0, powW, powH)];
-    }
-    
+    [_sprite setTexture:_texture];
+    [_sprite setSize:self.size];
+    [_subScene setSize:self.size];
+        
     [self setNeedsDisplay];
 }
 
@@ -367,7 +369,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         // Get and transform pick point (frame buffer space)
         CGPoint pickPoint = ((ICNodeVisitorPicking *)visitor).pickPoint;
         CGPoint localPoint = [self hostViewToNodeLocation:pickPoint];
-        
+                
         // Perform the inner hit test
         NSArray *innerHitTestNodes = [self.subScene hitTest:localPoint];
         

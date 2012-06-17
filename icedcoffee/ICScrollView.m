@@ -41,7 +41,7 @@
 - (void)scrollWheel:(NSEvent *)event
 {
     [self setContentOffset:kmVec3Make(_contentOffset.x + [event deltaX],
-                                      _contentOffset.y + -[event deltaY],
+                                      _contentOffset.y + [event deltaY],
                                       0)];
 }
 #endif

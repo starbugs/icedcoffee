@@ -80,14 +80,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ICConfiguration.h"
 //#import "Support/ICUtils.h"
 
-#if defined(__IPHONE_OS_VERSION_MAX_ALLOWED) && IC_FONT_LABEL_SUPPORT
-// FontLabel support
-#import "FontManager.h"
-#import "FontLabelStringDrawing.h"
-#endif// IC_FONT_LABEL_SUPPORT
 
-
+// FIXME: Removed FontLabel support as in cocos2d-2, but didn't add alternative yet
 // FIXME: ICLabel support for 32-bit textures
+
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
 #if defined(__ARM_NEON__) && IC_USE_RGBA32_LABELS_ON_NEON_ARCH
 #define USE_TEXT_WITH_A8_TEXTURES 0
@@ -117,7 +113,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	if((self = [super init])) {        
 		glGenTextures(1, &name_);
 		glBindTexture(GL_TEXTURE_2D, name_);
-
+        
 		[self setAntiAliasTexParameters];
 		
 		// Specify OpenGL texture image
@@ -177,7 +173,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 - (void) dealloc
 {
-	NSLog(@"IcedCoffee: deallocing %@", self);
+	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
 	if(name_) {
         // FIXME: Texture can only be deleted on main thread currently
         [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
@@ -417,12 +413,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-	
-#if IC_FONT_LABEL_SUPPORT
-	else // ZFont class 
-		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withZFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-#endif
-	
+		
 	UIGraphicsPopContext();
 	
 #if USE_TEXT_WITH_A8_TEXTURES
@@ -464,7 +455,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		}
 		
 		//Disable antialias
-		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	
+/*		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	*/
 		
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
 		[image lockFocus];	
@@ -506,14 +497,6 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	font = [UIFont fontWithName:name size:size];
 	if( font )
 		dim = [string sizeWithFont:font];
-
-#if IC_FONT_LABEL_SUPPORT
-	if( ! font ){
-		font = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-		if (font)
-			dim = [string sizeWithZFont:font];
-	}
-#endif // IC_FONT_LABEL_SUPPORT
 	
 	if( ! font ) {
 		NSLog(@"IcedCoffee: Unable to load font %@", name);
@@ -537,12 +520,15 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		  ]
 		 autorelease];
 	
+        // Require that GL_UNPACK_ALIGNMENT is set to 1 (see http://www.opengl.org/wiki/Common_Mistakes)
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
         dim.width = ceilf(dim.width);
         dim.height = ceilf(dim.height);
-        int remainder = (int)dim.width % 4 ? 4 - (int)dim.width % 4 : 0;
-        dim.width = remainder ? dim.width + remainder : dim.width;
-        dim.height = remainder ? dim.height + remainder : dim.height;
+        
+        // In case standard alignment is set (4), the following would correct the width of
+        // the alpha texture
+        //int remainder = (int)dim.width % 4 ? 4 - (int)dim.width % 4 : 0;
+        //dim.width = remainder ? dim.width + remainder : dim.width;
 				
 		return [self initWithString:string dimensions:dim alignment:ICTextAlignmentCenter attributedString:stringWithAttributes];
 	}
@@ -561,11 +547,6 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 	uifont = [UIFont fontWithName:name size:size];
 
-    // FIXME: Font label support in IcedCofee?
-#if IC_FONT_LABEL_SUPPORT
-	if( ! uifont )
-		uifont = [[FontManager sharedManager] zFontWithName:name pointSize:size];
-#endif // IC_FONT_LABEL_SUPPORT
 	if( ! uifont ) {
 		NSLog(@"IcedCoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];

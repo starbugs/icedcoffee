@@ -21,6 +21,7 @@
 //  
 
 #import "ICLabel.h"
+#import "ICSprite.h"
 #import "ICTexture2D.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
@@ -41,8 +42,9 @@
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
     if ((self = [super init])) {
-        [self setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
-        [self setShaderProgram:[[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
+        _sprite = [[ICSprite alloc] init];
+        [_sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
+        [self addChild:_sprite];
         
         self.fontName = fontName;
         self.fontSize = fontSize;
@@ -51,14 +53,28 @@
     return self;
 }
 
+- (void)dealloc
+{
+    [_sprite release];
+    [super dealloc];
+}
+
+- (void)setSpriteTexture:(ICTexture2D *)texture
+{
+    [_sprite setTexture:texture];
+    [_sprite setShaderProgram:[[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];    
+}
+
 - (void)setText:(NSString *)text
 {
     [_text release];
     _text = [text copy];
     
     ICTexture2D *texture = [[ICTexture2D alloc] initWithString:_text fontName:self.fontName fontSize:self.fontSize];
-    self.texture = texture;
+    [self setSpriteTexture:texture];
     [texture release];
+    
+    self.size = _sprite.size;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelTextDidChange object:self];
 }
@@ -76,6 +92,16 @@
     _fontSize = fontSize;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
+}
+
+- (icColor4B)color
+{
+    return _sprite.color;
+}
+
+- (void)setColor:(icColor4B)color
+{
+    [_sprite setColor:color];
 }
 
 @end

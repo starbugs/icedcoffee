@@ -30,9 +30,9 @@
 @synthesize dragOffset = _dragOffset;
 @synthesize textureFiles = _textureFiles;
 
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController
+- (id)init
 {
-    if ((self = [super initWithHostViewController:hostViewController])) {
+    if ((self = [super init])) {
         NSMutableArray *files = [NSMutableArray array];
         NSString *landscapesPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"landscapes"];
         NSDirectoryEnumerator *enumerator= [[NSFileManager defaultManager] enumeratorAtPath:landscapesPath];
@@ -55,10 +55,12 @@
         for (NSString *textureFile in self.textureFiles) {
             ImageSprite *sprite = [ImageSprite sprite];
             [sprite setPosition:(kmVec3){32.0f + col++ * (MAX_WIDTH + 16.0f), 32.0f + row * (MAX_HEIGHT + 16.0f), 0}];
+            [sprite setName:[textureFile lastPathComponent]];
             [self addChild:sprite];
-            [self.hostViewController.textureCache loadTextureFromFileAsync:textureFile
-                                                                withTarget:self
-                                                                withObject:sprite];
+            ICTextureCache *textureCache = [ICTextureCache currentTextureCache];
+            [textureCache loadTextureFromFileAsync:textureFile
+                                        withTarget:self
+                                        withObject:sprite];
             
             if (col == NUM_COLUMNS) {
                 col = 0;
@@ -70,10 +72,10 @@
 }
 
 - (void)textureDidLoad:(ICTexture2D *)texture object:(id)object
-{
+{    
     ICSprite *sprite = (ICSprite *)object;
     [sprite setTexture:texture];
-    
+
     CGSize maxSize = CGSizeMake(MAX_WIDTH, MAX_HEIGHT);
     CGSize scaledSize;
     CGSize size = [texture size];
@@ -93,7 +95,7 @@
 
 - (void)scrollWheel:(NSEvent *)event
 {
-    ICCameraPointsToPixelsPerspective *camera = (ICCameraPointsToPixelsPerspective *)self.camera;
+    ICUICamera *camera = (ICUICamera *)self.camera;
     [camera setZoomFactor:camera.zoomFactor - event.scrollingDeltaY / 1000];
 }
 

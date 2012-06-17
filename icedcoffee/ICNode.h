@@ -40,7 +40,8 @@
  <h3>Overview</h3>
  
  The ICNode class represents a drawable object on a scene graph. A scene graph is usually rooted
- in an ICScene object. Each node has an array of child nodes and a reference to its parent node.
+ in an ICScene object. Each node has an array of children nodes and a weak reference to its
+ parent node.
  
  A node has a transform matrix used to transform coordinates from parent space to its own
  local space. Nodes provide convenience methods for manipulating their transform matrix based
@@ -229,6 +230,16 @@
 - (BOOL)hasChildren;
 
 /**
+ @brief Returns all children that are kind of the specified class
+ */
+- (NSArray *)childrenOfType:(Class)classType;
+
+/**
+ @brief Returns all children that are not kind of the specified class
+ */
+- (NSArray *)childrenNotOfType:(Class)classType;
+
+/**
  @brief An array containing all ancestor nodes, ordered ascending beginning with the parent node
  
  @return Returns an NSArray of ICNode objects
@@ -242,9 +253,9 @@
  
  @return Returns an NSArray of ICNode objects
  */
-- (NSArray *)ancestorsWithType:(Class)classType;
+- (NSArray *)ancestorsOfType:(Class)classType;
 
-- (ICNode *)firstAncestorWithType:(Class)classType;
+- (ICNode *)firstAncestorOfType:(Class)classType;
 
 /**
  @brief An array containing all descendant nodes, ordered descending beginning with the first child
@@ -259,7 +270,7 @@
 
  @return Returns an NSArray of ICNode objects
  */
-- (NSArray *)descendantsWithType:(Class)classType;
+- (NSArray *)descendantsOfType:(Class)classType;
 
 /**
  @brief An array containing descendant nodes which are not of a specific class type, ordered
@@ -268,6 +279,11 @@
  @return Returns an NSArray of ICNode objects
  */
 - (NSArray *)descendantsNotOfType:(Class)classType;
+
+/**
+ @brief Returns the level of the node on the scene graph
+ */
+- (uint)level;
 
 /**
  @brief The root node terminating the node's branch
@@ -442,9 +458,24 @@
 - (kmVec3)anchorPoint;
 
 /**
- @brief Sets the content size of the node in its own untransformed space
+ @brief Sets the size of the node in its own untransformed space
  */
 - (void)setSize:(kmVec3)size;
+
+/**
+ @brief Sets the width of the node in its own untransformed space
+ */
+- (void)setWidth:(float)width;
+
+/**
+ @brief Sets the height of the node in its own untransformed space
+ */
+- (void)setHeight:(float)height;
+
+/**
+ @brief Sets the depth of the node in its own untransformed space
+ */
+- (void)setDepth:(float)depth;
 
 /**
  @brief Returns the content size of the node in its own untransformed space
@@ -696,5 +727,16 @@
  */
 @property (nonatomic, assign) BOOL userInteractionEnabled;
 
+#ifdef DEBUG
+
+#pragma mark - Debugging
+/** @name Debugging */
+
+/**
+ @brief Prints a debug log of the node's branch on the console (only available in debug mode)
+ */
+- (void)debugLogBranch;
+
+#endif
 
 @end

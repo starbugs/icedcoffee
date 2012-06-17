@@ -28,31 +28,86 @@
 
 @synthesize window = _window;
 @synthesize hostViewController = _hostViewController;
+@synthesize testScene = _testScene;
+@synthesize camAngle = _camAngle;
+@synthesize animateCamera = _animateCamera;
+
+- (id)init
+{
+    if ((self = [super init])) {
+        self.animateCamera = YES;
+    }
+    return self;
+}
 
 - (void)dealloc
 {
     [super dealloc];
 }
 
+- (void)update:(icTime)dt
+{
+    if (_animateCamera) {
+        kmVec3 eyeOffset = kmVec3Make(cos(_camAngle)*200, sin(_camAngle)*-300, 0);
+        ((ICUICamera *)self.testScene.camera).eyeOffset = eyeOffset;
+        ((ICUICamera *)self.testScene.camera).lookAtOffset = (kmVec3){-50,-50,0};
+        _camAngle += 0.1f * dt;
+    } else {
+        ((ICUICamera *)self.testScene.camera).eyeOffset = kmNullVec3;
+        ((ICUICamera *)self.testScene.camera).lookAtOffset = kmNullVec3;
+    }
+}
+
+- (void)setViewsWantRenderTextureBacking:(BOOL)flag
+{
+    NSArray *views = [self.testScene descendantsOfType:[ICView class]];
+    for (ICView *view in views) {
+        [view setWantsRenderTextureBacking:flag];
+    }
+    
+    //[self.testScene debugLogBranch];
+}
+
+- (void)backingSwitchButtonClicked:(id)sender
+{
+    ICButton *button = (ICButton *)sender;
+    if ([button.label.text isEqualToString:@"Without Render Textures"]) {
+        button.label.text = @"With Render Textures";
+        [self setViewsWantRenderTextureBacking:YES];
+    } else {
+        button.label.text = @"Without Render Textures";
+        [self setViewsWantRenderTextureBacking:NO];
+    }
+}
+
+- (void)animateButtonClicked:(id)sender
+{
+    ICButton *button = (ICButton *)sender;
+    if ([button.label.text isEqualToString:@"Animated"]) {
+        button.label.text = @"Not animated";
+        self.animateCamera = NO;
+    } else {
+        button.label.text = @"Animated";
+        self.animateCamera = YES;
+    }    
+}
+
 - (void)setupScene
 {
-    ICScene *scene = [[[ICScene alloc] initWithHostViewController:self.hostViewController] autorelease];
-    
-    ((ICCameraPointsToPixelsPerspective *)scene.camera).eyeOffset = (kmVec3){200,-300,0};
-    ((ICCameraPointsToPixelsPerspective *)scene.camera).lookAtOffset = (kmVec3){-50,-50,0};
-    
+    self.testScene = [ICUIScene scene];
+
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
-    ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:filename];
+    ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
-    [scene addChild:rs];
+    [self.testScene.contentView addChild:rs];
     
     ResponsiveView *rv = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [rv setPositionX:150];
-    [scene addChild:rv];
+    [self.testScene.contentView addChild:rv];
     
     ResponsiveView *nestedRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [nestedRV setPositionY:150];
-    [scene addChild:nestedRV];
+    [self.testScene.contentView addChild:nestedRV];
     
     ResponsiveView *innerRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
     [innerRV setPositionX:10];
@@ -74,10 +129,15 @@
     [innerRV4 setPositionY:70];
     [nestedRV addChild:innerRV4];
 
+    ResponsiveView *innerInnerRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(12, 12)] autorelease];
+    [innerInnerRV setPositionX:4];
+    [innerInnerRV setPositionY:4];
+    [innerRV4 addChild:innerInnerRV];
+    
     ResponsiveView *nestedRV2 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [nestedRV2 setPositionX:150];
     [nestedRV2 setPositionY:150];
-    [scene addChild:nestedRV2];
+    [self.testScene.contentView addChild:nestedRV2];
     
     ResponsiveView *innerRV5 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(108, 108)] autorelease];
     [innerRV5 setPositionX:10];
@@ -89,22 +149,51 @@
     [innerRV6 setPositionY:10];
     [innerRV5 addChild:innerRV6];
     
-    [self.hostViewController runWithScene:scene];
+
+    ICUIScene *testHostScene = [ICUIScene scene];
+    [testHostScene.contentView addChild:self.testScene];
+    
+    ICView *buttonPanel = [ICView viewWithSize:CGSizeMake(310, 21)];
+    [testHostScene.contentView addChild:buttonPanel];
+    [buttonPanel setPositionY:20];
+    [buttonPanel centerNodeHorizontally];
+    buttonPanel.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible |
+                                   ICAutoResizingMaskRightMarginFlexible |
+                                   ICAutoResizingMaskBottomMarginFlexible;
+    
+    ICButton *backingSwitchButton = [ICButton viewWithSize:CGSizeMake(180, 21)];
+    [buttonPanel addChild:backingSwitchButton];
+    ICButton *animateButton = [ICButton viewWithSize:CGSizeMake(120, 21)];
+    [buttonPanel addChild:animateButton];
+
+    backingSwitchButton.label.text = @"Without Render Textures";
+    [backingSwitchButton addTarget:self action:@selector(backingSwitchButtonClicked:)
+                  forControlEvents:ICControlEventLeftMouseUpInside];
+
+    [animateButton setPositionX:190];
+    animateButton.label.text = @"Animated";
+    [animateButton addTarget:self action:@selector(animateButtonClicked:)
+            forControlEvents:ICControlEventLeftMouseUpInside];
+    
+    [self.hostViewController runWithScene:testHostScene];
+    
+    [[self.hostViewController scheduler] scheduleUpdateForTarget:self];
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
-    [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
-    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
+    [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_Synchronized];
+    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
                                           shareContext:nil
                                     hostViewController:self.hostViewController];
     
     self.window.contentView = glView;
-    [self.window setAcceptsMouseMovedEvents:YES];
+    [self.window setAcceptsMouseMovedEvents:NO];
     [self.window makeFirstResponder:self.window.contentView];
+    [self.window makeKeyAndOrderFront:self];
 
     [self setupScene];
 }

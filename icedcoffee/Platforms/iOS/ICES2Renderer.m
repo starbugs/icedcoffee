@@ -73,7 +73,7 @@
 
 		depthFormat_ = depthFormat;
 		pixelFormat_ = pixelFormat;
-
+        
 		CHECK_GL_ERROR_DEBUG();
     }
 
@@ -92,7 +92,6 @@
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
 
 	ICLOG(@"IcedCoffee: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
-
 
 	if (depthFormat_)
 	{

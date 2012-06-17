@@ -38,10 +38,10 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [[[ICScene alloc] initWithHostViewController:self.hostViewController] autorelease];
+    ICScene *scene = [ICScene scene];
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
-    ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:filename];
+    ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [scene addChild:rs];
     

@@ -64,6 +64,8 @@ ICShaderCache *g_defaultShaderCache = nil;
 {
     NSString *resourcePath = [[NSBundle bundleForClass:[self class]] resourcePath];
     
+    NSString *positionColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionColor.vsh"];
+    NSString *positionColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionColor.fsh"];
     NSString *positionTextureColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureColor.vsh"];
     NSString *positionTextureColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureColor.fsh"];
     NSString *positionTextureA8ColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureA8Color.vsh"];
@@ -72,9 +74,24 @@ ICShaderCache *g_defaultShaderCache = nil;
     NSString *stencilMaskFSH = [resourcePath stringByAppendingPathComponent:@"StencilMask.fsh"];
     NSString *spriteTextureMaskFSH = [resourcePath stringByAppendingPathComponent:@"SpriteTextureMask.fsh"];
 
+    ICShaderProgram *p;
+
+    // Standard position color shader
+    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionColorVSH
+                                       fragmentShaderFilename:positionColorFSH];
+    
+	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
+	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
+    
+	[p link];
+	[p updateUniforms];
+    
+    [self setShaderProgram:p forKey:kICShader_PositionColor];
+    [p release];
+
     // Standard position texture color shader
-    ICShaderProgram *p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
-                                                        fragmentShaderFilename:positionTextureColorFSH];
+    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
+                                       fragmentShaderFilename:positionTextureColorFSH];
     
 	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
 	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];

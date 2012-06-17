@@ -44,10 +44,20 @@
 			<key>orderHint</key>
 			<integer>14</integer>
 		</dict>
+		<key>TableViewTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>16</integer>
+		</dict>
 		<key>TextureCacheTest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>8</integer>
+		</dict>
+		<key>ViewTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>17</integer>
 		</dict>
 		<key>icedcoffee-tests-mac.xcscheme</key>
 		<dict>
@@ -62,7 +72,17 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>D22F25581587D53B0049268C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D253D9BE15663DE20027DA6C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2850482158B204E00CD71ED</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -88,8 +88,8 @@ typedef struct _icV3F_C4B_T2F {
  */
 typedef struct _icV3F_C4B_T2FQuad {
 	icV3F_C4B_T2F tl;
-	icV3F_C4B_T2F bl;
 	icV3F_C4B_T2F tr;
+	icV3F_C4B_T2F bl;
 	icV3F_C4B_T2F br;
 } icV3F_C4B_T2FQuad;
 
@@ -171,5 +171,16 @@ typedef enum _icResolutionType {
 	//! iPad resolution type
 	kICResolutioniPad,
 } icResolutionType;
+
+
+enum {
+    ICAutoResizingMaskNotSizable           = 0x00,
+    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
+    ICAutoResizingMaskWidthSizable         = 0x02,
+    ICAutoResizingMaskRightMarginFlexible  = 0x04,
+    ICAutoResizingMaskTopMarginFlexible    = 0x08,
+    ICAutoResizingMaskHeightSizable        = 0x10,
+    ICAutoResizingMaskBottomMarginFlexible = 0x20
+};
 
 typedef double icTime;

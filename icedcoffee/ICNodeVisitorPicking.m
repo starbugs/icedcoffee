@@ -39,11 +39,12 @@
     if ((self = [super init])) {
         _visitorType = kICPickingNodeVisitor;
         _nodeIndex = 1;
-        // FIXME: enable depth buffer only if host view controller provides depth buffer support(?)
-        _renderTexture = [[ICRenderTexture alloc] initWithWidth:1
-                                                         height:1
+        _renderTexture = [[ICRenderTexture alloc] initWithWidth:1.0f/IC_CONTENT_SCALE_FACTOR()
+                                                         height:1.0f/IC_CONTENT_SCALE_FACTOR()
                                                     pixelFormat:kICPixelFormat_RGBA8888
-                                              depthBufferFormat:kICDepthBufferFormat_16];
+                                              depthBufferFormat:kICDepthBufferFormat_24
+                                            stencilBufferFormat:kICStencilBufferFormat_8];
+                
         _resultNodeStack = [[NSMutableArray alloc] init];
         _appendNodesToStack = [[NSMutableArray alloc] init];
         _pickPoint = CGPointMake(0, 0);
@@ -59,10 +60,26 @@
     [super dealloc];
 }
 
-- (void)beginWithPickPoint:(CGPoint)point
+- (GLint *)viewport
 {
-    _pickPoint = point;
+    return _viewport;
+}
+
+- (void)setViewport:(GLint *)viewport
+{
+    memcpy(_viewport, viewport, sizeof(GLint)*4);
+}
+
+- (void)beginWithPickPoint:(CGPoint)point viewport:(GLint *)viewport
+{
+    self.pickPoint = point;
+    self.viewport = viewport;
     [_renderTexture begin];
+}
+
+- (BOOL)isInPickingContext
+{
+    return [_renderTexture isInRenderTextureDrawContext];
 }
 
 - (void)end

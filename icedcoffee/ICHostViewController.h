@@ -36,6 +36,7 @@
 @class ICResponder;
 @class ICScheduler;
 @class ICTargetActionDispatcher;
+@class ICRenderContext;
 
 
 #if defined(__IC_PLATFORM_MAC)
@@ -87,9 +88,8 @@
 {
 @protected
     ICScene *_scene;
-    
-    ICTextureCache *_textureCache;
-    ICScheduler *_scheduler;
+
+    ICRenderContext *_renderContext;
     ICTargetActionDispatcher *_targetActionDispatcher;
     
     ICResponder *_currentFirstResponder;
@@ -99,7 +99,6 @@
 
     BOOL _isRunning;
     NSThread *_thread;
-    CGSize _viewSize;
 
     icTime _deltaTime;
     struct timeval _lastUpdate;
@@ -139,7 +138,7 @@
 /**
  @brief The ICTextureCache object associated with the host view controller
  */
-@property (nonatomic, readonly) ICTextureCache *textureCache;
+@property (nonatomic, readonly, getter=textureCache) ICTextureCache *textureCache;
 
 
 #pragma mark - Run Loop, Drawing and Animation
@@ -221,7 +220,7 @@
 #pragma mark - Update Scheduling and Target-Action Dispatch
 /** @name Update Scheduling and Target-Action Dispatch */
 
-@property (nonatomic, readonly) ICScheduler *scheduler;
+@property (nonatomic, readonly, getter=scheduler) ICScheduler *scheduler;
 
 @property (nonatomic, readonly) ICTargetActionDispatcher *targetActionDispatcher;
 
@@ -237,11 +236,6 @@
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (ICGLView *)view;
 #endif
-
-/**
- @brief The size of the view controller's view in points
- */
-@property (nonatomic, assign) CGSize viewSize;
 
 
 #pragma mark - Hit Testing

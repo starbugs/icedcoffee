@@ -40,6 +40,10 @@
 - (void)setNeedsDisplayForNode:(ICNode *)node;
 @end
 
+@interface ICScene (Private)
+- (void)adjustToFrameBufferSize;
+@end
+
 
 @implementation ICScene
 
@@ -54,46 +58,28 @@
 @synthesize performsDepthTesting = _performsDepthTesting;
 @synthesize performsFaceCulling = _performsFaceCulling;
 
-+ (id)sceneWithHostViewController:(ICHostViewController *)hostViewController
++ (id)scene
 {
-    return [[[[self class] alloc] initWithHostViewController:hostViewController] autorelease];
-}
-
-+ (id)sceneWithHostViewController:(ICHostViewController *)hostViewController
-                           camera:(ICCamera *)camera
-{
-    return [[[[self class] alloc] initWithHostViewController:hostViewController camera:camera] autorelease];    
+    return [[[[self class] alloc] init] autorelease];
 }
 
 - (id)init
 {
-    NSAssert(nil, @"You must initialize ICScene using initWithHostViewController:");
-    return nil;
-}
-
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController
-{
-    // Prepare a viewport for the scene's camera. Note that this may be reset later on when
-    // the scene is added to another scene
-    CGRect viewport = CGRectMake(0, 0,
-                                 hostViewController.view.bounds.size.width,
-                                 hostViewController.view.bounds.size.height);
-    
-    ICCamera *camera = [[[ICDEFAULT_CAMERA alloc] initWithViewport:viewport] autorelease];
-    return [self initWithHostViewController:hostViewController camera:camera];
-}
-
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController
-                          camera:(ICCamera *)camera
-{
     if ((self = [super init])) {
-        _hostViewController = hostViewController; // assign
+        // Note that initially, the scene is not assigned to a host view controller. This
+        // must be done later so that it receives a valid size and viewport from a parent
+        // frame buffer. A scene can be assigned to a host view controller directly using
+        // ICHostViewController:runWithScene:, or indirectly, by adding it to an existing
+        // scene graph using ICNode::addChild:.
+        
+        // Viewport of camera is set as soon as the scene is either added to an existing
+        // scene graph or assigned to a host view controller
+        ICCamera *camera = [[[ICDEFAULT_CAMERA alloc] initWithViewport:CGRectNull] autorelease];
         self.camera = camera;
+        
         self.drawingVisitor = [[[ICDEFAULT_DRAWING_VISITOR alloc] init] autorelease];
         self.pickingVisitor = [[[ICDEFAULT_PICKING_VISITOR alloc] init] autorelease];
-        [self setSize:(kmVec3){hostViewController.view.bounds.size.width,
-                               hostViewController.view.bounds.size.height,
-                               0}];
+                
         _clearColor = (icColor4B){255,255,255,255};
         _clearsColorBuffer = YES;
         _clearsDepthBuffer = YES;
@@ -141,20 +127,11 @@
     if (_performsFaceCulling)
         glEnable(GL_CULL_FACE);
     
-    // FIXME
-    
-/*    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-    glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);*/
-    
-    /*glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);*/
-    
-    // Set up pixel alignment
-    glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-    glPixelStorei(GL_PACK_ALIGNMENT, 1);
-    
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        
     // Set up alpha blending
     glEnable(GL_BLEND);
     glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
@@ -166,6 +143,11 @@
     }
 
     CHECK_GL_ERROR_DEBUG();
+    
+    // Store old projection matrix, so we can revert to the previous projection when
+    // drawing has been finished. This is essentially useful when dealing with nested
+    // scenes that draw to the same frame buffer object.
+    kmGLGetMatrix(KM_GL_PROJECTION, &_matOldProjection);
 
     // Set up projection and model-view matrix based on camera options
     [self.camera apply];
@@ -173,6 +155,11 @@
 
 - (void)tearDownSceneForDrawing
 {
+    // Revert old projection matrix
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_matOldProjection);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
+    
     glDisable(GL_DEPTH_TEST);
 }
 
@@ -181,8 +168,9 @@
     // Clear color and (optionally) depth buffers
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClearDepth(1.0f);
+    glClearStencil(0);
     
-    GLbitfield clearFlags = GL_COLOR_BUFFER_BIT;
+    GLbitfield clearFlags = GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
     if (_performsDepthTesting)
         clearFlags |= GL_DEPTH_BUFFER_BIT;
     glClear(clearFlags);
@@ -190,6 +178,8 @@
 
     // Disable alpha blending
     glDisable(GL_BLEND);
+    
+    kmGLGetMatrix(KM_GL_PROJECTION, &_matOldProjection);
     
     // Apply the camera with an additional pick matrix that scales the viewport to a 1x1
     // area at the given point
@@ -204,40 +194,56 @@
     }
 }
 
-- (void)visit
+- (void)tearDownSceneForPicking
 {
-    [self visitNode:self];
+    // Revert old projection matrix
+    kmGLMatrixMode(KM_GL_PROJECTION);
+    kmGLLoadMatrix(&_matOldProjection);
+    kmGLMatrixMode(KM_GL_MODELVIEW);
 }
 
-- (void)visitNode:(ICNode *)node
+- (void)visit
 {
-    [self setUpSceneForDrawing];
-    if ([node parent] && ![node isKindOfClass:[ICScene class]]) {
-        kmMat4 matTransform = [[node parent] nodeToWorldTransform];
-        kmGLPushMatrix();
-        kmGLMultMatrix(&matTransform);
+    [self.drawingVisitor visit:self];
+}
+
+- (void)drawWithVisitor:(ICNodeVisitor *)visitor
+{
+    if (visitor.visitorType == kICDrawingNodeVisitor) {
+        [self setUpSceneForDrawing];
+    } else if(visitor.visitorType == kICPickingNodeVisitor) {
+        CGPoint point = ((ICNodeVisitorPicking *)visitor).pickPoint;
+        GLint *viewport = ((ICNodeVisitorPicking *)visitor).viewport;
+        [self setupSceneForPickingWithPoint:point viewport:viewport];
     }
-    [self.drawingVisitor visit:node];
-    if ([node parent] && ![node isKindOfClass:[ICScene class]]) {
-        kmGLPopMatrix();
+}
+
+- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
+{
+    if (visitor.visitorType == kICDrawingNodeVisitor) {
+        [self tearDownSceneForDrawing];
+    } else if(visitor.visitorType == kICPickingNodeVisitor) {
+        [self tearDownSceneForPicking];
     }
-    [self tearDownSceneForDrawing];    
 }
 
 // Must be in valid GL context
 - (NSArray *)hitTest:(CGPoint)point
 {
+    // Hit test must be called from the FBO context the scene is part of,
+    // so we may retrieve the corresponding viewport from the GL state
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
     
-    if (point.x < viewport[0] || point.y < viewport[1] ||
-        point.x > viewport[2] || point.y > viewport[3]) {
+    if (point.x * IC_CONTENT_SCALE_FACTOR() < viewport[0] ||
+        point.y * IC_CONTENT_SCALE_FACTOR() < viewport[1] ||
+        point.x * IC_CONTENT_SCALE_FACTOR() > viewport[2] ||
+        point.y * IC_CONTENT_SCALE_FACTOR() > viewport[3]) {
         // Point outside viewport
         return [NSArray array];
     }
     
-    [(ICNodeVisitorPicking *)self.pickingVisitor beginWithPickPoint:point];
-    [self setupSceneForPickingWithPoint:point viewport:viewport];
+    [(ICNodeVisitorPicking *)self.pickingVisitor beginWithPickPoint:point viewport:viewport];
     [self.pickingVisitor visit:self];
     [(ICNodeVisitorPicking *)self.pickingVisitor end];
     
@@ -251,6 +257,16 @@
     return _hostViewController;
 }
 
+- (void)setHostViewController:(ICHostViewController *)hostViewController
+{
+    _hostViewController = hostViewController;
+    
+    // Adjust frame buffer size with respect to the new host view controller (this
+    // will implicitly adjust the sizes of all sub scenes)
+    [self adjustToFrameBufferSize];
+}
+
+// FIXME: this looks incorrect and may need fixing
 - (CGRect)frameRect
 {
     if (!_parent) {
@@ -261,28 +277,57 @@
 }
 
 - (CGSize)frameBufferSize
-{
-    if (self.parent == nil) {
-        // Root scene
-        return [[self.hostViewController view] bounds].size;
+{    
+    NSArray *renderTextureAncestors = [self ancestorsOfType:[ICRenderTexture class]];
+    if ([renderTextureAncestors count]) {
+        // Descendant of render texture, so we're dealing with a render texture FBO
+        ICRenderTexture *parentRenderTexture = [renderTextureAncestors objectAtIndex:0];
+        return CGSizeMake(parentRenderTexture.size.x, parentRenderTexture.size.y);
     }
     
-    NSArray *renderTextureAncestors = [self ancestorsWithType:[ICRenderTexture class]];
-    ICRenderTexture *parentRenderTexture = [renderTextureAncestors objectAtIndex:0];
-    return CGSizeMake(parentRenderTexture.size.x, parentRenderTexture.size.y);
+    // Scene without render texture ancestor, so we're dealing with the root FBO
+    if (self.hostViewController)
+        return [[self.hostViewController view] bounds].size;
+    
+    return CGSizeMake(0, 0);
+}
+
+- (void)adjustToFrameBufferSize
+{
+    CGSize frameBufferSize = [self frameBufferSize];
+    [self setSize:(kmVec3){frameBufferSize.width, frameBufferSize.height, 0}];    
 }
 
 - (void)setParent:(ICNode *)parent
 {
     [super setParent:parent];
     
-    CGSize frameBufferSize = [self frameBufferSize];
-    CGRect viewport = CGRectMake(0, 0,
-                                 frameBufferSize.width * IC_CONTENT_SCALE_FACTOR(),
-                                 frameBufferSize.height * IC_CONTENT_SCALE_FACTOR());
-    [self.camera setViewport:viewport];
-    
-    [self setSize:(kmVec3){frameBufferSize.width, frameBufferSize.height, 0}];
+    // When the scene is added to another scene, the latter may be part of a different
+    // frame buffer. Make sure both the camera's viewport and the size of the scene
+    // are in line with the parent frame buffer.
+    [self adjustToFrameBufferSize];
+}
+
+// Called by the framework. This should not be called directly, since the scene's size
+// must be identical to the frame buffer size in order to get a correct projection.
+- (void)setSize:(kmVec3)size
+{
+    if (size.x != self.size.x || size.y != self.size.y || size.z != self.size.z) {
+        [super setSize:size];
+        
+        // Set the camera's viewport according to the new size of the scene
+        CGRect viewport = CGRectMake(0, 0, size.x, size.y);
+        [self.camera setViewport:viewport];
+        [self setNeedsDisplay];
+        
+        // Ensure that descendant scenes adjust to the correct sizes respectively.
+        // Note that this will not touch render texture scene's as those are not part of the
+        // scene graph hierarchy when traversing the graph in descending direction.
+        NSArray *descendantScenes = [self descendantsOfType:[ICScene class]];
+        for (ICScene *scene in descendantScenes) {
+            [scene setSize:size];
+        }
+    }
 }
 
 - (void)setNeedsDisplayForNode:(ICNode *)node

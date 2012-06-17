@@ -60,6 +60,7 @@
 @private
     CADisplayLink *_displayLink;
     ICTouchEventDispatcher *_touchEventDispatcher;
+    BOOL _openGLReady;
     
 }
 

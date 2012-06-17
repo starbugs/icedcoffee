@@ -56,8 +56,6 @@
 - (id)initWithTexture:(ICTexture2D *)texture
 {
     if ((self = [super init])) {
-        self.shaderProgram = [[ICShaderCache defaultShaderCache]
-                              shaderProgramForKey:kICShader_PositionTextureColor];
         [self resetQuad];
         [self setColor:(icColor4B){255,255,255,255}];
         self.texture = texture;
@@ -69,6 +67,8 @@
 - (void)dealloc
 {
     ICLOG_DEALLOC(@"Deallocing ICSprite");
+    self.texture = nil;
+    
     [super dealloc];
 }
 
@@ -80,16 +80,18 @@
     float x2 = 1.0f;
     float y1 = 0.0f;
     float y2 = 1.0f;
-        
-    kmVec3Fill(&_quad.bl.vect, x1, y1, 0);
-    kmVec3Fill(&_quad.br.vect, x2, y1, 0);
-    kmVec3Fill(&_quad.tl.vect, x1, y2, 0);
-    kmVec3Fill(&_quad.tr.vect, x2, y2, 0);
     
-    kmVec2Fill(&_quad.tl.texCoords, 0, 0);
-    kmVec2Fill(&_quad.tr.texCoords, 1, 0);
-    kmVec2Fill(&_quad.bl.texCoords, 0, 1);
-    kmVec2Fill(&_quad.br.texCoords, 1, 1);
+    // Note: Y-axis inverted by IcedCoffe UI camera, so we need to do this in CCW order
+    kmVec3Fill(&_quad.tl.vect, x1, y1, 0);
+    kmVec3Fill(&_quad.tr.vect, x2, y1, 0);
+    kmVec3Fill(&_quad.bl.vect, x1, y2, 0);
+    kmVec3Fill(&_quad.br.vect, x2, y2, 0);
+    
+    // .. and flip the texture coordinates vertically
+    kmVec2Fill(&_quad.tl.texCoords, 0, 1);
+    kmVec2Fill(&_quad.tr.texCoords, 1, 1);
+    kmVec2Fill(&_quad.bl.texCoords, 0, 0);
+    kmVec2Fill(&_quad.br.texCoords, 1, 0);
 }
 
 - (icColor4B)color
@@ -171,6 +173,10 @@
     _texture = [texture retain];
 
     [self setSize:(kmVec3){[texture size].width, [texture size].height, 0}];
+        
+    NSString *shaderKey = texture ? kICShader_PositionTextureColor : kICShader_PositionColor;
+    self.shaderProgram = [[ICShaderCache defaultShaderCache]
+                          shaderProgramForKey:shaderKey];
 }
 
 - (void)setMaskTexture:(ICTexture2D *)maskTexture

@@ -20,6 +20,14 @@
 		D2732886152F9F9D0004F557 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB774514F9397A0028CD04 /* QuartzCore.framework */; };
 		D2732887152F9F9F0004F557 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773F14F939530028CD04 /* OpenGLES.framework */; };
 		D273288A152F9FCE0004F557 /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
+		D2735AF2158D11DF00216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF0158D11CA00216F1B /* PositionColor.fsh */; };
+		D2735AF3158D11E200216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF1158D11CA00216F1B /* PositionColor.vsh */; };
+		D2735B35158E4C4E00216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B2F158E4C3300216F1B /* PositionColor.fsh */; };
+		D2735B36158E4C5100216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B30158E4C3300216F1B /* PositionColor.vsh */; };
+		D2735B37158E4C5E00216F1B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */; };
+		D2735B38158E4C6100216F1B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */; };
+		D2735B39158E4C6400216F1B /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */; };
+		D2735B3A158E4C6800216F1B /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B34158E4C3300216F1B /* StencilMask.fsh */; };
 		D2A9AD6C15848CE5007EB224 /* ResponsiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */; };
 		D2AB773614F9391A0028CD04 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773414F939110028CD04 /* UIKit.framework */; };
 		D2AB773914F939330028CD04 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2AB773714F939260028CD04 /* Foundation.framework */; };
@@ -115,6 +123,14 @@
 		D273287E152F9F3A0004F557 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D273287F152F9F3A0004F557 /* RetinaDisplaySupportTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RetinaDisplaySupportTest-Info.plist"; sourceTree = "<group>"; };
 		D2732880152F9F3A0004F557 /* RetinaDisplaySupportTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RetinaDisplaySupportTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2735AF0158D11CA00216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2735AF1158D11CA00216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B2F158E4C3300216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B30158E4C3300216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B34158E4C3300216F1B /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D2A9AD6A15848CE5007EB224 /* ResponsiveView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveView.h; path = "tests-shared-src/PickingTest/ResponsiveView.h"; sourceTree = SOURCE_ROOT; };
 		D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveView.m; path = "tests-shared-src/PickingTest/ResponsiveView.m"; sourceTree = SOURCE_ROOT; };
 		D2AB773414F939110028CD04 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -271,6 +287,12 @@
 				D2D4A1FE14F93D5D000FCBA0 /* Picking.fsh */,
 				D2D4A1FF14F93D5D000FCBA0 /* PositionTextureColor.fsh */,
 				D2D4A20014F93D5D000FCBA0 /* PositionTextureColor.vsh */,
+				D2735B2F158E4C3300216F1B /* PositionColor.fsh */,
+				D2735B30158E4C3300216F1B /* PositionColor.vsh */,
+				D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */,
+				D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */,
+				D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */,
+				D2735B34158E4C3300216F1B /* StencilMask.fsh */,
 				D21C980114F302320059BBBE /* main.m */,
 				D21C97FF14F302320059BBBE /* InfoPlist.strings */,
 				D21C980214F302320059BBBE /* PickingTest-Info.plist */,
@@ -351,6 +373,8 @@
 			children = (
 				D2FEE890153AD516004CFF62 /* thiswayup.png */,
 				D2FEE88B153AD50F004CFF62 /* Picking.fsh */,
+				D2735AF0158D11CA00216F1B /* PositionColor.fsh */,
+				D2735AF1158D11CA00216F1B /* PositionColor.vsh */,
 				D2FEE88C153AD50F004CFF62 /* PositionTextureA8Color.fsh */,
 				D2FEE88D153AD50F004CFF62 /* PositionTextureA8Color.vsh */,
 				D2FEE88E153AD50F004CFF62 /* PositionTextureColor.fsh */,
@@ -444,8 +468,8 @@
 		D21C97CB14F301A70059BBBE /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0420;
-				ORGANIZATIONNAME = "UJAM Development GmbH";
+				LastUpgradeCheck = 0430;
+				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D21C97CE14F301A70059BBBE /* Build configuration list for PBXProject "icedcoffee-tests-ios" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -488,11 +512,17 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D2735B37158E4C5E00216F1B /* PositionTextureA8Color.fsh in Resources */,
+				D2735B38158E4C6100216F1B /* PositionTextureA8Color.vsh in Resources */,
+				D2735B39158E4C6400216F1B /* SpriteTextureMask.fsh in Resources */,
+				D2735B3A158E4C6800216F1B /* StencilMask.fsh in Resources */,
 				D21C980514F302320059BBBE /* InfoPlist.strings in Resources */,
 				D2D4A20514F93D66000FCBA0 /* thiswayup.png in Resources */,
 				D2D4A20114F93D5D000FCBA0 /* Picking.fsh in Resources */,
 				D2D4A20214F93D5D000FCBA0 /* PositionTextureColor.fsh in Resources */,
 				D2D4A20314F93D5D000FCBA0 /* PositionTextureColor.vsh in Resources */,
+				D2735B35158E4C4E00216F1B /* PositionColor.fsh in Resources */,
+				D2735B36158E4C5100216F1B /* PositionColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -517,6 +547,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2FEE892153AD523004CFF62 /* Picking.fsh in Resources */,
+				D2735AF2158D11DF00216F1B /* PositionColor.fsh in Resources */,
+				D2735AF3158D11E200216F1B /* PositionColor.vsh in Resources */,
 				D2FEE893153AD523004CFF62 /* PositionTextureA8Color.fsh in Resources */,
 				D2FEE894153AD523004CFF62 /* PositionTextureA8Color.vsh in Resources */,
 				D2FEE895153AD523004CFF62 /* PositionTextureColor.fsh in Resources */,

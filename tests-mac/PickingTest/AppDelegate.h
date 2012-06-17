@@ -23,10 +23,16 @@
 #import <Cocoa/Cocoa.h>
 #import "IcedCoffee.h"
 
-@interface AppDelegate : NSObject <NSApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, ICUpdatable>
 
 @property (assign) IBOutlet NSWindow *window;
 
 @property (strong, nonatomic) ICHostViewController *hostViewController;
+
+@property (strong, nonatomic) ICUIScene *testScene;
+
+@property (assign, nonatomic) float camAngle;
+
+@property (assign, nonatomic) BOOL animateCamera;
 
 @end

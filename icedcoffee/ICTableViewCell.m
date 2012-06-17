@@ -26,24 +26,36 @@
 
 @implementation ICTableViewCell
 
+@synthesize identifier = _identifier;
 @synthesize background = _background;
 @synthesize label = _label;
 @synthesize selected = _selected;
+
++ (id)cellWithIdentifier:(NSString *)identifier
+{
+    return [[[[self class] alloc] initWithIdentifier:identifier] autorelease];
+}
+
+- (id)initWithIdentifier:(NSString *)identifier
+{
+    if ((self = [self initWithSize:CGSizeMake(100, 30)])) {
+        _identifier = [identifier copy];
+    }
+    return self;
+}
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
         // Set up background
         self.background = [ICSprite sprite];
-        self.background.size = self.size;
         self.background.color = (icColor4B){255,255,255,255};
         [self addChild:self.background];
         
         // Set up label
         self.label = [ICLabel labelWithText:@"" fontName:@"Lucida Grande" fontSize:12];
-        self.label.color = (icColor4B){0,0,0,0};
+        self.label.color = (icColor4B){0,0,0,255};
         [self addChild:self.label];
-        [self.label centerNodeVertically];
     }
     return self;
 }
@@ -51,7 +63,17 @@
 - (void)dealloc
 {
     self.label = nil;
+    self.background = nil;
+    [_identifier release];
     [super dealloc];
+}
+
+- (void)setSize:(kmVec3)size
+{
+    [super setSize:size];
+    
+    self.background.size = self.size;
+    [self.label centerNodeVertically];    
 }
 
 - (void)setSelected:(BOOL)selected
@@ -62,8 +84,8 @@
             self.background.color = (icColor4B){0,50,170,255};
             self.label.color = (icColor4B){255,255,255,255};
         } else {
-            self.background.color = (icColor4B){255,255,255,255};
-            self.label.color = (icColor4B){0,0,0,0};
+            self.background.color = (icColor4B){255,255,0,255};
+            self.label.color = (icColor4B){0,0,0,255};
         }
         [self setNeedsDisplay];
     }

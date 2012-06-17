@@ -50,40 +50,48 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
+    
+    CHECK_GL_ERROR_DEBUG();
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
     ICTexture2D *texture = [self.hostViewController.textureCache loadTextureFromFile:filename];
+    
     _foregroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [_foregroundSprite setPositionX:10.0f];
     [_foregroundSprite setPositionY:10.0f];
+    [_foregroundSprite setName:@"fg"];
     ICSprite *backgroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [backgroundSprite flipTextureVertically];
     [backgroundSprite setPositionZ:-100.0f];
+    [backgroundSprite setName:@"bg"];
     [scene addChild:_foregroundSprite];
     [scene addChild:backgroundSprite];
     
     ICRenderTexture *renderTexture = [ICRenderTexture renderTextureWithWidth:128
                                                                       height:128
                                                                  pixelFormat:kICPixelFormat_RGBA8888
-                                                           depthBufferFormat:kICDepthBufferFormat_16];
-    ICScene *textureScene = [ICScene sceneWithHostViewController:self.hostViewController];
+                                                           depthBufferFormat:kICDepthBufferFormat_24];
+    ICScene *textureScene = [ICScene scene];
     textureScene.performsDepthTesting = YES;
     _tsForegroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [_tsForegroundSprite setPositionX:10.0f];
     [_tsForegroundSprite setPositionY:10.0f];
+    [_tsForegroundSprite setName:@"ts_fg"];
     ICSprite *tsBackgroundSprite = [ResponsiveSprite spriteWithTexture:texture];
     [tsBackgroundSprite setScale:kmVec3Make(2, 2, 1)];
     [tsBackgroundSprite flipTextureVertically];
     [tsBackgroundSprite setPositionZ:-100.0f];
+    [tsBackgroundSprite setName:@"ts_bg"];
     [textureScene addChild:_tsForegroundSprite];
     [textureScene addChild:tsBackgroundSprite];
     [renderTexture setSubScene:textureScene];
     [renderTexture setPositionY:160];
     [scene addChild:renderTexture];
     
-    self.hostViewController.scene = scene;
+    //self.hostViewController.scene = scene;
+    [self.hostViewController runWithScene:scene];
    
     [self.hostViewController.scheduler scheduleUpdateForTarget:self];
 }

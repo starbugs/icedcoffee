@@ -31,95 +31,159 @@
 @class ICHostViewController;
 
 /**
- @brief Defines the root of a scene graph, manages its camera and visitors
+ @brief Defines the root of a scene graph, manages a camera and visitors for drawing the scene
  
  <h3>Overview</h3>
- The ICScene class defines the root of a scene graph composed of one or multiple ICNode
- objects. An ICScene instance is always associated with an ICHostViewController object.
- Scene objects may be nested, that is one scene graph rooted in ICScene may contain
- another sub scene graph rooted in another (descendant) ICScene object. This is
- particularly useful for implementing multiple scenes, each with an own camera and
- event flow.
  
- The most important features of ICScene are listed as follows:
+ The ICScene class defines a node that acts as the root of a scene graph by providing
+ functionality that allows you to easily draw the scene's contents to a frame buffer.
+ 
+ In particular, ICScene fulfills the following tasks:
  <ul>
-    <li><b>Camera</b>: ICScene manages a camera object that is used to project the scene's
-    contents on the framebuffer.</li>
-    <li><b>Visitation</b>: ICScene provides two built-in default visitors for drawing
-    and picking. The default drawing visitor is implemented in ICNodeVisitorDrawing,
-    the default picking visitor is implemented in ICNodeVisitorPicking.</li>
-    <li><b>Hit testing</b>: ICScene provides a method for performing hit tests on its
-    scene graph. Hit tests are implemented using the picking visitor.</li>
+    <li>Managing a scene camera (see ICCamera) that takes care of setting up the scene's
+    projection and model-view matrices for presentation.</lI>
+    <li>Setting up the scene's OpenGL states for drawing and picking.</li>
+    <li>Managing visitors that are responsible for drawing and picking the
+    scene's contents.</li>
+    <li>Performing hit tests on the scene conveniently.</li>
+    <li>Intelligently resizing the scene when its parent frame buffer size changes.</li>
  </ul>
  
- <h3>Using ICScene</h3>
+ <h3>Root Scenes</h3>
+
+ Scenes play a central role in the IcedCoffee framework. In order to benefit from IcedCoffee's
+ event handling and user interface rendering capabilities, your application must provide at least
+ one scene, called the root scene. The root scene represents the origin of all contents that
+ are drawn on the OpenGL frame buffer of the host view that is managed by your application's
+ host view controller (see ICHostViewController).
+  
+ <h3>Setting up a Root Scene</h3>
  
- An ICScene object is manadatory if you wish to exploit IcedCoffee's internal drawing,
- hit testing and event management facilities.
+ You set up a root scene with a default camera by initializing ICScene using ICScene::init
+ or ICScene::scene. You then define the scene's contents by adding nodes to it using
+ ICNode::addChild:. Finally, as your scene is supposed to be the root scene of a host
+ view in your application, you hand it to that host view controller using
+ ICHostViewController::runWithScene:.
  
- You instanciate an ICScene object by using the ICSCene::sceneWithHostViewController: convenience
- initializer. This class method returns an autoreleased instance bound to the given
- ICHostViewController. The returned instance is equipped with a default camera as defined
- in #ICDEFAULT_CAMERA. After instanciating an ICScene object, you may add nodes to the scene using
- the ICNode::addChild: method. Finally, you run the scene using  the
- ICHostViewController::runWithScene: method.
+ <h3>Sub Scenes</h3>
  
- <h3>Lifecycle</h3>
+ In addition to the root scene, you may add furhter scenes to your existing scene graph.
+ However, when doing so, you should take care of the following conventions:
+ <ol>
+    <li>Scenes may be added as an immediate child of another scene. In this case, the sub
+    scene inherits the frame buffer target of the parent scene and uses the parent scene's
+    visitors to perform drawing and picking. Hit tests should always be performed on the
+    parent scene in this scenario. Nesting scenes directly in each other may be useful to
+    animate the camera of the sub scene without influencing the appearance of the nodes
+    rendered by the parent scene, for instance.</li>
+    <li>Scenes are used by ICRenderTexture to present sub scenes on a frame buffer backed
+    by a render texture. It is important to note that such sub scenes are not part of the
+    scene graph's node hierarchy as ICRenderTexture disconnects them from the normal drawing
+    mechanism of its parent scene. Instead these scenes act as the root scene of the
+    render texture's frame buffer.</li>
+    <li>Scenes may be added as immediate children of an ICView instance. This can be used
+    to present a scene's contents in a user interface view with built-in clipping and
+    layouting functionality. However, special rules apply for this kind of scene nesting.
+    The nested scene will always have the size of the parent frame buffer. If the view is
+    not backed by a render texture, this is the size of the host view's frame buffer.
+    Consequently, the scene's children live in world coordinate space. If the so-nested
+    scene's contents should be aligned to the parent view's origin on screen, you must
+    perform the necessary transformations yourself. What is more, scenes nested this way
+    may interfere with the parent view's clipping mechanism if they clear the stencil
+    buffer. You should thus deactivate automatic stencil buffer clearing by setting the
+    ICScene::clearsStencilBuffer property to <code>NO</code> for such kind of sub scenes.
+ </ol>
  
- When initializing an ICScene object with a given ICHostViewController instance, the
- host view controller object is assigned to the hostViewController property of the scene.
- Notice that ICScene does not retain the given ICHostViewController object on initialization.
+ <h3>Setting up a Sub Scene</h3>
  
- When running a scene on the ICHostViewController instance using the ICScene::runWithScene: method,
- the ICScene object is retained by the host view controller. ICHostViewController will 
- release the scene either if another scene is being run or the lifecycle of ICHostViewController
- ends.
+ You set up a sub scene exactly the way you set up a root scene, as described in "Setting
+ up a Root Scene". The only difference is that you add the scene as a child of another node
+ or set it as the ICRenderTexture::subScene property of a render texture.
  
- If you plan to work with multiple scenes, you should retain the created ICScene instances
- on your own, preferrably at some point in your application controller or in your custom
- ICHostViewController subclass.
+ <h3>Scene Sizes and The Relation of Scenes to Frame Buffers</h3>
+ 
+ Newly initialized scenes have zero size until they are added to an existing scene graph
+ or assigned to a host view controller. If you need a valid size for the scene in order to set
+ up its contents, you should add it to your existing scene graph or assign it to a host view
+ controller immediately after initialization.
+ 
+ When a root scene is assigned to a host view controller, it immediately resizes itself so as
+ to fit the size of the host view's OpenGL frame buffer in points.
+ 
+ When a sub scene is added to an existing scene or set as the sub scene of a render texture,
+ it immediately resizes itself to fit the size of its parent frame buffer. The parent frame
+ buffer of a scene is defined by its first ancestor defining a render target, or, if no such
+ node exists, the host view controller.
+ 
+ When a scene is resized (explicitly or implicitly) it attempts to resize its descendant
+ scenes to its own size, following the third convention described in "Sub Scenes". This does,
+ however, not have an effect on descendant render texture sub scenes, since these are
+ disconnected from the drawing mechanism of their parent scenes as discussed above.
+ 
+ <h3>Standard Scenes (ICScene) versus User Interface Scenes (ICUIScene)</h3>
+ 
+ Along with the standard scene implemented in the ICScene class, IcedCoffe provides a
+ special subclass that is designed to host user interfaces, named ICUIScene. ICUIScene
+ essentially provides a content view (ICView) child whose size is synchronized automatically
+ with the UI scene's size. This allows for automatic resizing and layouting of the content
+ view's subviews. See the ICUIScene documentation for more details.
  
  <h3>Subclassing</h3>
  
- You should consider subclassing ICScene as a standard pattern to build up and manage your
- custom scenes. Although this is not strictly required, it improves the structure of your
- code. If you choose to do so, you should override the ICScene::initWithHostViewController:camera:
- method to implement code required to build up your custom scene. If you require quick access to
- important nodes on your scene, you may add them as properties to your subclass. If you
- do so, it is recommended to retain these nodes as long as they are needed in your scene
- and release them in the dealloc method of your subclass.
+ You may subclass ICScene to create scenes with custom behavior and/or content. If you
+ wish to implement a custom user interface scene, you should consider subclassing ICUIScene
+ instead.
+
+ Generally, the following points should be respected when subclassing ICScene:
  
- Subclassing ICScene is required if you plan to override or extend its default behavior.
- The following is a list of the most important points to remember when subclassing ICScene:
- <ul>
-    <li>ICScene::initWithHostViewController:camera: is the designated initializer of the ICScene
-    class. If you require custom initialization, you should override this method.</li>
-    <li>You may customize the way scenes are set up and torn down by overriding the
-    setUpSceneForDrawing, tearDownSceneForDrawing, setUpSceneForPickingWithPoint:viewport:,
-    and tearDownSceneForPicking methods.</li>
-    <li>You may implement custom hit testing by choosing another (custom) ICNodeVisitor
-    class for drawing and/or picking, and/or by overriding the hitTest: method.</li>
- </ul>
+ <ol>
+    <li>ICScene's designated initializer is ICScene::init. You may override <code>init</code>
+    to implement custom initialization. For instance, you may set a different camera or
+    different visitors by default in your subclass. You may also set up predefined scene
+    content in <code>init</code>, however, remember that ICScene is initialized with zero
+    size, so automatic positioning behaviors implement in e.g. ICNode::centerNode will
+    not work unless you define a size on your own.</li>
+    <li>ICScene overrides ICNode::drawWithVisitor: to set up the scene for drawing or
+    picking according to the type of the visitor that calls the method. Thus, you should
+    call <code>[super drawWithVisitor:visitor]</code> if you override <code>drawWithVisitor:</code>
+    in your subclass <i>before</i> performing any drawing operation. Likewise, if you override
+    ICScene::childrenDidDrawWithVisitor:, you should call
+    <code>[super childrenDidDrawWithVisitor:visitor];</code> <i>after</i> your custom code.</li>
+    <li>If you need to customize scene setup and tear down you may override
+    ICScene::setUpSceneForDrawing, ICScene::tearDownSceneForDrawing,
+    ICScene::setUpSceneForPickingWithPoint:, and ICScene::tearDownSceneForPicking.</li>
+    <li>ICScene overrides ICNode::setParent: in order to adjust its size to the parent
+    frame buffer's size. If you override, setParent: call <code>[super setParent:parent]</code>
+    before implementing your own code.</li>
+    <li>ICScene overrides ICNode::setSize: to adjust its camera's viewport and resize
+    descendant scenes. You need to call <code>[super setSize:size]</code> to preserve
+    this behavior.</li>
+ </ol>
  */
 @interface ICScene : ICNode
 {
 @private
     ICHostViewController *_hostViewController;
     ICCamera *_camera;
+    
     ICNodeVisitor *_drawingVisitor;
     ICNodeVisitor *_pickingVisitor;
+    
     icColor4B _clearColor;
     BOOL _clearsColorBuffer;
     BOOL _clearsDepthBuffer;
     BOOL _clearsStencilBuffer;
     BOOL _performsDepthTesting;
     BOOL _performsFaceCulling;
+    
+    kmMat4 _matOldProjection;
 }
 
 /**
  @brief The ICHostViewController object associated with the scene
  */
-@property (nonatomic, readonly, getter=hostViewController) ICHostViewController *hostViewController;
+@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
+    ICHostViewController *hostViewController;
 
 /**
  @brief An ICCamera object used to define the scene's projection and model-view matrices
@@ -142,10 +206,22 @@
  */
 @property (nonatomic, assign) icColor4B clearColor;
 
+/**
+ @brief A boolean value indicating whether the scene automatically clears the color buffer
+ before drawing its contents
+ */
 @property (nonatomic, assign) BOOL clearsColorBuffer;
 
+/**
+ @brief A boolean value indicating whether the scene automatically clears the depth buffer
+ before drawing its contents
+ */
 @property (nonatomic, assign) BOOL clearsDepthBuffer;
 
+/**
+ @brief A boolean value indicating whether the scene automatically clears the stencil buffer
+ before drawing its contents
+ */
 @property (nonatomic, assign) BOOL clearsStencilBuffer;
 
 /**
@@ -165,32 +241,21 @@
 @property (nonatomic, assign) BOOL performsFaceCulling;
 
 /**
- @brief Returns an autoreleased scene associated with the given ICHostViewController object
- @sa initWithHostViewController:
- */
-+ (id)sceneWithHostViewController:(ICHostViewController *)hostViewController;
-
-/**
- @brief Returns an autoreleased scene associated with the given ICHostViewController object
- and sets the specified camera on it
- @sa initWithHostViewController:camera:
- */
-+ (id)sceneWithHostViewController:(ICHostViewController *)hostViewController
-                           camera:(ICCamera *)camera;
-
-/**
- @brief Initializes the scene and associates it with the given ICHostViewController object
+ @brief Returns an autoreleased scene object initialized with a default camera and
+ default visitors
  
- A default camera is instanciated and set as specified in #ICDEFAULT_CAMERA.
+ @sa init:
  */
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController;
++ (id)scene;
 
 /**
- @brief Initializes the scene, associates it with the given ICHostViewController object and
- sets the specified camera
+ @brief Initializes the receiver with a default camera and default visitors.
+ 
+ This method initializes the receiver with a default camera as specified
+ in #ICDEFAULT_CAMERA, a default drawing visitor as specified in ICDEFAULT_DRAWING_VISITOR,
+ and a default picking visitor as specified in ICDEFAULT_PICKING_VISITOR.
  */
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController
-                          camera:(ICCamera *)camera;
+- (id)init;
 
 /**
  @brief Sets up the drawing environment for the scene before drawing
@@ -208,16 +273,15 @@
 - (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 
 /**
+ @brief Resets the drawing environment of the scene after picking
+ */
+- (void)tearDownSceneForPicking;
+
+/**
  @brief Sets up the scene's drawing environment, draws all its contents using the drawing visitor,
  and finally tears down the scene's drawing environment
  */
 - (void)visit;
-
-/**
- @brief Sets up the scene's drawing environment, draws the given node using the drawing visitor,
- and finally tears down the scene's drawing environment
- */
-- (void)visitNode:(ICNode *)node;
 
 /**
  @brief Performs a hit test on the scene's node hierarchy
@@ -231,6 +295,17 @@
  with the respective top-most node rendered to the frame buffer.
  */
 - (NSArray *)hitTest:(CGPoint)point;
+
+/**
+ @brief Sets the size of the scene, adjusts the viewport of the camera and sets the size of
+ descendant scenes to the specified value
+ */
+- (void)setSize:(kmVec3)size;
+
+/**
+ @brief Adjusts the scene's size to the size of its parent frame buffer
+ */
+- (void)adjustToFrameBufferSize;
 
 - (CGRect)frameRect;
 

@@ -84,7 +84,9 @@ extern float g_icContentScaleFactor;
 
 // Logging
 
-#if defined(ICEDCOFFEE_DEBUG)
+#if defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
+
+#define IC_DEBUG_BREAK() kill(getpid(), SIGINT)
 
 #if IC_LOG_DEALLOCATIONS
 #define ICLOG_DEALLOC(...) NSLog(__VA_ARGS__)
@@ -96,6 +98,7 @@ extern float g_icContentScaleFactor;
 
 #else
 
+#define IC_DEBUG_BREAK() do {} while(0)
 #define ICLOG(...) do {} while(0)
 #define ICLOG_DEALLOC(...) do {} while(0)
 

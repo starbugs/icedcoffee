@@ -100,14 +100,16 @@
     float x4 = _size.x;
     float y4 = _size.y;
     float z = 0;
-    float tx1 = 0;
-    float ty1 = 1.0f;
-    float tx2 = _scale9Rect.origin.x / _texture.size.width;
-    float ty2 = (_scale9Rect.origin.y + _scale9Rect.size.height) / _texture.size.height;
-    float tx3 = (_scale9Rect.origin.x + _scale9Rect.size.width) / _texture.size.width;
-    float ty3 = _scale9Rect.origin.y / _texture.size.height;
-    float tx4 = 1.0f;
-    float ty4 = 0.0f;
+    
+    // IcedCoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
+    float tx4 = 0;
+    float ty4 = 1.0f;
+    float tx3 = _scale9Rect.origin.x / _texture.size.width;
+    float ty3 = (_scale9Rect.origin.y + _scale9Rect.size.height) / _texture.size.height;
+    float tx2 = (_scale9Rect.origin.x + _scale9Rect.size.width) / _texture.size.width;
+    float ty2 = _scale9Rect.origin.y / _texture.size.height;
+    float tx1 = 1.0f;
+    float ty1 = 0.0f;
     
     vertices[ 0].vect = (kmVec3){x1, y1, z};
     vertices[ 1].vect = (kmVec3){x1, y2, z};
@@ -153,42 +155,44 @@
         vertices[i].color = _color;
     }
     
+    // Note: as the Y axis is inverted by the IcedCoffe UI camera, we provide CCW indices
+    // here so that OpenGL standard culling continues to work correctly
     GLushort indices[] = {
         // left-top (x1,y1,x2,y2)
-        0, 2, 1,
-        1, 2, 3,
+        1, 2, 0,
+        3, 2, 1,
         
         // left-middle (x1,y2,x2,y3)
-        1, 3, 4,
-        4, 3, 6,
+        4, 3, 1,
+        6, 3, 4,
         
         // left-bottom (x1,y3,x2,y4)
-        4, 6, 5,
-        5, 6, 7,
+        5, 6, 4,
+        7, 6, 5,
         
         // middle-top (x2,y1,x3,y1)
-        2, 8, 3,
-        3, 8, 9,
+        3, 8, 2,
+        9, 8, 3,
         
         // middle-middle (x2,y2,x3,y3)
-        3, 9, 6,
-        6, 9, 12,
+        6, 9, 3,
+        12, 9, 6,
         
         // middle-bottom (x2,y3,x3,y4)
-        6, 12, 7,
-        7, 12, 13,
+        7, 12, 6,
+        13, 12, 7,
         
         // right-top (x3,y1,x4,y2)
-        8, 10, 9,
-        9, 10, 11,
+        9, 10, 8,
+        11, 10, 9,
         
         // right-middle (x3,y2,x4,y3)
-        9, 11, 12,
-        12, 11, 14,
+        12, 11, 9,
+        14, 11, 12,
         
         // right-bottom (x3,y3,x4,y4)
-        12, 14, 13,
-        13, 14, 15
+        13, 14, 12,
+        15, 14, 13
     };
     
     if (_vertexBuffer)

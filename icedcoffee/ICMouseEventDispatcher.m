@@ -113,7 +113,10 @@
     NSArray *ancestors = [deepest ancestors];
     
     if (deepest) {
+        _lastScrollNode = deepest;
         [newOverNodes addObject:deepest];
+    } else {
+        _lastScrollNode = nil;
     }
     
     // Check whether the deepest hit node's ancestors contain other hit nodes, and if so,
@@ -163,7 +166,8 @@
     if ([event type] == NSScrollWheel) {
         return _lastMouseLocation;
     }
-    return [event locationInWindow];
+    CGPoint location = [event locationInWindow];
+    return location;
 }
 
 - (void)dispatchEventToDelegates:(NSEvent *)event withSelector:(SEL)selector
@@ -204,7 +208,7 @@
         if ([deepest isKindOfClass:[ICControl class]]) {
             control = (ICControl *)deepest;
         } else {
-            control = (ICControl *)[deepest firstAncestorWithType:[ICControl class]];;
+            control = (ICControl *)[deepest firstAncestorOfType:[ICControl class]];;
         }
 
         if (([event type] == NSLeftMouseDown ||
@@ -301,7 +305,7 @@
                                             control:(ICControl *)control
                                               event:(NSEvent *)event
 {
-    ICControlEvents controlEvent;
+    ICControlEvents controlEvent = 0;
     switch (eventType) {
         case ICMouseDown:
             controlEvent = ICControlEventLeftMouseDown;
@@ -361,11 +365,7 @@
 {
     // Performance: as the window server potentially sends a flood of scroll events, use over
     // nodes determined in updateMouseOverState instead of performing a hit test for each event.
-    // What is more, send scroll events to all over nodes instead of just sending it to the
-    // deepest node.
-    for (ICNode *overNode in _overNodes) {
-        [overNode scrollWheel:event];
-    }
+    [_lastScrollNode scrollWheel:event];
 }
 
 // Dispatch dragged events to first responder, all other events go to the responder that

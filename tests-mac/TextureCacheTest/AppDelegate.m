@@ -36,7 +36,7 @@
 
 - (void)setupScene
 {
-    TextureCacheTestScene *scene = [TextureCacheTestScene sceneWithHostViewController:self.hostViewController];
+    TextureCacheTestScene *scene = [TextureCacheTestScene scene];
     [self.hostViewController runWithScene:scene];
 }
 

@@ -47,6 +47,8 @@ typedef enum _ICSchedulerPriority {
     NSMutableArray *_targetsWithHighPriority;
 }
 
++ (id)currentScheduler;
+
 /**
  @brief Schedule a frame-wise update for the given target
  

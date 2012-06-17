@@ -35,7 +35,7 @@
 
 - (void)setupScene
 {
-    ICScene *scene = [ICScene sceneWithHostViewController:self.hostViewController];
+    ICScene *scene = [ICScene scene];
     
     NSString *maskFile = [[NSBundle mainBundle] pathForImageResource:@"button_light_normal"];
     ICTexture2D *maskTexture = [self.hostViewController.textureCache loadTextureFromFile:maskFile];

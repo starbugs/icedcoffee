@@ -21,8 +21,17 @@
 //  
 
 #import "ICScheduler.h"
+#import "ICContextManager.h"
+#import "ICRenderContext.h"
 
 @implementation ICScheduler
+
++ (id)currentScheduler
+{
+    return [[[ICContextManager defaultContextManager]
+             renderContextForCurrentOpenGLContext]
+            scheduler];
+}
 
 - (id)init
 {

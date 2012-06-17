@@ -20,6 +20,9 @@
 //  SOFTWARE.
 //  
 
+
+// STUB: THIS TEST HAS NOT BEEN IMLPEMENTED YET
+
 #import "AppDelegate.h"
 
 @implementation AppDelegate

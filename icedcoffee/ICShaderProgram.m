@@ -57,18 +57,22 @@ typedef void (*GLLogFunction) (GLuint program,
         
 		_vertShader = _fragShader = 0;
         
-		if( vShaderFilename ) {
+		if (vShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:vShaderFilename]) {
 			if (![self compileShader:&_vertShader type:GL_VERTEX_SHADER file:vShaderFilename]) {
 				ICLOG(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
             }
-		}
+		} else {
+            ICLOG(@"Vertex shader %@ unavailable", vShaderFilename);
+        }
         
         // Create and compile fragment shader
-		if (fShaderFilename) {
+		if (fShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:fShaderFilename]) {
 			if (![self compileShader:&_fragShader type:GL_FRAGMENT_SHADER file:fShaderFilename]) {
 				ICLOG(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
             }
-		}
+		} else {
+            ICLOG(@"Fragment shader %@ unavailable", fShaderFilename);            
+        }
         
 		if (_vertShader)
 			glAttachShader(_program, _vertShader);
@@ -76,6 +80,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		if (_fragShader)
 			glAttachShader(_program, _fragShader);
         
+        CHECK_GL_ERROR_DEBUG();
     }
     
     return self;
@@ -123,12 +128,16 @@ typedef void (*GLLogFunction) (GLuint program,
 			ICLOG(@"IcedCoffee: %@: %@", file, [self fragmentShaderLog]);
         
 	}
+    
+    CHECK_GL_ERROR_DEBUG();
+    
     return status == GL_TRUE;
 }
 
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index
 {
 	glBindAttribLocation(_program, index, [attributeName UTF8String]);
+    CHECK_GL_ERROR_DEBUG();    
 }
 
 - (void)updateUniforms
@@ -142,6 +151,8 @@ typedef void (*GLLogFunction) (GLuint program,
 	glUseProgram(_program);
 	glUniform1i(_uniforms[kICUniformSampler], 0);
 	glUniform1i(_uniforms[kICUniformSampler2], 1);
+    
+    CHECK_GL_ERROR_DEBUG();
 }
 
 - (BOOL)link
@@ -172,12 +183,15 @@ typedef void (*GLLogFunction) (GLuint program,
     
 	_vertShader = _fragShader = 0;
     
+    CHECK_GL_ERROR_DEBUG();
+    
     return YES;
 }
 
 - (void)use
 {
     glUseProgram(_program);
+    CHECK_GL_ERROR_DEBUG();    
 }
 
 - (NSString *)logForOpenGLObject:(GLuint)object
