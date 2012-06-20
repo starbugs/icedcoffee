@@ -37,7 +37,7 @@
  setShaderProgram:forKey: method.
  
  It is recommended to use ICShaderCache as a pseudo singleton throughout an application.
- The defaultShaderCache class method is provided to instanciate ICShaderCache as a
+ The currentShaderCache class method is provided to instanciate ICShaderCache as a
  shared instance. This shared instance may be used by one or multiple ICHostViewController
  controlled runloops.
  
@@ -56,12 +56,12 @@
 /**
  @brief Returns or creates and returns a default shader cache instance
  */
-+ (id)defaultShaderCache;
++ (id)currentShaderCache;
 
 /**
  @brief Purges the internal shader cache
  */
-+ (void)purgeDefaultShaderCache;
++ (void)purgeCurrentShaderCache;
 
 /**
  @brief Initializes the ICShaderCache class and loads default shaders

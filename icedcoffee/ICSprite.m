@@ -175,7 +175,7 @@
     [self setSize:(kmVec3){[texture size].width, [texture size].height, 0}];
         
     NSString *shaderKey = texture ? kICShader_PositionTextureColor : kICShader_PositionColor;
-    self.shaderProgram = [[ICShaderCache defaultShaderCache]
+    self.shaderProgram = [[ICShaderCache currentShaderCache]
                           shaderProgramForKey:shaderKey];
 }
 
@@ -185,10 +185,10 @@
     _maskTexture = [maskTexture retain];
     
     if (_maskTexture) {
-        self.shaderProgram = [[ICShaderCache defaultShaderCache]
+        self.shaderProgram = [[ICShaderCache currentShaderCache]
                               shaderProgramForKey:kICShader_SpriteTextureMask];
     } else {
-        self.shaderProgram = [[ICShaderCache defaultShaderCache]
+        self.shaderProgram = [[ICShaderCache currentShaderCache]
                               shaderProgramForKey:kICShader_PositionTextureColor];
     }
 }

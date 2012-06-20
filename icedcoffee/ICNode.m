@@ -625,7 +625,7 @@
         [self.shaderProgram use];
         icGLUniformModelViewProjectionMatrix(self.shaderProgram);
     } else if (visitor.visitorType == kICPickingNodeVisitor) {
-        ICShaderProgram *p = [[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_Picking];
+        ICShaderProgram *p = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Picking];
         [p use];
         icGLUniformModelViewProjectionMatrix(p);
         GLuint pickColorLocation = glGetUniformLocation(p.program, "u_pickColor");

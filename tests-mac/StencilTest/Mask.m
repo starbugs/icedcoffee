@@ -29,7 +29,7 @@
 - (id)initWithTexture:(ICTexture2D *)texture
 {
     if ((self = [super initWithTexture:texture])) {
-        self.shaderProgram = [[ICShaderCache defaultShaderCache] shaderProgramForKey:kICShader_StencilMask];
+        self.shaderProgram = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_StencilMask];
     }
     return self;
 }

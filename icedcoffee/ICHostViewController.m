@@ -227,7 +227,7 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
     _retinaDisplayEnabled = retinaDisplayEnabled;
     [self setContentScaleFactor:retinaDisplayEnabled ? ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR
-                               : ICDEFAULT_CONTENT_SCALE_FACTOR];
+                                : ICDEFAULT_CONTENT_SCALE_FACTOR];
     
     [[self view] setContentScaleFactor:[self contentScaleFactor]];
     return YES;

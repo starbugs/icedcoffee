@@ -95,8 +95,10 @@
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 
-        _thread = [[NSThread alloc] initWithTarget:self selector:@selector(threadMainLoop) object:nil];
-        [_thread start];
+        self.thread = [[[NSThread alloc] initWithTarget:self
+                                               selector:@selector(threadMainLoop)
+                                                 object:nil] autorelease];
+        [self.thread start];
     }
 }
 
@@ -107,9 +109,8 @@
         
         ICLOG(@"IcedCoffee: animation stopped");
         
-        [_thread cancel];
-        [_thread release];
-        _thread = nil;
+        [self.thread cancel];
+        self.thread = nil;
         
         [_displayLink invalidate];
         _displayLink = nil;
@@ -135,6 +136,10 @@
 
 - (void)drawScene
 {
+    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand && !_needsDisplay) {
+        return; // nothing to draw
+    }
+    
     [self calculateDeltaTime];
 
 	// We draw on a secondary thread through the display link

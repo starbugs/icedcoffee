@@ -53,6 +53,8 @@
 #import "icConfig.h"
 
 
+#define IC_HVC_TIME_INTERVAL 0.001
+
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event { \
         [_mouseEventDispatcher eventMethod:event]; \
@@ -61,12 +63,15 @@
 
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
+- (void)scheduleRenderTimer;
 @end
 
 
 @implementation ICHostViewControllerMac
 
 @synthesize view = _view;
+@synthesize usesDisplayLink = _usesDisplayLink;
+@synthesize drawsConcurrently = _drawsConcurrently;
 
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -77,6 +82,8 @@
 {
     if ((self = [super init])) {
         _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
+        _usesDisplayLink = YES;
+        _drawsConcurrently = YES;
     }
     return self;
 }
@@ -85,6 +92,11 @@
 {
     [self stopAnimation];
     [_mouseEventDispatcher release];
+    
+    if (_thread && _isThreadOwner) {
+        [self.thread cancel];
+        self.thread = nil;
+    }    
 
     [super dealloc];
 }
@@ -118,11 +130,10 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
                                       CVOptionFlags* flagsOut,
                                       void* displayLinkContext)
 {
-    CVReturn result = [(ICHostViewControllerMac *)displayLinkContext getFrameForTime:outputTime];
-    return result;
+    return [(ICHostViewControllerMac *)displayLinkContext getFrameForTime:outputTime];
 }
 
-- (void)startAnimation
+- (void)setupDisplayLink
 {
     // Create a display link capable of being used with all active displays
     CVDisplayLinkCreateWithActiveCGDisplays(&_displayLink);
@@ -140,12 +151,72 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     CVDisplayLinkStart(_displayLink);    
 }
 
+- (void)threadMainLoop
+{
+    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+    [self scheduleRenderTimer];
+    [[NSRunLoop currentRunLoop] run];
+    [pool release];
+}
+
+- (void)timerFired:(id)sender
+{
+    [self drawScene];
+}
+
+- (void)scheduleRenderTimer
+{
+    _renderTimer = [[NSTimer timerWithTimeInterval:IC_HVC_TIME_INTERVAL
+                                            target:self
+                                          selector:@selector(timerFired:)
+                                          userInfo:nil
+                                           repeats:YES] retain];
+                   
+   [[NSRunLoop currentRunLoop] addTimer:_renderTimer 
+                                forMode:NSDefaultRunLoopMode];
+   [[NSRunLoop currentRunLoop] addTimer:_renderTimer 
+                                forMode:NSEventTrackingRunLoopMode]; // Ensure timer fires during resize    
+}
+
+- (void)startAnimation
+{
+    if (_usesDisplayLink) {
+        [self setupDisplayLink];
+    } else {
+        if (!_thread) {
+            if (_drawsConcurrently) {
+                // Create a thread for concurrent drawing
+                _isThreadOwner = YES;
+                self.thread = [[[NSThread alloc] initWithTarget:self
+                                                       selector:@selector(threadMainLoop) 
+                                                         object:nil] autorelease];
+                [self.thread start];
+            } else {
+                // Use main thread for drawing
+                self.thread = [NSThread mainThread];
+                [self scheduleRenderTimer];
+            }
+        } else {
+            // Thread already existing, schedule a timer for drawing on the specified thread
+            [self performSelector:@selector(scheduleRenderTimer)
+                         onThread:_thread
+                       withObject:nil
+                    waitUntilDone:YES];
+        }
+    }
+}
+
 - (void)stopAnimation
 {
-    if (_displayLink) {
-        CVDisplayLinkStop(_displayLink);
-        CVDisplayLinkRelease(_displayLink);
-        _displayLink = NULL;
+    if (_usesDisplayLink) {
+        if (_displayLink) {
+            CVDisplayLinkStop(_displayLink);
+            CVDisplayLinkRelease(_displayLink);
+            _displayLink = NULL;
+        }
+    } else {
+        [_renderTimer invalidate]; // must be called from hvc thread
+        [_renderTimer release];
     }
 }
 
@@ -200,8 +271,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 	[[openGLview openGLContext] makeCurrentContext];
 
 	glViewport(0, 0,
-               openGLview.bounds.size.width * self.contentScaleFactor,
-               openGLview.bounds.size.height * self.contentScaleFactor);
+               openGLview.bounds.size.width * IC_CONTENT_SCALE_FACTOR(),
+               openGLview.bounds.size.height * IC_CONTENT_SCALE_FACTOR());
     
     resultNodeStack = [self.scene hitTest:point];
     

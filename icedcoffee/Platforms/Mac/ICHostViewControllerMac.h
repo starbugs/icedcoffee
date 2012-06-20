@@ -51,15 +51,24 @@
 #import "ICGLView.h"
 #import <QuartzCore/CVDisplayLink.h>
 
+// See http://developer.apple.com/library/mac/#qa/qa1385/_index.html
 @interface ICHostViewControllerMac : ICHostViewController <ICMouseResponder>
 {
-@private
+@protected
     CVDisplayLinkRef _displayLink;
     ICGLView *_view;
     ICMouseEventDispatcher *_mouseEventDispatcher;
+    BOOL _usesDisplayLink;
+    BOOL _drawsConcurrently;
+    BOOL _isThreadOwner;
+    NSTimer *_renderTimer;
 }
 
 @property (nonatomic, retain, setter=setView:) ICGLView *view;
+
+@property (nonatomic, assign) BOOL usesDisplayLink;
+
+@property (nonatomic, assign) BOOL drawsConcurrently;
 
 - (void)setAcceptsMouseMovedEvents:(BOOL)acceptsMouseMovedEvents;
 

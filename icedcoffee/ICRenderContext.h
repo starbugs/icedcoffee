@@ -23,15 +23,19 @@
 #import <Foundation/Foundation.h>
 
 @class ICTextureCache;
+@class ICShaderCache;
 @class ICScheduler;
 
 @interface ICRenderContext : NSObject {
 @protected
     ICTextureCache *_textureCache;
+    ICShaderCache *_shaderCache;
     ICScheduler *_scheduler;
 }
 
 @property (nonatomic, retain) ICTextureCache *textureCache;
+
+@property (nonatomic, retain) ICShaderCache *shaderCache;
 
 @property (nonatomic, retain) ICScheduler *scheduler;
 

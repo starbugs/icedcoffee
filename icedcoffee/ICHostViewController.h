@@ -177,7 +177,7 @@
 /**
  @brief The thread used to draw the scene and process HID events
  */
-@property (nonatomic, readonly) NSThread *thread;
+@property (nonatomic, retain) NSThread *thread;
 
 /**
  @brief The scene that is currently drawn by the host view controller

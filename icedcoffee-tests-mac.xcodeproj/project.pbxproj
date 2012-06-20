@@ -66,6 +66,25 @@
 		D253DA0C1566ECCE0027DA6C /* dropshadow_rounded_5px.png in Resources */ = {isa = PBXBuildFile; fileRef = D253DA0B1566ECCE0027DA6C /* dropshadow_rounded_5px.png */; };
 		D2735AF8158DCB3400216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF4158DCAD800216F1B /* PositionColor.fsh */; };
 		D2735AF9158DCB3800216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF5158DCAD800216F1B /* PositionColor.vsh */; };
+		D2735B45159126E200216F1B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		D2735B671591270200216F1B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735B5D1591270200216F1B /* AppDelegate.m */; };
+		D2735B691591270200216F1B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2735B601591270200216F1B /* InfoPlist.strings */; };
+		D2735B6B1591270200216F1B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735B641591270200216F1B /* main.m */; };
+		D2735B701591273000216F1B /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		D2735B711591273300216F1B /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		D2735B721591273C00216F1B /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		D2735B7D159127AD00216F1B /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B741591278100216F1B /* Picking.fsh */; };
+		D2735B7E159127AD00216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B751591278100216F1B /* PositionColor.fsh */; };
+		D2735B7F159127AD00216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B761591278100216F1B /* PositionColor.vsh */; };
+		D2735B80159127AD00216F1B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B771591278100216F1B /* PositionTextureA8Color.fsh */; };
+		D2735B81159127AD00216F1B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B781591278100216F1B /* PositionTextureA8Color.vsh */; };
+		D2735B82159127AD00216F1B /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B791591278100216F1B /* PositionTextureColor.fsh */; };
+		D2735B83159127AD00216F1B /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B7A1591278100216F1B /* PositionTextureColor.vsh */; };
+		D2735B84159127AD00216F1B /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B7B1591278100216F1B /* SpriteTextureMask.fsh */; };
+		D2735B85159127AD00216F1B /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B7C1591278100216F1B /* StencilMask.fsh */; };
+		D2735B8715912DE000216F1B /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = D2735B8615912DE000216F1B /* MainMenu.xib */; };
+		D2735B8915912F1C00216F1B /* button_light_normal.png in Resources */ = {isa = PBXBuildFile; fileRef = D2735B8815912F1100216F1B /* button_light_normal.png */; };
 		D2850485158B204E00CD71ED /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D28504A7158B209300CD71ED /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D285049D158B209300CD71ED /* AppDelegate.m */; };
 		D28504A9158B209300CD71ED /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D28504A0158B209300CD71ED /* InfoPlist.strings */; };
@@ -239,6 +258,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		D2735B6E1591271E00216F1B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		D28504AE158B20C000CD71ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -375,6 +401,25 @@
 		D253DA0B1566ECCE0027DA6C /* dropshadow_rounded_5px.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = dropshadow_rounded_5px.png; path = resources/images/dropshadow_rounded_5px.png; sourceTree = SOURCE_ROOT; };
 		D2735AF4158DCAD800216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
 		D2735AF5158DCAD800216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultipleCocoaViewsTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D2735B5C1591270200216F1B /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		D2735B5D1591270200216F1B /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		D2735B5F1591270200216F1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		D2735B611591270200216F1B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D2735B641591270200216F1B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		D2735B651591270200216F1B /* MultipleCocoaViewsTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MultipleCocoaViewsTest-Info.plist"; sourceTree = "<group>"; };
+		D2735B661591270200216F1B /* MultipleCocoaViewsTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MultipleCocoaViewsTest-Prefix.pch"; sourceTree = "<group>"; };
+		D2735B741591278100216F1B /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B751591278100216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B761591278100216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B771591278100216F1B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B781591278100216F1B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B791591278100216F1B /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B7A1591278100216F1B /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		D2735B7B1591278100216F1B /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B7C1591278100216F1B /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
+		D2735B8615912DE000216F1B /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		D2735B8815912F1100216F1B /* button_light_normal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_light_normal.png; path = resources/images/button_light_normal.png; sourceTree = SOURCE_ROOT; };
 		D2850483158B204E00CD71ED /* ViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D285049C158B209300CD71ED /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		D285049D158B209300CD71ED /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -570,6 +615,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2735B40159126E200216F1B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2735B701591273000216F1B /* Carbon.framework in Frameworks */,
+				D2735B45159126E200216F1B /* Cocoa.framework in Frameworks */,
+				D2735B721591273C00216F1B /* CoreVideo.framework in Frameworks */,
+				D2735B711591273300216F1B /* OpenGL.framework in Frameworks */,
+				D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D2850480158B204E00CD71ED /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -744,6 +801,40 @@
 				D253D9E015663DFD0027DA6C /* main.m */,
 				D253D9E115663DFD0027DA6C /* Scale9SpriteTest-Info.plist */,
 				D253D9E215663DFD0027DA6C /* Scale9SpriteTest-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		D2735B5B1591270100216F1B /* MultipleCocoaViewsTest */ = {
+			isa = PBXGroup;
+			children = (
+				D2735B5C1591270200216F1B /* AppDelegate.h */,
+				D2735B5D1591270200216F1B /* AppDelegate.m */,
+				D2735B8615912DE000216F1B /* MainMenu.xib */,
+				D2735B6D1591270700216F1B /* Supporting Files */,
+			);
+			name = MultipleCocoaViewsTest;
+			path = "tests-mac/MultipleCocoaViewsTest";
+			sourceTree = "<group>";
+		};
+		D2735B6D1591270700216F1B /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D2735B8815912F1100216F1B /* button_light_normal.png */,
+				D2735B741591278100216F1B /* Picking.fsh */,
+				D2735B751591278100216F1B /* PositionColor.fsh */,
+				D2735B761591278100216F1B /* PositionColor.vsh */,
+				D2735B771591278100216F1B /* PositionTextureA8Color.fsh */,
+				D2735B781591278100216F1B /* PositionTextureA8Color.vsh */,
+				D2735B791591278100216F1B /* PositionTextureColor.fsh */,
+				D2735B7A1591278100216F1B /* PositionTextureColor.vsh */,
+				D2735B7B1591278100216F1B /* SpriteTextureMask.fsh */,
+				D2735B7C1591278100216F1B /* StencilMask.fsh */,
+				D2735B601591270200216F1B /* InfoPlist.strings */,
+				D2735B641591270200216F1B /* main.m */,
+				D2735B651591270200216F1B /* MultipleCocoaViewsTest-Info.plist */,
+				D2735B661591270200216F1B /* MultipleCocoaViewsTest-Prefix.pch */,
+				D2735B5E1591270200216F1B /* Credits.rtf */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -975,6 +1066,7 @@
 				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
 				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
 				D21F88941533068E00E2496C /* KazmathTests */,
+				D2735B5B1591270100216F1B /* MultipleCocoaViewsTest */,
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
 				D253D9D715663DFD0027DA6C /* Scale9SpriteTest */,
 				D2ADCFDE157EB37400B6E519 /* ScrollViewTest */,
@@ -1001,6 +1093,7 @@
 				D2ADCFC6157EB34A00B6E519 /* ScrollViewTest.app */,
 				D22F25591587D53B0049268C /* TableViewTest.app */,
 				D2850483158B204E00CD71ED /* ViewTest.app */,
+				D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1161,6 +1254,24 @@
 			name = Scale9SpriteTest;
 			productName = Scale9SpriteTest;
 			productReference = D253D9BF15663DE20027DA6C /* Scale9SpriteTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2735B42159126E200216F1B /* MultipleCocoaViewsTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D2735B58159126E300216F1B /* Build configuration list for PBXNativeTarget "MultipleCocoaViewsTest" */;
+			buildPhases = (
+				D2735B3F159126E200216F1B /* Sources */,
+				D2735B40159126E200216F1B /* Frameworks */,
+				D2735B41159126E200216F1B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D2735B6F1591271E00216F1B /* PBXTargetDependency */,
+			);
+			name = MultipleCocoaViewsTest;
+			productName = MultipleCocoaViewsTest;
+			productReference = D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D2850482158B204E00CD71ED /* ViewTest */ = {
@@ -1346,6 +1457,7 @@
 				D2ADCFC5157EB34A00B6E519 /* ScrollViewTest */,
 				D22F25581587D53B0049268C /* TableViewTest */,
 				D2850482158B204E00CD71ED /* ViewTest */,
+				D2735B42159126E200216F1B /* MultipleCocoaViewsTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1401,6 +1513,25 @@
 				D253D9E615663DFD0027DA6C /* MainMenu.xib in Resources */,
 				D253D9F4156641630027DA6C /* button_light_normal.png in Resources */,
 				D253DA0C1566ECCE0027DA6C /* dropshadow_rounded_5px.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2735B41159126E200216F1B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2735B8915912F1C00216F1B /* button_light_normal.png in Resources */,
+				D2735B7D159127AD00216F1B /* Picking.fsh in Resources */,
+				D2735B7E159127AD00216F1B /* PositionColor.fsh in Resources */,
+				D2735B7F159127AD00216F1B /* PositionColor.vsh in Resources */,
+				D2735B80159127AD00216F1B /* PositionTextureA8Color.fsh in Resources */,
+				D2735B81159127AD00216F1B /* PositionTextureA8Color.vsh in Resources */,
+				D2735B82159127AD00216F1B /* PositionTextureColor.fsh in Resources */,
+				D2735B83159127AD00216F1B /* PositionTextureColor.vsh in Resources */,
+				D2735B84159127AD00216F1B /* SpriteTextureMask.fsh in Resources */,
+				D2735B85159127AD00216F1B /* StencilMask.fsh in Resources */,
+				D2735B691591270200216F1B /* InfoPlist.strings in Resources */,
+				D2735B8715912DE000216F1B /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,6 +1722,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D2735B3F159126E200216F1B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D2735B671591270200216F1B /* AppDelegate.m in Sources */,
+				D2735B6B1591270200216F1B /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D285047F158B204E00CD71ED /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1692,6 +1832,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = D253D9ED15663E680027DA6C /* PBXContainerItemProxy */;
 		};
+		D2735B6F1591271E00216F1B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = D2735B6E1591271E00216F1B /* PBXContainerItemProxy */;
+		};
 		D28504AF158B20C000CD71ED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1784,6 +1929,22 @@
 				D253D9DF15663DFD0027DA6C /* en */,
 			);
 			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		D2735B5E1591270200216F1B /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2735B5F1591270200216F1B /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		D2735B601591270200216F1B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D2735B611591270200216F1B /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 		D285049E158B209300CD71ED /* Credits.rtf */ = {
@@ -2070,6 +2231,38 @@
 					"3rd-party/kazmath/include",
 				);
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		D2735B59159126E300216F1B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		D2735B5A159126E300216F1B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2399,6 +2592,15 @@
 			buildConfigurations = (
 				D253D9D515663DE20027DA6C /* Debug */,
 				D253D9D615663DE20027DA6C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2735B58159126E300216F1B /* Build configuration list for PBXNativeTarget "MultipleCocoaViewsTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				D2735B59159126E300216F1B /* Debug */,
+				D2735B5A159126E300216F1B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

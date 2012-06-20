@@ -25,11 +25,13 @@
 @implementation ICRenderContext
 
 @synthesize textureCache = _textureCache;
+@synthesize shaderCache = _shaderCache;
 @synthesize scheduler = _scheduler;
 
 - (void)dealloc
 {
     self.textureCache = nil;
+    self.shaderCache = nil;
     self.scheduler = nil;
     [super dealloc];
 }

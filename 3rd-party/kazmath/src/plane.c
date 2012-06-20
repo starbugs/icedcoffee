@@ -102,6 +102,7 @@ kmPlane* const kmPlaneFromPoints(kmPlane* pOut, const kmVec3* p1, const kmVec3* 
     return pOut;
 }
 
+// Added by tlensing (http://icedcoffee-framework.org)
 kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3* pV1, const kmVec3* pV2)
 {
     /*
@@ -117,13 +118,6 @@ kmVec3* const kmPlaneIntersectLine(kmVec3* pOut, const kmPlane* pP, const kmVec3
     n.y = pP->b;
     n.z = pP->c;
     kmVec3Normalize(&n, &n);
-    
-    /*if (fabs(kmVec3Dot(&n, &d)) < kmEpsilon)
-    {
-	    // If we get here then the plane and line are parallel (i.e. no intersection)
-	    pOut = NULL; // Set to nullptr
-	    return pOut;
-    }*/
 
     kmScalar nt = -(n.x * pV1->x + n.y * pV1->y + n.z * pV1->z + pP->d);
     kmScalar dt = (n.x * d.x + n.y * d.y + n.z * d.z);

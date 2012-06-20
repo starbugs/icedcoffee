@@ -1,6 +1,19 @@
 Changelog
 =========
 
+*v0.6.1*
+
+* Added support for multiple Cocoa views via render contexts that are bound to the OpenGL
+  context of each view. Added a test project (MultipleCocoaViewsTest) that draws two
+  scenes in two separate Cocoa windows.
+* Added support for concurrent drawing or drawing on the main thread on the Mac
+  (ICHostViewControllerMac).
+* Added support for on demand frame update mode on iOS (ICHostViewControllerIOS).
+* Added ICShaderCache to ICRenderContext.
+* Added ICShaderCache::currentShaderCache, which retrieves a shader cache valid for the
+  current OpenGL context (via ICRenderContext).
+* Removed ICShaderCache::defaultShaderCache, use ICShaderCache::currentShaderCache instead.
+
 *v0.6*
 
 * Renamed ICCameraPointsToPixelsPerspective to ICUICamera

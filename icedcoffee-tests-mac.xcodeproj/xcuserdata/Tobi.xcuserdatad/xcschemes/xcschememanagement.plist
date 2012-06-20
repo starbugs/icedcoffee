@@ -24,6 +24,11 @@
 			<key>orderHint</key>
 			<integer>10</integer>
 		</dict>
+		<key>MultipleCocoaViewsTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>18</integer>
+		</dict>
 		<key>PickingTest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -78,6 +83,11 @@
 			<true/>
 		</dict>
 		<key>D253D9BE15663DE20027DA6C</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2735B42159126E200216F1B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

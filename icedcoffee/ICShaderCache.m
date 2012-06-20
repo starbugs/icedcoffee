@@ -23,8 +23,8 @@
 
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
-
-ICShaderCache *g_defaultShaderCache = nil;
+#import "ICContextManager.h"
+#import "ICRenderContext.h"
 
 @interface ICShaderCache (Private)
 - (void)loadDefaultShaders;
@@ -32,17 +32,20 @@ ICShaderCache *g_defaultShaderCache = nil;
 
 @implementation ICShaderCache
 
-+ (id)defaultShaderCache
++ (id)currentShaderCache
 {
-    if (!g_defaultShaderCache) {
-        g_defaultShaderCache = [[ICShaderCache alloc] init];
+    ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
+                                      renderContextForCurrentOpenGLContext];
+    ICShaderCache *shaderCache = renderContext.shaderCache;
+    if (!shaderCache) {
+        shaderCache = renderContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
     }
-    return g_defaultShaderCache;
+    return shaderCache;
 }
 
-+ (void)purgeDefaultShaderCache
++ (void)purgeCurrentShaderCache
 {
-    [g_defaultShaderCache release];
+    [[[self class] currentShaderCache] release];
 }
 
 - (id)init
