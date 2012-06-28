@@ -9,6 +9,9 @@ interface frameworks. His first contribution is a shader based button along with
 code modifications and important architectural decisions regarding IcedCoffee's shader
 subsystem.
 
+* Added ICRectangle, a view that renders a parameterized rounded rectangle using a
+  fragment shader.
+* Changed ICButton to work with the new rounded rectangle shader.
 * Added the ICShaderUniform and ICShaderValue classes. ICShaderValue defines a uniform
   value with a specific type (ICShaderValueType) and allows for convenient initialization
   and retrieval of that value. ICShaderUniform defines a shader uniform with a specific
