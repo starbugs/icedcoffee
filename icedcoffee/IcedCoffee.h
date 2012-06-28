@@ -70,7 +70,7 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.6.1)
+ @mainpage IcedCoffee Framework Documentation (v0.6.2)
 
  <h2>Abstract</h2>
  
