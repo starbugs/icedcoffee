@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //  
@@ -21,17 +21,26 @@
 //  SOFTWARE.
 //  
 
-#import "ICControl.h"
+#import "ICScale9View.h"
+#import "ICScale9Sprite.h"
 
-@class ICLabel;
+@implementation ICScale9View
 
-@interface ICButton : ICControl {
-@protected
-    ICLabel *_label;
-    ICView *_background;
+@synthesize sprite = _sprite;
+
+- (id)initWithSize:(CGSize)size
+{
+    if ((self = [super initWithSize:size])) {
+        self.sprite = [ICScale9Sprite sprite];
+        [self setSize:kmVec3Make(size.width, size.height, 0)];
+    }
+    return self;
 }
 
-@property (nonatomic, retain, setter=setLabel:) ICLabel *label;
-@property (nonatomic, retain, setter=setBackground:) ICView *background;
+- (void)setSize:(kmVec3)size
+{
+    [super setSize:size];
+    self.sprite.size = size;
+}
 
 @end

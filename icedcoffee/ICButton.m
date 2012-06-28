@@ -44,6 +44,7 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
+        self.background = [ICRectangle viewWithSize:size];
         self.label = [ICLabel labelWithText:@"Button" fontName:@"Lucida Grande" fontSize:12];
         self.label.color = (icColor4B){0,0,0,255};
 
@@ -60,12 +61,6 @@
 /*        NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
         ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:textureFile];
         self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];*/
-        
-        ICRectangle *rectangle = [ICRectangle viewWithSize:size];
-        [self addChild:rectangle];
-        
-//        [self addChild:self.background];
-        [self addChild:self.label];        
     }
     return self;
 }
@@ -84,6 +79,26 @@
 {
     [self centerLabel];    
     [self.background setSize:self.size];
+}
+
+- (void)setLabel:(ICLabel *)label
+{
+    if (_label)
+        [self removeChild:_label];
+    [_label release];
+    _label = [label retain];
+    if (_label)
+        [self addChild:_label];    
+}
+
+- (void)setBackground:(ICView *)background
+{
+    if (_background)
+        [self removeChild:_background];
+    [_background release];
+    _background = [background retain];
+    if (_background)
+        [self addChild:_background];
 }
 
 @end

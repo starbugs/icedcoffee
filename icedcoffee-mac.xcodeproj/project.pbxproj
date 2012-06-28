@@ -13,6 +13,8 @@
 		018C885D1593B3CF0086319E /* ICShaderValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885B1593B3CF0086319E /* ICShaderValue.m */; };
 		018C88601593B8F40086319E /* ICShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C885E1593B8F40086319E /* ICShaderUniform.h */; };
 		018C88611593B8F40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885F1593B8F40086319E /* ICShaderUniform.m */; };
+		01DCA966159CD0EA002DEA20 /* ICScale9View.h in Headers */ = {isa = PBXBuildFile; fileRef = 01DCA964159CD0EA002DEA20 /* ICScale9View.h */; };
+		01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DCA965159CD0EA002DEA20 /* ICScale9View.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; };
 		D216CC8D154FDC29009FCDC4 /* ICControl.h in Headers */ = {isa = PBXBuildFile; fileRef = D216CC8B154FDC29009FCDC4 /* ICControl.h */; };
 		D216CC8E154FDC29009FCDC4 /* ICControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D216CC8C154FDC29009FCDC4 /* ICControl.m */; };
@@ -139,6 +141,8 @@
 		018C885B1593B3CF0086319E /* ICShaderValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderValue.m; path = icedcoffee/ICShaderValue.m; sourceTree = "<group>"; };
 		018C885E1593B8F40086319E /* ICShaderUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderUniform.h; path = icedcoffee/ICShaderUniform.h; sourceTree = "<group>"; };
 		018C885F1593B8F40086319E /* ICShaderUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderUniform.m; path = icedcoffee/ICShaderUniform.m; sourceTree = "<group>"; };
+		01DCA964159CD0EA002DEA20 /* ICScale9View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9View.h; path = icedcoffee/ICScale9View.h; sourceTree = "<group>"; };
+		01DCA965159CD0EA002DEA20 /* ICScale9View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9View.m; path = icedcoffee/ICScale9View.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
 		D216CC8B154FDC29009FCDC4 /* ICControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICControl.h; path = icedcoffee/ICControl.h; sourceTree = "<group>"; };
 		D216CC8C154FDC29009FCDC4 /* ICControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICControl.m; path = icedcoffee/ICControl.m; sourceTree = "<group>"; };
@@ -421,6 +425,8 @@
 				D2F34FFC151F3E0900DF2D5B /* ICLabel.m */,
 				018C884A1593A5DF0086319E /* ICRectangle.h */,
 				018C884B1593A5DF0086319E /* ICRectangle.m */,
+				01DCA964159CD0EA002DEA20 /* ICScale9View.h */,
+				01DCA965159CD0EA002DEA20 /* ICScale9View.m */,
 				D2ADCFBD157EA80600B6E519 /* ICScrollView.h */,
 				D2ADCFBE157EA80600B6E519 /* ICScrollView.m */,
 				D2B8ADA01582AE9A006F6419 /* ICTableViewDataSource.h */,
@@ -648,6 +654,7 @@
 				018C884C1593A5DF0086319E /* ICRectangle.h in Headers */,
 				018C885C1593B3CF0086319E /* ICShaderValue.h in Headers */,
 				018C88601593B8F40086319E /* ICShaderUniform.h in Headers */,
+				01DCA966159CD0EA002DEA20 /* ICScale9View.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -756,6 +763,7 @@
 				018C884D1593A5DF0086319E /* ICRectangle.m in Sources */,
 				018C885D1593B3CF0086319E /* ICShaderValue.m in Sources */,
 				018C88611593B8F40086319E /* ICShaderUniform.m in Sources */,
+				01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

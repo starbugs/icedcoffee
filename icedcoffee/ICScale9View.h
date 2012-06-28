@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //  
@@ -21,17 +21,16 @@
 //  SOFTWARE.
 //  
 
-#import "ICControl.h"
+#import "ICView.h"
 
-@class ICLabel;
+@class ICScale9Sprite;
 
-@interface ICButton : ICControl {
-@protected
-    ICLabel *_label;
-    ICView *_background;
+@interface ICScale9View : ICView {
+    ICScale9Sprite *_sprite;
 }
 
-@property (nonatomic, retain, setter=setLabel:) ICLabel *label;
-@property (nonatomic, retain, setter=setBackground:) ICView *background;
+@property (nonatomic, retain) ICScale9Sprite *sprite;
+
+- (id)initWithSize:(CGSize)size;
 
 @end

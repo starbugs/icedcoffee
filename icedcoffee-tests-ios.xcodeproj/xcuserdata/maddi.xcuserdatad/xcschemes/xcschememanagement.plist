@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>SchemeUserState</key>
+	<dict>
+		<key>DepthBufferTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>MultiTouchSpritesTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>9</integer>
+		</dict>
+		<key>PickingTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>12</integer>
+		</dict>
+		<key>RetinaDisplaySupportTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>14</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>D21C97E214F302050059BBBE</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2732864152F9F0E0004F557</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2D4A24014FA1AC4000FCBA0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D2FEE864153ABD2A004CFF62</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+	</dict>
+</dict>
+</plist>

@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //  
@@ -21,17 +21,34 @@
 //  SOFTWARE.
 //  
 
-#import "ICControl.h"
+#import "ICShaderUniform.h"
 
-@class ICLabel;
+@implementation ICShaderUniform
 
-@interface ICButton : ICControl {
-@protected
-    ICLabel *_label;
-    ICView *_background;
+@synthesize location = _location;
+
++ (id)shaderUniformWithType:(ICShaderValueType)type location:(GLint)location
+{
+    return [[[ICShaderUniform alloc] initWithType:type location:location] autorelease];
 }
 
-@property (nonatomic, retain, setter=setLabel:) ICLabel *label;
-@property (nonatomic, retain, setter=setBackground:) ICView *background;
+- (id)initWithType:(ICShaderValueType)type location:(GLint)location
+{
+    if ((self = [super init])) {
+        _type = type;
+        self.location = location;
+    }
+    return self;
+}
+
+- (BOOL)setToShaderValue:(ICShaderValue *)value
+{
+    if (value.type != _type) {
+        return NO;
+    }
+    
+    _value = value->_value;
+    return YES;
+}
 
 @end
