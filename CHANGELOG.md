@@ -1,6 +1,26 @@
 Changelog
 =========
 
+*v0.6.2*
+
+*New core contributor*: Marcus Tillmanns has joined the IcedCoffe project. Marcus works
+at Avid Technology, Inc. and has a strong background in Nokia's Qt and other user
+interface frameworks. His first contribution is a shader based button along with some
+code modifications and important architectural decisions regarding IcedCoffee's shader
+subsystem.
+
+* Added the ICShaderUniform and ICShaderValue classes. ICShaderValue defines a uniform
+  value with a specific type (ICShaderValueType) and allows for convenient initialization
+  and retrieval of that value. ICShaderUniform defines a shader uniform with a specific
+  type and allows you to set a value on that uniform.  Together these classes form the
+  basis for a more flexible shader subsystem in IcedCoffee.
+* Reworked ICShaderProgram to support arbitrary shader uniforms by incorporating the
+  ICShaderUniform and ICShaderValue classes. ICShaderProgram now automatically fetches
+  available uniforms from a given shader program at the end of the linker phase.
+  You may use the uniforms property to retrieve them. Uniform values may be set using
+  the setShaderValue:forUniform: method. Likewise, they may be retrieved using the
+  shaderValueForUniform: method.
+
 *v0.6.1*
 
 * Added support for multiple Cocoa views via render contexts that are bound to the OpenGL

@@ -96,9 +96,13 @@ typedef void (*GLLogFunction) (GLuint program,
 - (NSString *)logForOpenGLObject:(GLuint)object
                     infoCallback:(GLInfoFunction)infoFunc
                          logFunc:(GLLogFunction)logFunc;
+- (void)fetchUniforms;
 @end
 
 @implementation ICShaderProgram
+
+@synthesize program = _program;
+@synthesize uniforms = _uniforms;
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename
@@ -265,14 +269,7 @@ typedef void (*GLLogFunction) (GLuint program,
                 break;
         }
     }
-    
-/*	_uniforms[kICUniformMVPMatrix] = glGetUniformLocation(_program, kICUniformMVPMatrix_s);
-	_uniforms[kICUniformSampler] = glGetUniformLocation(_program, kICUniformSampler_s);
-	_uniforms[kICUniformSampler2] = glGetUniformLocation(_program, kICUniformSampler2_s);
-*/  
-//	glUniform1i(_uniforms[kICUniformSampler], 0);
-//	glUniform1i(_uniforms[kICUniformSampler2], 1);
-    
+        
     CHECK_GL_ERROR_DEBUG();
 }
 
@@ -383,11 +380,6 @@ typedef void (*GLLogFunction) (GLuint program,
     return [self logForOpenGLObject:_program
                        infoCallback:(GLInfoFunction)&glGetProgramiv
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
-- (const GLuint)program
-{
-    return _program;
 }
 
 @end

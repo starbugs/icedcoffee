@@ -70,11 +70,11 @@ enum {
            _fragShader;
     
     NSMutableDictionary *_uniforms;
-    
-	//GLint _uniforms[kICUniform_MAX];    
 }
 
-@property (nonatomic, readonly, getter=program) const GLuint program;
+@property (nonatomic, readonly) const GLuint program;
+
+@property (nonatomic, readonly) NSDictionary *uniforms;
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
@@ -82,6 +82,7 @@ enum {
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 
 - (BOOL)setShaderValue:(ICShaderValue *)shaderValue forUniform:(NSString *)uniformName;
+
 - (ICShaderValue *)shaderValueForUniform:(NSString *)uniformName;
 
 - (BOOL)link;
