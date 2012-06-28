@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		018C88571593A70C0086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88561593A7070086319E /* Rectangle.fsh */; };
+		018C88591593A9B80086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88581593A9B20086319E /* Rectangle.fsh */; };
 		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
 		D21F889D1533068E00E2496C /* KazmathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D21F889A1533068E00E2496C /* KazmathTests.m */; };
@@ -346,6 +348,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		018C88561593A7070086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
+		018C88581593A9B20086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
 		D21F88811533064A00E2496C /* KazmathTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazmathTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21F88961533068E00E2496C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D21F88971533068E00E2496C /* KazmathTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "KazmathTests-Info.plist"; sourceTree = "<group>"; };
@@ -1044,6 +1048,7 @@
 		D2F350B0151162D200A56B8D /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				018C88561593A7070086319E /* Rectangle.fsh */,
 				D2F3C9501551F08600446C12 /* button_light_normal.png */,
 				D2F34FB0151E2FE300DF2D5B /* Picking.fsh */,
 				D2F34FB6151E337A00DF2D5B /* PositionTextureA8Color.fsh */,
@@ -1148,6 +1153,7 @@
 		D2FD864D14F0E6CB006A9A90 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				018C88581593A9B20086319E /* Rectangle.fsh */,
 				D24BAB941551E83C003BCF94 /* button_light_normal.png */,
 				D22F25A1158877060049268C /* PositionColor.fsh */,
 				D22F25A2158877060049268C /* PositionColor.vsh */,
@@ -1629,6 +1635,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018C88571593A70C0086319E /* Rectangle.fsh in Resources */,
 				D2F34FB8151E338B00DF2D5B /* PositionTextureA8Color.fsh in Resources */,
 				D2F34FB9151E338B00DF2D5B /* PositionTextureA8Color.vsh in Resources */,
 				D2F34FB3151E2FEA00DF2D5B /* Picking.fsh in Resources */,
@@ -1645,6 +1652,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				018C88591593A9B80086319E /* Rectangle.fsh in Resources */,
 				D2FD864914F0E6C6006A9A90 /* InfoPlist.strings in Resources */,
 				D2FD864A14F0E6C6006A9A90 /* MainMenu.xib in Resources */,
 				D2FD86A514F0EFBA006A9A90 /* thiswayup.png in Resources */,

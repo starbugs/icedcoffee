@@ -1,5 +1,6 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -24,6 +25,7 @@
 #import "ICLabel.h"
 #import "ICScale9Sprite.h"
 #import "ICTextureCache.h"
+#import "ICRectangle.h"
 
 @interface ICButton (Private)
 - (void)centerLabel;
@@ -55,11 +57,14 @@
                                                      name:ICLabelFontDidChange
                                                    object:self.label];
         
-        NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
+/*        NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
         ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:textureFile];
-        self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];
+        self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];*/
         
-        [self addChild:self.background];
+        ICRectangle *rectangle = [ICRectangle viewWithSize:size];
+        [self addChild:rectangle];
+        
+//        [self addChild:self.background];
         [self addChild:self.label];        
     }
     return self;

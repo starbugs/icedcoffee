@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		018C884C1593A5DF0086319E /* ICRectangle.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C884A1593A5DF0086319E /* ICRectangle.h */; };
+		018C884D1593A5DF0086319E /* ICRectangle.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C884B1593A5DF0086319E /* ICRectangle.m */; };
+		018C885C1593B3CF0086319E /* ICShaderValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C885A1593B3CF0086319E /* ICShaderValue.h */; };
+		018C885D1593B3CF0086319E /* ICShaderValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885B1593B3CF0086319E /* ICShaderValue.m */; };
+		018C88601593B8F40086319E /* ICShaderUniform.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C885E1593B8F40086319E /* ICShaderUniform.h */; };
+		018C88611593B8F40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885F1593B8F40086319E /* ICShaderUniform.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; };
 		D216CC8D154FDC29009FCDC4 /* ICControl.h in Headers */ = {isa = PBXBuildFile; fileRef = D216CC8B154FDC29009FCDC4 /* ICControl.h */; };
 		D216CC8E154FDC29009FCDC4 /* ICControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D216CC8C154FDC29009FCDC4 /* ICControl.m */; };
@@ -127,6 +133,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		018C884A1593A5DF0086319E /* ICRectangle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICRectangle.h; path = icedcoffee/ICRectangle.h; sourceTree = "<group>"; };
+		018C884B1593A5DF0086319E /* ICRectangle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICRectangle.m; path = icedcoffee/ICRectangle.m; sourceTree = "<group>"; };
+		018C885A1593B3CF0086319E /* ICShaderValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderValue.h; path = icedcoffee/ICShaderValue.h; sourceTree = "<group>"; };
+		018C885B1593B3CF0086319E /* ICShaderValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderValue.m; path = icedcoffee/ICShaderValue.m; sourceTree = "<group>"; };
+		018C885E1593B8F40086319E /* ICShaderUniform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderUniform.h; path = icedcoffee/ICShaderUniform.h; sourceTree = "<group>"; };
+		018C885F1593B8F40086319E /* ICShaderUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderUniform.m; path = icedcoffee/ICShaderUniform.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
 		D216CC8B154FDC29009FCDC4 /* ICControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICControl.h; path = icedcoffee/ICControl.h; sourceTree = "<group>"; };
 		D216CC8C154FDC29009FCDC4 /* ICControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICControl.m; path = icedcoffee/ICControl.m; sourceTree = "<group>"; };
@@ -379,6 +391,10 @@
 				D24BAF6E14EDB142000E65AA /* ICShaderCache.m */,
 				D24BAF6F14EDB142000E65AA /* ICShaderProgram.h */,
 				D24BAF7014EDB142000E65AA /* ICShaderProgram.m */,
+				018C885E1593B8F40086319E /* ICShaderUniform.h */,
+				018C885F1593B8F40086319E /* ICShaderUniform.m */,
+				018C885A1593B3CF0086319E /* ICShaderValue.h */,
+				018C885B1593B3CF0086319E /* ICShaderValue.m */,
 			);
 			name = Shaders;
 			sourceTree = "<group>";
@@ -403,6 +419,8 @@
 				D216CC8C154FDC29009FCDC4 /* ICControl.m */,
 				D2F34FFB151F3E0900DF2D5B /* ICLabel.h */,
 				D2F34FFC151F3E0900DF2D5B /* ICLabel.m */,
+				018C884A1593A5DF0086319E /* ICRectangle.h */,
+				018C884B1593A5DF0086319E /* ICRectangle.m */,
 				D2ADCFBD157EA80600B6E519 /* ICScrollView.h */,
 				D2ADCFBE157EA80600B6E519 /* ICScrollView.m */,
 				D2B8ADA01582AE9A006F6419 /* ICTableViewDataSource.h */,
@@ -627,6 +645,9 @@
 				D2918D511589DEE00043C872 /* ICUIScene.h in Headers */,
 				D2735AFC158DE2B400216F1B /* ICContextManager.h in Headers */,
 				D2735B01158DE4F000216F1B /* ICRenderContext.h in Headers */,
+				018C884C1593A5DF0086319E /* ICRectangle.h in Headers */,
+				018C885C1593B3CF0086319E /* ICShaderValue.h in Headers */,
+				018C88601593B8F40086319E /* ICShaderUniform.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -732,6 +753,9 @@
 				D2735AFD158DE2B400216F1B /* ICContextManager.m in Sources */,
 				D2735B02158DE4F000216F1B /* ICRenderContext.m in Sources */,
 				D2735B3E158E566B00216F1B /* icGL.m in Sources */,
+				018C884D1593A5DF0086319E /* ICRectangle.m in Sources */,
+				018C885D1593B3CF0086319E /* ICShaderValue.m in Sources */,
+				018C88611593B8F40086319E /* ICShaderUniform.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

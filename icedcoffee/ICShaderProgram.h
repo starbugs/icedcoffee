@@ -25,6 +25,7 @@
 // Then adapted for IcedCoffee http://www.icedcoffee-framework.org
 
 #import "icGLState.h"
+#import "icTypes.h"
 
 enum {
 	kICUniformMVPMatrix,
@@ -43,6 +44,7 @@ enum {
 #define kICShader_Picking                       @"ShaderPicking"
 #define kICShader_StencilMask                   @"ShaderStencilMask"
 #define kICShader_SpriteTextureMask             @"ShaderSpriteTextureMask"
+#define kICShader_Rectangle                     @"ShaderRectangle"
 
 // uniform names
 #define kICUniformMVPMatrix_s			"u_MVPMatrix"
@@ -56,6 +58,8 @@ enum {
 #define	kICAttributeNameTexCoord		@"a_texCoord"
 
 
+@class ICShaderValue;
+
 /**
  @brief Defines a GLSL vertex and fragment shader program
  */
@@ -65,17 +69,20 @@ enum {
            _vertShader,
            _fragShader;
     
-	GLint _uniforms[kICUniform_MAX];    
+    NSMutableDictionary *_uniforms;
+    
+	//GLint _uniforms[kICUniform_MAX];    
 }
 
 @property (nonatomic, readonly, getter=program) const GLuint program;
-
-@property (nonatomic, readonly, getter=uniforms) const GLint *uniforms;
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
 
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
+
+- (BOOL)setShaderValue:(ICShaderValue *)shaderValue forUniform:(NSString *)uniformName;
+- (ICShaderValue *)shaderValueForUniform:(NSString *)uniformName;
 
 - (BOOL)link;
 

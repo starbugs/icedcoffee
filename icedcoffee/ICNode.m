@@ -1,5 +1,6 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -30,6 +31,8 @@
 #import "ICScene.h"
 #import "ICCamera.h"
 #import "ICShaderCache.h"
+#import "ICShaderValue.h"
+#import "ICShaderUniform.h"
 #import "ICShaderProgram.h"
 #import "ICNodeVisitorPicking.h"
 #import "ICHostViewController.h"
@@ -622,19 +625,14 @@
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor
 {
     if (visitor.visitorType == kICDrawingNodeVisitor) {
-        [self.shaderProgram use];
         icGLUniformModelViewProjectionMatrix(self.shaderProgram);
+        [self.shaderProgram use];
     } else if (visitor.visitorType == kICPickingNodeVisitor) {
         ICShaderProgram *p = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Picking];
-        [p use];
+        icColor4B pickColor = [(ICNodeVisitorPicking *)visitor pickColor];        
+        [p setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(pickColor)] forUniform:@"u_pickColor"];
         icGLUniformModelViewProjectionMatrix(p);
-        GLuint pickColorLocation = glGetUniformLocation(p.program, "u_pickColor");
-        icColor4B pickColor = [(ICNodeVisitorPicking *)visitor pickColor];
-        glUniform4f(pickColorLocation,
-                    (float)pickColor.r/IC_PICK_COLOR_RESOLUTION,
-                    (float)pickColor.g/IC_PICK_COLOR_RESOLUTION,
-                    (float)pickColor.b/IC_PICK_COLOR_RESOLUTION,
-                    (float)pickColor.a/IC_PICK_COLOR_RESOLUTION);
+        [p use];
     }    
 }
 

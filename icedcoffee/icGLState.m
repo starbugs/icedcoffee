@@ -32,6 +32,7 @@
 #import "icGL.h"
 #import "ICShaderProgram.h"
 #import "icConfig.h"
+#import "ICShaderValue.h"
 
 #if IC_ENABLE_GL_STATE_CACHE
 static GLenum _icBlendingSource = -1;
@@ -57,7 +58,7 @@ void icGLUniformModelViewProjectionMatrix(ICShaderProgram *shaderProgram)
     
 	kmMat4Multiply(&matrixMVP, &matrixP, &matrixMV);
     
-	glUniformMatrix4fv(shaderProgram.uniforms[kICUniformMVPMatrix], 1, GL_FALSE, matrixMVP.mat);
+    [shaderProgram setShaderValue:[ICShaderValue shaderValueWithMat4: matrixMVP] forUniform:@"u_MVPMatrix"];
 }
 
 void icGLBlendFunc(GLenum sfactor, GLenum dfactor)

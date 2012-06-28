@@ -25,8 +25,60 @@
 // Then adapted for IcedCoffee
 
 #import "ICShaderProgram.h"
+#import "ICShaderValue.h"
+#import "ICShaderUniform.h"
 #import "icMacros.h"
 #import "icGL.h"
+
+
+uint glTypeForShaderValueType(ICShaderValueType valueType)
+{
+    switch (valueType) {
+        case ICShaderValueType_Int:
+            return GL_INT;
+        case ICShaderValueType_Float:
+            return GL_FLOAT;
+        case ICShaderValueType_Vec2:
+            return GL_FLOAT_VEC2;
+        case ICShaderValueType_Vec3:
+            return GL_FLOAT_VEC3;
+        case ICShaderValueType_Vec4:
+            return GL_FLOAT_VEC4;
+        case ICShaderValueType_Mat4:
+            return GL_FLOAT_MAT4;
+        case ICShaderValueType_Sampler2D:
+            return GL_SAMPLER_2D;
+        default:
+            assert(nil && "Type not supported"); // not reached
+            break;
+    }
+    return 0; // not reached
+}
+
+ICShaderValueType shaderValueTypeForGLType(GLenum type)
+{
+    switch (type) {
+        case GL_INT:
+            return ICShaderValueType_Int;
+        case GL_FLOAT:
+            return ICShaderValueType_Float;
+        case GL_FLOAT_VEC2:
+            return ICShaderValueType_Vec2;
+        case GL_FLOAT_VEC3:
+            return ICShaderValueType_Vec3;
+        case GL_FLOAT_VEC4:
+            return ICShaderValueType_Vec4;
+        case GL_FLOAT_MAT4:
+            return ICShaderValueType_Mat4;
+        case GL_SAMPLER_2D:
+            return ICShaderValueType_Sampler2D;
+        default:
+            assert(nil && "Type not supported"); // not reached
+            break;
+    }
+    return ICShaderValueType_Invalid;
+}
+
 
 typedef void (*GLInfoFunction)(GLuint program,
                                GLenum pname,
@@ -53,6 +105,8 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     if ((self = [super init]))
     {
+        _uniforms = [[NSMutableDictionary alloc] init];
+        
         _program = glCreateProgram();
         
 		_vertShader = _fragShader = 0;
@@ -89,6 +143,8 @@ typedef void (*GLLogFunction) (GLuint program,
 - (void)dealloc
 {
 	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
+    
+    [_uniforms release];
     
 	// There is no need to delete the shaders. They should have been already deleted.
 	NSAssert(_vertShader == 0, @"Vertex Shaders should have been already deleted");
@@ -140,19 +196,109 @@ typedef void (*GLLogFunction) (GLuint program,
     CHECK_GL_ERROR_DEBUG();    
 }
 
+- (BOOL)setShaderValue:(ICShaderValue *)shaderValue forUniform:(NSString *)uniformName
+{
+    ICShaderUniform *uniform = [_uniforms objectForKey:uniformName];
+    return [uniform setToShaderValue:shaderValue];
+}
+
+- (ICShaderValue *)shaderValueForUniform:(NSString *)uniformName
+{
+    return [_uniforms objectForKey:uniformName];
+}
+
 - (void)updateUniforms
 {
 	// Since sample most probably won't change, set it to 0 now.
+    glUseProgram(_program);
+    NSEnumerator* e = [_uniforms objectEnumerator];
     
-	_uniforms[kICUniformMVPMatrix] = glGetUniformLocation(_program, kICUniformMVPMatrix_s);
+    ICShaderUniform* u;
+    
+    while(u = (ICShaderUniform*)[e nextObject])
+    {
+        switch(u.type)
+        {
+            case ICShaderValueType_Int:
+                glUniform1i(u.location, [u intValue]);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            case ICShaderValueType_Float:
+                glUniform1f(u.location, [u floatValue]);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            case ICShaderValueType_Vec2:
+            {
+                kmVec2 v = [u vec2Value];  
+                glUniform2fv(u.location, 1, (GLfloat*)&v);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            }
+            case ICShaderValueType_Vec3:
+            {
+                kmVec3 v = [u vec3Value];  
+                glUniform3fv(u.location, 1, (GLfloat*)&v);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            }
+            case ICShaderValueType_Vec4:
+            {
+                kmVec4 v = [u vec4Value];  
+                glUniform4fv(u.location, 1, (GLfloat*)&v);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            }
+            case ICShaderValueType_Mat4:
+            {
+                glUniformMatrix4fv(u.location, 1, GL_FALSE, [u mat4Value].mat);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            }
+ 
+            case ICShaderValueType_Sampler2D:
+            {
+                glUniform1i(u.location, [u intValue]);
+                CHECK_GL_ERROR_DEBUG();
+                break;
+            }
+            default:
+                break;
+        }
+    }
+    
+/*	_uniforms[kICUniformMVPMatrix] = glGetUniformLocation(_program, kICUniformMVPMatrix_s);
 	_uniforms[kICUniformSampler] = glGetUniformLocation(_program, kICUniformSampler_s);
 	_uniforms[kICUniformSampler2] = glGetUniformLocation(_program, kICUniformSampler2_s);
-    
-	glUseProgram(_program);
-	glUniform1i(_uniforms[kICUniformSampler], 0);
-	glUniform1i(_uniforms[kICUniformSampler2], 1);
+*/  
+//	glUniform1i(_uniforms[kICUniformSampler], 0);
+//	glUniform1i(_uniforms[kICUniformSampler2], 1);
     
     CHECK_GL_ERROR_DEBUG();
+}
+
+// Adapted from http://stackoverflow.com/questions/4783912/how-can-i-find-a-list-of-all-the-uniforms-in-opengl-es-2-0-vertex-shader-pro
+- (void)fetchUniforms
+{
+    GLint numUniforms;
+    glGetProgramiv(_program, GL_ACTIVE_UNIFORMS, &numUniforms);
+    for(int i=0; i<numUniforms; ++i)  {
+        int name_len=-1, num=-1;
+        GLenum type = GL_ZERO;
+        char name[100];
+        glGetActiveUniform(_program, i, sizeof(name)-1,
+                           &name_len, &num, &type, name);
+        name[name_len] = 0;
+        GLuint location = glGetUniformLocation(_program, name);
+        [_uniforms setObject:[ICShaderUniform shaderUniformWithType:shaderValueTypeForGLType(type) location:location]
+                                                             forKey:[NSString stringWithCString:name encoding:NSUTF8StringEncoding]];
+    }
+    
+    if ([_uniforms objectForKey:@"u_texture"]) {
+        [self setShaderValue:[ICShaderValue shaderValueWithInt:0] forUniform:@"u_texture"];
+    }
+    if ([_uniforms objectForKey:@"u_texture2"]) {
+        [self setShaderValue:[ICShaderValue shaderValueWithInt:1] forUniform:@"u_texture2"];
+    }
 }
 
 - (BOOL)link
@@ -185,12 +331,15 @@ typedef void (*GLLogFunction) (GLuint program,
     
     CHECK_GL_ERROR_DEBUG();
     
+    [self fetchUniforms];
+    
     return YES;
 }
 
 - (void)use
 {
     glUseProgram(_program);
+    [self updateUniforms];
     CHECK_GL_ERROR_DEBUG();    
 }
 
@@ -234,11 +383,6 @@ typedef void (*GLLogFunction) (GLuint program,
     return [self logForOpenGLObject:_program
                        infoCallback:(GLInfoFunction)&glGetProgramiv
                             logFunc:(GLLogFunction)&glGetProgramInfoLog];
-}
-
-- (const GLint *)uniforms
-{
-    return _uniforms;
 }
 
 - (const GLuint)program

@@ -32,6 +32,7 @@
 
 #import "Platforms/icGL.h"
 #import "kazmath/kazmath.h"
+#import "kazmath/vec4.h"
 
 // IcedCoffee extensions to kazmath
 
@@ -39,6 +40,7 @@
 #define kmNullVec3 (kmVec3){0,0,0}
 #define kmVec2Make(x,y) (kmVec2){x,y}
 #define kmVec3Make(x,y,z) (kmVec3){x,y,z}
+#define kmVec4Make(x,y,z,w) (kmVec4){x,y,z,w}
 #define kmVec3Description(v) \
     ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
 #define kmMat4Description(m) \
@@ -47,6 +49,7 @@
      (m).mat[1], (m).mat[5], (m).mat[9], (m).mat[13], \
      (m).mat[2], (m).mat[6], (m).mat[10], (m).mat[14], \
      (m).mat[3], (m).mat[7], (m).mat[11], (m).mat[15]])
+#define kmVec4FromColor(c) ((kmVec4){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
 
 /** @name Frame Updates */
 
@@ -55,6 +58,16 @@ typedef enum _ICFrameUpdateMode {
     kICFrameUpdateMode_OnDemand = 1
 } ICFrameUpdateMode;
 
+typedef enum _ICShaderValueType {
+    ICShaderValueType_Invalid,
+    ICShaderValueType_Int,
+    ICShaderValueType_Float,
+    ICShaderValueType_Vec2,
+    ICShaderValueType_Vec3,
+    ICShaderValueType_Vec4,
+    ICShaderValueType_Mat4,
+    ICShaderValueType_Sampler2D
+} ICShaderValueType;
 
 /** @name Color Types */
 

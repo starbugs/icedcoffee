@@ -1,5 +1,6 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -42,6 +43,7 @@
 #import "ICUIScene.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
+#import "ICShaderValue.h"
 #import "ICSprite.h"
 #import "ICScale9Sprite.h"
 #import "ICRenderTexture.h"
