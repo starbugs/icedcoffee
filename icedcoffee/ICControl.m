@@ -95,9 +95,9 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 }
 
 #ifdef __IC_PLATFORM_MAC
-- (void)sendAction:(SEL)action to:(id)target forEvent:(NSEvent *)event
+- (void)sendAction:(SEL)action to:(id)target forEvent:(ICOSXEvent *)event
 #elif defined(__IC_PLATFORM_IOS)
-- (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event
+- (void)sendAction:(SEL)action to:(id)target forEvent:(ICTouchEvent *)event
 #endif
 {
     ICAction *actionObject = [[ICAction alloc] initWithTarget:target action:action];
@@ -113,9 +113,9 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 }
 
 #ifdef __IC_PLATFORM_MAC
-- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(NSEvent *)event
+- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(ICOSXEvent *)event
 #elif defined(__IC_PLATFORM_IOS)
-- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(UIEvent *)event
+- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(ICTouchEvent *)event
 #endif
 {
     NSArray *actions = [_actions objectForKey:[NSNumber numberWithLong:controlEvent]];
@@ -222,15 +222,15 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 
 - (BOOL)highlighted
 {
-    return (_state & ICControLStateHighlighted);
+    return (_state & ICControlStateHighlighted);
 }
 
 - (void)setHighlighted:(BOOL)highlighted
 {
     if (highlighted) {
-        _state |= ICControLStateHighlighted;
+        _state |= ICControlStateHighlighted;
     } else {
-        _state &= ~ICControLStateHighlighted;
+        _state &= ~ICControlStateHighlighted;
     }
 }
 

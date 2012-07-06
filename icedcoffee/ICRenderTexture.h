@@ -25,6 +25,7 @@
  */
 
 #import "ICPlanarNode.h"
+#import "ICFrameBufferProvider.h"
 #import "ICTexture2D.h"
 #import "icTypes.h"
 #import "icConfig.h"
@@ -158,13 +159,8 @@
  Subclasses providing customized initialization should override the
  ICRenderTexture::initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
  method, which is the designated initializer of ICRenderTexture.
- 
- The IcedCoffee framework uses ICRenderTexture to implement view hierarchies for utilization
- in user interfaces. The ICView subclass adds convenient view hierarchies to ICRenderTexture.
- The ICControl class implements the target-action design pattern known from Cocoa on top of it.
- Many IcedCoffee UI controls inherit from either ICView or ICControl.
  */
-@interface ICRenderTexture : ICPlanarNode {
+@interface ICRenderTexture : ICPlanarNode <ICFrameBufferProvider> {
 @protected
 	GLuint      _fbo;
 	GLint		_oldFBO;
@@ -207,7 +203,7 @@
 @property (nonatomic, readonly) BOOL isInRenderTextureDrawContext;
 
 /**
- @brief A mode defining when to update the render texture contents
+ @brief A mode defining when to update the render texture's contents
  */
 @property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
 

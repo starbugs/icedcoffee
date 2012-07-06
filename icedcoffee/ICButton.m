@@ -39,13 +39,35 @@
 @implementation ICButton
 
 @synthesize label = _label;
-@synthesize background = _background;
+@synthesize mixesBackgroundStates = _mixesBackgroundStates;
+
++ (id)buttonWithSize:(CGSize)size
+{
+    return [[[[self class] alloc] initWithSize:size] autorelease];
+}
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        self.background = [ICRectangle viewWithSize:size];
+        _mouseButtonPressed = NO;
+        _mixesBackgroundStates = YES;
+        
+        _activeBackgrounds = [[NSMutableDictionary alloc] init];
+        _backgroundsByControlState = [[NSMutableDictionary alloc] init];
+        
+        ICRectangle *normalBackground = [ICRectangle viewWithSize:size];
+        [normalBackground setName:@"Normal Background"];
+        [self setBackground:normalBackground forState:ICControlStateNormal];
+        
+        ICRectangle *pressedBackground = [ICRectangle viewWithSize:size];
+        [pressedBackground setName:@"Pressed Background"];
+        pressedBackground.gradientStartColor = (icColor4B){220,220,220,255};
+        pressedBackground.gradientEndColor = (icColor4B){180,180,180,255};
+        [self setBackground:pressedBackground forState:ICControlStatePressed];
+        
         self.label = [ICLabel labelWithText:@"Button" fontName:@"Lucida Grande" fontSize:12];
+        self.label.name = @"Button label (view)";
+        self.label.userInteractionEnabled = NO;
         self.label.color = (icColor4B){0,0,0,255};
 
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -58,6 +80,8 @@
                                                      name:ICLabelFontDidChange
                                                    object:self.label];
         
+        self.state = ICControlStateNormal;
+        
 /*        NSString *textureFile = [[NSBundle mainBundle] pathForResource:@"button_light_normal" ofType:@"png"];
         ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:textureFile];
         self.background = [ICScale9Sprite spriteWithTexture:texture scale9Rect:CGRectMake(5, 5, 110, 11)];*/
@@ -69,16 +93,123 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     
+    [_activeBackgrounds release];
+    [_backgroundsByControlState release];
+    
     self.label = nil;
-    self.background = nil;
     
     [super dealloc];
 }
 
+- (void)cleanUpAllBackgrounds
+{
+    for (NSNumber *state in _activeBackgrounds) {
+        ICView *activeBackground = [_activeBackgrounds objectForKey:state];
+        activeBackground.isVisible = NO;
+    }
+    [_activeBackgrounds removeAllObjects];    
+}
+
+- (void)activateBackgroundForState:(ICControlState)state
+{
+    ICView *background = [self backgroundForState:state];
+    if (background) {
+        [_activeBackgrounds setObject:background forKey:[NSNumber numberWithUnsignedLong:state]];
+        background.isVisible = YES;
+    }
+}
+
+- (void)setState:(ICControlState)state
+{
+    [super setState:state];
+    if (state & ICControlStateDisabled && [self backgroundForState:ICControlStateDisabled]) {
+        [self cleanUpAllBackgrounds];
+        [self activateBackgroundForState:ICControlStateDisabled];
+    } else {
+        [self cleanUpAllBackgrounds];
+        if (state & ICControlStatePressed && [self backgroundForState:ICControlStatePressed]) {
+            [self activateBackgroundForState:ICControlStatePressed];
+        } else {
+            [self activateBackgroundForState:ICControlStateNormal];
+        }
+    }
+    if (state & ICControlStateSelected && [self backgroundForState:ICControlStateSelected]) {
+        if (!_mixesBackgroundStates)
+            [self cleanUpAllBackgrounds];
+        [self activateBackgroundForState:ICControlStateSelected];
+    }
+    if (state & ICControlStateHighlighted && [self backgroundForState:ICControlStateHighlighted]) {
+        if (!_mixesBackgroundStates)
+            [self cleanUpAllBackgrounds];
+        [self activateBackgroundForState:ICControlStateHighlighted];        
+    }
+    if (!_mixesBackgroundStates && state & (ICControlStateSelected | ICControlStateHighlighted) &&
+        [self backgroundForState:ICControlStateSelected | ICControlStateHighlighted]) {
+        [self activateBackgroundForState:ICControlStateSelected | ICControlStateHighlighted];
+    }
+}
+
+- (void)setBackground:(ICView *)background forState:(ICControlState)state
+{
+    ICView *existingBackground = [self backgroundForState:state];
+    if (existingBackground) {
+        [self removeBackgroundForState:state];
+        existingBackground = nil;
+    }
+    [_backgroundsByControlState setObject:background forKey:[NSNumber numberWithUnsignedLong:state]];
+    [self addChild:background];
+    background.isVisible = NO;
+}
+
+- (void)removeBackgroundForState:(ICControlState)state
+{
+    ICView *background = [[self backgroundForState:state] retain];
+    [_backgroundsByControlState removeObjectForKey:[NSNumber numberWithUnsignedLong:state]];
+    [self removeChild:background];
+    [background release];
+}
+
+- (ICView *)backgroundForState:(ICControlState)state
+{
+    return [_backgroundsByControlState objectForKey:[NSNumber numberWithUnsignedLong:state]];
+}
+
+#ifdef __IC_PLATFORM_MAC
+
+- (void)mouseDown:(ICMouseEvent *)event
+{
+    self.state |= ICControlStatePressed;
+    _mouseButtonPressed = YES;
+}
+
+- (void)mouseUp:(ICMouseEvent *)event
+{
+    self.state &= ~ICControlStatePressed;
+    _mouseButtonPressed = NO;
+}
+
+- (void)mouseEntered:(ICMouseEvent *)event
+{
+    if (_mouseButtonPressed) {
+        self.state |= ICControlStatePressed;
+    }
+}
+
+- (void)mouseExited:(ICMouseEvent *)event
+{
+    if (_mouseButtonPressed) {
+        self.state &= ~ICControlStatePressed;
+    }
+}
+
+#endif // __IC_PLATFORM_MAC
+
 - (void)layoutChildren
 {
-    [self centerLabel];    
-    [self.background setSize:self.size];
+    [self centerLabel];
+    for (NSNumber *state in _backgroundsByControlState) {
+        [(ICView *)[_backgroundsByControlState objectForKey:state] setSize:self.size];
+    }
 }
 
 - (void)setLabel:(ICLabel *)label
@@ -89,16 +220,6 @@
     _label = [label retain];
     if (_label)
         [self addChild:_label];    
-}
-
-- (void)setBackground:(ICView *)background
-{
-    if (_background)
-        [self removeChild:_background];
-    [_background release];
-    _background = [background retain];
-    if (_background)
-        [self addChild:_background];
 }
 
 @end

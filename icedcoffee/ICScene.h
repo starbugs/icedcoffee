@@ -287,13 +287,17 @@
 /**
  @brief Performs a hit test on the scene's node hierarchy
  
- Sets up the scene's picking environment, performs a hit test using the picking visitor,
- and finally tears down the scene's picking environment.
+ Sets up the scene's picking environment, performs a hit test by drawing all nodes contained
+ in the scene using the picking visitor (see ICScene::pickingVisitor), and finally tears down
+ the scene's picking environment.
  
- @param point A 2D location on the frame buffer in points
+ @param point A 2D location on the frame buffer in points (Y axis points downwards)
  
- @return Returns an NSArray containing all ICNode objects that passed the hit test, beginning
- with the respective top-most node rendered to the frame buffer.
+ @return Returns an NSArray containing all visible ICNode objects that passed the hit test in
+ exactly the order they were drawn to the frame buffer. If depth testing is enabled, the result
+ array may not contain all nodes that were drawn by the picking visitor as picking shapes may be
+ discarded by the depth test. However, it is guaranteed that all nodes that are finally visible
+ on screen will be contained in the method's result.
  */
 - (NSArray *)hitTest:(CGPoint)point;
 

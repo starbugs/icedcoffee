@@ -42,7 +42,6 @@
 #define ICTextAlignmentCenter		UITextAlignmentCenter
 #define ICTextAlignmentLeft			UITextAlignmentLeft
 #define ICTextAlignmentRight		UITextAlignmentRight
-#define ICEvent                     UIEvent
 
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -57,7 +56,6 @@
 #define ICTextAlignmentCenter		NSCenterTextAlignment
 #define ICTextAlignmentLeft			NSLeftTextAlignment
 #define ICTextAlignmentRight		NSRightTextAlignment
-#define ICEvent                     NSEvent
 
 #endif
 

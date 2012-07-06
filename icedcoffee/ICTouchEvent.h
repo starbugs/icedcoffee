@@ -21,19 +21,30 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import <Foundation/Foundation.h>
+#import "icMacros.h"
+#import "ICTouch.h"
 
-@implementation ImageSprite
+#ifdef __IC_PLATFORM_IOS
 
-- (void)mouseEntered:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
+@class ICNode;
+
+@interface ICTouchEvent : NSObject {
+@protected
+    UIEvent *_nativeEvent;
+    NSDictionary *_touchesForNodes;
 }
 
-- (void)mouseExited:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
-}
+@property (nonatomic, readonly) UIEvent *nativeEvent;
+
++ (id)touchEventWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
+
+- (id)initWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
+
+- (NSSet *)allTouches;
+
+- (NSSet *)touchesForNode:(ICNode *)node;
 
 @end
+
+#endif // __IC_PLATFORM_IOS

@@ -25,6 +25,8 @@
 #import "ICCamera.h"
 #import "ICScene.h"
 #import "ICRenderTexture.h"
+#import "ICHostViewController.h"
+#import "ICGLView.h"
 #import "icTypes.h"
 #import "kazmath/vec4.h"
 
@@ -74,14 +76,20 @@
     return plane;
 }
 
-- (CGPoint)hostViewToNodeLocation:(CGPoint)hostViewLocation
+// Assumes that parentScene is the correct match for unprojection with the parent frame buffer
+- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location
 {
-    // Projected points are in frame buffer (pixel) coordinates
+    // location is based on the upper left corner of the parent frame buffer, which doesn't
+    // match the OpenGL view coordinate system -- so we have to invert the Y axis here
+    float frameBufferHeight = [[self parentScene] frameBufferSize].height;
+    location.y = frameBufferHeight - location.y;
+    
+    // Projected points are in frame buffer coordinates (pixels)
     kmVec3 projectPoint1, projectPoint2;
-    projectPoint1 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
-                               hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 0);
-    projectPoint2 = kmVec3Make(hostViewLocation.x * IC_CONTENT_SCALE_FACTOR(),
-                               hostViewLocation.y * IC_CONTENT_SCALE_FACTOR(), 1);
+    projectPoint1 = kmVec3Make(location.x * IC_CONTENT_SCALE_FACTOR(),
+                               location.y * IC_CONTENT_SCALE_FACTOR(), 0);
+    projectPoint2 = kmVec3Make(location.x * IC_CONTENT_SCALE_FACTOR(),
+                               location.y * IC_CONTENT_SCALE_FACTOR(), 1);
 
     // Unprojected points are in world coordinates (points)
     kmVec3 unprojectPoint1, unprojectPoint2;
@@ -98,16 +106,30 @@
     kmVec3Transform(&localIntersection, &intersection, &worldToNodeTransform);
     localIntersection.x = roundf(localIntersection.x);
     localIntersection.y = roundf(localIntersection.y);
-        
-    if ([self isKindOfClass:[ICRenderTexture class]]) {
-        // ICUICamera inverts the framebuffer's y axis via projection scaling.
-        // For render textures, that texture has already been flipped vertically,
-        // so this needs to be undone here by inverting y again.
-        localIntersection.y = self.size.y - localIntersection.y;
+    
+    return localIntersection;
+}
+
+- (kmVec3)hostViewToNodeLocation:(CGPoint)location
+{
+    NSArray *ancestors = [self ancestorsFilteredUsingBlock:
+                          ^(ICNode *node) {
+                              if ([node conformsToProtocol:@protocol(ICFrameBufferProvider)] &&
+                                  [node conformsToProtocol:@protocol(ICProjectionTransforms)]) {
+                                  return YES;
+                              }
+                              return NO;
+                          }];
+    
+    NSEnumerator *e = [ancestors reverseObjectEnumerator];
+    ICNode<ICProjectionTransforms> *node = nil;
+    while (node = [e nextObject]) {
+        location = kmVec3ToCGPoint([node parentFrameBufferToNodeLocation:location]);
     }
     
-    return CGPointMake(localIntersection.x,
-                       localIntersection.y);
+    location = kmVec3ToCGPoint([self parentFrameBufferToNodeLocation:location]);
+    
+    return kmVec3Make(location.x, location.y, 0.0f);
 }
 
 @end

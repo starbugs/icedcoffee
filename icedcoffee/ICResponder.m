@@ -24,16 +24,16 @@
 #import "ICResponder.h"
 #import "icMacros.h"
 
-#define FORWARD_NSEVENT_TO_NEXT_RESPONDER(eventMethod) \
-    - (void)eventMethod:(NSEvent *)event \
+#define FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(eventMethod) \
+    - (void)eventMethod:(ICMouseEvent *)event \
     { \
         [[self nextResponder] eventMethod:event]; \
     }
 
-#define FORWARD_UIEVENT_TO_NEXT_RESPONDER(eventMethod) \
-    - (void)eventMethod:(NSSet *)touches withEvent:(UIEvent *)event \
+#define FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(eventMethod) \
+    - (void)eventMethod:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event \
     { \
-        [[self nextResponder] eventMethod:touches withEvent:event]; \
+        [[self nextResponder] eventMethod:touches withTouchEvent:event]; \
     }
 
 @implementation ICResponder
@@ -58,31 +58,39 @@
 
 #if __IC_PLATFORM_DESKTOP
 
-- (void)mouseEntered:(NSEvent *)event {}
-- (void)mouseExited:(NSEvent *)event {}
+// Only visible nodes (nodes that draw something) will receive mouseEntered:
+// and mouseExited: messages
+- (void)mouseEntered:(ICMouseEvent *)event {} // not forwarded
+- (void)mouseExited:(ICMouseEvent *)event {} // not forwarded
 
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(mouseDown)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(mouseDragged)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(mouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseDown)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseDragged)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUpInside)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUpOutside)
 
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(rightMouseDown)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(rightMouseDragged)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(rightMouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseDown)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseDragged)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUpInside)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUpOutside)
 
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(otherMouseDown)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(otherMouseDragged)
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(otherMouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseDown)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseDragged)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUp)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUpInside)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUpOutside)
 
-FORWARD_NSEVENT_TO_NEXT_RESPONDER(scrollWheel)
+FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(scrollWheel)
 
 #endif // __IC_PLATFORM_DESKTOP
 
 #if __IC_PLATFORM_IOS
 
-FORWARD_UIEVENT_TO_NEXT_RESPONDER(touchesBegan)
-FORWARD_UIEVENT_TO_NEXT_RESPONDER(touchesCancelled)
-FORWARD_UIEVENT_TO_NEXT_RESPONDER(touchesEnded)
-FORWARD_UIEVENT_TO_NEXT_RESPONDER(touchesMoved)
+FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(touchesBegan)
+FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(touchesCancelled)
+FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(touchesEnded)
+FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(touchesMoved)
 
 #endif // __IC_PLATFORM_IOS
 

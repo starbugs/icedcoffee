@@ -21,19 +21,28 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import <Foundation/Foundation.h>
 
-@implementation ImageSprite
+@class ICNode;
 
-- (void)mouseEntered:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
+// Class to make ICNode objects usable as keys in NSDictionary class -- holds a strong
+// reference to the linked ICNode so as to preserve the node object for the whole lifecycle
+// of an ICNodeRef object.
+@interface ICNodeRef : NSObject <NSCopying> {
+@protected
+    ICNode *_node;
 }
 
-- (void)mouseExited:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
-}
+@property (nonatomic, retain) ICNode *node;
+
++ (id)refWithNode:(ICNode *)node;
+
+- (id)initWithNode:(ICNode *)node;
+
+- (id)copyWithZone:(NSZone *)zone;
+
+- (BOOL)isEqual:(id)object;
+
+- (NSUInteger)hash;
 
 @end

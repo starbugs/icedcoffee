@@ -198,6 +198,18 @@
     return nil;
 }
 
+- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *))filterBlock
+{
+    ICNode *node = self;
+    NSMutableArray* ancestors = [[[NSMutableArray alloc] init] autorelease];
+    while((node = [node parent])) {
+        if (filterBlock(node)) {
+            [ancestors addObject:node];
+        }
+    }
+    return ancestors;
+}
+
 - (NSArray *)ancestors
 {
     return [self ancestorsOfType:nil];
@@ -667,8 +679,8 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@>",
-            [self class], self, self.name, [_parent class]];
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@ (%@)>",
+            [self class], self, self.name, [_parent class], [_parent name]];
 }
 
 // private

@@ -22,8 +22,23 @@
 //  
 
 #import <Foundation/Foundation.h>
-#import "ICResponder.h"
+#import "icTypes.h"
 
-@protocol ICEventDelegate <NSObject, EVENT_PROTOCOLS>
+/**
+ @brief All objects conforming to this protocol define transforms between host views and nodes
+ */
+@protocol ICProjectionTransforms <NSObject>
+
+@required
+
+/**
+ @brief Implementations must transform a given frame buffer location to a local node location
+ */
+- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location;
+
+/**
+ @brief Implementations must transform a given host view location to a local node location
+ */
+- (kmVec3)hostViewToNodeLocation:(CGPoint)hostViewLocation;
 
 @end

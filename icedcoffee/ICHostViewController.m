@@ -28,7 +28,6 @@
 #import "ICTextureCache.h"
 #import "ICScheduler.h"
 #import "ICCamera.h"
-#import "ICEventDelegate.h"
 #import "ICRenderContext.h"
 #import "ICContextManager.h"
 #import "ICTargetActionDispatcher.h"
@@ -49,7 +48,6 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 @implementation ICHostViewController
 
-@synthesize eventDelegates = _eventDelegates;
 @synthesize scene = _scene;
 @synthesize isRunning = _isRunning;
 @synthesize thread = _thread;
@@ -67,7 +65,6 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     if ((self = [super init])) {
         _renderContext = [[ICRenderContext alloc] init];
         _renderContext.scheduler = [[[ICScheduler alloc] init] autorelease];        
-        _eventDelegates = [[NSMutableArray alloc] init];
         _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
         _lastUpdate.tv_sec = 0;
         _lastUpdate.tv_usec = 0;
@@ -89,22 +86,10 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     
     self.scene = nil;
     [_currentFirstResponder release];
-    [_eventDelegates release];
     [_renderContext release];
     [_targetActionDispatcher release];
     
     [super dealloc];
-}
-
-- (void)addEventDelegate:(id<ICEventDelegate>)eventDelegate
-{
-    NSAssert(eventDelegate != nil, @"Attempted to add a nil event delegate");
-    [_eventDelegates addObject:eventDelegate];
-}
-
-- (void)removeEventDelegate:(id<ICEventDelegate>)eventDelegate
-{
-    [_eventDelegates removeObject:eventDelegate];
 }
 
 - (void)calculateDeltaTime

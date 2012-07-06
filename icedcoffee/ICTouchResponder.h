@@ -23,6 +23,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class ICTouchEvent;
+
 /**
  @brief Defines touch event messages
  */
@@ -30,9 +32,9 @@
 
 @optional
 
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
+- (void)touchesMoved:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
+- (void)touchesCancelled:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 @end

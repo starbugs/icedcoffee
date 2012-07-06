@@ -24,6 +24,7 @@
 #import <Foundation/Foundation.h>
 
 #import "icMacros.h"
+#import "ICMouseEvent.h"
 
 #ifdef __IC_PLATFORM_DESKTOP
 
@@ -34,23 +35,23 @@
 
 @optional
 
-- (void)mouseEntered:(NSEvent *)event;
-- (void)mouseExited:(NSEvent *)event;
-- (void)mouseMoved:(NSEvent *)event;
+- (void)mouseEntered:(ICMouseEvent *)event;
+- (void)mouseExited:(ICMouseEvent *)event;
+- (void)mouseMoved:(ICMouseEvent *)event;
 
-- (void)mouseDown:(NSEvent *)event;
-- (void)mouseDragged:(NSEvent *)event;
-- (void)mouseUp:(NSEvent *)event;
+- (void)mouseDown:(ICMouseEvent *)event;
+- (void)mouseDragged:(ICMouseEvent *)event;
+- (void)mouseUp:(ICMouseEvent *)event;
 
-- (void)rightMouseDown:(NSEvent *)event;
-- (void)rightMouseDragged:(NSEvent *)event;
-- (void)rightMouseUp:(NSEvent *)event;
+- (void)rightMouseDown:(ICMouseEvent *)event;
+- (void)rightMouseDragged:(ICMouseEvent *)event;
+- (void)rightMouseUp:(ICMouseEvent *)event;
 
-- (void)otherMouseDown:(NSEvent *)event;
-- (void)otherMouseDragged:(NSEvent *)event;
-- (void)otherMouseUp:(NSEvent *)event;
+- (void)otherMouseDown:(ICMouseEvent *)event;
+- (void)otherMouseDragged:(ICMouseEvent *)event;
+- (void)otherMouseUp:(ICMouseEvent *)event;
 
-- (void)scrollWheel:(NSEvent *)event;
+- (void)scrollWheel:(ICMouseEvent *)event;
 
 @end
 

@@ -94,20 +94,20 @@
     [sprite setPositionY:sprite.position.y + (maxSize.height - scaledSize.height) / 2];    
 }
 
-- (void)scrollWheel:(NSEvent *)event
+- (void)scrollWheel:(ICMouseEvent *)event
 {
     ICUICamera *camera = (ICUICamera *)self.camera;
     [camera setZoomFactor:camera.zoomFactor - event.scrollingDeltaY / 1000];
 }
 
-- (void)mouseDown:(NSEvent *)event
+- (void)mouseDown:(ICMouseEvent *)event
 {
     CGPoint location = [event locationInWindow];
     _dragStartPosition = (kmVec3){location.x, location.y, 0};
     _dragOffset = (kmVec3){location.x - self.position.x, location.y - self.position.y, 0};
 }
 
-- (void)mouseDragged:(NSEvent *)event
+- (void)mouseDragged:(ICMouseEvent *)event
 {
     CGPoint location = [event locationInWindow];
     [self setPositionX:_dragStartPosition.x + location.x - _dragStartPosition.x - _dragOffset.x];

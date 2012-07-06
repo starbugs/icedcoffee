@@ -25,8 +25,6 @@
 #import <Foundation/Foundation.h>
 
 #import "ICResponder.h"
-#import "ICEventDelegate.h"
-
 #import "icMacros.h"
 #import "icTypes.h"
 
@@ -94,7 +92,6 @@
     ICTargetActionDispatcher *_targetActionDispatcher;
     
     ICResponder *_currentFirstResponder;
-    NSMutableArray *_eventDelegates;
     
     BOOL _retinaDisplayEnabled;
 
@@ -125,12 +122,6 @@
  @brief The current first responder
  */
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
-
-@property (nonatomic, readonly) NSArray *eventDelegates;
-
-- (void)addEventDelegate:(id<ICEventDelegate>)eventDelegate;
-
-- (void)removeEventDelegate:(id<ICEventDelegate>)eventDelegate;
 
 
 #pragma mark - Caches and Management
@@ -243,7 +234,11 @@
 /** @name Hit Test */
 
 /**
- @brief Performs a hit test on the current scene
+ @brief Performs a hit test on the current scane
+ 
+ @param point A CGPoint defining the location to use for the hit test. The location must be
+ relative to the host view's frame origin, the Y axis' origin is the upper left corner of the view.
+ 
  @sa ICScene::hitTest:
  */
 - (NSArray *)hitTest:(CGPoint)point;

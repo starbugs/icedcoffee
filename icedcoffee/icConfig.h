@@ -23,6 +23,26 @@
 
 #pragma once
 
+// General Configuration
+
+// GL state cache (incomplete)
 #ifndef IC_ENABLE_GL_STATE_CACHE
 #define IC_ENABLE_GL_STATE_CACHE 1
+#endif
+
+
+// Logging and Debugging
+
+// Output debug log messages to console for hit test results
+#ifndef IC_ENABLE_DEBUG_HITTEST
+#define IC_ENABLE_DEBUG_HITTEST 0
+#endif
+
+// Output debug log messages to console when picking is being performed
+#ifndef IC_ENABLE_DEBUG_PICKING
+#define IC_ENABLE_DEBUG_PICKING 0
+#endif
+
+#ifndef IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+#define IC_ENABLE_DEBUG_TOUCH_DISPATCHER 0
 #endif

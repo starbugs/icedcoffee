@@ -21,37 +21,55 @@
 //  SOFTWARE.
 //  
 
-#import "ResponsiveSprite.h"
-
-@implementation ResponsiveSprite
+#import "UIKit/UIKit.h"
+#import "ICTouchEvent.h"
+#import "ICNodeRef.h"
 
 #ifdef __IC_PLATFORM_IOS
 
-- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
+@implementation ICTouchEvent
+
+@synthesize nativeEvent = _nativeEvent;
+
++ (id)touchEventWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes
 {
-    [self flipTextureVertically];
-    [self setNeedsDisplay];
-    
-    ICTouch *touch = [touches anyObject];
-    CGPoint hostViewPoint = [touch locationInHostView];
-    kmVec3 nodePoint = [touch locationInNode:self];
-    NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    return [[[[self class] alloc] initWithNativeEvent:nativeEvent touchesForNodes:touchesForNodes] autorelease];
 }
 
-#elif defined(__IC_PLATFORM_MAC)
-
-- (void)mouseUp:(ICMouseEvent *)event
+- (id)initWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes
 {
-    [self flipTextureVertically];
-    [self setNeedsDisplay];
-
-    CGPoint hostViewPoint = [event locationInHostView];
-    kmVec3 nodePoint = [event locationInNode:self];
-    NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    if ((self = [super init])) {
+        _nativeEvent = [nativeEvent retain];
+        _touchesForNodes = [touchesForNodes retain];
+    }
+    return self;
 }
 
-#endif // __IC_PLATFORM_*
+- (void)dealloc
+{
+    [_nativeEvent release];
+    [_touchesForNodes release];
+    [super dealloc];
+}
+
+- (NSSet *)allTouches
+{
+    NSMutableSet *allTouches = [NSMutableSet set];
+    NSEnumerator *e = [_touchesForNodes objectEnumerator];
+    NSArray *touches = nil;
+    while (touches = [e nextObject]) {
+        for (UITouch *touch in touches)
+            [allTouches addObject:touch];
+    }
+    return allTouches;
+}
+
+- (NSSet *)touchesForNode:(ICNode *)node
+{
+    return [NSSet setWithArray:[_touchesForNodes objectForKey:[ICNodeRef refWithNode:node]]];
+}
 
 @end
+
+#endif // __IC_PLATFORM_IOS
+

@@ -51,11 +51,10 @@
 
 #import "ICHostViewController.h"
 #import "ICGLView.h"
-#import "ICTouchResponder.h"
 
 @class ICTouchEventDispatcher;
 
-@interface ICHostViewControllerIOS : ICHostViewController <ICTouchResponder>
+@interface ICHostViewControllerIOS : ICHostViewController
 {
 @private
     CADisplayLink *_displayLink;

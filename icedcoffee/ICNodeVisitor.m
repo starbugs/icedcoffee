@@ -44,25 +44,27 @@
 
 - (void)visitNode:(ICNode *)node
 {
-    [self preVisitNode:node];
-    [self visitSingleNode:node];
-    [self visitChildrenOfNode:(ICNode *)node];
-    [self postVisitNode:node];
+    if (node.isVisible) {
+        [self preVisitNode:node];
+        [self visitSingleNode:node];
+        [self visitChildrenOfNode:(ICNode *)node];
+        [self postVisitNode:node];
+    }
 }
 
 - (void)preVisitNode:(ICNode *)node
 {
-    
+    // Implement in subclass
 }
 
 - (void)postVisitNode:(ICNode *)node
 {
-    
+    // Implement in subclass    
 }
 
 - (void)visitSingleNode:(ICNode *)node
 {
-    
+    // Implement in subclass
 }
 
 - (void)visitChildrenOfNode:(ICNode *)node

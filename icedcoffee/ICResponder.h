@@ -41,8 +41,7 @@
  
  The ICResponder abstract base class is the IcedCoffee pendant to the
  <a href="http://goo.gl/7kL9i">NSResponder</a> and <a href="http://goo.gl/5WIzx">UIResponder</a>
- classes and works in collaboration with the <a href="http://goo.gl/ncoLJ">NSEvent</a> and
- <a href="http://goo.gl/D153o">UIEvent</a> classes found in Apple's AppKit and UIKit frameworks.
+ classes.
   
  In contrast to Apple's design, IcedCoffee implements both mouse and touch event handling in one
  class. Only those events supported by the respective target platform will be sent to the responder.
@@ -92,73 +91,64 @@
 /** @name Mouse Events (Mac Platform) */
 
 /**
- @brief Called by the framework when the user presses the left mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user presses the left mouse button on the receiver
  */
-- (void)mouseDown:(NSEvent *)event;
+- (void)mouseDown:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user drags using the left mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user drags using the left mouse button on the receiver
  */
-- (void)mouseDragged:(NSEvent *)event;
+- (void)mouseDragged:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user releases the left mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user releases the left mouse button
  */
-- (void)mouseUp:(NSEvent *)event;
+- (void)mouseUp:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the mouse pointer entered the receiver's shape on screen
+ @brief Called by the framework when the mouse pointer entered the receiver's picking shape
  */
-- (void)mouseEntered:(NSEvent *)event;
+- (void)mouseEntered:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the mouse pointer exited the receiver's shape on screen
+ @brief Called by the framework when the mouse pointer exited the receiver's picking shape
  */
-- (void)mouseExited:(NSEvent *)event;
+- (void)mouseExited:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user presses the right mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user presses the right mouse button on the receiver
  */
-- (void)rightMouseDown:(NSEvent *)event;
+- (void)rightMouseDown:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user drags using the right mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user drags using the right mouse button on the receiver
  */
-- (void)rightMouseDragged:(NSEvent *)event;
+- (void)rightMouseDragged:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user releases the right mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user releases the right mouse button
  */
-- (void)rightMouseUp:(NSEvent *)event;
+- (void)rightMouseUp:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user presses the other mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user presses the other mouse button on the receiver
  */
-- (void)otherMouseDown:(NSEvent *)event;
+- (void)otherMouseDown:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user drags using the other mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user drags using the other mouse button on the receiver
  */
-- (void)otherMouseDragged:(NSEvent *)event;
+- (void)otherMouseDragged:(ICMouseEvent *)event;
 
 /**
- @brief Called by the framework when the user releases the other mouse button on the receiver's
- shape on screen
+ @brief Called by the framework when the user releases the other mouse button
  */
-- (void)otherMouseUp:(NSEvent *)event;
+- (void)otherMouseUp:(ICMouseEvent *)event;
 
 /**
  @brief Called by the framework when the user scrolls using the mouse's scroll wheel
  */
-- (void)scrollWheel:(NSEvent *)event;
+- (void)scrollWheel:(ICMouseEvent *)event;
 
 #endif // __IC_PLATFORM_DESKTOP
 
@@ -170,23 +160,35 @@
 
 /**
  @brief Called by the framework when the user began touching on the receiver's shape
+ 
+ @param touches An NSSet containing ICTouch objects representing individual touches
+ @param withTouchEvent An ICTouchEvent object representing the touch event
  */
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 /**
- @brief Called by the framework when the user cancels touching on the receiver's shape
+ @brief Called by the framework when touches were cancelled
+
+ @param touches An NSSet containing ICTouch objects representing individual touches
+ @param withTouchEvent An ICTouchEvent object representing the touch event
  */
-- (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesCancelled:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 /**
- @brief Called by the framework when the user ended touching on the receiver's shape
+ @brief Called by the framework when touches ended
+
+ @param touches An NSSet containing ICTouch objects representing individual touches
+ @param withTouchEvent An ICTouchEvent object representing the touch event
  */
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesEnded:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 /**
- @brief Called by the framework when the user' touches moved on the receiver's shape
+ @brief Called by the framework when the user's touches moved
+
+ @param touches An NSSet containing ICTouch objects representing individual touches
+ @param withTouchEvent An ICTouchEvent object representing the touch event
  */
-- (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event;
+- (void)touchesMoved:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 #endif // __IC_PLATFORM_IOS
 

@@ -65,26 +65,26 @@ enum {
         resizeEdge |= ResizeEdgeRight;
     } 
     if (localLocation.y < RESIZE_BAR_THICKNESS) {
-        resizeEdge |= ResizeEdgeBottom;
+        resizeEdge |= ResizeEdgeTop;
     }
     if (localLocation.y >= self.size.y - RESIZE_BAR_THICKNESS) {
-        resizeEdge |= ResizeEdgeTop;
+        resizeEdge |= ResizeEdgeBottom;
     }
     return resizeEdge;
 }
 
-- (void)mouseExited:(NSEvent *)event
+- (void)mouseExited:(ICMouseEvent *)event
 {
     [[self hostViewController] setCursor:[NSCursor arrowCursor]];
 }
 
-- (void)mouseMoved:(NSEvent *)event
+- (void)mouseMoved:(ICMouseEvent *)event
 {
     if (_isDragging)
         return;
     
-    CGPoint location = [event locationInWindow];
-    CGPoint localLocation = [self hostViewToNodeLocation:location];
+    CGPoint localLocation = kmVec3ToCGPoint([event locationInNode:self]);
+    NSLog(@"localLocation: %f, %f", localLocation.x, localLocation.y);
     
     uint resizeEdge = [self resizeEdgeWithLocalLocation:localLocation];
 
@@ -96,11 +96,10 @@ enum {
         [[self hostViewController] setCursor:[NSCursor openHandCursor]];
 }
 
-- (void)mouseDown:(NSEvent *)event
+- (void)mouseDown:(ICMouseEvent *)event
 {
-    CGPoint location = [event locationInWindow];
-    CGPoint localLocation = [self hostViewToNodeLocation:location];
-    location.y = self.hostViewController.view.bounds.size.height - location.y;
+    CGPoint location = [event locationInHostView];
+    CGPoint localLocation = kmVec3ToCGPoint([event locationInNode:self]);
 
     _resizeEdge = [self resizeEdgeWithLocalLocation:localLocation];
     
@@ -114,7 +113,7 @@ enum {
         [[self hostViewController] setCursor:[NSCursor closedHandCursor]];    
 }
 
-- (void)mouseUp:(NSEvent *)event
+- (void)mouseUp:(ICMouseEvent *)event
 {
     _isDragging = NO;
     
@@ -122,10 +121,9 @@ enum {
         [[self hostViewController] setCursor:[NSCursor openHandCursor]];
 }
 
-- (void)mouseDragged:(NSEvent *)event
+- (void)mouseDragged:(ICMouseEvent *)event
 {
-    CGPoint location = [event locationInWindow];
-    location.y = self.hostViewController.view.bounds.size.height - location.y;
+    CGPoint location = [event locationInHostView];
     
     CGPoint dragOffset;
     CGPoint sizeOffset;
@@ -137,26 +135,26 @@ enum {
     switch (_resizeEdge) {
         case ResizeEdgeBottom | ResizeEdgeLeft:
         {
+            dragOffset.y = 0;
             sizeOffset.x *= -1;
-            sizeOffset.y *= -1;
             break;
         }
         case ResizeEdgeBottom | ResizeEdgeRight:
         {
             dragOffset.x = 0;
-            sizeOffset.y *= -1;
+            dragOffset.y = 0;
             break;
         }
         case ResizeEdgeTop | ResizeEdgeLeft:
         {
-            dragOffset.y = 0;
             sizeOffset.x *= -1;
+            sizeOffset.y *= -1;
             break;
         }
         case ResizeEdgeTop | ResizeEdgeRight:
         {
             dragOffset.x = 0;
-            dragOffset.y = 0;
+            sizeOffset.y *= -1;
             break;
         }
         case ResizeEdgeLeft:
@@ -169,15 +167,15 @@ enum {
         case ResizeEdgeTop:
         {
             dragOffset.x = 0;
-            dragOffset.y = 0;
             sizeOffset.x = 0;
+            sizeOffset.y *= -1;
             break;
         }            
         case ResizeEdgeBottom:
         {
             dragOffset.x = 0;
+            dragOffset.y = 0;
             sizeOffset.x = 0;
-            sizeOffset.y *= -1;
             break;
         }            
         case ResizeEdgeRight:

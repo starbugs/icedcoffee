@@ -21,19 +21,51 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import <Foundation/Foundation.h>
+#import "icMacros.h"
+#import "ICProjectionTransforms.h"
 
-@implementation ImageSprite
+#ifdef __IC_PLATFORM_IOS
 
-- (void)mouseEntered:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
+@class ICNode;
+
+/**
+ @brief Represents a touch in an IcedCoffee scene on iOS
+ */
+@interface ICTouch : NSObject {
+@protected
+    UITouch *_nativeTouch;
+    ICNode *_node;
 }
 
-- (void)mouseExited:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
-}
+@property (nonatomic, readonly) UITouch *nativeTouch;
+
+@property (nonatomic, readonly) ICNode *node;
+
+@property (nonatomic, readonly, getter=window) UIWindow *window;
+
+@property (nonatomic, readonly, getter=hostView) UIView *hostView;
+
+@property (nonatomic, readonly, getter=tapCount) NSUInteger tapCount;
+
+@property (nonatomic, readonly, getter=timestamp) NSTimeInterval timestamp;
+
+@property (nonatomic, readonly, getter=phase) UITouchPhase phase;
+
+@property (nonatomic, readonly, getter=gestureRecognizers) NSArray *gestureRecognizers;
+
++ (id)touchWithNativeTouch:(UITouch *)touch node:(ICNode *)node;
+
+- (id)initWithNativeTouch:(UITouch *)touch node:(ICNode *)node;
+
+- (CGPoint)locationInHostView;
+
+- (CGPoint)previousLocationInHostView;
+
+- (kmVec3)locationInNode:(ICNode<ICProjectionTransforms> *)node;
+
+- (kmVec3)previousLocationInNode:(ICNode<ICProjectionTransforms> *)node;
 
 @end
+
+#endif // __IC_PLATFORM_IOS

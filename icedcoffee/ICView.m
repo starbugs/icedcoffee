@@ -242,23 +242,32 @@
         [self layoutChildren];
     }
     
-    if (_clipsChildren && !_backing) {
-        glClearStencil(0);
-        glClear(GL_STENCIL_BUFFER_BIT);
+    if (!_backing) {
+        // Perform clipping via stencil buffer if _clipsChildren is set to YES
+        if (_clipsChildren) {
+            glClearStencil(0);
+            glClear(GL_STENCIL_BUFFER_BIT);
+            
+            glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
+            glDepthMask(GL_FALSE);
+            glEnable(GL_STENCIL_TEST);
+            
+            glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+            glStencilFunc(GL_ALWAYS, 1, 1);
+            
+            // Draw solid sprite in rectangular region of the view to stencil buffer
+            [_clippingMask drawWithVisitor:visitor];
+            
+            glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
+            glDepthMask(GL_TRUE);
+            glStencilFunc(GL_EQUAL, 1, 1);
+        }
         
-        glColorMask(GL_FALSE, GL_FALSE, GL_FALSE, GL_FALSE);
-        glDepthMask(GL_FALSE);
-        glEnable(GL_STENCIL_TEST);
-        
-        glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-        glStencilFunc(GL_ALWAYS, 1, 1);
-        
-        // Draw solid sprite in rectangular region of the view
-        [_clippingMask drawWithVisitor:visitor];
-        
-        glColorMask(GL_TRUE, GL_TRUE, GL_TRUE, GL_TRUE);
-        glDepthMask(GL_TRUE);
-        glStencilFunc(GL_EQUAL, 1, 1);
+        if (visitor.visitorType == kICPickingNodeVisitor) {
+            // Draw view as solid sprite for picking, so the view reacts to
+            // mouseEntered/mouseExited events
+            [_clippingMask drawWithVisitor:visitor];
+        }
     }
 }
 

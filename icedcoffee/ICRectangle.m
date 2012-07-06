@@ -33,13 +33,17 @@
 @implementation ICRectangle
 
 @synthesize borderWidth = _borderWidth;
+@synthesize borderColor = _borderColor;
+@synthesize gradientStartColor = _gradientStartColor;
+@synthesize gradientEndColor = _gradientEndColor;
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
         _sprite = [ICSprite sprite];
+        _sprite.name = @"Rectangle sprite";
         
-        _borderWidth = 1; // pixel
+        self.borderWidth = 1; // points
         
         [_sprite setPosition:kmVec3Make(-(size.height/2.0), -size.height/2.0, 0.0)];//-((size.height/2.0)-_borderSize), -((size.height/2.0)-_borderSize), 0.0)];
         [_sprite setSize: kmVec3Make(size.width+(size.height), size.height*2.0, 1.0)];// + (size.height*2.0), (size.height*2.0)-_borderSize, 0)];
@@ -64,8 +68,22 @@
         [p release];        
         
         [_sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Rectangle]]; 
+        
+        _gradientStartColor = colorFromKmVec4(kmVec4Make(1.0, 1.0, 1.0, 1.0));
+        _gradientEndColor = colorFromKmVec4(kmVec4Make(0.7, 0.7, 0.7, 1.0));
+        _borderColor = colorFromKmVec4(kmVec4Make(0.0, 0.0, 0.0, 0.5));
     }
     return self;
+}
+
+- (void)setBorderWidth:(float)borderWidth
+{
+    _borderWidth = borderWidth * IC_CONTENT_SCALE_FACTOR();
+}
+
+- (float)borderWidth
+{
+    return _borderWidth / IC_CONTENT_SCALE_FACTOR();
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
@@ -81,9 +99,9 @@
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:0.4] forUniform:@"u_roundness"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(_sprite.size.x, _sprite.size.y)] forUniform:@"u_size"];
 
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4Make(1.0, 1.0, 1.0, 1.0)] forUniform:@"u_innerColor"];
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4Make(0.7, 0.7, 0.7, 1.0)] forUniform:@"u_innerColor2"];
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4Make(0.0, 0.0, 0.0, 1.0)] forUniform:@"u_borderColor"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_gradientStartColor)] forUniform:@"u_innerColor"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_gradientEndColor)] forUniform:@"u_innerColor2"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_borderColor)] forUniform:@"u_borderColor"];    
 }
 
 @end

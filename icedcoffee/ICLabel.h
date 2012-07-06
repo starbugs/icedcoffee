@@ -31,10 +31,10 @@
 @interface ICLabel : ICView {
 @protected
     ICSprite *_sprite;
-    icColor4B _color;
     NSString *_text;
     NSString *_fontName;
     CGFloat _fontSize;
+    icColor4B _color;
 }
 
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;

@@ -256,7 +256,12 @@
  */
 - (NSArray *)ancestorsOfType:(Class)classType;
 
+/**
+ @brief Returns the firt ancestor which is kind of the given class type
+ */
 - (ICNode *)firstAncestorOfType:(Class)classType;
+
+- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *))filterBlock;
 
 /**
  @brief An array containing all descendant nodes, ordered descending beginning with the first child

@@ -22,6 +22,7 @@
 //  
 
 #import <Foundation/Foundation.h>
+#import "ICSprite.h"
 #import "ICRenderTexture.h"
 
 /**
@@ -84,13 +85,12 @@
 }
 
 /**
- @brief The view's render texture backing
+ @brief An ICRenderTexture object representing the backing of the view
  
- You may set this property to an ICRenderTexture object which you would like to
- provide as a backing for the view. When the backing property is set to a non-nil
- value, ICView will automatically move its children to the backing's sub scene.
- Likewise, if the backing property is set to nil, ICView will automatically move
- its children back from the backing's sub scene to itself.
+ When the backing property is set to a non-nil value, ICView will operate in buffer backed
+ mode. When setting the backing to a non-nil value, the view's children are automatically
+ moved to the backing's sub scene. Likewise, if the backing property is set to nil, its
+ children are moved back from the backing's sub scene to the view itself.
  
  @note Switching a non-nil backing to another non-nil backing is not supported currently.
  You should always switch the backing to nil before you replace it with another backing.

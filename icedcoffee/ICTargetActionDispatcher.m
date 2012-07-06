@@ -33,7 +33,7 @@
     ICAction *action = [actionDict objectForKey:@"action"];
     
 #ifdef __IC_PLATFORM_MAC
-    NSEvent *event;
+    ICOSXEvent *event;
 #elif defined(__IC_PLATFORM_IOS)
     UIEvent *event;
 #endif
@@ -47,7 +47,7 @@
             // Valid action message signatures are:
             //  * (void)performAction;
             //  * (void)performAction:(id)sender;
-            //  * (void)performAction:(id)sender forEvent:(NSEvent *)event;
+            //  * (void)performAction:(id)sender forEvent:(ICOSXEvent *)event;
             NSUInteger numberOfArguments = [signature numberOfArguments];
             switch (numberOfArguments) {
                 case 2:

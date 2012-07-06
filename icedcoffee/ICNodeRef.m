@@ -21,19 +21,47 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import "ICNodeRef.h"
 
-@implementation ImageSprite
+@implementation ICNodeRef
 
-- (void)mouseEntered:(ICMouseEvent *)event
+@synthesize node = _node;
+
++ (id)refWithNode:(ICNode *)node
 {
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
+    return [[[[self class] alloc] initWithNode:node] autorelease];
 }
 
-- (void)mouseExited:(ICMouseEvent *)event
+- (id)initWithNode:(ICNode *)node
 {
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
+    if ((self = [super init])) {
+        self.node = node;
+    }
+    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    ICNodeRef *nodeRefCopy = [[ICNodeRef allocWithZone:zone] initWithNode:self.node];
+    return nodeRefCopy;
+}
+
+- (void)dealloc
+{
+    self.node = nil;
+    [super dealloc];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    if (![object isKindOfClass:[self class]])
+        return NO;
+    return [self hash] == [object hash];
+}
+
+- (NSUInteger)hash
+{
+    return (NSUInteger)_node;
 }
 
 @end

@@ -25,6 +25,8 @@
 #import "icMacros.h"
 
 #ifdef __IC_PLATFORM_MAC
+@class ICOSXEvent;
+
 enum {
     ICControlEventLeftMouseDown             = 1 << 0,
     ICControlEventLeftMouseDownRepeat       = 1 << 1,       // FIXME: unimplemented
@@ -66,7 +68,10 @@ enum {
 #define ICControlEventAllMouseEvents            0x00FFFFFF
 #endif
 
+// FIXME: touch control events not implemented yet
 #ifdef __IC_PLATFORM_IOS
+@class ICTouchEvent;
+
 enum {
     ICControlEventTouchDown                 = 1 << 0,
     ICControlEventTouchDownRepeat           = 1 << 1,
@@ -94,9 +99,10 @@ typedef NSUInteger ICControlEvents;
 
 enum {
     ICControlStateNormal            = 0,
-    ICControLStateHighlighted       = 1 << 0,
-    ICControlStateDisabled          = 1 << 1,
-    ICControlStateSelected          = 1 << 2
+    ICControlStatePressed           = 1 << 0,
+    ICControlStateHighlighted       = 1 << 1,
+    ICControlStateDisabled          = 1 << 2,
+    ICControlStateSelected          = 1 << 3
 };
 typedef NSUInteger ICControlState;
 
@@ -158,15 +164,17 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 - (id)initWithSize:(CGSize)size;
 
 #ifdef __IC_PLATFORM_MAC
-- (void)sendAction:(SEL)action to:(id)target forEvent:(NSEvent *)event;
+- (void)sendAction:(SEL)action to:(id)target forEvent:(ICOSXEvent *)event;
 #elif defined(__IC_PLATFORM_IOS)
-- (void)sendAction:(SEL)action to:(id)target forEvent:(UIEvent *)event;
+// FIXME: control event dispatch for iOS is work in progress
+- (void)sendAction:(SEL)action to:(id)target forEvent:(ICTouchEvent *)event;
 #endif
 
 #ifdef __IC_PLATFORM_MAC
-- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(NSEvent *)event;
+- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(ICOSXEvent *)event;
 #elif defined(__IC_PLATFORM_IOS)
-- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(UIEvent *)event;
+// FIXME: control event dispatch for iOS is work in progress
+- (void)sendActionsForControlEvent:(ICControlEvents)controlEvent forEvent:(ICTouchEvent *)event;
 #endif
 
 - (void)sendActionsForControlEvents:(ICControlEvents)controlEvents;

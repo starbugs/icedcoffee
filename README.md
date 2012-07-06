@@ -1,8 +1,8 @@
-IcedCoffee v0.6.2
+IcedCoffee v0.6.3
 =================
 
-IcedCoffee is a lightweight framework for building stunning user interfaces based on OpenGL ES 2.
-It is written in Objective-C and runs on iOS and Mac OS X.
+IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based
+on OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X.
 
 IcedCoffee is designed to be clean, minimalistic, consistent and reusable for different purposes.
 Its main focus is on user interfaces in the context of games, but of course you may use it for
@@ -55,7 +55,7 @@ Main Features
 Copyright and License
 ---------------------
 
-Copyright 2012 Tobias Lensing
+Copyright 2012 Tobias Lensing, Marcus Tillmanns
 
 Licensed under an MIT license (see LICENSE_icedcoffee.txt for details.)
 

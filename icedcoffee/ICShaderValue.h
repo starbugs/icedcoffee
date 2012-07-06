@@ -55,6 +55,7 @@
 - (id)initWithVec4:(kmVec4)value;
 - (id)initWithSampler2D:(int)value;
 - (id)initWithShaderValue:(ICShaderValue *)value;
+- (id)initWithMat4:(kmMat4)value;
 
 - (int)intValue;
 - (float)floatValue;

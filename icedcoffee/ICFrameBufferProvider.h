@@ -21,19 +21,11 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import <Foundation/Foundation.h>
 
-@implementation ImageSprite
-
-- (void)mouseEntered:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
-}
-
-- (void)mouseExited:(ICMouseEvent *)event
-{
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
-}
+/**
+ @brief Classes conforming to this "informal" protocol must provide a frame buffer
+ */
+@protocol ICFrameBufferProvider <NSObject>
 
 @end

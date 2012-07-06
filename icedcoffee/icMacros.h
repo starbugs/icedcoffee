@@ -31,7 +31,7 @@
 #import <Availability.h>
 
 
-// Platform Defines
+// Platform Macros
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /**
@@ -83,18 +83,21 @@ extern float g_icContentScaleFactor;
 #define IC_CONTENT_SCALE_FACTOR() g_icContentScaleFactor
 
 
-// Logging
+// Logging and Debugging
 
 #if defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
 
+// Macro for breaking into the debugger
 #define IC_DEBUG_BREAK() kill(getpid(), SIGINT)
 
+// Macro for logging deallocations
 #if IC_LOG_DEALLOCATIONS
 #define ICLOG_DEALLOC(...) NSLog(__VA_ARGS__)
 #else
 #define ICLOG_DEALLOC(...) do {} while(0)
 #endif // IC_LOG_DEALLOCATIONS
 
+// Macro for general IcedCoffee logging
 #define ICLOG(...) NSLog(__VA_ARGS__) 
 
 #else

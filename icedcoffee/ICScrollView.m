@@ -39,7 +39,7 @@
 }
 
 #ifdef __IC_PLATFORM_MAC
-- (void)scrollWheel:(NSEvent *)event
+- (void)scrollWheel:(ICMouseEvent *)event
 {
     [self setContentOffset:kmVec3Make(_contentOffset.x + [event deltaX],
                                       _contentOffset.y + [event deltaY],

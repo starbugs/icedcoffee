@@ -264,6 +264,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (NSArray *)hitTest:(CGPoint)point
 {
+    // Convert point to OpenGL coordinate system (Y axis inverted)
+    //point.y = self.view.bounds.size.height - point.y;    
+    
     NSArray *resultNodeStack;
     
 	ICGLView *openGLview = (ICGLView*)self.view;

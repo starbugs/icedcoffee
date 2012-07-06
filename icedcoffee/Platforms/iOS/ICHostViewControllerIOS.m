@@ -169,6 +169,7 @@
     }
 }
 
+// point is in UIView's coordinate system
 - (NSArray *)hitTest:(CGPoint)point
 {
     NSArray *resultNodeStack;

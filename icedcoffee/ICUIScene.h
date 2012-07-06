@@ -29,7 +29,7 @@
  @brief Defines a user interface scene
  
  The ICUIScene class adds a content view to ICScene and resizes it to the size of the
- scene automatically. This allows you to implement an view hierarchy that automatically
+ scene automatically. This allows you to implement a view hierarchy that automatically
  resizes and/or re-layoutes itself based on the scene's size.
  */
 @interface ICUIScene : ICScene {

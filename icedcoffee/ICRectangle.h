@@ -30,9 +30,17 @@
 @protected
     ICSprite* _sprite;
     float     _borderWidth;
-    
+    icColor4B _borderColor;
+    icColor4B _gradientStartColor;
+    icColor4B _gradientEndColor;
 }
 
-@property (nonatomic, assign)float borderWidth;
+@property (nonatomic, assign, getter=borderWidth, setter=setBorderWidth:) float borderWidth; // in points
+
+@property (nonatomic, assign) icColor4B borderColor;
+
+@property (nonatomic, assign) icColor4B gradientStartColor;
+
+@property (nonatomic, assign) icColor4B gradientEndColor;
 
 @end

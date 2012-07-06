@@ -1,18 +1,14 @@
 IcedCoffee Todos
 ================
 
+* Implement touch control events
 * Fix setAliasTexParameters (produces side effects)
 * Implement high resolution textures
 * Texture loading convenience (+ @2x retina display support)
 * Image and shader default bundles for framework resources
-* Implement layouting
-* Implement resizable views
-* GL state management
-* Implement full-blown touch event handling including control events
-* Check location space conversion for retina display cases
+* GL state management (?)
 * Full blown scheduler tests (including priorities)
 * Prepare/check for retina display support on Mac
-* Check/remove event delegates (useful or not, worth the overhead?)
 * Implement texture masking in ICSprite
 
 Known Bugs

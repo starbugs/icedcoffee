@@ -22,6 +22,7 @@
 //  
 
 #import "ICNode.h"
+#import "ICProjectionTransforms.h"
 #import "kazmath/kazmath.h"
 
 /**
@@ -31,7 +32,7 @@
  textures, etc.) Subclasses should override the ICPlanarNode::plane method to return an
  appropriate plane.
  */
-@interface ICPlanarNode : ICNode
+@interface ICPlanarNode : ICNode <ICProjectionTransforms>
 
 /**
  @brief The normal of the node's plane
@@ -54,13 +55,28 @@
 - (kmPlane)worldPlane;
 
 /**
+ @brief Converts a location in the parent scene's frame buffer coordinate space to a location in
+ the node's coordinate space
+
+ @param location A CGPoint defining the location in the parent frame buffer's coordinate space
+ in points; the Y axis points downwards.
+
+ The method uses the node's plane to transform a location in the parent scene's frame buffer
+ coordinate space to a location in the node's local coordinate space.
+ */
+- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location;
+
+/**
  @brief Converts a location in the host view's coordinate space to a location in the node's
  coordinate space
  
+ @param location A CGPoint defining the location in the host view's coordinate space
+ in points; the Y axis points downwards.
+ 
  The method uses the node's plane to transform a location on the host view to a location in
  the node's local coordinate space. You may use it to transform mouse or touch locations
- received from the OS window system to appropriate locations within a the node's space.
+ received from the OS window system to appropriate locations within the node's space.
  */
-- (CGPoint)hostViewToNodeLocation:(CGPoint)hostViewLocation;
+- (kmVec3)hostViewToNodeLocation:(CGPoint)location;
 
 @end

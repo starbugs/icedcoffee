@@ -34,6 +34,7 @@
 @synthesize text = _text;
 @synthesize fontName = _fontName;
 @synthesize fontSize = _fontSize;
+@synthesize color = _color;
 
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
@@ -44,6 +45,7 @@
 {
     if ((self = [super init])) {
         _sprite = [[ICSprite alloc] init];
+        _sprite.name = @"Label sprite";
         [_sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
         [self addChild:_sprite];
         
@@ -103,6 +105,12 @@
 - (void)setColor:(icColor4B)color
 {
     [_sprite setColor:color];
+}
+
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    [_sprite setUserInteractionEnabled:userInteractionEnabled];
 }
 
 @end

@@ -25,13 +25,75 @@
 
 @class ICLabel;
 
+/**
+ @brief Represents a button control
+
+ <h3>Overview</h3>
+ 
+ The ICButton class defines a flexible button control comprised of a background view and a title
+ label. The class allows you to define different custom backgrounds for each control state (normal,
+ pressed, disabled, highlighted, selected). By default, ICButton uses a built-in shader based
+ rounded rectangle view to draw its background.
+ 
+ <h3>Setup</h3>
+ 
+ You initialize a new button using the ICButton::initWithSize: method. Alternatevily, you may use
+ the ICButton::buttonWithSize: convenience method, which returns a new autoreleased button.
+ After initializing a button, you will most likely want to set its title. The following example
+ code illustrates how to create a button with a custom title:
+ 
+ @code
+ // Create a new autoreleased ICButtton object
+ ICButton *myButton = [ICButton buttonWithSize:CGSizeMake(160,21)];
+ // Set the title of the button to some custom string
+ myButton.label.text = @"My Button Title";
+ // Add the button to our scene (assuming that scene is a valid ICScene object)
+ [scene addChild:myButton];
+ @endcode
+  */
 @interface ICButton : ICControl {
 @protected
     ICLabel *_label;
-    ICView *_background;
+
+    NSMutableDictionary *_activeBackgrounds;
+    NSMutableDictionary *_backgroundsByControlState;
+    
+    BOOL _mixesBackgroundStates;
+    
+@private
+    BOOL _mouseButtonPressed;
 }
 
+/**
+ @brief Defines the button label
+ */
 @property (nonatomic, retain, setter=setLabel:) ICLabel *label;
-@property (nonatomic, retain, setter=setBackground:) ICView *background;
+
+/**
+ @brief A boolean flag indicating whether backgrounds for certain states should be mixed
+ 
+ If set to <code>YES</code>, ICButton will draw highlighted and selected background views on top
+ of normal, disabled or pressed backgrounds. Otherwise, background states are treated in a
+ mutually exclusive manner, meaning that only one background will be drawn at a time.
+ The default value for this property is <code>YES</code>.
+ */
+@property (nonatomic, assign) BOOL mixesBackgroundStates;
+
++ (id)buttonWithSize:(CGSize)size;
+
+/**
+ @brief Sets a background view for the given control state
+ */
+- (void)setBackground:(ICView *)background forState:(ICControlState)state;
+
+/**
+ @brief Removes the background view for the given control state
+ */
+- (void)removeBackgroundForState:(ICControlState)state;
+
+/**
+ @brief Returns the background view for the specified state
+ */
+- (ICView *)backgroundForState:(ICControlState)state;
 
 @end

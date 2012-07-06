@@ -50,9 +50,7 @@
 
 - (void)visitSingleNode:(ICNode *)node
 {
-    if ([node isVisible]) {
-        [node drawWithVisitor:self];
-    }
+    [node drawWithVisitor:self];
 }
 
 - (void)visitChildrenOfNode:(ICNode *)node

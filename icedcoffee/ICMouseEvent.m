@@ -21,19 +21,50 @@
 //  SOFTWARE.
 //  
 
-#import "ImageSprite.h"
+#import "ICMouseEvent.h"
 
-@implementation ImageSprite
+@implementation ICMouseEvent
 
-- (void)mouseEntered:(ICMouseEvent *)event
+- (NSInteger)buttonNumber
 {
-    [self setScale:(kmVec3){1.4f, 1.4f, 1.f}];
-    [self orderFront];
+    return [_nativeEvent buttonNumber];
 }
 
-- (void)mouseExited:(ICMouseEvent *)event
+- (NSInteger)clickCount
 {
-    [self setScale:(kmVec3){1.f, 1.f, 1.f}];    
+    return [_nativeEvent clickCount];
+}
+
+- (float)pressure
+{
+    return [_nativeEvent pressure];
+}
+
+- (CGFloat)deltaX
+{
+    return [_nativeEvent deltaX];
+}
+
+- (CGFloat)deltaY
+{
+    return [_nativeEvent deltaY];
+}
+
+- (CGFloat)deltaZ
+{
+    return [_nativeEvent deltaZ];
+}
+
+- (CGPoint)locationInHostView
+{
+    CGPoint location = [self.hostView convertPoint:[self locationInWindow] fromView:nil];
+    location.y = self.hostView.bounds.size.height - location.y;
+    return location;
+}
+
+- (kmVec3)locationInNode:(ICNode<ICProjectionTransforms> *)node
+{
+    return [node hostViewToNodeLocation:[self locationInHostView]];
 }
 
 @end

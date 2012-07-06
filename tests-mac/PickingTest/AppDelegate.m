@@ -99,8 +99,15 @@
 
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
     ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
+    
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [self.testScene.contentView addChild:rs];
+    
+    ResponsiveSprite *overlapRS = [ResponsiveSprite spriteWithTexture:texture];
+    [overlapRS setName:@"Overlapping Sprite"];
+    [overlapRS setPositionX:10.0f];
+    [overlapRS setPositionY:10.0f];
+    [self.testScene.contentView addChild:overlapRS];
     
     ResponsiveView *rv = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
     [rv setPositionX:150];
@@ -185,14 +192,14 @@
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
     self.hostViewController.frameUpdateMode = kICFrameUpdateMode_Synchronized;
-    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
+    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
                                           shareContext:nil
                                     hostViewController:self.hostViewController];
     
     self.window.contentView = glView;
-    [self.window setAcceptsMouseMovedEvents:NO];
+    [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     [self.window makeKeyAndOrderFront:self];
 

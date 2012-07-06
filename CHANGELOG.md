@@ -1,6 +1,80 @@
 Changelog
 =========
 
+*v0.6.3*
+
+* ICView does now draw its clipping mask shape when visited by the picking visitor.
+  Thus, ICView objects from now on receive mouseEntered and mouseExited events.
+* Made ICButton customizable by adding the ability to set custom backgrounds per state.
+* Fully implemented ICTouchEventDispatcher for the IcedCoffee iOS version. The new
+  touch dispatcher now processes individual touches, repackages them and then dispatches
+  touchesBegan:withTouchEvent:, touchesMoved:withTouchEvent:,
+  touchesCancelled:withTouchEvent: and touchesEnded:withTouchEvent: to the objects in
+  the scene.
+* Touch events are represented by a new class, ICTouchEvent, which allows to
+  access all touches (ICTouchEvent::allTouches) and touches for individual nodes
+  (ICTouchEvent::touchesForNode:). ICResponder and ICTouchResponder have been changed
+  to support the new touch event class. Nodes must now override
+  touchesBegan:withTouchEvent:, touchesMoved:withTouchEvent:, and so on in order to
+  handle touch events properly.
+* Within IcedCoffee, touches are now represented by ICTouch objects instead of UITouch
+  objects. The ICTouch class aggregates an UITouch object and provides convenience
+  methods for getting the location of a touch in a given node. Consequently, the
+  previously discussed touchesBegan:withTouchEvent: etc. methods now receive a set
+  of ICTouch objects instead of a set with UITouch objects.
+* Changed ICMouseEventDispatcher to dispatch mouse up events to the node that received
+  the corresponding mouse down event. The dispatcher previously sent mouse up events
+  to the node over the mouse cursor.
+* Added the ICOSXEvent class which aggregates an NSEvent object and binds it to
+  a host view (NSView).
+* Added the ICMouseEvent class (subclass of ICOSXEvent) which from now on represents
+  mouse events in the IcedCoffee framework. ICMouseEvent aggregates NSEvent via
+  ICOSXEvent and adds convenience methods for retrieving locations in a given
+  node's local coordinate space (see ICMouseEvent::locationInNode:).
+* Refactored ICMouseEventDispatcher to dispatch ICMouseEvent objects instead of
+  NSEvent objects.
+* Refactored ICMouseEventDispatcher to dispatch ICMouseEvent during control event
+  dispatch.
+* Refactored ICControl and ICTargetActionDispatcher to work with ICOSXEvent objects
+  instead of NSEvent objects.
+* Refactored all event handlers to accept ICMouseEvent instead of NSEvent objects.
+* Removed the ICEventDelegate class and also removed event delegates from
+  ICHostViewController and ICMouseEventDispatcher. Event delegate concept was unclear
+  and deprecated since v0.6.
+* Added the ICFrameBufferProvider protocol. All classes conforming to the this protocol
+  must provide a frame buffer. Currently, ICRenderTexture is the only class that conforms
+  to this protocol.
+* Added the ICProjectionTransforms protocol. All classes conforming to this protocol
+  must be capable of transforming between frame buffer coordinates and local node
+  coordinates using camera-based (un)projection or similar mechanisms.
+* Fixed a bug in ICPlanarNode::hostViewToNodeLocation:. The method was implemented
+  incorrectly before. It has been renamed to ICPlanarNode::parentFrameBufferToNodeLocation:
+  as it is only capable of converting between a parent frame buffer space to a node's
+  local space when there are no other frame buffers (and scenes) in between.
+  ICPlanarNode::hostViewToNodeLocation: does now what it is supposed to do: convert
+  from the host view's coordinate system to a given node's coordinate system by reverse
+  traversing all ancestor frame buffer providers that conform to the ICProjectionTransforms
+  protocol of that node and calling
+  ICNode<ICProjectionTransforms>::parentFrameBufferToNodeLocation: on each of them
+  subsequently, providing the location from the corresponding previous transform.
+* Changed the method signature of ICPlanarNode::hostViewToNodeLocation: conforming to the
+  new method signature defined in ICProjectionTransforms. The method does now return a
+  kmVec3 instead of a CGPoint to generalize for future 2D to 3D transforms.
+* ICPlanarNode::hostViewToNodeLocation: now expects a host view location whose coordinate
+  space has a Y axis pointing downwards. The same applies to ICHostViewController:hitTest:.
+* Added switchable debug logging to ICNodeVisitorPicking, ICScene::hitTest:, and
+  ICTouchEventDispatcher. Switching debug logging on and off can be done in icConfig.h.
+* Fixed a bug in ICNodeVisitor which caused the framework to draw visible children of
+  invisible nodes. Setting a node's isVisible flag to NO now means that the node is not
+  processed by (built-in) visitors, so the entire descendant branch whose ancestor is
+  set to invisible will not be drawn. As a side effect, it is no longer necessary to
+  check for visibility in ICNode::drawWithVisitor: overrides.
+* Fixed a bug in ICNodeVisitorPicking which yielded incorrect picking results when
+  having invisible nodes in a scene.
+* Fixed a bug with control events dispatch that could lead to wrong mouseUpInside/
+  mouseUpOutside control events under certain circumstances.
+* Extended and reworked parts of the header documentation.
+
 *v0.6.2*
 
 *New core contributor*: Marcus Tillmanns has joined the IcedCoffe project. Marcus works

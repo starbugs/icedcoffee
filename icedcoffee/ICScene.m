@@ -29,6 +29,7 @@
 #import "icUtils.h"
 #import "icGL.h"
 #import "icMacros.h"
+#import "icConfig.h"
 
 #ifdef __IC_PLATFORM_IOS
 #import "Platforms/iOS/ICGLView.h"
@@ -166,6 +167,8 @@
 
 - (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 {
+    point.y = [self frameBufferSize].height - point.y;
+    
     // Clear color and (optionally) depth buffers
     glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     glClearDepth(1.0f);
@@ -228,9 +231,13 @@
     }
 }
 
-// Must be in valid GL context
+// Must be in valid GL context, point must conform to IcedCoffee view axes (Y points downwards)
 - (NSArray *)hitTest:(CGPoint)point
 {
+#if IC_ENABLE_DEBUG_HITTEST
+    ICLOG(@"Beginning hit test with point (%f,%f)", point.x, point.y);
+#endif
+    
     // Hit test must be called from the FBO context the scene is part of,
     // so we may retrieve the corresponding viewport from the GL state
     GLint viewport[4];
@@ -248,7 +255,18 @@
     [self.pickingVisitor visit:self];
     [(ICNodeVisitorPicking *)self.pickingVisitor end];
     
-    return ((ICNodeVisitorPicking *)self.pickingVisitor).resultNodeStack;
+    NSArray *hitNodes = ((ICNodeVisitorPicking *)self.pickingVisitor).resultNodeStack;
+#if IC_ENABLE_DEBUG_HITTEST && defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
+    if ([hitNodes count] > 0) {
+        ICLOG(@"Hit test returned the following nodes:");
+        for (ICNode *node in hitNodes) {
+            ICLOG(@" - %@", [node description]);
+        }
+    } else {
+        ICLOG(@"Hit test returned an empty result");
+    }
+#endif
+    return hitNodes;
 }
 
 - (ICHostViewController *)hostViewController

@@ -21,37 +21,77 @@
 //  SOFTWARE.
 //  
 
-#import "ResponsiveSprite.h"
+#import "ICOSXEvent.h"
 
-@implementation ResponsiveSprite
+@implementation ICOSXEvent
 
-#ifdef __IC_PLATFORM_IOS
+@synthesize nativeEvent = _nativeEvent;
+@synthesize hostView = _hostView;
 
-- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
++ (id)eventWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView
 {
-    [self flipTextureVertically];
-    [self setNeedsDisplay];
-    
-    ICTouch *touch = [touches anyObject];
-    CGPoint hostViewPoint = [touch locationInHostView];
-    kmVec3 nodePoint = [touch locationInNode:self];
-    NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    return [[[[self class] alloc] initWithNativeEvent:event hostView:hostView] autorelease];
 }
 
-#elif defined(__IC_PLATFORM_MAC)
-
-- (void)mouseUp:(ICMouseEvent *)event
+- (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView
 {
-    [self flipTextureVertically];
-    [self setNeedsDisplay];
-
-    CGPoint hostViewPoint = [event locationInHostView];
-    kmVec3 nodePoint = [event locationInNode:self];
-    NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    if ((self = [super init])) {
+        _nativeEvent = [event retain];
+        _hostView = [hostView retain];
+    }
+    return self;
 }
 
-#endif // __IC_PLATFORM_*
+- (void)dealloc
+{
+    [_nativeEvent release];
+    [_hostView release];
+    [super dealloc];
+}
+
+- (NSGraphicsContext *)context
+{
+    return [_nativeEvent context];
+}
+
+- (CGPoint)locationInWindow
+{
+    return [_nativeEvent locationInWindow];
+}
+
+- (NSUInteger)modifierFlags
+{
+    return [_nativeEvent modifierFlags];
+}
+
+- (NSTimeInterval)timestamp
+{
+    return [_nativeEvent timestamp];
+}
+
+- (ICOSXEventType)type
+{
+    return (ICOSXEventType)[_nativeEvent type];
+}
+
+- (NSWindow *)window
+{
+    return [_nativeEvent window];
+}
+
+- (NSInteger)windowNumber
+{
+    return [_nativeEvent windowNumber];
+}
+
+- (const void *)eventRef
+{
+    return [_nativeEvent eventRef];
+}
+
+- (CGEventRef)CGEvent
+{
+    return [_nativeEvent CGEvent];
+}
 
 @end

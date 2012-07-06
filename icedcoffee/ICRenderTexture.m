@@ -35,6 +35,7 @@
 #import "ICHostViewController.h"
 #import "ICNodeVisitorPicking.h"
 #import "icGL.h"
+#import "icConfig.h"
 
 @interface ICNode (Private)
 - (void)setNeedsDisplayForNode:(ICNode *)node;
@@ -368,7 +369,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         
         // Get and transform pick point (frame buffer space)
         CGPoint pickPoint = ((ICNodeVisitorPicking *)visitor).pickPoint;
-        CGPoint localPoint = [self hostViewToNodeLocation:pickPoint];
+        CGPoint localPoint = kmVec3ToCGPoint([self parentFrameBufferToNodeLocation:pickPoint]);
+        
+#if IC_ENABLE_DEBUG_HITTEST
+        ICLOG(@"Hit test within ICRenderTexture: pickPoint=(%f,%f) localPoint=(%f,%f)",
+              pickPoint.x, pickPoint.y, localPoint.x, localPoint.y);
+#endif
                 
         // Perform the inner hit test
         NSArray *innerHitTestNodes = [self.subScene hitTest:localPoint];

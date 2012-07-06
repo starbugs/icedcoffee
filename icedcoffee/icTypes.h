@@ -40,6 +40,7 @@
 #define kmNullVec3 (kmVec3){0,0,0}
 #define kmVec2Make(x,y) (kmVec2){x,y}
 #define kmVec3Make(x,y,z) (kmVec3){x,y,z}
+#define kmVec3ToCGPoint(v) (CGPointMake(v.x,v.y))
 #define kmVec4Make(x,y,z,w) (kmVec4){x,y,z,w}
 #define kmVec3Description(v) \
     ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
@@ -50,6 +51,7 @@
      (m).mat[2], (m).mat[6], (m).mat[10], (m).mat[14], \
      (m).mat[3], (m).mat[7], (m).mat[11], (m).mat[15]])
 #define kmVec4FromColor(c) ((kmVec4){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
+#define colorFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
 
 /** @name Frame Updates */
 

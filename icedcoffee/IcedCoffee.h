@@ -59,9 +59,12 @@
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"
+#import "ICMouseEvent.h"
 #elif defined(__IC_PLATFORM_IOS)
 #import "Platforms/iOS/ICHostViewControllerIOS.h"
 #import "Platforms/iOS/ICGLView.h"
+#import "ICTouchEvent.h"
+#import "ICTouch.h"
 #endif
 
 
@@ -70,14 +73,14 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.6.2)
+ @mainpage IcedCoffee Framework Documentation (v0.6.3)
 
  <h2>Abstract</h2>
  
- IcedCoffee is a lightweight framework for building stunning user interfaces based on OpenGL ES 2.
- It is written in Objective-C and runs on iOS and Mac OS X. IcedCoffee is designed to be clean,
- minimalistic, consistent and reusable for different purposes. Its main focus is on user interfaces
- in the context of games, but of course you may use it for all kinds of rich and dynamic
+ IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based on
+ OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X. IcedCoffee is designed to
+ be clean, minimalistic, consistent and reusable for different purposes. Its main focus is on user
+ interfaces in the context of games, but of course you may use it for all kinds of rich and dynamic
  application frontends. IcedCoffee is open source and free for both non-commercial and
  commercial use (MIT license.)
 

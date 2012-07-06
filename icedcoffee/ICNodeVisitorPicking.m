@@ -24,6 +24,8 @@
 #import "ICNodeVisitorPicking.h"
 #import "ICNode.h"
 #import "ICRenderTexture.h"
+#import "icMacros.h"
+#import "icConfig.h"
 
 @interface ICNodeVisitorPicking (Private)
 - (ICNode *)findNodeForPickColor:(icColor4B)color withNode:(ICNode *)node index:(uint32_t *)index;
@@ -91,17 +93,22 @@
 
 - (void)visit:(ICNode *)node
 {
-    //NSLog(@"Picking visitor visit: %@", [node description]);
+#if IC_ENABLE_DEBUG_PICKING
+    ICLOG(@"Picking visitor visit: %@", [node description]);
+#endif
     
     [_resultNodeStack removeAllObjects];
     [super visit:node];
     _nodeIndex = 1;
 }
 
+// Note: called by ICNodeVisitor super class only if node is visible
 - (void)visitSingleNode:(ICNode *)node
 {
-    if ([node isVisible] && [node userInteractionEnabled]) {
-        //NSLog(@"Picking visitor visitSingleNode: %@", [node description]);
+    if ([node userInteractionEnabled]) {
+#if IC_ENABLE_DEBUG_PICKING
+        ICLOG(@"Picking visitor visitSingleNode: %@", [node description]);
+#endif
         
         [node drawWithVisitor:self];
         glFlush();
@@ -109,7 +116,9 @@
         icColor4B color = [_renderTexture colorOfPixelAtLocation:CGPointMake(0, 0)];
         ICNode *resultNode = [self nodeForPickColor:color];
         if (resultNode && ![_resultNodeStack containsObject:resultNode]) {
-            //NSLog(@"Picking visitor: hit node %@", [resultNode description]);
+#if IC_ENABLE_DEBUG_PICKING
+            ICLOG(@"Picking visitor: hit node %@", [resultNode description]);
+#endif
             // Push result node on stack
             [_resultNodeStack addObject:resultNode];
             // Append nodes picked from a render texture FBO after adding the result node
@@ -118,10 +127,15 @@
                 [_resultNodeStack addObject:appendNode];
             }
             [_appendNodesToStack removeAllObjects];
-        }
-                
-        _nodeIndex++;
+        }                
+    } else {
+#if IC_ENABLE_DEBUG_PICKING
+        ICLOG(@"Picking visitor: user interaction disabled for node: %@", [node description]);
+#endif        
     }
+    
+    // Increment node index to get a different pick color for each node
+    _nodeIndex++;
 }
 
 - (icColor4B)pickColor
@@ -141,10 +155,14 @@
     // ICNode::children (and other composition related methods) to its render texture
     // backing scene's children.
     for (ICNode *child in node->_children) {
-        (*index)++;
-        ICNode *resultNode = [self findNodeForPickColor:color withNode:child index:index];
-        if (resultNode) {
-            return resultNode;
+        // ICNodeVisitor super class calls visitSingleNode: only if node is visible -- we need
+        // to resemble this here in order to yield correct node indices
+        if (child.isVisible) {
+            (*index)++; // index begins with 1
+            ICNode *resultNode = [self findNodeForPickColor:color withNode:child index:index];
+            if (resultNode) {
+                return resultNode;
+            }
         }
     }
     
