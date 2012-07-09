@@ -25,14 +25,15 @@
 #import "icTypes.h"
 
 /**
- @brief All objects conforming to this protocol define transforms between host views and nodes
+ @brief Classes conforming to this protocol define projection transforms between frame
+ buffers and nodes
  */
 @protocol ICProjectionTransforms <NSObject>
 
 @required
 
 /**
- @brief Implementations must transform a given frame buffer location to a local node location
+ @brief Implementations must transform a given parent frame buffer location to a local node location
  */
 - (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location;
 

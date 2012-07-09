@@ -27,6 +27,9 @@
 
 @class ICNode;
 
+/**
+ @brief Represents a mouse event (Mac OS X only)
+ */
 @interface ICMouseEvent : ICOSXEvent
 
 /**

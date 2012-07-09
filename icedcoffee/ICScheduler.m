@@ -22,16 +22,13 @@
 //  
 
 #import "ICScheduler.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
+#import "ICHostViewController.h"
 
 @implementation ICScheduler
 
 + (id)currentScheduler
 {
-    return [[[ICContextManager defaultContextManager]
-             renderContextForCurrentOpenGLContext]
-            scheduler];
+    return [[ICHostViewController currentHostViewController] scheduler];
 }
 
 - (id)init

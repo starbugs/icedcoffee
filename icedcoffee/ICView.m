@@ -25,6 +25,7 @@
 #import "ICScene.h"
 #import "ICUIScene.h"
 #import "ICSprite.h"
+#import "ICNodeVisitorPicking.h"
 
 @implementation ICView
 
@@ -165,10 +166,10 @@
     if (wantsRenderTextureBacking) {
         [self setBacking:[ICRenderTexture renderTextureWithWidth:self.size.x
                                                           height:self.size.y
-                                                     pixelFormat:kICPixelFormat_Default
-                                               depthBufferFormat:kICDepthBufferFormat_Default
-                                             stencilBufferFormat:kICStencilBufferFormat_Default]];
-        _backing.frameUpdateMode = kICFrameUpdateMode_OnDemand;
+                                                     pixelFormat:ICPixelFormatDefault
+                                               depthBufferFormat:ICDepthBufferFormatDefault
+                                             stencilBufferFormat:ICStencilBufferFormatDefault]];
+        _backing.frameUpdateMode = ICFrameUpdateModeOnDemand;
     } else {
         [self setBacking:nil];
     }
@@ -263,7 +264,7 @@
             glStencilFunc(GL_EQUAL, 1, 1);
         }
         
-        if (visitor.visitorType == kICPickingNodeVisitor) {
+        if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             // Draw view as solid sprite for picking, so the view reacts to
             // mouseEntered/mouseExited events
             [_clippingMask drawWithVisitor:visitor];

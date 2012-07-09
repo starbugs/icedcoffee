@@ -31,7 +31,6 @@
 - (id)init
 {
     if ((self = [super init])) {
-        _visitorType = kICDrawingNodeVisitor;
     }
     return self;
 }

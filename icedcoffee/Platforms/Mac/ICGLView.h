@@ -42,7 +42,7 @@
 @property (nonatomic, readonly) ICHostViewController *hostViewController;
 
 - (id)initWithFrame:(NSRect)frameRect
-       shareContext:(NSOpenGLContext*)context
+       shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController;
 
 - (void)setCursor:(NSCursor *)cursor;

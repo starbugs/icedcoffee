@@ -44,7 +44,7 @@
     
     // FIXME: need to determine resolution type
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:filename];
-    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:kICResolutionUnknown] autorelease];
+    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:ICResolutionTypeUnknown] autorelease];
     [image release];
     
 #endif

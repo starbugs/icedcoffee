@@ -25,6 +25,7 @@
 #import <Foundation/Foundation.h>
 
 #import "ICResponder.h"
+#import "ICFrameBufferProvider.h"
 #import "icMacros.h"
 #import "icTypes.h"
 
@@ -83,12 +84,13 @@
  application's native OS view(s). Note, however, that in a standard application there
  usually is no need to subclass the host view controller class.
  */
-@interface ICHostViewController : IC_VIEWCONTROLLER <EVENT_PROTOCOLS>
+@interface ICHostViewController : IC_VIEWCONTROLLER <ICFrameBufferProvider, EVENT_PROTOCOLS>
 {
 @protected
     ICScene *_scene;
 
     ICRenderContext *_renderContext;
+    ICScheduler *_scheduler;
     ICTargetActionDispatcher *_targetActionDispatcher;
     
     ICResponder *_currentFirstResponder;
@@ -106,13 +108,32 @@
 }
 
 
-#pragma mark - Retina Display Support
+#pragma mark - Initialization
 /** @name Initialization */
 
 /**
- @brief Instanciates an ICHostViewController subclass suitable for the target platform
+ @brief Instanciates an autoreleased ICHostViewController subclass suitable for the target platform
  */
 + (ICHostViewController *)platformSpecificHostViewController;
+
+/**
+ @brief Initializes the receiver and makes it the current host view controller
+ */
+- (id)init;
+
+
+#pragma mark - Current Host View Controller
+/** @name Current Host View Controller */
+
+/**
+ @brief Returns the current host view controller
+ */
++ (ICHostViewController *)currentHostViewController;
+
+/**
+ @brief Makes the receiver the current host view controller
+ */
+- (id)makeCurrentHostViewController;
 
 
 #pragma mark - Event Handling
@@ -145,13 +166,13 @@
  @brief The frame update mode used to present the host view controller's scene
  
  An ICFrameUpdateMode enumerated value defining when the host view controller should draw
- the scene's contents. Setting this property to kICFrameUpdateMode_Synchronized lets the
+ the scene's contents. Setting this property to ICFrameUpdateModeSynchronized lets the
  host view controller draw the scene's contents continuously, synchronized with the display
- refresh rate. Setting it to kICFrameUpdateMode_OnDemand lets the host view controller draw
+ refresh rate. Setting it to ICFrameUpdateModeOnDemand lets the host view controller draw
  the scene's contents on demand only, when one or multiple nodes' ICNode::setNeedsDisplay
  method has been called.
  
- The default value for this property is kICFrameUpdateMode_Synchronized.
+ The default value for this property is ICFrameUpdateModeSynchronized.
  
  @remarks You should use synchronized updates for scenes that change frequently and on demand
  updates for those that change rarely. Setting the frame update mode to on demand drawing
@@ -212,7 +233,7 @@
 #pragma mark - Update Scheduling and Target-Action Dispatch
 /** @name Update Scheduling and Target-Action Dispatch */
 
-@property (nonatomic, readonly, getter=scheduler) ICScheduler *scheduler;
+@property (nonatomic, readonly) ICScheduler *scheduler;
 
 @property (nonatomic, readonly) ICTargetActionDispatcher *targetActionDispatcher;
 
@@ -227,6 +248,12 @@
 
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 - (ICGLView *)view;
+#endif
+
+#ifdef __IC_PLATFORM_IOS
+- (EAGLContext *)openGLContext;
+#elif defined(__IC_PLATFORM_MAC)
+- (NSOpenGLContext *)openGLContext;
 #endif
 
 
@@ -293,6 +320,15 @@
 - (void)setCursor:(NSCursor *)cursor;
 
 #endif // __IC_PLATFORM_MAC
+
+
+#pragma mark - Frame Buffer
+/** @name Frame Buffer */
+
+/**
+ @brief The size of the receiver's frame buffer, in points
+ */
+- (CGSize)frameBufferSize;
 
 @end
 

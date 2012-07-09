@@ -61,7 +61,7 @@
 }
 
 - (id)initWithFrame:(NSRect)frameRect
-       shareContext:(NSOpenGLContext*)context
+       shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController
 {
     _hostViewController = hostViewController; // assign
@@ -86,8 +86,13 @@
         [self.hostViewController setView:self];
 //        [self.hostViewController reshape:self.bounds.size];
         
-		if (context)
+		if (shareContext) {
+            NSOpenGLContext *context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat
+                                                                  shareContext:shareContext];
 			[self setOpenGLContext:context];
+            [context setView:self];
+            [context release];
+        }
         
 		// Synchronize buffer swaps with vertical refresh rate (vsync)
 		GLint swapInt = 1;

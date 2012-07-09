@@ -25,6 +25,9 @@
 #import "kazmath/vec4.h"
 #import "icTypes.h"
 
+@class ICNode;
+@class ICControl;
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -64,6 +67,8 @@ extern "C" {
                    kmMat4 *matModelView);
     
     kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count);
+    
+    ICControl *ICControlForNode(ICNode *node);
     
 #ifdef __cplusplus
 }

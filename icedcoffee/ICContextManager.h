@@ -25,20 +25,41 @@
 
 @class ICRenderContext;
 
+/**
+ @brief Render context management
+ 
+ The ICContextManager class is used to register ICRenderContext objects for OpenGL contexts.
+ It enables the framework to bind arbitrary objects to given OpenGL contexts.
+ */
 @interface ICContextManager : NSObject {
 @protected
     NSMutableDictionary *_contexts;
 }
 
+/**
+ @brief Returns the default context manager
+ */
 + (id)defaultContextManager;
 
+/**
+ @brief Registers the given render context for the specified OpenGL context
+ */
 - (void)registerRenderContext:(ICRenderContext *)renderContext
              forOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext;
 
+/**
+ @brief Unregisters the render context for the given OpenGL context
+ */
 - (void)unregisterRenderContextForOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext;
 
+/**
+ @brief Returns the render context for the given OpenGL context
+ */
 - (ICRenderContext *)renderContextForOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext;
 
+/**
+ @brief Returns the render context for the current OpenGL context
+ */
 - (ICRenderContext *)renderContextForCurrentOpenGLContext;
 
 @end

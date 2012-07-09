@@ -25,19 +25,55 @@
 
 @class ICTextureCache;
 @class ICShaderCache;
-@class ICScheduler;
 
+/**
+ @brief Represents a render context for binding arbitrary objects to an OpenGL context
+ 
+ The ICRenderContext class provides strong references to objects that should be bound
+ to an OpenGL context in order to make them globally retrievable based on the current
+ OpenGL context. Render contexts are registered and retrieved using the ICContextManager
+ class.
+ */
 @interface ICRenderContext : NSObject {
 @protected
     ICTextureCache *_textureCache;
     ICShaderCache *_shaderCache;
-    ICScheduler *_scheduler;
+    NSMutableDictionary *_customObjects;
 }
 
+/**
+ @brief Returns the render context for the current OpenGL context
+ */
++ (id)currentRenderContext;
+
+/**
+ @brief The receiver's texture cache
+ */
 @property (nonatomic, retain) ICTextureCache *textureCache;
 
+/**
+ @brief The receiver's shader cache
+ */
 @property (nonatomic, retain) ICShaderCache *shaderCache;
 
-@property (nonatomic, retain) ICScheduler *scheduler;
+/**
+ @brief Sets a custom object for the given key
+ */
+- (void)setCustomObject:(id)object forKey:(id)key;
+
+/**
+ @brief Returns the custom object set for the given key
+ */
+- (id)customObjectForKey:(id)key;
+
+/**
+ @brief Removes the custom object set for the given key
+ */
+- (void)removeCustomObjectForKey:(id)key;
+
+/**
+ @brief Removes all custom objects from the receiver
+ */
+- (void)removeAllCustomObjects;
 
 @end

@@ -40,9 +40,11 @@
  
  <h3>Overview</h3>
  
- The ICNode class represents a drawable object on a scene graph. A scene graph is usually rooted
- in an ICScene object. Each node has an array of children nodes and a weak reference to its
- parent node.
+ The ICNode class represents a low-level drawable object which is capable of receiving user
+ interaction events from the framework. Each node provides an array of strong references to its
+ children nodes and a weak reference to its parent node. A collection of linked nodes forms a
+ tree-like structure, called a scene graph. A scene graph must be rooted in an ICScene object
+ in order to exploit all capabilities of the framework.
  
  A node has a transform matrix used to transform coordinates from parent space to its own
  local space. Nodes provide convenience methods for manipulating their transform matrix based
@@ -114,19 +116,6 @@
     pass the event to the next responder by calling the respective event method on
     <code>self.nextResponder</code> at the end of your method implementation.</li>
  </ul>
- 
- <h3>Popular Subclasses</h3>
- 
- IcedCoffee provides a number of 'popular' subclasses of ICNode that are equipped with special
- capabilities which you may find useful.
- 
- <ul>
-    <li>ICSprite renders a textured 2D quad.</li>
-    <li>ICRenderTexture serves as a low-level FBO. It renders a sub scene into a texture and
-    displays that texture on screen utilizing ICSprite.</li>
-    <li>ICView provides a view hierarchy based on render textures (using ICRenderTexture.)</li>
-    <li>ICControl provides user interface control capabilities on top of ICView.</li>
- </ul>
  */
 @interface ICNode : ICResponder
 {
@@ -161,7 +150,8 @@
 /** @name Lifecycle */
 
 /**
-@brief Initializes a node
+@brief Initializes the receiver
+ 
 @note This is the designated initializer of the ICNode class.
 */
 - (id)init;
@@ -171,12 +161,12 @@
 /** @name Composition */
 
 /**
- @brief An NSArray containing the node's children
+ @brief An NSArray containing strong references to the receiver's children nodes
  */
 @property (nonatomic, readonly, getter=children) NSArray *children;
 
 /**
- @brief The node's parent
+ @brief The receiver's parent node
  
  The parent property is nil for root nodes. Usually, there is no need to set this
  property manually, it is set automatically by ICNode::addChild.
@@ -189,14 +179,14 @@
 @property (nonatomic, assign, setter=setParent:) ICNode *parent;
 
 /**
- @brief Adds a child node to the node's children array
+ @brief Adds a child node to the receiver's children array
  
  @param child A reference to a valid ICNode object. When added, the object is retained.
  */
 - (void)addChild:(ICNode *)child;
 
 /**
- @brief Inserts a child node at a specific index in the node's children array
+ @brief Inserts a child node at a specific index in the receiver's children array
  
  @param child A reference to a valid ICNode object. When inserted, the object is retained.
  @param index An int specifying an index position into the node's children array.
@@ -204,14 +194,14 @@
 - (void)insertChild:(ICNode *)child atIndex:(uint)index;
 
 /**
- @brief Removes a child node from the node's children array
+ @brief Removes a child node from the receiver's children array
  
  @param child A reference to a valid ICNode object. When removed, the object is released.
  */
 - (void)removeChild:(ICNode *)child;
 
 /**
- @brief Removes a child node specified by an index into the node's children array
+ @brief Removes a child node specified by an index into the receiver's children array
  
  @param index An int specifying the index of the child node to be removed. When removed,
  the object will be released.
@@ -219,90 +209,146 @@
 - (void)removeChildAtIndex:(uint)index;
 
 /**
- @brief Removes all children
+ @brief Removes all children from the receiver
  */
 - (void)removeAllChildren;
 
 /**
- @brief A boolean value indicating whether the node has children
+ @brief A boolean value indicating whether the receiver has children
  
- @return Returns YES when the node has children or NO if it does not have any children.
+ @return Returns YES when the receiver has children or NO if it does not have any children.
  */
 - (BOOL)hasChildren;
 
 /**
- @brief Returns all children that are kind of the specified class
+ @brief Returns all children of the receiver that are kind of the specified class
  */
 - (NSArray *)childrenOfType:(Class)classType;
 
 /**
- @brief Returns all children that are not kind of the specified class
+ @brief Returns all children of the receiver that are not kind of the specified class
  */
 - (NSArray *)childrenNotOfType:(Class)classType;
 
 /**
- @brief An array containing all ancestor nodes, ordered ascending beginning with the parent node
+ @brief Returns an array containing all ancestor nodes
  
- @return Returns an NSArray of ICNode objects
+ @return Returns an NSArray of ICNode objects, ordered ascending beginning with the first
+ ancestor node.
  */
 - (NSArray *)ancestors;
 
 /**
- @brief An array containing ancestor nodes of a specific class type, ordered ascending
- beginning with the parent node or the first matching node which is found starting from the
- parent node
+ @brief Returns an array of ancestor nodes filtered by the given filter block
  
- @return Returns an NSArray of ICNode objects
+ @param filterBlock A block that accepts an ICNode object and a pointer to a BOOL value.
+ The block must return a BOOL value indicating whether the given node passes the filter or not.
+ Additionally, if the block sets the stop flag to YES, the method stops collecting ancestors
+ immediately after adding the last ancestor that passed the filter test.
+ 
+ @return Returns an NSArray containg zero or more ICNode objects, ordered ascending
+ beginning with the first ancestor node of the receiver that matches the filter rules.
+ */
+- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+
+/**
+ @brief Returns an array containing ancestor nodes which are kind of the given class type
+ 
+ @return Returns an NSArray of ICNode objects, ordered ascending beginning with the first
+ ancestor node of the receiver that matches the given class type.
  */
 - (NSArray *)ancestorsOfType:(Class)classType;
 
 /**
- @brief Returns the firt ancestor which is kind of the given class type
+ @brief Returns an array containing ancestor nodes which are not kind of the given class type
+ 
+ @return Returns an NSArray of ICNode objects, ordered ascending beginning with the first
+ ancestor node of the receiver that matches the given class type.
+ */
+- (NSArray *)ancestorsNotOfType:(Class)classType;
+
+/**
+ @brief Returns an array containing ancestor nodes which conform to the given protocol
+ 
+ @return Returns an NSArray of ICNode objects, ordered ascending beginning with the first
+ ancestor node of the receiver that conforms to the given protocol.
+ */
+- (NSArray *)ancestorsConformingToProtocol:(Protocol *)protocol;
+
+/**
+ @brief Returns the first ancestor which is kind of the given class type
  */
 - (ICNode *)firstAncestorOfType:(Class)classType;
 
-- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *))filterBlock;
-
 /**
- @brief An array containing all descendant nodes, ordered descending beginning with the first child
+ @brief An array containing all descendant nodes
  
- @return Returns an NSArray of ICNode objects
+ @return Returns an NSArray of ICNode objects, ordered descending beginning with the
+ first child of the receiver.
  */
 - (NSArray *)descendants;
 
 /**
- @brief An array containing descendant nodes of a specific class type, ordered descending
- beginning with the first matching child
+ @brief Returns an array of descendant nodes filtered by the given filter block
 
- @return Returns an NSArray of ICNode objects
+ @param filterBlock A block that accepts an ICNode object and a pointer to a BOOL value.
+ The block must return a BOOL value indicating whether the given node passes the filter or not.
+ Additionally, if the block sets the stop flag to YES, the method stops collecting descendants
+ immediately after adding the last ancestor that passed the filter test.
+ 
+ @return Returns an NSArray containg zero or more ICNode objects, order descending
+ beginning with the first descendant of the receiver that matches the filter rules.
+ */
+- (NSArray *)descendantsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+
+/**
+ @brief Returns an array of descendant nodes which are kind of the given class type
+
+ @return Returns an NSArray of ICNode objects, ordered descending beginning with the
+ first matching descendant.
  */
 - (NSArray *)descendantsOfType:(Class)classType;
 
 /**
- @brief An array containing descendant nodes which are not of a specific class type, ordered
- descending beginning with the first matching child
+ @brief Returns an array of descendant nodes which are not kind of the given class type
  
- @return Returns an NSArray of ICNode objects
+ @return Returns an NSArray of ICNode objects, ordered descending beginning with the
+ first matching descendant.
  */
 - (NSArray *)descendantsNotOfType:(Class)classType;
 
 /**
- @brief Returns the level of the node on the scene graph
+ @brief Returns an array containing descendant nodes which conform to the given protocol
+ 
+ @return Returns an NSArray of ICNode objects, ordered descending beginning with the first
+ descendant node of the receiver that conforms to the given protocol.
+ */
+- (NSArray *)descendantsConformingToProtocol:(Protocol *)protocol;
+
+/**
+ @brief Returns the first descendant which is kind of the given class type
+ */
+- (ICNode *)firstDescendantOfType:(Class)classType;
+
+/**
+ @brief Returns the level of the receiver on the scene graph
+ 
+ The level is basically the number of ancestors of the receiver, that is, the root node's
+ level is always zero, the root scene's children's level is always one, and so on.
  */
 - (uint)level;
 
 /**
- @brief The root node terminating the node's branch
+ @brief The root node terminating the receiver's branch
  
- This method returns the root node of the node's branch. This is identical to calling
- <code>[[node ancestors] lastObject]</code>.
+ This method returns the root node of the receiver's branch.
  
  @return Returns an ICNode object representing the root node.
  */
 - (ICNode *)root;
 
 /**
- @brief The root scene of the node's branch
+ @brief The root scene of the receiver's branch
  
  This method invokes root, checks whether the resulting object is of class ICScene, and if so,
  returns the resulting ICScene object. If root is not of class ICScene, nil is returned.
@@ -315,7 +361,7 @@
 - (ICScene *)rootScene;
 
 /**
- @brief The parent scene of the node
+ @brief The parent scene of the receiver
 
  @note The parent scene is not available until the receiver has been added to a scene.
 
@@ -325,7 +371,7 @@
 - (ICScene *)parentScene;
 
 /**
- @brief The host view controller of the node's root scene
+ @brief The host view controller of the receiver's root scene
  
  This method invokes rootScene, asks it for its ICHostViewController object and returns the result.
  */
@@ -336,31 +382,41 @@
 /** @name Transforms */
 
 /**
- @brief The transform matrix of the node
+ @brief The transform matrix of the receiver
  
- The transform matrix is a 4x4 matrix which may be used for arbitrary 3D space transformations.
- The utilized matrix is of type kmMat4 and may be manipulated using functions provided by the
- kazmath library. If the computesTransform property is set to YES, the transform matrix will
- be calculated automatically when the node is being visited by an ICNodeVisitor object. This
+ The transform matrix is a 4x4 matrix which may be used for arbitrary 3D transforms.
+ The utilized matrix is of type kmMat4 and may be manipulated using the functions provided by the
+ kazmath library. If the ICNode::computesTransform property is set to YES, the transform matrix
+ will be calculated automatically when the node is being visited by an ICNodeVisitor object. This
  will also happen for some of the transform and vector conversion methods provided by ICNode.
+ 
+ @note Retrieving the transform from the receiver via this property will copy the matrix.
+ In performance criticial code you may access the transform for reading without copying it
+ using the ICNode::transformPtr method.
  */
 @property (nonatomic, assign) kmMat4 transform;
 
 /**
- @brief A const pointer to the node's transform matrix
+ @brief A const pointer to the receiver's transform matrix
+ 
+ Use this method in performance critical code to get fast read access the receiver's
+ transform matrix.
  */
 - (const kmMat4 *)transformPtr;
 
 /**
- @brief The transform matrix used to transform coordinates from node space to parent node space
+ @brief A transform matrix used to transform coordinates from the receiver's local node space
+ to the receiver's parent node space
   
- If the node's transform matrix is dirty and computesTransform is set to YES, this method
- will invoke computeTransform to update the node's transform matrix before returning the result.
+ If the receiver's transform matrix is dirty and ICNode::computesTransform is set to YES, this
+ method will invoke computeTransform to update the receiver's transform matrix before returning
+ the result.
  */
 - (kmMat4)nodeToParentTransform;
 
 /**
- @brief The transform matrix used to transform coordinates from parent node space to node space
+ @brief A transform matrix used to transform coordinates from the receiver's parent node space to
+ the receiver's local node space
 
  This method invokes nodeToParentTransform, calculates its inverse and returns the result.
  The resulting matrix may be used to transform coordinates from parent node space to local
@@ -369,7 +425,8 @@
 - (kmMat4)parentToNodeTransform;
 
 /**
- @brief The transform matrix used to transform coordinates from node space to world space
+ @brief A transform matrix used to transform coordinates from the receiver's local node space
+ to world space
  
  This method multiplies all ancestor transform matrices, starting with the receiver's direct
  parent, until an ICScene object's parent (or nil) is reached. It invokes nodeToParentTransform
@@ -382,7 +439,8 @@
 - (kmMat4)nodeToWorldTransform;
 
 /**
- @brief The transform matrix used to transform coordinates from world space to node space
+ @brief A transform matrix used to transform coordinates from world space to the receiver's
+ local node space
 
  This method invokes nodeToWorldTransform, calculates its inverse and returns the result.
  The resulting matrix may be used to transform coordinates from world space to local node space.
@@ -390,126 +448,128 @@
 - (kmMat4)worldToNodeTransform;
 
 /**
- @brief Converts a given vector from world to node space using worldToNodeTransform
+ @brief Converts a given vector from world space to the receiver's local node space
  */
 - (kmVec3)convertToNodeSpace:(kmVec3)worldVect;
 
 /**
- @brief Converts a given vector from node to world space using nodeToWorldTransform
+ @brief Converts a given vector from the receiver's local node space to world space
  */
 - (kmVec3)convertToWorldSpace:(kmVec3)nodeVect;
 
 /**
- @brief Sets the position of the node in its parent space
+ @brief Sets the position of the receiver
+ 
+ @param position A kmVec3 defining the position of the receiver relative to its parent's node space
  */
 - (void)setPosition:(kmVec3)position;
 
 /**
- @brief Sets the x coordinate of the position of the node in its parent space
+ @brief Sets the x coordinate of the position of the receiver
  */
 - (void)setPositionX:(float)positionX;
 
 /**
- @brief Sets the y coordinate of the position of the node in its parent space
+ @brief Sets the y coordinate of the position of the receiver
  */
 - (void)setPositionY:(float)positionY;
 
 /**
- @brief Sets the z coordinate of the position of the node in its parent space
+ @brief Sets the z coordinate of the position of the receiver
  */
 - (void)setPositionZ:(float)positionZ;
 
 /**
- @brief Sets the position of the node so as to center it in its parent node's space
+ @brief Sets the position of the receiver so as to center it in its parent node's space
  
- @note Both the node and its parent must have a valid ICNode::size for this method
+ @note Both the receiver and its parent must have a valid ICNode::size for this method
  to work correctly.
  */
 - (void)centerNode;
 
 /**
- @brief Sets the position of the node so as to center it vertically in its parent node's space
+ @brief Sets the position of the receiver so as to center it vertically in its parent node's space
  
- @note Both the node and its parent must have a valid ICNode::size for this method
+ @note Both the receiver and its parent must have a valid ICNode::size for this method
  to work correctly.
  */
 - (void)centerNodeVertically;
 
 /**
- @brief Sets the position of the node so as to center it horizontally in its parent node's space
+ @brief Sets the position of the receiver so as to center it horizontally in its parent node's space
  
- @note Both the node and its parent must have a valid ICNode::size for this method
+ @note Both the receiver and its parent must have a valid ICNode::size for this method
  to work correctly.
  */
 - (void)centerNodeHorizontally;
 
 /**
- @brief Returns the position of the node in the parent node space
+ @brief Returns the position of the receiver
  */
 - (kmVec3)position;
 
 /**
- @brief Sets the anchor point of the node in its own untransformed space
+ @brief Sets the anchor point of the receiver in its local node space
  */
 - (void)setAnchorPoint:(kmVec3)anchorPoint;
 
 /**
- @brief Centers the anchor point of the node based on its ICNode::size property
+ @brief Centers the anchor point of the receiver based on its ICNode::size property
  */
 - (void)centerAnchorPoint;
 
 /**
- @brief The anchor point of the node in its own untransformed space
+ @brief The anchor point of the receiver in its own local node space
  */
 - (kmVec3)anchorPoint;
 
 /**
- @brief Sets the size of the node in its own untransformed space
+ @brief Sets the size of the receiver
  */
 - (void)setSize:(kmVec3)size;
 
 /**
- @brief Sets the width of the node in its own untransformed space
+ @brief Sets the width of the receiver
  */
 - (void)setWidth:(float)width;
 
 /**
- @brief Sets the height of the node in its own untransformed space
+ @brief Sets the height of the receiver
  */
 - (void)setHeight:(float)height;
 
 /**
- @brief Sets the depth of the node in its own untransformed space
+ @brief Sets the depth of the receiver
  */
 - (void)setDepth:(float)depth;
 
 /**
- @brief Returns the content size of the node in its own untransformed space
+ @brief Returns the size of the receiver
  */
 - (kmVec3)size;
 
 /**
- @brief Sets the node's scale
+ @brief Sets the receiver's scale
  */
 - (void)setScale:(kmVec3)scale;
 
 /**
- @brief Sets the node's x scale
+ @brief Sets the receiver's x scale
  */
 - (void)setScaleX:(float)scaleX;
 
 /**
- @brief Sets the node's y scale
+ @brief Sets the receiver's y scale
  */
 - (void)setScaleY:(float)scaleY;
 
 /**
- @brief Sets the node's x and y scale
+ @brief Sets the receiver's x and y scale
  */
 - (void)setScaleXY:(float)scaleXY;
 
 /**
- @brief Sets the node's z scale
+ @brief Sets the receiver's z scale
  */
 - (void)setScaleZ:(float)scaleZ;
 
@@ -519,30 +579,30 @@
 - (kmVec3)scale;
 
 /**
- @brief Sets the rotation angle and axis of the node
+ @brief Sets the rotation angle and axis of the receiver
  */
 - (void)setRotationAngle:(float)angle axis:(kmVec3)axis;
 
 /**
- @brief Gets the rotation angle and axis of the node
+ @brief Gets the rotation angle and axis of the receiver
  */
 - (void)getRotationAngle:(float *)angle axis:(kmVec3 *)axis;
 
 /**
- @brief A BOOL property indicating whether the node should compute its transform based on
+ @brief A BOOL property indicating whether the receiver should compute its transform based on
  position, scale, rotation and anchor point as specified
  */
 @property (nonatomic, assign) BOOL computesTransform;
 
 /**
- @brief Computes the node's transform based on its position, scale, rotation and acnhor point
+ @brief Computes the receiver's transform based on its position, scale, rotation and anchor point
  properties
  */
 - (void)computeTransform;
 
 /**
  @brief A BOOL property indicating whether the anchor point should be auto-centered based on
- the node's size property
+ the receiver's size property
  */
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
@@ -551,27 +611,27 @@
 /** @name Order */
 
 /**
- @brief The index of the node in its parent's children array
+ @brief The index of the receiver in its parent's children array
  */
 - (NSUInteger)order;
 
 /**
- @brief Exchanges the node with the last node of its parent's children array
+ @brief Exchanges the receiver with the last node of its parent's children array
  */
 - (void)orderFront;
 
 /**
- @brief Exchanges the node with the next node of its parent's children array
+ @brief Exchanges the receiver with the next node of its parent's children array
  */
 - (void)orderForward;
 
 /**
- @brief Exchanges the node with the previous node of its parent's children array
+ @brief Exchanges the receiver with the previous node of its parent's children array
  */
 - (void)orderBackward;
 
 /**
- @brief Exchanges the node with the first node of its parent's children array
+ @brief Exchanges the receiver with the first node of its parent's children array
  */
 - (void)orderBack;
 
@@ -580,9 +640,10 @@
 /** @name Bounds */
 
 /**
- @brief The node's axis-aligned bounding box
+ @brief The receiver's axis-aligned bounding box
  
- This method calculates the node's axis-aligned bounding box in its parent node's coordinate space.
+ This method calculates the receiver's axis-aligned bounding box in its parent node
+ coordinate space.
  
  @remarks The calculations performed by this method are based on the ICNode::position and
  ICNode::size properties. For this method to work correctly, the following preconditions
@@ -601,7 +662,7 @@
 - (kmAABB)aabb;
 
 /**
- @brief The rectangle occupied by the node on its parent scene's frame buffer
+ @brief The rectangle occupied by the receiver on its parent scene's frame buffer
  
  This method calculates the origin and size of the rectangle occupied by the node on its parent
  scene's frame buffer. The rectangle is always aligned to the frame buffer's axes. All coordinates
@@ -629,52 +690,47 @@
 /** @name Drawing and Picking */
 
 /**
- @brief The node's shader program, including vertex and fragment shader
+ @brief The receiver's shader program, including vertex and fragment shader
  */
 @property (nonatomic, retain) ICShaderProgram *shaderProgram;
 
 /**
- @brief A BOOL property indicating whether the node is visible
+ @brief A BOOL property indicating whether the receiver is visible
  
- Invisible nodes will not be drawn. They may receive HID events, but will not be selectable
- using pointer or touch input devices as they are not drawn for picking.
+ Invisible nodes are not drawn and do not receive user interaction events by the framework.
  */
 @property (nonatomic, assign) BOOL isVisible;
 
 /**
- @brief Applies the standard draw setup with the specified visitor
+ @brief Applies a standard draw setup with the specified visitor
  
  This method should be called at the beginning of ICNode::drawWithVisitor: to ensure that an
  appropriate standard drawing setup is applied to the current OpenGL context. The default
  implementation sets up vertex and fragment shader programs pertaining to the specified
- visitor. For visitors of type kICDrawingNodeVisitor, the method applies the shader set
- in ICNode::shaderProgram, for visitors of type kICPickingNodeVisitor the method looks up
- the default picking shader (keyed kICShader_Picking) using ICShaderCache and applies it.
+ visitor. For non-picking visitors, the method applies the shader set in ICNode::shaderProgram,
+ for picking visitors the method looks up the default picking shader (keyed kICShader_Picking)
+ using ICShaderCache and applies it.
  */
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
- @brief Draws the node
+ @brief Draws the receiver
  
- This method is called by the framework to draw the node using a visitor. You should never call
- this method directly.
+ This method is called by the framework to draw the receiver using a visitor. You should
+ never call this method directly unless you know what you are doing.
  
  The default implementation does nothing.
 
  @param visitor The ICNodeVisitor instance used to visit the node
  
  You should override this method in drawable node subclasses to implement your custom drawing code.
- At the beginning of your method implementation, check whether the node is visible and cancel
- drawing if it is not. Additionally, apply a standard drawing setup using the
- ICNode::applyStandardDrawSetupWithVisitor: method.
+ You may want to pply a standard drawing setup using the ICNode::applyStandardDrawSetupWithVisitor:
+ method.
  
  Example:
  @code
  - (void)drawWithVisitor:(ICNodeVisitor *)visitor
  {
-    if (!self.visible)
-        return; // cancel drawing
-    
     [self applyStandardDrawSetupWithVisitor:visitor];
  
     // Your custom drawing code goes here
@@ -691,16 +747,16 @@
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
- @brief Called when all children of the node have been drawn
+ @brief Called when all children of the receiver have been drawn
  
  Called by the framework when all children nodes have been drawn completely. You may override
  this method to reset states that have been set in ICNode::drawWithVisitor: and were not reset
- for drawing the node's children.
+ for drawing the receiver's children.
  */
 - (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
- @brief Informs the framework that the node needs to be redrawn
+ @brief Informs the framework that the receiver needs to be redrawn
  
  This method needs to be called only if the node is part of a drawing environment that does not
  redraw all its contents continuously. The default implementation simply calls
@@ -714,7 +770,7 @@
 /** @name User Interaction Support */
 
 /**
- @brief Indicates whether the node should receive user interaction events from the event
+ @brief Indicates whether the receiver should receive user interaction events from the event
  processing system
  
  If set to YES, the node will be drawn by the picking visitor (see ICNodeVisitorPicking) and

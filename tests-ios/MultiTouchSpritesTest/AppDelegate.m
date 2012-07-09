@@ -22,13 +22,13 @@
 //  
 
 
-// STUB: THIS TEST HAS NOT BEEN IMLPEMENTED YET
-
 #import "AppDelegate.h"
+#import "DraggableSprite.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
+@synthesize hostViewController = _hostViewController;
 
 - (void)dealloc
 {
@@ -36,12 +36,44 @@
     [super dealloc];
 }
 
+- (void)setupScene
+{
+    ICScene *scene = [ICScene scene];
+    
+    NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
+    ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
+    
+    for (int i=0; i<10; i++) {
+        DraggableSprite *s = [DraggableSprite spriteWithTexture:texture];
+        [s setPosition:kmVec3Make(arc4random() % 300, arc4random() % 400, 0)];
+        [scene addChild:s];
+    }
+    
+    [self.hostViewController runWithScene:scene];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    self.hostViewController = [ICHostViewController platformSpecificHostViewController];
+    
+    ICGLView *glView = [ICGLView viewWithFrame:[self.window bounds]
+                                   pixelFormat:kEAGLColorFormatRGB565
+                                   depthFormat:0 /* GL_DEPTH_COMPONENT24_OES */
+                            preserveBackbuffer:NO
+                                    sharegroup:nil
+                                 multiSampling:NO
+                               numberOfSamples:0];
+    
+    [glView setMultipleTouchEnabled:YES];
+    [glView setHostViewController:self.hostViewController];
+    [self.hostViewController enableRetinaDisplaySupport:YES];
+    
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
+    self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
+    
+    [self setupScene];
+    
     return YES;
 }
 

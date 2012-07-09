@@ -21,57 +21,10 @@
 //  SOFTWARE.
 //  
 
-#import "ICNodeVisitor.h"
-#import "ICNode.h"
+#import "IcedCoffee.h"
 
-@implementation ICNodeVisitor
-
-- (id)init
-{
-    if ((self = [super init])) {
-    }
-    return self;
-}
-
-- (void)visit:(ICNode *)node
-{
-    _currentRoot = node;
-    [self visitNode:node];
-}
-
-- (void)visitNode:(ICNode *)node
-{
-    if (node.isVisible) {
-        [self preVisitNode:node];
-        [self visitSingleNode:node];
-        [self visitChildrenOfNode:(ICNode *)node];
-        [self postVisitNode:node];
-    }
-}
-
-- (void)preVisitNode:(ICNode *)node
-{
-    // Implement in subclass
-}
-
-- (void)postVisitNode:(ICNode *)node
-{
-    // Implement in subclass    
-}
-
-- (void)visitSingleNode:(ICNode *)node
-{
-    // Implement in subclass
-}
-
-- (void)visitChildrenOfNode:(ICNode *)node
-{
-    // Important: using ICNode's _children ivar for enumeration since ICView may re-route
-    // ICNode::children (and other composition related methods) to its render texture
-    // backing scene's children.    
-    for (ICNode *child in node->_children) {
-        [self visitNode:child];
-    }    
+@interface DraggableSprite : ICSprite {
+    kmVec3 _locationInNode;
 }
 
 @end

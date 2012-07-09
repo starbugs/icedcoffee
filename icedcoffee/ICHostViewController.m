@@ -36,7 +36,10 @@
 #import "sys/time.h"
 
 // Global content scale factor (applies to all ICHostViewController instances)
-float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
+float g_icContentScaleFactor = IC_DEFAULT_CONTENT_SCALE_FACTOR;
+
+// Globally current host view controller
+ICHostViewController *g_currentHostViewController = nil;
 
 
 @interface ICHostViewController (Private)
@@ -46,12 +49,14 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 @end
 
 
+// FIXME: render contexts must be shared if host view's OpenGL context is shared
 @implementation ICHostViewController
 
 @synthesize scene = _scene;
 @synthesize isRunning = _isRunning;
 @synthesize thread = _thread;
 @synthesize currentFirstResponder = _currentFirstResponder;
+@synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
 
@@ -63,15 +68,14 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 - (id)init
 {
     if ((self = [super init])) {
-        _renderContext = [[ICRenderContext alloc] init];
-        _renderContext.scheduler = [[[ICScheduler alloc] init] autorelease];        
+        _scheduler = [[ICScheduler alloc] init];        
         _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
         _lastUpdate.tv_sec = 0;
         _lastUpdate.tv_usec = 0;
-        _frameUpdateMode = kICFrameUpdateMode_Synchronized;
+        _frameUpdateMode = ICFrameUpdateModeSynchronized;
         _needsDisplay = YES;
     }
-    return self;
+    return [self makeCurrentHostViewController];
 }
 
 - (void)dealloc
@@ -86,10 +90,28 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     
     self.scene = nil;
     [_currentFirstResponder release];
+    [_scheduler release];
     [_renderContext release];
     [_targetActionDispatcher release];
     
     [super dealloc];
+}
+
++ (ICHostViewController *)currentHostViewController
+{
+    ICHostViewController *currentHostViewController;
+    @synchronized (self) {
+        currentHostViewController = g_currentHostViewController;
+    }
+    return currentHostViewController;
+}
+
+- (id)makeCurrentHostViewController
+{
+    @synchronized (self) {
+        g_currentHostViewController = self;
+    }
+    return self;
 }
 
 - (void)calculateDeltaTime
@@ -97,7 +119,7 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     @synchronized (self) {
         struct timeval now;
         if (gettimeofday(&now, NULL) != 0) {
-            ICLOG(@"IcedCoffee: error occurred in gettimeofday");
+            ICLog(@"IcedCoffee: error occurred in gettimeofday");
             _deltaTime = 0;
             return;
         }
@@ -120,7 +142,10 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 
 - (void)drawScene
 {
-    // Override in subclass
+    // Override in subclass, call base implementation before drawing
+    
+    // Make the receiver the current host view controller before drawing the scene
+    [self makeCurrentHostViewController];
 }
 
 - (void)runWithScene:(ICScene *)scene
@@ -153,21 +178,23 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 #endif
     // Mac host view controller implements this in its own subclass
     
-    // Create a texture cache bound to this view (required for auxiliary OpenGL context)
-    if (!self.textureCache) {
-        _renderContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
-                                       autorelease];
+    // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
+    // render context yet, create and register a new render context for it, so it's possible
+    // for other components to retrieve it via the OpenGL context globally
+    ICContextManager *contextManager = [ICContextManager defaultContextManager];
+    _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
+    if (!_renderContext) {
+        _renderContext = [[ICRenderContext alloc] init];
+        [contextManager registerRenderContext:_renderContext
+                             forOpenGLContext:[self openGLContext]];
     }
     
-    // OpenGL context became available: register our render context for it, so it's possible
-    // for other components to retrieve it via the OpenGL context globally
-#ifdef __IC_PLATFORM_MAC
-    [[ICContextManager defaultContextManager] registerRenderContext:_renderContext
-                                                   forOpenGLContext:[view openGLContext]];
-#elif defined(__IC_PLATFORM_IOS)
-    [[ICContextManager defaultContextManager] registerRenderContext:_renderContext
-                                                   forOpenGLContext:[(ICGLView *)view context]];
-#endif
+    // If not already existing, create a texture cache bound to our OpenGL context
+    // (required for auxiliary OpenGL context)
+    if (!self.textureCache) {
+        _renderContext.textureCache = 
+            [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+    }
 }
 
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -175,6 +202,18 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 {
     // Must be overriden in Mac host view controller
     return nil;
+}
+#endif
+
+#ifdef __IC_PLATFORM_IOS
+- (EAGLContext *)openGLContext
+{
+    return [(ICGLView *)[self view] context];
+}
+#elif defined(__IC_PLATFORM_MAC)
+- (NSOpenGLContext *)openGLContext
+{
+    return [[self view] openGLContext];
 }
 #endif
 
@@ -212,8 +251,8 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 		return NO; // SD device
 
     _retinaDisplayEnabled = retinaDisplayEnabled;
-    [self setContentScaleFactor:retinaDisplayEnabled ? ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR
-                                : ICDEFAULT_CONTENT_SCALE_FACTOR];
+    [self setContentScaleFactor:retinaDisplayEnabled ? IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR
+                                : IC_DEFAULT_CONTENT_SCALE_FACTOR];
     
     [[self view] setContentScaleFactor:[self contentScaleFactor]];
     return YES;
@@ -221,11 +260,6 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
     // Retina display not supported on other platforms
     return NO;
 #endif
-}
-
-- (ICScheduler *)scheduler
-{
-    return _renderContext.scheduler;
 }
 
 - (ICTextureCache *)textureCache
@@ -242,6 +276,12 @@ float g_icContentScaleFactor = ICDEFAULT_CONTENT_SCALE_FACTOR;
 }
 
 #endif // __IC_PLATFORM_MAC
+
+
+- (CGSize)frameBufferSize
+{
+    return [[self view] bounds].size;
+}
 
 
 // Private

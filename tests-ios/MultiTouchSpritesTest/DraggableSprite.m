@@ -21,57 +21,22 @@
 //  SOFTWARE.
 //  
 
-#import "ICNodeVisitor.h"
-#import "ICNode.h"
+#import "DraggableSprite.h"
 
-@implementation ICNodeVisitor
+@implementation DraggableSprite
 
-- (id)init
+- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
 {
-    if ((self = [super init])) {
-    }
-    return self;
+    ICTouch *touch = [touches anyObject];
+    _locationInNode = [touch locationInNode:self];
 }
 
-- (void)visit:(ICNode *)node
+- (void)touchesMoved:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
 {
-    _currentRoot = node;
-    [self visitNode:node];
-}
-
-- (void)visitNode:(ICNode *)node
-{
-    if (node.isVisible) {
-        [self preVisitNode:node];
-        [self visitSingleNode:node];
-        [self visitChildrenOfNode:(ICNode *)node];
-        [self postVisitNode:node];
-    }
-}
-
-- (void)preVisitNode:(ICNode *)node
-{
-    // Implement in subclass
-}
-
-- (void)postVisitNode:(ICNode *)node
-{
-    // Implement in subclass    
-}
-
-- (void)visitSingleNode:(ICNode *)node
-{
-    // Implement in subclass
-}
-
-- (void)visitChildrenOfNode:(ICNode *)node
-{
-    // Important: using ICNode's _children ivar for enumeration since ICView may re-route
-    // ICNode::children (and other composition related methods) to its render texture
-    // backing scene's children.    
-    for (ICNode *child in node->_children) {
-        [self visitNode:child];
-    }    
+    ICTouch *touch = [touches anyObject];
+    CGPoint locationInHostView = [touch locationInHostView];
+    [self setPosition:kmVec3Make(locationInHostView.x - _locationInNode.x,
+                                 locationInHostView.y - _locationInNode.y, 0.0f)];
 }
 
 @end

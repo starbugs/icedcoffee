@@ -30,17 +30,15 @@
  
  <h3>Overview</h3>
  
- The ICShaderCache class provides caching and management for shader programs used in an
- application based on IcedCoffee. On initialization, ICShaderCache loads default shader
- programs which are required for inherent parts of the framework (default position color
- texture, texture masking and picking.) If further shader programs are required,
- ICShaderCache can be used to cache arbitrary ICShaderProgram based shaders using the
- setShaderProgram:forKey: method.
+ The ICShaderCache class provides caching and management for ICShaderProgram objects.
+ In the IcedCoffee framework, there is one default shader cache for each OpenGL context.
+ The shader cache for the current OpenGL context can be retrieved using the
+ ICShaderCache::currentShaderCache method.
  
- It is recommended to use ICShaderCache as a pseudo singleton throughout an application.
- The currentShaderCache class method is provided to instanciate ICShaderCache as a
- shared instance. This shared instance may be used by one or multiple ICHostViewController
- controlled runloops.
+ On initialization, ICShaderCache loads default shader programs which are required by
+ core classes of the framework. If further shader programs are required, ICShaderCache
+ can be used to cache arbitrary ICShaderProgram based shaders using the
+ ICShaderCache::setShaderProgram:forKey: method.
  
  <h3>Subclassing</h3>
  
@@ -55,7 +53,7 @@
 }
 
 /**
- @brief Returns or creates and returns a default shader cache instance
+ @brief Returns the shader cache associated with the current OpenGL context
  */
 + (id)currentShaderCache;
 

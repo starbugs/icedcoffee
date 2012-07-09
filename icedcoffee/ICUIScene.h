@@ -36,6 +36,24 @@
     ICView *_contentView;
 }
 
+/**
+ @brief The receiver's content view
+ */
 @property (nonatomic, retain) ICView *contentView;
+
+/**
+ @brief Initializes the receiver with a default size of 400x300 points
+ */
+- (id)init;
+
+/**
+ @brief Initializes the receiver with the given size
+ */
+- (id)initWithSize:(CGSize)size;
+
+/**
+ @brief Sets the size of the receiver and automatically adjusts the size of the content view
+ */
+- (void)setSize:(kmVec3)size;
 
 @end

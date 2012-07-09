@@ -66,8 +66,8 @@
     
     ICRenderTexture *renderTexture = [ICRenderTexture renderTextureWithWidth:128
                                                                       height:128
-                                                                 pixelFormat:kICPixelFormat_RGBA8888
-                                                           depthBufferFormat:kICDepthBufferFormat_16];
+                                                                 pixelFormat:ICPixelFormatRGBA8888
+                                                           depthBufferFormat:ICDepthBufferFormat16];
     ICScene *textureScene = [ICScene scene];
     textureScene.performsDepthTesting = YES;
     _tsForegroundSprite = [ResponsiveSprite spriteWithTexture:texture];

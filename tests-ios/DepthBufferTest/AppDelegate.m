@@ -54,7 +54,7 @@
     ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
     
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
     ICTexture2D *texture = [self.hostViewController.textureCache loadTextureFromFile:filename];
@@ -72,8 +72,8 @@
     
     ICRenderTexture *renderTexture = [ICRenderTexture renderTextureWithWidth:128
                                                                       height:128
-                                                                 pixelFormat:kICPixelFormat_RGBA8888
-                                                           depthBufferFormat:kICDepthBufferFormat_24];
+                                                                 pixelFormat:ICPixelFormatRGBA8888
+                                                           depthBufferFormat:ICDepthBufferFormat24];
     ICScene *textureScene = [ICScene scene];
     textureScene.performsDepthTesting = YES;
     _tsForegroundSprite = [ResponsiveSprite spriteWithTexture:texture];

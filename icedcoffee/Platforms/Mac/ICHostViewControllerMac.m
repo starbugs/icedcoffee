@@ -222,7 +222,9 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene
 {
-    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand && !_needsDisplay) {
+    [super drawScene];
+    
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
         return; // nothing to draw
     }
     
@@ -254,7 +256,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
             [_mouseEventDispatcher updateMouseOverState];
         }
         
-        if (_frameUpdateMode == kICFrameUpdateMode_OnDemand) {
+        if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
             _needsDisplay = NO;
         }        
     }
@@ -274,8 +276,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 	[[openGLview openGLContext] makeCurrentContext];
 
 	glViewport(0, 0,
-               openGLview.bounds.size.width * IC_CONTENT_SCALE_FACTOR(),
-               openGLview.bounds.size.height * IC_CONTENT_SCALE_FACTOR());
+               ICPointsToPixels(openGLview.bounds.size.width),
+               ICPointsToPixels(openGLview.bounds.size.height));
     
     resultNodeStack = [self.scene hitTest:point];
     

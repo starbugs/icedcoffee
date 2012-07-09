@@ -26,6 +26,14 @@
 #import "ICScale9Sprite.h"
 #import "ICTextureCache.h"
 #import "ICRectangle.h"
+#import "icMacros.h"
+
+#ifdef __IC_PLATFORM_IOS
+#define DEFAULT_BUTTON_FONT @"Helvetica"
+#elif defined(__IC_PLATFORM_MAC)
+#define DEFAULT_BUTTON_FONT @"Lucida Grande"
+#endif
+
 
 @interface ICButton (Private)
 - (void)centerLabel;
@@ -65,7 +73,7 @@
         pressedBackground.gradientEndColor = (icColor4B){180,180,180,255};
         [self setBackground:pressedBackground forState:ICControlStatePressed];
         
-        self.label = [ICLabel labelWithText:@"Button" fontName:@"Lucida Grande" fontSize:12];
+        self.label = [ICLabel labelWithText:@"Button" fontName:DEFAULT_BUTTON_FONT fontSize:12];
         self.label.name = @"Button label (view)";
         self.label.userInteractionEnabled = NO;
         self.label.color = (icColor4B){0,0,0,255};
@@ -202,7 +210,19 @@
     }
 }
 
-#endif // __IC_PLATFORM_MAC
+#elif defined(__IC_PLATFORM_IOS)
+
+- (void)touchesBegan:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
+{
+    self.state |= ICControlStatePressed;
+}
+
+- (void)touchesEnded:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event
+{
+    self.state &= ~ICControlStatePressed;
+}
+
+#endif
 
 - (void)layoutChildren
 {

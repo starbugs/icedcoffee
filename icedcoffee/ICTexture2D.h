@@ -129,7 +129,7 @@ Note that RGBA type textures will have their alpha premultiplied - use the blend
 @interface ICTexture2D (Image)
 /** Initializes a texture from a UIImage object */
 #ifdef __IC_PLATFORM_IOS
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(icResolutionType)resolution;
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
 #elif defined(__IC_PLATFORM_MAC)
 - (id) initWithCGImage:(CGImageRef)cgImage;
 #endif
@@ -193,11 +193,11 @@ typedef struct _ICTexParams {
 @interface ICTexture2D (PixelFormat)
 /** sets the default pixel format for UIImages that contains alpha channel.
  If the UIImage contains alpha channel, then the options are:
-	- generate 32-bit textures: kICPixelFormat_RGBA8888 (default one)
-	- generate 16-bit textures: kICPixelFormat_RGBA4444
-	- generate 16-bit textures: kICPixelFormat_RGB5A1
-	- generate 16-bit textures: kICPixelFormat_RGB565
-	- generate 8-bit textures: kICPixelFormat_A8 (only use it if you use just 1 color)
+	- generate 32-bit textures: ICPixelFormatRGBA8888 (default one)
+	- generate 16-bit textures: ICPixelFormatRGBA4444
+	- generate 16-bit textures: ICPixelFormatRGB5A1
+	- generate 16-bit textures: ICPixelFormatRGB565
+	- generate 8-bit textures: ICPixelFormatA8 (only use it if you use just 1 color)
 
  How does it work ?
    - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)

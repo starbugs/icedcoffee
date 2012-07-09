@@ -74,7 +74,7 @@
 		depthFormat_ = depthFormat;
 		pixelFormat_ = pixelFormat;
         
-		CHECK_GL_ERROR_DEBUG();
+		IC_CHECK_GL_ERROR_DEBUG();
     }
 
     return self;
@@ -86,12 +86,12 @@
 	glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);
 
 	if( ! [context_ renderbufferStorage:GL_RENDERBUFFER fromDrawable:layer] )
-		ICLOG(@"failed to call context");
+		ICLog(@"failed to call context");
 
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_WIDTH, &backingWidth_);
 	glGetRenderbufferParameteriv(GL_RENDERBUFFER, GL_RENDERBUFFER_HEIGHT, &backingHeight_);
 
-	ICLOG(@"IcedCoffee: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
+	ICLog(@"IcedCoffee: surface size: %dx%d", (int)backingWidth_, (int)backingHeight_);
 
 	if (depthFormat_)
 	{
@@ -115,7 +115,7 @@
 		return NO;
 	}
 
-	CHECK_GL_ERROR_DEBUG();
+	IC_CHECK_GL_ERROR_DEBUG();
 
 	return YES;
 }
@@ -157,7 +157,7 @@
 
 - (void)dealloc
 {
-	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
 
     // Tear down GL
     if (defaultFramebuffer_) {

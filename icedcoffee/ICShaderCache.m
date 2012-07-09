@@ -84,8 +84,8 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionColorVSH
                                        fragmentShaderFilename:positionColorFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
     
 	[p link];
 	[p updateUniforms];
@@ -97,9 +97,9 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
                                        fragmentShaderFilename:positionTextureColorFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
     
 	[p link];
 	[p updateUniforms];
@@ -111,9 +111,9 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureA8ColorVSH
                                        fragmentShaderFilename:positionTextureA8ColorFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
     
 	[p link];
 	[p updateUniforms];
@@ -125,9 +125,9 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
                                        fragmentShaderFilename:pickingFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
     
 	[p link];
 	[p updateUniforms];
@@ -139,9 +139,9 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
                                        fragmentShaderFilename:stencilMaskFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
     
 	[p link];
 	[p updateUniforms];
@@ -153,9 +153,9 @@
     p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
                                        fragmentShaderFilename:spriteTextureMaskFSH];
     
-	[p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-	[p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-	[p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
     
 	[p link];
 	[p updateUniforms];

@@ -22,6 +22,7 @@
 //  
 
 #import "ICTouch.h"
+#import "ICHostViewController.h"
 
 #ifdef __IC_PLATFORM_IOS
 
@@ -58,7 +59,7 @@
 
 - (UIView *)hostView
 {
-    return _nativeTouch.view;
+    return [[ICHostViewController currentHostViewController] view];
 }
 
 - (NSUInteger)tapCount
@@ -83,12 +84,12 @@
 
 - (CGPoint)locationInHostView
 {
-    return [_nativeTouch locationInView:_nativeTouch.view];
+    return [_nativeTouch locationInView:[[ICHostViewController currentHostViewController] view]];
 }
 
 - (CGPoint)previousLocationInHostView
 {
-    return [_nativeTouch previousLocationInView:_nativeTouch.view];
+    return [_nativeTouch previousLocationInView:[[ICHostViewController currentHostViewController] view]];
 }
 
 - (kmVec3)locationInNode:(ICNode<ICProjectionTransforms> *)node

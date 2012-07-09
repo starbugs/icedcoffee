@@ -26,12 +26,6 @@
 
 @class ICNode;
 
-typedef enum _ICNodeVisitorType {
-    kICUnknownNodeVisitor,
-    kICPickingNodeVisitor,
-    kICDrawingNodeVisitor
-} ICNodeVisitorType;
-
 /**
  @brief Abstract node visitor used for traversing an IcedCoffee scene graph
  
@@ -45,11 +39,8 @@ typedef enum _ICNodeVisitorType {
  */
 @interface ICNodeVisitor : NSObject {
 @protected
-    ICNodeVisitorType _visitorType;
     ICNode *_currentRoot;
 }
-
-@property (nonatomic, readonly) ICNodeVisitorType visitorType;
 
 /**
  @brief Performs visitation starting with the specified node

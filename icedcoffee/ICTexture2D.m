@@ -98,7 +98,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
+static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 #pragma mark -
 #pragma mark ICTexture2D - Main
@@ -120,19 +120,19 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		
 		switch(pixelFormat)
 		{
-			case kICPixelFormat_RGBA8888:
+			case ICPixelFormatRGBA8888:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				break;
-			case kICPixelFormat_RGBA4444:
+			case ICPixelFormatRGBA4444:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 				break;
-			case kICPixelFormat_RGB5A1:
+			case ICPixelFormatRGB5A1:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 				break;
-			case kICPixelFormat_RGB565:
+			case ICPixelFormatRGB565:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
-			case kICPixelFormat_A8:
+			case ICPixelFormatA8:
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			default:
@@ -140,7 +140,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 				
 		}
         
-        CHECK_GL_ERROR_DEBUG();
+        IC_CHECK_GL_ERROR_DEBUG();
 
 		size_ = size;
 		width_ = width;
@@ -173,7 +173,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 - (void) dealloc
 {
-	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
 	if(name_) {
         // FIXME: Texture can only be deleted on main thread currently
         [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
@@ -190,8 +190,8 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 -(CGSize) size
 {
 	CGSize ret;
-	ret.width = size_.width; // / IC_CONTENT_SCALE_FACTOR();
-	ret.height = size_.height; // / IC_CONTENT_SCALE_FACTOR();
+	ret.width = size_.width; // / ICContentScaleFactor();
+	ret.height = size_.height; // / ICContentScaleFactor();
 	
 	return ret;
 }
@@ -202,7 +202,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 
 @implementation ICTexture2D (Image)
 #ifdef __IC_PLATFORM_IOS
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(icResolutionType)resolution
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
 #elif defined(__IC_PLATFORM_MAC)
 - (id) initWithCGImage:(CGImageRef)cgImage
 #endif
@@ -220,7 +220,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	ICPixelFormat	pixelFormat;
     
 	if(cgImage == NULL) {
-		ICLOG(@"IcedCoffee: ICTexture2D. Can't create Texture. cgImage is nil");
+		ICLog(@"IcedCoffee: ICTexture2D. Can't create Texture. cgImage is nil");
 		[self release];
 		return nil;
 	}
@@ -240,7 +240,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
     
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		ICLOG(@"IcedCoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+		ICLog(@"IcedCoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			  (long)POTWide, (long)POTHigh,
 			  (long)maxTextureSize, (long)maxTextureSize);
 		[self release];
@@ -257,13 +257,13 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixelFormat_;
 		else {
-			ICLOG(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
-			pixelFormat = kICPixelFormat_RGB565;
+			ICLog(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
+			pixelFormat = ICPixelFormatRGB565;
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
-		ICLOG(@"IcedCoffee: ICTexture2D: Using A8 texture since image is a mask");
-		pixelFormat = kICPixelFormat_A8;
+		ICLog(@"IcedCoffee: ICTexture2D: Using A8 texture since image is a mask");
+		pixelFormat = ICPixelFormatA8;
 	}
     
 	imageSize = CGSizeMake(CGImageGetWidth(cgImage), CGImageGetHeight(cgImage));
@@ -271,9 +271,9 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	// Create the bitmap graphics context
     
 	switch(pixelFormat) {
-		case kICPixelFormat_RGBA8888:
-		case kICPixelFormat_RGBA4444:
-		case kICPixelFormat_RGB5A1:
+		case ICPixelFormatRGBA8888:
+		case ICPixelFormatRGBA4444:
+		case ICPixelFormatRGB5A1:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
 			info = hasAlpha ? kCGImageAlphaPremultipliedLast : kCGImageAlphaNoneSkipLast;
@@ -282,14 +282,14 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 			CGColorSpaceRelease(colorSpace);
 			break;
             
-		case kICPixelFormat_RGB565:
+		case ICPixelFormatRGB565:
 			colorSpace = CGColorSpaceCreateDeviceRGB();
 			data = malloc(POTHigh * POTWide * 4);
 			info = kCGImageAlphaNoneSkipLast;
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, info | kCGBitmapByteOrder32Big);
 			CGColorSpaceRelease(colorSpace);
 			break;
-		case kICPixelFormat_A8:
+		case ICPixelFormatA8:
 			data = malloc(POTHigh * POTWide);
 			info = kCGImageAlphaOnly;
 			context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, POTWide, NULL, info);
@@ -305,7 +305,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
     
 	// Repack the pixel data into the right format
     
-	if(pixelFormat == kICPixelFormat_RGB565) {
+	if(pixelFormat == ICPixelFormatRGB565) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGGBBBBB"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -316,7 +316,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		data = tempData;
         
 	}
-	else if (pixelFormat == kICPixelFormat_RGBA4444) {
+	else if (pixelFormat == ICPixelFormatRGBA4444) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRGGGGBBBBAAAA"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -333,7 +333,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 		data = tempData;
         
 	}
-	else if (pixelFormat == kICPixelFormat_RGB5A1) {
+	else if (pixelFormat == ICPixelFormatRGB5A1) {
 		//Convert "RRRRRRRRRGGGGGGGGBBBBBBBBAAAAAAAA" to "RRRRRGGGGGBBBBBA"
 		tempData = malloc(POTHigh * POTWide * 2);
 		inPixel32 = (unsigned int*)data;
@@ -417,9 +417,9 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
 	UIGraphicsPopContext();
 	
 #if USE_TEXT_WITH_A8_TEXTURES
-	self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
+	self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 #else
-	self = [self initWithData:data pixelFormat:kICPixelFormat_RGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
+	self = [self initWithData:data pixelFormat:ICPixelFormatRGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 #endif
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -474,7 +474,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = kICPixelFormat_Default;
                 data[c++] = data[i*bytesPerRow+j*4+3];
 		
 		//data = (unsigned char*)[self keepData:data length:textureSize];
-		self = [self initWithData:data pixelFormat:kICPixelFormat_A8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
+		self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
 		
 		[bitmap release];
 		[image release]; 

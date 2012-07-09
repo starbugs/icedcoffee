@@ -31,15 +31,16 @@ typedef enum _ICSchedulerPriority {
 } ICSchedulerPriority;
 
 /**
- @brief A scheduler used for continuously updating and animating objects in a scene
+ @brief A scheduler used for continuously updating animated objects in a scene
  
- The scheduler works in collaboration with the ICHostViewController class. Each host view
- controller comes with a scheduler which is used for updating objects continuously before
- a new host view frame is drawn. For example, updates may be used for continuous animations
- performed by ICNode based objects on a scene.
+ A scheduler continuously updates registered objects for animation purposes. 
+ Schedulers work in collaboration with host view controllers to issue pending updates to
+ registered objects.
  
- @note ICScheduler updates will only work as expected if the host view controller's
- ICHostViewController:frameUpdateMode is set to kICFrameUpdateMode_Synchronized.
+ Note that ICScheduler updates will only work as expected if the host view
+ controller's ICHostViewController:frameUpdateMode is set to ICFrameUpdateModeSynchronized.
+ Scenes usnig host view controllers that update their host view frame on demand should
+ use NSTimer to perform updates.
  */
 @interface ICScheduler : NSObject {
 @protected
@@ -48,6 +49,9 @@ typedef enum _ICSchedulerPriority {
     NSMutableArray *_targetsWithHighPriority;
 }
 
+/**
+ @brief Returns the scheduler for the current host view controller
+ */
 + (id)currentScheduler;
 
 /**

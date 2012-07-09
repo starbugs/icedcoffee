@@ -22,19 +22,55 @@
 //  
 
 #import "ICRenderContext.h"
+#import "ICContextManager.h"
 
 @implementation ICRenderContext
 
 @synthesize textureCache = _textureCache;
 @synthesize shaderCache = _shaderCache;
-@synthesize scheduler = _scheduler;
+
++ (id)currentRenderContext
+{
+    return [[ICContextManager defaultContextManager] renderContextForCurrentOpenGLContext];
+}
+
+- (id)init
+{
+    if ((self = [super init])) {
+        _customObjects = nil; // lazy allocation
+    }
+    return self;
+}
 
 - (void)dealloc
 {
+    [_customObjects release];
     self.textureCache = nil;
     self.shaderCache = nil;
-    self.scheduler = nil;
     [super dealloc];
+}
+
+- (void)setCustomObject:(id)object forKey:(id)key
+{
+    if (!_customObjects) {
+        _customObjects = [[NSMutableDictionary alloc] init];
+    }
+    [_customObjects setObject:object forKey:key];
+}
+
+- (id)customObjectForKey:(id)key
+{
+    return [_customObjects objectForKey:key];
+}
+
+- (void)removeCustomObjectForKey:(id)key
+{
+    [_customObjects removeObjectForKey:key];
+}
+
+- (void)removeAllCustomObjects
+{
+    [_customObjects removeAllObjects];
 }
 
 @end

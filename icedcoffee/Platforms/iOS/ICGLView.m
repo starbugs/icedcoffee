@@ -145,12 +145,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			return nil;
 		}
         
-        // FIXME
         // Set up pixel alignment
-        //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        //glPixelStorei(GL_PACK_ALIGNMENT, 1);        
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);        
 
-		CHECK_GL_ERROR_DEBUG();
+		IC_CHECK_GL_ERROR_DEBUG();
 	}
 
 	return self;
@@ -173,12 +172,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 			return nil;
 		}
         
-        // FIXME
         // Set up pixel alignment
-        //glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
-        //glPixelStorei(GL_PACK_ALIGNMENT, 1);          
+        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        glPixelStorei(GL_PACK_ALIGNMENT, 1);          
 
-		CHECK_GL_ERROR_DEBUG();
+		IC_CHECK_GL_ERROR_DEBUG();
     }
 
     return self;
@@ -210,14 +208,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 	discardFramebufferSupported_ = [[ICConfiguration sharedConfiguration] supportsDiscardFramebuffer];
 
-	CHECK_GL_ERROR_DEBUG();
+	IC_CHECK_GL_ERROR_DEBUG();
 
 	return YES;
 }
 
 - (void)dealloc
 {
-	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
 
 	[renderer_ release];
 	[super dealloc];
@@ -283,9 +281,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	}
 
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
-		ICLOG(@"IcedCoffee: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+		ICLog(@"IcedCoffee: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
-	CHECK_GL_ERROR_DEBUG();
+	IC_CHECK_GL_ERROR_DEBUG();
 
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop

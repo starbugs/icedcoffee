@@ -40,13 +40,12 @@
 - (id)init
 {
     if ((self = [super init])) {
-        _visitorType = kICPickingNodeVisitor;
         _nodeIndex = 1;
-        _renderTexture = [[ICRenderTexture alloc] initWithWidth:1.0f/IC_CONTENT_SCALE_FACTOR()
-                                                         height:1.0f/IC_CONTENT_SCALE_FACTOR()
-                                                    pixelFormat:kICPixelFormat_RGBA8888
-                                              depthBufferFormat:kICDepthBufferFormat_24
-                                            stencilBufferFormat:kICStencilBufferFormat_8];
+        _renderTexture = [[ICRenderTexture alloc] initWithWidth:ICPixelsToPoints(1.f)
+                                                         height:ICPixelsToPoints(1.f)
+                                                    pixelFormat:ICPixelFormatRGBA8888
+                                              depthBufferFormat:ICDepthBufferFormat24
+                                            stencilBufferFormat:ICStencilBufferFormat8];
                 
         _resultNodeStack = [[NSMutableArray alloc] init];
         _appendNodesToStack = [[NSMutableArray alloc] init];
@@ -94,7 +93,7 @@
 - (void)visit:(ICNode *)node
 {
 #if IC_ENABLE_DEBUG_PICKING
-    ICLOG(@"Picking visitor visit: %@", [node description]);
+    ICLog(@"Picking visitor visit: %@", [node description]);
 #endif
     
     [_resultNodeStack removeAllObjects];
@@ -107,7 +106,7 @@
 {
     if ([node userInteractionEnabled]) {
 #if IC_ENABLE_DEBUG_PICKING
-        ICLOG(@"Picking visitor visitSingleNode: %@", [node description]);
+        ICLog(@"Picking visitor visitSingleNode: %@", [node description]);
 #endif
         
         [node drawWithVisitor:self];
@@ -117,7 +116,7 @@
         ICNode *resultNode = [self nodeForPickColor:color];
         if (resultNode && ![_resultNodeStack containsObject:resultNode]) {
 #if IC_ENABLE_DEBUG_PICKING
-            ICLOG(@"Picking visitor: hit node %@", [resultNode description]);
+            ICLog(@"Picking visitor: hit node %@", [resultNode description]);
 #endif
             // Push result node on stack
             [_resultNodeStack addObject:resultNode];
@@ -130,7 +129,7 @@
         }                
     } else {
 #if IC_ENABLE_DEBUG_PICKING
-        ICLOG(@"Picking visitor: user interaction disabled for node: %@", [node description]);
+        ICLog(@"Picking visitor: user interaction disabled for node: %@", [node description]);
 #endif        
     }
     

@@ -170,94 +170,123 @@
     return _children;
 }
 
-- (NSArray *)ancestorsOfType:(Class)classType stopAfterFirstAncestor:(BOOL)stopAfterFirstAncestor
-{
-    ICNode *node = self;
-    NSMutableArray* ancestors = [[[NSMutableArray alloc] init] autorelease];
-    while((node = [node parent])) {
-        if(!classType || [node isKindOfClass:classType]) {
-            [ancestors addObject:node];
-            if(stopAfterFirstAncestor)
-                break;
-        }
-    }
-    return ancestors;        
-}
-
 - (NSArray *)ancestorsOfType:(Class)classType
 {
-    return [self ancestorsOfType:classType stopAfterFirstAncestor:NO];
+    return [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return [node isKindOfClass:classType];
+    }];
+}
+
+- (NSArray *)ancestorsNotOfType:(Class)classType
+{
+    return [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return ![node isKindOfClass:classType];
+    }];    
+}
+
+- (NSArray *)ancestorsConformingToProtocol:(Protocol *)protocol
+{
+    return [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return [node conformsToProtocol:protocol];
+    }];    
 }
 
 - (ICNode *)firstAncestorOfType:(Class)classType
 {
-    NSArray *ancestors = [self ancestorsOfType:classType stopAfterFirstAncestor:YES];
-    if ([ancestors count]) {
+    NSArray *ancestors = [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        BOOL passes = [node isKindOfClass:classType];
+        if (passes)
+            *stop = YES;
+        return passes;
+    }];
+    if ([ancestors count])
         return [ancestors objectAtIndex:0];
-    }
     return nil;
 }
 
-- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *))filterBlock
+- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
 {
+    if (!filterBlock) {
+        filterBlock = ^BOOL(ICNode *node, BOOL *stop) {
+            return YES;
+        };
+    }
+    
+    BOOL stopFlag = NO;
     ICNode *node = self;
     NSMutableArray* ancestors = [[[NSMutableArray alloc] init] autorelease];
     while((node = [node parent])) {
-        if (filterBlock(node)) {
+        if (filterBlock(node, &stopFlag)) {
             [ancestors addObject:node];
         }
+        if (stopFlag)
+            break;
     }
+    
     return ancestors;
 }
 
 - (NSArray *)ancestors
 {
-    return [self ancestorsOfType:nil];
-}
-
-- (void)accumulateDescendants:(NSMutableArray*)descendants
-                     withNode:(ICNode *)node
-                    notOfType:(Class)classType
-{
-    if([node hasChildren]) {
-        int i;
-        for(i=0; i<[[node children] count]; i++) {
-            if(!classType || ![[[node children] objectAtIndex:i] isKindOfClass: classType])
-                [descendants addObject: [[node children] objectAtIndex: i]];
-            [self accumulateDescendants: descendants
-                               withNode: [[node children] objectAtIndex: i]
-                              notOfType: classType];
-        }
-    }
+    return [self ancestorsFilteredUsingBlock:nil];
 }
 
 - (NSArray *)descendantsNotOfType:(Class)classType
 {
-    NSMutableArray* descendants = [[[NSMutableArray alloc] init] autorelease];
-    [self accumulateDescendants:descendants withNode:self notOfType:classType];
-    return descendants;
-}
-
-- (void)accumulateDescendants:(NSMutableArray*)descendants
-                     withNode:(ICNode *)node
-                       ofType:(Class)classType
-{
-    if([node hasChildren]) {
-        int i;
-        for(i=0; i<[[node children] count]; i++) {
-            if(!classType || [[[node children] objectAtIndex:i] isKindOfClass:classType])
-                [descendants addObject:[[node children] objectAtIndex:i]];
-            [self accumulateDescendants:descendants
-                               withNode:[[node children] objectAtIndex:i]
-                                 ofType:classType];
-        }
-    }
+    return [self descendantsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return ![node isKindOfClass:classType];
+    }];
 }
 
 - (NSArray *)descendantsOfType:(Class)classType
 {
-    NSMutableArray* descendants = [[[NSMutableArray alloc] init] autorelease];
-    [self accumulateDescendants:descendants withNode:self ofType:classType];
+    return [self descendantsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return [node isKindOfClass:classType];
+    }];
+}
+
+- (NSArray *)descendantsConformingToProtocol:(Protocol *)protocol
+{
+    return [self descendantsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        return [node conformsToProtocol:protocol];
+    }];
+}
+
+- (ICNode *)firstDescendantOfType:(Class)classType
+{
+    NSArray *descendants = [self descendantsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        BOOL passes = [node isKindOfClass:classType];
+        if (passes)
+            *stop = YES;
+        return passes;
+    }];
+    if ([descendants count]) {
+        return [descendants objectAtIndex:0];
+    }
+    return nil;
+}
+
+- (void)accumulateDescendants:(NSMutableArray *)descendants
+                     withNode:(ICNode *)node
+                   usingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
+{
+    if ([node hasChildren]) {
+        BOOL stopFlag = NO;
+        for (ICNode *child in node.children) {
+            if (filterBlock(child, &stopFlag)) {
+                [descendants addObject:child];
+            }
+            if (stopFlag)
+                break;
+            [self accumulateDescendants:descendants withNode:child usingBlock:filterBlock];
+        }
+    }
+}
+
+- (NSArray *)descendantsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
+{
+    NSMutableArray *descendants = [NSMutableArray array];
+    [self accumulateDescendants:descendants withNode:self usingBlock:filterBlock];
     return descendants;
 }
 
@@ -280,7 +309,15 @@
 
 - (ICNode *)root
 {
-    return [self.ancestors lastObject];
+    ICNode *parent = _parent;
+    while (true) {
+        if ([parent parent]) {
+            parent = [parent parent];
+        } else {
+            break;
+        }
+    }
+    return parent;
 }
 
 - (ICScene *)rootScene
@@ -618,10 +655,8 @@
         if (_parent)
             w = [self convertToWorldSpace:world[i]];
         [scene.camera projectWorld:w toView:&view[i]];
-        view[i].x = (int)view[i].x;
-        view[i].y = (int)view[i].y;
-        view[i].x /= IC_CONTENT_SCALE_FACTOR();
-        view[i].y /= IC_CONTENT_SCALE_FACTOR();
+        view[i].x = ICPixelsToPoints((int)view[i].x);
+        view[i].y = ICPixelsToPoints((int)view[i].y);
     }
     
     kmAABB aabb = icComputeAABBFromVertices(view, 8);
@@ -636,10 +671,10 @@
 
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor
 {
-    if (visitor.visitorType == kICDrawingNodeVisitor) {
+    if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) { // drawing node visitor
         icGLUniformModelViewProjectionMatrix(self.shaderProgram);
         [self.shaderProgram use];
-    } else if (visitor.visitorType == kICPickingNodeVisitor) {
+    } else {
         ICShaderProgram *p = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Picking];
         icColor4B pickColor = [(ICNodeVisitorPicking *)visitor pickColor];        
         [p setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(pickColor)] forUniform:@"u_pickColor"];

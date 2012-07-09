@@ -76,11 +76,11 @@
         
         // Viewport of camera is set as soon as the scene is either added to an existing
         // scene graph or assigned to a host view controller
-        ICCamera *camera = [[[ICDEFAULT_CAMERA alloc] initWithViewport:CGRectNull] autorelease];
+        ICCamera *camera = [[[IC_DEFAULT_CAMERA alloc] initWithViewport:CGRectNull] autorelease];
         self.camera = camera;
         
-        self.drawingVisitor = [[[ICDEFAULT_DRAWING_VISITOR alloc] init] autorelease];
-        self.pickingVisitor = [[[ICDEFAULT_PICKING_VISITOR alloc] init] autorelease];
+        self.drawingVisitor = [[[IC_DEFAULT_DRAWING_VISITOR alloc] init] autorelease];
+        self.pickingVisitor = [[[IC_DEFAULT_PICKING_VISITOR alloc] init] autorelease];
                 
         _clearColor = (icColor4B){255,255,255,255};
         _clearsColorBuffer = YES;
@@ -104,7 +104,7 @@
 - (void)setUpSceneForDrawing
 {
     icGLPurgeStateCache();
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     // Clear buffers as configured
     if (_clearsColorBuffer)
@@ -123,7 +123,7 @@
     if (_clearsStencilBuffer)
         clearFlags |= GL_STENCIL_BUFFER_BIT;
     glClear(clearFlags);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     // Enable face culling by default
     if (_performsFaceCulling)
@@ -144,7 +144,7 @@
         glDepthFunc(GL_LEQUAL);
     }
 
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     // Store old projection matrix, so we can revert to the previous projection when
     // drawing has been finished. This is essentially useful when dealing with nested
@@ -178,7 +178,7 @@
     if (_performsDepthTesting)
         clearFlags |= GL_DEPTH_BUFFER_BIT;
     glClear(clearFlags);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
 
     // Disable alpha blending
     glDisable(GL_BLEND);
@@ -213,9 +213,9 @@
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
-    if (visitor.visitorType == kICDrawingNodeVisitor) {
+    if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         [self setUpSceneForDrawing];
-    } else if(visitor.visitorType == kICPickingNodeVisitor) {
+    } else {
         CGPoint point = ((ICNodeVisitorPicking *)visitor).pickPoint;
         GLint *viewport = ((ICNodeVisitorPicking *)visitor).viewport;
         [self setupSceneForPickingWithPoint:point viewport:viewport];
@@ -224,9 +224,9 @@
 
 - (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
 {
-    if (visitor.visitorType == kICDrawingNodeVisitor) {
+    if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         [self tearDownSceneForDrawing];
-    } else if(visitor.visitorType == kICPickingNodeVisitor) {
+    } else {
         [self tearDownSceneForPicking];
     }
 }
@@ -235,7 +235,7 @@
 - (NSArray *)hitTest:(CGPoint)point
 {
 #if IC_ENABLE_DEBUG_HITTEST
-    ICLOG(@"Beginning hit test with point (%f,%f)", point.x, point.y);
+    ICLog(@"Beginning hit test with point (%f,%f)", point.x, point.y);
 #endif
     
     // Hit test must be called from the FBO context the scene is part of,
@@ -243,10 +243,10 @@
     GLint viewport[4];
     glGetIntegerv(GL_VIEWPORT, viewport);
     
-    if (point.x * IC_CONTENT_SCALE_FACTOR() < viewport[0] ||
-        point.y * IC_CONTENT_SCALE_FACTOR() < viewport[1] ||
-        point.x * IC_CONTENT_SCALE_FACTOR() > viewport[2] ||
-        point.y * IC_CONTENT_SCALE_FACTOR() > viewport[3]) {
+    if (ICPointsToPixels(point.x) < viewport[0] ||
+        ICPointsToPixels(point.y) < viewport[1] ||
+        ICPointsToPixels(point.x) > viewport[2] ||
+        ICPointsToPixels(point.y) > viewport[3]) {
         // Point outside viewport
         return [NSArray array];
     }
@@ -258,12 +258,12 @@
     NSArray *hitNodes = ((ICNodeVisitorPicking *)self.pickingVisitor).resultNodeStack;
 #if IC_ENABLE_DEBUG_HITTEST && defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
     if ([hitNodes count] > 0) {
-        ICLOG(@"Hit test returned the following nodes:");
+        ICLog(@"Hit test returned the following nodes:");
         for (ICNode *node in hitNodes) {
-            ICLOG(@" - %@", [node description]);
+            ICLog(@" - %@", [node description]);
         }
     } else {
-        ICLOG(@"Hit test returned an empty result");
+        ICLog(@"Hit test returned an empty result");
     }
 #endif
     return hitNodes;
@@ -297,16 +297,16 @@
 
 - (CGSize)frameBufferSize
 {    
-    NSArray *renderTextureAncestors = [self ancestorsOfType:[ICRenderTexture class]];
-    if ([renderTextureAncestors count]) {
+    NSArray *fboAncestors = [self ancestorsConformingToProtocol:@protocol(ICFrameBufferProvider)];
+    if ([fboAncestors count]) {
         // Descendant of render texture, so we're dealing with a render texture FBO
-        ICRenderTexture *parentRenderTexture = [renderTextureAncestors objectAtIndex:0];
-        return CGSizeMake(parentRenderTexture.size.x, parentRenderTexture.size.y);
+        ICNode<ICFrameBufferProvider> *parentFBOProvider = [fboAncestors objectAtIndex:0];
+        return [parentFBOProvider frameBufferSize];
     }
     
     // Scene without render texture ancestor, so we're dealing with the root FBO
     if (self.hostViewController)
-        return [[self.hostViewController view] bounds].size;
+        return [self.hostViewController frameBufferSize];
     
     return CGSizeMake(0, 0);
 }

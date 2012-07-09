@@ -35,22 +35,22 @@
 @interface ICPlanarNode : ICNode <ICProjectionTransforms>
 
 /**
- @brief The normal of the node's plane
+ @brief The normal of the receiver's plane
  */
 - (kmVec3)planeNormal;
 
 /**
- @brief A point on the node's plane
+ @brief A point on the receiver's plane
  */
 - (kmVec3)planePoint;
 
 /**
- @brief The node's plane in local coordinate space
+ @brief The receiver's plane in local coordinate space
  */
 - (kmPlane)plane;
 
 /**
- @brief The node's plane in world coordinate space
+ @brief The receiver's plane in world coordinate space
  */
 - (kmPlane)worldPlane;
 

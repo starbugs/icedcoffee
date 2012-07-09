@@ -70,7 +70,6 @@
 		D2FAC4E314E7ABE80022BB3B /* ICIdentifiable.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FAC4B114E7ABE80022BB3B /* ICIdentifiable.h */; };
 		D2FAC4E414E7ABE80022BB3B /* ICIdentifiable.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FAC4B214E7ABE80022BB3B /* ICIdentifiable.m */; };
 		D2FAC4E514E7ABE80022BB3B /* icMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FAC4B314E7ABE80022BB3B /* icMacros.h */; };
-		D2FAC4E814E7ABE80022BB3B /* ICMouseResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FAC4B614E7ABE80022BB3B /* ICMouseResponder.h */; };
 		D2FAC4E914E7ABE80022BB3B /* ICNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FAC4B714E7ABE80022BB3B /* ICNode.h */; };
 		D2FAC4EA14E7ABE80022BB3B /* ICNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FAC4B814E7ABE80022BB3B /* ICNode.m */; };
 		D2FAC4EB14E7ABE80022BB3B /* ICNodeVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FAC4B914E7ABE80022BB3B /* ICNodeVisitor.h */; };
@@ -210,7 +209,6 @@
 		D2FAC4B114E7ABE80022BB3B /* ICIdentifiable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICIdentifiable.h; path = icedcoffee/ICIdentifiable.h; sourceTree = "<group>"; };
 		D2FAC4B214E7ABE80022BB3B /* ICIdentifiable.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICIdentifiable.m; path = icedcoffee/ICIdentifiable.m; sourceTree = "<group>"; };
 		D2FAC4B314E7ABE80022BB3B /* icMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icMacros.h; path = icedcoffee/icMacros.h; sourceTree = "<group>"; };
-		D2FAC4B614E7ABE80022BB3B /* ICMouseResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMouseResponder.h; path = icedcoffee/ICMouseResponder.h; sourceTree = "<group>"; };
 		D2FAC4B714E7ABE80022BB3B /* ICNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNode.h; path = icedcoffee/ICNode.h; sourceTree = "<group>"; };
 		D2FAC4B814E7ABE80022BB3B /* ICNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNode.m; path = icedcoffee/ICNode.m; sourceTree = "<group>"; };
 		D2FAC4B914E7ABE80022BB3B /* ICNodeVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeVisitor.h; path = icedcoffee/ICNodeVisitor.h; sourceTree = "<group>"; };
@@ -387,7 +385,6 @@
 				D2FAC4B114E7ABE80022BB3B /* ICIdentifiable.h */,
 				D2FAC4B214E7ABE80022BB3B /* ICIdentifiable.m */,
 				D2FAC4B314E7ABE80022BB3B /* icMacros.h */,
-				D2FAC4B614E7ABE80022BB3B /* ICMouseResponder.h */,
 				D2A04C8E15A70D3D0097BDA3 /* ICNodeRef.h */,
 				D2A04C8F15A70D3D0097BDA3 /* ICNodeRef.m */,
 				D2FAC4B914E7ABE80022BB3B /* ICNodeVisitor.h */,
@@ -618,7 +615,6 @@
 				D2FAC4E114E7ABE80022BB3B /* ICHostViewController.h in Headers */,
 				D2FAC4E314E7ABE80022BB3B /* ICIdentifiable.h in Headers */,
 				D2FAC4E514E7ABE80022BB3B /* icMacros.h in Headers */,
-				D2FAC4E814E7ABE80022BB3B /* ICMouseResponder.h in Headers */,
 				D2FAC4E914E7ABE80022BB3B /* ICNode.h in Headers */,
 				D2FAC4EB14E7ABE80022BB3B /* ICNodeVisitor.h in Headers */,
 				D2FAC4ED14E7ABE80022BB3B /* ICNodeVisitorDrawing.h in Headers */,

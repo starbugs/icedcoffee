@@ -86,10 +86,10 @@
     
     // Projected points are in frame buffer coordinates (pixels)
     kmVec3 projectPoint1, projectPoint2;
-    projectPoint1 = kmVec3Make(location.x * IC_CONTENT_SCALE_FACTOR(),
-                               location.y * IC_CONTENT_SCALE_FACTOR(), 0);
-    projectPoint2 = kmVec3Make(location.x * IC_CONTENT_SCALE_FACTOR(),
-                               location.y * IC_CONTENT_SCALE_FACTOR(), 1);
+    projectPoint1 = kmVec3Make(ICPointsToPixels(location.x),
+                               ICPointsToPixels(location.y), 0);
+    projectPoint2 = kmVec3Make(ICPointsToPixels(location.x),
+                               ICPointsToPixels(location.y), 1);
 
     // Unprojected points are in world coordinates (points)
     kmVec3 unprojectPoint1, unprojectPoint2;
@@ -113,7 +113,7 @@
 - (kmVec3)hostViewToNodeLocation:(CGPoint)location
 {
     NSArray *ancestors = [self ancestorsFilteredUsingBlock:
-                          ^(ICNode *node) {
+                          ^(ICNode *node, BOOL *stop) {
                               if ([node conformsToProtocol:@protocol(ICFrameBufferProvider)] &&
                                   [node conformsToProtocol:@protocol(ICProjectionTransforms)]) {
                                   return YES;

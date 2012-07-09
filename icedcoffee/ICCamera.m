@@ -124,10 +124,10 @@
 
 - (void)setViewport:(CGRect)viewport
 {
-    _viewport[0] = (GLint)viewport.origin.x * IC_CONTENT_SCALE_FACTOR();
-    _viewport[1] = (GLint)viewport.origin.y * IC_CONTENT_SCALE_FACTOR();
-    _viewport[2] = _viewport[0] + (GLint)viewport.size.width * IC_CONTENT_SCALE_FACTOR();
-    _viewport[3] = _viewport[1] + (GLint)viewport.size.height * IC_CONTENT_SCALE_FACTOR();
+    _viewport[0] = ICPointsToPixels((GLint)viewport.origin.x);
+    _viewport[1] = ICPointsToPixels((GLint)viewport.origin.y);
+    _viewport[2] = _viewport[0] + ICPointsToPixels((GLint)viewport.size.width);
+    _viewport[3] = _viewport[1] + ICPointsToPixels((GLint)viewport.size.height);
     float w = _viewport[2] - _viewport[0];
     float h = _viewport[3] - _viewport[1];
     self.aspect = w != 0 ? h / w : 0;
@@ -136,10 +136,10 @@
 
 - (CGRect)viewport
 {
-    return CGRectMake(_viewport[0] / IC_CONTENT_SCALE_FACTOR(),
-                      _viewport[1] / IC_CONTENT_SCALE_FACTOR(),
-                      (_viewport[2] - _viewport[0]) / IC_CONTENT_SCALE_FACTOR(),
-                      (_viewport[3] - _viewport[1]) / IC_CONTENT_SCALE_FACTOR());
+    return CGRectMake(ICPixelsToPoints(_viewport[0]),
+                      ICPixelsToPoints(_viewport[1]),
+                      ICPixelsToPoints(_viewport[2] - _viewport[0]),
+                      ICPixelsToPoints(_viewport[3] - _viewport[1]));
 }
 
 - (void)setEye:(kmVec3)eye
@@ -182,8 +182,8 @@
     kmGLLoadIdentity();
     
     // Point is in points, fbo is in pixels
-    point.x *= IC_CONTENT_SCALE_FACTOR();
-    point.y *= IC_CONTENT_SCALE_FACTOR();
+    point.x = ICPointsToPixels(point.x);
+    point.y = ICPointsToPixels(point.y);
 
     icPickMatrix(point.x, point.y, 1, 1, viewport);
 
@@ -205,10 +205,10 @@
     kmGLLoadIdentity();
     
     // Point is in points, fbo is in pixels
-    pickFrame.origin.x *= IC_CONTENT_SCALE_FACTOR();
-    pickFrame.origin.y *= IC_CONTENT_SCALE_FACTOR();
-    pickFrame.size.width *= IC_CONTENT_SCALE_FACTOR();
-    pickFrame.size.height *= IC_CONTENT_SCALE_FACTOR();
+    pickFrame.origin.x    = ICPointsToPixels(pickFrame.origin.x);
+    pickFrame.origin.y    = ICPointsToPixels(pickFrame.origin.y);
+    pickFrame.size.width  = ICPointsToPixels(pickFrame.size.width);
+    pickFrame.size.height = ICPointsToPixels(pickFrame.size.height);
     
     icPickMatrix(pickFrame.origin.x, pickFrame.origin.y, pickFrame.size.width, pickFrame.size.height, viewport);
     

@@ -58,7 +58,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
-    [self.hostViewController setFrameUpdateMode:kICFrameUpdateMode_OnDemand];
+    [self.hostViewController setFrameUpdateMode:ICFrameUpdateModeOnDemand];
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame

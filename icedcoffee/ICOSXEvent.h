@@ -27,18 +27,18 @@
 
 // Compatible to NSEventType
 enum {
-    ICLeftMouseDown = 1,
-    ICLeftMouseUp = 2,
-    ICRightMouseDown = 3,
-    ICRightMouseUp = 4,
-    ICMouseMoved = 5,
-    ICLeftMouseDragged = 6,
+    ICLeftMouseDown     = 1,
+    ICLeftMouseUp       = 2,
+    ICRightMouseDown    = 3,
+    ICRightMouseUp      = 4,
+    ICMouseMoved        = 5,
+    ICLeftMouseDragged  = 6,
     ICRightMouseDragged = 7,
-    ICMouseEntered = 8,
-    ICMouseExited = 9,
-    ICScrollWheel = 22,
-    ICOtherMouseDown = 25,
-    ICOtherMouseUp = 26,
+    ICMouseEntered      = 8,
+    ICMouseExited       = 9,
+    ICScrollWheel       = 22,
+    ICOtherMouseDown    = 25,
+    ICOtherMouseUp      = 26,
     ICOtherMouseDragged = 27
 };
 typedef NSUInteger ICOSXEventType;

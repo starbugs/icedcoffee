@@ -91,7 +91,7 @@
     if (_openGLReady && !self.isRunning) {
         _isRunning = YES;
     
-        ICLOG(@"IcedCoffee: animation started");
+        ICLog(@"IcedCoffee: animation started");
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 
@@ -107,7 +107,7 @@
     if (self.isRunning) {
         _isRunning = NO;
         
-        ICLOG(@"IcedCoffee: animation stopped");
+        ICLog(@"IcedCoffee: animation stopped");
         
         [self.thread cancel];
         self.thread = nil;
@@ -136,7 +136,9 @@
 
 - (void)drawScene
 {
-    if (_frameUpdateMode == kICFrameUpdateMode_OnDemand && !_needsDisplay) {
+    [super drawScene];
+    
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
         return; // nothing to draw
     }
     

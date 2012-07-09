@@ -1,27 +1,26 @@
-/*
- * cocos2d for iPhone: http://www.cocos2d-iphone.org
- *
- * Copyright (c) 2008-2010 Ricardo Quesada
- * Copyright (c) 2011 Zynga Inc.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
- */
+//  
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
+//  
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+//  of the Software, and to permit persons to whom the Software is furnished to do
+//  so, subject to the following conditions:
+//  
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//  
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//  
+//  Some structs and typedefs adapted from cocos2d-iphone.org (see LICENSE_cocos2d.txt).
 
 /**
  @file icTypes.h
@@ -36,12 +35,14 @@
 
 // IcedCoffee extensions to kazmath
 
-#define kmNullVec2 (kmVec2){0,0}
-#define kmNullVec3 (kmVec3){0,0,0}
-#define kmVec2Make(x,y) (kmVec2){x,y}
-#define kmVec3Make(x,y,z) (kmVec3){x,y,z}
+#define kmNullVec2 ((kmVec2){0,0})
+#define kmNullVec3 ((kmVec3){0,0,0})
+#define kmVec2Make(x,y) ((kmVec2){x,y})
+#define kmVec3Make(x,y,z) ((kmVec3){x,y,z})
 #define kmVec3ToCGPoint(v) (CGPointMake(v.x,v.y))
-#define kmVec4Make(x,y,z,w) (kmVec4){x,y,z,w}
+#define kmVec3ToCGSize(v) (CGSizeMake(v.x,v.y))
+#define CGSizeTokmVec3(s) (kmVec3Make(s.width,s.height,0.0f))
+#define kmVec4Make(x,y,z,w) ((kmVec4){x,y,z,w})
 #define kmVec3Description(v) \
     ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
 #define kmMat4Description(m) \
@@ -56,20 +57,94 @@
 /** @name Frame Updates */
 
 typedef enum _ICFrameUpdateMode {
-    kICFrameUpdateMode_Synchronized = 0,
-    kICFrameUpdateMode_OnDemand = 1
+    ICFrameUpdateModeSynchronized = 0,
+    ICFrameUpdateModeOnDemand = 1
 } ICFrameUpdateMode;
 
 typedef enum _ICShaderValueType {
-    ICShaderValueType_Invalid,
-    ICShaderValueType_Int,
-    ICShaderValueType_Float,
-    ICShaderValueType_Vec2,
-    ICShaderValueType_Vec3,
-    ICShaderValueType_Vec4,
-    ICShaderValueType_Mat4,
-    ICShaderValueType_Sampler2D
+    ICShaderValueTypeInvalid,
+    ICShaderValueTypeInt,
+    ICShaderValueTypeFloat,
+    ICShaderValueTypeVec2,
+    ICShaderValueTypeVec3,
+    ICShaderValueTypeVec4,
+    ICShaderValueTypeMat4,
+    ICShaderValueTypeSampler2D
 } ICShaderValueType;
+
+
+/** @typedef ICPixelFormat
+ Supported texture pixel formats
+ */
+typedef enum {
+	ICPixelFormatAutomatic = 0,
+	//! 32-bit texture: RGBA8888
+	ICPixelFormatRGBA8888,
+	//! 16-bit texture without Alpha channel
+	ICPixelFormatRGB565,
+	//! 8-bit textures used as masks
+	ICPixelFormatA8,
+	//! 16-bit textures: RGBA4444
+	ICPixelFormatRGBA4444,
+	//! 16-bit textures: RGB5A1
+	ICPixelFormatRGB5A1,	
+    
+	//! Default texture format: RGBA8888
+	ICPixelFormatDefault = ICPixelFormatRGBA8888,
+} ICPixelFormat;
+
+
+/** @typedef ICDepthBufferFormat
+ Supported depth buffer formats
+ */
+typedef enum {
+    ICDepthBufferFormatNone = 0,
+	ICDepthBufferFormat16 = 1,
+    ICDepthBufferFormat24 = 2,
+    
+	//! Default texture format: RGBA8888
+	ICDepthBufferFormatDefault = ICDepthBufferFormat24
+} ICDepthBufferFormat;
+
+
+/** @typedef ICStencilBufferFormat
+ */
+typedef enum {
+    ICStencilBufferFormatNone = 0,
+	ICStencilBufferFormat8 = 1,
+    
+	//! Default texture format: RGBA8888
+	ICStencilBufferFormatDefault = ICStencilBufferFormat8
+} ICStencilBufferFormat;
+
+
+/**
+ @enum ICResolutionType
+ @brief Texture resolution type
+ */
+typedef enum _ICResolutionType {
+	//! Unknonw resolution type
+	ICResolutionTypeUnknown,
+	//! iPhone resolution type
+	ICResolutionTypeiPhone,
+	//! RetinaDisplay resolution type
+	ICResolutionTypeRetinaDisplay,
+	//! iPad resolution type
+	ICResolutionTypeiPad,
+} ICResolutionType;
+
+
+enum {
+    ICAutoResizingMaskNotSizable           = 0x00,
+    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
+    ICAutoResizingMaskWidthSizable         = 0x02,
+    ICAutoResizingMaskRightMarginFlexible  = 0x04,
+    ICAutoResizingMaskTopMarginFlexible    = 0x08,
+    ICAutoResizingMaskHeightSizable        = 0x10,
+    ICAutoResizingMaskBottomMarginFlexible = 0x20
+};
+
+typedef double icTime;
 
 /** @name Color Types */
 
@@ -125,77 +200,3 @@ typedef struct _icBlendFunc
 	//! destination blend function
 	GLenum dst;
 } icBlendFunc;
-
-
-/** @typedef ICPixelFormat
- Supported texture pixel formats
- */
-typedef enum {
-	kICPixelFormat_Automatic = 0,
-	//! 32-bit texture: RGBA8888
-	kICPixelFormat_RGBA8888,
-	//! 16-bit texture without Alpha channel
-	kICPixelFormat_RGB565,
-	//! 8-bit textures used as masks
-	kICPixelFormat_A8,
-	//! 16-bit textures: RGBA4444
-	kICPixelFormat_RGBA4444,
-	//! 16-bit textures: RGB5A1
-	kICPixelFormat_RGB5A1,	
-    
-	//! Default texture format: RGBA8888
-	kICPixelFormat_Default = kICPixelFormat_RGBA8888,
-} ICPixelFormat;
-
-
-/** @typedef ICDepthBufferFormat
- Supported depth buffer formats
- */
-typedef enum {
-    kICDepthBufferFormat_None = 0,
-	kICDepthBufferFormat_16 = 1,
-    kICDepthBufferFormat_24 = 2,
-    
-	//! Default texture format: RGBA8888
-	kICDepthBufferFormat_Default = kICDepthBufferFormat_24
-} ICDepthBufferFormat;
-
-
-/** @typedef ICStencilBufferFormat
- */
-typedef enum {
-    kICStencilBufferFormat_None = 0,
-	kICStencilBufferFormat_8 = 1,
-    
-	//! Default texture format: RGBA8888
-	kICStencilBufferFormat_Default = kICStencilBufferFormat_8
-} ICStencilBufferFormat;
-
-
-/**
- @enum icResolutionType
- @brief Texture resolution type
- */
-typedef enum _icResolutionType {
-	//! Unknonw resolution type
-	kICResolutionUnknown,
-	//! iPhone resolution type
-	kICResolutioniPhone,
-	//! RetinaDisplay resolution type
-	kICResolutionRetinaDisplay,
-	//! iPad resolution type
-	kICResolutioniPad,
-} icResolutionType;
-
-
-enum {
-    ICAutoResizingMaskNotSizable           = 0x00,
-    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
-    ICAutoResizingMaskWidthSizable         = 0x02,
-    ICAutoResizingMaskRightMarginFlexible  = 0x04,
-    ICAutoResizingMaskTopMarginFlexible    = 0x08,
-    ICAutoResizingMaskHeightSizable        = 0x10,
-    ICAutoResizingMaskBottomMarginFlexible = 0x20
-};
-
-typedef double icTime;

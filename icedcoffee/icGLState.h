@@ -29,11 +29,11 @@
 #import "Platforms/icGL.h"
 
 enum {
-	kICVertexAttrib_Position,
-	kICVertexAttrib_Color,
-	kICVertexAttrib_TexCoords,
+	ICVertexAttribPosition,
+	ICVertexAttribColor,
+	ICVertexAttribTexCoords,
     
-	kICVertexAttrib_MAX,
+	ICVertexAttribMAX,
 };
 
 @class ICShaderProgram;

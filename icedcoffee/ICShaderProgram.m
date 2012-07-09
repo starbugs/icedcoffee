@@ -34,19 +34,19 @@
 uint glTypeForShaderValueType(ICShaderValueType valueType)
 {
     switch (valueType) {
-        case ICShaderValueType_Int:
+        case ICShaderValueTypeInt:
             return GL_INT;
-        case ICShaderValueType_Float:
+        case ICShaderValueTypeFloat:
             return GL_FLOAT;
-        case ICShaderValueType_Vec2:
+        case ICShaderValueTypeVec2:
             return GL_FLOAT_VEC2;
-        case ICShaderValueType_Vec3:
+        case ICShaderValueTypeVec3:
             return GL_FLOAT_VEC3;
-        case ICShaderValueType_Vec4:
+        case ICShaderValueTypeVec4:
             return GL_FLOAT_VEC4;
-        case ICShaderValueType_Mat4:
+        case ICShaderValueTypeMat4:
             return GL_FLOAT_MAT4;
-        case ICShaderValueType_Sampler2D:
+        case ICShaderValueTypeSampler2D:
             return GL_SAMPLER_2D;
         default:
             assert(nil && "Type not supported"); // not reached
@@ -59,24 +59,24 @@ ICShaderValueType shaderValueTypeForGLType(GLenum type)
 {
     switch (type) {
         case GL_INT:
-            return ICShaderValueType_Int;
+            return ICShaderValueTypeInt;
         case GL_FLOAT:
-            return ICShaderValueType_Float;
+            return ICShaderValueTypeFloat;
         case GL_FLOAT_VEC2:
-            return ICShaderValueType_Vec2;
+            return ICShaderValueTypeVec2;
         case GL_FLOAT_VEC3:
-            return ICShaderValueType_Vec3;
+            return ICShaderValueTypeVec3;
         case GL_FLOAT_VEC4:
-            return ICShaderValueType_Vec4;
+            return ICShaderValueTypeVec4;
         case GL_FLOAT_MAT4:
-            return ICShaderValueType_Mat4;
+            return ICShaderValueTypeMat4;
         case GL_SAMPLER_2D:
-            return ICShaderValueType_Sampler2D;
+            return ICShaderValueTypeSampler2D;
         default:
             assert(nil && "Type not supported"); // not reached
             break;
     }
-    return ICShaderValueType_Invalid;
+    return ICShaderValueTypeInvalid;
 }
 
 
@@ -117,19 +117,19 @@ typedef void (*GLLogFunction) (GLuint program,
         
 		if (vShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:vShaderFilename]) {
 			if (![self compileShader:&_vertShader type:GL_VERTEX_SHADER file:vShaderFilename]) {
-				ICLOG(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
+				ICLog(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
             }
 		} else {
-            ICLOG(@"Vertex shader %@ unavailable", vShaderFilename);
+            ICLog(@"Vertex shader %@ unavailable", vShaderFilename);
         }
         
         // Create and compile fragment shader
 		if (fShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:fShaderFilename]) {
 			if (![self compileShader:&_fragShader type:GL_FRAGMENT_SHADER file:fShaderFilename]) {
-				ICLOG(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
+				ICLog(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
             }
 		} else {
-            ICLOG(@"Fragment shader %@ unavailable", fShaderFilename);            
+            ICLog(@"Fragment shader %@ unavailable", fShaderFilename);            
         }
         
 		if (_vertShader)
@@ -138,7 +138,7 @@ typedef void (*GLLogFunction) (GLuint program,
 		if (_fragShader)
 			glAttachShader(_program, _fragShader);
         
-        CHECK_GL_ERROR_DEBUG();
+        IC_CHECK_GL_ERROR_DEBUG();
     }
     
     return self;
@@ -146,7 +146,7 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (void)dealloc
 {
-	ICLOG_DEALLOC(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
     
     [_uniforms release];
     
@@ -183,13 +183,13 @@ typedef void (*GLLogFunction) (GLuint program,
     
 	if (!status) {
 		if (type == GL_VERTEX_SHADER)
-			ICLOG(@"IcedCoffee: %@: %@", file, [self vertexShaderLog]);
+			ICLog(@"IcedCoffee: %@: %@", file, [self vertexShaderLog]);
 		else
-			ICLOG(@"IcedCoffee: %@: %@", file, [self fragmentShaderLog]);
+			ICLog(@"IcedCoffee: %@: %@", file, [self fragmentShaderLog]);
         
 	}
     
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     return status == GL_TRUE;
 }
@@ -197,7 +197,7 @@ typedef void (*GLLogFunction) (GLuint program,
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index
 {
 	glBindAttribLocation(_program, index, [attributeName UTF8String]);
-    CHECK_GL_ERROR_DEBUG();    
+    IC_CHECK_GL_ERROR_DEBUG();    
 }
 
 - (BOOL)setShaderValue:(ICShaderValue *)shaderValue forUniform:(NSString *)uniformName
@@ -223,46 +223,46 @@ typedef void (*GLLogFunction) (GLuint program,
     {
         switch(u.type)
         {
-            case ICShaderValueType_Int:
+            case ICShaderValueTypeInt:
                 glUniform1i(u.location, [u intValue]);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
-            case ICShaderValueType_Float:
+            case ICShaderValueTypeFloat:
                 glUniform1f(u.location, [u floatValue]);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
-            case ICShaderValueType_Vec2:
+            case ICShaderValueTypeVec2:
             {
                 kmVec2 v = [u vec2Value];  
                 glUniform2fv(u.location, 1, (GLfloat*)&v);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
             }
-            case ICShaderValueType_Vec3:
+            case ICShaderValueTypeVec3:
             {
                 kmVec3 v = [u vec3Value];  
                 glUniform3fv(u.location, 1, (GLfloat*)&v);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
             }
-            case ICShaderValueType_Vec4:
+            case ICShaderValueTypeVec4:
             {
                 kmVec4 v = [u vec4Value];  
                 glUniform4fv(u.location, 1, (GLfloat*)&v);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
             }
-            case ICShaderValueType_Mat4:
+            case ICShaderValueTypeMat4:
             {
                 glUniformMatrix4fv(u.location, 1, GL_FALSE, [u mat4Value].mat);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
             }
  
-            case ICShaderValueType_Sampler2D:
+            case ICShaderValueTypeSampler2D:
             {
                 glUniform1i(u.location, [u intValue]);
-                CHECK_GL_ERROR_DEBUG();
+                IC_CHECK_GL_ERROR_DEBUG();
                 break;
             }
             default:
@@ -270,7 +270,7 @@ typedef void (*GLLogFunction) (GLuint program,
         }
     }
         
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
 }
 
 // Adapted from http://stackoverflow.com/questions/4783912/how-can-i-find-a-list-of-all-the-uniforms-in-opengl-es-2-0-vertex-shader-pro
@@ -308,7 +308,7 @@ typedef void (*GLLogFunction) (GLuint program,
     
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-		ICLOG(@"IcedCoffee: ERROR: Failed to link program: %i", _program);
+		ICLog(@"IcedCoffee: ERROR: Failed to link program: %i", _program);
 		if (_vertShader)
 			glDeleteShader(_vertShader);
 		if (_fragShader)
@@ -326,7 +326,7 @@ typedef void (*GLLogFunction) (GLuint program,
     
 	_vertShader = _fragShader = 0;
     
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     [self fetchUniforms];
     
@@ -337,7 +337,7 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     glUseProgram(_program);
     [self updateUniforms];
-    CHECK_GL_ERROR_DEBUG();    
+    IC_CHECK_GL_ERROR_DEBUG();    
 }
 
 - (NSString *)logForOpenGLObject:(GLuint)object

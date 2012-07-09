@@ -65,7 +65,7 @@
 - (id)initWithInt:(int)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Int;
+        _type = ICShaderValueTypeInt;
         _value.intValue = value;
     }
     return self;
@@ -74,7 +74,7 @@
 - (id)initWithFloat:(float)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Float;
+        _type = ICShaderValueTypeFloat;
         _value.floatValue = value;
     }
     return self;
@@ -84,7 +84,7 @@
 - (id)initWithVec2:(kmVec2)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Vec2;
+        _type = ICShaderValueTypeVec2;
         _value.vec2Value = value;
     }
     return self;
@@ -94,7 +94,7 @@
 - (id)initWithVec3:(kmVec3)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Vec3;
+        _type = ICShaderValueTypeVec3;
         _value.vec3Value = value;
     }
     return self;
@@ -104,7 +104,7 @@
 - (id)initWithVec4:(kmVec4)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Vec4;
+        _type = ICShaderValueTypeVec4;
         _value.vec4Value = value;
     }
     return self;
@@ -114,7 +114,7 @@
 - (id)initWithMat4:(kmMat4)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Mat4;
+        _type = ICShaderValueTypeMat4;
         _value.mat4Value = value;
     }
     return self;
@@ -124,7 +124,7 @@
 - (id)initWithSampler2D:(int)value
 {
     if ((self = [super init])) {
-        _type = ICShaderValueType_Sampler2D;
+        _type = ICShaderValueTypeSampler2D;
         _value.intValue = value;
     }
     return self;    

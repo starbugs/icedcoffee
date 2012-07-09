@@ -1,4 +1,4 @@
-IcedCoffee v0.6.3
+IcedCoffee v0.6.4
 =================
 
 IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based

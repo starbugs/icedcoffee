@@ -32,7 +32,7 @@
 @class ICHostViewController;
 
 /**
- @brief Defines the root of a scene graph, manages a camera and visitors for drawing the scene
+ @brief Defines the root of a scene graph, manages a camera and visitors for drawing nodes
  
  <h3>Overview</h3>
  
@@ -181,52 +181,52 @@
 }
 
 /**
- @brief The ICHostViewController object associated with the scene
+ @brief The ICHostViewController object associated with the receiver
  */
 @property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
     ICHostViewController *hostViewController;
 
 /**
- @brief An ICCamera object used to define the scene's projection and model-view matrices
+ @brief An ICCamera object used to define the receiver's projection and model-view matrices
  */
 @property (nonatomic, retain) ICCamera *camera;
 
 /**
- @brief An ICNodeVisitor object defining the visitor used to draw the scene's contents
+ @brief An ICNodeVisitor object defining the visitor used to draw the receiver's contents
  */
 @property (nonatomic, retain) ICNodeVisitor *drawingVisitor;
 
 /**
- @brief An ICNodeVisitor object defining the visitor used to perform hit tests on the scene
+ @brief An ICNodeVisitor object defining the visitor used to perform hit tests on the receiver
  */
 @property (nonatomic, retain) ICNodeVisitor *pickingVisitor;
 
 /**
- @brief An icColor4B value defining the clear color used to clear the scene's frame buffer
+ @brief An icColor4B value defining the clear color used to clear the receiver's frame buffer
  before drawing its contents
  */
 @property (nonatomic, assign) icColor4B clearColor;
 
 /**
- @brief A boolean value indicating whether the scene automatically clears the color buffer
+ @brief A boolean value indicating whether the receiver automatically clears the color buffer
  before drawing its contents
  */
 @property (nonatomic, assign) BOOL clearsColorBuffer;
 
 /**
- @brief A boolean value indicating whether the scene automatically clears the depth buffer
+ @brief A boolean value indicating whether the receiver automatically clears the depth buffer
  before drawing its contents
  */
 @property (nonatomic, assign) BOOL clearsDepthBuffer;
 
 /**
- @brief A boolean value indicating whether the scene automatically clears the stencil buffer
+ @brief A boolean value indicating whether the receiver automatically clears the stencil buffer
  before drawing its contents
  */
 @property (nonatomic, assign) BOOL clearsStencilBuffer;
 
 /**
- @brief A boolean flag indicating whether depth testing is performed
+ @brief A boolean flag indicating whether depth testing is performed by the receiver
  
  If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
  GL_DEPTH_TEST state before drawing the scene's contents. The default value for this flag is NO.
@@ -234,7 +234,7 @@
 @property (nonatomic, assign) BOOL performsDepthTesting;
 
 /**
- @brief A boolean flag indicating whether face culling is performed
+ @brief A boolean flag indicating whether face culling is performed by the receiver
 
  If face culling is enabled, ICScene will enable the GL_CULL_FACE state before drawing the
  scene's contents. The default value for this flag is YES.
@@ -253,43 +253,43 @@
  @brief Initializes the receiver with a default camera and default visitors.
  
  This method initializes the receiver with a default camera as specified
- in #ICDEFAULT_CAMERA, a default drawing visitor as specified in ICDEFAULT_DRAWING_VISITOR,
- and a default picking visitor as specified in ICDEFAULT_PICKING_VISITOR.
+ in #IC_DEFAULT_CAMERA, a default drawing visitor as specified in IC_DEFAULT_DRAWING_VISITOR,
+ and a default picking visitor as specified in IC_DEFAULT_PICKING_VISITOR.
  */
 - (id)init;
 
 /**
- @brief Sets up the drawing environment for the scene before drawing
+ @brief Sets up the drawing environment for the receiver before drawing
  */
 - (void)setUpSceneForDrawing;
 
 /**
- @brief Resets the drawing environment of the scene after drawing
+ @brief Resets the drawing environment of the receiver after drawing
  */
 - (void)tearDownSceneForDrawing;
 
 /**
- @brief Sets up the drawing environment for the scene before picking
+ @brief Sets up the drawing environment for the receiver before picking
  */
 - (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 
 /**
- @brief Resets the drawing environment of the scene after picking
+ @brief Resets the drawing environment of the receiver after picking
  */
 - (void)tearDownSceneForPicking;
 
 /**
- @brief Sets up the scene's drawing environment, draws all its contents using the drawing visitor,
- and finally tears down the scene's drawing environment
+ @brief Sets up the receiver's drawing environment, draws all its contents using the
+ drawing visitor, and finally tears down the scene's drawing environment
  */
 - (void)visit;
 
 /**
- @brief Performs a hit test on the scene's node hierarchy
+ @brief Performs a hit test on the receiver's node hierarchy
  
- Sets up the scene's picking environment, performs a hit test by drawing all nodes contained
- in the scene using the picking visitor (see ICScene::pickingVisitor), and finally tears down
- the scene's picking environment.
+ Sets up the receiver's picking environment, performs a hit test by drawing all nodes contained
+ in the receiver using the picking visitor (see ICScene::pickingVisitor), and finally tears down
+ the receiver's picking environment.
  
  @param point A 2D location on the frame buffer in points (Y axis points downwards)
  
@@ -302,20 +302,20 @@
 - (NSArray *)hitTest:(CGPoint)point;
 
 /**
- @brief Sets the size of the scene, adjusts the viewport of the camera and sets the size of
+ @brief Sets the size of the receiver, adjusts the viewport of the camera and sets the size of
  descendant scenes to the specified value
  */
 - (void)setSize:(kmVec3)size;
 
 /**
- @brief Adjusts the scene's size to the size of its parent frame buffer
+ @brief Adjusts the receiver's size to the size of its parent frame buffer
  */
 - (void)adjustToFrameBufferSize;
 
 - (CGRect)frameRect;
 
 /**
- @brief Returns the size of the parent frame buffer in points
+ @brief Returns the size of the receiver's parent frame buffer in points
  */
 - (CGSize)frameBufferSize;
 

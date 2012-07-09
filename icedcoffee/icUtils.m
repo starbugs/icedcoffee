@@ -7,6 +7,8 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
+#import "ICControl.h"
+
 unsigned long icNextPOT(unsigned long x)
 {
     x = x - 1;
@@ -136,4 +138,19 @@ kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count)
     }
     
     return (kmAABB){ aabbMin, aabbMax };   
+}
+
+ICControl *ICControlForNode(ICNode *node)
+{
+    if ([node isKindOfClass:[ICControl class]]) {
+        // The node itself is a control
+        return (ICControl *)node;
+    } else {
+        ICControl *ancestorControl = (ICControl *)[node firstAncestorOfType:[ICControl class]];
+        if (ancestorControl) {
+            // The node has an ancestor which is a control
+            return ancestorControl;
+        }
+    }
+    return nil; // no control found for given node
 }

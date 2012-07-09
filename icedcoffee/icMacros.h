@@ -77,10 +77,13 @@ extern float g_icContentScaleFactor;
  support using ICHostViewController::enableRetinaDisplaySupport:. If the device's software and
  hardware support the retina display, the content scale factor will be set to 2.0.
  
- The default content scale factors are defined in #ICDEFAULT_CONTENT_SCALE_FACTOR
- and #ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR.
+ The default content scale factors are defined in #IC_DEFAULT_CONTENT_SCALE_FACTOR
+ and #IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR.
  */
-#define IC_CONTENT_SCALE_FACTOR() g_icContentScaleFactor
+#define ICContentScaleFactor() g_icContentScaleFactor
+
+#define ICPointsToPixels(points) (points*ICContentScaleFactor())
+#define ICPixelsToPoints(pixels) (pixels/ICContentScaleFactor())
 
 
 // Logging and Debugging
@@ -88,23 +91,23 @@ extern float g_icContentScaleFactor;
 #if defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
 
 // Macro for breaking into the debugger
-#define IC_DEBUG_BREAK() kill(getpid(), SIGINT)
+#define ICDebugBreak() kill(getpid(), SIGINT)
 
 // Macro for logging deallocations
 #if IC_LOG_DEALLOCATIONS
-#define ICLOG_DEALLOC(...) NSLog(__VA_ARGS__)
+#define ICLogDealloc(...) NSLog(__VA_ARGS__)
 #else
-#define ICLOG_DEALLOC(...) do {} while(0)
+#define ICLogDealloc(...) do {} while(0)
 #endif // IC_LOG_DEALLOCATIONS
 
 // Macro for general IcedCoffee logging
-#define ICLOG(...) NSLog(__VA_ARGS__) 
+#define ICLog(...) NSLog(__VA_ARGS__) 
 
 #else
 
-#define IC_DEBUG_BREAK() do {} while(0)
-#define ICLOG(...) do {} while(0)
-#define ICLOG_DEALLOC(...) do {} while(0)
+#define ICDebugBreak() do {} while(0)
+#define ICLog(...) do {} while(0)
+#define ICLogDealloc(...) do {} while(0)
 
 #endif // ICEDCOFEE_DEBUG
 

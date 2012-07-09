@@ -23,6 +23,7 @@
 
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
+#import "icConfig.h"
 
 ICContextManager *g_defaultContextManager = nil;
 
@@ -53,12 +54,20 @@ ICContextManager *g_defaultContextManager = nil;
 - (void)registerRenderContext:(ICRenderContext *)renderContext
              forOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext
 {
-    [_contexts setObject:renderContext forKey:[NSValue valueWithPointer:openGLContext]];
+    NSValue *contextAddress = [NSValue valueWithPointer:openGLContext];
+    [_contexts setObject:renderContext forKey:contextAddress];
+#if IC_ENABLE_DEBUG_OPENGL_CONTEXTS
+    ICLog(@"Registered render context for OpenGL context: %@", [contextAddress description]);
+#endif
 }
 
 - (void)unregisterRenderContextForOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext
 {
-    [_contexts removeObjectForKey:[NSValue valueWithPointer:openGLContext]];
+    NSValue *contextAddress = [NSValue valueWithPointer:openGLContext];
+    [_contexts removeObjectForKey:contextAddress];
+#if IC_ENABLE_DEBUG_OPENGL_CONTEXTS
+    ICLog(@"Unregistered render context for OpenGL context: %@", [contextAddress description]);
+#endif
 }
 
 - (ICRenderContext *)renderContextForOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext

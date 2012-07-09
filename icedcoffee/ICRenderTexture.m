@@ -103,24 +103,24 @@
 
 - (id)initWithWidth:(float)w height:(float)h
 {
-    return [self initWithWidth:w height:h pixelFormat:kICPixelFormat_Default];
+    return [self initWithWidth:w height:h pixelFormat:ICPixelFormatDefault];
 }
 
 - (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer
 {
     return [self initWithWidth:w
                         height:h
-                   pixelFormat:kICPixelFormat_Default
-             depthBufferFormat:depthBuffer ? kICDepthBufferFormat_Default : kICDepthBufferFormat_None];
+                   pixelFormat:ICPixelFormatDefault
+             depthBufferFormat:depthBuffer ? ICDepthBufferFormatDefault : ICDepthBufferFormatNone];
 }
 
 - (id)initWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer stencilBuffer:(BOOL)stencilBuffer
 {
     return [self initWithWidth:w
                         height:h
-                   pixelFormat:kICPixelFormat_Default
-             depthBufferFormat:depthBuffer ? kICDepthBufferFormat_Default : kICDepthBufferFormat_None
-           stencilBufferFormat:stencilBuffer ? kICStencilBufferFormat_Default : kICStencilBufferFormat_None];
+                   pixelFormat:ICPixelFormatDefault
+             depthBufferFormat:depthBuffer ? ICDepthBufferFormatDefault : ICDepthBufferFormatNone
+           stencilBufferFormat:stencilBuffer ? ICStencilBufferFormatDefault : ICStencilBufferFormatNone];
 }
 
 - (id)initWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format
@@ -128,7 +128,7 @@
     return [self initWithWidth:w
                         height:h
                    pixelFormat:format
-             depthBufferFormat:kICDepthBufferFormat_None];
+             depthBufferFormat:ICDepthBufferFormatNone];
 }
 
 - (id)initWithWidth:(float)w
@@ -140,7 +140,7 @@
                         height:h
                    pixelFormat:format
              depthBufferFormat:depthBufferFormat
-           stencilBufferFormat:kICStencilBufferFormat_None];
+           stencilBufferFormat:ICStencilBufferFormatNone];
 }
 
 - (id)initWithWidth:(float)w
@@ -150,7 +150,7 @@
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 {
 	if ((self = [super init])) {
-		NSAssert(pixelFormat != kICPixelFormat_A8,
+		NSAssert(pixelFormat != ICPixelFormatA8,
                  @"Only RGB and RGBA formats are valid for a render texture");
         
         // Store formats
@@ -167,8 +167,8 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         [_sprite flipTextureVertically];
 		[self addChild:_sprite];        
         
-        // By default, set the display mode to kICFrameUpdateMode_Synchronized
-        self.frameUpdateMode = kICFrameUpdateMode_Synchronized;
+        // By default, set the display mode to ICFrameUpdateModeSynchronized
+        self.frameUpdateMode = ICFrameUpdateModeSynchronized;
 	}
 	return self;
 }
@@ -193,8 +193,8 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
     [super setSize:size];
     
-    w *= IC_CONTENT_SCALE_FACTOR();
-    h *= IC_CONTENT_SCALE_FACTOR();
+    w = ICPointsToPixels(w);
+    h = ICPointsToPixels(h);
     
     // Textures must be power of two unless we have NPOT support
     NSUInteger powW;
@@ -244,11 +244,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         if (!_stencilBufferFormat) {
             // Depth buffer only formats
             switch (_depthBufferFormat) {
-                case kICDepthBufferFormat_16: {
+                case ICDepthBufferFormat16: {
                     depthFormat = GL_DEPTH_COMPONENT16;
                     break;
                 }
-                case kICDepthBufferFormat_24: {
+                case ICDepthBufferFormat24: {
 #ifdef __IC_PLATFORM_MAC
                     depthFormat = GL_DEPTH_COMPONENT24;
 #elif defined(__IC_PLATFORM_IOS)
@@ -263,7 +263,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
             }
         } else {
             // Depth-stencil packed format, the only supported format is GL_DEPTH24_STENCIL8
-            _depthBufferFormat = kICDepthBufferFormat_24;
+            _depthBufferFormat = ICDepthBufferFormat24;
 #ifdef __IC_PLATFORM_MAC
             depthFormat = GL_DEPTH24_STENCIL8;
 #elif defined(__IC_PLATFORM_IOS)
@@ -291,7 +291,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     
     // Bind old frame buffer
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     //[_texture setAliasTexParameters];    
     
@@ -320,7 +320,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
     _isInRenderTextureDrawContext = YES;
 }
@@ -328,7 +328,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 - (void)end
 {
 	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
     
 	// Restore previous matrices
     kmGLMatrixMode(GL_PROJECTION);
@@ -363,7 +363,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
     [self begin];
-    if (visitor.visitorType == kICPickingNodeVisitor) {
+    if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         
         // Perform picking on inner texture scene
         
@@ -372,7 +372,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         CGPoint localPoint = kmVec3ToCGPoint([self parentFrameBufferToNodeLocation:pickPoint]);
         
 #if IC_ENABLE_DEBUG_HITTEST
-        ICLOG(@"Hit test within ICRenderTexture: pickPoint=(%f,%f) localPoint=(%f,%f)",
+        ICLog(@"Hit test within ICRenderTexture: pickPoint=(%f,%f) localPoint=(%f,%f)",
               pickPoint.x, pickPoint.y, localPoint.x, localPoint.y);
 #endif
                 
@@ -383,14 +383,14 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         // which will be the hit of the render texture's sprite
         [(ICNodeVisitorPicking *)visitor appendNodesToResultStack:innerHitTestNodes];
         
-    } else if (self.frameUpdateMode == kICFrameUpdateMode_Synchronized ||
-              (self.frameUpdateMode == kICFrameUpdateMode_OnDemand && _needsDisplay)) {
+    } else if (self.frameUpdateMode == ICFrameUpdateModeSynchronized ||
+              (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay)) {
         
         // Visit inner scene for drawing
         [self.subScene visit];
         
         // Reset needsDisplay property if applicable
-        if (self.frameUpdateMode == kICFrameUpdateMode_OnDemand && _needsDisplay) {
+        if (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay) {
             _needsDisplay = NO;
         }
         
@@ -428,6 +428,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 - (kmPlane)plane
 {
     return [self.sprite plane];
+}
+
+- (CGSize)frameBufferSize
+{
+    return kmVec3ToCGSize(self.size);
 }
 
 @end

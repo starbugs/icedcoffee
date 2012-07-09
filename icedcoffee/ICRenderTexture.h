@@ -86,20 +86,20 @@
  ICRenderTexture adds functionality for conditional drawing (frame buffer updates on demand only)
  to the IcedCoffee scene graph. Conditional drawing can be configured using the
  ICRenderTexture::frameUpdateMode property. If ICRenderTexture::frameUpdateMode is set to
- <code>kICFrameUpdateMode_OnDemand</code>, the visitation system will draw the sub scene of
+ <code>ICFrameUpdateModeOnDemand</code>, the visitation system will draw the sub scene of
  the render texture only if ICNode::setNeedsDisplay was called within the current run loop
- slice. If <code>frameUpdateMode</code> is set to <code>kICFrameUpdateMode_Synchronized</code>,
+ slice. If <code>frameUpdateMode</code> is set to <code>ICFrameUpdateModeSynchronized</code>,
  the framework will render the sub scene to the render texture on each time the parent
  scene is drawn.
  
  Note that by default render textures are initialized with
- <code>kICFrameUpdateMode_Synchronized</code>. For sub scenes that do not change frequently,
+ <code>ICFrameUpdateModeSynchronized</code>. For sub scenes that do not change frequently,
  you should set the frame update mode to on demand drawing.
  
  @code
  // As the sprite we have added in the previous example isn't updated frequently, improve
  // rendering performance by only drawing it when really required:
- myRenderTexture.frameUpdateMode = kICFrameUpdateMode_OnDemand;
+ myRenderTexture.frameUpdateMode = ICFrameUpdateModeOnDemand;
  @endcode
  
  At a later point in your application code, when the render texture's contents are changed,
@@ -242,7 +242,7 @@
  
  The render texture will be initialized with a color buffer backing only. Neither a depth buffer
  nor a stencil buffer will be attached. The render texture's pixel format will be set to
- kICPixelFormat_Default.
+ ICPixelFormatDefault.
  */
 - (id)initWithWidth:(float)w height:(float)h;
 
@@ -325,8 +325,8 @@
  by the format arguments. Due to compatibility reasons, it is not possible to create a
  render texture with a stencil buffer if no depth buffer is attached. Therefore, if a
  stencil buffer format is defined, a packed depth-stencil buffer will be attached to the
- render texture. In this case, the depth format will default to kICDepthBufferFormat_24 and
- the stencil buffer format will be kICStencilBufferFormat_8.
+ render texture. In this case, the depth format will default to ICDepthBufferFormat24 and
+ the stencil buffer format will be ICStencilBufferFormat8.
  */
 - (id)initWithWidth:(float)w
              height:(float)h
@@ -370,5 +370,10 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
  This method essentially returns the render texture's sprite plane.
  */
 - (kmPlane)plane;
+
+/**
+ @brief The size of the receiver's frame buffer, in points
+ */
+- (CGSize)frameBufferSize;
 
 @end

@@ -31,7 +31,14 @@
 #import "ICHostViewController.h"
 #import "ICNode.h"
 #import "ICNodeRef.h"
+#import "ICControl.h"
+#import "icUtils.h"
 
+
+#define SEL_TOUCHES_BEGAN       @selector(touchesBegan:withTouchEvent:)
+#define SEL_TOUCHES_MOVED       @selector(touchesMoved:withTouchEvent:)
+#define SEL_TOUCHES_ENDED       @selector(touchesEnded:withTouchEvent:)
+#define SEL_TOUCHES_CANCELLED   @selector(touchesCancelled:withTouchEvent:)
 
 @implementation ICTouchEventDispatcher
 
@@ -42,6 +49,7 @@
         _touchesForDispatchTargets = [[NSMutableDictionary alloc] init];
         _dispatchTargetsForTouches = [[NSMutableDictionary alloc] init];
         _icTouchesForNativeTouches = [[NSMutableDictionary alloc] init];
+        _draggingTouches = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -51,6 +59,7 @@
     [_touchesForDispatchTargets release];
     [_dispatchTargetsForTouches release];
     [_icTouchesForNativeTouches release];
+    [_draggingTouches release];
     [super dealloc];
 }
 
@@ -58,8 +67,8 @@
 // Debugging
 - (void)debugLogCacheDicts
 {
-    ICLOG(@"touchesForDispatchTargets:\n%@", [_touchesForDispatchTargets description]);
-    ICLOG(@"dispatchTargetsForTouches:\n%@", [_dispatchTargetsForTouches description]);
+    ICLog(@"touchesForDispatchTargets:\n%@", [_touchesForDispatchTargets description]);
+    ICLog(@"dispatchTargetsForTouches:\n%@", [_dispatchTargetsForTouches description]);
 }
 #endif // IC_ENABLE_DEBUG_TOUCH_DISPATCHER
 
@@ -118,6 +127,11 @@
     
     // Remove dispatch target for the given touch in our second mapping
     [_dispatchTargetsForTouches removeObjectForKey:touchAddress];
+
+    // Remove dragging touch if necessary
+    ICTouch *icTouch = [_icTouchesForNativeTouches objectForKey:touchAddress];
+    if ([self isDraggingTouch:icTouch])
+        [self removeDraggingTouch:icTouch];
     
     // Remove converted ICTouch for corresponding native UITouch
     [_icTouchesForNativeTouches removeObjectForKey:touchAddress];
@@ -125,7 +139,9 @@
 
 - (NSDictionary *)convertNativeCachedTouchesToICTouches:(NSDictionary *)cachedTouches
 {
-    NSMutableDictionary *convertedCachedTouches = [NSMutableDictionary dictionaryWithCapacity:[cachedTouches count]];
+    NSMutableDictionary *convertedCachedTouches =
+        [NSMutableDictionary dictionaryWithCapacity:[cachedTouches count]];
+    
     NSEnumerator *e = [cachedTouches keyEnumerator];
     ICNodeRef *dispatchTargetRef = nil;
     while (dispatchTargetRef = [e nextObject]) {
@@ -142,7 +158,103 @@
     return convertedCachedTouches;
 }
 
-- (void)dispatchCachedTouches:(NSDictionary *)cachedTouches withEvent:(UIEvent *)event selector:(SEL)selector
+- (ICNode *)nodeForTouch:(UITouch *)touch
+{
+    // Perform a hit test with each touch location to compute dispatch target
+    CGPoint touchLocation = [touch locationInView:[_hostViewController view]];
+    ICNode *dispatchTarget = [[_hostViewController hitTest:touchLocation] lastObject];
+    return dispatchTarget;
+}
+
+- (void)setDraggingTouch:(ICTouch *)touch
+{
+    [_draggingTouches setObject:touch forKey:[NSValue valueWithPointer:touch]];
+}
+
+- (BOOL)isDraggingTouch:(ICTouch *)touch
+{
+    return [_draggingTouches objectForKey:[NSValue valueWithPointer:touch]] != nil;
+}
+
+- (void)removeDraggingTouch:(ICTouch *)touch
+{
+    [_draggingTouches removeObjectForKey:[NSValue valueWithPointer:touch]];
+}
+
+- (void)dispatchControlEventsWithConvertedTouches:(NSDictionary *)convertedTouches
+                                   withTouchEvent:(ICTouchEvent *)touchEvent
+                                         selector:(SEL)selector
+{
+    NSEnumerator *dispatchTargetEnumerator = [convertedTouches keyEnumerator];
+    ICNodeRef *dispatchTargetRef = nil;
+    while (dispatchTargetRef = [dispatchTargetEnumerator nextObject]) {
+        // Only dispatch control events if the given dispatch target is itself a control
+        // or a descendant of a control
+        ICControl *dispatchTarget = ICControlForNode([dispatchTargetRef node]);
+        if (dispatchTarget) {
+            // Iterate through all touches for the given control
+            NSDictionary *touchesDict = [convertedTouches objectForKey:dispatchTargetRef];
+            NSEnumerator *touchesEnumerator = [touchesDict objectEnumerator];
+            ICTouch *touch = nil;
+            while (touch = [touchesEnumerator nextObject]) {
+                // Find the current control the touch is over by performing another hit test.
+                // This is to compute correct control events for touches that moved or ended
+                // over another control than the dispatch target.
+                ICNode *overNode = [self nodeForTouch:touch.nativeTouch];
+                ICControl *overControl = ICControlForNode(overNode);
+                
+                // Compute the appropriate control event
+                ICControlEvents controlEvent = 0;
+                if (selector == SEL_TOUCHES_BEGAN) {
+                    // Touch down control events
+                    if (touch.tapCount > 1) {
+                        controlEvent = ICControlEventTouchDownRepeat;
+                    } else {
+                        controlEvent = ICControlEventTouchDown;
+                    }
+                } else if (selector == SEL_TOUCHES_MOVED) {
+                    if (![self isDraggingTouch:touch]) {
+                        // Start dragging
+                        [self setDraggingTouch:touch];
+                        // Immediately dispatch drag enter control event
+                        [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragEnter
+                                                          forEvent:touchEvent];
+                    }
+                    // Drag inside/outside
+                    if (overControl == dispatchTarget) {
+                        controlEvent = ICControlEventTouchDragInside;
+                    } else {
+                        controlEvent = ICControlEventTouchDragOutside;
+                    }
+                } else if (selector == SEL_TOUCHES_ENDED) {
+                    if ([self isDraggingTouch:touch]) {
+                        // Stop dragging
+                        [self removeDraggingTouch:touch];
+                        // Immediately dispatch drag exit control event
+                        [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragExit
+                                                          forEvent:touchEvent];
+                    }
+                    // Touch up control events
+                    if (overControl == dispatchTarget) {
+                        controlEvent = ICControlEventTouchUpInside;
+                    } else {
+                        controlEvent = ICControlEventTouchUpOutside;
+                    }
+                } else if (selector == SEL_TOUCHES_CANCELLED) {
+                    // Touch cancelled control event
+                    controlEvent = ICControlEventTouchCancel;
+                }
+                
+                // Dispatch control event
+                [dispatchTarget sendActionsForControlEvent:controlEvent forEvent:touchEvent];
+            }
+        }
+    }
+}
+
+- (void)dispatchCachedTouches:(NSDictionary *)cachedTouches
+                    withEvent:(UIEvent *)event
+                     selector:(SEL)selector
 {
     // Dispatch event message with touches for each dispatch target
     NSDictionary *convertedTouches = [self convertNativeCachedTouchesToICTouches:cachedTouches];
@@ -158,11 +270,18 @@
         while (touch = [touchesEnumerator nextObject]) {
             [touches addObject:touch];
         }
+        
+        // Dispatch touch event
         if ([dispatchTarget respondsToSelector:selector]) {
             [dispatchTarget performSelector:selector
                                  withObject:touches
                                  withObject:touchEvent];
         }
+        
+        // Dispatch control events if applicable
+        [self dispatchControlEventsWithConvertedTouches:convertedTouches
+                                         withTouchEvent:touchEvent
+                                               selector:selector];
     }    
 }
 
@@ -176,9 +295,8 @@
     // Assignment is implemented in the setTouch:forDispatchTarget: method.
     NSArray *allTouches = [touches allObjects];
     for (UITouch *touch in allTouches) {
-        CGPoint touchLocation = [touch locationInView:[_hostViewController view]];
-        // Perform a hit test with each touch location to compute dispatch targets
-        ICNode *dispatchTarget = [[_hostViewController hitTest:touchLocation] lastObject];
+        // Find dispatch target by performing a hit test using the touch location
+        ICNode *dispatchTarget = [self nodeForTouch:touch];
         if (dispatchTarget)
             [self setTouch:touch forDispatchTarget:dispatchTarget];
     }
@@ -218,10 +336,12 @@
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
-    ICLOG(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
+    ICLog(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
 #endif
     NSDictionary *cachedTouches = [self cacheNewTouches:touches];
-    [self dispatchCachedTouches:cachedTouches withEvent:event selector:@selector(touchesBegan:withTouchEvent:)];
+    [self dispatchCachedTouches:cachedTouches
+                      withEvent:event
+                       selector:SEL_TOUCHES_BEGAN];
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     [self debugLogCacheDicts];
 #endif
@@ -230,10 +350,12 @@
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
-    ICLOG(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
+    ICLog(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
 #endif
     NSDictionary *cachedTouches = [self filterCachedTouchesWithTouches:touches];
-    [self dispatchCachedTouches:cachedTouches withEvent:event selector:@selector(touchesMoved:withTouchEvent:)];
+    [self dispatchCachedTouches:cachedTouches
+                      withEvent:event
+                       selector:SEL_TOUCHES_MOVED];
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     [self debugLogCacheDicts];
 #endif
@@ -242,10 +364,12 @@
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
-    ICLOG(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
+    ICLog(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
 #endif
     NSDictionary *cachedTouches = [self filterCachedTouchesWithTouches:touches];
-    [self dispatchCachedTouches:cachedTouches withEvent:event selector:@selector(touchesCancelled:withTouchEvent:)];    
+    [self dispatchCachedTouches:cachedTouches
+                      withEvent:event
+                       selector:SEL_TOUCHES_CANCELLED];    
     [self removeObsoleteCachedTouchesWithTouches:touches];
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     [self debugLogCacheDicts];
@@ -255,10 +379,12 @@
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
-    ICLOG(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
+    ICLog(@"Handling %@ (%d touches)", NSStringFromSelector(_cmd), [touches count]);
 #endif
     NSDictionary *cachedTouches = [self filterCachedTouchesWithTouches:touches];
-    [self dispatchCachedTouches:cachedTouches withEvent:event selector:@selector(touchesEnded:withEvent:)];    
+    [self dispatchCachedTouches:cachedTouches
+                      withEvent:event
+                       selector:SEL_TOUCHES_ENDED];    
     [self removeObsoleteCachedTouchesWithTouches:touches];
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     [self debugLogCacheDicts];

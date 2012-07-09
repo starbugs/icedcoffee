@@ -31,23 +31,23 @@
 #import <Availability.h>
 
 /**
- @def ICDEFAULT_CONTENT_SCALE_FACTOR
+ @def IC_DEFAULT_CONTENT_SCALE_FACTOR
  @brief The default content scale factor for non-retina displays
  */
-#define ICDEFAULT_CONTENT_SCALE_FACTOR 1.f
+#define IC_DEFAULT_CONTENT_SCALE_FACTOR 1.f
 
 /**
- @def ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR
+ @def IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR
  @brief The default content scale factor for retina displays
  */
-#define ICDEFAULT_RETINA_CONTENT_SCALE_FACTOR 2.f
+#define IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR 2.f
 
 #import "ICUICamera.h"
 /**
- @def ICDEFAULT_CAMERA
+ @def IC_DEFAULT_CAMERA
  @brief The default camera instanciated and set by ICScene::initWithHostViewController:
  */
-#define ICDEFAULT_CAMERA ICUICamera
+#define IC_DEFAULT_CAMERA ICUICamera
 
 #if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 #import "Platforms/Mac/ICHostViewControllerMac.h"
@@ -59,16 +59,16 @@
 
 #import "ICNodeVisitorDrawing.h"
 /**
- @def ICDEFAULT_DRAWING_VISITOR
+ @def IC_DEFAULT_DRAWING_VISITOR
  @brief The default drawing visitor class
  */
-#define ICDEFAULT_DRAWING_VISITOR ICNodeVisitorDrawing
+#define IC_DEFAULT_DRAWING_VISITOR ICNodeVisitorDrawing
 
 #import "ICNodeVisitorPicking.h"
 /**
- @def ICDEFAULT_PICKING_VISITOR
+ @def IC_DEFAULT_PICKING_VISITOR
  @brief The default picking visitor class
  */
-#define ICDEFAULT_PICKING_VISITOR ICNodeVisitorPicking
+#define IC_DEFAULT_PICKING_VISITOR ICNodeVisitorPicking
 
 

@@ -55,7 +55,7 @@
 NSString *NSStringFromGLError(GLenum error);
 
 #if DEBUG
-#define CHECK_GL_ERROR_DEBUG() \
+#define IC_CHECK_GL_ERROR_DEBUG() \
     ({ \
         GLenum __error = glGetError(); \
         if(__error) { \
@@ -64,7 +64,7 @@ NSString *NSStringFromGLError(GLenum error);
         } \
     })
 #else
-#define CHECK_GL_ERROR_DEBUG()
+#define IC_CHECK_GL_ERROR_DEBUG()
 #endif
 
 // iOS

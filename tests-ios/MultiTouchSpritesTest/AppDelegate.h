@@ -22,12 +22,13 @@
 //  
 
 
-// STUB: THIS TEST HAS NOT BEEN IMLPEMENTED YET
-
 #import <UIKit/UIKit.h>
+#import "IcedCoffee.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) ICHostViewController *hostViewController;
 
 @end

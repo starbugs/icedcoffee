@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		018C88571593A70C0086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88561593A7070086319E /* Rectangle.fsh */; };
 		018C88591593A9B80086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88581593A9B20086319E /* Rectangle.fsh */; };
+		D20FA8CA15A881CC003A2235 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D20FA8C915A881BE003A2235 /* Rectangle.fsh */; };
 		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
 		D21F889D1533068E00E2496C /* KazmathTests.m in Sources */ = {isa = PBXBuildFile; fileRef = D21F889A1533068E00E2496C /* KazmathTests.m */; };
@@ -350,6 +351,7 @@
 /* Begin PBXFileReference section */
 		018C88561593A7070086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
 		018C88581593A9B20086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
+		D20FA8C915A881BE003A2235 /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
 		D21F88811533064A00E2496C /* KazmathTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazmathTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21F88961533068E00E2496C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D21F88971533068E00E2496C /* KazmathTests-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "KazmathTests-Info.plist"; sourceTree = "<group>"; };
@@ -825,6 +827,7 @@
 			isa = PBXGroup;
 			children = (
 				D2735B8815912F1100216F1B /* button_light_normal.png */,
+				D20FA8C915A881BE003A2235 /* Rectangle.fsh */,
 				D2735B741591278100216F1B /* Picking.fsh */,
 				D2735B751591278100216F1B /* PositionColor.fsh */,
 				D2735B761591278100216F1B /* PositionColor.vsh */,
@@ -1527,6 +1530,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D2735B8915912F1C00216F1B /* button_light_normal.png in Resources */,
+				D20FA8CA15A881CC003A2235 /* Rectangle.fsh in Resources */,
 				D2735B7D159127AD00216F1B /* Picking.fsh in Resources */,
 				D2735B7E159127AD00216F1B /* PositionColor.fsh in Resources */,
 				D2735B7F159127AD00216F1B /* PositionColor.vsh in Resources */,

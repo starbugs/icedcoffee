@@ -85,9 +85,9 @@
     // this effectively makes camera coordinates screen coordinates in points
     kmMat4 matContentScale;
     kmMat4Scaling(&matContentScale,
-                  IC_CONTENT_SCALE_FACTOR(), 
-                  IC_CONTENT_SCALE_FACTOR(),
-                  IC_CONTENT_SCALE_FACTOR());
+                  ICContentScaleFactor(), 
+                  ICContentScaleFactor(),
+                  ICContentScaleFactor());
     kmMat4Multiply(&_matLookAt, &_matLookAt, &matContentScale);
 }
 

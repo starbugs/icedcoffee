@@ -148,6 +148,8 @@
 		01DCA964159CD0EA002DEA20 /* ICScale9View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9View.h; path = icedcoffee/ICScale9View.h; sourceTree = "<group>"; };
 		01DCA965159CD0EA002DEA20 /* ICScale9View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9View.m; path = icedcoffee/ICScale9View.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
+		D20FA8C615A87B58003A2235 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		D20FA8C815A87B70003A2235 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		D216CC8B154FDC29009FCDC4 /* ICControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICControl.h; path = icedcoffee/ICControl.h; sourceTree = "<group>"; };
 		D216CC8C154FDC29009FCDC4 /* ICControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICControl.m; path = icedcoffee/ICControl.m; sourceTree = "<group>"; };
 		D22F25AC158879F90049268C /* ICUICamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUICamera.h; path = icedcoffee/ICUICamera.h; sourceTree = "<group>"; };
@@ -338,6 +340,8 @@
 				D2918D4B15887EEE0043C872 /* Sprites */,
 				D2918D4715887E860043C872 /* Textures */,
 				D2918D4C15887F190043C872 /* User Interface */,
+				D20FA8C615A87B58003A2235 /* README.md */,
+				D20FA8C815A87B70003A2235 /* CHANGELOG.md */,
 			);
 			name = icedcoffee;
 			sourceTree = "<group>";

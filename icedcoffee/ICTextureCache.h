@@ -35,12 +35,9 @@
  @brief Provides texture caching and management
  
  The ICTextureCache class should be used to load and unload textures in your application.
- It provides mechanisms to load, cache and unload textures synchronously or asynchronously.
- 
- ICTextureCache instances are always bound to an ICHostViewController object and should
- not be instanciated manually. ICHostViewController instanciates an ICTextureCache object
- for your. You may access that texture cache object using the ICHostViewController's
- textureCache property.
+ In the IcedCoffee framework, there is one default texture cache for each OpenGL context.
+ You may retrieve the texture cache for the current OpenGL context using the
+ ICTextureCache::currentTextureCache method.
  */
 @interface ICTextureCache : NSObject
 {
@@ -56,10 +53,13 @@
 #endif
 }
 
+/**
+ @brief Returns the texture cache associated with the current OpenGL context
+ */
 + (id)currentTextureCache;
 
 /**
- @brief Initializes the texture cache with the given host view controller
+ @brief Initializes the receiver with the given host view controller
  */
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;
 

@@ -24,8 +24,15 @@
 #import <Foundation/Foundation.h>
 
 /**
- @brief Classes conforming to this "informal" protocol must provide a frame buffer
+ @brief Classes conforming to this protocol must provide a frame buffer
  */
 @protocol ICFrameBufferProvider <NSObject>
+
+@required
+
+/**
+ @brief The size of the receiver's frame buffer, in points
+ */
+- (CGSize)frameBufferSize;
 
 @end

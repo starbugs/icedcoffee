@@ -29,7 +29,7 @@
 
 enum {
     ICControlEventLeftMouseDown             = 1 << 0,
-    ICControlEventLeftMouseDownRepeat       = 1 << 1,       // FIXME: unimplemented
+    ICControlEventLeftMouseDownRepeat       = 1 << 1,
     ICControlEventLeftMouseDragInside       = 1 << 2,
     ICControlEventLeftMouseDragOutside      = 1 << 3,
     ICControlEventLeftMouseDragEnter        = 1 << 4,
@@ -38,7 +38,7 @@ enum {
     ICControlEventLeftMouseUpOutside        = 1 << 7,
 
     ICControlEventRightMouseDown            = 1 << 8,
-    ICControlEventRightMouseDownRepeat      = 1 << 9,       // FIXME: unimplemented
+    ICControlEventRightMouseDownRepeat      = 1 << 9,
     ICControlEventRightMouseDragInside      = 1 << 10,
     ICControlEventRightMouseDragOutside     = 1 << 11,
     ICControlEventRightMouseDragEnter       = 1 << 12,
@@ -47,7 +47,7 @@ enum {
     ICControlEventRightMouseUpOutside       = 1 << 15,
 
     ICControlEventOtherMouseDown            = 1 << 16,
-    ICControlEventOtherMouseDownRepeat      = 1 << 17,      // FIXME: unimplemented
+    ICControlEventOtherMouseDownRepeat      = 1 << 17,
     ICControlEventOtherMouseDragInside      = 1 << 18,
     ICControlEventOtherMouseDragOutside     = 1 << 19,
     ICControlEventOtherMouseDragEnter       = 1 << 20,
@@ -150,7 +150,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 @end
 
 /**
- @brief Base class for all IcedCoffee-based user interface controls
+ @brief Base class for simple user interface controls (buttons, sliders, etc.)
  
  The ICControl class implements the target-action design pattern to connect user interface
  controls with application logic.

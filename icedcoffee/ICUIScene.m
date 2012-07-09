@@ -30,11 +30,16 @@
 
 - (id)init
 {
+    return [self initWithSize:CGSizeMake(400, 300)];
+}
+
+- (id)initWithSize:(CGSize)size
+{
     if ((self = [super init])) {
-        self.contentView = [ICView viewWithSize:CGSizeMake(400, 300)];
+        self.contentView = [ICView viewWithSize:size];
         [self addChild:self.contentView];
     }
-    return self;
+    return self;    
 }
 
 - (void)dealloc

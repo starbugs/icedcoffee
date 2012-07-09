@@ -37,9 +37,15 @@
     [super dealloc];
 }
 
+- (void)buttonPressed
+{
+    int brk = 1;
+}
+
 - (void)setupScene
 {
     ICScene *scene = [ICScene scene];
+    [scene setSize:CGSizeTokmVec3(self.hostViewController.view.bounds.size)];
     
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
     ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
@@ -49,6 +55,14 @@
     ResponsiveView *rv = [ResponsiveView viewWithSize:CGSizeMake(128, 128)];
     [rv setPositionY:150];
     [scene addChild:rv];
+    
+    ICButton *button = [ICButton buttonWithSize:CGSizeMake(150, 32)];
+    button.label.fontSize = 14.f;
+    button.label.text = @"Test Button";
+    [button setPositionY:300];
+    [scene addChild:button];
+    [button centerNodeHorizontally];
+    [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
     [self.hostViewController runWithScene:scene];
 }

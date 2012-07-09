@@ -67,7 +67,7 @@
 
 - (void)dealloc
 {
-    ICLOG_DEALLOC(@"Deallocing ICSprite");
+    ICLogDealloc(@"Deallocing ICSprite");
     self.texture = nil;
     
     [super dealloc];
@@ -117,18 +117,18 @@
     [self applyStandardDrawSetupWithVisitor:visitor];
     
     // Set texture (unless we're in picking mode)
-    if (_texture && visitor.visitorType != kICPickingNodeVisitor) {
+    if (_texture && ![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, [_texture name]);
         if (_maskTexture) {
             glActiveTexture(GL_TEXTURE1);
             glBindTexture(GL_TEXTURE_2D, [_maskTexture name]);
         }
-        CHECK_GL_ERROR_DEBUG();
+        IC_CHECK_GL_ERROR_DEBUG();
     }
     
     // FIXME: support for textured picking?
-    if (visitor.visitorType == kICPickingNodeVisitor) {
+    if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         icGLDisable(GL_BLEND);
     } else {
         icGLBlendFunc(_blendFunc.src, _blendFunc.dst);
@@ -136,28 +136,28 @@
     }
     
     // FIXME: needs to go into icGLState
-    glEnableVertexAttribArray(kICVertexAttrib_Position);
-    glEnableVertexAttribArray(kICVertexAttrib_Color);
-    glEnableVertexAttribArray(kICVertexAttrib_TexCoords);
-    CHECK_GL_ERROR_DEBUG();
+    glEnableVertexAttribArray(ICVertexAttribPosition);
+    glEnableVertexAttribArray(ICVertexAttribColor);
+    glEnableVertexAttribArray(ICVertexAttribTexCoords);
+    IC_CHECK_GL_ERROR_DEBUG();
     
 #define kQuadSize sizeof(_quad.bl)    
     long offset = (long)&_quad;
     
 	// vertex
 	NSInteger diff = offsetof(icV3F_C4B_T2F, vect);
-	glVertexAttribPointer(kICVertexAttrib_Position, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
     
 	// color
 	diff = offsetof(icV3F_C4B_T2F, color);
-	glVertexAttribPointer(kICVertexAttrib_Color, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(ICVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
     
 	// texCoords
 	diff = offsetof(icV3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(kICVertexAttrib_TexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
             
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
 
     if (_maskTexture) {
         glActiveTexture(GL_TEXTURE1);
@@ -165,7 +165,7 @@
     }
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
-    CHECK_GL_ERROR_DEBUG();
+    IC_CHECK_GL_ERROR_DEBUG();
 }
 
 - (void)setTexture:(ICTexture2D *)texture

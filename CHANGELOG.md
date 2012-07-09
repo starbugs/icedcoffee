@@ -1,6 +1,92 @@
 Changelog
 =========
 
+*v0.6.4*
+
+* Implemented touch control event dispatch for in ICTouchEventDispatcher.
+* Fixed a bug with pixel alignment for font rendering in ICGLView on iOS.
+  Labels are now displayed correctly on iOS.
+* ICButton does now use font "Lucida Grande" on Mac OS X and "Helvetica"
+  on iOS by default.
+* Implemented multi touch sprite test.
+* Removed ICNodeVisitor::visitorType property and corresponding enumerated type.
+  Nodes should use reflection from now on to check for the visitor's type. E.g.,
+  if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) ...
+* Macro name refactoring to improve consistency according to the following rules:
+  Framework macros defining constants start with "IC_" and follow with
+  underscore-separated multi-word identifier parts. The same applies to framework
+  macros that unfold to multiple code statements. Function macros start with
+  "IC" and continue with camel case multi-word identifiers starting with a capital
+  letter.
+    * Renamed IC_CONTENT_SCALE_FACTOR() to ICContentScaleFactor()
+    * Added ICPointsToPixels() and ICPixelsToPoints() macros and refactored
+      all code that previoulsy used IC_CONTENT_SCALE_FACTOR() to transform
+      point values to pixel values or vice versa.
+    * Renamed IC_DEBUG_BREAK() to ICDebugBreak().
+    * Renamed ICLOG_DEALLOC() to ICLogDealloc().
+    * Renamed ICLOG() to ICLog().
+    * Renamed ICDEFAULT_* to IC_DEFAULT_*.
+    * Renamed CHECK_GL_ERROR_DEBUG() to IC_CHECK_GL_ERROR_DEBUG().
+* Typedef enum refactoring to improve consistency according to the following
+  rules: Framework enums start with "IC" and follow with camel case multi-word
+  identifiers starting with a capital letter. Enumerated constants do no longer
+  used artifacts of hungarian notation (no kICSomeEnumConstant). Instead they
+  start with the name of the type followed by a camel case multi-word identifier
+  starting with a capital letter.
+    * Renamed kICFrameUpdateMode_* to ICFrameUpdateMode*.
+    * Renamed kICPixelFormat_* to ICPixelFormat*.
+    * Renamed kICDepthBufferFormat_ to ICDepthBufferFormat*.
+    * Renamed kICStencilBufferFormat_ to ICStencilBufferFormat*.
+    * Renamed icResolutionType to ICResolutionType.
+    * Renamed kICResolution* to ICResolutionType*.
+    * Renamed ICShaderValueType_* to ICShaderValueType*.
+    * Renamed kICVertexAttrib_* to ICVertexAttrib*.
+* Added ICHostViewController::currentHostViewController and
+  ICHostViewController::makeCurrentHostViewController. The former retrieves the
+  globally current host view controller while the latter makes the receiver the
+  current host view controller.
+* ICHostViewController::init now makes the receiver the current host view controller.
+* ICHostViewController::drawScene now makes the receiver the current host view
+  controller and is to be called by subclasses in their corresponding drawScene
+  implementations before drawing to the OpenGL context.
+* Removed the scheduler from ICRenderContext and bound it to ICHostViewController
+  instead. ICScheduler::currentScheduler now returns the scheduler bound to the
+  current host view controller. This change was required to make schedulers unique
+  for each host view controller. Previously they were bound to OpenGL contexts,
+  however, it is possible to share one OpenGL context between multiple host views.
+  In this case the scheduler could have fired updates multiple times for the
+  same objects.
+* Added ICHostViewController::openGLContext which retrieves the host view's
+  OpenGL context (EAGLContext on iOS, NSOpenGLContext on Mac OS X).
+* Added ICNode::descendantsFilteredUsingBlock:, ICNode::ancestorsFilteredUsingBlock:.
+* Rewrote methods for descendants and ancestors retrieval of ICNode. These methods
+  do now use ICNode::descendantsFilteredUsingBlock: and
+  ICNode::ancestorsFilteredUsingBlock:.
+* Rewrote ICNode::root to optimize performance.
+* Fixed a bug which registered wrong render contexts under certain circumstances.
+  Render contexts are now created and registered in ICHostViewController::setView:,
+  only if no render context for the given OpenGL context is existing yet. Otherwise,
+  the existing render context is reused.
+* Added ICFrameBufferProvider::frameBufferSize.
+* ICHostViewController now conforms to the ICFrameBufferProvider protocol by
+  implementing ICFrameBufferProvider::frameBufferSize.
+* ICRenderTexture now conforms to the ICFrameBufferProvider protocol by
+  implementing ICFrameBufferProvider::frameBufferSize.
+* Changed ICScene::frameBufferSize to look for ancestors conforming to the
+  ICFrameBufferProvider protocol instead of looking for ICRenderTexture objects.
+  Also, the method now uses ICFrameBufferProvider::frameBufferSize to retrieve the
+  size of the corresponding frame buffer for a scene.
+* Extended the ICRenderContext class to hold references to custom objects using
+  the ICRenderContext::setCustomObject:forKey:, ICRenderContext::customObjectForKey:,
+  ICRenderContext::removeCustomObject:forKey:, and
+  ICRenderContext::removeAllCustomObjects: methods.
+* Added support for repeated mouse down control events to ICMouseEventDispatcher.
+* Fixed a bug in ICMouseEventDispatcher: mouse down control events were sent as
+  for the left mouse button always. The framework now sends mouse down control
+  events for the correct mouse buttons.
+* Fixed some issues with the icedcoffee-ios Xcode project regarding linked frameworks.
+* Removed version number from LICENSE_icedcoffee.txt.
+  
 *v0.6.3*
 
 * ICView does now draw its clipping mask shape when visited by the picking visitor.

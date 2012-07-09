@@ -97,7 +97,7 @@
 - (void)scrollWheel:(ICMouseEvent *)event
 {
     ICUICamera *camera = (ICUICamera *)self.camera;
-    [camera setZoomFactor:camera.zoomFactor - event.scrollingDeltaY / 1000];
+    [camera setZoomFactor:camera.zoomFactor - event.deltaY / 1000];
 }
 
 - (void)mouseDown:(ICMouseEvent *)event

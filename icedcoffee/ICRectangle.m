@@ -57,9 +57,9 @@
         ICShaderProgram *p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
                                                             fragmentShaderFilename:rectangleFSH];
         
-        [p addAttribute:kICAttributeNamePosition index:kICVertexAttrib_Position];
-        [p addAttribute:kICAttributeNameColor index:kICVertexAttrib_Color];
-        [p addAttribute:kICAttributeNameTexCoord index:kICVertexAttrib_TexCoords];
+        [p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
+        [p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
+        [p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
         
         [p link];
         [p updateUniforms];
@@ -78,12 +78,12 @@
 
 - (void)setBorderWidth:(float)borderWidth
 {
-    _borderWidth = borderWidth * IC_CONTENT_SCALE_FACTOR();
+    _borderWidth = ICPointsToPixels(borderWidth);
 }
 
 - (float)borderWidth
 {
-    return _borderWidth / IC_CONTENT_SCALE_FACTOR();
+    return ICPixelsToPoints(_borderWidth);
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
