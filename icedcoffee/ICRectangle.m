@@ -69,9 +69,9 @@
         
         [_sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Rectangle]]; 
         
-        _gradientStartColor = colorFromKmVec4(kmVec4Make(1.0, 1.0, 1.0, 1.0));
-        _gradientEndColor = colorFromKmVec4(kmVec4Make(0.7, 0.7, 0.7, 1.0));
-        _borderColor = colorFromKmVec4(kmVec4Make(0.0, 0.0, 0.0, 0.5));
+        _gradientStartColor = color4BFromKmVec4(kmVec4Make(1.0, 1.0, 1.0, 1.0));
+        _gradientEndColor = color4BFromKmVec4(kmVec4Make(0.7, 0.7, 0.7, 1.0));
+        _borderColor = color4BFromKmVec4(kmVec4Make(0.0, 0.0, 0.0, 0.5));
     }
     return self;
 }
@@ -99,9 +99,9 @@
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:0.4] forUniform:@"u_roundness"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(_sprite.size.x, _sprite.size.y)] forUniform:@"u_size"];
 
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_gradientStartColor)] forUniform:@"u_innerColor"];
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_gradientEndColor)] forUniform:@"u_innerColor2"];
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(_borderColor)] forUniform:@"u_borderColor"];    
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(_gradientStartColor)] forUniform:@"u_innerColor"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(_gradientEndColor)] forUniform:@"u_innerColor2"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(_borderColor)] forUniform:@"u_borderColor"];    
 }
 
 @end

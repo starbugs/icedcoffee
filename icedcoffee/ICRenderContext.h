@@ -47,6 +47,16 @@
 + (id)currentRenderContext;
 
 /**
+ @brief Initializes the receiver
+ */
+- (id)init;
+
+/**
+ @brief Initializes the receiver with the texture and shader caches from the given share context
+ */
+- (id)initWithShareContext:(ICRenderContext *)shareContext;
+
+/**
  @brief The receiver's texture cache
  */
 @property (nonatomic, retain) ICTextureCache *textureCache;

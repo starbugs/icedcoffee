@@ -28,9 +28,9 @@
 
 @implementation ICNodeVisitorDrawing
 
-- (id)init
+- (id)initWithOwner:(ICNode *)owner
 {
-    if ((self = [super init])) {
+    if ((self = [super initWithOwner:owner])) {
     }
     return self;
 }
@@ -47,14 +47,17 @@
     kmGLMultMatrix([node transformPtr]);
 }
 
-- (void)visitSingleNode:(ICNode *)node
+- (BOOL)visitSingleNode:(ICNode *)node
 {
     [node drawWithVisitor:self];
+    return YES;
 }
 
 - (void)visitChildrenOfNode:(ICNode *)node
 {
-    [super visitChildrenOfNode:node];
+    for (ICNode *child in [node drawingChildren]) {
+        [self visitNode:child];
+    }    
     [node childrenDidDrawWithVisitor:self];
 }
 

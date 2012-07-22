@@ -27,6 +27,7 @@
 
 #import "ICResponder.h"
 #import "ICNodeVisitor.h"
+#import "ICFramebufferProvider.h"
 
 #import "icConfig.h"
 
@@ -56,7 +57,7 @@
  parent's children array. ICNode provides convenience methods for manipulating this order, e.g.
  ICNode::orderFront, ICNode::orderForward, ICNode::orderBackward and ICNode::orderBack.
  
- Visitors are used to traverse a given scene graph for drawing on a frame buffer. A visitor is
+ Visitors are used to traverse a given scene graph for drawing on a framebuffer. A visitor is
  an external object of class ICNodeVisitor. The framework ships with two built-in visitor classes,
  ICNodeVisitorDrawing for drawing nodes on screen and ICNodeVisitorPicking for drawing nodes
  on an invisible framebuffer for picking.
@@ -85,7 +86,7 @@
     skip any drawing if it is not.</li>
     <li>IcedCoffee does by default provide two different visitors. ICNodeVisitorDrawing is
     used for rendering objects on screen while ICNodeVisitorPicking is used to draw objects
-    on an internal picking frame buffer. ICNode provides a standard way of setting up shaders
+    on an internal picking framebuffer. ICNode provides a standard way of setting up shaders
     for drawing and picking. Hence, after checking for visibility, you should call
     ICNode::applyStandardDrawSetupWithVisitor: . This will automatically activate the node's shader
     program for drawing or the default picker shader program for picking.</li>
@@ -119,10 +120,9 @@
  */
 @interface ICNode : ICResponder
 {
-@public
-    NSMutableArray *_children;    
-    
 @protected
+    // Graph linkage
+    NSMutableArray *_children;    
     ICNode *_parent;
     
     // Transform
@@ -161,9 +161,19 @@
 /** @name Composition */
 
 /**
- @brief An NSArray containing strong references to the receiver's children nodes
+ @brief Returns an array containing the receiver's children nodes
  */
 @property (nonatomic, readonly, getter=children) NSArray *children;
+
+/**
+ @brief Returns an array containing the receiver's children nodes to be used for drawing
+ */
+- (NSArray *)drawingChildren;
+
+/**
+ @brief Returns an array containing the receiver's children nodes to be used for picking
+ */
+- (NSArray *)pickingChildren;
 
 /**
  @brief The receiver's parent node
@@ -221,6 +231,11 @@
 - (BOOL)hasChildren;
 
 /**
+ @brief Returns the receiver's immediate child for the specified tag
+ */
+- (ICNode *)childForTag:(uint)tag;
+
+/**
  @brief Returns all children of the receiver that are kind of the specified class
  */
 - (NSArray *)childrenOfType:(Class)classType;
@@ -274,6 +289,8 @@
  ancestor node of the receiver that conforms to the given protocol.
  */
 - (NSArray *)ancestorsConformingToProtocol:(Protocol *)protocol;
+
+- (ICNode *)firstAncestorConformingToProtocol:(Protocol *)protocol;
 
 /**
  @brief Returns the first ancestor which is kind of the given class type
@@ -365,10 +382,25 @@
 
  @note The parent scene is not available until the receiver has been added to a scene.
 
- @return Returns an ICScene object representing the parent scene of the node. If no parent scene
- is available, nil is returned.
+ @return Returns an ICScene object representing the parent scene of the receiver. If no parent
+ scene is available, nil is returned.
  */
 - (ICScene *)parentScene;
+
+/**
+ @brief The scene of the receiver
+ 
+ If the receiver is of class ICScene, returns the receiver. Otherwise, returns the parent scene
+ of the receiver.
+ 
+ @note The scene may not be available until the receiver has been added to a scene.
+ 
+ @return Returns an ICScene object representing the scene of the receiver. If no scene
+ is available, nil is returned.
+ */
+- (ICScene *)scene;
+
+- (ICNode<ICFramebufferProvider> *)framebufferProvider;
 
 /**
  @brief The host view controller of the receiver's root scene
@@ -662,10 +694,18 @@
 - (kmAABB)aabb;
 
 /**
- @brief The rectangle occupied by the receiver on its parent scene's frame buffer
+ @brief Returns the rectangular bounds of the receiver
+ 
+ By default, the bounds of the receiver are defined as a rectangle with origin (0,0) and
+ size (size.x,size.y). Subclasses may override this method to define custom bounds.
+ */
+- (CGRect)bounds;
+
+/**
+ @brief The rectangle occupied by the receiver on its parent scene's framebuffer
  
  This method calculates the origin and size of the rectangle occupied by the node on its parent
- scene's frame buffer. The rectangle is always aligned to the frame buffer's axes. All coordinates
+ scene's framebuffer. The rectangle is always aligned to the framebuffer's axes. All coordinates
  are expressed in points rather than pixels.
 
  @remarks The calculations performed by this method are based on the ICNode::position and
@@ -676,7 +716,7 @@
     the whole (cubic) space occupied by the receiver's visible contents.</li>
     <li>The receiver must have been added to a valid ICScene object before this method is
     called.</li>
-    <li>The parent scene of the receiver must have a valid target frame buffer.</li>
+    <li>The parent scene of the receiver must have a valid target framebuffer.</li>
  </ul>
  
  @return Returns a CGRect defining the rectangle (in points) occupied by the node's visible
@@ -760,10 +800,28 @@
  
  This method needs to be called only if the node is part of a drawing environment that does not
  redraw all its contents continuously. The default implementation simply calls
- ICNode::setNeedsDisplay on its parent. Specialized classes implementing updatable frame buffers
+ ICNode::setNeedsDisplay on its parent. Specialized classes implementing updatable framebuffers
  such as ICRenderTexture should override this method in order to implement conditional redrawing.
  */
 - (void)setNeedsDisplay;
+
+
+#pragma mark - Ray-based Hit Testing
+/** @name Ray-based Hit Testing */
+
+/**
+ @brief Performs a local ray-based hit test on the receiver
+ 
+ To be implemented in subclasses. The default implementation does nothing and returns
+ ICHitTestUnsupported.
+ 
+ Subclasses implementing this method should perform a hit test based on some approximation
+ of the node's geometry and the specified ray.
+ 
+ @param ray An icRay3 object defining the ray to be used for hit testing in the receiver's local
+ coordinate space.
+ */
+- (ICHitTestResult)localRayHitTest:(icRay3)ray;
 
 
 #pragma mark - User Interaction Support

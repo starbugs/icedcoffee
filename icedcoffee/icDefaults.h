@@ -65,6 +65,7 @@
 #define IC_DEFAULT_DRAWING_VISITOR ICNodeVisitorDrawing
 
 #import "ICNodeVisitorPicking.h"
+#import "ICNodeVisitorProjectionPicking.h" // experimental
 /**
  @def IC_DEFAULT_PICKING_VISITOR
  @brief The default picking visitor class

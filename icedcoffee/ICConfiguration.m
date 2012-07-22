@@ -40,6 +40,7 @@
 @synthesize supportsNPOT = supportsNPOT_;
 @synthesize supportsBGRA8888 = supportsBGRA8888_;
 @synthesize supportsDiscardFramebuffer = supportsDiscardFramebuffer_;
+@synthesize supportsPixelBufferObject = supportsPixelBufferObject_;
 @synthesize OSVersion = OSVersion_;
 
 //
@@ -134,12 +135,15 @@ static char * glExtensions;
 		
 		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
         
+        supportsPixelBufferObject_ = [self checkForGLExtension:@"GL_ARB_pixel_buffer_object"];
+        
 		NSLog(@"IcedCoffee: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
 		NSLog(@"IcedCoffee: GL_MAX_SAMPLES: %d", maxSamplesAllowed_);
 		NSLog(@"IcedCoffee: GL supports PVRTC: %s", (supportsPVRTC_ ? "YES" : "NO") );
 		NSLog(@"IcedCoffee: GL supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
 		NSLog(@"IcedCoffee: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
 		NSLog(@"IcedCoffee: GL supports discard_framebuffer: %s", (supportsDiscardFramebuffer_ ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL supports ARB_pixel_buffer_object: %s", (supportsPixelBufferObject_ ? "YES" : "NO") );
 		
 		//CHECK_GL_ERROR();
 	}

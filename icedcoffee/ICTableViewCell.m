@@ -28,7 +28,6 @@
 @implementation ICTableViewCell
 
 @synthesize identifier = _identifier;
-@synthesize background = _background;
 @synthesize label = _label;
 @synthesize selected = _selected;
 
@@ -48,11 +47,6 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        // Set up background
-        self.background = [ICSprite sprite];
-        self.background.color = (icColor4B){255,255,255,255};
-        [self addChild:self.background];
-        
         // Set up label
         self.label = [ICLabel labelWithText:@"" fontName:@"Lucida Grande" fontSize:12];
         self.label.color = (icColor4B){0,0,0,255};
@@ -73,7 +67,6 @@
 {
     [super setSize:size];
     
-    self.background.size = self.size;
     [self.label centerNodeVertically];    
 }
 

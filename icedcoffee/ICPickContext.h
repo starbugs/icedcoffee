@@ -22,31 +22,19 @@
 //  
 
 #import <Foundation/Foundation.h>
-#import "ICNodeVisitor.h"
+#import "icTypes.h"
 
-/**
- @brief Node visitor for drawing a scene graph on an OpenGL framebuffer
- */
-@interface ICNodeVisitorDrawing : ICNodeVisitor
+@interface ICPickContext : NSObject {
+    CGPoint _point;
+    GLint _viewport[4];
+}
 
-/**
- @brief Sets up the node's model-view transform matrix and pushes it on the OpenGL matrix stack
- */
-- (void)preVisitNode:(ICNode *)node;
+@property (nonatomic, readonly) CGPoint point;
 
-/**
- @brief Draws a single node to the OpenGL framebuffer
- */
-- (BOOL)visitSingleNode:(ICNode *)node;
+@property (nonatomic, readonly, getter=viewport) GLint *viewport;
 
-/**
- @brief Performs visitation on the children of the given node
- */
-- (void)visitChildrenOfNode:(ICNode *)node;
++ (id)pickContextWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 
-/**
- @brief Pops the node's model-view transform matrix from the OpenGL matrix stack
- */
-- (void)postVisitNode:(ICNode *)node;
+- (id)initWithPoint:(CGPoint)point viewport:(GLint *)viewport;
 
 @end

@@ -32,11 +32,11 @@
     [self flipTextureVertically];
     [self setNeedsDisplay];
     
-    ICTouch *touch = [touches anyObject];
+/*    ICTouch *touch = [touches anyObject];
     CGPoint hostViewPoint = [touch locationInHostView];
     kmVec3 nodePoint = [touch locationInNode:self];
     NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);*/
 }
 
 #elif defined(__IC_PLATFORM_MAC)
@@ -46,10 +46,22 @@
     [self flipTextureVertically];
     [self setNeedsDisplay];
 
-    CGPoint hostViewPoint = [event locationInHostView];
+/*    CGPoint hostViewPoint = [event locationInHostView];
     kmVec3 nodePoint = [event locationInNode:self];
     NSLog(@"host view point: (%f,%f)", hostViewPoint.x, hostViewPoint.y);
-    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);
+    NSLog(@"node point: (%f,%f)", nodePoint.x, nodePoint.y);*/
+}
+
+- (void)mouseEntered:(ICMouseEvent *)event
+{
+    self.color = (icColor4B){255,0,0,255};
+    [self setNeedsDisplay];
+}
+
+- (void)mouseExited:(ICMouseEvent *)event
+{
+    self.color = (icColor4B){255,255,255,255};
+    [self setNeedsDisplay];
 }
 
 #endif // __IC_PLATFORM_*

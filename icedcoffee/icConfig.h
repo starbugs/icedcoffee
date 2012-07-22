@@ -33,6 +33,16 @@
 
 // Logging and Debugging
 
+// Break on GL errors
+#ifndef IC_BREAK_ON_GL_ERRORS
+#define IC_BREAK_ON_GL_ERRORS 0
+#endif
+
+// Debug output FPS (once a second) on the console
+#ifndef IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
+#define IC_DEBUG_OUTPUT_FPS_ON_CONSOLE 0
+#endif
+
 // Output debug log messages to console for hit test results
 #ifndef IC_ENABLE_DEBUG_HITTEST
 #define IC_ENABLE_DEBUG_HITTEST 0

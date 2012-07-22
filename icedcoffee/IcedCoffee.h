@@ -35,6 +35,7 @@
 #import "ICConfiguration.h"
 #import "icDefaults.h"
 #import "ICHostViewController.h"
+#import "ICTestHostViewController.h"
 #import "ICNode.h"
 #import "ICNodeVisitorDrawing.h"
 #import "ICButton.h"
@@ -73,7 +74,7 @@
 // General Documentation
 
 /**
- @mainpage IcedCoffee Framework Documentation (v0.6.4)
+ @mainpage IcedCoffee Framework Documentation (v0.6.5)
 
  <h2>Abstract</h2>
  

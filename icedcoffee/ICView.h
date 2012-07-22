@@ -82,6 +82,8 @@
     ICRenderTexture *_backing;
     ICSprite *_clippingMask;
     BOOL _clipsChildren;
+    ICSprite *_background;
+    BOOL _drawsBackground;
 }
 
 /**
@@ -96,6 +98,10 @@
  You should always switch the backing to nil before you replace it with another backing.
  */
 @property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
+
+@property (nonatomic, retain) ICSprite *background;
+
+@property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
 
 /**
  @brief Whether the view clips its children

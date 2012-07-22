@@ -58,8 +58,8 @@
 
 - (void)dealloc
 {
-    if (_vertexBuffer)
-        glDeleteBuffers(1, &_vertexBuffer);
+    if (_scale9VertexBuffer)
+        glDeleteBuffers(1, &_scale9VertexBuffer);
     if (_indexBuffer)
         glDeleteBuffers(1, &_indexBuffer);
     
@@ -91,7 +91,7 @@
      y4  5+------7+--------------13+-----15+
      */    
     
-    icV3F_C4B_T2F vertices[NUM_VERTICES];
+    icV3F_C4F_T2F vertices[NUM_VERTICES];
     
     float x1 = 0;
     float y1 = 0;
@@ -154,7 +154,7 @@
     vertices[15].texCoords = (kmVec2){tx4, ty4};
     
     for (int i=0; i<NUM_VERTICES; i++) {
-        vertices[i].color = _color;
+        vertices[i].color = color4FFromColor4B(_color);
     }
     
     // Note: as the Y axis is inverted by the IcedCoffe UI camera, we provide CCW indices
@@ -197,16 +197,16 @@
         15, 14, 13
     };
     
-    if (_vertexBuffer)
-        glDeleteBuffers(1, &_vertexBuffer);
+    if (_scale9VertexBuffer)
+        glDeleteBuffers(1, &_scale9VertexBuffer);
     if (_indexBuffer)
         glDeleteBuffers(1, &_indexBuffer);
     
-    glGenBuffers(1, &_vertexBuffer);
+    glGenBuffers(1, &_scale9VertexBuffer);
     glGenBuffers(1, &_indexBuffer);
     
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
-    glBufferData(GL_ARRAY_BUFFER, sizeof(icV3F_C4B_T2F) * NUM_VERTICES, vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, _scale9VertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(icV3F_C4F_T2F) * NUM_VERTICES, vertices, GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
@@ -265,21 +265,21 @@
     glEnableVertexAttribArray(ICVertexAttribTexCoords);
     IC_CHECK_GL_ERROR_DEBUG();
 
-    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBindBuffer(GL_ARRAY_BUFFER, _scale9VertexBuffer);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
 
-#define kVertexSize sizeof(_quad.bl)    
+#define kVertexSize sizeof(icV3F_C4F_T2F)    
 
 	// vertex
-	NSInteger diff = offsetof(icV3F_C4B_T2F, vect);
+	NSInteger diff = offsetof(icV3F_C4F_T2F, vect);
 	glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
     
 	// color
-	diff = offsetof(icV3F_C4B_T2F, color);
-	glVertexAttribPointer(ICVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kVertexSize, (void*)(diff));
+	diff = offsetof(icV3F_C4F_T2F, color);
+	glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
     
 	// texCoords
-	diff = offsetof(icV3F_C4B_T2F, texCoords);
+	diff = offsetof(icV3F_C4F_T2F, texCoords);
 	glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
     
 	glDrawElements(GL_TRIANGLES, NUM_INDICES, GL_UNSIGNED_SHORT, NULL);

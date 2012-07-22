@@ -172,14 +172,14 @@
 }
 
 // point is in UIView's coordinate system
-- (NSArray *)hitTest:(CGPoint)point
+- (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
     NSArray *resultNodeStack;
     
 	ICGLView *openGLview = (ICGLView*)self.view;
 	[EAGLContext setCurrentContext: [openGLview context]];
 
-    resultNodeStack = [self.scene hitTest:point];
+    resultNodeStack = [self.scene hitTest:point deferredReadback:deferredReadback];
     
     return resultNodeStack;
 }
@@ -191,21 +191,25 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }
 

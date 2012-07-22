@@ -21,32 +21,25 @@
 //  SOFTWARE.
 //  
 
-#import <Foundation/Foundation.h>
-#import "ICNodeVisitor.h"
+#import "ICView.h"
 
-/**
- @brief Node visitor for drawing a scene graph on an OpenGL framebuffer
- */
-@interface ICNodeVisitorDrawing : ICNodeVisitor
+@class ICButton;
+@class ICLabel;
 
-/**
- @brief Sets up the node's model-view transform matrix and pushes it on the OpenGL matrix stack
- */
-- (void)preVisitNode:(ICNode *)node;
+@interface ICTestButtonPanel : ICView {
+@protected
+    ICButton *_previousSceneButton;
+    ICButton *_nextSceneButton;
+    ICLabel *_statusLabel;
+    ICLabel *_hintLabel;
+}
 
-/**
- @brief Draws a single node to the OpenGL framebuffer
- */
-- (BOOL)visitSingleNode:(ICNode *)node;
+@property (nonatomic, readonly) ICButton *previousSceneButton;
 
-/**
- @brief Performs visitation on the children of the given node
- */
-- (void)visitChildrenOfNode:(ICNode *)node;
+@property (nonatomic, readonly) ICButton *nextSceneButton;
 
-/**
- @brief Pops the node's model-view transform matrix from the OpenGL matrix stack
- */
-- (void)postVisitNode:(ICNode *)node;
+@property (nonatomic, readonly) ICLabel *statusLabel;
+
+@property (nonatomic, readonly) ICLabel *hintLabel;
 
 @end

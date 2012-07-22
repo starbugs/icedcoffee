@@ -228,7 +228,7 @@
  @return Returns YES on success or NO otherwise. The resulting world vector is written into
  resultVect.
  
- @remarks View coordinates are to be understood as frame buffer coordinates in pixels.
+ @remarks View coordinates are to be understood as framebuffer coordinates in pixels.
  */
 - (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect;
 
@@ -244,7 +244,7 @@
  resultVect. Note that you may need to round its coordinates so as to compensate for limited
  floating point precision.
  
- @remarks View coordinates are to be understood as frame buffer coordinates in pixels.
+ @remarks View coordinates are to be understood as framebuffer coordinates in pixels.
  */
 - (BOOL)projectWorld:(kmVec3)worldVect toView:(kmVec3 *)resultVect;
 

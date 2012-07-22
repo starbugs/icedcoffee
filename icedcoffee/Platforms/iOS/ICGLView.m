@@ -249,8 +249,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	{
 		/* Resolve from msaaFramebuffer to resolveFramebuffer */
 		//glDisable(GL_SCISSOR_TEST);
-		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFrameBuffer]);
-		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFrameBuffer]);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER_APPLE, [renderer_ msaaFramebuffer]);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER_APPLE, [renderer_ defaultFramebuffer]);
 		glResolveMultisampleFramebufferAPPLE();
 	}
 
@@ -288,7 +288,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	// We can safely re-bind the framebuffer here, since this will be the
 	// 1st instruction of the new main loop
 	if( multiSampling_ )
-		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFrameBuffer]);
+		glBindFramebuffer(GL_FRAMEBUFFER, [renderer_ msaaFramebuffer]);
 }
 
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat

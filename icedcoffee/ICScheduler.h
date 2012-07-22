@@ -51,6 +51,12 @@ typedef enum _ICSchedulerPriority {
 
 /**
  @brief Returns the scheduler for the current host view controller
+ 
+ This method internally retrieves the current host view controller for the current thread by calling
+ ICHostViewController::currentHostViewController and then returns a reference to the current
+ scheduler as stored in the ICHostViewController::scheduler property.
+ 
+ Note that this method is thread-safe while all other methods of this class are not.
  */
 + (id)currentScheduler;
 

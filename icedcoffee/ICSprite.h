@@ -41,9 +41,10 @@
 @protected
     ICTexture2D *_texture;
     ICTexture2D *_maskTexture;
-    icQuad       _quad;
     icColor4B    _color;
     icBlendFunc  _blendFunc;
+    GLuint       _vertexBuffer;
+    kmVec2       _texCoords[4];
 }
 
 /**
@@ -90,11 +91,6 @@
  @brief Draws the sprite
  */
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor;
-
-/**
- @brief Sets the size of the sprite's quad in local node space
- */
-- (void)setQuadSize:(CGSize)size;
 
 /**
  @brief Flips the sprite's texture horizontally

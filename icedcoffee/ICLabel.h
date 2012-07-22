@@ -35,7 +35,10 @@
     NSString *_fontName;
     CGFloat _fontSize;
     icColor4B _color;
+    BOOL _autoresizesToTextSize;
 }
+
+@property (nonatomic, assign) BOOL autoresizesToTextSize;
 
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
 

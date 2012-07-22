@@ -25,25 +25,25 @@
 #import "kazmath/kazmath.h"
 
 /**
- @brief Camara mapping world coordinates in points to frame buffer coordinates in pixels
+ @brief Camara mapping world coordinates in points to framebuffer coordinates in pixels
  
  The ICUICamera class provides a world coordinate system in points
- and maps these point locations to frame buffer pixels using a non-orthogonal 3D projection
- matrix. The world coordinate system is designed to reflect the frame buffers's coordinate
- system, that is, the X-axis is the horizontal frame buffer axis, the Y-axis is the vertical
- frame buffer axis and the Z-axis is used to represent screen depth. By default, the origin
- of the camera's coordinate system is the lower left corner of the target frame buffer, so
+ and maps these point locations to framebuffer pixels using a non-orthogonal 3D projection
+ matrix. The world coordinate system is designed to reflect the framebuffers's coordinate
+ system, that is, the X-axis is the horizontal framebuffer axis, the Y-axis is the vertical
+ framebuffer axis and the Z-axis is used to represent screen depth. By default, the origin
+ of the camera's coordinate system is the lower left corner of the target framebuffer, so
  the XY-plane of the camera maps point coordinates to pixel coordinates.
  
  For standard resolution displays, the camera will effectively map model-view coordinates
- to frame buffer pixel coordinates. For example, specifying a sprite with position (0,0,0)
+ to framebuffer pixel coordinates. For example, specifying a sprite with position (0,0,0)
  and content size (200,200,0) will result in the sprite covering a quadratic region of
- 200 pixels at position (0,0) of the frame buffer.
+ 200 pixels at position (0,0) of the framebuffer.
  
  For high resolution displays, the pixel coordinate system differs from the point coordinate
  system. On iOS devices supporting the retina display, a special content scale factor is
  defined, which is used to internally scale the point coordinate system to the right pixel
- positions of the frame buffer. See ICHostViewController::enableRetinaDisplaySupport: for details. 
+ positions of the framebuffer. See ICHostViewController::enableRetinaDisplaySupport: for details. 
  */
 @interface ICUICamera : ICCamera
 {

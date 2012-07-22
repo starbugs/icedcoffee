@@ -39,7 +39,7 @@
  
  You initialize an ICScrollView instance using the ICScrollView::initWithSize: method.
  By default, ICScrollView is not backed by a render texture, which means that clipping
- is performed by means of the stencil buffer. Consequently, the frame buffer rendering
+ is performed by means of the stencil buffer. Consequently, the framebuffer rendering
  the scroll view must be endued with a stencil buffer attachment.
  
  After the scroll view has been initialized, you may define its contents by adding

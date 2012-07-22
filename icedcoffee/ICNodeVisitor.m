@@ -26,9 +26,12 @@
 
 @implementation ICNodeVisitor
 
-- (id)init
+@synthesize owner = _owner;
+
+- (id)initWithOwner:(ICNode *)owner
 {
     if ((self = [super init])) {
+        _owner = owner;
     }
     return self;
 }
@@ -39,12 +42,17 @@
     [self visitNode:node];
 }
 
+- (void)skipChildren
+{
+    _skipChildren = YES;
+}
+
 - (void)visitNode:(ICNode *)node
 {
     if (node.isVisible) {
         [self preVisitNode:node];
-        [self visitSingleNode:node];
-        [self visitChildrenOfNode:(ICNode *)node];
+        if ([self visitSingleNode:node])
+            [self visitChildrenOfNode:(ICNode *)node];
         [self postVisitNode:node];
     }
 }
@@ -59,19 +67,15 @@
     // Implement in subclass    
 }
 
-- (void)visitSingleNode:(ICNode *)node
+- (BOOL)visitSingleNode:(ICNode *)node
 {
     // Implement in subclass
+    return YES;
 }
 
 - (void)visitChildrenOfNode:(ICNode *)node
 {
-    // Important: using ICNode's _children ivar for enumeration since ICView may re-route
-    // ICNode::children (and other composition related methods) to its render texture
-    // backing scene's children.    
-    for (ICNode *child in node->_children) {
-        [self visitNode:child];
-    }    
+    // Implement in subclass
 }
 
 @end

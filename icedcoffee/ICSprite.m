@@ -27,6 +27,11 @@
 #import "icMacros.h"
 #import "ICNodeVisitorPicking.h"
 #import "icGLState.h"
+#import "icUtils.h"
+
+
+#define NUM_VERTICES 4
+
 
 @interface ICSprite (Private)
 - (void)resetQuad;
@@ -56,8 +61,12 @@
 
 - (id)initWithTexture:(ICTexture2D *)texture
 {
+    _texCoords[0] = kmVec2Make(0, 1);
+    _texCoords[1] = kmVec2Make(1, 1);
+    _texCoords[2] = kmVec2Make(0, 0);
+    _texCoords[3] = kmVec2Make(1, 0);
+    
     if ((self = [super init])) {
-        [self resetQuad];
         [self setColor:(icColor4B){255,255,255,255}];
         self.texture = texture;
 		[self setBlendFunc:(icBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
@@ -68,31 +77,47 @@
 - (void)dealloc
 {
     ICLogDealloc(@"Deallocing ICSprite");
+    
+    if (_vertexBuffer)
+        glDeleteBuffers(1, &_vertexBuffer);    
+    
     self.texture = nil;
     
     [super dealloc];
 }
 
-- (void)resetQuad
+- (void)updateQuad
 {
-    bzero(&_quad, sizeof(icQuad));
-    
     float x1 = 0.0f;
-    float x2 = 1.0f;
+    float x2 = _size.x;
     float y1 = 0.0f;
-    float y2 = 1.0f;
+    float y2 = _size.y;
+    
+    icV3F_C4F_T2F vertices[NUM_VERTICES];    
     
     // Note: Y-axis inverted by IcedCoffe UI camera, so we need to do this in CCW order
-    kmVec3Fill(&_quad.tl.vect, x1, y1, 0);
-    kmVec3Fill(&_quad.tr.vect, x2, y1, 0);
-    kmVec3Fill(&_quad.bl.vect, x1, y2, 0);
-    kmVec3Fill(&_quad.br.vect, x2, y2, 0);
+    kmVec3Fill(&vertices[0].vect, x1, y2, 0);
+    kmVec3Fill(&vertices[1].vect, x2, y2, 0); 
+    kmVec3Fill(&vertices[2].vect, x1, y1, 0);
+    kmVec3Fill(&vertices[3].vect, x2, y1, 0);
     
     // .. and flip the texture coordinates vertically
-    kmVec2Fill(&_quad.tl.texCoords, 0, 1);
-    kmVec2Fill(&_quad.tr.texCoords, 1, 1);
-    kmVec2Fill(&_quad.bl.texCoords, 0, 0);
-    kmVec2Fill(&_quad.br.texCoords, 1, 0);
+    kmVec2Fill(&vertices[0].texCoords, _texCoords[0].x, _texCoords[0].y);
+    kmVec2Fill(&vertices[1].texCoords, _texCoords[1].x, _texCoords[1].y);
+    kmVec2Fill(&vertices[2].texCoords, _texCoords[2].x, _texCoords[2].y);
+    kmVec2Fill(&vertices[3].texCoords, _texCoords[3].x, _texCoords[3].y);
+    
+    vertices[0].color = color4FFromColor4B(_color);
+    vertices[1].color = color4FFromColor4B(_color);
+    vertices[2].color = color4FFromColor4B(_color);
+    vertices[3].color = color4FFromColor4B(_color);
+    
+    if (!_vertexBuffer)
+        glGenBuffers(1, &_vertexBuffer);
+    
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBufferData(GL_ARRAY_BUFFER, sizeof(icV3F_C4F_T2F) * NUM_VERTICES, vertices, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);    
 }
 
 - (icColor4B)color
@@ -103,17 +128,11 @@
 - (void)setColor:(icColor4B)color
 {
     _color = color;
-    _quad.tl.color = _color;
-    _quad.tr.color = _color;
-    _quad.bl.color = _color;
-    _quad.br.color = _color;    
+    [self updateQuad];
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
-    if (!self.isVisible)
-        return;
-    
     [self applyStandardDrawSetupWithVisitor:visitor];
     
     // Set texture (unless we're in picking mode)
@@ -135,30 +154,33 @@
         icGLEnable(IC_GL_BLEND);
     }
     
+    glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+
     // FIXME: needs to go into icGLState
     glEnableVertexAttribArray(ICVertexAttribPosition);
     glEnableVertexAttribArray(ICVertexAttribColor);
     glEnableVertexAttribArray(ICVertexAttribTexCoords);
     IC_CHECK_GL_ERROR_DEBUG();
     
-#define kQuadSize sizeof(_quad.bl)    
-    long offset = (long)&_quad;
+#define kVertexSize sizeof(icV3F_C4F_T2F)    
     
 	// vertex
-	NSInteger diff = offsetof(icV3F_C4B_T2F, vect);
-	glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
+	NSInteger diff = offsetof(icV3F_C4F_T2F, vect);
+	glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
     
 	// color
-	diff = offsetof(icV3F_C4B_T2F, color);
-	glVertexAttribPointer(ICVertexAttribColor, 4, GL_UNSIGNED_BYTE, GL_TRUE, kQuadSize, (void*)(offset + diff));
+	diff = offsetof(icV3F_C4F_T2F, color);
+	glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
     
 	// texCoords
-	diff = offsetof(icV3F_C4B_T2F, texCoords);
-	glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kQuadSize, (void*)(offset + diff));
-            
+	diff = offsetof(icV3F_C4F_T2F, texCoords);
+	glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+    
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
     IC_CHECK_GL_ERROR_DEBUG();
 
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
     if (_maskTexture) {
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -196,73 +218,62 @@
 
 - (void)setSize:(kmVec3)size
 {
-    [self setQuadSize:CGSizeMake(size.x, size.y)];
     [super setSize:size];
-}
-
-- (void)setQuadSize:(CGSize)size
-{
-    float x1 = 0.0f;
-    float x2 = size.width;
-    float y1 = 0.0f;
-    float y2 = size.height;
-    
-    kmVec3Fill(&_quad.bl.vect, x1, y1, 0);
-    kmVec3Fill(&_quad.br.vect, x2, y1, 0);
-    kmVec3Fill(&_quad.tl.vect, x1, y2, 0);
-    kmVec3Fill(&_quad.tr.vect, x2, y2, 0);    
+    [self updateQuad];
 }
 
 - (void)flipTextureHorizontally
 {
     float min = 1.0f, max = 0.0f;
-    icV3F_C4B_T2F *vertices = (icV3F_C4B_T2F *)&_quad;
     int i=0;
-    for(; i<4; i++) {
-        if(vertices[i].texCoords.x < min)
-            min = vertices[i].texCoords.x;
-        if(vertices[i].texCoords.x > max)
-            max = vertices[i].texCoords.x;
+    for(; i<NUM_VERTICES; i++) {
+        if(_texCoords[i].x < min)
+            min = _texCoords[i].x;
+        if(_texCoords[i].x > max)
+            max = _texCoords[i].x;
     }
-    _quad.tl.texCoords.x = (_quad.tl.texCoords.x == min) ? max : min; 
-    _quad.tr.texCoords.x = (_quad.tr.texCoords.x == min) ? max : min; 
-    _quad.bl.texCoords.x = (_quad.bl.texCoords.x == min) ? max : min; 
-    _quad.br.texCoords.x = (_quad.br.texCoords.x == min) ? max : min; 
+    for(i=0; i<NUM_VERTICES; i++) {
+        _texCoords[i].x = (_texCoords[i].x == min) ? max : min; 
+    }
+    [self updateQuad];
 }
 
 - (void)flipTextureVertically
 {
     float min = 1.0f, max = 0.0f;
-    icV3F_C4B_T2F *vertices = (icV3F_C4B_T2F *)&_quad;
     int i=0;
-    for(; i<4; i++) {
-        if(vertices[i].texCoords.y < min)
-            min = vertices[i].texCoords.y;
-        if(vertices[i].texCoords.y > max)
-            max = vertices[i].texCoords.y;
+    for(; i<NUM_VERTICES; i++) {
+        if(_texCoords[i].y < min)
+            min = _texCoords[i].y;
+        if(_texCoords[i].y > max)
+            max = _texCoords[i].y;
     }
-    _quad.tl.texCoords.y = (_quad.tl.texCoords.y == min) ? max : min; 
-    _quad.tr.texCoords.y = (_quad.tr.texCoords.y == min) ? max : min; 
-    _quad.bl.texCoords.y = (_quad.bl.texCoords.y == min) ? max : min; 
-    _quad.br.texCoords.y = (_quad.br.texCoords.y == min) ? max : min; 
+    for(i=0; i<NUM_VERTICES; i++) {
+        _texCoords[i].y = (_texCoords[i].y == min) ? max : min; 
+    }
+    [self updateQuad];
 }
 
 - (void)rotateTextureCW
 {
-    icQuad oldQuad = _quad;
-    _quad.tr.texCoords = oldQuad.tl.texCoords;
-    _quad.br.texCoords = oldQuad.tr.texCoords;
-    _quad.tl.texCoords = oldQuad.bl.texCoords;
-    _quad.bl.texCoords = oldQuad.br.texCoords;
+    kmVec2 oldTexCoords[4];
+    memcpy(oldTexCoords, _texCoords, sizeof(kmVec2)*NUM_VERTICES);
+    _texCoords[1] = oldTexCoords[0];
+    _texCoords[3] = oldTexCoords[1];
+    _texCoords[0] = oldTexCoords[2];
+    _texCoords[2] = oldTexCoords[3];
+    [self updateQuad];
 }
 
 - (void)rotateTextureCCW
 {
-    icQuad oldQuad = _quad;
-    _quad.tl.texCoords = oldQuad.tr.texCoords;
-    _quad.tr.texCoords = oldQuad.br.texCoords;
-    _quad.bl.texCoords = oldQuad.tl.texCoords;
-    _quad.br.texCoords = oldQuad.bl.texCoords;
+    kmVec2 oldTexCoords[4];
+    memcpy(oldTexCoords, _texCoords, sizeof(kmVec2)*NUM_VERTICES);
+    _texCoords[0] = oldTexCoords[1];
+    _texCoords[1] = oldTexCoords[3];
+    _texCoords[2] = oldTexCoords[0];
+    _texCoords[3] = oldTexCoords[2];
+    [self updateQuad];
 }
 
 - (BOOL)acceptsFirstResponder

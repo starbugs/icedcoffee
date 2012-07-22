@@ -108,15 +108,19 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 @implementation ICMouseEventDispatcher
 
 @synthesize acceptsMouseMovedEvents = _acceptsMouseMovedEvents;
+@synthesize updatesEnterExitEventsContinuously = _updatesEnterExitEventsContinuously;
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
 {
     if ((self = [super init])) {
         _hostViewController = hostViewController;
+        _previousMouseLocation = CGPointMake(-1, -1);
         _lastMouseLocation = CGPointMake(-1, -1);
         _lastMouseModifierFlags = 0;
         _eventNumber = 0;
-        _acceptsMouseMovedEvents = YES; // handle mouse moved events by default
+        // Handle mouse moved events by default
+        _acceptsMouseMovedEvents = YES; 
+        _updatesEnterExitEventsContinuously = NO; 
     }
     return self;
 }
@@ -156,17 +160,35 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     return e;
 }
 
-// Note: this will only work if the host view controller's view returns YES in acceptsFirstResponder
-// and the view's window is set to accept mouse moved events.
-- (void)updateMouseOverState
+- (void)prepareUpdateMouseOverState
 {
-    if (!self.acceptsMouseMovedEvents)
+    if (!_acceptsMouseMovedEvents ||
+        (!_updatesEnterExitEventsContinuously &&
+         _lastMouseLocation.x == _previousMouseLocation.x &&
+         _lastMouseLocation.y == _previousMouseLocation.y))
         return;
     
+    [_hostViewController hitTest:_lastMouseLocation deferredReadback:YES];
+}
+
+// Note: this will only work if the host view controller's view returns YES in acceptsFirstResponder
+// and the view's window is set to accept mouse moved events.
+- (void)updateMouseOverState:(BOOL)deferredReadback
+{
+    if (!_acceptsMouseMovedEvents ||
+        (!_updatesEnterExitEventsContinuously &&
+         _lastMouseLocation.x == _previousMouseLocation.x &&
+         _lastMouseLocation.y == _previousMouseLocation.y))
+        return;
+    
+    if (!_updatesEnterExitEventsContinuously)
+        _previousMouseLocation = _lastMouseLocation;
+    
+    NSArray *hitNodes = deferredReadback ? [_hostViewController performHitTestReadback] :
+                        [_hostViewController hitTest:_lastMouseLocation];
+    
     NSMutableArray *newOverNodes = [NSMutableArray array];
-    NSArray *hitNodes = [_hostViewController hitTest:_lastMouseLocation];
     ICNode *deepest = [hitNodes lastObject];
-    NSArray *ancestors = [deepest ancestors];
     
     if (deepest) {
         _lastScrollNode = deepest;
@@ -174,6 +196,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     } else {
         _lastScrollNode = nil;
     }
+    
+    NSArray *ancestors = [deepest ancestors];
     
     // Check whether the deepest hit node's ancestors contain other hit nodes, and if so,
     // add them to a new overNodes array
@@ -195,7 +219,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
             }
         }
     }
-
+    
     // Check which new nodes are not in the current over nodes array and send them
     // a mouseEntered event
     if ([newOverNodes count]) {
@@ -364,12 +388,18 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     // On mouse moved, note mouse location and current modifier flags; this will be used
     // in updateMouseOverState, which is called repeatedly when the scene is drawn to
     // send entered and exited events.
-    _lastMouseLocation = [self locationFromEvent:[ICMouseEvent eventWithNativeEvent:event
-                                                                           hostView:_hostViewController.view]];
+    _lastMouseLocation = [self locationFromEvent:
+                          [ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view]];
     _lastMouseModifierFlags = [event modifierFlags];
     
     if (self.acceptsMouseMovedEvents) {
-        [self dispatchEvent:event withSelector:@selector(mouseMoved:)];
+        if ([_lastScrollNode respondsToSelector:@selector(mouseMoved:)]) {
+            // Convert NSEvent to ICMouseEvent
+            ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event
+                                                                 hostView:_hostViewController.view];
+            // Dispatch event to the node the mouse is currently over
+            [_lastScrollNode mouseMoved:mouseEvent];
+        }
     }
 }
 

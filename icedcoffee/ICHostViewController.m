@@ -33,13 +33,15 @@
 #import "ICTargetActionDispatcher.h"
 #import "icDefaults.h"
 #import "icConfig.h"
+#import "ICConfiguration.h"
 #import "sys/time.h"
 
 // Global content scale factor (applies to all ICHostViewController instances)
 float g_icContentScaleFactor = IC_DEFAULT_CONTENT_SCALE_FACTOR;
 
-// Globally current host view controller
-ICHostViewController *g_currentHostViewController = nil;
+// Globally current host view controller (weak references via NSValue with pointers)
+NSMutableDictionary *g_currentHVCForThread = nil; // lazy allocation
+NSLock *g_hvcDictLock = nil; // lazy allocation
 
 
 @interface ICHostViewController (Private)
@@ -55,20 +57,26 @@ ICHostViewController *g_currentHostViewController = nil;
 @synthesize scene = _scene;
 @synthesize isRunning = _isRunning;
 @synthesize thread = _thread;
+@synthesize renderContext = _renderContext;
 @synthesize currentFirstResponder = _currentFirstResponder;
 @synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
 
-+ (ICHostViewController *)platformSpecificHostViewController
++ (id)platformSpecificHostViewController
 {
     return [[[IC_HOSTVIEWCONTROLLER alloc] init] autorelease];
+}
+
++ (id)hostViewController
+{
+    return [[[[self class] alloc] init] autorelease];
 }
 
 - (id)init
 {
     if ((self = [super init])) {
-        _scheduler = [[ICScheduler alloc] init];        
+        _scheduler = [[ICScheduler alloc] init];
         _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
         _lastUpdate.tv_sec = 0;
         _lastUpdate.tv_usec = 0;
@@ -93,24 +101,47 @@ ICHostViewController *g_currentHostViewController = nil;
     [_scheduler release];
     [_renderContext release];
     [_targetActionDispatcher release];
+
+    // Make sure no bad access can occur with the current host view controller
+    ICHostViewController *currentHVC = [[self class] currentHostViewController];
+    if (currentHVC == self) {
+        NSValue *threadAddress = [NSValue valueWithPointer:[NSThread currentThread]];
+        [g_hvcDictLock lock];
+        [g_currentHVCForThread removeObjectForKey:threadAddress];
+        [g_hvcDictLock unlock];
+    }
     
     [super dealloc];
 }
 
-+ (ICHostViewController *)currentHostViewController
++ (id)currentHostViewController
 {
     ICHostViewController *currentHostViewController;
-    @synchronized (self) {
-        currentHostViewController = g_currentHostViewController;
-    }
+    NSValue *threadAddress = [NSValue valueWithPointer:[NSThread currentThread]];
+    
+    if (!g_hvcDictLock)
+        g_hvcDictLock = [[NSLock alloc] init];
+    
+    [g_hvcDictLock lock];
+    currentHostViewController = [[g_currentHVCForThread objectForKey:threadAddress] pointerValue];
+    [g_hvcDictLock unlock];
+    
     return currentHostViewController;
 }
 
 - (id)makeCurrentHostViewController
 {
-    @synchronized (self) {
-        g_currentHostViewController = self;
-    }
+    NSValue *threadAddress = [NSValue valueWithPointer:[NSThread currentThread]];
+    
+    if (!g_hvcDictLock)
+        g_hvcDictLock = [[NSLock alloc] init];
+    
+    [g_hvcDictLock lock];
+    if (!g_currentHVCForThread)
+        g_currentHVCForThread = [[NSMutableDictionary alloc] initWithCapacity:1];
+    [g_currentHVCForThread setObject:[NSValue valueWithPointer:self] forKey:threadAddress];
+    [g_hvcDictLock unlock];
+    
     return self;
 }
 
@@ -132,6 +163,19 @@ ICHostViewController *g_currentHostViewController = nil;
         }
         
         _lastUpdate = now;
+        
+#if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
+        // FIXME: this needs to be refactored so that it works generically and for multiple HVCs
+        static int numFrames = 0;
+        static float dtsum = 0.0f;
+        dtsum += _deltaTime;
+        numFrames++;
+        if (dtsum >= 1.0f) {
+            ICLog(@"FPS: %f", (float)numFrames / dtsum);
+            dtsum -= 1.0f;
+            numFrames = 0;
+        }
+#endif
     }
 }
 
@@ -146,6 +190,12 @@ ICHostViewController *g_currentHostViewController = nil;
     
     // Make the receiver the current host view controller before drawing the scene
     [self makeCurrentHostViewController];
+}
+
+- (void)setupScene
+{
+    // Override in subclass, set up an ICScene object, then call [self runWithScene:scene]
+    // to start animation with the prepared scene
 }
 
 - (void)runWithScene:(ICScene *)scene
@@ -176,24 +226,29 @@ ICHostViewController *g_currentHostViewController = nil;
 #ifdef __IC_PLATFORM_IOS
     [super setView:view];
 #endif
-    // Mac host view controller implements this in its own subclass
+    // Mac SDK doesn't know view controllers, so ICHostViewControllerMac implements this
+    // in its own subclass
     
-    // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
-    // render context yet, create and register a new render context for it, so it's possible
-    // for other components to retrieve it via the OpenGL context globally
-    ICContextManager *contextManager = [ICContextManager defaultContextManager];
-    _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
-    if (!_renderContext) {
-        _renderContext = [[ICRenderContext alloc] init];
-        [contextManager registerRenderContext:_renderContext
-                             forOpenGLContext:[self openGLContext]];
-    }
-    
-    // If not already existing, create a texture cache bound to our OpenGL context
-    // (required for auxiliary OpenGL context)
-    if (!self.textureCache) {
-        _renderContext.textureCache = 
-            [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+    if (view) {
+        // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
+        // render context yet, create and register a new render context for it, so it's possible
+        // for other components to retrieve it via the OpenGL context globally
+        ICContextManager *contextManager = [ICContextManager defaultContextManager];
+        _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
+        if (!_renderContext) {
+            _renderContext = [[ICRenderContext alloc] init];
+            [contextManager registerRenderContext:_renderContext
+                                 forOpenGLContext:[self openGLContext]];
+        }
+        
+        // If not already existing, create a texture cache bound to our OpenGL context
+        // (required for auxiliary OpenGL context)
+        if (!self.textureCache) {
+            _renderContext.textureCache = 
+                [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+        }
+        
+        [self setupScene];
     }
 }
 
@@ -278,7 +333,7 @@ ICHostViewController *g_currentHostViewController = nil;
 #endif // __IC_PLATFORM_MAC
 
 
-- (CGSize)frameBufferSize
+- (CGSize)framebufferSize
 {
     return [[self view] bounds].size;
 }
@@ -293,8 +348,24 @@ ICHostViewController *g_currentHostViewController = nil;
 
 - (NSArray *)hitTest:(CGPoint)point
 {
+    return [self hitTest:point deferredReadback:NO];
+}
+
+- (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
+{
     // Override in subclass
     return nil;
+}
+
+- (NSArray *)performHitTestReadback
+{
+    // Override in subclass
+    return nil;
+}
+
+- (BOOL)canPerformDeferredReadbacks
+{
+    return [[ICConfiguration sharedConfiguration] supportsPixelBufferObject];
 }
 
 

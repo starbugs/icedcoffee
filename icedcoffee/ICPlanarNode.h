@@ -29,8 +29,15 @@
  @brief Base class for all planar nodes
  
  The ICPlanarNode class represents an abstract base class for all planar nodes (sprites, render
- textures, etc.) Subclasses should override the ICPlanarNode::plane method to return an
- appropriate plane.
+ textures, etc.) ICPlanarNode provides methods to calculate the node's plane based on a plane
+ normal and a point on the plane. Furthermore it implements the ICProjectionTransforms protocol
+ for transforming parent framebuffer and host view locations to local node locations via
+ unprojection using the node's scene camera.
+ 
+ ICPlanarNode defines a default node plane which faces the user interace camera (ICUICamera).
+ Hence, the default plane normal is [0,0,1] and the default plane point is [0,0,0]. Subclasses
+ may override ICPlanarNode::planeNormal and ICPlanarNode::planePoint in order to customize
+ the plane.
  */
 @interface ICPlanarNode : ICNode <ICProjectionTransforms>
 
@@ -55,16 +62,16 @@
 - (kmPlane)worldPlane;
 
 /**
- @brief Converts a location in the parent scene's frame buffer coordinate space to a location in
+ @brief Converts a location in the parent scene's framebuffer coordinate space to a location in
  the node's coordinate space
 
- @param location A CGPoint defining the location in the parent frame buffer's coordinate space
+ @param location A CGPoint defining the location in the parent framebuffer's coordinate space
  in points; the Y axis points downwards.
 
- The method uses the node's plane to transform a location in the parent scene's frame buffer
+ The method uses the node's plane to transform a location in the parent scene's framebuffer
  coordinate space to a location in the node's local coordinate space.
  */
-- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location;
+- (kmVec3)parentFramebufferToNodeLocation:(CGPoint)location;
 
 /**
  @brief Converts a location in the host view's coordinate space to a location in the node's

@@ -178,6 +178,10 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     self.subScene = nil;
     [_sprite release];
     [_texture release];
+
+    if (_fbo) {
+        glDeleteFramebuffers(1, &_fbo);
+    }
     
 	[super dealloc];
 }
@@ -289,7 +293,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     NSAssert(fboStatus == GL_FRAMEBUFFER_COMPLETE,
              @"Could not attach texture to framebuffer (fbo status: %x", fboStatus);
     
-    // Bind old frame buffer
+    // Bind old framebuffer
     glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
     IC_CHECK_GL_ERROR_DEBUG();
     
@@ -302,21 +306,41 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     [self setNeedsDisplay];
 }
 
-- (void)begin
+- (CGSize)textureSizeInPixels
 {
-	// Save the current matrices
+    return CGSizeMake(ICPointsToPixels(_size.x), ICPointsToPixels(_size.y));
+}
+
+- (void)pushRenderTextureMatrices
+{
+	// Save current matrices
     kmGLMatrixMode(GL_PROJECTION);
     kmGLPushMatrix();
     kmGLMatrixMode(GL_MODELVIEW);
-	kmGLPushMatrix();
+	kmGLPushMatrix();    
+}
+
+- (void)popRenderTextureMatrices
+{
+	// Restore previous matrices
+    kmGLMatrixMode(GL_PROJECTION);
+    kmGLPopMatrix();
+    kmGLMatrixMode(GL_MODELVIEW);
+	kmGLPopMatrix();    
+}
+
+- (void)begin
+{
+    [self pushRenderTextureMatrices];
 
     // Save current FBO viewport
     glGetIntegerv(GL_VIEWPORT, _oldFBOViewport);
         
-	// Adjust the viewport
+	// Adjust the viewport to the render texture's size
 	CGSize texSize = [_texture sizeInPixels];
 	glViewport(0, 0, texSize.width, texSize.height);
 
+    // Save the current framebuffer and switch to the render texture's framebuffer
 	glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
 	glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     
@@ -327,14 +351,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (void)end
 {
+    // Restore the old framebuffer
 	glBindFramebuffer(GL_FRAMEBUFFER, _oldFBO);
     IC_CHECK_GL_ERROR_DEBUG();
-    
-	// Restore previous matrices
-    kmGLMatrixMode(GL_PROJECTION);
-    kmGLPopMatrix();
-    kmGLMatrixMode(GL_MODELVIEW);
-	kmGLPopMatrix();
+
+    [self popRenderTextureMatrices];
     
 	// Restore viewport
 	glViewport(_oldFBOViewport[0], _oldFBOViewport[1], _oldFBOViewport[2], _oldFBOViewport[3]);
@@ -352,7 +373,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         [self begin];
     }
     
-	glReadPixels(location.x, location.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
+    glReadPixels(location.x, location.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
     
     if (performBeginEnd)
         [self end];
@@ -360,31 +381,30 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     return color;
 }
 
+- (void)readPixels:(void *)data inRect:(CGRect)rect
+{
+    BOOL performBeginEnd = NO;
+    
+    if (!self.isInRenderTextureDrawContext) {
+        performBeginEnd = YES;
+        [self begin];
+    }
+    
+    glReadPixels(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,
+                 GL_RGBA, GL_UNSIGNED_BYTE, data);
+    
+    if (performBeginEnd)
+        [self end];
+}
+
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
-    [self begin];
-    if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
+    if (![visitor isKindOfClass:[ICNodeVisitorPicking class]] &&
+        (self.frameUpdateMode == ICFrameUpdateModeSynchronized ||
+        (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay))) {
         
-        // Perform picking on inner texture scene
-        
-        // Get and transform pick point (frame buffer space)
-        CGPoint pickPoint = ((ICNodeVisitorPicking *)visitor).pickPoint;
-        CGPoint localPoint = kmVec3ToCGPoint([self parentFrameBufferToNodeLocation:pickPoint]);
-        
-#if IC_ENABLE_DEBUG_HITTEST
-        ICLog(@"Hit test within ICRenderTexture: pickPoint=(%f,%f) localPoint=(%f,%f)",
-              pickPoint.x, pickPoint.y, localPoint.x, localPoint.y);
-#endif
-                
-        // Perform the inner hit test
-        NSArray *innerHitTestNodes = [self.subScene hitTest:localPoint];
-        
-        // Append nodes after(!) the next successfully hit node in the parent scene,
-        // which will be the hit of the render texture's sprite
-        [(ICNodeVisitorPicking *)visitor appendNodesToResultStack:innerHitTestNodes];
-        
-    } else if (self.frameUpdateMode == ICFrameUpdateModeSynchronized ||
-              (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay)) {
+        // Enter render texture context
+        [self begin];
         
         // Visit inner scene for drawing
         [self.subScene visit];
@@ -394,10 +414,23 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
             _needsDisplay = NO;
         }
         
+        // Exit render texture context
+        [self end];
+    } else if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
+        [self pushRenderTextureMatrices];
     }
-    [self end];
+}
 
-    [super drawWithVisitor:visitor];
+- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
+{
+    if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
+        [self popRenderTextureMatrices];
+    }
+}
+
+- (NSArray *)pickingChildren
+{
+    return [NSArray arrayWithObjects:self.subScene, nil];
 }
 
 - (void)setSubScene:(ICScene *)subScene
@@ -410,6 +443,9 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     // relationship as the scene is not a child of self.sprite, but self.sprite is the
     // scene's parent. This is essntially an edge case. Don't do this at home ;)
     [_subScene setParent:self.sprite];
+    
+    // Assign self as render texture to sub scene
+    [_subScene setRenderTexture:self];
 }
 
 - (void)setNeedsDisplayForNode:(ICNode *)node
@@ -430,7 +466,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     return [self.sprite plane];
 }
 
-- (CGSize)frameBufferSize
+- (CGSize)framebufferSize
 {
     return kmVec3ToCGSize(self.size);
 }

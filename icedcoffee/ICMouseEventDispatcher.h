@@ -46,6 +46,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 @private
     ICHostViewController *_hostViewController;
     NSMutableArray *_overNodes;
+    CGPoint _previousMouseLocation;
     CGPoint _lastMouseLocation;
     NSUInteger _lastMouseModifierFlags;
     ICNode *_lastMouseDownNode;
@@ -54,13 +55,17 @@ typedef NSUInteger ICAbstractMouseEventType;
     BOOL _isDragging;
     NSUInteger _eventNumber;
     BOOL _acceptsMouseMovedEvents;
+    BOOL _updatesEnterExitEventsContinuously;
 }
 
 @property (nonatomic, assign) BOOL acceptsMouseMovedEvents;
 
+@property (nonatomic, assign) BOOL updatesEnterExitEventsContinuously;
+
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;
 
-- (void)updateMouseOverState;
+- (void)prepareUpdateMouseOverState;
+- (void)updateMouseOverState:(BOOL)deferredReadback;
 
 - (void)mouseDown:(NSEvent *)event;
 - (void)mouseDragged:(NSEvent *)event;

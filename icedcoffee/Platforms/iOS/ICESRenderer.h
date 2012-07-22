@@ -52,8 +52,8 @@
 
 - (unsigned int) colorRenderBuffer;
 - (unsigned int) depthBuffer;
-- (unsigned int) defaultFrameBuffer;
-- (unsigned int) msaaFrameBuffer;
+- (unsigned int) defaultFramebuffer;
+- (unsigned int) msaaFramebuffer;
 - (unsigned int) msaaColorBuffer;
 @end
 

@@ -22,8 +22,7 @@
 //  
 
 #import "ICControl.h"
-
-@class ICLabel;
+#import "ICLabel.h"
 
 /**
  @brief Represents a button control

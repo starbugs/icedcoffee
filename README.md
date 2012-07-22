@@ -1,4 +1,4 @@
-IcedCoffee v0.6.4
+IcedCoffee v0.6.5
 =================
 
 IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based
@@ -10,7 +10,7 @@ all kinds of rich and dynamic application frontends.
 
 IcedCoffee is open source and free for both non-commercial and commercial use (MIT license.)
 
-	Note: This is an early release meaning that some things aren't quite finished yet.
+	Note: This is an early release, which means that some things aren't quite finished yet.
 
 
 Getting Started
@@ -35,17 +35,18 @@ Main Features
 
   * Minimalistic scene graph: scene node infrastructure with arbitrary 3D transforms,
     easily extensible via node visitation
-  * Full event handling support for nodes (touch, mouse, keyboard, motion), responder
-    chain design similar to that found in Cocoa/CocoaTouch
-  * Perspective GUI rendering (XY world plane matches the screen plane)
-  * Shader-based picking/selection of nodes (support for arbitrary picking shapes)
-  * Render to texture, picking through (potentially nested) texture FBOs
+  * Full event handling support for nodes, views and controls (multi-touch, mouse, keyboard),
+    responder chain design similar to that found in Cocoa/CocoaTouch
+  * Shader-based picking/selection of nodes (arbitrary picking shapes)
+  * Render to texture, picking through (potentially nested) texture FBOs via unprojection
   * Render to texture and picking with depth and stencil buffer support
-  * View hierarchy with stencil-based clipping, optionally backed by render textures
-  * Font rendering via CoreGraphics
   * Scale9 sprites for scaling background images and sprite textures
-  * Texture loading on a separate thread via GCD
-  * Rendering via dedicated display link thread
+  * Perspective UI rendering via UI cameras (XY world plane matches the screen plane)
+  * View hierarchy with stencil-based clipping, optionally backed by render textures
+  * Target-action control event handling for user interface controls
+  * Font rendering via CoreGraphics
+  * Convienent texture caching, asynchronous texture loading via GCD using shared OpenGL contexts
+  * Rendering via display link, dedicated thread or main thread
   * Retina display support for all suitable devices
   * View/view controller architecture for easy integration with Cocoa/CocoaTouch
   * Minimalistic design with little dependencies: very easy to integrate into existing

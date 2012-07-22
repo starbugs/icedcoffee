@@ -39,7 +39,7 @@
 
 - (void)buttonPressed
 {
-    int brk = 1;
+    //int brk = 1;
 }
 
 - (void)setupScene

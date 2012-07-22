@@ -35,6 +35,7 @@
 @synthesize fontName = _fontName;
 @synthesize fontSize = _fontSize;
 @synthesize color = _color;
+@synthesize autoresizesToTextSize = _autoresizesToTextSize;
 
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
@@ -44,6 +45,8 @@
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
     if ((self = [super init])) {
+        _autoresizesToTextSize = YES;
+        
         _sprite = [[ICSprite alloc] init];
         _sprite.name = @"Label sprite";
         [_sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
@@ -77,7 +80,8 @@
     [self setSpriteTexture:texture];
     [texture release];
     
-    self.size = _sprite.size;
+    if (_autoresizesToTextSize)
+        self.size = _sprite.size;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelTextDidChange object:self];
 }

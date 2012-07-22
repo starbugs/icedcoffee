@@ -76,34 +76,16 @@
     return plane;
 }
 
-// Assumes that parentScene is the correct match for unprojection with the parent frame buffer
-- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location
+// Assumes that parentScene is the correct match for unprojection with the parent framebuffer
+- (kmVec3)parentFramebufferToNodeLocation:(CGPoint)location
 {
-    // location is based on the upper left corner of the parent frame buffer, which doesn't
-    // match the OpenGL view coordinate system -- so we have to invert the Y axis here
-    float frameBufferHeight = [[self parentScene] frameBufferSize].height;
-    location.y = frameBufferHeight - location.y;
-    
-    // Projected points are in frame buffer coordinates (pixels)
-    kmVec3 projectPoint1, projectPoint2;
-    projectPoint1 = kmVec3Make(ICPointsToPixels(location.x),
-                               ICPointsToPixels(location.y), 0);
-    projectPoint2 = kmVec3Make(ICPointsToPixels(location.x),
-                               ICPointsToPixels(location.y), 1);
-
-    // Unprojected points are in world coordinates (points)
-    kmVec3 unprojectPoint1, unprojectPoint2;
     ICScene *parentScene = [self parentScene];
-    [[parentScene camera] unprojectView:projectPoint1
-                                toWorld:&unprojectPoint1];
-    [[parentScene camera] unprojectView:projectPoint2
-                                toWorld:&unprojectPoint2];
-    
+    icRay3 worldRay = [parentScene worldRayFromFramebufferLocation:location];
     kmPlane p = [self worldPlane];
-    kmVec3 intersection, localIntersection;
-    kmPlaneIntersectLine(&intersection, &p, &unprojectPoint1, &unprojectPoint2);
+    kmVec3 worldIntersection, localIntersection;
     kmMat4 worldToNodeTransform = [self worldToNodeTransform];
-    kmVec3Transform(&localIntersection, &intersection, &worldToNodeTransform);
+    kmPlaneIntersectLine(&worldIntersection, &p, &worldRay.origin, &worldRay.direction);
+    kmVec3Transform(&localIntersection, &worldIntersection, &worldToNodeTransform);
     localIntersection.x = roundf(localIntersection.x);
     localIntersection.y = roundf(localIntersection.y);
     
@@ -114,7 +96,7 @@
 {
     NSArray *ancestors = [self ancestorsFilteredUsingBlock:
                           ^(ICNode *node, BOOL *stop) {
-                              if ([node conformsToProtocol:@protocol(ICFrameBufferProvider)] &&
+                              if ([node conformsToProtocol:@protocol(ICFramebufferProvider)] &&
                                   [node conformsToProtocol:@protocol(ICProjectionTransforms)]) {
                                   return YES;
                               }
@@ -124,12 +106,24 @@
     NSEnumerator *e = [ancestors reverseObjectEnumerator];
     ICNode<ICProjectionTransforms> *node = nil;
     while (node = [e nextObject]) {
-        location = kmVec3ToCGPoint([node parentFrameBufferToNodeLocation:location]);
+        location = kmVec3ToCGPoint([node parentFramebufferToNodeLocation:location]);
     }
     
-    location = kmVec3ToCGPoint([self parentFrameBufferToNodeLocation:location]);
+    location = kmVec3ToCGPoint([self parentFramebufferToNodeLocation:location]);
     
     return kmVec3Make(location.x, location.y, 0.0f);
+}
+
+- (ICHitTestResult)localRayHitTest:(icRay3)ray
+{
+    CGRect bounds = [self bounds];
+    kmPlane p = [self plane];
+    kmVec3 intersection;
+    kmPlaneIntersectLine(&intersection, &p, &ray.origin, &ray.direction);
+    return (intersection.x >= bounds.origin.x &&
+            intersection.y >= bounds.origin.y &&
+            intersection.x <= bounds.origin.x + bounds.size.width &&
+            intersection.y <= bounds.origin.y + bounds.size.height) ? ICHitTestHit : ICHitTestFailed;
 }
 
 @end

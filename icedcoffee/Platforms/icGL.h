@@ -44,6 +44,7 @@
 #endif
 
 #import "icMacros.h"
+#import "icConfig.h"
 #import "kazmath/GL/matrix.h"
 
 #ifdef __IC_PLATFORM_MAC
@@ -55,12 +56,18 @@
 NSString *NSStringFromGLError(GLenum error);
 
 #if DEBUG
+#if IC_BREAK_ON_GL_ERRORS
+#define IC_GL_ERROR_BREAK() NSAssert(nil, @"Configured to break on OpenGL error");
+#else
+#define IC_GL_ERROR_BREAK() do {} while(0)
+#endif
 #define IC_CHECK_GL_ERROR_DEBUG() \
     ({ \
         GLenum __error = glGetError(); \
         if(__error) { \
             NSLog(@"OpenGL error 0x%04X in %s %d: %@\n", __error, __FUNCTION__, __LINE__, \
                   NSStringFromGLError(__error)); \
+            IC_GL_ERROR_BREAK(); \
         } \
     })
 #else

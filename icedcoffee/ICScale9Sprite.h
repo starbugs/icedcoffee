@@ -49,7 +49,7 @@
 @interface ICScale9Sprite : ICSprite {
 @protected
     CGRect _scale9Rect;
-    GLuint _vertexBuffer;
+    GLuint _scale9VertexBuffer;
     GLuint _indexBuffer;    
 }
 

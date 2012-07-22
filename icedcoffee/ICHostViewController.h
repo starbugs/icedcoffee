@@ -20,12 +20,13 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //  
-//  Note: ICHostViewController was inspired by CCDirector's design from the cocos2d project.
+//  Note: Parts of ICHostViewController were inspired by CCDirector's design from
+//  the cocos2d-iphone.org project.
 
 #import <Foundation/Foundation.h>
 
 #import "ICResponder.h"
-#import "ICFrameBufferProvider.h"
+#import "ICFramebufferProvider.h"
 #import "icMacros.h"
 #import "icTypes.h"
 
@@ -49,42 +50,21 @@
 /**
  @brief View controller base class for displaying and updating an IcedCoffee framebuffer
  
- <h3>Overview</h3>
- 
- ICHostViewController defines a view controller for platform-specific views (host views.)
- The class provides the following main functionality:
- <ul>
-    <li><b>Rendering OpenGL scenes</b>: the class renders an ICScene object defined
-    by a call to ICHostViewController::runWithScene: when the application is initialized.
-    It uses a CoreVideo (Mac) or CoreAnimation (iOS) display link callback to perform
-    frame updates continuously, synchronized to the refresh rate of the device's display.</li>
-    <li><b>Scheduling updates for animations</b>: [TODO]</li>
-    <li><b>Dispatching HID events</b>: HID events are dispatched to the scene rendered
-    by ICHostViewController on the display link thread. You may handle these events
-    using specialized ICNode objects or by subclassing ICScene.</li>
-    <li><b>Retina display support</b>: retina display support may be enabled using
-    the enableRetinaDisplaySupport: method. The class provides access to a globally
-    defined content scale factor, which is set to 1 for non-retina displays or to 2
-    when retina display support is enabled.</li>
-    <li><b>Providing access to auxiliary managers</b>: ICHostViewController manages
-    an ICTextureCache object (see textureCache property.) The texture cache is bound
-    to the view controlled by the ICHostViewController instance.</li>
- </ul>
- 
- <h3>Subclassing</h3>
+ ICHostViewController is a base class for view controllers for CocoaTouch and Cocoa host views.
+ Host view controllers represent a means to integrate IcedCoffee into iOS and Mac OS X applications.
+ They play a central role as they provide the foundation for drawing, scheduling and event handling
+ for a given host view. The framework provides built-in view controller subclasses specialized for
+ each supported platform: ICHostViewControllerIOS for use in CocoaTouch applications on iOS and
+ ICHostViewControllerMac for use in Cocoa applications on Mac OS X. Host view controllers work in
+ collaboration with the ICGLView class, which exists in two different versions for each platform
+ as well.
 
- ICHostViewController is an abstract base class, that is it needs to be specialized for
- each supported platform. IcedCoffee currently ships with two built-in platform-specific
- subclasses: ICHostViewControllerIOS and ICHostViewControllerMac.  Depending on the
- target platform, ICHostViewController may inherit from different super classes. On
- the Mac it is a subclass of NSObject while on iOS it inherits from UIViewController.
-
- As a framework user, you should subclass the ICHostViewControllerIOS or
- ICHostViewControllerMac class if you require a custom view controller for managing your
- application's native OS view(s). Note, however, that in a standard application there
- usually is no need to subclass the host view controller class.
+ As a framework user, you should subclass the ICHostViewControllerIOS or ICHostViewControllerMac
+ class to implement custom view controllers for managing your application's native OS views.
+ See the respective class documentation for more information on subclassing and working with
+ host view controllers on iOS and Mac OS X.
  */
-@interface ICHostViewController : IC_VIEWCONTROLLER <ICFrameBufferProvider, EVENT_PROTOCOLS>
+@interface ICHostViewController : IC_VIEWCONTROLLER <EVENT_PROTOCOLS>
 {
 @protected
     ICScene *_scene;
@@ -112,12 +92,27 @@
 /** @name Initialization */
 
 /**
- @brief Instanciates an autoreleased ICHostViewController subclass suitable for the target platform
+ @brief Returns a new autoreleased default ICHostViewController subclass suitable for use with
+ the target platform
+ 
+ Use this method to instanciate an autoreleased host view controller for the target platform
+ if you do not use a custom view controller by subclassing either ICHostViewControllerIOS or
+ ICHostViewControllerMac.
  */
-+ (ICHostViewController *)platformSpecificHostViewController;
++ (id)platformSpecificHostViewController;
+
+/**
+ @brief Returns a new autoreleased host view controller
+ 
+ Use this method to instanciate an autoreleased host view controller if you created a custom view
+ controller by subclassing either ICHostViewControllerIOS or ICHostViewControllerMac.
+ */
++ (id)hostViewController;
 
 /**
  @brief Initializes the receiver and makes it the current host view controller
+ 
+ @sa makeCurrentHostViewController
  */
 - (id)init;
 
@@ -126,12 +121,47 @@
 /** @name Current Host View Controller */
 
 /**
- @brief Returns the current host view controller
+ @brief Returns the current host view controller for the current thread
+ 
+ The current host view controller is determined by the framework automatically or it is explicitly
+ set by the user utilizing ICHostViewController::makeCurrentHostViewController. One can safely
+ assume the current host view controller to be the last host view controller initialized on the
+ current thread or the host view controller that is currently drawing or handling events on the
+ current thread, even if ICHostViewController::makeCurrentHostViewController is never called
+ manually by the framework user.
+ 
+ Please note that the mechanism employed here for managing a current host view controller imposes
+ a global state on your application process, which is mostly transparent to you since any framework
+ or user code may rely on this method. Others may not know that code or they may not even be able to
+ read it if they do not have access to its source files. In most situations there are better (more
+ secure) ways to gain access to the appropriate host view controller. For example, each ICNode
+ object on a scene graph is capable of returning a pointer to its corresponding host view controller
+ without directly relying on this method. Not using this method makes your code more secure and
+ easier to debug.
+ 
+ Note that this method is thread-safe.
+ 
+ @sa makeCurrentHostViewController
  */
-+ (ICHostViewController *)currentHostViewController;
++ (id)currentHostViewController;
 
 /**
- @brief Makes the receiver the current host view controller
+ @brief Makes the receiver the current host view controller for the current thread
+
+ This method uses a global dictionary to store a weak reference to the current host view controller.
+ The receiver should be made the current host view controller before other framework code is about
+ to be executed in its context. Usually you do not have to call this method on your own, since
+ ICHostViewController itself takes care of making the receiver the current host view controller in
+ appropriate situations. For example, this method is called automatically at the end of
+ ICHostViewController initialization (before ICHostViewController::setupScene is called), before a
+ scene is drawn in ICHostViewController::drawScene, and before an event is dispatched. This way,
+ framework or user code written to set up, draw or interact in an IcedCoffee scene is usually
+ guaranteed to retrieve the correct current host view controller via
+ ICHostViewController::currentHostViewController.
+ 
+ Note that this method is thread-safe.
+ 
+ @sa currentHostViewController
  */
 - (id)makeCurrentHostViewController;
 
@@ -140,7 +170,7 @@
 /** @name Event Handling */
 
 /**
- @brief The current first responder
+ @brief The receiver's current first responder
  */
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
 
@@ -149,7 +179,12 @@
 /** @name Caches and Management */
 
 /**
- @brief The ICTextureCache object associated with the host view controller
+ @brief The receiver's render context
+ */
+@property (nonatomic, readonly) ICRenderContext *renderContext;
+
+/**
+ @brief The ICTextureCache object associated with the receiver
  */
 @property (nonatomic, readonly, getter=textureCache) ICTextureCache *textureCache;
 
@@ -163,7 +198,7 @@
 - (void)calculateDeltaTime;
 
 /**
- @brief The frame update mode used to present the host view controller's scene
+ @brief The frame update mode used to present the receiver's scene
  
  An ICFrameUpdateMode enumerated value defining when the host view controller should draw
  the scene's contents. Setting this property to ICFrameUpdateModeSynchronized lets the
@@ -183,34 +218,41 @@
 @property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
 
 /**
- @brief Called by the framework to indicate that the host view's contents needs to be redrawn
+ @brief Called by the framework to signal that the receiver's view contents need to be redrawn
  */
 - (void)setNeedsDisplay;
 
 /**
- @brief The thread used to draw the scene and process HID events
+ @brief The thread used to draw the receiver's scene and process HID events
  */
-@property (nonatomic, retain) NSThread *thread;
+@property (atomic, retain) NSThread *thread;
 
 /**
- @brief The scene that is currently drawn by the host view controller
+ @brief The scene that is currently managed by the receiver
  */
 @property (nonatomic, retain) ICScene *scene;
 
 /**
- @brief Draws the scene in the host view's frame buffer
+ @brief Draws the scene in the receiver's host view
  */
 - (void)drawScene;
 
 /**
- @brief Sets the given scene as the controller's current scene and starts animation
+ @brief Called by the framework to set up the receiver's scene
+ 
+ To be overridden in subclasses. The default implementation does nothing.
+ */
+- (void)setupScene;
+
+/**
+ @brief Sets the given scene as the receiver's current scene and starts animation
  */
 // FIXME: runWithScene is deprecated, should assign scene, then start animation if necessary
 // only. On iOS, animation is started automatically via UIViewController::viewWillAppear.
 - (void)runWithScene:(ICScene *)scene;
 
 /**
- @brief A boolean flag indicating whether the host view controller is currently running
+ @brief A boolean flag indicating whether the receiver is currently running
  */
 @property (nonatomic, readonly) BOOL isRunning;
 
@@ -242,7 +284,10 @@
 /** @name Host View */
 
 /**
- @brief Sets the view associated with the host view controller
+ @brief Sets the view to be controlled by the receiver
+ 
+ If view is set to a non-nil value, prepares the receiver's render context, initializes a texture
+ cache if necessary, and calls ICHostViewController::setupScene on the receiver.
  */
 - (void)setView:(ICGLView *)view;
 
@@ -261,7 +306,7 @@
 /** @name Hit Test */
 
 /**
- @brief Performs a hit test on the current scane
+ @brief Performs a hit test on the current scene
  
  @param point A CGPoint defining the location to use for the hit test. The location must be
  relative to the host view's frame origin, the Y axis' origin is the upper left corner of the view.
@@ -269,6 +314,12 @@
  @sa ICScene::hitTest:
  */
 - (NSArray *)hitTest:(CGPoint)point;
+
+- (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback;
+
+- (NSArray *)performHitTestReadback;
+
+- (BOOL)canPerformDeferredReadbacks;
 
 
 #pragma mark - Retina Display Support
@@ -326,9 +377,9 @@
 /** @name Frame Buffer */
 
 /**
- @brief The size of the receiver's frame buffer, in points
+ @brief The size of the receiver's framebuffer, in points
  */
-- (CGSize)frameBufferSize;
+- (CGSize)framebufferSize;
 
 @end
 

@@ -34,6 +34,8 @@
 @synthesize needsLayout = _needsLayout;
 @synthesize autoresizingMask = _autoresizingMask;
 @synthesize autoresizesSubviews = _autoresizesSubviews;
+@synthesize background = _background;
+@synthesize drawsBackground = _drawsBackground;
 
 + (id)view
 {
@@ -53,6 +55,7 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super init])) {
+        self.background = [ICSprite sprite];
         self.autoresizesSubviews = YES;
         self.size = kmVec3Make(size.width, size.height, 0);
         _clippingMask = [[ICSprite alloc] init];
@@ -69,6 +72,8 @@
     
     [_clippingMask release];
     _clippingMask = nil;
+    
+    self.background = nil;
     
     [super dealloc];
 }
@@ -115,6 +120,9 @@
             if (autoresizingMask & ICAutoResizingMaskLeftMarginFlexible &&
                 autoresizingMask & ICAutoResizingMaskRightMarginFlexible)
                 leftTop.x = leftTop.x + (rightBottom.x - leftTop.x) / 2 - self.size.x / 2;
+            else if (autoresizingMask & ICAutoResizingMaskLeftMarginFlexible &&
+                     !(autoresizingMask & ICAutoResizingMaskRightMarginFlexible))
+                leftTop.x = newSuperviewSize.x - (oldSuperviewSize.x - self.position.x);
         }
         
         if (autoresizingMask & ICAutoResizingMaskHeightSizable) {
@@ -124,6 +132,9 @@
             if (autoresizingMask & ICAutoResizingMaskTopMarginFlexible &&
                 autoresizingMask & ICAutoResizingMaskBottomMarginFlexible)
                 leftTop.y = leftTop.y + (rightBottom.y - leftTop.y) / 2 - self.size.y / 2;
+            else if (autoresizingMask & ICAutoResizingMaskTopMarginFlexible &&
+                     !(autoresizingMask & ICAutoResizingMaskBottomMarginFlexible))
+                leftTop.y = newSuperviewSize.y - (oldSuperviewSize.y - self.position.y);
         }
         
         leftTop.x = roundf(leftTop.x);
@@ -151,6 +162,8 @@
         // Update the view's size
         [super setSize:size];
         [_backing setSize:size];
+        [_background setSize:size];
+        [_clippingMask setSize:size];
         
         if (_autoresizesSubviews) {
             [self resizeSubviewsWithOldSuperviewSize:oldSize];
@@ -235,6 +248,18 @@
 {
     [_backing setNeedsDisplay];
     [super setNeedsDisplay];
+}
+
+- (void)setDrawsBackground:(BOOL)drawsBackground
+{
+    if (_drawsBackground != drawsBackground) {
+        if (!_drawsBackground && drawsBackground) {
+            [self addChild:self.background];
+        } else if(_drawsBackground && !drawsBackground) {
+            [self removeChild:self.background];
+        }
+        _drawsBackground = drawsBackground;
+    }
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
@@ -334,6 +359,7 @@
     }
 }
 
+// FIXME: childrenNotOfType missing
 - (NSArray *)childrenOfType:(Class)classType
 {
     NSArray *viewChildren = _backing ? _backing.subScene.children : [super children];
@@ -344,6 +370,14 @@
         }
     }
     return children;
+}
+
+- (ICNode *)childForTag:(uint)tag
+{
+    if (!_backing) {
+        return [super childForTag:tag];
+    }
+    return [self.backing.subScene childForTag:tag];
 }
 
 - (NSArray *)children

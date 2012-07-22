@@ -28,6 +28,7 @@
 #import "ICHostViewController.h"
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
+#import "icUtils.h"
 
 @implementation ICTextureCache
 
@@ -50,19 +51,8 @@
         // Set up an auxiliary OpenGL context for asynchronous texture loading
         ICGLView *view = (ICGLView *)[hostViewController view];
         NSAssert(view, @"View needs to be initialized before texture cache");
-        
-#ifdef __IC_PLATFORM_MAC
-		NSOpenGLPixelFormat *pixelFormat = [view pixelFormat];
-		NSOpenGLContext *shareContext = [view openGLContext];
-        
-        _auxGLContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat
-                                                   shareContext:shareContext];
-#elif defined(__IC_PLATFORM_IOS)
-		_auxGLContext = [[EAGLContext alloc]
-						 initWithAPI:kEAGLRenderingAPIOpenGLES2
-						 sharegroup:[[view context] sharegroup]];        
-#endif
-        
+
+        _auxGLContext = icCreateAuxGLContextForView(view, YES);
 		NSAssert(_auxGLContext, @"Could not create OpenGL context");
     }
     return self;
@@ -85,7 +75,9 @@
 {
     ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:path];
     NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
-    [_textures setObject:texture forKey:path];
+    dispatch_sync(_dictQueue, ^{
+        [_textures setObject:texture forKey:path];
+    });
     return texture;
 }
 

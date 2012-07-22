@@ -46,4 +46,9 @@
     [super drawWithVisitor:visitor];
 }
 
+- (void)setName:(NSString *)name
+{
+    [(ICNode *)[[self children] objectAtIndex:0] setName:name];
+}
+
 @end

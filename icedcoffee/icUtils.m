@@ -7,7 +7,33 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
+#import <mach/mach.h>
+#import <mach/mach_time.h>
+
 #import "ICControl.h"
+
+#ifdef __IC_PLATFORM_MAC
+#import "Platforms/Mac/ICGLView.h"
+#elif defined(__IC_PLATFORM_IOS)
+#import "Platforms/iOS/ICGLView.h"
+#endif
+
+#ifdef __IC_PLATFORM_MAC
+NSOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
+{
+    NSOpenGLPixelFormat *pixelFormat = [view pixelFormat];
+    NSOpenGLContext *shareContext = share ? [view openGLContext] : nil;
+    return [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shareContext];    
+}
+#elif defined(__IC_PLATFORM_IOS)
+EAGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
+{
+    EAGLSharegroup *sharegroup = share ? [[view context] sharegroup] : nil;
+    return [[EAGLContext alloc]
+            initWithAPI:kEAGLRenderingAPIOpenGLES2
+            sharegroup:sharegroup];    
+}
+#endif
 
 unsigned long icNextPOT(unsigned long x)
 {
@@ -138,6 +164,24 @@ kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count)
     }
     
     return (kmAABB){ aabbMin, aabbMax };   
+}
+
+// Taken from http://stackoverflow.com/questions/2405832/uievent-has-timestamp-how-can-i-generate-an-equivalent-value-on-my-own
+NSTimeInterval icTimestamp()
+{
+    // get the timebase info -- different on phone and OSX
+    mach_timebase_info_data_t info;
+    mach_timebase_info(&info);
+    
+    // get the time
+    uint64_t absTime = mach_absolute_time();
+    
+    // apply the timebase info
+    absTime *= info.numer;
+    absTime /= info.denom;
+    
+    // convert nanoseconds into seconds and return
+    return (NSTimeInterval) ((double) absTime / 1000000000.0);    
 }
 
 ICControl *ICControlForNode(ICNode *node)

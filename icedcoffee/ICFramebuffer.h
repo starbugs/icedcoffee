@@ -22,31 +22,45 @@
 //  
 
 #import <Foundation/Foundation.h>
-#import "ICNodeVisitor.h"
 
-/**
- @brief Node visitor for drawing a scene graph on an OpenGL framebuffer
- */
-@interface ICNodeVisitorDrawing : ICNodeVisitor
+#import "icTypes.h"
 
-/**
- @brief Sets up the node's model-view transform matrix and pushes it on the OpenGL matrix stack
- */
-- (void)preVisitNode:(ICNode *)node;
+@interface ICFramebuffer : NSObject {
+@protected
+	GLuint      _fbo;
+	GLint		_oldFBO;
+    GLint       _oldFBOViewport[4];
+    GLuint      _colorRBO;
+    GLuint      _depthRBO;
+    GLuint      _stencilRBO;
+    GLint       _oldRBO;
+    CGSize      _size;
+	GLenum		_pixelFormat;
+    GLenum      _depthBufferFormat;
+    GLenum      _stencilBufferFormat;
+    BOOL        _isInFramebufferDrawContext;
+}
 
-/**
- @brief Draws a single node to the OpenGL framebuffer
- */
-- (BOOL)visitSingleNode:(ICNode *)node;
+@property (nonatomic, assign, setter=setSize:) CGSize size;
 
-/**
- @brief Performs visitation on the children of the given node
- */
-- (void)visitChildrenOfNode:(ICNode *)node;
+@property (nonatomic, readonly) BOOL isInFramebufferDrawContext;
 
-/**
- @brief Pops the node's model-view transform matrix from the OpenGL matrix stack
- */
-- (void)postVisitNode:(ICNode *)node;
++ (id)framebufferWithSize:(CGSize)size
+              pixelFormat:(ICPixelFormat)pixelFormat
+        depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+      stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
+
+-  (id)initWithSize:(CGSize)size
+        pixelFormat:(ICPixelFormat)pixelFormat
+  depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
+stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
+
+- (CGSize)sizeInPixels;
+
+- (void)begin;
+
+- (void)end;
+
+- (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 
 @end

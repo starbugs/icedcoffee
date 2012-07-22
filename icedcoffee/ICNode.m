@@ -143,6 +143,15 @@
     return _children.count > 0;
 }
 
+- (ICNode *)childForTag:(uint)tag
+{
+    for (ICNode *child in _children) {
+        if (child.tag == tag)
+            return child;
+    }
+    return nil;
+}
+
 - (NSArray *)childrenOfType:(Class)classType
 {
     NSMutableArray *children = [NSMutableArray array];
@@ -170,6 +179,16 @@
     return _children;
 }
 
+- (NSArray *)drawingChildren
+{
+    return _children;
+}
+
+- (NSArray *)pickingChildren
+{
+    return _children;
+}
+
 - (NSArray *)ancestorsOfType:(Class)classType
 {
     return [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
@@ -189,6 +208,20 @@
     return [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
         return [node conformsToProtocol:protocol];
     }];    
+}
+
+- (ICNode *)firstAncestorConformingToProtocol:(Protocol *)protocol
+{
+    NSArray *ancestors = [self ancestorsFilteredUsingBlock:^BOOL(ICNode *node, BOOL *stop) {
+        BOOL result = [node conformsToProtocol:protocol];
+        if (result)
+            *stop = YES;
+        return result;
+    }];
+    if ([ancestors count]) {
+        return [ancestors objectAtIndex:0];
+    }
+    return nil;
 }
 
 - (ICNode *)firstAncestorOfType:(Class)classType
@@ -335,6 +368,20 @@
     if ([sceneAncestors count] > 0)
         return [sceneAncestors objectAtIndex:0];
     return nil;
+}
+
+- (ICScene *)scene
+{
+    if ([self isKindOfClass:[ICScene class]]) {
+        return (ICScene *)self;
+    }
+    return [self parentScene];
+}
+
+- (ICNode<ICFramebufferProvider> *)framebufferProvider
+{
+    return (ICNode<ICFramebufferProvider> *)[self firstAncestorConformingToProtocol:
+                                             @protocol(ICFramebufferProvider)];
 }
 
 - (ICHostViewController *)hostViewController
@@ -630,6 +677,11 @@
     return icComputeAABBFromVertices(vertices, 2);
 }
 
+- (CGRect)bounds
+{
+    return CGRectMake(0, 0, _size.x, _size.y);
+}
+
 - (CGRect)frameRect
 {
     kmVec3 world[8], view[8];
@@ -677,7 +729,8 @@
     } else {
         ICShaderProgram *p = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_Picking];
         icColor4B pickColor = [(ICNodeVisitorPicking *)visitor pickColor];        
-        [p setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor(pickColor)] forUniform:@"u_pickColor"];
+        [p setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(pickColor)]
+               forUniform:@"u_pickColor"];
         icGLUniformModelViewProjectionMatrix(p);
         [p use];
     }    
@@ -702,6 +755,15 @@
 - (void)setNeedsDisplay
 {
     [self setNeedsDisplayForNode:self];
+}
+
+
+#pragma mark - Ray-based Hit Testing
+
+- (ICHitTestResult)localRayHitTest:(icRay3)ray
+{
+    // Override in subclass
+    return ICHitTestUnsupported;
 }
 
 

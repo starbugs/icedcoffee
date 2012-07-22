@@ -59,6 +59,7 @@ enum {
 	BOOL			supportsNPOT_;
 	BOOL			supportsBGRA8888_;
 	BOOL			supportsDiscardFramebuffer_;
+    BOOL            supportsPixelBufferObject_;
 	unsigned int	OSVersion_;
 	GLint			maxSamplesAllowed_;
 }
@@ -92,6 +93,8 @@ enum {
  @since v0.99.2
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
+
+@property (nonatomic, readonly) BOOL supportsPixelBufferObject;
 
 /** returns the OS version.
  - On iOS devices it returns the firmware version.

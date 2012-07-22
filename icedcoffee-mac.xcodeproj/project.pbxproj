@@ -16,12 +16,14 @@
 		01DCA966159CD0EA002DEA20 /* ICScale9View.h in Headers */ = {isa = PBXBuildFile; fileRef = 01DCA964159CD0EA002DEA20 /* ICScale9View.h */; };
 		01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DCA965159CD0EA002DEA20 /* ICScale9View.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; };
+		D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */; };
+		D20F5EA415B6223E0023B1C9 /* ICFramebuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */; };
 		D216CC8D154FDC29009FCDC4 /* ICControl.h in Headers */ = {isa = PBXBuildFile; fileRef = D216CC8B154FDC29009FCDC4 /* ICControl.h */; };
 		D216CC8E154FDC29009FCDC4 /* ICControl.m in Sources */ = {isa = PBXBuildFile; fileRef = D216CC8C154FDC29009FCDC4 /* ICControl.m */; };
 		D22F25AE158879FA0049268C /* ICUICamera.h in Headers */ = {isa = PBXBuildFile; fileRef = D22F25AC158879F90049268C /* ICUICamera.h */; };
 		D22F25AF158879FA0049268C /* ICUICamera.m in Sources */ = {isa = PBXBuildFile; fileRef = D22F25AD158879F90049268C /* ICUICamera.m */; };
 		D23CB57E15A76B2600E2370D /* ICProjectionTransforms.h in Headers */ = {isa = PBXBuildFile; fileRef = D23CB57D15A76B2600E2370D /* ICProjectionTransforms.h */; };
-		D23CB58215A76DB100E2370D /* ICFrameBufferProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D23CB58115A76DB100E2370D /* ICFrameBufferProvider.h */; };
+		D23CB58215A76DB100E2370D /* ICFramebufferProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = D23CB58115A76DB100E2370D /* ICFramebufferProvider.h */; };
 		D24BAB8815503BA4003BCF94 /* ICTargetActionDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */; };
 		D24BAB8915503BA4003BCF94 /* ICTargetActionDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */; };
 		D24BAB92155067D0003BCF94 /* ICButton.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAB90155067D0003BCF94 /* ICButton.h */; };
@@ -89,6 +91,10 @@
 		D2735B3E158E566B00216F1B /* icGL.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735B3D158E566B00216F1B /* icGL.m */; };
 		D2918D511589DEE00043C872 /* ICUIScene.h in Headers */ = {isa = PBXBuildFile; fileRef = D2918D4F1589DEDF0043C872 /* ICUIScene.h */; };
 		D2918D521589DEE00043C872 /* ICUIScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D2918D501589DEE00043C872 /* ICUIScene.m */; };
+		D292851815AB82600086B12A /* ICTestHostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D292851615AB82600086B12A /* ICTestHostViewController.h */; };
+		D292851915AB82600086B12A /* ICTestHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D292851715AB82600086B12A /* ICTestHostViewController.m */; };
+		D292851D15AC50A40086B12A /* ICTestButtonPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = D292851B15AC50A40086B12A /* ICTestButtonPanel.h */; };
+		D292851E15AC50A40086B12A /* ICTestButtonPanel.m in Sources */ = {isa = PBXBuildFile; fileRef = D292851C15AC50A40086B12A /* ICTestButtonPanel.m */; };
 		D2A04C9815A71FE60097BDA3 /* ICMouseEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D2A04C9615A71FE50097BDA3 /* ICMouseEvent.h */; };
 		D2A04C9915A71FE60097BDA3 /* ICMouseEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A04C9715A71FE50097BDA3 /* ICMouseEvent.m */; };
 		D2A04C9C15A727D20097BDA3 /* ICOSXEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = D2A04C9A15A727D00097BDA3 /* ICOSXEvent.h */; };
@@ -107,6 +113,8 @@
 		D2F34FFD151F3E0A00DF2D5B /* ICLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F34FFB151F3E0900DF2D5B /* ICLabel.h */; };
 		D2F34FFE151F3E0A00DF2D5B /* ICLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F34FFC151F3E0900DF2D5B /* ICLabel.m */; };
 		D2F3504915286EFC00DF2D5B /* ICAsyncTextureCacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */; };
+		D2FB3E3415B340C1007169B1 /* ICPickContext.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FB3E3215B340C1007169B1 /* ICPickContext.h */; };
+		D2FB3E3515B340C1007169B1 /* ICPickContext.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FB3E3315B340C1007169B1 /* ICPickContext.m */; };
 		D2FD867E14F0ECFE006A9A90 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD865E14F0ECFE006A9A90 /* aabb.h */; };
 		D2FD867F14F0ECFE006A9A90 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866014F0ECFE006A9A90 /* mat4stack.h */; };
 		D2FD868014F0ECFE006A9A90 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD866114F0ECFE006A9A90 /* matrix.h */; };
@@ -148,6 +156,8 @@
 		01DCA964159CD0EA002DEA20 /* ICScale9View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9View.h; path = icedcoffee/ICScale9View.h; sourceTree = "<group>"; };
 		01DCA965159CD0EA002DEA20 /* ICScale9View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9View.m; path = icedcoffee/ICScale9View.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
+		D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebuffer.h; path = icedcoffee/ICFramebuffer.h; sourceTree = "<group>"; };
+		D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFramebuffer.m; path = icedcoffee/ICFramebuffer.m; sourceTree = "<group>"; };
 		D20FA8C615A87B58003A2235 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		D20FA8C815A87B70003A2235 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
 		D216CC8B154FDC29009FCDC4 /* ICControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICControl.h; path = icedcoffee/ICControl.h; sourceTree = "<group>"; };
@@ -155,7 +165,7 @@
 		D22F25AC158879F90049268C /* ICUICamera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUICamera.h; path = icedcoffee/ICUICamera.h; sourceTree = "<group>"; };
 		D22F25AD158879F90049268C /* ICUICamera.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICUICamera.m; path = icedcoffee/ICUICamera.m; sourceTree = "<group>"; };
 		D23CB57D15A76B2600E2370D /* ICProjectionTransforms.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICProjectionTransforms.h; path = icedcoffee/ICProjectionTransforms.h; sourceTree = "<group>"; };
-		D23CB58115A76DB100E2370D /* ICFrameBufferProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFrameBufferProvider.h; path = icedcoffee/ICFrameBufferProvider.h; sourceTree = "<group>"; };
+		D23CB58115A76DB100E2370D /* ICFramebufferProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebufferProvider.h; path = icedcoffee/ICFramebufferProvider.h; sourceTree = "<group>"; };
 		D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTargetActionDispatcher.h; path = icedcoffee/ICTargetActionDispatcher.h; sourceTree = "<group>"; };
 		D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTargetActionDispatcher.m; path = icedcoffee/ICTargetActionDispatcher.m; sourceTree = "<group>"; };
 		D24BAB90155067D0003BCF94 /* ICButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICButton.h; path = icedcoffee/ICButton.h; sourceTree = "<group>"; };
@@ -227,6 +237,10 @@
 		D2735B3D158E566B00216F1B /* icGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = icGL.m; sourceTree = "<group>"; };
 		D2918D4F1589DEDF0043C872 /* ICUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUIScene.h; path = icedcoffee/ICUIScene.h; sourceTree = "<group>"; };
 		D2918D501589DEE00043C872 /* ICUIScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICUIScene.m; path = icedcoffee/ICUIScene.m; sourceTree = "<group>"; };
+		D292851615AB82600086B12A /* ICTestHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTestHostViewController.h; path = icedcoffee/ICTestHostViewController.h; sourceTree = "<group>"; };
+		D292851715AB82600086B12A /* ICTestHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTestHostViewController.m; path = icedcoffee/ICTestHostViewController.m; sourceTree = "<group>"; };
+		D292851B15AC50A40086B12A /* ICTestButtonPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTestButtonPanel.h; path = icedcoffee/ICTestButtonPanel.h; sourceTree = "<group>"; };
+		D292851C15AC50A40086B12A /* ICTestButtonPanel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTestButtonPanel.m; path = icedcoffee/ICTestButtonPanel.m; sourceTree = "<group>"; };
 		D2A04C9615A71FE50097BDA3 /* ICMouseEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMouseEvent.h; path = icedcoffee/ICMouseEvent.h; sourceTree = "<group>"; };
 		D2A04C9715A71FE50097BDA3 /* ICMouseEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMouseEvent.m; path = icedcoffee/ICMouseEvent.m; sourceTree = "<group>"; };
 		D2A04C9A15A727D00097BDA3 /* ICOSXEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOSXEvent.h; path = icedcoffee/ICOSXEvent.h; sourceTree = "<group>"; };
@@ -245,6 +259,8 @@
 		D2F34FFB151F3E0900DF2D5B /* ICLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLabel.h; path = icedcoffee/ICLabel.h; sourceTree = "<group>"; };
 		D2F34FFC151F3E0900DF2D5B /* ICLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLabel.m; path = icedcoffee/ICLabel.m; sourceTree = "<group>"; };
 		D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAsyncTextureCacheDelegate.h; path = icedcoffee/ICAsyncTextureCacheDelegate.h; sourceTree = "<group>"; };
+		D2FB3E3215B340C1007169B1 /* ICPickContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPickContext.h; path = icedcoffee/ICPickContext.h; sourceTree = "<group>"; };
+		D2FB3E3315B340C1007169B1 /* ICPickContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPickContext.m; path = icedcoffee/ICPickContext.m; sourceTree = "<group>"; };
 		D2FD865E14F0ECFE006A9A90 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		D2FD866014F0ECFE006A9A90 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
 		D2FD866114F0ECFE006A9A90 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
@@ -429,6 +445,7 @@
 		D2918D4C15887F190043C872 /* User Interface */ = {
 			isa = PBXGroup;
 			children = (
+				D292851A15AC50660086B12A /* Testing */,
 				D24BAB90155067D0003BCF94 /* ICButton.h */,
 				D24BAB91155067D0003BCF94 /* ICButton.m */,
 				D216CC8B154FDC29009FCDC4 /* ICControl.h */,
@@ -473,7 +490,9 @@
 				D2735AFB158DE2B400216F1B /* ICContextManager.m */,
 				D24BAF5214EDB142000E65AA /* icDefaults.h */,
 				D24BAF5314EDB142000E65AA /* IcedCoffee.h */,
-				D23CB58115A76DB100E2370D /* ICFrameBufferProvider.h */,
+				D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */,
+				D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */,
+				D23CB58115A76DB100E2370D /* ICFramebufferProvider.h */,
 				D24BAF5514EDB142000E65AA /* icGLState.h */,
 				D24BAF5614EDB142000E65AA /* icGLState.m */,
 				D24BAF5714EDB142000E65AA /* ICHostViewController.h */,
@@ -494,6 +513,8 @@
 				D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */,
 				D2A04C9A15A727D00097BDA3 /* ICOSXEvent.h */,
 				D2A04C9B15A727D10097BDA3 /* ICOSXEvent.m */,
+				D2FB3E3215B340C1007169B1 /* ICPickContext.h */,
+				D2FB3E3315B340C1007169B1 /* ICPickContext.m */,
 				D23CB57D15A76B2600E2370D /* ICProjectionTransforms.h */,
 				D2735AFF158DE4EF00216F1B /* ICRenderContext.h */,
 				D2735B00158DE4F000216F1B /* ICRenderContext.m */,
@@ -509,6 +530,17 @@
 				D24BAF7C14EDB142000E65AA /* icUtils.m */,
 			);
 			name = Core;
+			sourceTree = "<group>";
+		};
+		D292851A15AC50660086B12A /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				D292851B15AC50A40086B12A /* ICTestButtonPanel.h */,
+				D292851C15AC50A40086B12A /* ICTestButtonPanel.m */,
+				D292851615AB82600086B12A /* ICTestHostViewController.h */,
+				D292851715AB82600086B12A /* ICTestHostViewController.m */,
+			);
+			name = Testing;
 			sourceTree = "<group>";
 		};
 		D2FD865B14F0ECFE006A9A90 /* kazmath */ = {
@@ -672,7 +704,11 @@
 				D2A04C9815A71FE60097BDA3 /* ICMouseEvent.h in Headers */,
 				D2A04C9C15A727D20097BDA3 /* ICOSXEvent.h in Headers */,
 				D23CB57E15A76B2600E2370D /* ICProjectionTransforms.h in Headers */,
-				D23CB58215A76DB100E2370D /* ICFrameBufferProvider.h in Headers */,
+				D23CB58215A76DB100E2370D /* ICFramebufferProvider.h in Headers */,
+				D292851815AB82600086B12A /* ICTestHostViewController.h in Headers */,
+				D292851D15AC50A40086B12A /* ICTestButtonPanel.h in Headers */,
+				D2FB3E3415B340C1007169B1 /* ICPickContext.h in Headers */,
+				D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -784,6 +820,10 @@
 				01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */,
 				D2A04C9915A71FE60097BDA3 /* ICMouseEvent.m in Sources */,
 				D2A04C9D15A727D20097BDA3 /* ICOSXEvent.m in Sources */,
+				D292851915AB82600086B12A /* ICTestHostViewController.m in Sources */,
+				D292851E15AC50A40086B12A /* ICTestButtonPanel.m in Sources */,
+				D2FB3E3515B340C1007169B1 /* ICPickContext.m in Sources */,
+				D20F5EA415B6223E0023B1C9 /* ICFramebuffer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

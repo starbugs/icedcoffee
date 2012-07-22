@@ -28,8 +28,11 @@
 #import "icTypes.h"
 
 @class ICNodeVisitor;
+@class ICNodeVisitorDrawing;
+@class ICNodeVisitorPicking;
 @class ICCamera;
 @class ICHostViewController;
+@class ICRenderTexture;
 
 /**
  @brief Defines the root of a scene graph, manages a camera and visitors for drawing nodes
@@ -37,7 +40,7 @@
  <h3>Overview</h3>
  
  The ICScene class defines a node that acts as the root of a scene graph by providing
- functionality that allows you to easily draw the scene's contents to a frame buffer.
+ functionality that allows you to easily draw the scene's contents to a framebuffer.
  
  In particular, ICScene fulfills the following tasks:
  <ul>
@@ -47,7 +50,7 @@
     <li>Managing visitors that are responsible for drawing and picking the
     scene's contents.</li>
     <li>Performing hit tests on the scene conveniently.</li>
-    <li>Intelligently resizing the scene when its parent frame buffer size changes.</li>
+    <li>Intelligently resizing the scene when its parent framebuffer size changes.</li>
  </ul>
  
  <h3>Root Scenes</h3>
@@ -55,7 +58,7 @@
  Scenes play a central role in the IcedCoffee framework. In order to benefit from IcedCoffee's
  event handling and user interface rendering capabilities, your application must provide at least
  one scene, called the root scene. The root scene represents the origin of all contents that
- are drawn on the OpenGL frame buffer of the host view that is managed by your application's
+ are drawn on the OpenGL framebuffer of the host view that is managed by your application's
  host view controller (see ICHostViewController).
   
  <h3>Setting up a Root Scene</h3>
@@ -72,21 +75,21 @@
  However, when doing so, you should take care of the following conventions:
  <ol>
     <li>Scenes may be added as an immediate child of another scene. In this case, the sub
-    scene inherits the frame buffer target of the parent scene and uses the parent scene's
+    scene inherits the framebuffer target of the parent scene and uses the parent scene's
     visitors to perform drawing and picking. Hit tests should always be performed on the
     parent scene in this scenario. Nesting scenes directly in each other may be useful to
     animate the camera of the sub scene without influencing the appearance of the nodes
     rendered by the parent scene, for instance.</li>
-    <li>Scenes are used by ICRenderTexture to present sub scenes on a frame buffer backed
+    <li>Scenes are used by ICRenderTexture to present sub scenes on a framebuffer backed
     by a render texture. It is important to note that such sub scenes are not part of the
     scene graph's node hierarchy as ICRenderTexture disconnects them from the normal drawing
     mechanism of its parent scene. Instead these scenes act as the root scene of the
-    render texture's frame buffer.</li>
+    render texture's framebuffer.</li>
     <li>Scenes may be added as immediate children of an ICView instance. This can be used
     to present a scene's contents in a user interface view with built-in clipping and
     layouting functionality. However, special rules apply for this kind of scene nesting.
-    The nested scene will always have the size of the parent frame buffer. If the view is
-    not backed by a render texture, this is the size of the host view's frame buffer.
+    The nested scene will always have the size of the parent framebuffer. If the view is
+    not backed by a render texture, this is the size of the host view's framebuffer.
     Consequently, the scene's children live in world coordinate space. If the so-nested
     scene's contents should be aligned to the parent view's origin on screen, you must
     perform the necessary transformations yourself. What is more, scenes nested this way
@@ -109,10 +112,10 @@
  controller immediately after initialization.
  
  When a root scene is assigned to a host view controller, it immediately resizes itself so as
- to fit the size of the host view's OpenGL frame buffer in points.
+ to fit the size of the host view's OpenGL framebuffer in points.
  
  When a sub scene is added to an existing scene or set as the sub scene of a render texture,
- it immediately resizes itself to fit the size of its parent frame buffer. The parent frame
+ it immediately resizes itself to fit the size of its parent framebuffer. The parent frame
  buffer of a scene is defined by its first ancestor defining a render target, or, if no such
  node exists, the host view controller.
  
@@ -154,7 +157,7 @@
     ICScene::setUpSceneForDrawing, ICScene::tearDownSceneForDrawing,
     ICScene::setUpSceneForPickingWithPoint:, and ICScene::tearDownSceneForPicking.</li>
     <li>ICScene overrides ICNode::setParent: in order to adjust its size to the parent
-    frame buffer's size. If you override, setParent: call <code>[super setParent:parent]</code>
+    framebuffer's size. If you override, setParent: call <code>[super setParent:parent]</code>
     before implementing your own code.</li>
     <li>ICScene overrides ICNode::setSize: to adjust its camera's viewport and resize
     descendant scenes. You need to call <code>[super setSize:size]</code> to preserve
@@ -163,12 +166,13 @@
  */
 @interface ICScene : ICNode
 {
-@private
+@protected
     ICHostViewController *_hostViewController;
     ICCamera *_camera;
     
-    ICNodeVisitor *_drawingVisitor;
-    ICNodeVisitor *_pickingVisitor;
+    ICNodeVisitorDrawing *_drawingVisitor;
+    ICNodeVisitorPicking *_pickingVisitor;
+    ICRenderTexture *_renderTexture;
     
     icColor4B _clearColor;
     BOOL _clearsColorBuffer;
@@ -178,6 +182,7 @@
     BOOL _performsFaceCulling;
     
     kmMat4 _matOldProjection;
+    GLint _oldViewport[4];
 }
 
 /**
@@ -194,15 +199,17 @@
 /**
  @brief An ICNodeVisitor object defining the visitor used to draw the receiver's contents
  */
-@property (nonatomic, retain) ICNodeVisitor *drawingVisitor;
+@property (nonatomic, retain) ICNodeVisitorDrawing *drawingVisitor;
 
 /**
  @brief An ICNodeVisitor object defining the visitor used to perform hit tests on the receiver
  */
-@property (nonatomic, retain) ICNodeVisitor *pickingVisitor;
+@property (nonatomic, retain) ICNodeVisitorPicking *pickingVisitor;
+
+@property (nonatomic, assign) ICRenderTexture *renderTexture;
 
 /**
- @brief An icColor4B value defining the clear color used to clear the receiver's frame buffer
+ @brief An icColor4B value defining the clear color used to clear the receiver's framebuffer
  before drawing its contents
  */
 @property (nonatomic, assign) icColor4B clearColor;
@@ -259,24 +266,32 @@
 - (id)init;
 
 /**
+ @brief Returns a boolean flag indicating whether the receiver is the root scene
+ 
+ The receiver is a root scene if it has been assigned to a host view controller and does
+ not have a parent node.
+ */
+- (BOOL)isRootScene;
+
+/**
  @brief Sets up the drawing environment for the receiver before drawing
  */
-- (void)setUpSceneForDrawing;
+- (void)setUpSceneForDrawingWithVisitor:(ICNodeVisitorDrawing *)visitor;
 
 /**
  @brief Resets the drawing environment of the receiver after drawing
  */
-- (void)tearDownSceneForDrawing;
+- (void)tearDownSceneAfterDrawingWithVisitor:(ICNodeVisitorDrawing *)visitor;
 
 /**
  @brief Sets up the drawing environment for the receiver before picking
  */
-- (void)setupSceneForPickingWithPoint:(CGPoint)point viewport:(GLint *)viewport;
+- (void)setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor;
 
 /**
  @brief Resets the drawing environment of the receiver after picking
  */
-- (void)tearDownSceneForPicking;
+- (void)tearDownSceneAfterPickingWithVisitor:(ICNodeVisitorPicking *)picking;
 
 /**
  @brief Sets up the receiver's drawing environment, draws all its contents using the
@@ -287,19 +302,65 @@
 /**
  @brief Performs a hit test on the receiver's node hierarchy
  
- Sets up the receiver's picking environment, performs a hit test by drawing all nodes contained
- in the receiver using the picking visitor (see ICScene::pickingVisitor), and finally tears down
- the receiver's picking environment.
+ Sets up the receiver's picking environment, performs a synchronous hit test using the picking
+ visitor (see ICScene::pickingVisitor), and finally tears down the receiver's picking environment.
  
- @param point A 2D location on the frame buffer in points (Y axis points downwards)
+ @param point A 2D location on the framebuffer in points (Y axis points downwards)
  
- @return Returns an NSArray containing all visible ICNode objects that passed the hit test in
- exactly the order they were drawn to the frame buffer. If depth testing is enabled, the result
- array may not contain all nodes that were drawn by the picking visitor as picking shapes may be
- discarded by the depth test. However, it is guaranteed that all nodes that are finally visible
- on screen will be contained in the method's result.
+ @return Returns an NSArray containing the ICNode objects that passed the hit test. If one or
+ multiple nodes pass the hit test, the last object in the returned array represents the "final
+ hit", the node that visually appears as the front-most object to the user (incorporating depth
+ and stencil tests). If no nodes pass the hit test, an empty array is returned.
  */
 - (NSArray *)hitTest:(CGPoint)point;
+
+/**
+ @brief Performs a hit test on the receiver's node hierarchy
+ 
+ Sets up the receiver's picking environment, performs a hit test using the picking
+ visitor (see ICScene::pickingVisitor), and finally tears down the receiver's picking environment.
+ 
+ @param point A 2D location on the framebuffer in points (Y axis points downwards)
+ @param deferredReadback (Mac OS X only.) A boolean flag indicating whether the hit test's
+ results should be readback asynchronously. If set to YES, you must use
+ ICScene::performHitTestReadback to obtain the hit test's results at a later point in time.
+ Note that asynchronous readbacks are available only if the OpenGL hardware supports pixel
+ buffer objects.
+ 
+ @return If deferredReadback is set to NO, returns an NSArray containing the ICNode objects that
+ passed the hit test. If one or multiple nodes pass the hit test, the last object in the returned
+ array represents the "final hit", the node that visually appears as the front-most object to the
+ user (incorporating depth and stencil tests). If no nodes pass the hit test, an empty array is
+ returned. If deferredReadback is set to YES, this method always returns nil.
+ */
+- (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback;
+
+/**
+ @brief Performs an asynchronous readback for the previous hit test and returns the corresponding
+ hit nodes
+ 
+ This method should be called after performing a picking test with deferred readback using
+ ICScene::hitTest:point:deferredReadback: to perform the actual readback on the picking visitor's
+ render texture and return the corresponding hit nodes.
+ 
+ @return Returns an NSArray containing ICNode objects representing the nodes that passed the
+ picking test. If no nodes passed the test, an empty array is returned. If one or more nodes
+ passed the test, the last object in the array always represents the final hit. The final hit is
+ defined as the node that visually appears to the user as the front-most object at the pick point
+ given to the receiver. If that node is part of a hierarchy of drawable nodes, it is simultaneously
+ the "deepest" node of that hierarchy which has passed the picking test.
+ 
+ @remarks Asynchronous readbacks are only available on Mac OS X and if the graphics hardware
+ supports OpenGL pixel buffer objects. See 
+ ICNodeVisitorPicking::performPickingTestWithNode:point:viewport:deferredReadback:.
+ */
+- (NSArray *)performHitTestReadback;
+
+/**
+ @brief Computes a ray in world coordinates for the given framebuffer location using the
+ receiver's camera
+ */
+- (icRay3)worldRayFromFramebufferLocation:(CGPoint)location;
 
 /**
  @brief Sets the size of the receiver, adjusts the viewport of the camera and sets the size of
@@ -308,15 +369,15 @@
 - (void)setSize:(kmVec3)size;
 
 /**
- @brief Adjusts the receiver's size to the size of its parent frame buffer
+ @brief Adjusts the receiver's size to the size of its parent framebuffer
  */
-- (void)adjustToFrameBufferSize;
+- (void)adjustToFramebufferSize;
 
 - (CGRect)frameRect;
 
 /**
- @brief Returns the size of the receiver's parent frame buffer in points
+ @brief Returns the size of the receiver's parent framebuffer in points
  */
-- (CGSize)frameBufferSize;
+- (CGSize)framebufferSize;
 
 @end

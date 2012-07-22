@@ -89,7 +89,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
-    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
+    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
+    [(ICHostViewControllerMac *)self.hostViewController setUpdatesMouseEnterExitEventsContinuously:YES];
     
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
                                           shareContext:nil

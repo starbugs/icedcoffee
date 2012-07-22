@@ -25,7 +25,7 @@
  */
 
 #import "ICPlanarNode.h"
-#import "ICFrameBufferProvider.h"
+#import "ICFramebufferProvider.h"
 #import "ICTexture2D.h"
 #import "icTypes.h"
 #import "icConfig.h"
@@ -40,7 +40,7 @@
  <h3>Overview</h3>
  
  The ICRenderTexture class implements a mechanism for rendering a scene represented by an
- ICScene object into a frame buffer object (FBO) backed by a texture. The class comes with
+ ICScene object into a framebuffer object (FBO) backed by a texture. The class comes with
  built-in support for depth and stencil buffer attachments to the FBO. It supports picking
  and event handling implicitly, i.e. all nodes added to the render texture's sub scene
  will be capable of picking and handling user interaction events automatically. The
@@ -83,7 +83,7 @@
  
  <h3>Conditional Drawing</h3>
  
- ICRenderTexture adds functionality for conditional drawing (frame buffer updates on demand only)
+ ICRenderTexture adds functionality for conditional drawing (framebuffer updates on demand only)
  to the IcedCoffee scene graph. Conditional drawing can be configured using the
  ICRenderTexture::frameUpdateMode property. If ICRenderTexture::frameUpdateMode is set to
  <code>ICFrameUpdateModeOnDemand</code>, the visitation system will draw the sub scene of
@@ -114,14 +114,14 @@
  [mySprite setPositionX:10];
  
  // Now tell the framework to update the render texture's contents to reflect the sprite's
- // position change inside the render texture's frame buffer.
+ // position change inside the render texture's framebuffer.
  [mySprite setNeedsDisplay];
  @endcode
  
  <h3>Nesting Render Textures</h3>
  
  ICRenderTexture objects may be nested in arbitrary sub scene graphs, which is particularly
- useful for implementing view hierarchies backed by OpenGL frame buffers. Nesting works out
+ useful for implementing view hierarchies backed by OpenGL framebuffers. Nesting works out
  of the box, intuitively and without any further settings required:
  
  @code
@@ -160,7 +160,7 @@
  ICRenderTexture::initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
  method, which is the designated initializer of ICRenderTexture.
  */
-@interface ICRenderTexture : ICPlanarNode <ICFrameBufferProvider> {
+@interface ICRenderTexture : ICPlanarNode <ICFramebufferProvider> {
 @protected
 	GLuint      _fbo;
 	GLint		_oldFBO;
@@ -187,7 +187,7 @@
 @property (nonatomic, readonly) ICTexture2D *texture;
 
 /**
- @brief The sprite used to draw the texture on the frame buffer
+ @brief The sprite used to draw the texture on the framebuffer
  */
 @property (nonatomic, readonly) ICSprite *sprite;
 
@@ -198,7 +198,7 @@
 
 /**
  @brief A boolean flag indicating whether the render texture's FBO is currently set as the
- OpenGL target frame buffer
+ OpenGL target framebuffer
  */
 @property (nonatomic, readonly) BOOL isInRenderTextureDrawContext;
 
@@ -335,45 +335,53 @@
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
 /**
- @brief Sets the content size of the render texture and automatically re-creates its buffers
+ @brief Sets the size of the render texture and automatically re-creates its buffers
  if necessary
  */
 - (void)setSize:(kmVec3)size;
 
+- (CGSize)textureSizeInPixels;
+
 /**
- @brief Sets the render texture's FBO as the current frame buffer and adjusts the viewport
- accordingly
+ @brief Sets up the receiver's framebuffer for drawing
  
- You do not need to call this method directly. It is called by the framework when the render
- texture's sub scene needs to be redrawn.
+ This method saves the current framebuffer and viewport, then pushes identity projection and
+ model-view matrices, binds the receiver's framebuffer and sets the render texture's viewport
+ on the current OpenGL context. After this method has been called, you may use OpenGL commands
+ to draw to the receiver's framebuffer. When drawing is finished, you must call
+ ICRenderTexture::end in order to restore the old framebuffer, viewport and matrices.
  */
 - (void)begin;
 
 /**
- @brief Sets the previously selected FBO as the current frame buffer and resets the viewport
- accordingly
- 
- You do not need to call this method directly. It is called by the framework after the render
- texture's sub scene has been redrawn.
+ @brief Restores the old OpenGL framebuffer after drawing to the receiver's surface
+
+ This method restores the framebuffer, viewport, projection and model-view matrices that were
+ saved in a previous call to ICRenderTexture::begin.
  */
 - (void)end;
 
+- (void)pushRenderTextureMatrices;
+
+- (void)popRenderTextureMatrices;
+
 /**
- @brief Reads the color of the pixel at the given location (in pixels) in the texture's
- frame buffer
+ @brief Reads the color of the pixel at the given location in the receiver's framebuffer
  */
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 
+- (void)readPixels:(void *)data inRect:(CGRect)rect;
+
 /**
- @brief The render texture's plane in local coordinate space
+ @brief The receiver's plane in local coordinate space
  
  This method essentially returns the render texture's sprite plane.
  */
 - (kmPlane)plane;
 
 /**
- @brief The size of the receiver's frame buffer, in points
+ @brief The size of the receiver's framebuffer, in points
  */
-- (CGSize)frameBufferSize;
+- (CGSize)framebufferSize;
 
 @end

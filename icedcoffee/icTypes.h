@@ -51,8 +51,11 @@
      (m).mat[1], (m).mat[5], (m).mat[9], (m).mat[13], \
      (m).mat[2], (m).mat[6], (m).mat[10], (m).mat[14], \
      (m).mat[3], (m).mat[7], (m).mat[11], (m).mat[15]])
-#define kmVec4FromColor(c) ((kmVec4){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
-#define colorFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
+#define kmVec4FromColor4B(c) ((kmVec4){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
+#define kmVec4FromColor4F(c) ((kmVec4){c.r,c.g,c.b,c.a})
+#define icColor4FMake(r,g,b,a) ((icColor4F){r,g,b,a})
+#define color4BFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
+#define color4FFromColor4B(c) ((icColor4F){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
 
 /** @name Frame Updates */
 
@@ -144,6 +147,14 @@ enum {
     ICAutoResizingMaskBottomMarginFlexible = 0x20
 };
 
+enum {
+    ICHitTestUnsupported = 0,
+    ICHitTestHit = 1,
+    ICHitTestFailed = 2
+};
+
+typedef uint ICHitTestResult;
+
 typedef double icTime;
 
 /** @name Color Types */
@@ -152,11 +163,15 @@ typedef double icTime;
  @brief Defines an RGBA color composed of four bytes
  */
 typedef struct _icColor4B {
-    GLubyte r;
-    GLubyte g;
-    GLubyte b;
-    GLubyte a;
+    GLubyte r, g, b, a;
 } icColor4B;
+
+/**
+ @brief Defines an RGBA color composed of four floats
+ */
+typedef struct _icColor4F {
+    float r, g, b, a;
+} icColor4F;
 
 /** @name Texture Coordinate Types */
 
@@ -173,21 +188,17 @@ typedef struct _icV3F_C4B_T2F {
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4B_T2F;
 
-/**
- @brief A 3D quad defined by four vertices
- */
-typedef struct _icV3F_C4B_T2FQuad {
-	icV3F_C4B_T2F tl;
-	icV3F_C4B_T2F tr;
-	icV3F_C4B_T2F bl;
-	icV3F_C4B_T2F br;
-} icV3F_C4B_T2FQuad;
+typedef struct _icV3F_C4F_T2F {
+    kmVec3 vect;                // 12 bytes
+	icColor4F color;			// 16 bytes
+    kmVec2 texCoords;           // 8 bytes
+} icV3F_C4F_T2F;
 
-/**
- @brief Short for icV3F_C4B_T2FQuad
- */
-typedef icV3F_C4B_T2FQuad icQuad;
 
+typedef struct _icRay3 {
+    kmVec3 origin;
+    kmVec3 direction;
+} icRay3;
 
 /**
  @struct icBlendFunc

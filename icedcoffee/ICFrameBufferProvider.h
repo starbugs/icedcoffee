@@ -22,17 +22,18 @@
 //  
 
 #import <Foundation/Foundation.h>
+#import "ICProjectionTransforms.h"
 
 /**
- @brief Classes conforming to this protocol must provide a frame buffer
+ @brief Classes conforming to this protocol must provide a framebuffer
  */
-@protocol ICFrameBufferProvider <NSObject>
+@protocol ICFramebufferProvider <ICProjectionTransforms>
 
 @required
 
 /**
- @brief The size of the receiver's frame buffer, in points
+ @brief The size of the receiver's framebuffer, in points
  */
-- (CGSize)frameBufferSize;
+- (CGSize)framebufferSize;
 
 @end

@@ -36,7 +36,16 @@
 
 - (id)init
 {
+    return [self initWithShareContext:nil];
+}
+
+- (id)initWithShareContext:(ICRenderContext *)shareContext
+{
     if ((self = [super init])) {
+        if (shareContext) {
+            self.textureCache = shareContext.textureCache;
+            self.shaderCache = shareContext.shaderCache;
+        }
         _customObjects = nil; // lazy allocation
     }
     return self;

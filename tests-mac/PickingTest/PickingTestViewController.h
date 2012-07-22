@@ -21,32 +21,12 @@
 //  SOFTWARE.
 //  
 
-#import <Foundation/Foundation.h>
-#import "ICNodeVisitor.h"
+#import "IcedCoffee.h"
 
-/**
- @brief Node visitor for drawing a scene graph on an OpenGL framebuffer
- */
-@interface ICNodeVisitorDrawing : ICNodeVisitor
+@interface PickingTestViewController : ICTestHostViewController <ICUpdatable>
 
-/**
- @brief Sets up the node's model-view transform matrix and pushes it on the OpenGL matrix stack
- */
-- (void)preVisitNode:(ICNode *)node;
+@property (assign, nonatomic) float camAngle;
 
-/**
- @brief Draws a single node to the OpenGL framebuffer
- */
-- (BOOL)visitSingleNode:(ICNode *)node;
-
-/**
- @brief Performs visitation on the children of the given node
- */
-- (void)visitChildrenOfNode:(ICNode *)node;
-
-/**
- @brief Pops the node's model-view transform matrix from the OpenGL matrix stack
- */
-- (void)postVisitNode:(ICNode *)node;
+@property (assign, nonatomic) BOOL animateCamera;
 
 @end

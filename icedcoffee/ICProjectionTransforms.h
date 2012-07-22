@@ -33,9 +33,9 @@
 @required
 
 /**
- @brief Implementations must transform a given parent frame buffer location to a local node location
+ @brief Implementations must transform a given parent framebuffer location to a local node location
  */
-- (kmVec3)parentFrameBufferToNodeLocation:(CGPoint)location;
+- (kmVec3)parentFramebufferToNodeLocation:(CGPoint)location;
 
 /**
  @brief Implementations must transform a given host view location to a local node location

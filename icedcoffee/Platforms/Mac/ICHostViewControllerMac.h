@@ -52,6 +52,19 @@
 #import <QuartzCore/CVDisplayLink.h>
 
 // See http://developer.apple.com/library/mac/#qa/qa1385/_index.html
+
+/**
+ @brief Host view controller for the Mac platform
+ 
+ ICHostViewControllerMac specializes and extends ICHostViewController to implement view management
+ for the Mac OS X platform. Each Cocoa view that should display an IcedCoffee scene in your
+ application must have a distinct host view controller.
+ 
+ When creating an IcedCoffee-based application or integrating an IcedCoffee-based OpenGL view
+ into an existing Cocoa application on the Mac, it is recommended to subclass
+ ICHostViewControllerMac in order to implement a specialized view controller for each
+ application view that should display an IcedCoffee scene.
+ */
 @interface ICHostViewControllerMac : ICHostViewController <ICMouseResponder>
 {
 @protected
@@ -62,6 +75,7 @@
     BOOL _drawsConcurrently;
     BOOL _isThreadOwner;
     NSTimer *_renderTimer;
+    icTime _mouseOverStateDeltaTime;
 }
 
 @property (nonatomic, retain, setter=setView:) ICGLView *view;
@@ -73,5 +87,9 @@
 - (void)setAcceptsMouseMovedEvents:(BOOL)acceptsMouseMovedEvents;
 
 - (BOOL)acceptsMouseMovedEvents;
+
+- (void)setUpdatesMouseEnterExitEventsContinuously:(BOOL)updatesMouseEnterExitEventsContinuously;
+
+- (BOOL)updatesMouseEnterExitEventsContinuously;
 
 @end

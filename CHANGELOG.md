@@ -1,9 +1,67 @@
 Changelog
 =========
 
+*v0.6.5*
+
+* Completely rewrote ICNodeVisitorPicking to optimize performance. The class does
+  now perform preliminary ray-based hit tests on each node and only runs further
+  color-based picking tests if that ray-based test either succeeds or is
+  unsupported by a given node. Furthermore, ICNodeVisitorPicking now uses a 256x256
+  render texture to successively draw each node to one distinct pixel and perform
+  only one readback at the end of the picking test run. What is more, on Mac OS X
+  machines that support pixel buffer objects, the visitor now supports asynchronous
+  readbacks using PBOs.
+* Added the icRay3 struct which from now on represents 3D-rays in IcedCoffee.
+* Added ICNode::localRayHitTest:, which by default returns ICHitTestUnsupported.
+  The method is to be overridden in subclasses.
+* Implemented ICPlanarNode::localRayHitTest:. The method performs a hit test by
+  calculating the intersection of the given ray with the receiver's plane and then
+  testing whether that intersection lies within the receiver's bounds.
+* ICMouseEventDispatcher and ICHostViewControllerMac do now perform optimized
+  hit testing for continuous hit tests required for computing enter/exit events.
+* Added ICScene::hitTest:deferredReadback: and
+  ICHostViewController::hitTest:deferredReadback:. On Mac OS X and if supported
+  by OpenGL hardware, deferredReadback may be set to YES in order to perform
+  asynchronous readbacks using pixel buffer objects.
+* Added ICScene::performHitTestReadback and
+  ICHostViewController::performHitTestReadback. These methods are used to
+  perform a previously issued asynchronous readback on the picking visitor's
+  render texture on systems supporting PBOs.
+* Added ICHostViewController::setupScene which is from now on called by
+  ICHostViewController::setView: and may be overridden by subclasses implementing
+  custom host view controllers.
+* Added the ICTestHostViewController class which provides a standard test bed for
+  IcedCoffee test applications.
+* Redesigned The PickingTest (Mac) project to use the new test bed infrastructure.
+* Added background property of type ICSprite to ICView. Additionally a
+  drawsBackground property was added. By default no background is drawn.
+* Added ICLabel::autoresizesToTextSize property. If set to YES (default), the label
+  automatically resizes to its text's size when the text is set or font properties
+  are changed.
+* Changed the ICHostViewController::makeCurrentHostViewController to set the current
+  host view controller for the current thread using a global dictionary with weak
+  references to ICHostViewController objects. Changed
+  ICHostViewController::currentHostViewController to return the current host view
+  controller for the current thread respectively.
+* All event handler methods of ICHostViewControllerMac and ICHostViewControllerIOS
+  do now make their corresponding receivers the current host view controller on
+  the thread that handles the event before dispatching.
+* Added the ICHostViewController::renderContext property in order to make render
+  contexts accessible from the outside.
+* Added the ICRenderContext::initWithShareContext: initializer, which initializes
+  an ICRenderContext object with the caches defined in the given share context.
+* Fixed a bug with auto resizing masks that were set to left margin flexible,
+  but not right margin flexible, or to top margin flexible, but not bottom margin
+  flexible.
+* Fixed a bug in ICView which did not resize its clipping mask when ICView::setSize:
+  was called.
+* Renamed ICFrameBufferProvider to ICFramebufferProvider.
+* Renamed ICFrameBuffer to ICFramebuffer.
+* Renamed all frameBuffer and FrameBuffer occurrences to framebuffer and Framebuffer.
+
 *v0.6.4*
 
-* Implemented touch control event dispatch for in ICTouchEventDispatcher.
+* Implemented touch control event dispatch in ICTouchEventDispatcher.
 * Fixed a bug with pixel alignment for font rendering in ICGLView on iOS.
   Labels are now displayed correctly on iOS.
 * ICButton does now use font "Lucida Grande" on Mac OS X and "Helvetica"

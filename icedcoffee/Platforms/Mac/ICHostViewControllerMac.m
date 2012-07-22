@@ -57,6 +57,7 @@
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event { \
+        [self makeCurrentHostViewController]; \
         [_mouseEventDispatcher eventMethod:event]; \
     }
 
@@ -229,7 +230,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     }
     
     [self calculateDeltaTime];
-
+    
     // We draw on a secondary thread through the display link
     // When resizing the view, -reshape is called automatically on the main thread
     // Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
@@ -244,17 +245,33 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         glViewport(0, 0,
                    openGLview.bounds.size.width * self.contentScaleFactor,
                    openGLview.bounds.size.height * self.contentScaleFactor);
+
+        BOOL performUpdateMouseOverState = NO;
+        BOOL performDeferredReadback = NO;
+        if ([NSThread currentThread] == self.thread) {
+            _mouseOverStateDeltaTime += _deltaTime;
+            if (_mouseOverStateDeltaTime > 0.033f) {
+                if ([self canPerformDeferredReadbacks]) {
+                    // Prepare deferred readback for hit test in mouse event dispatcher's
+                    // updateMouseOverState
+                    [_mouseEventDispatcher prepareUpdateMouseOverState];
+                    performDeferredReadback = YES;
+                }
+                performUpdateMouseOverState = YES;
+                _mouseOverStateDeltaTime = 0;
+            }
+        }
         
         // Render final scene
         [self.scene visit];  
         
+        if (performUpdateMouseOverState) {
+            // Let mouse event dispatcher update state for mouseEntered/mouseExited events
+            [_mouseEventDispatcher updateMouseOverState:performDeferredReadback];
+        }
+        
         // Flush OpenGL buffer
         [[openGLview openGLContext] flushBuffer];
-
-        if ([NSThread currentThread] == self.thread) {
-            // Let mouse event dispatcher update state for mouseEntered/mouseExited events
-            [_mouseEventDispatcher updateMouseOverState];
-        }
         
         if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
             _needsDisplay = NO;
@@ -264,11 +281,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
 }
 
-- (NSArray *)hitTest:(CGPoint)point
+- (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
-    // Convert point to OpenGL coordinate system (Y axis inverted)
-    //point.y = self.view.bounds.size.height - point.y;    
-    
     NSArray *resultNodeStack;
     
 	ICGLView *openGLview = (ICGLView*)self.view;
@@ -279,11 +293,16 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
                ICPointsToPixels(openGLview.bounds.size.width),
                ICPointsToPixels(openGLview.bounds.size.height));
     
-    resultNodeStack = [self.scene hitTest:point];
+    resultNodeStack = [self.scene hitTest:point deferredReadback:deferredReadback];
     
-	CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
+    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
     
     return resultNodeStack;
+}
+
+- (NSArray *)performHitTestReadback
+{
+    return [self.scene performHitTestReadback];
 }
 
 - (void)setAcceptsMouseMovedEvents:(BOOL)acceptsMouseMovedEvents
@@ -294,6 +313,16 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 - (BOOL)acceptsMouseMovedEvents
 {
     return _mouseEventDispatcher.acceptsMouseMovedEvents;
+}
+
+- (void)setUpdatesMouseEnterExitEventsContinuously:(BOOL)updatesMouseEnterExitEventsContinuously
+{
+    _mouseEventDispatcher.updatesEnterExitEventsContinuously = updatesMouseEnterExitEventsContinuously;
+}
+
+- (BOOL)updatesMouseEnterExitEventsContinuously
+{
+    return [_mouseEventDispatcher updatesEnterExitEventsContinuously];
 }
 
 - (void)setView:(ICGLView *)view

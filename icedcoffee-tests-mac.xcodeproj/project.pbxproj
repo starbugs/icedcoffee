@@ -107,6 +107,7 @@
 		D28504C4158B212200CD71ED /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504BB158B211000CD71ED /* SpriteTextureMask.fsh */; };
 		D28504C5158B212200CD71ED /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D28504BC158B211000CD71ED /* StencilMask.fsh */; };
 		D28504EB158B297100CD71ED /* Autumn_scenery.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D28504EA158B297100CD71ED /* Autumn_scenery.jpg */; };
+		D292851315AB190E0086B12A /* PickingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D292851215AB190E0086B12A /* PickingTestViewController.m */; };
 		D2AA0E50152882A400F98623 /* 061212-nordkapp.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */; };
 		D2AA0E51152882A400F98623 /* Arianit_Brod_image149.jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */; };
 		D2AA0E52152882A400F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg in CopyFiles */ = {isa = PBXBuildFile; fileRef = D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */; };
@@ -445,6 +446,8 @@
 		D28504BB158B211000CD71ED /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
 		D28504BC158B211000CD71ED /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D28504EA158B297100CD71ED /* Autumn_scenery.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = Autumn_scenery.jpg; path = resources/images/landscapes/Autumn_scenery.jpg; sourceTree = SOURCE_ROOT; };
+		D292851115AB190E0086B12A /* PickingTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PickingTestViewController.h; sourceTree = "<group>"; };
+		D292851215AB190E0086B12A /* PickingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PickingTestViewController.m; sourceTree = "<group>"; };
 		D2AA0E3915287E9500F98623 /* 061212-nordkapp.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "061212-nordkapp.jpg"; sourceTree = "<group>"; };
 		D2AA0E3A15287E9500F98623 /* Arianit_Brod_image149.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Arianit_Brod_image149.jpg; sourceTree = "<group>"; };
 		D2AA0E3B15287E9500F98623 /* Autumn_scene_at_Woodleigh_(3_of_7).jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "Autumn_scene_at_Woodleigh_(3_of_7).jpg"; sourceTree = "<group>"; };
@@ -1146,6 +1149,8 @@
 				D2FD865914F0EC50006A9A90 /* ResponsiveSprite.m */,
 				D2E64894150436A600D71A6D /* ResponsiveView.h */,
 				D2E64895150436A600D71A6D /* ResponsiveView.m */,
+				D292851115AB190E0086B12A /* PickingTestViewController.h */,
+				D292851215AB190E0086B12A /* PickingTestViewController.m */,
 				D2FD864214F0E6C6006A9A90 /* MainMenu.xib */,
 				D2FD864D14F0E6CB006A9A90 /* Supporting Files */,
 			);
@@ -1808,6 +1813,7 @@
 				D2FD864B14F0E6C6006A9A90 /* main.m in Sources */,
 				D2FD865A14F0EC50006A9A90 /* ResponsiveSprite.m in Sources */,
 				D2E64896150436A600D71A6D /* ResponsiveView.m in Sources */,
+				D292851315AB190E0086B12A /* PickingTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

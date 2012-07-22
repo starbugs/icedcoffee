@@ -41,7 +41,7 @@ NSString *NSStringFromGLError(GLenum error) {
         }
         case GL_INVALID_FRAMEBUFFER_OPERATION: {
             return @"GL_INVALID_FRAMEBUFFER_OPERATION: Attempted to read from or write to " \
-            "a frame buffer that is not complete";
+            "a framebuffer that is not complete";
         }
         case GL_STACK_OVERFLOW: {
             return @"GL_STACK_OVERFLOW: Stack pushing operation cannot be done, because it would " \
