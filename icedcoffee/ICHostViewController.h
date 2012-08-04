@@ -148,7 +148,7 @@
 /**
  @brief Makes the receiver the current host view controller for the current thread
 
- This method uses a global dictionary to store a weak reference to the current host view controller.
+ This method uses a global variable to store a weak reference to the current host view controller.
  The receiver should be made the current host view controller before other framework code is about
  to be executed in its context. Usually you do not have to call this method on your own, since
  ICHostViewController itself takes care of making the receiver the current host view controller in

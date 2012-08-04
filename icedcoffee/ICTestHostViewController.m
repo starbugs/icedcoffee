@@ -101,7 +101,7 @@
 - (void)showNextScene
 {
     if ([_testScenes count]) {
-        int currentSceneIndex = [_testScenes indexOfObject:_currentTestScene];
+        int currentSceneIndex = (int)[_testScenes indexOfObject:_currentTestScene];
         if (currentSceneIndex + 1 < [_testScenes count])
             self.currentTestScene = [_testScenes objectAtIndex:currentSceneIndex+1];
         else
@@ -112,7 +112,7 @@
 - (void)showPreviousScene
 {
     if ([_testScenes count]) {
-        int currentSceneIndex = [_testScenes indexOfObject:_currentTestScene];
+        int currentSceneIndex = (int)[_testScenes indexOfObject:_currentTestScene];
         if (currentSceneIndex - 1 < 0)
             self.currentTestScene = [_testScenes lastObject];
         else

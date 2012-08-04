@@ -184,7 +184,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], self, name_, width_, height_, maxS_, maxT_];
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, name_, width_, height_, maxS_, maxT_];
 }
 
 -(CGSize) size

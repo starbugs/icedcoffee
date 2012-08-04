@@ -777,7 +777,7 @@
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@ (%@)>",
-            [self class], self, self.name, [_parent class], [_parent name]];
+            [self class], (uint)self, self.name, [_parent class], [_parent name]];
 }
 
 // private

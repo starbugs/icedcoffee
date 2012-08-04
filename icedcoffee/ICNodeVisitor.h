@@ -37,8 +37,8 @@ typedef uint ICNodeVisitorType;
  @brief Abstract node visitor used for traversing an IcedCoffee scene graph
  
  ICNodeVisitor is an abstract base class providing the foundation for IcedCoffee's
- node visitation system. A node visitor is used to traverse a scene graph and
- process its nodes.
+ node visitation system. A node visitor is used to traverse a given scene graph and
+ process its nodes for a certain purpose.
  
  IcedCoffee ships with two built-in node visitors: ICNodeVisitorDrawing is used
  by the framework to draw scene graphs on a framebuffer whereas ICNodeVisitorPicking

@@ -104,7 +104,7 @@
     // Initialize a GL view with depth buffer support
     ICGLView *glView = [ICGLView viewWithFrame:[self.window bounds]
                                    pixelFormat:kEAGLColorFormatRGBA8
-                                   depthFormat:GL_DEPTH_COMPONENT24_OES
+                                   depthFormat:GL_DEPTH24_STENCIL8_OES
                             preserveBackbuffer:NO
                                     sharegroup:nil
                                  multiSampling:NO

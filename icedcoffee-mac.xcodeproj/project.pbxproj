@@ -738,7 +738,7 @@
 		D24BAF2914EDB05D000E65AA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D24BAF2C14EDB05D000E65AA /* Build configuration list for PBXProject "icedcoffee-mac" */;
@@ -878,6 +878,7 @@
 		D24BAF4414EDB05D000E65AA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -894,6 +895,7 @@
 		D24BAF4514EDB05D000E65AA /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;

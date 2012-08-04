@@ -1439,7 +1439,7 @@
 		D2FD85CA14F0E4A5006A9A90 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */;
@@ -2155,6 +2155,7 @@
 		D21F88901533064B00E2496C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
@@ -2171,6 +2172,7 @@
 		D21F88911533064B00E2496C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
@@ -2187,6 +2189,7 @@
 		D22F256F1587D53B0049268C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2208,6 +2211,7 @@
 		D22F25701587D53B0049268C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2225,6 +2229,7 @@
 		D253D9D515663DE20027DA6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2241,6 +2246,7 @@
 		D253D9D615663DE20027DA6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2257,6 +2263,7 @@
 		D2735B59159126E300216F1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2273,6 +2280,7 @@
 		D2735B5A159126E300216F1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2289,6 +2297,7 @@
 		D2850499158B204F00CD71ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2305,6 +2314,7 @@
 		D285049A158B204F00CD71ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2321,6 +2331,7 @@
 		D2ADCFDC157EB34A00B6E519 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2342,6 +2353,7 @@
 		D2ADCFDD157EB34A00B6E519 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2358,6 +2370,7 @@
 		D2EDC3571572BB8A00EBB417 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2374,6 +2387,7 @@
 		D2EDC3581572BB8A00EBB417 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2390,6 +2404,7 @@
 		D2F34FD4151F098A00DF2D5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2405,6 +2420,7 @@
 		D2F34FD5151F098A00DF2D5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2420,6 +2436,7 @@
 		D2F3502115285D8600DF2D5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2435,6 +2452,7 @@
 		D2F3502215285D8600DF2D5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2450,6 +2468,7 @@
 		D2F3509C1511623600A56B8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2465,6 +2484,7 @@
 		D2F3509D1511623600A56B8D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2525,6 +2545,7 @@
 		D2FD861C14F0E5EF006A9A90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
@@ -2541,6 +2562,7 @@
 		D2FD861D14F0E5EF006A9A90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
@@ -2557,6 +2579,7 @@
 		D2FEE83A1539D763004CFF62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2572,6 +2595,7 @@
 		D2FEE83B1539D763004CFF62 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

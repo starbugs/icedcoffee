@@ -7,6 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
+		A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
+		A6EA1E0415CD65110007C4FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
+		A6EA1E3A15CD65790007C4FF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E2815CD65790007C4FF /* AppDelegate.m */; };
+		A6EA1E3B15CD65790007C4FF /* DetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E2A15CD65790007C4FF /* DetailViewController.m */; };
+		A6EA1E3C15CD65790007C4FF /* DetailViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E2B15CD65790007C4FF /* DetailViewController_iPad.xib */; };
+		A6EA1E3D15CD65790007C4FF /* DetailViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E2D15CD65790007C4FF /* DetailViewController_iPhone.xib */; };
+		A6EA1E3E15CD65790007C4FF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E2F15CD65790007C4FF /* InfoPlist.strings */; };
+		A6EA1E3F15CD65790007C4FF /* MasterViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E3115CD65790007C4FF /* MasterViewController_iPad.xib */; };
+		A6EA1E4015CD65790007C4FF /* MasterViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E3315CD65790007C4FF /* MasterViewController_iPhone.xib */; };
+		A6EA1E4215CD65790007C4FF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E3715CD65790007C4FF /* main.m */; };
+		A6EA1E4315CD65790007C4FF /* MasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E3915CD65790007C4FF /* MasterViewController.m */; };
+		A6EA1E4415CD67720007C4FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F115AA521A0086B12A /* QuartzCore.framework */; };
+		A6EA1E4515CD67780007C4FF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F715AA52460086B12A /* OpenGLES.framework */; };
+		A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
+		A6EA1E5C15CD6C670007C4FF /* IBGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E5B15CD6C670007C4FF /* IBGLView.m */; };
+		A6EA1E6815CD6EBB0007C4FF /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */; };
+		A6EA1E6915CD6EBB0007C4FF /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */; };
+		A6EA1E6A15CD6EBB0007C4FF /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */; };
+		A6EA1E6B15CD6EBB0007C4FF /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */; };
+		A6EA1E6C15CD6EBB0007C4FF /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */; };
+		A6EA1E6D15CD6EBB0007C4FF /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */; };
+		A6EA1E6E15CD6EBB0007C4FF /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */; };
+		A6EA1E6F15CD6EBB0007C4FF /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */; };
+		A6EA1E7015CD6EBB0007C4FF /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */; };
+		A6EA1E7115CD6EBB0007C4FF /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */; };
 		D21C980414F302320059BBBE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C97FE14F302320059BBBE /* AppDelegate.m */; };
 		D21C980514F302320059BBBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21C97FF14F302320059BBBE /* InfoPlist.strings */; };
 		D21C980614F302320059BBBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C980114F302320059BBBE /* main.m */; };
@@ -118,6 +144,33 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6EA1E2715CD65790007C4FF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A6EA1E2815CD65790007C4FF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A6EA1E2915CD65790007C4FF /* DetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DetailViewController.h; sourceTree = "<group>"; };
+		A6EA1E2A15CD65790007C4FF /* DetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DetailViewController.m; sourceTree = "<group>"; };
+		A6EA1E2C15CD65790007C4FF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPad.xib; sourceTree = "<group>"; };
+		A6EA1E2E15CD65790007C4FF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DetailViewController_iPhone.xib; sourceTree = "<group>"; };
+		A6EA1E3015CD65790007C4FF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6EA1E3215CD65790007C4FF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPad.xib; sourceTree = "<group>"; };
+		A6EA1E3415CD65790007C4FF /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MasterViewController_iPhone.xib; sourceTree = "<group>"; };
+		A6EA1E3515CD65790007C4FF /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
+		A6EA1E3615CD65790007C4FF /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
+		A6EA1E3715CD65790007C4FF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6EA1E3815CD65790007C4FF /* MasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MasterViewController.h; sourceTree = "<group>"; };
+		A6EA1E3915CD65790007C4FF /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
+		A6EA1E5A15CD6C670007C4FF /* IBGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBGLView.h; sourceTree = "<group>"; };
+		A6EA1E5B15CD6C670007C4FF /* IBGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBGLView.m; sourceTree = "<group>"; };
+		A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "icedcoffee-ios.xcodeproj"; sourceTree = "<group>"; };
 		D21C97E314F302050059BBBE /* PickingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PickingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21C97FD14F302320059BBBE /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -196,6 +249,19 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A6EA1DFD15CD65110007C4FF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */,
+				A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */,
+				A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */,
+				A6EA1E4415CD67720007C4FF /* QuartzCore.framework in Frameworks */,
+				A6EA1E0415CD65110007C4FF /* CoreGraphics.framework in Frameworks */,
+				A6EA1E4515CD67780007C4FF /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21C97E014F302050059BBBE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -251,6 +317,48 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A6EA1E2615CD65790007C4FF /* IBIntegrationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A6EA1E5D15CD6EB10007C4FF /* Shaders */,
+				A6EA1E2715CD65790007C4FF /* AppDelegate.h */,
+				A6EA1E2815CD65790007C4FF /* AppDelegate.m */,
+				A6EA1E2915CD65790007C4FF /* DetailViewController.h */,
+				A6EA1E2A15CD65790007C4FF /* DetailViewController.m */,
+				A6EA1E2B15CD65790007C4FF /* DetailViewController_iPad.xib */,
+				A6EA1E2D15CD65790007C4FF /* DetailViewController_iPhone.xib */,
+				A6EA1E2F15CD65790007C4FF /* InfoPlist.strings */,
+				A6EA1E3115CD65790007C4FF /* MasterViewController_iPad.xib */,
+				A6EA1E3315CD65790007C4FF /* MasterViewController_iPhone.xib */,
+				A6EA1E3515CD65790007C4FF /* IBIntegrationTest-Info.plist */,
+				A6EA1E3615CD65790007C4FF /* IBIntegrationTest-Prefix.pch */,
+				A6EA1E5A15CD6C670007C4FF /* IBGLView.h */,
+				A6EA1E5B15CD6C670007C4FF /* IBGLView.m */,
+				A6EA1E3715CD65790007C4FF /* main.m */,
+				A6EA1E3815CD65790007C4FF /* MasterViewController.h */,
+				A6EA1E3915CD65790007C4FF /* MasterViewController.m */,
+			);
+			name = IBIntegrationTest;
+			path = "tests-ios/IBIntegrationTest";
+			sourceTree = "<group>";
+		};
+		A6EA1E5D15CD6EB10007C4FF /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */,
+				A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */,
+				A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */,
+				A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */,
+				A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */,
+				A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */,
+				A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */,
+				A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */,
+				A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */,
+				A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
 		D21C97C914F301A70059BBBE = {
 			isa = PBXGroup;
 			children = (
@@ -259,6 +367,7 @@
 				D21C97FC14F302320059BBBE /* PickingTest */,
 				D2D4A25514FA1AF4000FCBA0 /* MultiTouchSpritesTest */,
 				D2732879152F9F3A0004F557 /* RetinaDisplaySupportTest */,
+				A6EA1E2615CD65790007C4FF /* IBIntegrationTest */,
 				D21C97E614F302050059BBBE /* Frameworks */,
 				D21C97E414F302050059BBBE /* Products */,
 			);
@@ -279,6 +388,7 @@
 				D2D4A24114FA1AC4000FCBA0 /* MultiTouchSpritesTest.app */,
 				D2732865152F9F0E0004F557 /* RetinaDisplaySupportTest.app */,
 				D2FEE865153ABD2A004CFF62 /* DepthBufferTest.app */,
+				A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -435,6 +545,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */;
+			buildPhases = (
+				A6EA1DFC15CD65110007C4FF /* Sources */,
+				A6EA1DFD15CD65110007C4FF /* Frameworks */,
+				A6EA1DFE15CD65110007C4FF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = IBIntegrationTest;
+			productName = IBIntegrationTest;
+			productReference = A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D21C97E214F302050059BBBE /* PickingTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D21C97F914F302050059BBBE /* Build configuration list for PBXNativeTarget "PickingTest" */;
@@ -538,6 +665,7 @@
 				D2D4A24014FA1AC4000FCBA0 /* MultiTouchSpritesTest */,
 				D2732864152F9F0E0004F557 /* RetinaDisplaySupportTest */,
 				D2FEE864153ABD2A004CFF62 /* DepthBufferTest */,
+				A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */,
 			);
 		};
 /* End PBXProject section */
@@ -553,6 +681,28 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A6EA1DFE15CD65110007C4FF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6EA1E6815CD6EBB0007C4FF /* Picking.fsh in Resources */,
+				A6EA1E6915CD6EBB0007C4FF /* PositionColor.fsh in Resources */,
+				A6EA1E6A15CD6EBB0007C4FF /* PositionColor.vsh in Resources */,
+				A6EA1E6B15CD6EBB0007C4FF /* PositionTextureA8Color.fsh in Resources */,
+				A6EA1E6C15CD6EBB0007C4FF /* PositionTextureA8Color.vsh in Resources */,
+				A6EA1E6D15CD6EBB0007C4FF /* PositionTextureColor.fsh in Resources */,
+				A6EA1E6E15CD6EBB0007C4FF /* PositionTextureColor.vsh in Resources */,
+				A6EA1E6F15CD6EBB0007C4FF /* Rectangle.fsh in Resources */,
+				A6EA1E7015CD6EBB0007C4FF /* SpriteTextureMask.fsh in Resources */,
+				A6EA1E7115CD6EBB0007C4FF /* StencilMask.fsh in Resources */,
+				A6EA1E3C15CD65790007C4FF /* DetailViewController_iPad.xib in Resources */,
+				A6EA1E3D15CD65790007C4FF /* DetailViewController_iPhone.xib in Resources */,
+				A6EA1E3E15CD65790007C4FF /* InfoPlist.strings in Resources */,
+				A6EA1E3F15CD65790007C4FF /* MasterViewController_iPad.xib in Resources */,
+				A6EA1E4015CD65790007C4FF /* MasterViewController_iPhone.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21C97E114F302050059BBBE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -618,6 +768,18 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A6EA1DFC15CD65110007C4FF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6EA1E3A15CD65790007C4FF /* AppDelegate.m in Sources */,
+				A6EA1E3B15CD65790007C4FF /* DetailViewController.m in Sources */,
+				A6EA1E4215CD65790007C4FF /* main.m in Sources */,
+				A6EA1E4315CD65790007C4FF /* MasterViewController.m in Sources */,
+				A6EA1E5C15CD6C670007C4FF /* IBGLView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21C97DF14F302050059BBBE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -684,6 +846,46 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A6EA1E2B15CD65790007C4FF /* DetailViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6EA1E2C15CD65790007C4FF /* en */,
+			);
+			name = DetailViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		A6EA1E2D15CD65790007C4FF /* DetailViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6EA1E2E15CD65790007C4FF /* en */,
+			);
+			name = DetailViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		A6EA1E2F15CD65790007C4FF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6EA1E3015CD65790007C4FF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A6EA1E3115CD65790007C4FF /* MasterViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6EA1E3215CD65790007C4FF /* en */,
+			);
+			name = MasterViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		A6EA1E3315CD65790007C4FF /* MasterViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6EA1E3415CD65790007C4FF /* en */,
+			);
+			name = MasterViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
 		D21C97FF14F302320059BBBE /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -719,6 +921,73 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A6EA1E2415CD65110007C4FF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-ios/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6EA1E2515CD65110007C4FF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-ios/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		D21C97D014F301A70059BBBE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1002,6 +1271,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6EA1E2415CD65110007C4FF /* Debug */,
+				A6EA1E2515CD65110007C4FF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D21C97CE14F301A70059BBBE /* Build configuration list for PBXProject "icedcoffee-tests-ios" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

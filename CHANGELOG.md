@@ -1,6 +1,18 @@
 Changelog
 =========
 
+*v0.6.6*
+
+* Improved integration with Interface Builder: added IBIntegrationTest to
+  icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
+  of ICGLView. The custom subclass is required for Interface Builder to accept the
+  ICGLView (see DetailViewController XIBs).
+* Fixed ICGLView::initWithCoder:, depth buffer format now defaults to
+  GL_DEPTH24_STENCIL8_OES when using Interface Builder views.
+* Fixed DepthBufferTest for iOS: depth buffer format must be GL_DEPTH24_STENCIL8_OES
+  instead of GL_DEPTH_COMPONENT24_OES.
+* Fixed a couple of warnings that occurred as of Xcode 4.4.
+
 *v0.6.5*
 
 * Completely rewrote ICNodeVisitorPicking to optimize performance. The class does

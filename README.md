@@ -8,7 +8,7 @@ IcedCoffee is designed to be clean, minimalistic, consistent and reusable for di
 Its main focus is on user interfaces in the context of games, but of course you may use it for
 all kinds of rich and dynamic application frontends.
 
-IcedCoffee is open source and free for both non-commercial and commercial use (MIT license.)
+IcedCoffee is open source and free for both non-commercial and commercial use (MIT license).
 
 	Note: This is an early release, which means that some things aren't quite finished yet.
 
@@ -27,7 +27,8 @@ Documentation
 -------------
 
 Find a work-in-progress version of the [IcedCoffee API reference](http://icedcoffee-framework.org/docs)
-on [icedcoffee-framework.org](http://icedcoffee-framework.org).
+on [icedcoffee-framework.org](http://icedcoffee-framework.org). If you have questions or want to get in
+touch, please join the [IcedCoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
 
 
 Main Features
@@ -58,15 +59,15 @@ Copyright and License
 
 Copyright 2012 Tobias Lensing, Marcus Tillmanns
 
-Licensed under an MIT license (see LICENSE_icedcoffee.txt for details.)
+Licensed under an MIT license (see LICENSE_icedcoffee.txt for details).
 
 
 Third-party Sources
 -------------------
 
   * Portions of cocos2d's source code have been reused/refactored (see respective
-	  header files and LICENSE_cocos2d.txt for details.)
+	  header files and LICENSE_cocos2d.txt for details).
   * The Kazmath project has been included to provide math structures and
-	  routines for IcedCoffee's linear algebra (see LICENSE_Kazmath.txt.)
+	  routines for IcedCoffee's linear algebra (see LICENSE_Kazmath.txt).
   * Creative Commons licensed images have been reused for demo purposes (see
-	  the respective license files in resource folders.)
+	  the respective license files in resource folders).

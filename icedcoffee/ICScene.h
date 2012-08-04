@@ -104,7 +104,7 @@
  up a Root Scene". The only difference is that you add the scene as a child of another node
  or set it as the ICRenderTexture::subScene property of a render texture.
  
- <h3>Scene Sizes and The Relation of Scenes to Frame Buffers</h3>
+ <h3>Scene Sizes and The Relation of Scenes to Framebuffers</h3>
  
  Newly initialized scenes have zero size until they are added to an existing scene graph
  or assigned to a host view controller. If you need a valid size for the scene in order to set
@@ -119,7 +119,7 @@
  buffer of a scene is defined by its first ancestor defining a render target, or, if no such
  node exists, the host view controller.
  
- When a scene is resized (explicitly or implicitly) it attempts to resize its descendant
+ When a scene is resized (explicitly or implicitly), it attempts to resize its descendant
  scenes to its own size, following the third convention described in "Sub Scenes". This does,
  however, not have an effect on descendant render texture sub scenes, since these are
  disconnected from the drawing mechanism of their parent scenes as discussed above.
@@ -249,21 +249,30 @@
 @property (nonatomic, assign) BOOL performsFaceCulling;
 
 /**
- @brief Returns an autoreleased scene object initialized with a default camera and
- default visitors
+ @brief Returns an autoreleased scene object initialized with a default camera
  
  @sa init:
  */
 + (id)scene;
 
 /**
- @brief Initializes the receiver with a default camera and default visitors.
+ @brief Returns an autoreleased scene object initialized with the given camera
  
- This method initializes the receiver with a default camera as specified
- in #IC_DEFAULT_CAMERA, a default drawing visitor as specified in IC_DEFAULT_DRAWING_VISITOR,
- and a default picking visitor as specified in IC_DEFAULT_PICKING_VISITOR.
+ @sa initWithCamera:
+ */
++ (id)sceneWithCamera:(ICCamera *)camera;
+
+/**
+ @brief Initializes the receiver with a default camera
+ 
+ This method initializes the receiver with a default camera as specified in #IC_DEFAULT_CAMERA.
  */
 - (id)init;
+
+/**
+ @brief Initializes the receiver with the given camera
+ */
+- (id)initWithCamera:(ICCamera *)camera;
 
 /**
  @brief Returns a boolean flag indicating whether the receiver is the root scene
