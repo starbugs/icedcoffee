@@ -73,6 +73,14 @@
     return self;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     [_touchEventDispatcher release];

@@ -37,6 +37,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    // Issue #3: wire view to host view controller when created via nib
+    ((ICGLView *)self.view).hostViewController = self;
+    
 	// Do any additional setup after loading the view, typically from a nib.
     [self configureView];
 }
