@@ -102,6 +102,9 @@
         //glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
         [self.hostViewController setView:self];
+        // Issue 3: Interface Builder integration
+        // Call -viewDidLoad on the host view controller (old style view instantiation and wiring)
+        [self.hostViewController viewDidLoad];
         
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];

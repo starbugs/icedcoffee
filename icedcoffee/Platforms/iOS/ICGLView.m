@@ -321,28 +321,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
 
-
 - (void)setHostViewController:(ICHostViewController *)hostViewController
 {
+    // Issue #3: old style view instantiation and wiring
     _hostViewController = hostViewController;
     [_hostViewController setView:self];
+    if (![_hostViewController didAlreadyCallViewDidLoad])
+        [_hostViewController viewDidLoad];
 }
-
-/*- (void)internalTouch:(UITouch *)touch
-{
-    CGPoint point = [self convertPointFromViewToSurface:[touch locationInView:self]];
-    point.y = self.bounds.size.height - point.y;
-    NSArray *nodes = [self.hostViewController hitTest:point];
-    for (ICNode *node in nodes) {
-        NSLog(@"%@", [node description]);
-    }    
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    [self performSelector:@selector(internalTouch:) onThread:[self.hostViewController thread] withObject:touch waitUntilDone:NO];
-}*/
 
 - (void)internalTouchesBegan:(NSArray *)touchesEventInfo
 {

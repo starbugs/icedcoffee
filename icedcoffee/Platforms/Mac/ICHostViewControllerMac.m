@@ -325,10 +325,31 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     return [_mouseEventDispatcher updatesEnterExitEventsContinuously];
 }
 
+// Issue #3: Interface Builder integration
+- (BOOL)isViewLoaded
+{
+    return _view != nil;
+}
+
+- (ICGLView *)view
+{
+    // Issue #3: Interface Builder integration
+    // If _view is nil, call loadView
+    if (!_view) {
+        [self loadView];
+    }
+    return _view;
+}
+
 - (void)setView:(ICGLView *)view
 {
-    [_view release];
-    _view = [view retain];
+    if (_view != view) {
+        [_view release];
+        _view = [view retain];
+        
+        // Issue #3: make sure we don't run into stack overflows with old style view instantiation
+        _didAlreadyCallViewDidLoad = NO;
+    }
     
     [super setView:view];
 }

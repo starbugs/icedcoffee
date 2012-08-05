@@ -62,6 +62,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
+@synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 
 + (id)platformSpecificHostViewController
 {
@@ -224,41 +225,94 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (void)setView:(ICGLView *)view
 {
 #ifdef __IC_PLATFORM_IOS
-    [super setView:view];
+    // Issue #3: iOS ICGLView -setHostViewController: calls this method for old style view
+    // instantiation and wiring. Ignore calls to setView: if the view instance being set
+    // is identical to that in the view property.
+    if (![self isViewLoaded] || self.view != view) {
+        // iOS UIViewController implements setView:, so we simply use that
+        [super setView:view];
+        _didAlreadyCallViewDidLoad = NO;
+    }
 #endif
     // Mac SDK doesn't know view controllers, so ICHostViewControllerMac implements this
     // in its own subclass
-    
-    if (view) {
-        // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
-        // render context yet, create and register a new render context for it, so it's possible
-        // for other components to retrieve it via the OpenGL context globally
-        ICContextManager *contextManager = [ICContextManager defaultContextManager];
-        _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
-        if (!_renderContext) {
-            _renderContext = [[ICRenderContext alloc] init];
-            [contextManager registerRenderContext:_renderContext
-                                 forOpenGLContext:[self openGLContext]];
-        }
-        
-        // If not already existing, create a texture cache bound to our OpenGL context
-        // (required for auxiliary OpenGL context)
-        if (!self.textureCache) {
-            _renderContext.textureCache = 
-                [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
-        }
-        
-        [self setupScene];
-    }
 }
 
-#if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#if defined(__IC_PLATFORM_MAC)
 - (ICGLView *)view
 {
-    // Must be overriden in Mac host view controller
+    // Must be overriden in Mac host view controller to load and return the associated view
     return nil;
 }
 #endif
+
+// Issue #3: iOS Interface Builder integration
+// As Apple decided to put instantiation code into the view property getter, we cannot use that
+// for testing whether a view was already associated with the view controller internally...
+- (BOOL)isViewLoaded
+{
+#ifdef __IC_PLATFORM_IOS
+    return [super isViewLoaded];
+#endif
+    
+    // Overridden by ICHostViewControllerMac
+    return NO;
+}
+
+// Issue #3: iOS Interface Builder integration
+// UIViewController will call loadView when a nil view property is requested -- this mechanism
+// is resembled in ICHostViewControllerMac also
+- (void)loadView
+{
+    // Override this method in your custom view controller to programatically instantiate
+    // an ICGLView object. Overriding this method is not necessary if you're using a nib.
+    // You must call the [super loadView] in your override.
+    
+#ifdef __IC_PLATFORM_IOS
+    // Let UIViewController load the view from its associated nib file, if applicable
+    [super loadView];
+#elif defined(__IC_PLATFORM_MAC)
+    if ([self isViewLoaded]) {
+        [self viewDidLoad];
+    }
+#endif
+}
+
+// Issue #3: iOS Interface Builder integration
+// This method is called either by UIViewController -loadView or by ICHostViewController -loadView
+// when a view has been instanciated.
+- (void)viewDidLoad
+{
+    // Issue #3: make sure we don't run into stack overflows with old style view instantiation
+    if (_didAlreadyCallViewDidLoad) {
+        return;
+    } else {
+        _didAlreadyCallViewDidLoad = YES;        
+    }
+    
+    NSAssert(self.view != nil, @"view property must not be nil at this point");
+    
+    // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
+    // render context yet, create and register a new render context for it, so it's possible
+    // for other components to retrieve it via the OpenGL context globally
+    ICContextManager *contextManager = [ICContextManager defaultContextManager];
+    _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
+    if (!_renderContext) {
+        _renderContext = [[ICRenderContext alloc] init];
+        [contextManager registerRenderContext:_renderContext
+                             forOpenGLContext:[self openGLContext]];
+    }
+    
+    // If not already existing, create a texture cache bound to our OpenGL context
+    // (required for auxiliary OpenGL contexts)
+    if (!self.textureCache) {
+        _renderContext.textureCache =
+        [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+    }
+    
+    // Allow subclasses to set up their custom scene
+    [self setupScene];
+}
 
 #ifdef __IC_PLATFORM_IOS
 - (EAGLContext *)openGLContext

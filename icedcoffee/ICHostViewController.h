@@ -85,6 +85,9 @@
     
     ICFrameUpdateMode _frameUpdateMode;
     BOOL _needsDisplay;
+    
+    // Issue #3
+    BOOL _didAlreadyCallViewDidLoad;
 }
 
 
@@ -291,9 +294,20 @@
  */
 - (void)setView:(ICGLView *)view;
 
-#if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#if defined(__IC_PLATFORM_MAC)
 - (ICGLView *)view;
 #endif
+
+- (BOOL)isViewLoaded;
+
+// Issue #3: make sure we don't run into stack overflows with old style view instantiation
+@property (nonatomic, readonly) BOOL didAlreadyCallViewDidLoad;
+
+// Issue #3: iOS Interface Builder integration
+- (void)loadView;
+
+// Issue #3: iOS Interface Builder integration
+- (void)viewDidLoad;
 
 #ifdef __IC_PLATFORM_IOS
 - (EAGLContext *)openGLContext;
