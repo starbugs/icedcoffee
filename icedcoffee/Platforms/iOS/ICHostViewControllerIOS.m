@@ -57,6 +57,7 @@
 #import "icGL.h"
 #import "ICESRenderer.h"
 #import "ICScheduler.h"
+#import "icConfig.h"
 
 @interface ICHostViewControllerIOS (Private)
 - (void)threadMainLoop;
@@ -199,24 +200,36 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }

@@ -75,6 +75,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ICES2Renderer.h"
 #import "../../ICHostViewController.h"
 #import "../../ICConfiguration.h"
+#import "../../icConfig.h"
 
 
 //CLASS IMPLEMENTATIONS:
@@ -339,6 +340,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched");
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesBegan:)
                  onThread:[_hostViewController thread]
@@ -355,6 +363,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesCancelled:)
                  onThread:[_hostViewController thread]
@@ -364,6 +379,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)internalTouchesEnded:(NSArray *)touchesEventInfo
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSSet *touches = [touchesEventInfo objectAtIndex:0];
     UIEvent *event = [touchesEventInfo objectAtIndex:1];
     [self.hostViewController touchesEnded:touches withEvent:event];
@@ -371,6 +393,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesEnded:)
                  onThread:[_hostViewController thread]
@@ -387,6 +416,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesMoved:)
                  onThread:[_hostViewController thread]
