@@ -68,6 +68,9 @@
 
 - (id)init
 {
+#if IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
+    ICLog(@"%@ initialized via %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
     if ((self = [super init])) {
         _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
     }
@@ -76,6 +79,9 @@
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
+#if IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
+    ICLog(@"%@ initialized via %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+#endif
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
         _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
     }
@@ -203,6 +209,10 @@
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
 #endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
@@ -212,6 +222,10 @@
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
 #endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
@@ -221,6 +235,10 @@
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
 #endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
@@ -230,6 +248,10 @@
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
     ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
 #endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }
