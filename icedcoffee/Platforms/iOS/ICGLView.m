@@ -78,8 +78,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "../../icConfig.h"
 
 
-//CLASS IMPLEMENTATIONS:
-
 @interface ICGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
 - (unsigned int) convertPixelFormat:(NSString*) pixelFormat;
@@ -106,32 +104,72 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+	return [[[self alloc] initWithFrame:frame
+                            pixelFormat:format
+                            depthFormat:depth
+                     preserveBackbuffer:NO
+                             sharegroup:nil
+                          multiSampling:NO
+                        numberOfSamples:0] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
+ preserveBackbuffer:(BOOL)retained
+         sharegroup:(EAGLSharegroup*)sharegroup
+      multiSampling:(BOOL)multisampling
+    numberOfSamples:(unsigned int)samples
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+	return [[[self alloc] initWithFrame:frame
+                            pixelFormat:format
+                            depthFormat:depth
+                     preserveBackbuffer:retained
+                             sharegroup:sharegroup
+                          multiSampling:multisampling
+                        numberOfSamples:samples] autorelease];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame
+                   pixelFormat:kEAGLColorFormatRGB565
+                   depthFormat:0
+            preserveBackbuffer:NO
+                    sharegroup:nil
+                 multiSampling:NO
+               numberOfSamples:0];
 }
 
-- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
+- (id)initWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame
+                   pixelFormat:format
+                   depthFormat:0
+            preserveBackbuffer:NO
+                    sharegroup:nil
+                 multiSampling:NO
+               numberOfSamples:0];
 }
 
-- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
+- (id)initWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
+ preserveBackbuffer:(BOOL)retained
+         sharegroup:(EAGLSharegroup*)sharegroup
+      multiSampling:(BOOL)sampling
+    numberOfSamples:(unsigned int)nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{

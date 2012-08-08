@@ -27,8 +27,8 @@ Documentation
 -------------
 
 Find a work-in-progress version of the [IcedCoffee API reference](http://icedcoffee-framework.org/docs)
-on [icedcoffee-framework.org](http://icedcoffee-framework.org). If you have questions or want to get in
-touch, please join the [IcedCoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
+on [icedcoffee-framework.org](http://icedcoffee-framework.org). If you have questions or want to
+receive updates and release notes via email, please join the [IcedCoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
 
 
 Main Features
