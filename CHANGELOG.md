@@ -3,7 +3,26 @@ Changelog
 
 *v0.6.6*
 
-* Improved integration with Interface Builder: added IBIntegrationTest to
+* Refactored and improved ICTexture2D (see RELEASE_NOTES.md):
+  * Renamed the sizeInPixels property to contentSizeInPixels
+  * Renamed the size method to contentSize (size was misleading) and changed
+    its semantics (!), which were wrong previously. The contentSize method does
+    now return the actual content size of the texture in points. Previously, it
+    returned the pixel size of the texture, which yielded the correct results on
+    retina displays when working with SD resolution textures, but still isn't
+    semantically correct.
+  * Added the displayContentSize method, which does now return the correct scaled
+    content size in points of a texture, taking into account the current content
+    scale factor and the resolution type of the texture. That is, for a 128x128
+    low resolution texture on both SD and retina displays, it will return (128,128),
+    and for a 256x256 high resolution texture, it will also return (128,128).
+    This method should be used to retrieve the correct display size in points of
+    a texture regardless of which content scale factor is currently set, i.e.
+    regardless on whether you are on an SD or a retina display.
+  * Added the resolutionType property plus _resolutionType ivar.
+  * Made all ivars @protected.
+  * Renamed size_ to _contentSizeInPixels (_size was misleading).
+* Improved integration with Interface Builder on iOS: added IBIntegrationTest to
   icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
   of ICGLView. The custom subclass is required for Interface Builder to accept the
   ICGLView (see DetailViewController XIBs).

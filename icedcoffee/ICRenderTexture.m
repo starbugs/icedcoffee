@@ -337,7 +337,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     glGetIntegerv(GL_VIEWPORT, _oldFBOViewport);
         
 	// Adjust the viewport to the render texture's size
-	CGSize texSize = [_texture sizeInPixels];
+	CGSize texSize = [_texture contentSizeInPixels];
 	glViewport(0, 0, texSize.width, texSize.height);
 
     // Save the current framebuffer and switch to the render texture's framebuffer

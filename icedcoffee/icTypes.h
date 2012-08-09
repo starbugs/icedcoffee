@@ -128,12 +128,10 @@ typedef enum {
 typedef enum _ICResolutionType {
 	//! Unknonw resolution type
 	ICResolutionTypeUnknown,
-	//! iPhone resolution type
-	ICResolutionTypeiPhone,
+	//! Standard definition resolution type
+	ICResolutionTypeStandard,
 	//! RetinaDisplay resolution type
 	ICResolutionTypeRetinaDisplay,
-	//! iPad resolution type
-	ICResolutionTypeiPad,
 } ICResolutionType;
 
 

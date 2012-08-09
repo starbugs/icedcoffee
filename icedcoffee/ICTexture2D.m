@@ -81,7 +81,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 //#import "Support/ICUtils.h"
 
 
-// FIXME: Removed FontLabel support as in cocos2d-2, but didn't add alternative yet
+// (FIXME: Removed FontLabel support as in cocos2d-2, but didn't add alternative yet)
 // FIXME: ICLabel support for 32-bit textures
 
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
@@ -105,10 +105,21 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 @implementation ICTexture2D
 
-@synthesize sizeInPixels = size_, pixelFormat = format_, pixelsWide = width_, pixelsHigh = height_, name = name_, maxS = maxS_, maxT = maxT_;
-@synthesize hasPremultipliedAlpha = hasPremultipliedAlpha_;
+@synthesize contentSizeInPixels = _contentSizeInPixels,
+            pixelFormat = format_,
+            pixelsWide = width_,
+            pixelsHigh = height_,
+            name = name_,
+            maxS = maxS_,
+            maxT = maxT_,
+            hasPremultipliedAlpha = hasPremultipliedAlpha_,
+            resolutionType = _resolutionType;
 
-- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height size:(CGSize)size
+- (id)initWithData:(const void*)data
+       pixelFormat:(ICPixelFormat)pixelFormat
+        pixelsWide:(NSUInteger)width
+        pixelsHigh:(NSUInteger)height
+              size:(CGSize)contentSizeInPixels
 {
 	if((self = [super init])) {        
 		glGenTextures(1, &name_);
@@ -142,12 +153,12 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
         
         IC_CHECK_GL_ERROR_DEBUG();
 
-		size_ = size;
+		_contentSizeInPixels = contentSizeInPixels;
 		width_ = width;
 		height_ = height;
 		format_ = pixelFormat;
-		maxS_ = size.width / (float)width;
-		maxT_ = size.height / (float)height;
+		maxS_ = contentSizeInPixels.width / (float)width;
+		maxT_ = contentSizeInPixels.height / (float)height;
 
 		hasPremultipliedAlpha_ = NO;
 	}					
@@ -187,14 +198,29 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, name_, width_, height_, maxS_, maxT_];
 }
 
--(CGSize) size
+- (CGSize)contentSize
 {
 	CGSize ret;
-	ret.width = size_.width; // / ICContentScaleFactor();
-	ret.height = size_.height; // / ICContentScaleFactor();
-	
+	ret.width = _contentSizeInPixels.width / ICContentScaleFactor();
+	ret.height = _contentSizeInPixels.height / ICContentScaleFactor();
 	return ret;
 }
+
+- (CGSize)displayContentSize
+{
+    switch (_resolutionType) {
+        case ICResolutionTypeUnknown:
+        case ICResolutionTypeStandard:
+            return _contentSizeInPixels;
+            break;
+        case ICResolutionTypeRetinaDisplay:
+            return [self contentSize];
+    }
+    
+    // Not reached
+    return CGSizeMake(0, 0);
+}
+
 @end
 
 #pragma mark -

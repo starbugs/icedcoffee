@@ -195,7 +195,8 @@
     [_texture release];
     _texture = [texture retain];
 
-    [self setSize:(kmVec3){[texture size].width, [texture size].height, 0}];
+    CGSize displaySize = [texture displayContentSize];
+    [self setSize:(kmVec3){displaySize.width, displaySize.height, 0}];
         
     NSString *shaderKey = texture ? kICShader_PositionTextureColor : kICShader_PositionColor;
     self.shaderProgram = [[ICShaderCache currentShaderCache]
