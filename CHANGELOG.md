@@ -4,13 +4,28 @@ Changelog
 *v0.6.6*
 
 * Refactored and improved ICTexture2D (see RELEASE_NOTES.md):
+  * initWithData:pixelFormat:pixelsWide:pixelsHigh:size: is marked deprecated
+    as of this version of icedcoffee. You should use
+    initWithData:pixelFormat:textureSize:contentSize:resolutionType: as a
+    replacement from now on. The framework itself was refactored to use
+    the new initializer.
+  * Added the initWithData:pixelFormat:textureSize:contentSize:resolutionType:
+    initializer.
+  * Added support for high resolution font rendering. Fonts are now drawn with
+    double resolution on retina displays.
+  * Changed initWithCGImage: for Mac to to initWithCGImage:resolutionType, re-added
+    initWithCGImage:, which does now default to ICResolutionTypeUnknown.
   * Renamed the sizeInPixels property to contentSizeInPixels
+  * sizeInPixels was re-added as a depcreated method for backwards compatibility.
+    It returns the value of contentSizeInPixels.
   * Renamed the size method to contentSize (size was misleading) and changed
     its semantics (!), which were wrong previously. The contentSize method does
     now return the actual content size of the texture in points. Previously, it
     returned the pixel size of the texture, which yielded the correct results on
     retina displays when working with SD resolution textures, but still isn't
     semantically correct.
+  * The size method was re-added and marked deprecated for backwards compatibility.
+    It calls displayContentSize internally (see below).
   * Added the displayContentSize method, which does now return the correct scaled
     content size in points of a texture, taking into account the current content
     scale factor and the resolution type of the texture. That is, for a 128x128

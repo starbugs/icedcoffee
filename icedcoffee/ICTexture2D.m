@@ -76,6 +76,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "icMacros.h"
 #import "icUtils.h"
 
+#import "ICHostViewController.h"
 #import "icConfig.h"
 #import "ICConfiguration.h"
 //#import "Support/ICUtils.h"
@@ -117,11 +118,14 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
-        pixelsWide:(NSUInteger)width
-        pixelsHigh:(NSUInteger)height
-              size:(CGSize)contentSizeInPixels
+       textureSize:(CGSize)textureSizeInPixels
+       contentSize:(CGSize)contentSizeInPixels
+    resolutionType:(ICResolutionType)resolutionType
 {
-	if((self = [super init])) {        
+    GLsizei width = textureSizeInPixels.width;
+    GLsizei height = textureSizeInPixels.height;
+    
+	if((self = [super init])) {
 		glGenTextures(1, &_name);
 		glBindTexture(GL_TEXTURE_2D, _name);
         
@@ -152,17 +156,31 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		}
         
         IC_CHECK_GL_ERROR_DEBUG();
-
+        
 		_contentSizeInPixels = contentSizeInPixels;
 		_width = width;
 		_height = height;
 		_format = pixelFormat;
 		_maxS = contentSizeInPixels.width / (float)width;
 		_maxT = contentSizeInPixels.height / (float)height;
-
+        _resolutionType = resolutionType;
+        
 		_hasPremultipliedAlpha = NO;
-	}					
-	return self;
+	}
+	return self;    
+}
+
+- (id)initWithData:(const void*)data
+       pixelFormat:(ICPixelFormat)pixelFormat
+        pixelsWide:(NSUInteger)width
+        pixelsHigh:(NSUInteger)height
+              size:(CGSize)contentSizeInPixels
+{
+    return [self initWithData:data
+                  pixelFormat:pixelFormat
+                  textureSize:CGSizeMake(width, height)
+                  contentSize:contentSizeInPixels
+               resolutionType:ICResolutionTypeUnknown];
 }
 
 - (void) releaseData:(void*)data
@@ -208,17 +226,29 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (CGSize)displayContentSize
 {
+    CGSize ret = [self contentSize];
     switch (_resolutionType) {
         case ICResolutionTypeUnknown:
         case ICResolutionTypeStandard:
-            return _contentSizeInPixels;
+            ret.width *= ICContentScaleFactor();
+            ret.height *= ICContentScaleFactor();
             break;
-        case ICResolutionTypeRetinaDisplay:
-            return [self contentSize];
+        default:
+            break;
     }
-    
-    // Not reached
-    return CGSizeMake(0, 0);
+    return ret;
+}
+
+// Deprecated as of v0.6.6
+- (CGSize)size
+{
+    return [self displayContentSize];
+}
+
+// Deprecated as of v0.6.6
+- (CGSize)sizeInPixels
+{
+    return self.contentSizeInPixels;
 }
 
 @end
@@ -227,10 +257,18 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 #pragma mark ICTexture2D - Image
 
 @implementation ICTexture2D (Image)
+
+#ifdef __IC_PLATFORM_MAC
+- (id)initWithCGImage:(CGImageRef)cgImage
+{
+    return [self initWithCGImage:cgImage resolutionType:ICResolutionTypeUnknown];
+}
+#endif
+
 #ifdef __IC_PLATFORM_IOS
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
 #elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
 #endif
 {
 	NSUInteger				POTWide, POTHigh;
@@ -375,17 +413,17 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		free(data);
 		data = tempData;
 	}
-	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh size:imageSize];
+    self = [self initWithData:data
+                  pixelFormat:pixelFormat
+                  textureSize:CGSizeMake(POTWide, POTHigh)
+                  contentSize:imageSize
+               resolutionType:resolution];
     
 	// should be after calling super init
 	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
     
 	CGContextRelease(context);
 	[self releaseData:data];
-    
-#ifdef __CC_PLATFORM_IOS
-	resolutionType_ = resolution;
-#endif
     
 	return self;
 }
@@ -401,16 +439,19 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(ICTextAlignment)alignment font:(id)uifont
+- (id) initWithString:(NSString*)string
+           dimensions:(CGSize)dimensions // pixels
+            alignment:(ICTextAlignment)alignment
+                 font:(id)uifont
 {
 	NSAssert( uifont, @"Invalid font");
 	
-	NSUInteger POTWide = dimensions.width; //icNextPOT(dimensions.width);
-	NSUInteger POTHigh = dimensions.height; //icNextPOT(dimensions.height);
-	unsigned char*			data;
-	
-	CGContextRef			context;
-	CGColorSpaceRef			colorSpace;
+	NSUInteger POTWide = dimensions.width;
+	NSUInteger POTHigh = dimensions.height;
+    
+	unsigned char*      data;
+	CGContextRef		context;
+	CGColorSpaceRef		colorSpace;
 	
 #if USE_TEXT_WITH_A8_TEXTURES
 	colorSpace = CGColorSpaceCreateDeviceGray();
@@ -439,14 +480,23 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
-		
+    
+    ICHostViewController *currentHVC = [ICHostViewController currentHostViewController];
+    ICResolutionType resolutionType = [currentHVC bestResolutionTypeForCurrentScreen];
+    ICPixelFormat pixelFormat;
+#if USE_TEXT_WITH_A8_TEXTURES
+    pixelFormat = ICPixelFormatA8;
+#else
+    pixelFormat = ICPixelFormatRGBA8888;
+#endif
+    
 	UIGraphicsPopContext();
 	
-#if USE_TEXT_WITH_A8_TEXTURES
-	self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
-#else
-	self = [self initWithData:data pixelFormat:ICPixelFormatRGBA8888 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
-#endif
+	self = [self initWithData:data
+                  pixelFormat:ICPixelFormatA8
+                  textureSize:CGSizeMake(POTWide, POTHigh)
+                  contentSize:CGSizeMake(POTWide, POTHigh)
+               resolutionType:resolutionType];
 	CGContextRelease(context);
 	[self releaseData:data];
 			
@@ -520,7 +570,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	id font;
-	font = [UIFont fontWithName:name size:size];
+	font = [UIFont fontWithName:name size:ICPointsToPixels(size)];
 	if( font )
 		dim = [string sizeWithFont:font];
 	
@@ -546,7 +596,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		  ]
 		 autorelease];
 	
-        // Require that GL_UNPACK_ALIGNMENT is set to 1 (see http://www.opengl.org/wiki/Common_Mistakes)
+        // Requires that GL_UNPACK_ALIGNMENT is set to 1 (see http://www.opengl.org/wiki/Common_Mistakes)
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
         dim.width = ceilf(dim.width);
         dim.height = ceilf(dim.height);

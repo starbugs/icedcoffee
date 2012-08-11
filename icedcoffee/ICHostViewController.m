@@ -371,6 +371,11 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 #endif
 }
 
+- (ICResolutionType)bestResolutionTypeForCurrentScreen
+{
+    return [self contentScaleFactor] != 1.f ? ICResolutionTypeRetinaDisplay : ICResolutionTypeStandard;
+}
+
 - (ICTextureCache *)textureCache
 {
     return _renderContext.textureCache;

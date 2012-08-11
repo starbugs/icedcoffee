@@ -368,6 +368,11 @@
  */
 - (void)setContentScaleFactor:(float)contentScaleFactor;
 
+/**
+ @brief Returns the best resolution type for the receiver's current screen
+ */
+- (ICResolutionType)bestResolutionTypeForCurrentScreen;
+
 
 #ifdef __IC_PLATFORM_MAC
 

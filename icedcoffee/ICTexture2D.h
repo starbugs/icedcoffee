@@ -116,12 +116,18 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     ICResolutionType    _resolutionType;
 }
 
+- (id)initWithData:(const void*)data
+       pixelFormat:(ICPixelFormat)pixelFormat
+       textureSize:(CGSize)textureSizeInPixels
+       contentSize:(CGSize)contentSizeInPixels
+    resolutionType:(ICResolutionType)resolutionType;
+
 /** Intializes with a texture2d with data */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
         pixelsWide:(NSUInteger)width
         pixelsHigh:(NSUInteger)height
-              size:(CGSize)contentSizeInPixels;
+              size:(CGSize)contentSizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
 /** These functions are needed to create mutable textures */
 - (void)releaseData:(void*)data;
@@ -155,6 +161,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** Returns the content size of the receiver in points scaled with regard to its resolution type
     and the global content scale factor */
 - (CGSize)displayContentSize;
+
+- (CGSize)size DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+- (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 @end
 
 /**
@@ -162,11 +172,15 @@ Extensions to make it easy to create a ICTexture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface ICTexture2D (Image)
+#ifdef __IC_PLATFORM_MAC
+// Defaults to ICResolutionTypeUnknown
+- (id) initWithCGImage:(CGImageRef)cgImage;
+#endif
 /** Initializes a texture from a UIImage object */
 #ifdef __IC_PLATFORM_IOS
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
 #elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage;
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
 #endif
 @end
 
