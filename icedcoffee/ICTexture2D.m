@@ -98,7 +98,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
-static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
+static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 #pragma mark -
 #pragma mark ICTexture2D - Main
@@ -106,13 +106,13 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 @implementation ICTexture2D
 
 @synthesize contentSizeInPixels = _contentSizeInPixels,
-            pixelFormat = format_,
-            pixelsWide = width_,
-            pixelsHigh = height_,
-            name = name_,
-            maxS = maxS_,
-            maxT = maxT_,
-            hasPremultipliedAlpha = hasPremultipliedAlpha_,
+            pixelFormat = _format,
+            pixelsWide = _width,
+            pixelsHigh = _height,
+            name = _name,
+            maxS = _maxS,
+            maxT = _maxT,
+            hasPremultipliedAlpha = _hasPremultipliedAlpha,
             resolutionType = _resolutionType;
 
 - (id)initWithData:(const void*)data
@@ -122,8 +122,8 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
               size:(CGSize)contentSizeInPixels
 {
 	if((self = [super init])) {        
-		glGenTextures(1, &name_);
-		glBindTexture(GL_TEXTURE_2D, name_);
+		glGenTextures(1, &_name);
+		glBindTexture(GL_TEXTURE_2D, _name);
         
 		[self setAntiAliasTexParameters];
 		
@@ -154,13 +154,13 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
         IC_CHECK_GL_ERROR_DEBUG();
 
 		_contentSizeInPixels = contentSizeInPixels;
-		width_ = width;
-		height_ = height;
-		format_ = pixelFormat;
-		maxS_ = contentSizeInPixels.width / (float)width;
-		maxT_ = contentSizeInPixels.height / (float)height;
+		_width = width;
+		_height = height;
+		_format = pixelFormat;
+		_maxS = contentSizeInPixels.width / (float)width;
+		_maxT = contentSizeInPixels.height / (float)height;
 
-		hasPremultipliedAlpha_ = NO;
+		_hasPremultipliedAlpha = NO;
 	}					
 	return self;
 }
@@ -179,13 +179,13 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 - (void)deleteGlTexture: (id)object
 {
-    glDeleteTextures(1, &name_);    
+    glDeleteTextures(1, &_name);    
 }
 
 - (void) dealloc
 {
 	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
-	if(name_) {
+	if(_name) {
         // FIXME: Texture can only be deleted on main thread currently
         [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
     }
@@ -195,7 +195,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, name_, width_, height_, maxS_, maxT_];
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
 }
 
 - (CGSize)contentSize
@@ -281,7 +281,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
     
 	if(colorSpace) {
 		if(hasAlpha || bpp >= 8)
-			pixelFormat = defaultAlphaPixelFormat_;
+			pixelFormat = defaultAlphaPixel_format;
 		else {
 			ICLog(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
 			pixelFormat = ICPixelFormatRGB565;
@@ -378,7 +378,7 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 	self = [self initWithData:data pixelFormat:pixelFormat pixelsWide:POTWide pixelsHigh:POTHigh size:imageSize];
     
 	// should be after calling super init
-	hasPremultipliedAlpha_ = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
+	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
     
 	CGContextRelease(context);
 	[self releaseData:data];
@@ -612,14 +612,14 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 
 -(void) generateMipmap
 {
-	NSAssert( width_ == icNextPOT((unsigned int)width_) && height_ == icNextPOT((unsigned int)height_), @"Mipmap texture only works in POT textures");
-	glBindTexture( GL_TEXTURE_2D, name_ );
+	NSAssert( _width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height), @"Mipmap texture only works in POT textures");
+	glBindTexture( GL_TEXTURE_2D, _name );
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 -(void) setTexParameters: (ICTexParams*) texParams
 {
-	NSAssert( (width_ == icNextPOT((unsigned int)width_) && height_ == icNextPOT((unsigned int)height_)) ||
+	NSAssert( (_width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture( GL_TEXTURE_2D, self.name );
@@ -652,12 +652,12 @@ static ICPixelFormat defaultAlphaPixelFormat_ = ICPixelFormatDefault;
 @implementation ICTexture2D (PixelFormat)
 +(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format
 {
-	defaultAlphaPixelFormat_ = format;
+	defaultAlphaPixel_format = format;
 }
 
 +(ICPixelFormat) defaultAlphaPixelFormat
 {
-	return defaultAlphaPixelFormat_;
+	return defaultAlphaPixel_format;
 }
 @end
 

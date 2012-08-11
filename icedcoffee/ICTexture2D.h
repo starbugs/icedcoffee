@@ -105,14 +105,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 @interface ICTexture2D : NSObject
 {
 @protected
-	GLuint				name_;
+	GLuint				_name;
 	CGSize				_contentSizeInPixels;
-	NSUInteger			width_,
-						height_;
-	ICPixelFormat		format_;
-	GLfloat				maxS_,
-						maxT_;
-	BOOL				hasPremultipliedAlpha_;
+	NSUInteger			_width,
+						_height;
+	ICPixelFormat		_format;
+	GLfloat				_maxS,
+						_maxT;
+	BOOL				_hasPremultipliedAlpha;
     ICResolutionType    _resolutionType;
 }
 

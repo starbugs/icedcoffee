@@ -22,6 +22,8 @@ Changelog
   * Added the resolutionType property plus _resolutionType ivar.
   * Made all ivars @protected.
   * Renamed size_ to _contentSizeInPixels (_size was misleading).
+  * Renamed all other ivars to _<ivarName> instead of <ivarName>_ to match the
+    general icedcoffee naming conventions.
 * Improved integration with Interface Builder on iOS: added IBIntegrationTest to
   icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
   of ICGLView. The custom subclass is required for Interface Builder to accept the
