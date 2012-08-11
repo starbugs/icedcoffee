@@ -59,7 +59,15 @@
 #import "ICScheduler.h"
 #import "icConfig.h"
 
+#ifdef IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
+#define LOG_HVC_INITIALIZER() ICLog(@"%@ initialized via %@", \
+                              NSStringFromClass([self class]), NSStringFromSelector(_cmd))
+#else
+#define LOG_HVC_INITIALIZER() do {} while(0)
+#endif
+
 @interface ICHostViewControllerIOS (Private)
+- (void)commonInit;
 - (void)threadMainLoop;
 - (void)mainLoop:(id)sender;
 @end
@@ -68,24 +76,37 @@
 
 - (id)init
 {
-#if IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
-    ICLog(@"%@ initialized via %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+    LOG_HVC_INITIALIZER();
     if ((self = [super init])) {
-        _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
+        [self commonInit];
     }
     return self;
 }
 
+// Initializer for nib files
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
-#if IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
-    ICLog(@"%@ initialized via %@", NSStringFromClass([self class]), NSStringFromSelector(_cmd));
-#endif
+    LOG_HVC_INITIALIZER();
     if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
-        _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
+        [self commonInit];
     }
     return self;
+}
+
+// Initializer for storyboards (and other serialized view controllers)
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    LOG_HVC_INITIALIZER();
+    if ((self = [super initWithCoder:aDecoder])) {
+        [self commonInit];
+    }
+    return self;
+}
+
+// Called by all initializers
+- (void)commonInit
+{
+    _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
 }
 
 - (void)dealloc
