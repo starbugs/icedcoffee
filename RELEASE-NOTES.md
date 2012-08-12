@@ -16,9 +16,9 @@ Deprecations:
   support differen resolution types and is kind of misleading. Use
   initWithData:pixelFormat:textureSize:contentSize:resolutionType: from now on.
 * ICTexture2D::size is deprecated. Use ICTexture2D::contentSize or ICTexture2D::displayContentSize
-  instead. See the changelog for details.
+  instead. The semantics of ICTexture2D::size were incorrect. See the changelog for details.
 * ICTexture2D::sizeInPixels is deprecated. Use ICTexture2D::contentSizeInPixels instead.
 
-Removed methods:
+Replaced methods (possible backwards incompatibility):
 * ICScene::setupSceneForPickingWithVisitor: has been removed and was replaced with
   ICScene::setUpSceneForPickingWithVisitor:. The semantics of the method were not changed.
