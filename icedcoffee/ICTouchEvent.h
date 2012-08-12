@@ -39,6 +39,8 @@
 
 + (id)touchEventWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
 
+- (id)init __attribute__((unavailable("Must use initWithNativeEvent: instead.")));
+
 - (id)initWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
 
 - (NSSet *)allTouches;

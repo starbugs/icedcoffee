@@ -59,7 +59,7 @@
     return cell;
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     ICTableView *tableView = [ICTableView viewWithSize:CGSizeMake(300, 400)];
@@ -82,7 +82,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

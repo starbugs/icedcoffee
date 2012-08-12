@@ -36,7 +36,7 @@
     [super dealloc];
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [[[ICScene alloc] initWithHostViewController:self.hostViewController] autorelease];
     NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];    
@@ -68,7 +68,7 @@
     self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
     
-    [self setupScene];
+    [self setUpScene];
 
     return YES;
 }

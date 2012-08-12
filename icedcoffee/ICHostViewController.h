@@ -243,9 +243,16 @@
 /**
  @brief Called by the framework to set up the receiver's scene
  
+ Deprecated as of v0.6.6. Use setUpScene instead.
+ */
+- (void)setupScene DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+/**
+ @brief Called by the framework to set up the receiver's scene
+ 
  To be overridden in subclasses. The default implementation does nothing.
  */
-- (void)setupScene;
+- (void)setUpScene;
 
 /**
  @brief Sets the given scene as the receiver's current scene and starts animation
@@ -290,7 +297,7 @@
  @brief Sets the view to be controlled by the receiver
  
  If view is set to a non-nil value, prepares the receiver's render context, initializes a texture
- cache if necessary, and calls ICHostViewController::setupScene on the receiver.
+ cache if necessary, and calls ICHostViewController::setUpScene on the receiver.
  */
 - (void)setView:(ICGLView *)view;
 

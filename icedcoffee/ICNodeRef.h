@@ -37,6 +37,8 @@
 
 + (id)refWithNode:(ICNode *)node;
 
+- (id)init __attribute__((unavailable("Must use initWithNode: instead.")));
+
 - (id)initWithNode:(ICNode *)node;
 
 - (id)copyWithZone:(NSZone *)zone;

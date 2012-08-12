@@ -193,7 +193,13 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     [self makeCurrentHostViewController];
 }
 
+// Deprecated as of v0.6.6
 - (void)setupScene
+{
+    [self setUpScene];
+}
+
+- (void)setUpScene
 {
     // Override in subclass, set up an ICScene object, then call [self runWithScene:scene]
     // to start animation with the prepared scene
@@ -311,7 +317,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     }
     
     // Allow subclasses to set up their custom scene
-    [self setupScene];
+    [self setUpScene];
 }
 
 #ifdef __IC_PLATFORM_IOS

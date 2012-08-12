@@ -295,7 +295,7 @@
 /**
  @brief Sets up the drawing environment for the receiver before picking
  */
-- (void)setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor;
+- (void)setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor;
 
 /**
  @brief Resets the drawing environment of the receiver after picking

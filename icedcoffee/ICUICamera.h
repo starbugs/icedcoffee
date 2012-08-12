@@ -56,7 +56,7 @@
 /**
  @brief A zoom factor applied to the camera's projection
  
- The camera internally divides ICCamera::fov by zoomFactor in ICCamera::setupScreen.
+ The camera internally divides ICCamera::fov by zoomFactor in ICCamera::setUpScreen.
  */
 @property (nonatomic, assign) float zoomFactor;
 

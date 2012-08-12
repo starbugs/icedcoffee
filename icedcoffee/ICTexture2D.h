@@ -116,6 +116,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     ICResolutionType    _resolutionType;
 }
 
+- (id)init __attribute__((unavailable));
+
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
        textureSize:(CGSize)textureSizeInPixels

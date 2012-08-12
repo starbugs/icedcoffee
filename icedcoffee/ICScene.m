@@ -190,7 +190,7 @@
     glDisable(GL_DEPTH_TEST);
 }
 
-- (void)setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor
+- (void)setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor
 {
     CGPoint point;
     GLint *viewport;
@@ -298,7 +298,7 @@
     if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         [self setUpSceneForDrawingWithVisitor:(ICNodeVisitorDrawing *)visitor];
     } else {
-        [self setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor];
+        [self setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor];
     }
 }
 

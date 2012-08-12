@@ -56,6 +56,8 @@
 
 + (id)touchWithNativeTouch:(UITouch *)touch node:(ICNode *)node;
 
+- (id)init __attribute__((unavailable("Must use initWithNativeTouch: instead.")));
+
 - (id)initWithNativeTouch:(UITouch *)touch node:(ICNode *)node;
 
 - (CGPoint)locationInHostView;

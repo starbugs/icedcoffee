@@ -49,7 +49,7 @@
     angle += dt;
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
@@ -117,7 +117,7 @@
     self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
     
-    [self setupScene];
+    [self setUpScene];
     
     return YES;
 }

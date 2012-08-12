@@ -6,6 +6,14 @@ v0.6.6
 
 Changes and Improvements:
 
+* ICCamera::setupScreen is deprecated due to misspelling. It is replaced by
+  ICCamera::setUpScreen. Framework users should simply rename their setupScreen
+  overrides to setUpScreen.
+* ICHostViewController::setupScene is deprecated due to misspelling. It is
+  replaced by ICHostViewController::setUpScene. Framework users should simply
+  rename overrides to setUpScene.
+* Renamed ICScene::setupSceneForPickingWithVisitor: to
+  ICScene::setUpSceneForPickingWithVisitor:.
 * Refactored and improved ICTexture2D (see RELEASE_NOTES.md):
   * initWithData:pixelFormat:pixelsWide:pixelsHigh:size: is marked deprecated
     as of this version of icedcoffee. You should use

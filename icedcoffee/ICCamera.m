@@ -163,7 +163,7 @@
 - (void)apply
 {
     if(_dirty) {
-        [self setupScreen];
+        [self setUpScreen];
         _dirty = NO;
     }
 
@@ -188,7 +188,7 @@
     icPickMatrix(point.x, point.y, 1, 1, viewport);
 
     if(_dirty) {
-        [self setupScreen];
+        [self setUpScreen];
         _dirty = NO;
     }
 
@@ -213,7 +213,7 @@
     icPickMatrix(pickFrame.origin.x, pickFrame.origin.y, pickFrame.size.width, pickFrame.size.height, viewport);
     
     if(_dirty) {
-        [self setupScreen];
+        [self setUpScreen];
         _dirty = NO;
     }
     
@@ -224,7 +224,13 @@
     kmGLMultMatrix(&_matLookAt);    
 }
 
+// Deprecated as of v0.6.6
 - (void)setupScreen
+{
+    [self setUpScreen];
+}
+
+- (void)setUpScreen
 {
     kmMat4PerspectiveProjection(&_matProjection, _fov, _aspect, _zNear, _zFar);
     kmMat4LookAt(&_matLookAt, &_eye, &_lookAt, &_upVector);
@@ -233,7 +239,7 @@
 - (BOOL)unprojectView:(kmVec3)viewVect toWorld:(kmVec3 *)resultVect
 {
     if (_dirty) {
-        [self setupScreen];
+        [self setUpScreen];
         _dirty = NO;
     }
     
@@ -243,7 +249,7 @@
 - (BOOL)projectWorld:(kmVec3)worldVect toView:(kmVec3 *)resultVect
 {
     if (_dirty) {
-        [self setupScreen];
+        [self setUpScreen];
         _dirty = NO;
     }
     

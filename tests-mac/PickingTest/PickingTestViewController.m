@@ -55,7 +55,7 @@ enum {
     return self;
 }
 
-- (void)setupSimpleTestScene
+- (void)setUpSimpleTestScene
 {
     ICUIScene *scene = [ICUIScene scene];
     scene.name = @"Picking Test (Single Sprite)";
@@ -70,7 +70,7 @@ enum {
     [self addTestScene:scene withHint:@"Sprite flips its texture vertically when clicked"];
 }
 
-- (void)setupSpriteOverlapTestScene
+- (void)setUpSpriteOverlapTestScene
 {
     ICUIScene *scene = [ICUIScene scene];
     scene.name = @"Picking Test (Sprite Overlap)";
@@ -91,7 +91,7 @@ enum {
     [self addTestScene:scene withHint:@"Sprites flip their textures vertically when clicked"];
 }
 
-- (void)setupCombinedTestScene
+- (void)setUpCombinedTestScene
 {
     ICUIScene *combinedScene = [ICUIScene scene];
     combinedScene.name = @"Picking Test (Combined)";
@@ -171,21 +171,21 @@ enum {
     [self addTestScene:combinedScene withHint:@"Sprites/views flip their texture vertically when clicked"];
 }
 
-- (void)setupTestScenes
+- (void)setUpTestScenes
 {
-    [self setupSimpleTestScene];
-    [self setupSpriteOverlapTestScene];
-    [self setupCombinedTestScene];
+    [self setUpSimpleTestScene];
+    [self setUpSpriteOverlapTestScene];
+    [self setUpCombinedTestScene];
     
     [[self scheduler] scheduleUpdateForTarget:self];    
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
-    [super setupScene];
+    [super setUpScene];
     
     // Set up the test's scene
-    [self setupTestScenes];
+    [self setUpTestScenes];
     
     // Set up user interface controls for the test
     ICView *buttonPanel = [ICView viewWithSize:CGSizeMake(310, 21)];

@@ -58,6 +58,8 @@
  */
 + (id)currentTextureCache;
 
+- (id)init __attribute__((unavailable("Must use initWithHostViewController: instead.")));
+
 /**
  @brief Initializes the receiver with the given host view controller
  */

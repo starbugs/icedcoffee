@@ -74,7 +74,7 @@
  
  If you add properties that may have an effect on the internal transform matrix calculations
  of ICCamera, you must call <code>setDirty:YES</code> in your property setter. You may also have
- to override the ICCamera::setupScreen method to implement custom transformations.
+ to override the ICCamera::setUpScreen method to implement custom transformations.
  */
 @interface ICCamera : NSObject
 {
@@ -195,15 +195,22 @@
  matrix stacks
  
  The method first checks whether the camera's projection and/or look-at matrices are dirty and,
- if so, updates them by invoking ICCamera::setupScreen. Afterwards, the matrices are applied to the
+ if so, updates them by invoking ICCamera::setUpScreen. Afterwards, the matrices are applied to the
  projection and model-view matrix stacks.
  */
 - (void)apply;
 
 /**
  @brief Sets up the camera's projection and look-at matrices
+ 
+ Deprecated as of v0.6.6. Use setUpScreen instead.
  */
-- (void)setupScreen;
+- (void)setupScreen DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+/**
+ @brief Sets up the camera's projection and look-at matrices
+*/
+- (void)setUpScreen;
 
 /**
  @brief Apply a pick matrix at the given point in the specified viewport

@@ -120,7 +120,7 @@
     }
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     _testHostScene = [ICUIScene scene];
     [self runWithScene:_testHostScene]; // retained by super in self.scene
