@@ -82,11 +82,17 @@
 - (id)init
 {
     if ((self = [super init])) {
-        _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
-        _usesDisplayLink = YES;
-        _drawsConcurrently = YES;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit
+{
+    [super commonInit];
+    _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
+    _usesDisplayLink = YES;
+    _drawsConcurrently = YES;
 }
 
 - (void)dealloc

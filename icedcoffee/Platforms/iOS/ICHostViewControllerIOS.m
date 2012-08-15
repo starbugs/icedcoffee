@@ -67,7 +67,6 @@
 #endif
 
 @interface ICHostViewControllerIOS (Private)
-- (void)commonInit;
 - (void)threadMainLoop;
 - (void)mainLoop:(id)sender;
 @end
@@ -106,6 +105,7 @@
 // Called by all initializers
 - (void)commonInit
 {
+    [super commonInit];
     _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
 }
 

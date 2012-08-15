@@ -77,14 +77,19 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (id)init
 {
     if ((self = [super init])) {
-        _scheduler = [[ICScheduler alloc] init];
-        _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
-        _lastUpdate.tv_sec = 0;
-        _lastUpdate.tv_usec = 0;
-        _frameUpdateMode = ICFrameUpdateModeSynchronized;
-        _needsDisplay = YES;
+        [self commonInit];
     }
     return [self makeCurrentHostViewController];
+}
+
+- (void)commonInit
+{
+    _scheduler = [[ICScheduler alloc] init];
+    _targetActionDispatcher = [[ICTargetActionDispatcher alloc] init];
+    _lastUpdate.tv_sec = 0;
+    _lastUpdate.tv_usec = 0;
+    _frameUpdateMode = ICFrameUpdateModeSynchronized;
+    _needsDisplay = YES;
 }
 
 - (void)dealloc

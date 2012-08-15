@@ -23,7 +23,7 @@ Changes and Improvements:
   * Added the initWithData:pixelFormat:textureSize:contentSize:resolutionType:
     initializer.
   * Added support for high resolution font rendering. Fonts are now drawn with
-    double resolution on retina displays.
+    double resolution on retina displays (iOS only).
   * Changed initWithCGImage: for Mac to to initWithCGImage:resolutionType, re-added
     initWithCGImage:, which does now default to ICResolutionTypeUnknown.
   * Renamed the sizeInPixels property to contentSizeInPixels

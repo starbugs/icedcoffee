@@ -119,6 +119,8 @@
  */
 - (id)init;
 
+- (void)commonInit;
+
 
 #pragma mark - Current Host View Controller
 /** @name Current Host View Controller */

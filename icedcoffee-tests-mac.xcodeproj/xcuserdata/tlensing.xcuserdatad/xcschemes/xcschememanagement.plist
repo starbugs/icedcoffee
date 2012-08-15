@@ -19,6 +19,11 @@
 			<key>orderHint</key>
 			<integer>8</integer>
 		</dict>
+		<key>IBIntegrationTest.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>19</integer>
+		</dict>
 		<key>MultipleCocoaViewsTest.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -62,6 +67,16 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>A61D6F1615DC3A35005AFDA5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>A61D6F3215DC3A8E005AFDA5</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>D21F88801533064A00E2496C</key>
 		<dict>
 			<key>primary</key>
