@@ -73,7 +73,13 @@
 
 - (ICTexture2D *)loadTextureFromFile:(NSString *)path
 {
-    ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:path];
+    return [self loadTextureFromFile:path resolutionType:ICResolutionTypeUnknown];
+}
+
+- (ICTexture2D *)loadTextureFromFile:(NSString *)path
+                      resolutionType:(ICResolutionType)resolutionType
+{
+    ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:path resolutionType:resolutionType];
     NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
     dispatch_sync(_dictQueue, ^{
         [_textures setObject:texture forKey:path];
@@ -83,6 +89,17 @@
 
 - (void)loadTextureFromFileAsync:(NSString *)path
                       withTarget:(id)target
+                      withObject:(id)object
+{
+    return [self loadTextureFromFileAsync:path
+                           resolutionType:ICResolutionTypeUnknown
+                               withTarget:target
+                               withObject:object];
+}
+
+- (void)loadTextureFromFileAsync:(NSString *)path
+                  resolutionType:(ICResolutionType)resolutionType
+                      withTarget:(id<ICAsyncTextureCacheDelegate>)target
                       withObject:(id)object
 {
     NSAssert(path != nil, @"Path cannot be nil");
@@ -108,7 +125,7 @@
 #ifdef __IC_PLATFORM_MAC
 		[_auxGLContext makeCurrentContext];
                 
-		asyncTexture = [self loadTextureFromFile:path];
+		asyncTexture = [self loadTextureFromFile:path resolutionType:resolutionType];
         
 		glFlush();
         

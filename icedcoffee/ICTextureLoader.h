@@ -22,11 +22,15 @@
 //  
 
 #import <Foundation/Foundation.h>
+#import "icTypes.h"
 
 @class ICTexture2D;
 
 @interface ICTextureLoader : NSObject
 
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename;
+
++ (ICTexture2D *)loadTextureFromFile:(NSString *)filename
+                      resolutionType:(ICResolutionType)resolutionType;
 
 @end

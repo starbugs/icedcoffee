@@ -185,7 +185,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 - (ICControlEvents)allControlEvents;
 - (NSArray *)allTargets;
 
-@property (nonatomic, assign) ICControlState state;
+@property (nonatomic, assign, getter=state, setter=setState:) ICControlState state;
 @property (nonatomic, assign, getter=enabled, setter=setEnabled:) BOOL enabled;
 @property (nonatomic, assign, getter=selected, setter=setSelected:) BOOL selected;
 @property (nonatomic, assign, getter=highlighted, setter=setHighlighted:) BOOL highlighted;

@@ -29,6 +29,12 @@
 
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename
 {
+    return [[self class] loadTextureFromFile:filename resolutionType:ICResolutionTypeUnknown];
+}
+
++ (ICTexture2D *)loadTextureFromFile:(NSString *)filename
+                      resolutionType:(ICResolutionType)resolutionType
+{
     ICTexture2D *texture = nil;
     
 #ifdef __IC_PLATFORM_MAC
@@ -42,14 +48,13 @@
     
 #elif __IC_PLATFORM_IOS
     
-    // FIXME: need to determine resolution type
     UIImage *image = [[UIImage alloc] initWithContentsOfFile:filename];
-    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:ICResolutionTypeUnknown] autorelease];
+    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolutionType] autorelease];
     [image release];
     
 #endif
     
-    return texture;
+    return texture;    
 }
 
 @end

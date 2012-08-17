@@ -84,6 +84,8 @@
         self.size = _sprite.size;
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelTextDidChange object:self];
+    
+    [self setNeedsDisplay];
 }
 
 - (void)setFontName:(NSString *)fontName

@@ -76,8 +76,6 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 
 @implementation ICControl
 
-@synthesize state = _state;
-
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
@@ -246,6 +244,17 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
     } else {
         _state &= ~ICControlStateSelected;
     }
+}
+
+- (ICControlState)state
+{
+    return _state;
+}
+
+- (void)setState:(ICControlState)state
+{
+    _state = state;
+    [self setNeedsDisplay];
 }
 
 @end
