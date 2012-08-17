@@ -96,6 +96,7 @@
     _drawsConcurrently = YES;
     
     // Ensure ICGLView is linked when using nib files
+    // See http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
     [ICGLView class];
 }
 

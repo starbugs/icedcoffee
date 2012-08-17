@@ -5,7 +5,7 @@ icedcoffee v0.6.6
 -----------------
 
 New Features:
-* Support for integration with Interface Builder on iOS
+* Support for integration with Interface Builder (on both iOS and Mac OS X)
 * Support for high resolution fonts on retina displays on iOS
 
 Deprecations:

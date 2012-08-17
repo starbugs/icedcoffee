@@ -4,6 +4,27 @@ Changelog
 v0.6.6
 ------
 
+New Features:
+
+* Integration with Interface Builder on iOS: added IBIntegrationTest to
+  icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
+  of ICGLView. The custom subclass is required for Interface Builder to accept the
+  ICGLView (see DetailViewController XIBs). Detailed changed for this feature can be
+  reviewed at https://github.com/starbugs/icedcoffee/issues/3.
+* Integration with Interface Builder on Mac: added IBIntegrationTest to
+  icedcoffee-tests-mac which provides a sample Cocoa application with a custom subclass
+  of ICHostViewControllerMac and a xib file containing the applications window,
+  host view controller and ICGLView. The new feature involves the following changes:
+  * The ICGLView::hostViewController property is now marked with IBOutlet, so as to
+    be utilizable as an outlet for connecting ICGLView instances to ICHostViewController
+    instances.
+  * ICGLView for Mac does now perform follow-up logic for view-host view controller
+    wiring in setHostViewController: instead of
+    initWithFrame:shareContext:hostViewController:.
+  * The ICHostViewControllerMac::view property is now marked with IBOutlet, so as to
+    be utilizable as an outlet for connecting ICHostViewController instances to ICGLView
+    instances.
+
 Changes and Improvements:
 
 * ICCamera::setupScreen is deprecated due to misspelling. It is replaced by
@@ -51,15 +72,10 @@ Changes and Improvements:
   * Renamed all other ivars to _<ivarName> instead of <ivarName>_ to match the
     general icedcoffee naming conventions.
     
-New Features:
-
-* Integration with Interface Builder on iOS: added IBIntegrationTest to
-  icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
-  of ICGLView. The custom subclass is required for Interface Builder to accept the
-  ICGLView (see DetailViewController XIBs).
-
 Fixes:
-    
+
+* Fixed Issue #3 Interface Builder integration on iOS
+  (see https://github.com/starbugs/icedcoffee/issues/3)
 * Fixed ICGLView::initWithCoder:, depth buffer format now defaults to
   GL_DEPTH24_STENCIL8_OES when using Interface Builder views.
 * Fixed DepthBufferTest for iOS: depth buffer format must be GL_DEPTH24_STENCIL8_OES

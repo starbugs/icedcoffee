@@ -213,7 +213,11 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (NSString *) description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
+#ifdef __IC_PLATFORM_MAC
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %lix%li | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
+#elif defined(__IC_PLATFORM_IOS)
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];    
+#endif
 }
 
 - (CGSize)contentSize
@@ -550,8 +554,10 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                 data[c++] = data[i*bytesPerRow+j*4+3];
 		
 		//data = (unsigned char*)[self keepData:data length:textureSize];
-		self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
-		
+//		self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
+        ICResolutionType resolutionType = [[ICHostViewController currentHostViewController] bestResolutionTypeForCurrentScreen];
+		self = [self initWithData:data pixelFormat:ICPixelFormatA8 textureSize:CGSizeMake(POTWide, POTHigh) contentSize:dimensions resolutionType:resolutionType];
+        
 		[bitmap release];
 		[image release]; 
 			
