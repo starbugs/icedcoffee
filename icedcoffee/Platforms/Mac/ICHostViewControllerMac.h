@@ -78,7 +78,7 @@
     icTime _mouseOverStateDeltaTime;
 }
 
-@property (nonatomic, retain, getter=view, setter=setView:) ICGLView *view;
+@property (nonatomic, retain, getter=view, setter=setView:) IBOutlet ICGLView *view;
 
 @property (nonatomic, assign) BOOL usesDisplayLink;
 

@@ -54,18 +54,16 @@
 
 @synthesize hostViewController = _hostViewController;
 
+// Used to initialize the view when instantiated from nib
 - (id)initWithFrame:(NSRect)frameRect
 {
-    NSAssert(nil, @"You must initialize ICGLView using initWithFrame:shareContext:hostViewController:");
-	return nil;
+	return [self initWithFrame:frameRect shareContext:nil hostViewController:nil];
 }
 
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController
 {
-    _hostViewController = hostViewController; // assign
-    
     // FIXME: make this configurable?
     NSOpenGLPixelFormatAttribute attribs[] =
     {
@@ -101,10 +99,8 @@
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
-        [self.hostViewController setView:self];
-        // Issue 3: Interface Builder integration
-        // Call -viewDidLoad on the host view controller (old style view instantiation and wiring)
-        [self.hostViewController viewDidLoad];
+        if (hostViewController)
+            self.hostViewController = hostViewController;
         
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
@@ -117,6 +113,15 @@
 {
     [_hostViewController release];
     [super dealloc];
+}
+
+- (void)setHostViewController:(ICHostViewController *)hostViewController
+{
+    _hostViewController = hostViewController;
+    [_hostViewController setView:self];
+    // Issue 3: Interface Builder integration
+    // Call -viewDidLoad on the host view controller (old style view instantiation and wiring)
+    [_hostViewController viewDidLoad];
 }
 
 - (void)reshape

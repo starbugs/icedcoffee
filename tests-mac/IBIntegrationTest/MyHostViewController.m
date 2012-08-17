@@ -20,20 +20,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-#import "AppDelegate.h"
 
-@implementation AppDelegate
+#import "MyHostViewController.h"
 
-- (void)dealloc
+@implementation MyHostViewController
+
+- (void)setUpScene
 {
-    [super dealloc];
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    [ICHostViewControllerMac class];
-    
-    // Insert code here to initialize your application
+    ICUIScene *scene = [ICUIScene scene];
+    ICButton *button = [ICButton buttonWithSize:CGSizeMake(140, 21)];
+    [scene addChild:button];
+    [self runWithScene:scene];
 }
 
 @end

@@ -60,6 +60,7 @@
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"
+#import "Platforms/Mac/ICHostViewControllerMac.h"
 #import "ICMouseEvent.h"
 #elif defined(__IC_PLATFORM_IOS)
 #import "Platforms/iOS/ICHostViewControllerIOS.h"

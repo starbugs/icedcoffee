@@ -22,6 +22,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "IcedCoffee.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>
 

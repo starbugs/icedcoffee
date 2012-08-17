@@ -20,20 +20,9 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 //  SOFTWARE.
 //
-#import "AppDelegate.h"
 
-@implementation AppDelegate
+#import "IcedCoffee.h"
 
-- (void)dealloc
-{
-    [super dealloc];
-}
-
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-    [ICHostViewControllerMac class];
-    
-    // Insert code here to initialize your application
-}
+@interface MyHostViewController : ICHostViewControllerMac
 
 @end

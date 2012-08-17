@@ -90,9 +90,13 @@
 - (void)commonInit
 {
     [super commonInit];
+    
     _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
     _usesDisplayLink = YES;
     _drawsConcurrently = YES;
+    
+    // Ensure ICGLView is linked when using nib files
+    [ICGLView class];
 }
 
 - (void)dealloc

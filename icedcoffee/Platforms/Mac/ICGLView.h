@@ -39,7 +39,8 @@
     NSCursor *_cursor;
 }
 
-@property (nonatomic, readonly) ICHostViewController *hostViewController;
+@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
+    IBOutlet ICHostViewController *hostViewController;
 
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)shareContext
