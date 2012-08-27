@@ -104,7 +104,7 @@ typedef uint ICNodeVisitorType;
 /**
  @brief Sets up the environment for visiting the given node
  
- Called by ICNodeVisitor::visitNode: before ICNodeVisitor::visitSingleNode is called.
+ Called by ICNodeVisitor::visitNode: before ICNodeVisitor::visitSingleNode: is called.
  Override this method in a subclass to set up the environment for visition of the given node.
  */
 - (void)preVisitNode:(ICNode *)node;

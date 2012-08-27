@@ -57,12 +57,12 @@
 #define color4BFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
 #define color4FFromColor4B(c) ((icColor4F){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
 
-/** @name Frame Updates */
+/**
+ @defgroup general-types General Types
+ @{
+ */
 
-typedef enum _ICFrameUpdateMode {
-    ICFrameUpdateModeSynchronized = 0,
-    ICFrameUpdateModeOnDemand = 1
-} ICFrameUpdateMode;
+/** @name Misc. */
 
 typedef enum _ICShaderValueType {
     ICShaderValueTypeInvalid,
@@ -75,6 +75,13 @@ typedef enum _ICShaderValueType {
     ICShaderValueTypeSampler2D
 } ICShaderValueType;
 
+typedef enum _ICFrameUpdateMode {
+    ICFrameUpdateModeSynchronized = 0,
+    ICFrameUpdateModeOnDemand = 1
+} ICFrameUpdateMode;
+
+
+/** @name Pixel, Depth and Stencil Formats */
 
 /** @typedef ICPixelFormat
  Supported texture pixel formats
@@ -121,6 +128,8 @@ typedef enum {
 } ICStencilBufferFormat;
 
 
+/** @name Resolution Types */
+
 /**
  @enum ICResolutionType
  @brief Texture resolution type
@@ -135,15 +144,7 @@ typedef enum _ICResolutionType {
 } ICResolutionType;
 
 
-enum {
-    ICAutoResizingMaskNotSizable           = 0x00,
-    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
-    ICAutoResizingMaskWidthSizable         = 0x02,
-    ICAutoResizingMaskRightMarginFlexible  = 0x04,
-    ICAutoResizingMaskTopMarginFlexible    = 0x08,
-    ICAutoResizingMaskHeightSizable        = 0x10,
-    ICAutoResizingMaskBottomMarginFlexible = 0x20
-};
+/** @name Hit Test Result Types */
 
 enum {
     ICHitTestUnsupported = 0,
@@ -186,6 +187,11 @@ typedef struct _icV3F_C4B_T2F {
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4B_T2F;
 
+typedef struct _icV3F_C4F {
+    kmVec3 vect;                // 12 bytes
+	icColor4F color;			// 16 bytes
+} icV3F_C4F;
+
 typedef struct _icV3F_C4F_T2F {
     kmVec3 vect;                // 12 bytes
 	icColor4F color;			// 16 bytes
@@ -209,3 +215,5 @@ typedef struct _icBlendFunc
 	//! destination blend function
 	GLenum dst;
 } icBlendFunc;
+
+/** @} */

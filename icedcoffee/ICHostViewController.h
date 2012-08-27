@@ -245,7 +245,7 @@
 /**
  @brief Called by the framework to set up the receiver's scene
  
- Deprecated as of v0.6.6. Use setUpScene instead.
+ @deprecated Deprecated as of v0.6.6. Use ICHostViewController::setUpScene instead.
  */
 - (void)setupScene DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 

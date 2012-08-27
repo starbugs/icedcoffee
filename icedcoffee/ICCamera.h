@@ -203,7 +203,7 @@
 /**
  @brief Sets up the camera's projection and look-at matrices
  
- Deprecated as of v0.6.6. Use setUpScreen instead.
+ @deprecated Deprecated as of v0.6.6. Use setUpScreen instead.
  */
 - (void)setupScreen DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 

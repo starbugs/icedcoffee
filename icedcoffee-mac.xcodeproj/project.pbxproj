@@ -15,6 +15,8 @@
 		018C88611593B8F40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885F1593B8F40086319E /* ICShaderUniform.m */; };
 		01DCA966159CD0EA002DEA20 /* ICScale9View.h in Headers */ = {isa = PBXBuildFile; fileRef = 01DCA964159CD0EA002DEA20 /* ICScale9View.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DCA965159CD0EA002DEA20 /* ICScale9View.m */; };
+		A672D3FE15E588E900891D8D /* ICLine.h in Headers */ = {isa = PBXBuildFile; fileRef = A672D3FC15E588E900891D8D /* ICLine.h */; };
+		A672D3FF15E588E900891D8D /* ICLine.m in Sources */ = {isa = PBXBuildFile; fileRef = A672D3FD15E588E900891D8D /* ICLine.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D20F5EA415B6223E0023B1C9 /* ICFramebuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */; };
@@ -156,6 +158,8 @@
 		01DCA964159CD0EA002DEA20 /* ICScale9View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9View.h; path = icedcoffee/ICScale9View.h; sourceTree = "<group>"; };
 		01DCA965159CD0EA002DEA20 /* ICScale9View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9View.m; path = icedcoffee/ICScale9View.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
+		A672D3FC15E588E900891D8D /* ICLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine.h; path = icedcoffee/ICLine.h; sourceTree = "<group>"; };
+		A672D3FD15E588E900891D8D /* ICLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine.m; path = icedcoffee/ICLine.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
 		D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebuffer.h; path = icedcoffee/ICFramebuffer.h; sourceTree = "<group>"; };
 		D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFramebuffer.m; path = icedcoffee/ICFramebuffer.m; sourceTree = "<group>"; };
@@ -406,6 +410,8 @@
 			children = (
 				D24BAF5F14EDB142000E65AA /* ICNode.h */,
 				D24BAF6014EDB142000E65AA /* ICNode.m */,
+				A672D3FC15E588E900891D8D /* ICLine.h */,
+				A672D3FD15E588E900891D8D /* ICLine.m */,
 				D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */,
 				D253DA0015666DDD0027DA6C /* ICPlanarNode.m */,
 				D24BAF6714EDB142000E65AA /* ICRenderTexture.h */,
@@ -711,6 +717,7 @@
 				D292851D15AC50A40086B12A /* ICTestButtonPanel.h in Headers */,
 				D2FB3E3415B340C1007169B1 /* ICPickContext.h in Headers */,
 				D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */,
+				A672D3FE15E588E900891D8D /* ICLine.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -826,6 +833,7 @@
 				D292851E15AC50A40086B12A /* ICTestButtonPanel.m in Sources */,
 				D2FB3E3515B340C1007169B1 /* ICPickContext.m in Sources */,
 				D20F5EA415B6223E0023B1C9 /* ICFramebuffer.m in Sources */,
+				A672D3FF15E588E900891D8D /* ICLine.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

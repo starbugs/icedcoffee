@@ -25,6 +25,18 @@
 #import "ICSprite.h"
 #import "ICRenderTexture.h"
 
+
+enum {
+    ICAutoResizingMaskNotSizable           = 0x00,
+    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
+    ICAutoResizingMaskWidthSizable         = 0x02,
+    ICAutoResizingMaskRightMarginFlexible  = 0x04,
+    ICAutoResizingMaskTopMarginFlexible    = 0x08,
+    ICAutoResizingMaskHeightSizable        = 0x10,
+    ICAutoResizingMaskBottomMarginFlexible = 0x20
+};
+typedef NSUInteger ICAutoResizingMask;
+
 /**
  @brief Base class for user interface views
  
@@ -66,7 +78,7 @@
     custom initialization logic, override this method instead of ICNode::init.</li>
     <li>As mentioned before, ICView allows for buffered rendering using a render texture
     backing. When ICView::backing is set, ICView automatically moves its children to the
-    backing's sub scene. However, since ICView overrides all method related to scene graph
+    backing's sub scene. However, since ICView overrides all methods related to scene graph
     composition, its children still appear as its own children to the outside. Usually,
     you do not have to care about this explicitly, but there are exceptions to that rule.
     Just in case, keep in mind that ICView::addChild:, ICView::insertChild:atIndex:,
@@ -84,6 +96,7 @@
     BOOL _clipsChildren;
     ICSprite *_background;
     BOOL _drawsBackground;
+    ICAutoResizingMask _autoresizingMask;
 }
 
 /**
@@ -113,7 +126,7 @@
  */
 @property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
 
-@property (nonatomic, assign, setter=setAutoResizingMask:) NSUInteger autoresizingMask;
+@property (nonatomic, assign, setter=setAutoResizingMask:) ICAutoResizingMask autoresizingMask;
 
 @property (nonatomic, assign) BOOL autoresizesSubviews;
 

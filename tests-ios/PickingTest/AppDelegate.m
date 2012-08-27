@@ -64,6 +64,11 @@
     [button centerNodeHorizontally];
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
+    ICLine *line = [ICLine lineWithOrigin:kmVec3Make(150, 150, 0)
+                                   target:kmVec3Make(200, 250, 0)
+                                lineWidth:1];
+    [scene addChild:line];
+    
     [self.hostViewController runWithScene:scene];
 }
 

@@ -71,6 +71,9 @@ Changes and Improvements:
   * Renamed size_ to _contentSizeInPixels (_size was misleading).
   * Renamed all other ivars to _<ivarName> instead of <ivarName>_ to match the
     general icedcoffee naming conventions.
+* Added ICTextureLoader::loadTextureFromFile:resolutionType:.
+* Added ICTextureCache::loadTextureFromFile:resolutionType and
+  ICTextureCache::loadTextureFromFileAsync:resolutionType:withTarget:withObject:.
     
 Fixes:
 

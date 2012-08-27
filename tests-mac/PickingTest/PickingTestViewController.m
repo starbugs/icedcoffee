@@ -65,7 +65,7 @@ enum {
     ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
     
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
-    [scene.contentView addChild:rs];    
+    [scene.contentView addChild:rs];
     
     [self addTestScene:scene withHint:@"Sprite flips its texture vertically when clicked"];
 }

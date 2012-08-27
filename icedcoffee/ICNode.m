@@ -724,6 +724,8 @@
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor
 {
     if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) { // drawing node visitor
+        if (!self.shaderProgram)
+            NSLog(@"Warning: no shader program set for node %@", [self description]);
         icGLUniformModelViewProjectionMatrix(self.shaderProgram);
         [self.shaderProgram use];
     } else {
