@@ -59,7 +59,9 @@
  */
 + (id)currentTextureCache;
 
+/** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable("Must use initWithHostViewController: instead.")));
+/** @endcond */
 
 /**
  @brief Initializes the receiver with the given host view controller

@@ -1569,7 +1569,8 @@ INCLUDE_FILE_PATTERNS  =
 
 PREDEFINED             = __IC_PLATFORM_IOS:=1 \
                          __IC_PLATFORM_TOUCH:=1 \
-                         DEPRECATED_ATTRIBUTE:=
+                         DEPRECATED_ATTRIBUTE:= \
+                         __attribute__():=
 
 # If the MACRO_EXPANSION and EXPAND_ONLY_PREDEF tags are set to YES then 
 # this tag can be used to specify a list of macro names that should be expanded. 

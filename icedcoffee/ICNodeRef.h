@@ -37,7 +37,9 @@
 
 + (id)refWithNode:(ICNode *)node;
 
+/** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable("Must use initWithNode: instead.")));
+/** @endcond */
 
 - (id)initWithNode:(ICNode *)node;
 

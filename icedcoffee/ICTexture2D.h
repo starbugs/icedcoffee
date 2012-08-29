@@ -116,7 +116,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     ICResolutionType    _resolutionType;
 }
 
+/** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable));
+/** @endcond */
 
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat

@@ -39,7 +39,9 @@
 
 + (id)touchEventWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
 
+/** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable("Must use initWithNativeEvent: instead.")));
+/** @endcond */
 
 - (id)initWithNativeEvent:(UIEvent *)nativeEvent touchesForNodes:(NSDictionary *)touchesForNodes;
 

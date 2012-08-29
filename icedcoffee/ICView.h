@@ -27,14 +27,24 @@
 
 
 enum {
+    /** @brief The view is not resizable */
     ICAutoResizingMaskNotSizable           = 0x00,
+    /** @brief The view's left margin is flexible */
     ICAutoResizingMaskLeftMarginFlexible   = 0x01,
+    /** @brief The view's width is resizable */
     ICAutoResizingMaskWidthSizable         = 0x02,
+    /** @brief The view's right margin is flexible */
     ICAutoResizingMaskRightMarginFlexible  = 0x04,
+    /** @brief The view's top margin is flexible */
     ICAutoResizingMaskTopMarginFlexible    = 0x08,
+    /** @brief The view's height is resizable */
     ICAutoResizingMaskHeightSizable        = 0x10,
+    /** @brief The view's bottom margin is flexible */
     ICAutoResizingMaskBottomMarginFlexible = 0x20
 };
+/**
+ @brief Constants used to define the ICView::autoresizingMask property
+ */
 typedef NSUInteger ICAutoResizingMask;
 
 /**

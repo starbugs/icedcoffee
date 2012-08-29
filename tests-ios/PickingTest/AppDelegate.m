@@ -68,7 +68,14 @@
                                    target:kmVec3Make(200, 250, 0)
                                 lineWidth:1];
     [scene addChild:line];
-    
+    ICLine *line2 = [ICLine lineWithOrigin:kmVec3Make(250, 150, 0)
+                                    target:kmVec3Make(200, 250, 0)
+                                 lineWidth:1];
+    [scene addChild:line2];
+    ICLine *line3 = [ICLine lineWithOrigin:kmVec3Make(200, 250, 0)
+                                    target:kmVec3Make(250, 150, 0)
+                                 lineWidth:1];
+    [scene addChild:line3];
     [self.hostViewController runWithScene:scene];
 }
 

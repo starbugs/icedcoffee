@@ -30,6 +30,7 @@
 #define ICLINE_DEFAULT_COLOR (icColor4B){0,0,0,255}
 #define ICLINE_NUM_VERTICES 8
 #define ICLINE_PROTOTYPE_VECT kmVec3Make(0,1,0)
+#define ICLINE_PROTOTYPE_NORM kmVec3Make(1,0,0)
 
 @implementation ICLine
 
@@ -161,10 +162,11 @@
        y2  A+----C+----------E+----G+
      */
     
-    float x1 = 0;
-    float x2 = _antialiasStrength;
-    float x3 = _antialiasStrength + _lineWidth;
-    float x4 = 2*_antialiasStrength + _lineWidth;
+    float hw = (2*_antialiasStrength + _lineWidth)/2;
+    float x1 = -hw;
+    float x2 = -hw + _antialiasStrength;
+    float x3 = -hw +_antialiasStrength + _lineWidth;
+    float x4 = -hw + 2*_antialiasStrength + _lineWidth;
     float y1 = 0;
     float y2 = 1;
     float z = 0;
@@ -205,7 +207,7 @@
 
 - (void)updateLineTransform
 {
-    kmVec3 t, x, p = ICLINE_PROTOTYPE_VECT;
+    kmVec3 t, x, p = ICLINE_PROTOTYPE_VECT, n = ICLINE_PROTOTYPE_NORM;
     kmVec3Subtract(&t, &_target, &_origin);
     float l = kmVec3Length(&t);
     kmVec3Normalize(&t, &t);
@@ -214,7 +216,9 @@
     kmVec3Cross(&x, &p, &t);
     float s = kmVec3Length(&x);
     float c = kmVec3Dot(&p, &t);
-    float theta = -atan2(s, c);
+    float d = kmVec3Dot(&n, &t);
+    s = d < 0 ? s : -1*s;
+    float theta = atan2(s, c);
     
     // Calculate transform matrix made up of rotation and scale
     kmMat4 matRotate, matScale;
