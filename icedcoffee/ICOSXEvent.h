@@ -25,6 +25,8 @@
 #import "icMacros.h"
 #import "icTypes.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 // Compatible to NSEventType
 enum {
     ICLeftMouseDown     = 1,
@@ -122,3 +124,5 @@ typedef NSUInteger ICOSXEventType;
 - (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
 
 @end
+
+#endif // __IC_PLATFORM_MAC

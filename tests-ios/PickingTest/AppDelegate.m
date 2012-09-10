@@ -25,6 +25,8 @@
 #import "ResponsiveSprite.h"
 #import "ResponsiveView.h"
 
+#import "DraggableControl.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -76,6 +78,11 @@
                                     target:kmVec3Make(250, 150, 0)
                                  lineWidth:1];
     [scene addChild:line3];
+    
+    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:CGSizeMake(30, 30)] autorelease];
+    [draggableControl setPosition:kmVec3Make(200, 200, 0)];
+    [scene addChild:draggableControl];
+    
     [self.hostViewController runWithScene:scene];
 }
 

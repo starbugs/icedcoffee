@@ -30,6 +30,12 @@
 
 #import <Availability.h>
 
+
+/**
+ @defgroup icedcoffee-default-definitions Icedcoffee Default Definitions
+ @{
+ */
+
 /**
  @def IC_DEFAULT_CONTENT_SCALE_FACTOR
  @brief The default content scale factor for non-retina displays
@@ -72,4 +78,5 @@
  */
 #define IC_DEFAULT_PICKING_VISITOR ICNodeVisitorPicking
 
+/** @} */
 

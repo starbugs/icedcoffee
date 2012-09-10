@@ -23,6 +23,8 @@
 
 #import "ICMouseEvent.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @implementation ICMouseEvent
 
 - (NSInteger)buttonNumber
@@ -68,3 +70,5 @@
 }
 
 @end
+
+#endif // __IC_PLATFORM_MAC

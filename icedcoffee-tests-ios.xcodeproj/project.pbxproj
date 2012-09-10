@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6478F4D15FE7896003DB316 /* DraggableControl.m */; };
 		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
 		A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
 		A6EA1E0415CD65110007C4FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
@@ -144,6 +145,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A6478F4C15FE7896003DB316 /* DraggableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableControl.h; sourceTree = "<group>"; };
+		A6478F4D15FE7896003DB316 /* DraggableControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableControl.m; sourceTree = "<group>"; };
 		A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6EA1E2715CD65790007C4FF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6EA1E2815CD65790007C4FF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -411,6 +414,8 @@
 			children = (
 				D21C97FD14F302320059BBBE /* AppDelegate.h */,
 				D21C97FE14F302320059BBBE /* AppDelegate.m */,
+				A6478F4C15FE7896003DB316 /* DraggableControl.h */,
+				A6478F4D15FE7896003DB316 /* DraggableControl.m */,
 				D2AB774B14F93AA20028CD04 /* ResponsiveSprite.h */,
 				D2AB774C14F93AA20028CD04 /* ResponsiveSprite.m */,
 				D2A9AD6A15848CE5007EB224 /* ResponsiveView.h */,
@@ -788,6 +793,7 @@
 				D21C980614F302320059BBBE /* main.m in Sources */,
 				D2AB774D14F93AA20028CD04 /* ResponsiveSprite.m in Sources */,
 				D2A9AD6C15848CE5007EB224 /* ResponsiveView.m in Sources */,
+				A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

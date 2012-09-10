@@ -33,7 +33,11 @@
 #import "kazmath/kazmath.h"
 #import "kazmath/vec4.h"
 
-// IcedCoffee extensions to kazmath
+
+/**
+ @defgroup conversion-macros Conversion Macros
+ @{
+ */
 
 #define kmNullVec2 ((kmVec2){0,0})
 #define kmNullVec3 ((kmVec3){0,0,0})
@@ -56,6 +60,9 @@
 #define icColor4FMake(r,g,b,a) ((icColor4F){r,g,b,a})
 #define color4BFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
 #define color4FFromColor4B(c) ((icColor4F){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
+
+/** @} */
+
 
 /**
  @defgroup general-types General Types
@@ -205,7 +212,6 @@ typedef struct _icRay3 {
 } icRay3;
 
 /**
- @struct icBlendFunc
  @brief Blend function used for textures
  */
 typedef struct _icBlendFunc

@@ -25,6 +25,8 @@
 #import "ICOSXEvent.h"
 #import "ICProjectionTransforms.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @class ICNode;
 
 /**
@@ -80,3 +82,6 @@
 - (kmVec3)locationInNode:(ICNode<ICProjectionTransforms> *)node;
 
 @end
+
+#endif // __IC_PLATFORM_MAC
+

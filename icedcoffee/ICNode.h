@@ -37,6 +37,11 @@
 @class ICHostViewController;
 
 /**
+ @brief Block type for filtering nodes
+ */
+typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
+
+/**
  @brief Base class for drawable nodes in a scene
  
  The ICNode class represents a low-level drawable object which is capable of receiving user
@@ -322,7 +327,7 @@
  @return Returns an NSArray containg zero or more ICNode objects, ordered ascending
  beginning with the first ancestor node of the receiver that matches the filter rules.
  */
-- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+- (NSArray *)ancestorsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock;
 
 /**
  @brief Returns an array containing ancestor nodes which are kind of the given class type
@@ -380,7 +385,7 @@
  @return Returns an NSArray containg zero or more ICNode objects, order descending
  beginning with the first descendant of the receiver that matches the filter rules.
  */
-- (NSArray *)descendantsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+- (NSArray *)descendantsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock;
 
 /**
  @brief Returns an array of descendant nodes which are kind of the given class type

@@ -237,7 +237,7 @@
     return nil;
 }
 
-- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
+- (NSArray *)ancestorsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock
 {
     if (!filterBlock) {
         filterBlock = ^BOOL(ICNode *node, BOOL *stop) {
@@ -301,7 +301,7 @@
 
 - (void)accumulateDescendants:(NSMutableArray *)descendants
                      withNode:(ICNode *)node
-                   usingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
+                   usingBlock:(ICNodeFilterBlockType)filterBlock
 {
     if ([node hasChildren]) {
         BOOL stopFlag = NO;
@@ -316,7 +316,7 @@
     }
 }
 
-- (NSArray *)descendantsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock
+- (NSArray *)descendantsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock
 {
     NSMutableArray *descendants = [NSMutableArray array];
     [self accumulateDescendants:descendants withNode:self usingBlock:filterBlock];

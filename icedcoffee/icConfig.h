@@ -23,6 +23,12 @@
 
 #pragma once
 
+/**
+ @defgroup icedcoffee-configuration Icedcoffee Configuration
+ @{
+ */
+
+
 // General Configuration
 
 // GL state cache (incomplete)
@@ -67,3 +73,6 @@
 #ifndef IC_ENABLE_DEBUG_OPENGL_CONTEXTS
 #define IC_ENABLE_DEBUG_OPENGL_CONTEXTS 0
 #endif
+
+/** @} */
+

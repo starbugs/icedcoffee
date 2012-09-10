@@ -33,6 +33,11 @@
 
 // Platform Macros
 
+/**
+ @addtogroup platform-macros Platform Macros
+ @{
+ */
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 /**
  @brief Defined when compiled for the iOS platform
@@ -53,6 +58,8 @@
 #define __IC_PLATFORM_DESKTOP 1
 #endif
 
+/** @} */
+
 
 #import "icGLState.h"
 
@@ -65,6 +72,11 @@
 // Retina display support
 
 extern float g_icContentScaleFactor;
+
+/**
+ @defgroup retina-display-support-macros Retina Display Support Macros
+ @{
+ */
 
 /**
  @brief A global content scale factor used for scaling points to pixels on retina displays
@@ -85,6 +97,13 @@ extern float g_icContentScaleFactor;
 #define ICPointsToPixels(points) (points*ICContentScaleFactor())
 #define ICPixelsToPoints(pixels) (pixels/ICContentScaleFactor())
 
+/** @} */
+
+
+/**
+ @defgroup logging-and-debugging-macros Logging and Debugging Macros
+ @{
+ */
 
 // Logging and Debugging
 
@@ -101,7 +120,7 @@ extern float g_icContentScaleFactor;
 #endif // IC_LOG_DEALLOCATIONS
 
 // Macro for general IcedCoffee logging
-#define ICLog(...) NSLog(__VA_ARGS__) 
+#define ICLog(...) NSLog(__VA_ARGS__)
 
 #else
 
@@ -111,5 +130,6 @@ extern float g_icContentScaleFactor;
 
 #endif // ICEDCOFEE_DEBUG
 
+/** @} */
 
 
