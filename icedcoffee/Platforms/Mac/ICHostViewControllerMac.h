@@ -49,7 +49,10 @@
 #import "ICMouseResponder.h"
 #import "ICMouseEventDispatcher.h"
 #import "ICGLView.h"
+#import "icMacros.h"
 #import <QuartzCore/CVDisplayLink.h>
+
+#ifdef __IC_PLATFORM_MAC
 
 // See http://developer.apple.com/library/mac/#qa/qa1385/_index.html
 
@@ -93,3 +96,5 @@
 - (BOOL)updatesMouseEnterExitEventsContinuously;
 
 @end
+
+#endif // __IC_PLATFORM_MAC

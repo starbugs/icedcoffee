@@ -53,6 +53,8 @@
 #import "icConfig.h"
 
 
+#ifdef __IC_PLATFORM_MAC
+
 #define IC_HVC_TIME_INTERVAL 0.001
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
@@ -387,3 +389,5 @@ DISPATCH_MOUSE_EVENT(otherMouseUp)
 DISPATCH_MOUSE_EVENT(scrollWheel)
 
 @end
+
+#endif // __IC_PLATFORM_MAC
