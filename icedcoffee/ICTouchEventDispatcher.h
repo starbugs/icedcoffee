@@ -65,6 +65,7 @@
     NSMutableDictionary *_dispatchTargetsForTouches;
     NSMutableDictionary *_icTouchesForNativeTouches;
     NSMutableDictionary *_draggingTouches;
+    uint64_t _currentControlDispatchFrame;
 }
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;

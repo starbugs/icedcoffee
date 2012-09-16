@@ -82,6 +82,7 @@
 
     icTime _deltaTime;
     struct timeval _lastUpdate;
+    uint64_t _frameCount;
     
     ICFrameUpdateMode _frameUpdateMode;
     BOOL _needsDisplay;
@@ -201,6 +202,11 @@
  @brief Called by the framework to calculate the delta time between two consecutive frames
  */
 - (void)calculateDeltaTime;
+
+/**
+ @brief The number of frames drawn by the receiver so far
+ */
+@property (nonatomic, readonly) uint64_t frameCount;
 
 /**
  @brief The frame update mode used to present the receiver's scene

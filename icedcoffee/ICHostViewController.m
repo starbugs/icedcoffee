@@ -62,6 +62,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
+@synthesize frameCount = _frameCount;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 
 + (id)platformSpecificHostViewController
@@ -169,6 +170,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         }
         
         _lastUpdate = now;
+        _frameCount++;
         
 #if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
         // FIXME: this needs to be refactored so that it works generically and for multiple HVCs
