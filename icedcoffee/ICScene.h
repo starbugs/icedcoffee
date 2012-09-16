@@ -55,7 +55,7 @@
  
  <h3>Root Scenes</h3>
 
- Scenes play a central role in the IcedCoffee framework. In order to benefit from IcedCoffee's
+ Scenes play a central role in the Icedcoffee framework. In order to benefit from Icedcoffee's
  event handling and user interface rendering capabilities, your application must provide at least
  one scene, called the root scene. The root scene represents the origin of all contents that
  are drawn on the OpenGL framebuffer of the host view that is managed by your application's
@@ -126,7 +126,7 @@
  
  <h3>Standard Scenes (ICScene) versus User Interface Scenes (ICUIScene)</h3>
  
- Along with the standard scene implemented in the ICScene class, IcedCoffe provides a
+ Along with the standard scene implemented in the ICScene class, Icedcoffe provides a
  special subclass that is designed to host user interfaces, named ICUIScene. ICUIScene
  essentially provides a content view (ICView) child whose size is synchronized automatically
  with the UI scene's size. This allows for automatic resizing and layouting of the content
@@ -141,10 +141,9 @@
  Generally, the following points should be respected when subclassing ICScene:
  
  <ol>
-    <li>ICScene's designated initializer is ICScene::init. You may override <code>init</code>
-    to implement custom initialization. For instance, you may set a different camera or
-    different visitors by default in your subclass. You may also set up predefined scene
-    content in <code>init</code>, however, remember that ICScene is initialized with zero
+    <li>ICScene's designated initializer is ICScene::initWithCamera:. You may override
+    it to implement custom initialization. You may also set up predefined scene
+    content in ICScene::initWithCamera:. However, remember that ICScene is initialized with zero
     size, so automatic positioning behaviors implement in e.g. ICNode::centerNode will
     not work unless you define a size on your own.</li>
     <li>ICScene overrides ICNode::drawWithVisitor: to set up the scene for drawing or
@@ -154,8 +153,8 @@
     ICScene::childrenDidDrawWithVisitor:, you should call
     <code>[super childrenDidDrawWithVisitor:visitor];</code> <i>after</i> your custom code.</li>
     <li>If you need to customize scene setup and tear down you may override
-    ICScene::setUpSceneForDrawing, ICScene::tearDownSceneForDrawing,
-    ICScene::setUpSceneForPickingWithPoint:, and ICScene::tearDownSceneForPicking.</li>
+    ICScene::setUpSceneForDrawingWithVisitor:, ICScene::tearDownSceneAfterDrawingWithVisitor:,
+    ICScene::setUpSceneForPickingWithVisitor:, and ICScene::tearDownSceneAfterPickingWithVisitor:.</li>
     <li>ICScene overrides ICNode::setParent: in order to adjust its size to the parent
     framebuffer's size. If you override, setParent: call <code>[super setParent:parent]</code>
     before implementing your own code.</li>
@@ -236,15 +235,16 @@
  @brief A boolean flag indicating whether depth testing is performed by the receiver
  
  If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
- GL_DEPTH_TEST state before drawing the scene's contents. The default value for this flag is NO.
+ ``GL_DEPTH_TEST`` state before drawing the scene's contents. The default value for this flag
+ is ``NO``.
  */
 @property (nonatomic, assign) BOOL performsDepthTesting;
 
 /**
  @brief A boolean flag indicating whether face culling is performed by the receiver
 
- If face culling is enabled, ICScene will enable the GL_CULL_FACE state before drawing the
- scene's contents. The default value for this flag is YES.
+ If face culling is enabled, ICScene will enable the ``GL_CULL_FACE`` state before drawing the
+ scene's contents. The default value for this flag is ``YES``.
  */
 @property (nonatomic, assign) BOOL performsFaceCulling;
 

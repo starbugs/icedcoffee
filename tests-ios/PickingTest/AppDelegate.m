@@ -79,7 +79,8 @@
                                  lineWidth:1];
     [scene addChild:line3];
     
-    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:CGSizeMake(30, 30)] autorelease];
+    // FIXME: remove this
+    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:CGSizeMake(50, 50)] autorelease];
     [draggableControl setPosition:kmVec3Make(200, 200, 0)];
     [scene addChild:draggableControl];
     

@@ -823,7 +823,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
- @brief Draws the receiver
+ @brief Draws the receiver's contents
  
  This method is called by the framework to draw the receiver using a visitor. You should
  never call this method directly unless you know what you are doing.

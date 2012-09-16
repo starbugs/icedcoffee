@@ -200,6 +200,7 @@
                 // Find the current control the touch is over by performing another hit test.
                 // This is to compute correct control events for touches that moved or ended
                 // over another control than the dispatch target.
+                // FIXME: this causes bad performance for touchesMoved: events
                 ICNode *overNode = [self nodeForTouch:touch.nativeTouch];
                 ICControl *overControl = ICControlForNode(overNode);
                 

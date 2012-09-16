@@ -94,7 +94,14 @@ extern float g_icContentScaleFactor;
  */
 #define ICContentScaleFactor() g_icContentScaleFactor
 
+/**
+ @brief Converts the given value from points to pixels
+ */
 #define ICPointsToPixels(points) (points*ICContentScaleFactor())
+
+/**
+ @brief Converts the given value from pixels to points
+ */
 #define ICPixelsToPoints(pixels) (pixels/ICContentScaleFactor())
 
 /** @} */
