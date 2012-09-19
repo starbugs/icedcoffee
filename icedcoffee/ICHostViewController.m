@@ -80,7 +80,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     if ((self = [super init])) {
         [self commonInit];
     }
-    return [self makeCurrentHostViewController];
+    return self;
 }
 
 - (void)commonInit
@@ -91,6 +91,9 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _lastUpdate.tv_usec = 0;
     _frameUpdateMode = ICFrameUpdateModeSynchronized;
     _needsDisplay = YES;
+    
+    // Make current host view controller regardless of which initializer was called
+    [self makeCurrentHostViewController];
 }
 
 - (void)dealloc

@@ -234,6 +234,8 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
@@ -247,6 +249,8 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
@@ -260,6 +264,8 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
@@ -273,6 +279,8 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }

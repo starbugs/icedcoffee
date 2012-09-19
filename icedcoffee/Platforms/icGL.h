@@ -47,11 +47,18 @@
 #import "icConfig.h"
 #import "kazmath/GL/matrix.h"
 
+/**
+ @addtogroup platform-macros Platform Macros
+ @{
+ */
+
 #ifdef __IC_PLATFORM_MAC
 #define IC_PLATFORM_GL_CONTEXT NSOpenGLContext
 #elif defined(__IC_PLATFORM_IOS)
 #define IC_PLATFORM_GL_CONTEXT EAGLContext
 #endif
+
+/** @} */
 
 NSString *NSStringFromGLError(GLenum error);
 

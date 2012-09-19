@@ -219,8 +219,10 @@
 
 - (void)setSize:(kmVec3)size
 {
-    [super setSize:size];
-    [self updateQuad];
+    if (_size.x != size.x || _size.y != size.y || _size.z != size.z) {
+        [super setSize:size];
+        [self updateQuad];
+    }
 }
 
 - (void)flipTextureHorizontally

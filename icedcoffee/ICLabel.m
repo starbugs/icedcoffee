@@ -68,7 +68,7 @@
 - (void)setSpriteTexture:(ICTexture2D *)texture
 {
     [_sprite setTexture:texture];
-    [_sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];    
+    [_sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
 }
 
 - (void)setText:(NSString *)text

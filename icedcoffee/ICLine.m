@@ -246,6 +246,7 @@
     [self applyStandardDrawSetupWithVisitor:visitor];
     
     glBindBuffer(GL_ARRAY_BUFFER, _vertexBuffer);
+    glBindTexture(GL_TEXTURE_2D, 0);
     
     glEnableVertexAttribArray(ICVertexAttribPosition);
     glEnableVertexAttribArray(ICVertexAttribColor);
