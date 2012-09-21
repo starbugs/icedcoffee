@@ -108,7 +108,7 @@ static char * glExtensions;
 		
 		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		if( OSVersion_ >= kICiOSVersion_4_0 )
+		if( OSVersion_ >= ICIOSVersion_4_0 )
 			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
 		else
 			maxSamplesAllowed_ = 0;

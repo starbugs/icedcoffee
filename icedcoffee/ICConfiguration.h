@@ -28,24 +28,32 @@
 
 // FIXME: certain parts inherited from cocos2d, but not (yet) used in IcedCoffee
 
-/** OS version definitions. Includes both iOS and Mac OS versions
- */
 enum {
-	kICiOSVersion_3_0   = 0x03000000,
-	kICiOSVersion_3_1   = 0x03010000,
-	kICiOSVersion_3_1_1 = 0x03010100,
-	kICiOSVersion_3_1_2 = 0x03010200,
-	kICiOSVersion_3_1_3 = 0x03010300,
-	kICiOSVersion_3_2   = 0x03020000,
-	kICiOSVersion_3_2_1 = 0x03020100,
-	kICiOSVersion_4_0   = 0x04000000,
-	kICiOSVersion_4_0_1 = 0x04000100,
-	kICiOSVersion_4_1   = 0x04010000,
+	ICIOSVersion_4_0   = 0x04000000,
+	ICIOSVersion_4_0_1 = 0x04000100,
+	ICIOSVersion_4_1   = 0x04010000,
+	ICIOSVersion_4_2   = 0x04020000,
+	ICIOSVersion_4_2_1 = 0x04020100,
+	ICIOSVersion_4_3   = 0x04030000,
+	ICIOSVersion_4_3_1 = 0x04030100,
+	ICIOSVersion_4_3_2 = 0x04030200,
+	ICIOSVersion_4_3_3 = 0x04030300,
+	ICIOSVersion_4_3_4 = 0x04030400,
+	ICIOSVersion_4_3_5 = 0x04030500,
+	ICIOSVersion_5_0   = 0x05000000,
+	ICIOSVersion_5_0_1 = 0x05000100,
+	ICIOSVersion_5_1_0 = 0x05010000,
+	ICIOSVersion_6_0_0 = 0x06000000,
     
-	kICMacVersion_10_5  = 0x0a050000,
-	kICMacVersion_10_6  = 0x0a060000,
-	kICMacVersion_10_7  = 0x0a070000,
+	ICMacVersion_10_5  = 0x0a050000,
+	ICMacVersion_10_6  = 0x0a060000,
+	ICMacVersion_10_7  = 0x0a070000,
+	ICMacVersion_10_8  = 0x0a080000,
 };
+/**
+ @brief OS version definitions. Includes both iOS and Mac OS versions
+ */
+typedef uint ICOSVersion;
 
 /**
  CCConfiguration contains some openGL variables
