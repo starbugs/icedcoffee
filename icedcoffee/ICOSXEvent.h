@@ -49,7 +49,7 @@ typedef NSUInteger ICOSXEventType;
  @brief Base class for Mac OS X events
  
  The ICOSXEvent class aggregates NSEvent, binds it to a given host view and serves as a base
- class for implementing IcedCoffee specific event functionality.
+ class for implementing IcedCoffee-specific event handling.
  */
 @interface ICOSXEvent : NSObject {
 @protected

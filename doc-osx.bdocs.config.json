@@ -20,7 +20,10 @@
 	"nameMap": {
 		"anonEnum": {
 			"ICHitTest(.*)": "ICHitTestResult",
-			"ICControlEvent(.*)": "ICControlEvents"
+			"ICControlEvent(.*)": "ICControlEvents",
+			"ICAbstractControlEvent(.*)": "ICAbstractControlEvents",
+			"IC(.*)MouseButton": "ICMouseButton",
+			"ICMouse(.*)": "ICAbstractMouseEventType"
 		}
 	}
 }

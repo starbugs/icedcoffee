@@ -28,6 +28,9 @@
 #define ICLabelTextDidChange @"ICLabelTextDidChange"
 #define ICLabelFontDidChange @"ICLabelFontDidChange"
 
+/**
+ @brief Defines a label displaying a single line of text
+ */
 @interface ICLabel : ICView {
 @protected
     ICSprite *_sprite;

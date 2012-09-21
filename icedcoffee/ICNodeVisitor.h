@@ -24,13 +24,6 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
-    ICNodeVisitorTypeUnknown = 0,
-    ICNodeVisitorTypeDrawing = 1,
-    ICNodeVisitorTypePicking = 2
-};
-typedef uint ICNodeVisitorType;
-
 @class ICNode;
 
 /**
