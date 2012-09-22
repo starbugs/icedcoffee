@@ -23,10 +23,7 @@
  */
 
 #import <Foundation/Foundation.h>
-
 #import "Platforms/ICGL.h"
-
-// FIXME: certain parts inherited from cocos2d, but not (yet) used in IcedCoffee
 
 enum {
 	ICIOSVersion_4_0   = 0x04000000,
@@ -45,10 +42,10 @@ enum {
 	ICIOSVersion_5_1_0 = 0x05010000,
 	ICIOSVersion_6_0_0 = 0x06000000,
     
-	ICMacVersion_10_5  = 0x0a050000,
-	ICMacVersion_10_6  = 0x0a060000,
-	ICMacVersion_10_7  = 0x0a070000,
-	ICMacVersion_10_8  = 0x0a080000,
+	ICMacOSXVersion_10_5  = 0x0a050000,
+	ICMacOSXVersion_10_6  = 0x0a060000,
+	ICMacOSXVersion_10_7  = 0x0a070000,
+	ICMacOSXVersion_10_8  = 0x0a080000,
 };
 /**
  @brief OS version definitions. Includes both iOS and Mac OS versions
@@ -56,68 +53,60 @@ enum {
 typedef uint ICOSVersion;
 
 /**
- CCConfiguration contains some openGL variables
- @since v0.99.0
+ @brief Provides information about the system's configuration
  */
 @interface ICConfiguration : NSObject {
     
-	GLint			maxTextureSize_;
-	GLint			maxModelviewStackDepth_;        // FIXME: not required with GLES2
-	BOOL			supportsPVRTC_;
-	BOOL			supportsNPOT_;
-	BOOL			supportsBGRA8888_;
-	BOOL			supportsDiscardFramebuffer_;
-    BOOL            supportsPixelBufferObject_;
-	unsigned int	OSVersion_;
-	GLint			maxSamplesAllowed_;
+	GLint			_maxTextureSize;
+	BOOL			_supportsPVRTC;
+	BOOL			_supportsNPOT;
+	BOOL			_supportsBGRA8888;
+	BOOL			_supportsDiscardFramebuffer;
+    BOOL            _supportsPixelBufferObject;
+	unsigned int	_OSVersion;
+	GLint			_maxSamplesAllowed;
 }
 
-/** OpenGL Max texture size. */
+/**
+ @brief Returns a globally shared instance of ICConfiguration
+ */
++ (ICConfiguration *) sharedConfiguration;
+
+/**
+ @brief The maximum texture size allowed by the current graphics hardware
+ */
 @property (nonatomic, readonly) GLint maxTextureSize;
 
-/** OpenGL Max Modelview Stack Depth. */
-@property (nonatomic, readonly) GLint maxModelviewStackDepth;
-
-/** Whether or not the GPU supports NPOT (Non Power Of Two) textures.
+/** @brief Whether or not the GPU supports NPOT (Non Power Of Two) textures.
  NPOT textures have the following limitations:
  - They can't have mipmaps
- - They only accept GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}
- 
- @since v0.99.2
+ - They only accept ``GL_CLAMP_TO_EDGE`` in ``GL_TEXTURE_WRAP_{S,T}``
  */
 @property (nonatomic, readonly) BOOL supportsNPOT;
 
-/** Whether or not PVR Texture Compressed is supported */
+/** @brief Whether or not PVR texture compression is supported
+ */
 @property (nonatomic, readonly) BOOL supportsPVRTC;
 
-/** Whether or not BGRA8888 textures are supported.
- 
- @since v0.99.2
+/** @brief Whether or not ``BGRA8888`` textures are supported.
  */
 @property (nonatomic, readonly) BOOL supportsBGRA8888;
 
-/** Whether or not glDiscardFramebufferEXT is supported
- 
- @since v0.99.2
+/** @brief Whether or not ``glDiscardFramebufferEXT`` is supported
  */
 @property (nonatomic, readonly) BOOL supportsDiscardFramebuffer;
 
+/** @brief Whether or not OpenGL supports PBOs (Pixel Buffer Objects)
+ */
 @property (nonatomic, readonly) BOOL supportsPixelBufferObject;
 
-/** returns the OS version.
- - On iOS devices it returns the firmware version.
- - On Mac returns the OS version
+/** @brief Returns the OS version.
  
- @since v0.99.5
+ On iOS devices, returns the firmware version. On Mac OS X, returns the OS version.
  */
 @property (nonatomic, readonly) unsigned int OSVersion;
 
-/** returns a shared instance of the CCConfiguration */
-+ (ICConfiguration *) sharedConfiguration;
-
-/** returns whether or not an OpenGL is supported */
-- (BOOL) checkForGLExtension:(NSString *)searchName;
-
-
+/** @brief Returns whether or not the given OpenGL extension is supported */
+- (BOOL)checkForGLExtension:(NSString *)extensionName;
 
 @end
