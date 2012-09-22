@@ -67,10 +67,16 @@ typedef uint ICOSVersion;
 	GLint			_maxSamplesAllowed;
 }
 
+
+/* @name Obtaining the Configuration */
+
 /**
  @brief Returns a globally shared instance of ICConfiguration
  */
-+ (ICConfiguration *) sharedConfiguration;
++ (ICConfiguration *)sharedConfiguration;
+
+
+/* @name Retrieving Configuration Information */
 
 /**
  @brief The maximum texture size allowed by the current graphics hardware
@@ -105,6 +111,8 @@ typedef uint ICOSVersion;
  On iOS devices, returns the firmware version. On Mac OS X, returns the OS version.
  */
 @property (nonatomic, readonly) unsigned int OSVersion;
+
+/** @name Checking for OpenGL Extensions */
 
 /** @brief Returns whether or not the given OpenGL extension is supported */
 - (BOOL)checkForGLExtension:(NSString *)extensionName;
