@@ -57,4 +57,33 @@
     return texture;    
 }
 
++ (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+{
+    return [[self class] loadTextureFromURL:url resolutionType:ICResolutionTypeUnknown];
+}
+
++ (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+                     resolutionType:(ICResolutionType)resolutionType
+{
+    ICTexture2D *texture = nil;
+    
+#ifdef __IC_PLATFORM_MAC
+    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+    NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
+    texture = [[[ICTexture2D alloc] initWithCGImage:[image CGImage]] autorelease];
+    
+    [data release];
+    [image release];
+    
+#elif __IC_PLATFORM_IOS
+    
+    UIImage * image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolutionType] autorelease];
+    [image release];
+    
+#endif
+    
+    return texture;
+}
+
 @end
