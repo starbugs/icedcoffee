@@ -35,7 +35,7 @@
     [super dealloc];
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     TextureCacheTestScene *scene = [TextureCacheTestScene scene];
     [self.hostViewController runWithScene:scene];
@@ -54,7 +54,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

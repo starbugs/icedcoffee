@@ -24,6 +24,18 @@
 #import <Foundation/Foundation.h>
 #import "icTypes.h"
 
+/**
+ @brief Represents the value of a shader program's uniform
+ 
+ The ICShaderValue class provides a representation for a value of an ICShaderUniform object.
+ ICShaderUniform objects are used to represent shader program uniforms defined in GLSL shaders
+ represented by ICShaderProgram objects.
+ 
+ Shader values exhibit a certain type, defined in the source code of a given shader program.
+ The ICShaderValue class must be initialized with the correct type for its target uniform.
+ Shader values can be assigned to shader uniforms using ICShaderUniform::setToShaderValue:
+ implemented in the ICShaderUniform class.
+ */
 @interface ICShaderValue : NSObject {
 @protected
     ICShaderValueType _type;
@@ -38,8 +50,9 @@
     } _value;
 }
 
-@property (nonatomic, readonly) ICShaderValueType type;
-
+#pragma mark - Creating Shader Value Objects
+/** @name Creating Shader Value Objects */
+ 
 + (id)shaderValueWithInt:(int)value;
 + (id)shaderValueWithFloat:(float)value;
 + (id)shaderValueWithVec2:(kmVec2)value;
@@ -57,11 +70,19 @@
 - (id)initWithShaderValue:(ICShaderValue *)value;
 - (id)initWithMat4:(kmMat4)value;
 
+#pragma mark - Retrieving the Value from the Object
+/** @name Retrieving the Value from the Object */
+
 - (int)intValue;
 - (float)floatValue;
 - (kmVec2)vec2Value;
 - (kmVec3)vec3Value;
 - (kmVec4)vec4Value;
 - (kmMat4)mat4Value;
+
+#pragma mark - Obtaining the Value Type
+/** @name Obtaining the Value Type */
+
+@property (nonatomic, readonly) ICShaderValueType type;
 
 @end

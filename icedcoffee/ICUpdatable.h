@@ -35,6 +35,9 @@
 
 @required
 
+#pragma mark - Updating Objects
+/** @name Updating Objects */
+
 /**
  @brief Called by the framework when the host view updates its framebuffer's contents
  

@@ -41,7 +41,7 @@
     return self;
 }
 
-- (void)setupScreen
+- (void)setUpScreen
 {    
     float w = _viewport[2];
     float h = _viewport[3];
@@ -74,7 +74,7 @@
     self.zNear = nearDist;
     self.zFar = farDist;
     
-    [super setupScreen];
+    [super setUpScreen];
     
     kmMat4 matContentScale;
     kmMat4Scaling(&matContentScale,

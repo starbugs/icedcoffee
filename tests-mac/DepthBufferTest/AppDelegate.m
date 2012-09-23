@@ -48,7 +48,7 @@
     angle += dt;
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
@@ -100,7 +100,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

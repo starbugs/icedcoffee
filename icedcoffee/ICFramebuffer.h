@@ -25,6 +25,9 @@
 
 #import "icTypes.h"
 
+/**
+ @brief Represents an OpenGL framebufer object
+ */
 @interface ICFramebuffer : NSObject {
 @protected
 	GLuint      _fbo;
@@ -41,9 +44,8 @@
     BOOL        _isInFramebufferDrawContext;
 }
 
-@property (nonatomic, assign, setter=setSize:) CGSize size;
-
-@property (nonatomic, readonly) BOOL isInFramebufferDrawContext;
+#pragma mark - Creating a Framebuffer
+/** @name Creating a Framebuffer */
 
 + (id)framebufferWithSize:(CGSize)size
               pixelFormat:(ICPixelFormat)pixelFormat
@@ -55,11 +57,27 @@
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
+
+#pragma mark - Managing the Framebuffer's Size
+/** @name Managing the Framebuffer's Size */
+
+@property (nonatomic, assign, setter=setSize:) CGSize size;
+
 - (CGSize)sizeInPixels;
+
+
+#pragma mark - Drawing to the Framebuffer
+/** @name Drawing to the Framebuffer */
 
 - (void)begin;
 
 - (void)end;
+
+@property (nonatomic, readonly) BOOL isInFramebufferDrawContext;
+
+
+#pragma mark - Reading Back Pixel Colors
+/** @name Reading Back Pixel Colors */
 
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 

@@ -28,6 +28,9 @@
 #define ICLabelTextDidChange @"ICLabelTextDidChange"
 #define ICLabelFontDidChange @"ICLabelFontDidChange"
 
+/**
+ @brief Defines a label displaying a single line of text
+ */
 @interface ICLabel : ICView {
 @protected
     ICSprite *_sprite;
@@ -38,11 +41,18 @@
     BOOL _autoresizesToTextSize;
 }
 
-@property (nonatomic, assign) BOOL autoresizesToTextSize;
+#pragma mark - Creating a Label
+/** @name Creating a Label */
 
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
 
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
+
+
+#pragma mark - Manipulating the Label's Text, Font and Color
+/** @name Manipulating the Label's Text, Font and Color */
+
+@property (nonatomic, assign) BOOL autoresizesToTextSize;
 
 @property (nonatomic, copy, setter=setText:) NSString *text;
 @property (nonatomic, copy, setter=setFontName:) NSString *fontName;

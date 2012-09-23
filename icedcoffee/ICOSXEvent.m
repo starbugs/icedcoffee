@@ -23,6 +23,8 @@
 
 #import "ICOSXEvent.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @implementation ICOSXEvent
 
 @synthesize nativeEvent = _nativeEvent;
@@ -95,3 +97,5 @@
 }
 
 @end
+
+#endif // __IC_PLATFORM_MAC

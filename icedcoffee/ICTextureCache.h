@@ -25,6 +25,7 @@
 
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
+#import "icTypes.h"
 #import "Platforms/icGL.h"
 #import "ICAsyncTextureCacheDelegate.h"
 
@@ -53,15 +54,26 @@
 #endif
 }
 
+#pragma mark - Obtaining/Creating a Texture Cache
+/** @name Obtaining/Creating a Texture Cache */
+
 /**
  @brief Returns the texture cache associated with the current OpenGL context
  */
 + (id)currentTextureCache;
 
+/** @cond */ // Exclude from docs
+- (id)init __attribute__((unavailable("Must use initWithHostViewController: instead.")));
+/** @endcond */
+
 /**
  @brief Initializes the receiver with the given host view controller
  */
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;
+
+
+#pragma mark - Loading Textures into the Cache
+/** @name Loading Textures into the Cache */
 
 /**
  @brief Loads a texture from a file synchronously
@@ -69,8 +81,30 @@
  The loaded texture is added to the texture cache. If a texture with the same path has already
  been loaded, the method will return the cached texture instead of reloading it from the file.
  The path parameter is used as the key to the texture in the texture cache.
+ 
+ @param path The path of the texture file to be loaded
+ 
+ @return If the texture could be loaded successfully, returns an ICTexture2D object representing
+ the loaded texture. Otherwise returns nil.
  */
 - (ICTexture2D *)loadTextureFromFile:(NSString *)path;
+
+/**
+ @brief Loads a texture from a file synchronously using the given resolution type
+ 
+ The loaded texture is added to the texture cache. If a texture with the same path has already
+ been loaded, the method will return the cached texture instead of reloading it from the file.
+ The path parameter is used as the key to the texture in the texture cache.
+ 
+ @param path The path of the texture file to be loaded
+ @param resolutionType An ICResolutionType enumerated value defining the resolution type of the
+ texture
+ 
+ @return If the texture could be loaded successfully, returns an ICTexture2D object representing
+ the loaded texture. Otherwise returns nil.
+ */
+- (ICTexture2D *)loadTextureFromFile:(NSString *)path
+                      resolutionType:(ICResolutionType)resolutionType;
 
 /**
  @brief Loads a texture from a file asynchronously
@@ -92,6 +126,34 @@
 - (void)loadTextureFromFileAsync:(NSString *)path
                       withTarget:(id<ICAsyncTextureCacheDelegate>)target
                       withObject:(id)object;
+
+/**
+ @brief Loads a texture from a file asynchronously using the given resolution type
+ 
+ This method performs the ICTextureCache::loadTextureFromFile: method to load a texture on a
+ separate thread. The texture is loaded asynchronously in the background while the calling thread
+ continues execution. Once the texture is loaded, the
+ ICAsyncTextureCacheDelegate::textureDidLoad:object: message is sent to the specified target.
+ 
+ @param path An NSString defining the path to the texture file
+ @param resolutionType An ICResolutionType enumerated value defining the resolution type of the
+ texture
+ @param target An object conforming to the ICAsyncTextureCacheDelegate protocol. This object
+ receives an ICAsyncTextureCacheDelegate::textureDidLoad:object: message once the texture has
+ been loaded successfully.
+ @param object An arbitary object that is passed to the target when it is notified about the
+ completion of the texture loading procedure. You may specify nil if this is not needed.
+ 
+ @sa loadTextureFromFile:
+ */
+- (void)loadTextureFromFileAsync:(NSString *)path
+                  resolutionType:(ICResolutionType)resolutionType
+                      withTarget:(id<ICAsyncTextureCacheDelegate>)target
+                      withObject:(id)object;
+
+
+#pragma mark - Managing Cached Textures
+/** @name Managing Cached Textures */
 
 /**
  @brief Returns the texture for the specified key

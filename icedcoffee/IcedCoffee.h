@@ -47,6 +47,8 @@
 #import "ICShaderValue.h"
 #import "ICSprite.h"
 #import "ICScale9Sprite.h"
+#import "ICRectangle.h"
+#import "ICLine.h"
 #import "ICRenderTexture.h"
 #import "ICScheduler.h"
 #import "ICTableView.h"
@@ -60,6 +62,7 @@
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"
+#import "Platforms/Mac/ICHostViewControllerMac.h"
 #import "ICMouseEvent.h"
 #elif defined(__IC_PLATFORM_IOS)
 #import "Platforms/iOS/ICHostViewControllerIOS.h"
@@ -67,119 +70,4 @@
 #import "ICTouchEvent.h"
 #import "ICTouch.h"
 #endif
-
-
-
-
-// General Documentation
-
-/**
- @mainpage IcedCoffee Framework Documentation (v0.6.5)
-
- <h2>Abstract</h2>
- 
- IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based on
- OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X. IcedCoffee is designed to
- be clean, minimalistic, consistent and reusable for different purposes. Its main focus is on user
- interfaces in the context of games, but of course you may use it for all kinds of rich and dynamic
- application frontends. IcedCoffee is open source and free for both non-commercial and
- commercial use (MIT license.)
-
- <h2>Status of the Framework</h2>
- 
- The framework is currently in an early pre-release phase. Parts of the API may change in future
- versions and the framework has not been tested extensively yet. You are welcome to contribute
- by testing and reporting bugs or extending and fixing the framework's source.
- 
- Please <a href="https://github.com/starbugs/icedcoffee/issues">report issues via GitHub</a>.
- If you'd like to contribute to the framework, please
- <a href="https://github.com/starbugs/icedcoffee">fork IcedCoffee on GitHub</a> and send me
- an email to @htmlonly<script type="text/javascript">document.write("<a href='");
- document.write("ma");document.write("il");document.write("to");document.write(":");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("'>");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("</a>");
- </script>.@endhtmlonly
- 
- <h2>Status of This Documentation</h2>
- 
- This documentation is preliminary, incomplete and parts of it are subject to change as the
- framework evolves. I am doing my best to keep this documentation up to date with the framework
- sources and to fill the gaps over time.
- 
- <h2>Getting the Source</h2>
- 
- The <a href="http://github.com/starbugs/icedcoffee">IcedCoffee source</a> is hosted on GitHub.
- You may either <a href="https://github.com/starbugs/icedcoffee/zipball/master">download a zipball
- of the current IcedCoffee master</a> or checkout the current master by opening a terminal and
- typing:
- 
- @code
- $ git clone git://github.com/starbugs/icedcoffee.git
- @endcode
- 
- <h2>Building</h2>
- 
- IcedCoffee comes with a convenient Xcode workspace and a number of Xcode projects. Once you have
- downloaded the source, open <code>icedcoffee.xcworkspace</code> using Apple's Xcode 4.2 or newer,
- select a test application from the available schemes and hit Cmd+R to build and run the test.
-
- <h2>Getting Started</h2>
- 
- While I am writing up a guide that covers the basics of IcedCoffee by walking through a sample
- application, you may want to have a look at one of the tests shipping with the framework source.
- 
- The following tests may be interesting for you to get started:
- <ul>
-    <li>The <b>PickingTest</b> illustrates how a view hierarchy backed by ICRenderTexture
-    and ICView may be built up using IcedCoffee. It also demonstrates how to handle mouse and
-    touch events within such a view hierarchy.</li>
-    <li>The <b>DepthBufferTest</b> demonstrates picking and simple animation with depth buffers.
-    </li>
-    <li>The <b>Scale9SpriteTest</b> provides a resizable sprite with a scale9 grid implemented
-    by the ICScale9Sprite class.</li>
- </ul>
- 
- <h2>Feedback</h2>
- 
- Please provide criticism, praise, requests or questions via email to
- @htmlonly<script type="text/javascript">document.write("<a href='");
- document.write("ma");document.write("il");document.write("to");document.write(":");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("'>");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("</a>");
- </script>.@endhtmlonly
- 
- <h2>License</h2>
- 
- IcedCoffee is distributed under an MIT license. See
- the <a href="https://github.com/starbugs/icedcoffee/blob/master/LICENSE_icedcoffee.txt">license
- details</a>.
- 
- IcedCoffee has borrowed ideas and source from <a href="http://cocos2d-iphone.org">cocos2d</a>
- and several other great frameworks. See the
- <a href="https://github.com/starbugs/icedcoffee/blob/master/README.md">README</a> for details.
- 
- <h2>Imprint</h2>
- 
- German law requires me to put this here:
- 
- Responsible for the contents of this web site: Tobias Lensing, Grenzstr. 50, 28217 Bremen,
- Tel: +49 421 3979999, @htmlonly<script type="text/javascript">document.write("<a href='");
- document.write("ma");document.write("il");document.write("to");document.write(":");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("'>");
- document.write("ma");document.write("il");document.write("@");document.write("tl");
- document.write("e");document.write("n");document.write("si");document.write("ng");
- document.write(".");document.write("o");document.write("rg");document.write("</a>");
- </script>.@endhtmlonly
- 
- */
 

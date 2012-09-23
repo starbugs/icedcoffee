@@ -29,11 +29,14 @@
 #ifdef __IC_PLATFORM_DESKTOP
 
 /**
- @brief Defines mouse event messages
+ @brief Defines methods for handling mouse event messages
  */
 @protocol ICMouseResponder <NSObject>
 
 @optional
+
+#pragma mark - Responding to Mouse Events
+/** @name Responding to Mouse Events */
 
 - (void)mouseEntered:(ICMouseEvent *)event;
 - (void)mouseExited:(ICMouseEvent *)event;

@@ -29,6 +29,10 @@
  */
 @interface ICNodeVisitorDrawing : ICNodeVisitor
 
+
+#pragma mark - Visiting a Scene for Drawing
+/** @name Visiting a Scene for Drawing */
+
 /**
  @brief Sets up the node's model-view transform matrix and pushes it on the OpenGL matrix stack
  */

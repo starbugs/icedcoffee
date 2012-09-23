@@ -41,6 +41,9 @@
  */
 @interface ICPlanarNode : ICNode <ICProjectionTransforms>
 
+#pragma mark - Retrieving Information about a Node's Plane
+/** @name Retrieving Information about a Node's Plane */
+
 /**
  @brief The normal of the receiver's plane
  */
@@ -60,6 +63,10 @@
  @brief The receiver's plane in world coordinate space
  */
 - (kmPlane)worldPlane;
+
+
+#pragma mark - Transforming Points to a Node's Coordinate Space
+/** @name Transforming Points to a Node's Coordinate Space */
 
 /**
  @brief Converts a location in the parent scene's framebuffer coordinate space to a location in

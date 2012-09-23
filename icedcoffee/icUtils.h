@@ -34,11 +34,16 @@
 extern "C" {
 #endif
 
+    /**
+     @defgroup utility-functions Utility Functions
+     @{
+     */
+    
 #ifdef __IC_PLATFORM_MAC
     NSOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share);
 #elif defined(__IC_PLATFORM_IOS)
     EAGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share);
-#endif    
+#endif
     
     /**
      @brief Calculates the next power of two for the given value
@@ -79,6 +84,8 @@ extern "C" {
     NSTimeInterval icTimestamp();
     
     ICControl *ICControlForNode(ICNode *node);
+    
+    /** @} */
     
 #ifdef __cplusplus
 }

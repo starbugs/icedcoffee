@@ -23,6 +23,12 @@
 
 #pragma once
 
+/**
+ @defgroup icedcoffee-configuration Icedcoffee Configuration
+ @{
+ */
+
+
 // General Configuration
 
 // GL state cache (incomplete)
@@ -53,6 +59,11 @@
 #define IC_ENABLE_DEBUG_PICKING 0
 #endif
 
+// Output debug log messages to console in host view controllers
+#ifndef IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
+#define IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER 0
+#endif
+
 // Output debug log messages to console when dispatching touch events (iOS only)
 #ifndef IC_ENABLE_DEBUG_TOUCH_DISPATCHER
 #define IC_ENABLE_DEBUG_TOUCH_DISPATCHER 0
@@ -62,3 +73,6 @@
 #ifndef IC_ENABLE_DEBUG_OPENGL_CONTEXTS
 #define IC_ENABLE_DEBUG_OPENGL_CONTEXTS 0
 #endif
+
+/** @} */
+

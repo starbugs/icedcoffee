@@ -34,7 +34,7 @@
     [super dealloc];
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICUIScene *rootScene = [ICUIScene scene];
 
@@ -72,7 +72,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

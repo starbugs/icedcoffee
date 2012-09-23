@@ -25,6 +25,8 @@
 #import "ResponsiveSprite.h"
 #import "ResponsiveView.h"
 
+#import "DraggableControl.h"
+
 @implementation AppDelegate
 
 @synthesize window = _window;
@@ -42,7 +44,7 @@
     //int brk = 1;
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     [scene setSize:CGSizeTokmVec3(self.hostViewController.view.bounds.size)];
@@ -63,6 +65,24 @@
     [scene addChild:button];
     [button centerNodeHorizontally];
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
+    
+    ICLine *line = [ICLine lineWithOrigin:kmVec3Make(150, 150, 0)
+                                   target:kmVec3Make(200, 250, 0)
+                                lineWidth:1];
+    [scene addChild:line];
+    ICLine *line2 = [ICLine lineWithOrigin:kmVec3Make(250, 150, 0)
+                                    target:kmVec3Make(200, 250, 0)
+                                 lineWidth:1];
+    [scene addChild:line2];
+    ICLine *line3 = [ICLine lineWithOrigin:kmVec3Make(200, 250, 0)
+                                    target:kmVec3Make(250, 150, 0)
+                                 lineWidth:1];
+    [scene addChild:line3];
+    
+    // FIXME: remove this
+    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:CGSizeMake(50, 50)] autorelease];
+    [draggableControl setPosition:kmVec3Make(200, 200, 0)];
+    [scene addChild:draggableControl];
     
     [self.hostViewController runWithScene:scene];
 }
@@ -87,7 +107,7 @@
     self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
     
-    [self setupScene];
+    [self setUpScene];
 
     return YES;
 }

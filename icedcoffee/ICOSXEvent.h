@@ -25,6 +25,8 @@
 #import "icMacros.h"
 #import "icTypes.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 // Compatible to NSEventType
 enum {
     ICLeftMouseDown     = 1,
@@ -47,7 +49,7 @@ typedef NSUInteger ICOSXEventType;
  @brief Base class for Mac OS X events
  
  The ICOSXEvent class aggregates NSEvent, binds it to a given host view and serves as a base
- class for implementing IcedCoffee specific event functionality.
+ class for implementing IcedCoffee-specific event handling.
  */
 @interface ICOSXEvent : NSObject {
 @protected
@@ -55,10 +57,32 @@ typedef NSUInteger ICOSXEventType;
     NSView *_hostView;
 }
 
+
+#pragma mark - Creating an Event
+/** @name Creating an Event */
+
+/**
+ @brief Returns an autoreleased event with the given NSEvent object and host view
+ */
++ (id)eventWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
+
+/**
+ @brief Initializes an event with the given NSEvent object and host view
+ */
+- (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
+
+
+#pragma mark - Accessing the Native Event
+/** @name Accessing the Native Event */
+
 /**
  @brief The native NSEvent object aggregated by the receiver
  */
 @property (nonatomic, readonly) NSEvent *nativeEvent;
+
+
+#pragma mark - Accessing System Event Information
+/** @name Accessing System Event Information */
 
 /**
  @brief The host view the receiver is being dispatched to
@@ -110,15 +134,6 @@ typedef NSUInteger ICOSXEventType;
  */
 @property (nonatomic, readonly, getter=CGEvent) CGEventRef CGEvent;
 
-
-/**
- @brief Returns an autoreleased event with the given NSEvent object and host view
- */
-+ (id)eventWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
-
-/**
- @brief Initializes an event with the given NSEvent object and host view
- */
-- (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
-
 @end
+
+#endif // __IC_PLATFORM_MAC

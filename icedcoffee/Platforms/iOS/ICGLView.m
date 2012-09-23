@@ -75,9 +75,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ICES2Renderer.h"
 #import "../../ICHostViewController.h"
 #import "../../ICConfiguration.h"
+#import "../../icConfig.h"
 
-
-//CLASS IMPLEMENTATIONS:
 
 @interface ICGLView (Private)
 - (BOOL) setupSurfaceWithSharegroup:(EAGLSharegroup*)sharegroup;
@@ -105,32 +104,72 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return [[[self alloc] initWithFrame:frame] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
 {
 	return [[[self alloc] initWithFrame:frame pixelFormat:format] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0] autorelease];
+	return [[[self alloc] initWithFrame:frame
+                            pixelFormat:format
+                            depthFormat:depth
+                     preserveBackbuffer:NO
+                             sharegroup:nil
+                          multiSampling:NO
+                        numberOfSamples:0] autorelease];
 }
 
-+ (id)viewWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)multisampling numberOfSamples:(unsigned int)samples
++ (id)viewWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
+ preserveBackbuffer:(BOOL)retained
+         sharegroup:(EAGLSharegroup*)sharegroup
+      multiSampling:(BOOL)multisampling
+    numberOfSamples:(unsigned int)samples
 {
-	return [[[self alloc] initWithFrame:frame pixelFormat:format depthFormat:depth preserveBackbuffer:retained sharegroup:sharegroup multiSampling:multisampling numberOfSamples:samples] autorelease];
+	return [[[self alloc] initWithFrame:frame
+                            pixelFormat:format
+                            depthFormat:depth
+                     preserveBackbuffer:retained
+                             sharegroup:sharegroup
+                          multiSampling:multisampling
+                        numberOfSamples:samples] autorelease];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
-	return [self initWithFrame:frame pixelFormat:kEAGLColorFormatRGB565 depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame
+                   pixelFormat:kEAGLColorFormatRGB565
+                   depthFormat:0
+            preserveBackbuffer:NO
+                    sharegroup:nil
+                 multiSampling:NO
+               numberOfSamples:0];
 }
 
-- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format
+- (id)initWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
 {
-	return [self initWithFrame:frame pixelFormat:format depthFormat:0 preserveBackbuffer:NO sharegroup:nil multiSampling:NO numberOfSamples:0];
+	return [self initWithFrame:frame
+                   pixelFormat:format
+                   depthFormat:0
+            preserveBackbuffer:NO
+                    sharegroup:nil
+                 multiSampling:NO
+               numberOfSamples:0];
 }
 
-- (id)initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples
+- (id)initWithFrame:(CGRect)frame
+        pixelFormat:(NSString*)format
+        depthFormat:(GLuint)depth
+ preserveBackbuffer:(BOOL)retained
+         sharegroup:(EAGLSharegroup*)sharegroup
+      multiSampling:(BOOL)sampling
+    numberOfSamples:(unsigned int)nSamples
 {
 	if((self = [super initWithFrame:frame]))
 	{
@@ -162,7 +201,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		CAEAGLLayer* eaglLayer = (CAEAGLLayer*)[self layer];
 
 		pixelformat_ = kEAGLColorFormatRGB565;
-		depthFormat_ = 0; // GL_DEPTH_COMPONENT24_OES;
+		depthFormat_ = GL_DEPTH24_STENCIL8_OES;
 		multiSampling_= NO;
 		requestedSamples_ = 0;
 		size_ = [eaglLayer bounds].size;
@@ -321,28 +360,14 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	return CGRectMake((rect.origin.x - bounds.origin.x) / bounds.size.width * size_.width, (rect.origin.y - bounds.origin.y) / bounds.size.height * size_.height, rect.size.width / bounds.size.width * size_.width, rect.size.height / bounds.size.height * size_.height);
 }
 
-
 - (void)setHostViewController:(ICHostViewController *)hostViewController
 {
+    // Issue #3: old style view instantiation and wiring
     _hostViewController = hostViewController;
     [_hostViewController setView:self];
+    if (![_hostViewController didAlreadyCallViewDidLoad])
+        [_hostViewController viewDidLoad];
 }
-
-/*- (void)internalTouch:(UITouch *)touch
-{
-    CGPoint point = [self convertPointFromViewToSurface:[touch locationInView:self]];
-    point.y = self.bounds.size.height - point.y;
-    NSArray *nodes = [self.hostViewController hitTest:point];
-    for (ICNode *node in nodes) {
-        NSLog(@"%@", [node description]);
-    }    
-}
-
-- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
-{
-    UITouch *touch = [touches anyObject];
-    [self performSelector:@selector(internalTouch:) onThread:[self.hostViewController thread] withObject:touch waitUntilDone:NO];
-}*/
 
 - (void)internalTouchesBegan:(NSArray *)touchesEventInfo
 {
@@ -353,6 +378,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched");
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesBegan:)
                  onThread:[_hostViewController thread]
@@ -369,6 +401,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesCancelled:)
                  onThread:[_hostViewController thread]
@@ -378,6 +417,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)internalTouchesEnded:(NSArray *)touchesEventInfo
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSSet *touches = [touchesEventInfo objectAtIndex:0];
     UIEvent *event = [touchesEventInfo objectAtIndex:1];
     [self.hostViewController touchesEnded:touches withEvent:event];
@@ -385,6 +431,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesEnded:)
                  onThread:[_hostViewController thread]
@@ -401,6 +454,13 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_hostViewController) {
+        NSLog(@"WARNING: ICGLView's hostViewController property is set to nil, " \
+              "no touches will be dispatched (%@)", NSStringFromSelector(_cmd));
+    }
     NSArray *touchesEventInfo = [NSArray arrayWithObjects:touches, event, nil];
     [self performSelector:@selector(internalTouchesMoved:)
                  onThread:[_hostViewController thread]

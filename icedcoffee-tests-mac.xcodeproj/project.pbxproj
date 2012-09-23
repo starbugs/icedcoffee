@@ -9,6 +9,27 @@
 /* Begin PBXBuildFile section */
 		018C88571593A70C0086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88561593A7070086319E /* Rectangle.fsh */; };
 		018C88591593A9B80086319E /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = 018C88581593A9B20086319E /* Rectangle.fsh */; };
+		A61D6F3515DC3A8E005AFDA5 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A61D6F5715DC3AD1005AFDA5 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A61D6F4D15DC3AD1005AFDA5 /* AppDelegate.m */; };
+		A61D6F5815DC3AD1005AFDA5 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */; };
+		A61D6F5915DC3AD1005AFDA5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A61D6F5015DC3AD1005AFDA5 /* InfoPlist.strings */; };
+		A61D6F5A15DC3AD1005AFDA5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A61D6F5215DC3AD1005AFDA5 /* MainMenu.xib */; };
+		A61D6F5C15DC3AD1005AFDA5 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A61D6F5615DC3AD1005AFDA5 /* main.m */; };
+		A61D6F5E15DC3BE6005AFDA5 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A6F0489F15DE9C5C00321D86 /* MyHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F0489E15DE9C5C00321D86 /* MyHostViewController.m */; };
+		A6F048AB15DE9E5A00321D86 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A115DE9E5A00321D86 /* Picking.fsh */; };
+		A6F048AC15DE9E5A00321D86 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A215DE9E5A00321D86 /* PositionColor.fsh */; };
+		A6F048AD15DE9E5A00321D86 /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A315DE9E5A00321D86 /* PositionColor.vsh */; };
+		A6F048AE15DE9E5A00321D86 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A415DE9E5A00321D86 /* PositionTextureA8Color.fsh */; };
+		A6F048AF15DE9E5A00321D86 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A515DE9E5A00321D86 /* PositionTextureA8Color.vsh */; };
+		A6F048B015DE9E5A00321D86 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A615DE9E5A00321D86 /* PositionTextureColor.fsh */; };
+		A6F048B115DE9E5A00321D86 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A715DE9E5A00321D86 /* PositionTextureColor.vsh */; };
+		A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A815DE9E5A00321D86 /* Rectangle.fsh */; };
+		A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A915DE9E5A00321D86 /* SpriteTextureMask.fsh */; };
+		A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048AA15DE9E5A00321D86 /* StencilMask.fsh */; };
 		D20FA8CA15A881CC003A2235 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D20FA8C915A881BE003A2235 /* Rectangle.fsh */; };
 		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
@@ -234,6 +255,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		D21F88921533065500E2496C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -352,6 +380,27 @@
 /* Begin PBXFileReference section */
 		018C88561593A7070086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
 		018C88581593A9B20086319E /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
+		A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A61D6F4C15DC3AD1005AFDA5 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A61D6F4D15DC3AD1005AFDA5 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A61D6F4F15DC3AD1005AFDA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A61D6F5115DC3AD1005AFDA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A61D6F5315DC3AD1005AFDA5 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
+		A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
+		A61D6F5615DC3AD1005AFDA5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6F0489D15DE9C5C00321D86 /* MyHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHostViewController.h; sourceTree = "<group>"; };
+		A6F0489E15DE9C5C00321D86 /* MyHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHostViewController.m; sourceTree = "<group>"; };
+		A6F048A115DE9E5A00321D86 /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048A215DE9E5A00321D86 /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048A315DE9E5A00321D86 /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
+		A6F048A415DE9E5A00321D86 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048A515DE9E5A00321D86 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
+		A6F048A615DE9E5A00321D86 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048A715DE9E5A00321D86 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
+		A6F048A815DE9E5A00321D86 /* Rectangle.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048A915DE9E5A00321D86 /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
+		A6F048AA15DE9E5A00321D86 /* StencilMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D20FA8C915A881BE003A2235 /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
 		D21F88811533064A00E2496C /* KazmathTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KazmathTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21F88961533068E00E2496C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -587,6 +636,18 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A61D6F3015DC3A8E005AFDA5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */,
+				A61D6F3515DC3A8E005AFDA5 /* Cocoa.framework in Frameworks */,
+				A61D6F5E15DC3BE6005AFDA5 /* Carbon.framework in Frameworks */,
+				A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */,
+				A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21F887D1533064A00E2496C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -735,6 +796,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A61D6F4B15DC3AD1005AFDA5 /* IBIntegrationTest */ = {
+			isa = PBXGroup;
+			children = (
+				A61D6F4C15DC3AD1005AFDA5 /* AppDelegate.h */,
+				A61D6F4D15DC3AD1005AFDA5 /* AppDelegate.m */,
+				A61D6F5215DC3AD1005AFDA5 /* MainMenu.xib */,
+				A6F0489D15DE9C5C00321D86 /* MyHostViewController.h */,
+				A6F0489E15DE9C5C00321D86 /* MyHostViewController.m */,
+				A61D6F5D15DC3AD8005AFDA5 /* Supporting Files */,
+			);
+			name = IBIntegrationTest;
+			path = "tests-mac/IBIntegrationTest";
+			sourceTree = "<group>";
+		};
+		A61D6F5D15DC3AD8005AFDA5 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A6F048A015DE9E4C00321D86 /* Shaders */,
+				A61D6F5615DC3AD1005AFDA5 /* main.m */,
+				A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */,
+				A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */,
+				A61D6F5015DC3AD1005AFDA5 /* InfoPlist.strings */,
+				A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6F048A015DE9E4C00321D86 /* Shaders */ = {
+			isa = PBXGroup;
+			children = (
+				A6F048A115DE9E5A00321D86 /* Picking.fsh */,
+				A6F048A215DE9E5A00321D86 /* PositionColor.fsh */,
+				A6F048A315DE9E5A00321D86 /* PositionColor.vsh */,
+				A6F048A415DE9E5A00321D86 /* PositionTextureA8Color.fsh */,
+				A6F048A515DE9E5A00321D86 /* PositionTextureA8Color.vsh */,
+				A6F048A615DE9E5A00321D86 /* PositionTextureColor.fsh */,
+				A6F048A715DE9E5A00321D86 /* PositionTextureColor.vsh */,
+				A6F048A815DE9E5A00321D86 /* Rectangle.fsh */,
+				A6F048A915DE9E5A00321D86 /* SpriteTextureMask.fsh */,
+				A6F048AA15DE9E5A00321D86 /* StencilMask.fsh */,
+			);
+			name = Shaders;
+			sourceTree = "<group>";
+		};
 		D21F88941533068E00E2496C /* KazmathTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1076,6 +1181,7 @@
 				D2F34FD6151F09BF00DF2D5B /* AlphaBlendingTest */,
 				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
 				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
+				A61D6F4B15DC3AD1005AFDA5 /* IBIntegrationTest */,
 				D21F88941533068E00E2496C /* KazmathTests */,
 				D2735B5B1591270100216F1B /* MultipleCocoaViewsTest */,
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
@@ -1105,6 +1211,7 @@
 				D22F25591587D53B0049268C /* TableViewTest.app */,
 				D2850483158B204E00CD71ED /* ViewTest.app */,
 				D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */,
+				A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1215,6 +1322,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A61D6F4815DC3A8F005AFDA5 /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */;
+			buildPhases = (
+				A61D6F2F15DC3A8E005AFDA5 /* Sources */,
+				A61D6F3015DC3A8E005AFDA5 /* Frameworks */,
+				A61D6F3115DC3A8E005AFDA5 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A61D6F6215DC4120005AFDA5 /* PBXTargetDependency */,
+			);
+			name = IBIntegrationTest;
+			productName = IBIntegrationTest;
+			productReference = A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		D21F88801533064A00E2496C /* KazmathTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */;
@@ -1439,7 +1564,7 @@
 		D2FD85CA14F0E4A5006A9A90 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0430;
+				LastUpgradeCheck = 0440;
 				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */;
@@ -1472,6 +1597,7 @@
 				D22F25581587D53B0049268C /* TableViewTest */,
 				D2850482158B204E00CD71ED /* ViewTest */,
 				D2735B42159126E200216F1B /* MultipleCocoaViewsTest */,
+				A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1487,6 +1613,26 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A61D6F3115DC3A8E005AFDA5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61D6F5815DC3AD1005AFDA5 /* Credits.rtf in Resources */,
+				A61D6F5915DC3AD1005AFDA5 /* InfoPlist.strings in Resources */,
+				A61D6F5A15DC3AD1005AFDA5 /* MainMenu.xib in Resources */,
+				A6F048AB15DE9E5A00321D86 /* Picking.fsh in Resources */,
+				A6F048AC15DE9E5A00321D86 /* PositionColor.fsh in Resources */,
+				A6F048AD15DE9E5A00321D86 /* PositionColor.vsh in Resources */,
+				A6F048AE15DE9E5A00321D86 /* PositionTextureA8Color.fsh in Resources */,
+				A6F048AF15DE9E5A00321D86 /* PositionTextureA8Color.vsh in Resources */,
+				A6F048B015DE9E5A00321D86 /* PositionTextureColor.fsh in Resources */,
+				A6F048B115DE9E5A00321D86 /* PositionTextureColor.vsh in Resources */,
+				A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */,
+				A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */,
+				A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21F887E1533064A00E2496C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1712,6 +1858,16 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A61D6F2F15DC3A8E005AFDA5 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61D6F5715DC3AD1005AFDA5 /* AppDelegate.m in Sources */,
+				A61D6F5C15DC3AD1005AFDA5 /* main.m in Sources */,
+				A6F0489F15DE9C5C00321D86 /* MyHostViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21F887C1533064A00E2496C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1830,6 +1986,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A61D6F6215DC4120005AFDA5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */;
+		};
 		D21F88931533065500E2496C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1893,6 +2054,30 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A61D6F4F15DC3AD1005AFDA5 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A61D6F5015DC3AD1005AFDA5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A61D6F5115DC3AD1005AFDA5 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A61D6F5215DC3AD1005AFDA5 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A61D6F5315DC3AD1005AFDA5 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		D21F88951533068E00E2496C /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2152,9 +2337,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A61D6F4915DC3A8F005AFDA5 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A61D6F4A15DC3A8F005AFDA5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		D21F88901533064B00E2496C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
@@ -2171,6 +2397,7 @@
 		D21F88911533064B00E2496C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
@@ -2187,6 +2414,7 @@
 		D22F256F1587D53B0049268C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2208,6 +2436,7 @@
 		D22F25701587D53B0049268C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2225,6 +2454,7 @@
 		D253D9D515663DE20027DA6C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2241,6 +2471,7 @@
 		D253D9D615663DE20027DA6C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2257,6 +2488,7 @@
 		D2735B59159126E300216F1B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2273,6 +2505,7 @@
 		D2735B5A159126E300216F1B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2289,6 +2522,7 @@
 		D2850499158B204F00CD71ED /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2305,6 +2539,7 @@
 		D285049A158B204F00CD71ED /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2321,6 +2556,7 @@
 		D2ADCFDC157EB34A00B6E519 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -2342,6 +2578,7 @@
 		D2ADCFDD157EB34A00B6E519 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2358,6 +2595,7 @@
 		D2EDC3571572BB8A00EBB417 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2374,6 +2612,7 @@
 		D2EDC3581572BB8A00EBB417 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
@@ -2390,6 +2629,7 @@
 		D2F34FD4151F098A00DF2D5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2405,6 +2645,7 @@
 		D2F34FD5151F098A00DF2D5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2420,6 +2661,7 @@
 		D2F3502115285D8600DF2D5B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2435,6 +2677,7 @@
 		D2F3502215285D8600DF2D5B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2450,6 +2693,7 @@
 		D2F3509C1511623600A56B8D /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2465,6 +2709,7 @@
 		D2F3509D1511623600A56B8D /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2525,6 +2770,7 @@
 		D2FD861C14F0E5EF006A9A90 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
@@ -2541,6 +2787,7 @@
 		D2FD861D14F0E5EF006A9A90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
@@ -2557,6 +2804,7 @@
 		D2FEE83A1539D763004CFF62 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2572,6 +2820,7 @@
 		D2FEE83B1539D763004CFF62 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -2587,6 +2836,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A61D6F4815DC3A8F005AFDA5 /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A61D6F4915DC3A8F005AFDA5 /* Debug */,
+				A61D6F4A15DC3A8F005AFDA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

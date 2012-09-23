@@ -36,10 +36,17 @@
     NSMutableDictionary *_contexts;
 }
 
+#pragma mark - Obtaining the Default Context Manager
+/** @name Obtaining the Default Context Manager */
+
 /**
  @brief Returns the default context manager
  */
 + (id)defaultContextManager;
+
+
+#pragma mark - Registering and Unregistering Render Contexts
+/** @name Registering and Unregistering Render Contexts */
 
 /**
  @brief Registers the given render context for the specified OpenGL context
@@ -51,6 +58,10 @@
  @brief Unregisters the render context for the given OpenGL context
  */
 - (void)unregisterRenderContextForOpenGLContext:(IC_PLATFORM_GL_CONTEXT *)openGLContext;
+
+
+#pragma mark - Obtaining Render Contexts for OpenGL Contexts
+/** @name Obtaining Render Contexts for OpenGL Contexts */
 
 /**
  @brief Returns the render context for the given OpenGL context

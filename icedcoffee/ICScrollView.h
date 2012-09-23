@@ -74,6 +74,9 @@
     kmVec3 _contentMax;
 }
 
+#pragma mark - Working with the Scroll View's Content Size and Offset
+/** @name Working with the Scroll View's Content Size and Offset */
+
 /**
  @brief The size of the scroll view's contents
  */

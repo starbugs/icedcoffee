@@ -24,21 +24,14 @@
 
 #import <Foundation/Foundation.h>
 
-enum {
-    ICNodeVisitorTypeUnknown = 0,
-    ICNodeVisitorTypeDrawing = 1,
-    ICNodeVisitorTypePicking = 2
-};
-typedef uint ICNodeVisitorType;
-
 @class ICNode;
 
 /**
  @brief Abstract node visitor used for traversing an IcedCoffee scene graph
  
  ICNodeVisitor is an abstract base class providing the foundation for IcedCoffee's
- node visitation system. A node visitor is used to traverse a scene graph and
- process its nodes.
+ node visitation system. A node visitor is used to traverse a given scene graph and
+ process its nodes for a certain purpose.
  
  IcedCoffee ships with two built-in node visitors: ICNodeVisitorDrawing is used
  by the framework to draw scene graphs on a framebuffer whereas ICNodeVisitorPicking
@@ -51,10 +44,9 @@ typedef uint ICNodeVisitorType;
     BOOL _skipChildren;
 }
 
-/**
- @brief The receiver's owner node
- */
-@property (nonatomic, readonly) ICNode *owner;
+
+#pragma mark - Initializing a Node Visitor
+/** @name Initializing a Node Visitor */
 
 /**
  @brief Initializes the receiver with the given owner node
@@ -67,6 +59,19 @@ typedef uint ICNodeVisitorType;
  parameter to indicate that the receiver does not have an owner.
  */
 - (id)initWithOwner:(ICNode *)owner;
+
+
+#pragma mark - Obtaining the Node Visitor's Owner
+/** @name Obtaining the Node Visitor's Owner */
+
+/**
+ @brief The receiver's owner node
+ */
+@property (nonatomic, readonly) ICNode *owner;
+
+
+#pragma mark - Performing Visitation
+/** @name Performing Visitation */
 
 /**
  @brief Performs visitation of the scene graph rooted in the given node
@@ -104,7 +109,7 @@ typedef uint ICNodeVisitorType;
 /**
  @brief Sets up the environment for visiting the given node
  
- Called by ICNodeVisitor::visitNode: before ICNodeVisitor::visitSingleNode is called.
+ Called by ICNodeVisitor::visitNode: before ICNodeVisitor::visitSingleNode: is called.
  Override this method in a subclass to set up the environment for visition of the given node.
  */
 - (void)preVisitNode:(ICNode *)node;

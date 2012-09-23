@@ -89,16 +89,18 @@
      y3  4+------6+--------------12+-----14+
           |   2   |       5        |   8   |
      y4  5+------7+--------------13+-----15+
-     */    
+     */
     
     icV3F_C4F_T2F vertices[NUM_VERTICES];
+    
+    CGSize textureDisplaySize = [_texture displayContentSize];
     
     float x1 = 0;
     float y1 = 0;
     float x2 = _scale9Rect.origin.x;
     float y2 = _scale9Rect.origin.y;
-    float x3 = _size.x - (_texture.size.width - _scale9Rect.origin.x - _scale9Rect.size.width);
-    float y3 = _size.y - (_texture.size.height - _scale9Rect.origin.y - _scale9Rect.size.height);
+    float x3 = _size.x - (textureDisplaySize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
+    float y3 = _size.y - (textureDisplaySize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
     float x4 = _size.x;
     float y4 = _size.y;
     float z = 0;
@@ -106,10 +108,10 @@
     // IcedCoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
     float tx4 = 0;
     float ty4 = 1.0f;
-    float tx3 = _scale9Rect.origin.x / _texture.size.width;
-    float ty3 = (_scale9Rect.origin.y + _scale9Rect.size.height) / _texture.size.height;
-    float tx2 = (_scale9Rect.origin.x + _scale9Rect.size.width) / _texture.size.width;
-    float ty2 = _scale9Rect.origin.y / _texture.size.height;
+    float tx3 = _scale9Rect.origin.x / textureDisplaySize.width;
+    float ty3 = (_scale9Rect.origin.y + _scale9Rect.size.height) / textureDisplaySize.height;
+    float tx2 = (_scale9Rect.origin.x + _scale9Rect.size.width) / textureDisplaySize.width;
+    float ty2 = _scale9Rect.origin.y / textureDisplaySize.height;
     float tx1 = 1.0f;
     float ty1 = 0.0f;
     

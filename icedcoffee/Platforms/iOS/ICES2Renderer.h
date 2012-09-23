@@ -37,6 +37,9 @@
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 
+/**
+ @brief Implements the icedcoffee OpenGL ES 2 renderer
+ */
 @interface ICES2Renderer : NSObject <ICESRenderer>
 {
     // The pixel dimensions of the CAEAGLLayer
@@ -62,7 +65,6 @@
 	EAGLContext *context_;
 }
 
-/** EAGLContext */
 @property (nonatomic,readonly) EAGLContext* context;
 
 - (BOOL)resizeFromLayer:(CAEAGLLayer *)layer;

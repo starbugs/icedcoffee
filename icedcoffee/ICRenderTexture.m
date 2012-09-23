@@ -181,6 +181,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
     if (_fbo) {
         glDeleteFramebuffers(1, &_fbo);
+        _fbo = 0;
     }
     
 	[super dealloc];
@@ -190,13 +191,24 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 {
     float w = size.x;
     float h = size.y;
-    
+
     if (w == _size.x &&
         h == _size.y)
         return; // content size not changed -- do nothing
-
-    [super setSize:size];
     
+    [super setSize:size];
+
+    if (w == 0 || h == 0) {
+        // If size x*y==0, just give up the texture and FBO
+        [_texture release];
+        _texture = nil;
+        if (_fbo) {
+            glDeleteFramebuffers(1, &_fbo);
+            _fbo = 0;
+        }
+        return;
+    }
+
     w = ICPointsToPixels(w);
     h = ICPointsToPixels(h);
     
@@ -223,15 +235,20 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
     
+    ICHostViewController *hostViewController = [self hostViewController];
+    if (!hostViewController)
+        hostViewController = [ICHostViewController currentHostViewController];
+    ICResolutionType resolutionType = [hostViewController bestResolutionTypeForCurrentScreen];
+    
     void *data = malloc((int)(powW * powH * 4));
     memset(data, 0, (int)(powW * powH * 4));
     
     [_texture release];
     _texture = [[ICTexture2D alloc] initWithData:data
                                      pixelFormat:_pixelFormat
-                                      pixelsWide:powW
-                                      pixelsHigh:powH
-                                            size:CGSizeMake(w, h)];
+                                     textureSize:CGSizeMake(powW, powH)
+                                     contentSize:CGSizeMake(w, h)
+                                  resolutionType:resolutionType];
     free(data);
     
     // Associate texture with FBO
@@ -337,7 +354,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     glGetIntegerv(GL_VIEWPORT, _oldFBOViewport);
         
 	// Adjust the viewport to the render texture's size
-	CGSize texSize = [_texture sizeInPixels];
+	CGSize texSize = [_texture contentSizeInPixels];
 	glViewport(0, 0, texSize.width, texSize.height);
 
     // Save the current framebuffer and switch to the render texture's framebuffer
@@ -403,19 +420,21 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         (self.frameUpdateMode == ICFrameUpdateModeSynchronized ||
         (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay))) {
         
-        // Enter render texture context
-        [self begin];
-        
-        // Visit inner scene for drawing
-        [self.subScene visit];
-        
-        // Reset needsDisplay property if applicable
-        if (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay) {
-            _needsDisplay = NO;
+        if (_fbo && _texture) {
+            // Enter render texture context
+            [self begin];
+            
+            // Visit inner scene for drawing
+            [self.subScene visit];
+            
+            // Reset needsDisplay property if applicable
+            if (self.frameUpdateMode == ICFrameUpdateModeOnDemand && _needsDisplay) {
+                _needsDisplay = NO;
+            }
+            
+            // Exit render texture context
+            [self end];
         }
-        
-        // Exit render texture context
-        [self end];
     } else if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         [self pushRenderTextureMatrices];
     }

@@ -55,7 +55,7 @@
  
  <h3>Root Scenes</h3>
 
- Scenes play a central role in the IcedCoffee framework. In order to benefit from IcedCoffee's
+ Scenes play a central role in the Icedcoffee framework. In order to benefit from Icedcoffee's
  event handling and user interface rendering capabilities, your application must provide at least
  one scene, called the root scene. The root scene represents the origin of all contents that
  are drawn on the OpenGL framebuffer of the host view that is managed by your application's
@@ -104,7 +104,7 @@
  up a Root Scene". The only difference is that you add the scene as a child of another node
  or set it as the ICRenderTexture::subScene property of a render texture.
  
- <h3>Scene Sizes and The Relation of Scenes to Frame Buffers</h3>
+ <h3>Scene Sizes and The Relation of Scenes to Framebuffers</h3>
  
  Newly initialized scenes have zero size until they are added to an existing scene graph
  or assigned to a host view controller. If you need a valid size for the scene in order to set
@@ -119,14 +119,14 @@
  buffer of a scene is defined by its first ancestor defining a render target, or, if no such
  node exists, the host view controller.
  
- When a scene is resized (explicitly or implicitly) it attempts to resize its descendant
+ When a scene is resized (explicitly or implicitly), it attempts to resize its descendant
  scenes to its own size, following the third convention described in "Sub Scenes". This does,
  however, not have an effect on descendant render texture sub scenes, since these are
  disconnected from the drawing mechanism of their parent scenes as discussed above.
  
  <h3>Standard Scenes (ICScene) versus User Interface Scenes (ICUIScene)</h3>
  
- Along with the standard scene implemented in the ICScene class, IcedCoffe provides a
+ Along with the standard scene implemented in the ICScene class, Icedcoffe provides a
  special subclass that is designed to host user interfaces, named ICUIScene. ICUIScene
  essentially provides a content view (ICView) child whose size is synchronized automatically
  with the UI scene's size. This allows for automatic resizing and layouting of the content
@@ -141,10 +141,9 @@
  Generally, the following points should be respected when subclassing ICScene:
  
  <ol>
-    <li>ICScene's designated initializer is ICScene::init. You may override <code>init</code>
-    to implement custom initialization. For instance, you may set a different camera or
-    different visitors by default in your subclass. You may also set up predefined scene
-    content in <code>init</code>, however, remember that ICScene is initialized with zero
+    <li>ICScene's designated initializer is ICScene::initWithCamera:. You may override
+    it to implement custom initialization. You may also set up predefined scene
+    content in ICScene::initWithCamera:. However, remember that ICScene is initialized with zero
     size, so automatic positioning behaviors implement in e.g. ICNode::centerNode will
     not work unless you define a size on your own.</li>
     <li>ICScene overrides ICNode::drawWithVisitor: to set up the scene for drawing or
@@ -154,8 +153,8 @@
     ICScene::childrenDidDrawWithVisitor:, you should call
     <code>[super childrenDidDrawWithVisitor:visitor];</code> <i>after</i> your custom code.</li>
     <li>If you need to customize scene setup and tear down you may override
-    ICScene::setUpSceneForDrawing, ICScene::tearDownSceneForDrawing,
-    ICScene::setUpSceneForPickingWithPoint:, and ICScene::tearDownSceneForPicking.</li>
+    ICScene::setUpSceneForDrawingWithVisitor:, ICScene::tearDownSceneAfterDrawingWithVisitor:,
+    ICScene::setUpSceneForPickingWithVisitor:, and ICScene::tearDownSceneAfterPickingWithVisitor:.</li>
     <li>ICScene overrides ICNode::setParent: in order to adjust its size to the parent
     framebuffer's size. If you override, setParent: call <code>[super setParent:parent]</code>
     before implementing your own code.</li>
@@ -185,16 +184,58 @@
     GLint _oldViewport[4];
 }
 
+
+#pragma mark - Creating a Scene
+/** @name Creating a Scene */
+
+/**
+ @brief Returns an autoreleased scene object initialized with a default camera
+ 
+ @sa init:
+ */
++ (id)scene;
+
+/**
+ @brief Returns an autoreleased scene object initialized with the given camera
+ 
+ @sa initWithCamera:
+ */
++ (id)sceneWithCamera:(ICCamera *)camera;
+
+/**
+ @brief Initializes the receiver with a default camera
+ 
+ This method initializes the receiver with a default camera as specified in #IC_DEFAULT_CAMERA.
+ */
+- (id)init;
+
+/**
+ @brief Initializes the receiver with the given camera
+ */
+- (id)initWithCamera:(ICCamera *)camera;
+
+
+#pragma mark - Managing the Host View Controller
+/** @name Managing the Host View Controller */
+
 /**
  @brief The ICHostViewController object associated with the receiver
  */
 @property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
     ICHostViewController *hostViewController;
 
+
+#pragma mark - Managing the Camera
+/** @name Managing the Camera */
+
 /**
  @brief An ICCamera object used to define the receiver's projection and model-view matrices
  */
 @property (nonatomic, retain) ICCamera *camera;
+
+
+#pragma mark - Working with Visitors and Render Textures
+/** @name Working with Visitors and Render Textures */
 
 /**
  @brief An ICNodeVisitor object defining the visitor used to draw the receiver's contents
@@ -207,6 +248,10 @@
 @property (nonatomic, retain) ICNodeVisitorPicking *pickingVisitor;
 
 @property (nonatomic, assign) ICRenderTexture *renderTexture;
+
+
+#pragma mark - Clearing the Scene's Framebuffer
+/** @name Clearing the Scene's Framebuffer */
 
 /**
  @brief An icColor4B value defining the clear color used to clear the receiver's framebuffer
@@ -232,38 +277,30 @@
  */
 @property (nonatomic, assign) BOOL clearsStencilBuffer;
 
+
+#pragma mark - Managing OpenGL-specific Scene Setup Properties
+/** @name Managing OpenGL-specific Scene Setup Properties */
+
 /**
  @brief A boolean flag indicating whether depth testing is performed by the receiver
  
  If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
- GL_DEPTH_TEST state before drawing the scene's contents. The default value for this flag is NO.
+ ``GL_DEPTH_TEST`` state before drawing the scene's contents. The default value for this flag
+ is ``NO``.
  */
 @property (nonatomic, assign) BOOL performsDepthTesting;
 
 /**
  @brief A boolean flag indicating whether face culling is performed by the receiver
 
- If face culling is enabled, ICScene will enable the GL_CULL_FACE state before drawing the
- scene's contents. The default value for this flag is YES.
+ If face culling is enabled, ICScene will enable the ``GL_CULL_FACE`` state before drawing the
+ scene's contents. The default value for this flag is ``YES``.
  */
 @property (nonatomic, assign) BOOL performsFaceCulling;
 
-/**
- @brief Returns an autoreleased scene object initialized with a default camera and
- default visitors
- 
- @sa init:
- */
-+ (id)scene;
 
-/**
- @brief Initializes the receiver with a default camera and default visitors.
- 
- This method initializes the receiver with a default camera as specified
- in #IC_DEFAULT_CAMERA, a default drawing visitor as specified in IC_DEFAULT_DRAWING_VISITOR,
- and a default picking visitor as specified in IC_DEFAULT_PICKING_VISITOR.
- */
-- (id)init;
+#pragma mark - Checking the Scene's Status
+/** @name Checking the Scene's Status */
 
 /**
  @brief Returns a boolean flag indicating whether the receiver is the root scene
@@ -272,6 +309,10 @@
  not have a parent node.
  */
 - (BOOL)isRootScene;
+
+
+#pragma mark - Drawing the Scene
+/** @name Drawing the Scene */
 
 /**
  @brief Sets up the drawing environment for the receiver before drawing
@@ -286,7 +327,7 @@
 /**
  @brief Sets up the drawing environment for the receiver before picking
  */
-- (void)setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor;
+- (void)setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor;
 
 /**
  @brief Resets the drawing environment of the receiver after picking
@@ -298,6 +339,10 @@
  drawing visitor, and finally tears down the scene's drawing environment
  */
 - (void)visit;
+
+
+#pragma mark - Performing Hit Tests
+/** @name Performing Hit Tests */
 
 /**
  @brief Performs a hit test on the receiver's node hierarchy
@@ -361,6 +406,10 @@
  receiver's camera
  */
 - (icRay3)worldRayFromFramebufferLocation:(CGPoint)location;
+
+
+#pragma mark - Managing the Scene's Size
+/** @name Managing the Scene's Size */
 
 /**
  @brief Sets the size of the receiver, adjusts the viewport of the camera and sets the size of

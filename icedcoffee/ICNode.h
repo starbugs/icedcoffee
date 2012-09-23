@@ -37,9 +37,12 @@
 @class ICHostViewController;
 
 /**
+ @brief Block type for filtering nodes
+ */
+typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
+
+/**
  @brief Base class for drawable nodes in a scene
- 
- <h3>Overview</h3>
  
  The ICNode class represents a low-level drawable object which is capable of receiving user
  interaction events from the framework. Each node provides an array of strong references to its
@@ -69,54 +72,50 @@
  devices. Event handling is implemented on top of the scene graph in the ICScene, ICResponder, and
  ICHostViewController classes amongst others.
 
- <h3>Subclassing</h3>
+ ### Subclassing ###
  
  ICNode may be subclassed to implement custom nodes. Most likely, you will want to implement
  custom drawing and/or custom event handling (based on ICResponder.)
  
- <h4>Custom Drawing</h4>
+ #### Custom Drawing ####
  
- <ul>
-    <li>ICNode's designated initializer is ICNode::init. You should override ICNode::init
-    to implement custom initialization on top of ICNode.</li>
-    <li>Set a custom shader program in the subclasses' initializer if necessary.</li>
-    <li>ICNode::drawWithVisitor: is called by the framework when the node needs to be drawn into
-    a framebuffer. It is used for both drawing and picking.</li>
-    <li>When you override ICNode::drawWithVisitor:, first check whether the node is visible and
-    skip any drawing if it is not.</li>
-    <li>IcedCoffee does by default provide two different visitors. ICNodeVisitorDrawing is
+  - ICNode's designated initializer is ICNode::init. You should override ICNode::init
+    to implement custom initialization on top of ICNode.
+  - Set a custom shader program in the subclasses' initializer if necessary.
+  - ICNode::drawWithVisitor: is called by the framework when the node needs to be drawn into
+    a framebuffer. It is used for both drawing and picking.
+  - When you override ICNode::drawWithVisitor:, first check whether the node is visible and
+    skip any drawing if it is not.
+  - IcedCoffee does by default provide two different visitors. ICNodeVisitorDrawing is
     used for rendering objects on screen while ICNodeVisitorPicking is used to draw objects
     on an internal picking framebuffer. ICNode provides a standard way of setting up shaders
     for drawing and picking. Hence, after checking for visibility, you should call
     ICNode::applyStandardDrawSetupWithVisitor: . This will automatically activate the node's shader
-    program for drawing or the default picker shader program for picking.</li>
-    <li>You may implement custom picking shapes or optimized drawing code for picking by checking
+    program for drawing or the default picker shader program for picking.
+  - You may implement custom picking shapes or optimized drawing code for picking by checking
     the class of the visitor object given when ICNode::drawWithVisitor: is called. If visitor is
     kind of class ICNodeVisitorDrawing, provide code to draw the object's visible shape on screen.
     If visitor is kind of class ICNodeVisitorPicking, provide code to draw the object's
-    pickable shape.</li>
-    <li>You may also implement your drawing code without taking care of picking. In this
+    pickable shape.
+  - You may also implement your drawing code without taking care of picking. In this
     case the framework will automatically use the object's drawn shape as a picking shape
-    provided that you employ ICNode::applyStandardDrawSetupWithVisitor: to set up drawing.</li>
- </ul>
+    provided that you employ ICNode::applyStandardDrawSetupWithVisitor: to set up drawing.
  
- <h4>Custom Event Handling</h4>
+ #### Custom Event Handling ####
  
- <ul>
-    <li>Event handling is based on the ICResponder super class. You implement event handlers
+  - Event handling is based on the ICResponder super class. You implement event handlers
     by overriding one of the event handler methods defined there, e.g. by implementing
     ICResponder::mouseDown:. You may override both touch and mouse event handler methods in one
     ICNode subclass. On Mac OS X the node will receive mouse events and on iOS it will receive
-    touch events.</li>
-    <li>By default, events received but not handled by your node will be passed on to the next
+    touch events.
+  - By default, events received but not handled by your node will be passed on to the next
     responder in the responder chain. The next responder is by default set to the parent of the
     node. You may choose to override this default by implementing ICNode::init and setting
     ICResponder::nextResponder to some other object. You may suppress event forwarding by
     implementing the respective event handler with an empty body in your subclass. If you
     implement a certain event handler method for performing a specific task, you may choose to
     pass the event to the next responder by calling the respective event method on
-    <code>self.nextResponder</code> at the end of your method implementation.</li>
- </ul>
+    <code>self.nextResponder</code> at the end of your method implementation.
  */
 @interface ICNode : ICResponder
 {
@@ -146,8 +145,8 @@
 }
 
 
-#pragma mark - Lifecycle
-/** @name Lifecycle */
+#pragma mark - Initializing a Node
+/** @name Initializing a Node */
 
 /**
 @brief Initializes the receiver
@@ -157,21 +156,37 @@
 - (id)init;
 
 
-#pragma mark - Composition
-/** @name Composition */
+#pragma mark - Compositing Nodes
+/** @name Compositing Nodes */
 
 /**
  @brief Returns an array containing the receiver's children nodes
+ 
+ @sa
+    - drawingChildren
+    - pickingChildren
+    - hasChildren
+    - childForTag:
+    - childrenOfType:
+    - descendants
  */
 @property (nonatomic, readonly, getter=children) NSArray *children;
 
 /**
  @brief Returns an array containing the receiver's children nodes to be used for drawing
+ 
+ @sa
+    - pickingChildren
+    - children
  */
 - (NSArray *)drawingChildren;
 
 /**
  @brief Returns an array containing the receiver's children nodes to be used for picking
+ 
+ @sa
+    - drawingChildren
+    - children
  */
 - (NSArray *)pickingChildren;
 
@@ -185,6 +200,10 @@
  ICNode::setParent: to implement custom program logic. When overriding, you should
  always call <code>[super setParent:parent]</code> to ensure the parent is set
  appropriately in ICNode.
+ 
+ @sa
+    - ancestors
+    - children
  */
 @property (nonatomic, assign, setter=setParent:) ICNode *parent;
 
@@ -192,6 +211,11 @@
  @brief Adds a child node to the receiver's children array
  
  @param child A reference to a valid ICNode object. When added, the object is retained.
+ 
+ @sa
+    - insertChild:atIndex:
+    - removeChild:
+    - children
  */
 - (void)addChild:(ICNode *)child;
 
@@ -200,6 +224,10 @@
  
  @param child A reference to a valid ICNode object. When inserted, the object is retained.
  @param index An int specifying an index position into the node's children array.
+ 
+ @sa
+    - addChild:
+    - children
  */
 - (void)insertChild:(ICNode *)child atIndex:(uint)index;
 
@@ -207,6 +235,11 @@
  @brief Removes a child node from the receiver's children array
  
  @param child A reference to a valid ICNode object. When removed, the object is released.
+ 
+ @sa
+    - removeChildAtIndex:
+    - removeAllChildren:
+    - children
  */
 - (void)removeChild:(ICNode *)child;
 
@@ -215,11 +248,21 @@
  
  @param index An int specifying the index of the child node to be removed. When removed,
  the object will be released.
+ 
+ @sa
+    - removeChild:
+    - removeAllChildren:
+    - children
  */
 - (void)removeChildAtIndex:(uint)index;
 
 /**
  @brief Removes all children from the receiver
+ 
+ @sa
+    - removeChild:
+    - removeChildAtIndex:
+    - children
  */
 - (void)removeAllChildren;
 
@@ -227,21 +270,35 @@
  @brief A boolean value indicating whether the receiver has children
  
  @return Returns YES when the receiver has children or NO if it does not have any children.
+ 
+ @sa
+    - children
  */
 - (BOOL)hasChildren;
 
 /**
  @brief Returns the receiver's immediate child for the specified tag
+ 
+ @sa
+    - children
  */
 - (ICNode *)childForTag:(uint)tag;
 
 /**
  @brief Returns all children of the receiver that are kind of the specified class
+ 
+ @sa
+    - childrenNotOfType:
+    - children
  */
 - (NSArray *)childrenOfType:(Class)classType;
 
 /**
  @brief Returns all children of the receiver that are not kind of the specified class
+ 
+ @sa
+    - childrenOfType:
+    - children
  */
 - (NSArray *)childrenNotOfType:(Class)classType;
 
@@ -250,6 +307,12 @@
  
  @return Returns an NSArray of ICNode objects, ordered ascending beginning with the first
  ancestor node.
+ 
+ @sa
+    - ancestorsOfType:
+    - ancestorsNotOfType:
+    - ancestorsConformingToProtocol:
+    - ancestorsFilteredUsingBlock:
  */
 - (NSArray *)ancestors;
 
@@ -264,7 +327,7 @@
  @return Returns an NSArray containg zero or more ICNode objects, ordered ascending
  beginning with the first ancestor node of the receiver that matches the filter rules.
  */
-- (NSArray *)ancestorsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+- (NSArray *)ancestorsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock;
 
 /**
  @brief Returns an array containing ancestor nodes which are kind of the given class type
@@ -302,6 +365,12 @@
  
  @return Returns an NSArray of ICNode objects, ordered descending beginning with the
  first child of the receiver.
+ 
+ @sa
+    - descendantsOfType:
+    - descendantsNotOfType:
+    - descendantsConformingToProtocol:
+    - descendantsFilteredUsingBlock:
  */
 - (NSArray *)descendants;
 
@@ -316,7 +385,7 @@
  @return Returns an NSArray containg zero or more ICNode objects, order descending
  beginning with the first descendant of the receiver that matches the filter rules.
  */
-- (NSArray *)descendantsFilteredUsingBlock:(BOOL (^)(ICNode *node, BOOL *stop))filterBlock;
+- (NSArray *)descendantsFilteredUsingBlock:(ICNodeFilterBlockType)filterBlock;
 
 /**
  @brief Returns an array of descendant nodes which are kind of the given class type
@@ -410,8 +479,8 @@
 - (ICHostViewController *)hostViewController;
 
 
-#pragma mark - Transforms
-/** @name Transforms */
+#pragma mark - Transforming a Node
+/** @name Transforming a Node */
 
 /**
  @brief The transform matrix of the receiver
@@ -639,8 +708,8 @@
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
 
-#pragma mark - Order
-/** @name Order */
+#pragma mark - Managing Order
+/** @name Managing Order */
 
 /**
  @brief The index of the receiver in its parent's children array
@@ -668,8 +737,8 @@
 - (void)orderBack;
 
 
-#pragma mark - Bounds
-/** @name Bounds */
+#pragma mark - Managing a Node's Bounds
+/** @name Managing a Node's Bounds */
 
 /**
  @brief The receiver's axis-aligned bounding box
@@ -754,7 +823,7 @@
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
- @brief Draws the receiver
+ @brief Draws the receiver's contents
  
  This method is called by the framework to draw the receiver using a visitor. You should
  never call this method directly unless you know what you are doing.
@@ -806,8 +875,8 @@
 - (void)setNeedsDisplay;
 
 
-#pragma mark - Ray-based Hit Testing
-/** @name Ray-based Hit Testing */
+#pragma mark - Performing Ray-based Hit Testing
+/** @name Performing Ray-based Hit Testing */
 
 /**
  @brief Performs a local ray-based hit test on the receiver
@@ -824,8 +893,8 @@
 - (ICHitTestResult)localRayHitTest:(icRay3)ray;
 
 
-#pragma mark - User Interaction Support
-/** @name User Interaction Support */
+#pragma mark - Managing User Interaction Support
+/** @name Managing User Interaction Support */
 
 /**
  @brief Indicates whether the receiver should receive user interaction events from the event

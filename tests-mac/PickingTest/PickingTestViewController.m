@@ -55,7 +55,7 @@ enum {
     return self;
 }
 
-- (void)setupSimpleTestScene
+- (void)setUpSimpleTestScene
 {
     ICUIScene *scene = [ICUIScene scene];
     scene.name = @"Picking Test (Single Sprite)";
@@ -65,12 +65,26 @@ enum {
     ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
     
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
-    [scene.contentView addChild:rs];    
+    [scene.contentView addChild:rs];
+    
+    ICLine *line = [ICLine lineWithOrigin:kmVec3Make(150, 150, 0)
+                                   target:kmVec3Make(200, 250, 0)
+                                lineWidth:1];
+    [scene.contentView addChild:line];
+    ICLine *line2 = [ICLine lineWithOrigin:kmVec3Make(250, 150, 0)
+                                    target:kmVec3Make(200, 250, 0)
+                                 lineWidth:1];
+    [scene.contentView addChild:line2];
+    ICLine *line3 = [ICLine lineWithOrigin:kmVec3Make(200, 250, 0)
+                                    target:kmVec3Make(250, 150, 0)
+                                 lineWidth:1];
+    [scene.contentView addChild:line3];
+    
     
     [self addTestScene:scene withHint:@"Sprite flips its texture vertically when clicked"];
 }
 
-- (void)setupSpriteOverlapTestScene
+- (void)setUpSpriteOverlapTestScene
 {
     ICUIScene *scene = [ICUIScene scene];
     scene.name = @"Picking Test (Sprite Overlap)";
@@ -91,7 +105,7 @@ enum {
     [self addTestScene:scene withHint:@"Sprites flip their textures vertically when clicked"];
 }
 
-- (void)setupCombinedTestScene
+- (void)setUpCombinedTestScene
 {
     ICUIScene *combinedScene = [ICUIScene scene];
     combinedScene.name = @"Picking Test (Combined)";
@@ -171,21 +185,21 @@ enum {
     [self addTestScene:combinedScene withHint:@"Sprites/views flip their texture vertically when clicked"];
 }
 
-- (void)setupTestScenes
+- (void)setUpTestScenes
 {
-    [self setupSimpleTestScene];
-    [self setupSpriteOverlapTestScene];
-    [self setupCombinedTestScene];
+    [self setUpSimpleTestScene];
+    [self setUpSpriteOverlapTestScene];
+    [self setUpCombinedTestScene];
     
     [[self scheduler] scheduleUpdateForTarget:self];    
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
-    [super setupScene];
+    [super setUpScene];
     
     // Set up the test's scene
-    [self setupTestScenes];
+    [self setUpTestScenes];
     
     // Set up user interface controls for the test
     ICView *buttonPanel = [ICView viewWithSize:CGSizeMake(310, 21)];

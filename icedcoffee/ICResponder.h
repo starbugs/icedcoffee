@@ -59,8 +59,8 @@
 }
 
 
-#pragma mark - Responder Chain
-/** @name Responder Chain */
+#pragma mark - Managing the Responder Chain
+/** @name Managing the Responder Chain */
 
 /**
  @brief The next responder in the responder chain
@@ -87,8 +87,8 @@
 
 #if __IC_PLATFORM_DESKTOP
 
-#pragma mark - Mouse Events (Mac Platform)
-/** @name Mouse Events (Mac Platform) */
+#pragma mark - Handling Mouse Events
+/** @name Handling Mouse Events */
 
 /**
  @brief Called by the framework when the user presses the left mouse button on the receiver
@@ -155,8 +155,8 @@
 
 #if __IC_PLATFORM_IOS
 
-#pragma mark - Touch Events (iOS Platform)
-/** @name Touch Events (iOS Platform) */
+#pragma mark - Handling Touch Events
+/** @name Handling Touch Events */
 
 /**
  @brief Called by the framework when the user began touching on the receiver's shape

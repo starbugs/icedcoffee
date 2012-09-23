@@ -82,14 +82,18 @@
 
     icTime _deltaTime;
     struct timeval _lastUpdate;
+    uint64_t _frameCount;
     
     ICFrameUpdateMode _frameUpdateMode;
     BOOL _needsDisplay;
+    
+    // Issue #3
+    BOOL _didAlreadyCallViewDidLoad;
 }
 
 
-#pragma mark - Initialization
-/** @name Initialization */
+#pragma mark - Creating a Host View Controller
+/** @name Creating a Host View Controller */
 
 /**
  @brief Returns a new autoreleased default ICHostViewController subclass suitable for use with
@@ -116,9 +120,17 @@
  */
 - (id)init;
 
+/**
+ @brief Performs common initialization internally
+ 
+ This method should be called by all initializers to perform common initialization. Subclasses
+ should override this method in order to implement custom common initialization.
+ */
+- (void)commonInit;
 
-#pragma mark - Current Host View Controller
-/** @name Current Host View Controller */
+
+#pragma mark - Managing the Current Host View Controller
+/** @name Managing the Current Host View Controller */
 
 /**
  @brief Returns the current host view controller for the current thread
@@ -148,7 +160,7 @@
 /**
  @brief Makes the receiver the current host view controller for the current thread
 
- This method uses a global dictionary to store a weak reference to the current host view controller.
+ This method uses a global variable to store a weak reference to the current host view controller.
  The receiver should be made the current host view controller before other framework code is about
  to be executed in its context. Usually you do not have to call this method on your own, since
  ICHostViewController itself takes care of making the receiver the current host view controller in
@@ -166,8 +178,8 @@
 - (id)makeCurrentHostViewController;
 
 
-#pragma mark - Event Handling
-/** @name Event Handling */
+#pragma mark - Managing the First Responder
+/** @name Managing the First Responder */
 
 /**
  @brief The receiver's current first responder
@@ -175,8 +187,8 @@
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
 
 
-#pragma mark - Caches and Management
-/** @name Caches and Management */
+#pragma mark - Obtaining Caches and Contexts
+/** @name Obtaining Caches and Contexts */
 
 /**
  @brief The receiver's render context
@@ -189,13 +201,18 @@
 @property (nonatomic, readonly, getter=textureCache) ICTextureCache *textureCache;
 
 
-#pragma mark - Run Loop, Drawing and Animation
-/** @name Run Loop, Drawing and Animation */
+#pragma mark - Managing the Run Loop, Drawing and Animation
+/** @name Managing the Run Loop, Drawing and Animation */
 
 /**
  @brief Called by the framework to calculate the delta time between two consecutive frames
  */
 - (void)calculateDeltaTime;
+
+/**
+ @brief The number of frames drawn by the receiver so far
+ */
+@property (nonatomic, readonly) uint64_t frameCount;
 
 /**
  @brief The frame update mode used to present the receiver's scene
@@ -240,9 +257,16 @@
 /**
  @brief Called by the framework to set up the receiver's scene
  
+ @deprecated Deprecated as of v0.6.6. Use ICHostViewController::setUpScene instead.
+ */
+- (void)setupScene DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+/**
+ @brief Called by the framework to set up the receiver's scene
+ 
  To be overridden in subclasses. The default implementation does nothing.
  */
-- (void)setupScene;
+- (void)setUpScene;
 
 /**
  @brief Sets the given scene as the receiver's current scene and starts animation
@@ -280,20 +304,31 @@
 @property (nonatomic, readonly) ICTargetActionDispatcher *targetActionDispatcher;
 
 
-#pragma mark - Host View
-/** @name Host View */
+#pragma mark - Managing the Host View
+/** @name Managing the Host View */
 
 /**
  @brief Sets the view to be controlled by the receiver
  
  If view is set to a non-nil value, prepares the receiver's render context, initializes a texture
- cache if necessary, and calls ICHostViewController::setupScene on the receiver.
+ cache if necessary, and calls ICHostViewController::setUpScene on the receiver.
  */
 - (void)setView:(ICGLView *)view;
 
-#if defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+#if defined(__IC_PLATFORM_MAC)
 - (ICGLView *)view;
 #endif
+
+- (BOOL)isViewLoaded;
+
+// Issue #3: make sure we don't run into stack overflows with old style view instantiation
+@property (nonatomic, readonly) BOOL didAlreadyCallViewDidLoad;
+
+// Issue #3: iOS Interface Builder integration
+- (void)loadView;
+
+// Issue #3: iOS Interface Builder integration
+- (void)viewDidLoad;
 
 #ifdef __IC_PLATFORM_IOS
 - (EAGLContext *)openGLContext;
@@ -302,8 +337,8 @@
 #endif
 
 
-#pragma mark - Hit Testing
-/** @name Hit Test */
+#pragma mark - Performing Hit Tests
+/** @name Performing Hit Tests */
 
 /**
  @brief Performs a hit test on the current scene
@@ -322,8 +357,8 @@
 - (BOOL)canPerformDeferredReadbacks;
 
 
-#pragma mark - Retina Display Support
-/** @name Retina Display Support */
+#pragma mark - Supporting Retina Displays
+/** @name Supporting Retina Displays */
 
 /**
  @brief Enables or disables retina display support (iOS only)
@@ -354,11 +389,16 @@
  */
 - (void)setContentScaleFactor:(float)contentScaleFactor;
 
+/**
+ @brief Returns the best resolution type for the receiver's current screen
+ */
+- (ICResolutionType)bestResolutionTypeForCurrentScreen;
+
 
 #ifdef __IC_PLATFORM_MAC
 
-#pragma mark - Mouse Cursor
-/** @name Mouse Cursor */
+#pragma mark - Changing the Mouse Cursor
+/** @name Changing the Mouse Cursor */
 
 /**
  @brief Sets the mouse cursor (Mac only)

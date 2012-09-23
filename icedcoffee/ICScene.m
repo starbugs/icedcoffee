@@ -68,7 +68,18 @@
     return [[[[self class] alloc] init] autorelease];
 }
 
++ (id)sceneWithCamera:(ICCamera *)camera
+{
+    return [[[[self class] alloc] initWithCamera:camera] autorelease];
+}
+
 - (id)init
+{
+    ICCamera *camera = [[[IC_DEFAULT_CAMERA alloc] initWithViewport:CGRectNull] autorelease];
+    return [self initWithCamera:camera];
+}
+
+- (id)initWithCamera:(ICCamera *)camera
 {
     if ((self = [super init])) {
         // Note that initially, the scene is not assigned to a host view controller. This
@@ -79,7 +90,6 @@
         
         // Viewport of camera is set as soon as the scene is either added to an existing
         // scene graph or assigned to a host view controller
-        ICCamera *camera = [[[IC_DEFAULT_CAMERA alloc] initWithViewport:CGRectNull] autorelease];
         self.camera = camera;
         
         _clearColor = (icColor4B){255,255,255,255};
@@ -100,7 +110,6 @@
     
     [super dealloc];
 }
-
 
 - (ICNodeVisitorDrawing *)defaultDrawingVisitor
 {
@@ -181,7 +190,7 @@
     glDisable(GL_DEPTH_TEST);
 }
 
-- (void)setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor
+- (void)setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor
 {
     CGPoint point;
     GLint *viewport;
@@ -289,7 +298,7 @@
     if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
         [self setUpSceneForDrawingWithVisitor:(ICNodeVisitorDrawing *)visitor];
     } else {
-        [self setupSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor];
+        [self setUpSceneForPickingWithVisitor:(ICNodeVisitorPicking *)visitor];
     }
 }
 

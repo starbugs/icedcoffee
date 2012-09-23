@@ -47,11 +47,23 @@
 #import "icConfig.h"
 #import "kazmath/GL/matrix.h"
 
+/**
+ @addtogroup platform-macros Platform Macros
+ @{
+ */
+
 #ifdef __IC_PLATFORM_MAC
 #define IC_PLATFORM_GL_CONTEXT NSOpenGLContext
 #elif defined(__IC_PLATFORM_IOS)
 #define IC_PLATFORM_GL_CONTEXT EAGLContext
 #endif
+
+/** @} */
+
+/**
+ @addtogroup logging-and-debugging-macros Logging and Debugging Macros
+ @{
+ */
 
 NSString *NSStringFromGLError(GLenum error);
 
@@ -74,8 +86,16 @@ NSString *NSStringFromGLError(GLenum error);
 #define IC_CHECK_GL_ERROR_DEBUG()
 #endif
 
+/** @} */
+
+/**
+ @defgroup opengl-redefinitions OpenGL Redefinitions
+ @{
+ */
+
 // iOS
 #ifdef __IC_PLATFORM_IOS
+
 #define	glClearDepth				glClearDepthf
 #define glDeleteVertexArrays		glDeleteVertexArraysOES
 #define glGenVertexArrays			glGenVertexArraysOES
@@ -83,8 +103,12 @@ NSString *NSStringFromGLError(GLenum error);
 
 // Mac
 #elif defined(__IC_PLATFORM_MAC)
+
 #define glDeleteVertexArrays		glDeleteVertexArraysAPPLE
 #define glGenVertexArrays			glGenVertexArraysAPPLE
 #define glBindVertexArray			glBindVertexArrayAPPLE
 
 #endif
+
+/** @} */
+

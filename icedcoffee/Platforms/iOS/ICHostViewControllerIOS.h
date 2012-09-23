@@ -54,6 +54,9 @@
 
 @class ICTouchEventDispatcher;
 
+/**
+ @brief Implements an iOS host view controller
+ */
 @interface ICHostViewControllerIOS : ICHostViewController
 {
 @private

@@ -46,7 +46,7 @@
     ((ICButton *)sender).label.text = @"Test Button";
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     [scene setClearColor:(icColor4B){0,0,0,255}];
@@ -85,7 +85,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

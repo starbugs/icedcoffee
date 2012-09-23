@@ -1,9 +1,7 @@
 IcedCoffee Todos
 ================
 
-* Implement touch control events
 * Fix setAliasTexParameters (produces side effects)
-* Implement high resolution textures
 * Texture loading convenience (+ @2x retina display support)
 * Image and shader default bundles for framework resources
 * GL state management (?)

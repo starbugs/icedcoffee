@@ -34,33 +34,32 @@
 
 @implementation ICConfiguration
 
-@synthesize maxTextureSize = maxTextureSize_;
-@synthesize supportsPVRTC = supportsPVRTC_;
-@synthesize maxModelviewStackDepth = maxModelviewStackDepth_;
-@synthesize supportsNPOT = supportsNPOT_;
-@synthesize supportsBGRA8888 = supportsBGRA8888_;
-@synthesize supportsDiscardFramebuffer = supportsDiscardFramebuffer_;
-@synthesize supportsPixelBufferObject = supportsPixelBufferObject_;
-@synthesize OSVersion = OSVersion_;
+@synthesize maxTextureSize = _maxTextureSize;
+@synthesize supportsPVRTC = _supportsPVRTC;
+@synthesize supportsNPOT = _supportsNPOT;
+@synthesize supportsBGRA8888 = _supportsBGRA8888;
+@synthesize supportsDiscardFramebuffer = _supportsDiscardFramebuffer;
+@synthesize supportsPixelBufferObject = _supportsPixelBufferObject;
+@synthesize OSVersion = _OSVersion;
 
 //
 // singleton stuff
 //
-static ICConfiguration *_sharedConfiguration = nil;
+static ICConfiguration *g_sharedConfiguration = nil;
 
 static char * glExtensions;
 
 + (ICConfiguration *)sharedConfiguration
 {
-	if (!_sharedConfiguration)
-		_sharedConfiguration = [[self alloc] init];
+	if (!g_sharedConfiguration)
+		g_sharedConfiguration = [[self alloc] init];
     
-	return _sharedConfiguration;
+	return g_sharedConfiguration;
 }
 
-+(id)alloc
++ (id)alloc
 {
-	NSAssert(_sharedConfiguration == nil, @"Attempted to allocate a second instance of a singleton.");
+	NSAssert(g_sharedConfiguration == nil, @"Attempted to allocate a second instance of a singleton.");
 	return [super alloc];
 }
 
@@ -78,12 +77,12 @@ static char * glExtensions;
 }
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
 
--(id) init
+- (id)init
 {
 	if( (self=[super init])) {
 		
-		// Obtain iOS version
-		OSVersion_ = 0;
+		// Obtain OS version
+		_OSVersion = 0;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		NSLog(@"IcedCoffee on iOS");        
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
@@ -93,12 +92,12 @@ static char * glExtensions;
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
 		int idx=0x01000000;
-		for( NSString *str in arr ) {
+		for (NSString *str in arr) {
 			int value = [str intValue];
-			OSVersion_ += value * idx;
+			_OSVersion += value * idx;
 			idx = idx >> 8;
 		}
-		NSLog(@"IcedCoffee: OS version: %@ (0x%08x)", OSVer, OSVersion_);
+		NSLog(@"IcedCoffee: OS version: %@ (0x%08x)", OSVer, _OSVersion);
 		
 		NSLog(@"IcedCoffee: GL_VENDOR:   %s", glGetString(GL_VENDOR));
 		NSLog(@"IcedCoffee: GL_RENDERER: %s", glGetString(GL_RENDERER));
@@ -106,21 +105,21 @@ static char * glExtensions;
 		
 		glExtensions = (char *)glGetString(GL_EXTENSIONS);
 		
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTextureSize_);
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &_maxTextureSize);
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		if( OSVersion_ >= kICiOSVersion_4_0 )
-			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &maxSamplesAllowed_);
+		if (_OSVersion >= ICIOSVersion_4_0)
+			glGetIntegerv(GL_MAX_SAMPLES_APPLE, &_maxSamplesAllowed);
 		else
-			maxSamplesAllowed_ = 0;
+			_maxSamplesAllowed = 0;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
+		glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
 #endif
 		
-		supportsPVRTC_ = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
+		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		supportsNPOT_ = YES; // see cocos2d2
+		_supportsNPOT = YES; // see cocos2d2
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names
@@ -128,22 +127,22 @@ static char * glExtensions;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		BOOL bgra8a = [self checkForGLExtension:@"GL_IMG_texture_format_BGRA8888"];
 		BOOL bgra8b = [self checkForGLExtension:@"GL_APPLE_texture_format_BGRA8888"];
-		supportsBGRA8888_ = bgra8a | bgra8b;
+		_supportsBGRA8888 = bgra8a | bgra8b;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		supportsBGRA8888_ = [self checkForGLExtension:@"GL_EXT_bgra"];
+		_supportsBGRA8888 = [self checkForGLExtension:@"GL_EXT_bgra"];
 #endif
 		
-		supportsDiscardFramebuffer_ = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
+		_supportsDiscardFramebuffer = [self checkForGLExtension:@"GL_EXT_discard_framebuffer"];
         
-        supportsPixelBufferObject_ = [self checkForGLExtension:@"GL_ARB_pixel_buffer_object"];
+        _supportsPixelBufferObject = [self checkForGLExtension:@"GL_ARB_pixel_buffer_object"];
         
-		NSLog(@"IcedCoffee: GL_MAX_TEXTURE_SIZE: %d", maxTextureSize_);
-		NSLog(@"IcedCoffee: GL_MAX_SAMPLES: %d", maxSamplesAllowed_);
-		NSLog(@"IcedCoffee: GL supports PVRTC: %s", (supportsPVRTC_ ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports BGRA8888 textures: %s", (supportsBGRA8888_ ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports NPOT textures: %s", (supportsNPOT_ ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports discard_framebuffer: %s", (supportsDiscardFramebuffer_ ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports ARB_pixel_buffer_object: %s", (supportsPixelBufferObject_ ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL_MAX_TEXTURE_SIZE: %d", _maxTextureSize);
+		NSLog(@"IcedCoffee: GL_MAX_SAMPLES: %d", _maxSamplesAllowed);
+		NSLog(@"IcedCoffee: GL supports PVRTC: %s", (_supportsPVRTC ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL supports BGRA8888 textures: %s", (_supportsBGRA8888 ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL supports NPOT textures: %s", (_supportsNPOT ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL supports discard_framebuffer: %s", (_supportsDiscardFramebuffer ? "YES" : "NO") );
+		NSLog(@"IcedCoffee: GL supports ARB_pixel_buffer_object: %s", (_supportsPixelBufferObject ? "YES" : "NO") );
 		
 		//CHECK_GL_ERROR();
 	}
@@ -151,12 +150,12 @@ static char * glExtensions;
 	return self;
 }
 
-- (BOOL) checkForGLExtension:(NSString *)searchName
+- (BOOL)checkForGLExtension:(NSString *)extensionName
 {
 	// For best results, extensionsNames should be stored in your renderer so that it does not
 	// need to be recreated on each invocation.
-    NSString *extensionsString = [NSString stringWithCString:glExtensions encoding: NSASCIIStringEncoding];
+    NSString *extensionsString = [NSString stringWithCString:glExtensions encoding:NSASCIIStringEncoding];
     NSArray *extensionsNames = [extensionsString componentsSeparatedByString:@" "];
-    return [extensionsNames containsObject: searchName];
+    return [extensionsNames containsObject:extensionName];
 }
 @end

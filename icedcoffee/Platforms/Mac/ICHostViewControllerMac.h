@@ -49,12 +49,15 @@
 #import "ICMouseResponder.h"
 #import "ICMouseEventDispatcher.h"
 #import "ICGLView.h"
+#import "icMacros.h"
 #import <QuartzCore/CVDisplayLink.h>
+
+#ifdef __IC_PLATFORM_MAC
 
 // See http://developer.apple.com/library/mac/#qa/qa1385/_index.html
 
 /**
- @brief Host view controller for the Mac platform
+ @brief Host view controller for the Mac OS X platform
  
  ICHostViewControllerMac specializes and extends ICHostViewController to implement view management
  for the Mac OS X platform. Each Cocoa view that should display an IcedCoffee scene in your
@@ -78,11 +81,20 @@
     icTime _mouseOverStateDeltaTime;
 }
 
-@property (nonatomic, retain, setter=setView:) ICGLView *view;
+#pragma mark - Managing the Controller's View
+/** @name Managing the Controller's View */
+
+@property (nonatomic, retain, getter=view, setter=setView:) IBOutlet ICGLView *view;
+
+#pragma mark - Configuring Drawing
+/** @name Configuring Drawing */
 
 @property (nonatomic, assign) BOOL usesDisplayLink;
 
 @property (nonatomic, assign) BOOL drawsConcurrently;
+
+#pragma mark - Configuring Tracking of Mouse Movement
+/** @name Configuring Tracking of Mouse Movement */
 
 - (void)setAcceptsMouseMovedEvents:(BOOL)acceptsMouseMovedEvents;
 
@@ -93,3 +105,5 @@
 - (BOOL)updatesMouseEnterExitEventsContinuously;
 
 @end
+
+#endif // __IC_PLATFORM_MAC

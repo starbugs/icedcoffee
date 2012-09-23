@@ -108,21 +108,14 @@
     ICRenderContext *_renderContext;
 }
 
-/**
- @brief The receiver's render texture size in pixels
- */
-@property (nonatomic, assign, setter=setRenderTextureSizeInPixels:) CGSize renderTextureSizeInPixels;
-
-/**
- @brief A boolean flag indicating whether the receiver uses an auxiliary OpenGL context for picking
- */
-@property (nonatomic, readonly) BOOL usesAuxiliaryOpenGLContext;
+#pragma mark - Initializing a Picking Node Visitor
+/** @name Initializing a Picking Node Visitor */
 
 /**
  @brief Initializes the receiver with the given owner node
 
  Calls ICNodeVisitorPicking::initWithOwner:useAuxiliaryOpenGLContext: internally, with the
- useAuxiliaryOpenGLContext parameter set to YES.
+ ``useAuxiliaryOpenGLContext`` parameter set to ``YES``.
  
  @sa initWithOwner:useAuxiliaryOpenGLContext:
  */
@@ -135,12 +128,31 @@
  the owner so as to avoid retain cycles. It is the responsibility of the visitor's owner to
  deallocate the visitor before the owner is deallocated.
  
- @param owner An ICNode object representing the receiver's owner. You may specifiy nil for this
+ @param owner An ICNode object representing the receiver's owner. You may specifiy ``nil`` for this
  parameter to indicate that the receiver does not have an owner.
- @param useAuxiliaryContext If set to YES, creates and uses an auxiliary OpenGL context for
- drawing to the visitor's render texture. This should always be set to YES for maximum performance.
+ @param useAuxiliaryContext If set to ``YES``, creates and uses an auxiliary OpenGL context for
+ drawing to the visitor's render texture. This should always be set to ``YES`` for maximum
+ performance.
  */
 - (id)initWithOwner:(ICNode *)owner useAuxiliaryOpenGLContext:(BOOL)useAuxContext;
+
+
+#pragma mark - Using an Auxiliary OpenGL Context
+/** @name Using an Auxiliary OpenGL Context */
+
+/**
+ @brief A boolean flag indicating whether the receiver uses an auxiliary OpenGL context for picking
+ */
+@property (nonatomic, readonly) BOOL usesAuxiliaryOpenGLContext;
+
+
+#pragma mark - Managing the Visitor's Render Texture
+/** @name Managing the Visitor's Render Texture */
+
+/**
+ @brief The receiver's render texture size in pixels
+ */
+@property (nonatomic, assign, setter=setRenderTextureSizeInPixels:) CGSize renderTextureSizeInPixels;
 
 /**
  @brief Returns the number of pixels of the receiver's render texture
@@ -151,6 +163,10 @@
  @brief Returns the size of the receiver's render texture surface in bytes
  */
 - (uint)renderTextureMemorySize;
+
+
+#pragma mark - Using the Pick Context Stack
+/** @name Using the Pick Context Stack */
 
 /**
  @brief Pushes the given pick context to the receiver's pick context stack
@@ -177,6 +193,10 @@
  */
 - (GLint *)currentViewport;
 
+
+#pragma mark - Using the Ray Stack
+/** @name Using the Ray Stack */
+
 /**
  @brief Pushes a ray to the receiver's ray stack
  */
@@ -191,6 +211,10 @@
  @brief Returns the current top ray of the receiver's ray stack
  */
 - (icRay3 *)currentRay;
+
+
+#pragma mark - Performing Picking Tests
+/** @name Performing Picking Tests */
 
 /**
  @brief Performs a picking test and returns the resulting nodes

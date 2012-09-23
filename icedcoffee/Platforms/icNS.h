@@ -30,6 +30,11 @@
 
 #import <Foundation/Foundation.h> //	for NSObject
 
+/**
+ @addtogroup platform-macros Platform Macros
+ @{
+ */
+
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
 #define ICRectFromString(__r__)		CGRectFromString(__r__)
@@ -59,4 +64,4 @@
 
 #endif
 
-
+/** @} */

@@ -25,12 +25,17 @@
 #import "ICOSXEvent.h"
 #import "ICProjectionTransforms.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @class ICNode;
 
 /**
- @brief Represents a mouse event (Mac OS X only)
+ @brief Represents a mouse event
  */
 @interface ICMouseEvent : ICOSXEvent
+
+#pragma mark - Accessing System Event Properties
+/** @name Accessing System Event Properties */
 
 /**
  @brief The receiver's NSEvent button number
@@ -62,6 +67,10 @@
  */
 @property (nonatomic, readonly, getter=deltaZ) CGFloat deltaZ;
 
+
+#pragma mark - Obtaining the Event's Location
+/** @name Obtaining the Event's Location */
+
 /**
  @brief The event's location inside the host view
  
@@ -80,3 +89,6 @@
 - (kmVec3)locationInNode:(ICNode<ICProjectionTransforms> *)node;
 
 @end
+
+#endif // __IC_PLATFORM_MAC
+

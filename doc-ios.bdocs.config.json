@@ -1,0 +1,28 @@
+{
+	"doxyfilePath": "~/github/icedcoffee/Doxyfile-iOS",
+	"doxygenOutputPath": "~/github/icedcoffee/docs-iOS",
+	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"relativeOutputPath": "content/reference/ios/",
+
+	"executeDoxygen": true,
+	"executeNanoc": true,
+	"cleanIntermediates": true,
+
+	"mainTitle": "Icedcoffee iOS API Reference",
+	"version": "0.6.6",
+	
+	"classPrefix": "IC",
+	"macroPrefix": "IC_",
+	
+	"generateYAML": true,
+	"documentIvars": false,
+	
+	"nameMap": {
+		"anonEnum": {
+			"ICHitTest(.*)": "ICHitTestResult",
+			"ICControlEvent(.*)": "ICControlEvents",
+			"ICAbstractControlEvent(.*)": "ICAbstractControlEvents",
+			"IC(.*)Version(.*)": "ICOSVersion"			
+		}
+	}
+}

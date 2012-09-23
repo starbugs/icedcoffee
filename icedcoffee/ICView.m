@@ -389,7 +389,7 @@
     }
 }
 
-- (void)setAutoResizingMask:(NSUInteger)autoresizingMask
+- (void)setAutoResizingMask:(ICAutoResizingMask)autoresizingMask
 {
     _autoresizingMask = autoresizingMask;
 }

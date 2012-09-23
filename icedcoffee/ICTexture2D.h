@@ -1,9 +1,34 @@
+//
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+//  of the Software, and to permit persons to whom the Software is furnished to do
+//  so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+
 /*
+ 
+ORIGINAL LICENSE:
 
 ===== IMPORTANT =====
 
 This is sample code demonstrating API, technology or techniques in development.
-Although this sample code has been reviewed for technical aICuracy, it is not
+Although this sample code has been reviewed for technical accuracy, it is not
 final. Apple is supplying this information to help you plan for the adoption of
 the technologies and programming interfaces described herein. This information
 is subject to change, and software implemented based on this sample code should
@@ -60,66 +85,90 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 */
 
-#import <Availability.h>
+#import "icMacros.h"
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-#import <UIKit/UIKit.h>			// for UIImage
+#ifdef __IC_PLATFORM_IOS
+#import <UIKit/UIKit.h>	// for UIImage
 #endif
 
-#import <Foundation/Foundation.h> //	for NSObject
+#import <Foundation/Foundation.h>
 
-#import "Platforms/ICGL.h" // OpenGL stuff
-#import "Platforms/ICNS.h" // Next-Step stuff
-#import "icMacros.h"
+#import "Platforms/ICGL.h"
+#import "Platforms/ICNS.h"
 #import "icTypes.h"
 
 /** ICTexture2D class.
  * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * The created ICTexture2D object will always have power-of-two dimensions. 
  * Depending on how you create the ICTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "size" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
  * Be aware that the content of the generated textures will be upside-down!
  */
 @interface ICTexture2D : NSObject
 {
-	GLuint						name_;
-	CGSize						size_;
-	NSUInteger					width_,
-								height_;
-	ICPixelFormat		format_;
-	GLfloat						maxS_,
-								maxT_;
-	BOOL						hasPremultipliedAlpha_;
+@protected
+	GLuint				_name;
+	CGSize				_contentSizeInPixels;
+	NSUInteger			_width,
+						_height;
+	ICPixelFormat		_format;
+	GLfloat				_maxS,
+						_maxT;
+	BOOL				_hasPremultipliedAlpha;
+    ICResolutionType    _resolutionType;
 }
 
-/** Intializes with a texture2d with data */
-- (id) initWithData:(const void*)data pixelFormat:(ICPixelFormat)pixelFormat pixelsWide:(NSUInteger)width pixelsHigh:(NSUInteger)height size:(CGSize)size;
+/** @cond */ // Exclude from docs
+- (id)init __attribute__((unavailable));
+/** @endcond */
+
+- (id)initWithData:(const void*)data
+       pixelFormat:(ICPixelFormat)pixelFormat
+       textureSize:(CGSize)textureSizeInPixels
+       contentSize:(CGSize)contentSizeInPixels
+    resolutionType:(ICResolutionType)resolutionType;
+
+/** Intializes a texture with data */
+- (id)initWithData:(const void*)data
+       pixelFormat:(ICPixelFormat)pixelFormat
+        pixelsWide:(NSUInteger)width
+        pixelsHigh:(NSUInteger)height
+              size:(CGSize)contentSizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
 /** These functions are needed to create mutable textures */
-- (void) releaseData:(void*)data;
-- (void*) keepData:(void*)data length:(NSUInteger)length;
+- (void)releaseData:(void*)data;
+- (void *)keepData:(void*)data length:(NSUInteger)length;
 
 /** pixel format of the texture */
-@property(nonatomic,readonly) ICPixelFormat pixelFormat;
+@property (nonatomic, readonly) ICPixelFormat pixelFormat;
 /** width in pixels */
-@property(nonatomic,readonly) NSUInteger pixelsWide;
+@property (nonatomic, readonly) NSUInteger pixelsWide;
 /** hight in pixels */
-@property(nonatomic,readonly) NSUInteger pixelsHigh;
+@property (nonatomic, readonly) NSUInteger pixelsHigh;
 
 /** texture name */
-@property(nonatomic,readonly) GLuint name;
+@property (nonatomic, readonly) GLuint name;
 
 /** returns content size of the texture in pixels */
-@property(nonatomic,readonly, nonatomic) CGSize sizeInPixels;
+@property (nonatomic, readonly, nonatomic) CGSize contentSizeInPixels;
 
 /** texture max S */
-@property(nonatomic,readwrite) GLfloat maxS;
+@property (nonatomic, readwrite) GLfloat maxS;
 /** texture max T */
-@property(nonatomic,readwrite) GLfloat maxT;
+@property (nonatomic, readwrite) GLfloat maxT;
 /** whether or not the texture has their Alpha premultiplied */
-@property(nonatomic,readonly) BOOL hasPremultipliedAlpha;
+@property (nonatomic, readonly) BOOL hasPremultipliedAlpha;
+
+@property (nonatomic, readwrite) ICResolutionType resolutionType;
 
 /** returns the content size of the texture in points */
--(CGSize) size;
+- (CGSize)contentSize;
+
+/** Returns the content size of the receiver in points scaled with regard to its resolution type
+    and the global content scale factor */
+- (CGSize)displayContentSize;
+
+- (CGSize)size DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+- (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 @end
 
 /**
@@ -127,11 +176,15 @@ Extensions to make it easy to create a ICTexture2D object from an image file.
 Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
 */
 @interface ICTexture2D (Image)
+#ifdef __IC_PLATFORM_MAC
+// Defaults to ICResolutionTypeUnknown
+- (id) initWithCGImage:(CGImageRef)cgImage;
+#endif
 /** Initializes a texture from a UIImage object */
 #ifdef __IC_PLATFORM_IOS
 - (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
 #elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage;
+- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
 #endif
 @end
 

@@ -36,6 +36,10 @@
     void *_userData;
 }
 
+
+#pragma mark - Identifying an Object
+/** @name Identifying an Object */
+
 /**
  @brief A user-defined tag
  */

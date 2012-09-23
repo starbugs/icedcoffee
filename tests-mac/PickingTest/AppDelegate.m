@@ -56,7 +56,7 @@
     [self.window makeFirstResponder:self.window.contentView];
     [self.window makeKeyAndOrderFront:self];
     
-    [self.viewController setCursor:[NSCursor crosshairCursor]];    
+    [self.viewController setCursor:[NSCursor crosshairCursor]];
 }
 
 @end

@@ -57,6 +57,14 @@
 #import "icGL.h"
 #import "ICESRenderer.h"
 #import "ICScheduler.h"
+#import "icConfig.h"
+
+#ifdef IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
+#define LOG_HVC_INITIALIZER() ICLog(@"%@ initialized via %@", \
+                              NSStringFromClass([self class]), NSStringFromSelector(_cmd))
+#else
+#define LOG_HVC_INITIALIZER() do {} while(0)
+#endif
 
 @interface ICHostViewControllerIOS (Private)
 - (void)threadMainLoop;
@@ -67,10 +75,38 @@
 
 - (id)init
 {
+    LOG_HVC_INITIALIZER();
     if ((self = [super init])) {
-        _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
+        [self commonInit];
     }
     return self;
+}
+
+// Initializer for nib files
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    LOG_HVC_INITIALIZER();
+    if ((self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil])) {
+        [self commonInit];
+    }
+    return self;
+}
+
+// Initializer for storyboards (and other serialized view controllers)
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    LOG_HVC_INITIALIZER();
+    if ((self = [super initWithCoder:aDecoder])) {
+        [self commonInit];
+    }
+    return self;
+}
+
+// Called by all initializers
+- (void)commonInit
+{
+    [super commonInit];
+    _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
 }
 
 - (void)dealloc
@@ -191,24 +227,60 @@
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
 
 - (void)touchesCancelled:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
 
 - (void)touchesMoved:(NSSet *)touches withEvent:(UIEvent *)event
 {
+#if IC_ENABLE_DEBUG_TOUCH_DISPATCHER
+    ICLog(@"Host view controller received %@", NSStringFromSelector(_cmd));
+#endif
+    if (!_touchEventDispatcher) {
+        NSLog(@"No touch event dispatcher available in %@ %@",
+              NSStringFromClass([self class]), NSStringFromSelector(_cmd));
+    }
+    ICGLView *openGLview = (ICGLView*)self.view;
+	[EAGLContext setCurrentContext:[openGLview context]];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }

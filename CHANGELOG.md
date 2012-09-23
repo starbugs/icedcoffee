@@ -1,7 +1,100 @@
 Changelog
 =========
 
-*v0.6.5*
+v0.6.6
+------
+
+New Features:
+
+* Integration with Interface Builder on iOS: added IBIntegrationTest to
+  icedcofeee-tests-ios which provides a master-detail sample with a custom subclass
+  of ICGLView. The custom subclass is required for Interface Builder to accept the
+  ICGLView (see DetailViewController XIBs). Detailed changed for this feature can be
+  reviewed at https://github.com/starbugs/icedcoffee/issues/3.
+* Integration with Interface Builder on Mac: added IBIntegrationTest to
+  icedcoffee-tests-mac which provides a sample Cocoa application with a custom subclass
+  of ICHostViewControllerMac and a xib file containing the applications window,
+  host view controller and ICGLView. The new feature involves the following changes:
+  * The ICGLView::hostViewController property is now marked with IBOutlet, so as to
+    be utilizable as an outlet for connecting ICGLView instances to ICHostViewController
+    instances.
+  * ICGLView for Mac does now perform follow-up logic for view-host view controller
+    wiring in setHostViewController: instead of
+    initWithFrame:shareContext:hostViewController:.
+  * The ICHostViewControllerMac::view property is now marked with IBOutlet, so as to
+    be utilizable as an outlet for connecting ICHostViewController instances to ICGLView
+    instances.
+
+Changes and Improvements:
+
+* ICCamera::setupScreen is deprecated due to misspelling. It is replaced by
+  ICCamera::setUpScreen. Framework users should simply rename their setupScreen
+  overrides to setUpScreen.
+* ICHostViewController::setupScene is deprecated due to misspelling. It is
+  replaced by ICHostViewController::setUpScene. Framework users should simply
+  rename overrides to setUpScene.
+* Renamed ICScene::setupSceneForPickingWithVisitor: to
+  ICScene::setUpSceneForPickingWithVisitor:.
+* Refactored and improved ICTexture2D (see RELEASE_NOTES.md):
+  * initWithData:pixelFormat:pixelsWide:pixelsHigh:size: is marked deprecated
+    as of this version of icedcoffee. You should use
+    initWithData:pixelFormat:textureSize:contentSize:resolutionType: as a
+    replacement from now on. The framework itself was refactored to use
+    the new initializer.
+  * Added the initWithData:pixelFormat:textureSize:contentSize:resolutionType:
+    initializer.
+  * Added support for high resolution font rendering. Fonts are now drawn with
+    double resolution on retina displays (iOS only).
+  * Changed initWithCGImage: for Mac to to initWithCGImage:resolutionType, re-added
+    initWithCGImage:, which does now default to ICResolutionTypeUnknown.
+  * Renamed the sizeInPixels property to contentSizeInPixels
+  * sizeInPixels was re-added as a depcreated method for backwards compatibility.
+    It returns the value of contentSizeInPixels.
+  * Renamed the size method to contentSize (size was misleading) and changed
+    its semantics (!), which were wrong previously. The contentSize method does
+    now return the actual content size of the texture in points. Previously, it
+    returned the pixel size of the texture, which yielded the correct results on
+    retina displays when working with SD resolution textures, but still isn't
+    semantically correct.
+  * The size method was re-added and marked deprecated for backwards compatibility.
+    It calls displayContentSize internally (see below).
+  * Added the displayContentSize method, which does now return the correct scaled
+    content size in points of a texture, taking into account the current content
+    scale factor and resolution type of the texture. That is, for a 128x128
+    low resolution texture on both SD and retina displays, it will return (128,128),
+    and for a 256x256 high resolution texture, it will also return (128,128).
+    This method should be used to retrieve the correct display size in points of
+    a texture regardless of which content scale factor is currently set, i.e.
+    regardless on whether you are on an SD or a retina display.
+  * Added the resolutionType property plus _resolutionType ivar.
+  * Made all ivars @protected.
+  * Renamed size_ to _contentSizeInPixels (_size was misleading).
+  * Renamed all other ivars to _<ivarName> instead of <ivarName>_ to match the
+    general icedcoffee naming conventions.
+* Added ICTextureLoader::loadTextureFromFile:resolutionType:.
+* Added ICTextureCache::loadTextureFromFile:resolutionType and
+  ICTextureCache::loadTextureFromFileAsync:resolutionType:withTarget:withObject:.
+* Renamed kICiOS... version enum values to ICIOS...
+* Renamed kICMac... version enum values to ICMacOSX...
+* Refactored the ICConfiguration class
+* Added and refined the header documentation
+* Created a new API reference site at http://icedcoffee-framework.org
+    
+Fixes:
+
+* Fixed Issue #3: Interface Builder integration on iOS
+  (see https://github.com/starbugs/icedcoffee/issues/3)
+* Fixed ICGLView::initWithCoder:, depth buffer format now defaults to
+  GL_DEPTH24_STENCIL8_OES when using Interface Builder views.
+* Fixed DepthBufferTest for iOS: depth buffer format must be GL_DEPTH24_STENCIL8_OES
+  instead of GL_DEPTH_COMPONENT24_OES.
+* Partially fixed Issue #7: Performance problem with control events based on touchesMoved on iOS.
+  The fix is incomplete and will be continued in the next version.
+* Fixed a couple of warnings that occurred as of Xcode 4.4.
+
+
+v0.6.5
+------
 
 * Completely rewrote ICNodeVisitorPicking to optimize performance. The class does
   now perform preliminary ray-based hit tests on each node and only runs further
@@ -59,7 +152,9 @@ Changelog
 * Renamed ICFrameBuffer to ICFramebuffer.
 * Renamed all frameBuffer and FrameBuffer occurrences to framebuffer and Framebuffer.
 
-*v0.6.4*
+
+v0.6.4
+------
 
 * Implemented touch control event dispatch in ICTouchEventDispatcher.
 * Fixed a bug with pixel alignment for font rendering in ICGLView on iOS.
@@ -145,7 +240,9 @@ Changelog
 * Fixed some issues with the icedcoffee-ios Xcode project regarding linked frameworks.
 * Removed version number from LICENSE_icedcoffee.txt.
   
-*v0.6.3*
+  
+v0.6.3
+------
 
 * ICView does now draw its clipping mask shape when visited by the picking visitor.
   Thus, ICView objects from now on receive mouseEntered and mouseExited events.
@@ -219,7 +316,9 @@ Changelog
   mouseUpOutside control events under certain circumstances.
 * Extended and reworked parts of the header documentation.
 
-*v0.6.2*
+
+v0.6.2
+------
 
 *New core contributor*: Marcus Tillmanns has joined the IcedCoffe project. Marcus works
 at Avid Technology, Inc. and has a strong background in Nokia's Qt and other user
@@ -242,7 +341,9 @@ subsystem.
   the setShaderValue:forUniform: method. Likewise, they may be retrieved using the
   shaderValueForUniform: method.
 
-*v0.6.1*
+
+v0.6.1
+------
 
 * Added support for multiple Cocoa views via render contexts that are bound to the OpenGL
   context of each view. Added a test project (MultipleCocoaViewsTest) that draws two
@@ -255,7 +356,9 @@ subsystem.
   current OpenGL context (via ICRenderContext).
 * Removed ICShaderCache::defaultShaderCache, use ICShaderCache::currentShaderCache instead.
 
-*v0.6*
+
+v0.6
+----
 
 * Renamed ICCameraPointsToPixelsPerspective to ICUICamera
 * Changed IcedCoffee's UI coordinate system to invert the OpenGL Y axis. This means that y=0
@@ -333,7 +436,9 @@ subsystem.
 * Updated PickingTest for Mac: you can now switch render texture backings and animation off and on.
 * Added and rewrote parts of the documentation.
 
-*v0.5*
+
+v0.5
+----
 
 * Redesigned the ICView class to allow for buffer backed and unbacked (direct) drawing,
   including stencil based clipping for unbacked views.
@@ -346,7 +451,9 @@ subsystem.
   results on retina displays.
 * Added and reworked parts of the documentation.
 
-*v0.4*
+
+v0.4
+----
 
 * Introduced full depth buffer support in ICRenderTexture, refactored initializers for
   convenient setup of render textures with or without depth buffers
@@ -363,6 +470,8 @@ subsystem.
 * Fixed a bug that caused the framework to freeze on view resize on Mac OS X
 * Added and reworked parts of the inline documentation
 
-*v0.3*
+
+v0.3
+----
 
 * First pre-release

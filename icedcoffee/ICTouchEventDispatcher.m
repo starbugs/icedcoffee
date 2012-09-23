@@ -185,68 +185,73 @@
                                    withTouchEvent:(ICTouchEvent *)touchEvent
                                          selector:(SEL)selector
 {
-    NSEnumerator *dispatchTargetEnumerator = [convertedTouches keyEnumerator];
-    ICNodeRef *dispatchTargetRef = nil;
-    while (dispatchTargetRef = [dispatchTargetEnumerator nextObject]) {
-        // Only dispatch control events if the given dispatch target is itself a control
-        // or a descendant of a control
-        ICControl *dispatchTarget = ICControlForNode([dispatchTargetRef node]);
-        if (dispatchTarget) {
-            // Iterate through all touches for the given control
-            NSDictionary *touchesDict = [convertedTouches objectForKey:dispatchTargetRef];
-            NSEnumerator *touchesEnumerator = [touchesDict objectEnumerator];
-            ICTouch *touch = nil;
-            while (touch = [touchesEnumerator nextObject]) {
-                // Find the current control the touch is over by performing another hit test.
-                // This is to compute correct control events for touches that moved or ended
-                // over another control than the dispatch target.
-                ICNode *overNode = [self nodeForTouch:touch.nativeTouch];
-                ICControl *overControl = ICControlForNode(overNode);
-                
-                // Compute the appropriate control event
-                ICControlEvents controlEvent = 0;
-                if (selector == SEL_TOUCHES_BEGAN) {
-                    // Touch down control events
-                    if (touch.tapCount > 1) {
-                        controlEvent = ICControlEventTouchDownRepeat;
-                    } else {
-                        controlEvent = ICControlEventTouchDown;
+    if (_hostViewController.frameCount != _currentControlDispatchFrame) {
+        // Issue #7: avoid processing multiple touchesMoved: events per frame
+        _currentControlDispatchFrame = _hostViewController.frameCount;
+        
+        NSEnumerator *dispatchTargetEnumerator = [convertedTouches keyEnumerator];
+        ICNodeRef *dispatchTargetRef = nil;
+        while (dispatchTargetRef = [dispatchTargetEnumerator nextObject]) {
+            // Only dispatch control events if the given dispatch target is itself a control
+            // or a descendant of a control
+            ICControl *dispatchTarget = ICControlForNode([dispatchTargetRef node]);
+            if (dispatchTarget) {
+                // Iterate through all touches for the given control
+                NSDictionary *touchesDict = [convertedTouches objectForKey:dispatchTargetRef];
+                NSEnumerator *touchesEnumerator = [touchesDict objectEnumerator];
+                ICTouch *touch = nil;
+                while (touch = [touchesEnumerator nextObject]) {
+                    // Find the current control the touch is over by performing another hit test.
+                    // This is to compute correct control events for touches that moved or ended
+                    // over another control than the dispatch target.
+                    ICNode *overNode = [self nodeForTouch:touch.nativeTouch];
+                    ICControl *overControl = ICControlForNode(overNode);
+                    
+                    // Compute the appropriate control event
+                    ICControlEvents controlEvent = 0;
+                    if (selector == SEL_TOUCHES_BEGAN) {
+                        // Touch down control events
+                        if (touch.tapCount > 1) {
+                            controlEvent = ICControlEventTouchDownRepeat;
+                        } else {
+                            controlEvent = ICControlEventTouchDown;
+                        }
+                    } else if (selector == SEL_TOUCHES_MOVED) {
+                        if (![self isDraggingTouch:touch]) {
+                            // Start dragging
+                            [self setDraggingTouch:touch];
+                            // Immediately dispatch drag enter control event
+                            [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragEnter
+                                                              forEvent:touchEvent];
+                        }
+                        // Drag inside/outside
+                        if (overControl == dispatchTarget) {
+                            controlEvent = ICControlEventTouchDragInside;
+                        } else {
+                            controlEvent = ICControlEventTouchDragOutside;
+                        }
+                    } else if (selector == SEL_TOUCHES_ENDED) {
+                        if ([self isDraggingTouch:touch]) {
+                            // Stop dragging
+                            [self removeDraggingTouch:touch];
+                            // Immediately dispatch drag exit control event
+                            [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragExit
+                                                              forEvent:touchEvent];
+                        }
+                        // Touch up control events
+                        if (overControl == dispatchTarget) {
+                            controlEvent = ICControlEventTouchUpInside;
+                        } else {
+                            controlEvent = ICControlEventTouchUpOutside;
+                        }
+                    } else if (selector == SEL_TOUCHES_CANCELLED) {
+                        // Touch cancelled control event
+                        controlEvent = ICControlEventTouchCancel;
                     }
-                } else if (selector == SEL_TOUCHES_MOVED) {
-                    if (![self isDraggingTouch:touch]) {
-                        // Start dragging
-                        [self setDraggingTouch:touch];
-                        // Immediately dispatch drag enter control event
-                        [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragEnter
-                                                          forEvent:touchEvent];
-                    }
-                    // Drag inside/outside
-                    if (overControl == dispatchTarget) {
-                        controlEvent = ICControlEventTouchDragInside;
-                    } else {
-                        controlEvent = ICControlEventTouchDragOutside;
-                    }
-                } else if (selector == SEL_TOUCHES_ENDED) {
-                    if ([self isDraggingTouch:touch]) {
-                        // Stop dragging
-                        [self removeDraggingTouch:touch];
-                        // Immediately dispatch drag exit control event
-                        [dispatchTarget sendActionsForControlEvent:ICControlEventTouchDragExit
-                                                          forEvent:touchEvent];
-                    }
-                    // Touch up control events
-                    if (overControl == dispatchTarget) {
-                        controlEvent = ICControlEventTouchUpInside;
-                    } else {
-                        controlEvent = ICControlEventTouchUpOutside;
-                    }
-                } else if (selector == SEL_TOUCHES_CANCELLED) {
-                    // Touch cancelled control event
-                    controlEvent = ICControlEventTouchCancel;
+                    
+                    // Dispatch control event
+                    [dispatchTarget sendActionsForControlEvent:controlEvent forEvent:touchEvent];
                 }
-                
-                // Dispatch control event
-                [dispatchTarget sendActionsForControlEvent:controlEvent forEvent:touchEvent];
             }
         }
     }

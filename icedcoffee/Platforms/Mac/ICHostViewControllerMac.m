@@ -53,6 +53,8 @@
 #import "icConfig.h"
 
 
+#ifdef __IC_PLATFORM_MAC
+
 #define IC_HVC_TIME_INTERVAL 0.001
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
@@ -82,11 +84,22 @@
 - (id)init
 {
     if ((self = [super init])) {
-        _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
-        _usesDisplayLink = YES;
-        _drawsConcurrently = YES;
+        [self commonInit];
     }
     return self;
+}
+
+- (void)commonInit
+{
+    [super commonInit];
+    
+    _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
+    _usesDisplayLink = YES;
+    _drawsConcurrently = YES;
+    
+    // Ensure ICGLView is linked when using nib files
+    // See http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
+    [ICGLView class];
 }
 
 - (void)dealloc
@@ -325,10 +338,31 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     return [_mouseEventDispatcher updatesEnterExitEventsContinuously];
 }
 
+// Issue #3: Interface Builder integration
+- (BOOL)isViewLoaded
+{
+    return _view != nil;
+}
+
+- (ICGLView *)view
+{
+    // Issue #3: Interface Builder integration
+    // If _view is nil, call loadView
+    if (!_view) {
+        [self loadView];
+    }
+    return _view;
+}
+
 - (void)setView:(ICGLView *)view
 {
-    [_view release];
-    _view = [view retain];
+    if (_view != view) {
+        [_view release];
+        _view = [view retain];
+        
+        // Issue #3: make sure we don't run into stack overflows with old style view instantiation
+        _didAlreadyCallViewDidLoad = NO;
+    }
     
     [super setView:view];
 }
@@ -355,3 +389,5 @@ DISPATCH_MOUSE_EVENT(otherMouseUp)
 DISPATCH_MOUSE_EVENT(scrollWheel)
 
 @end
+
+#endif // __IC_PLATFORM_MAC

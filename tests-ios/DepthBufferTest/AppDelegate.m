@@ -49,7 +49,7 @@
     angle += dt;
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     scene.performsDepthTesting = YES;
@@ -104,7 +104,7 @@
     // Initialize a GL view with depth buffer support
     ICGLView *glView = [ICGLView viewWithFrame:[self.window bounds]
                                    pixelFormat:kEAGLColorFormatRGBA8
-                                   depthFormat:GL_DEPTH_COMPONENT24_OES
+                                   depthFormat:GL_DEPTH24_STENCIL8_OES
                             preserveBackbuffer:NO
                                     sharegroup:nil
                                  multiSampling:NO
@@ -117,7 +117,7 @@
     self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
     
-    [self setupScene];
+    [self setUpScene];
     
     return YES;
 }

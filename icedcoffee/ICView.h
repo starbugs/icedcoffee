@@ -25,6 +25,28 @@
 #import "ICSprite.h"
 #import "ICRenderTexture.h"
 
+
+enum {
+    /** @brief The view is not resizable */
+    ICAutoResizingMaskNotSizable           = 0x00,
+    /** @brief The view's left margin is flexible */
+    ICAutoResizingMaskLeftMarginFlexible   = 0x01,
+    /** @brief The view's width is resizable */
+    ICAutoResizingMaskWidthSizable         = 0x02,
+    /** @brief The view's right margin is flexible */
+    ICAutoResizingMaskRightMarginFlexible  = 0x04,
+    /** @brief The view's top margin is flexible */
+    ICAutoResizingMaskTopMarginFlexible    = 0x08,
+    /** @brief The view's height is resizable */
+    ICAutoResizingMaskHeightSizable        = 0x10,
+    /** @brief The view's bottom margin is flexible */
+    ICAutoResizingMaskBottomMarginFlexible = 0x20
+};
+/**
+ @brief Constants used to define the ICView::autoresizingMask property
+ */
+typedef NSUInteger ICAutoResizingMask;
+
 /**
  @brief Base class for user interface views
  
@@ -66,7 +88,7 @@
     custom initialization logic, override this method instead of ICNode::init.</li>
     <li>As mentioned before, ICView allows for buffered rendering using a render texture
     backing. When ICView::backing is set, ICView automatically moves its children to the
-    backing's sub scene. However, since ICView overrides all method related to scene graph
+    backing's sub scene. However, since ICView overrides all methods related to scene graph
     composition, its children still appear as its own children to the outside. Usually,
     you do not have to care about this explicitly, but there are exceptions to that rule.
     Just in case, keep in mind that ICView::addChild:, ICView::insertChild:atIndex:,
@@ -84,38 +106,11 @@
     BOOL _clipsChildren;
     ICSprite *_background;
     BOOL _drawsBackground;
+    ICAutoResizingMask _autoresizingMask;
 }
 
-/**
- @brief An ICRenderTexture object representing the backing of the view
- 
- When the backing property is set to a non-nil value, ICView will operate in buffer backed
- mode. When setting the backing to a non-nil value, the view's children are automatically
- moved to the backing's sub scene. Likewise, if the backing property is set to nil, its
- children are moved back from the backing's sub scene to the view itself.
- 
- @note Switching a non-nil backing to another non-nil backing is not supported currently.
- You should always switch the backing to nil before you replace it with another backing.
- */
-@property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
-
-@property (nonatomic, retain) ICSprite *background;
-
-@property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
-
-/**
- @brief Whether the view clips its children
- */
-@property (nonatomic, assign, getter=clipsChildren, setter=setClipsChildren:) BOOL clipsChildren;
-
-/**
- @brief Whether the view's layout needs to be udpated
- */
-@property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
-
-@property (nonatomic, assign, setter=setAutoResizingMask:) NSUInteger autoresizingMask;
-
-@property (nonatomic, assign) BOOL autoresizesSubviews;
+#pragma mark - Creating a View
+/** @name Creating a View */
 
 /**
  @brief Creates a new autoreleased view with the given size
@@ -130,6 +125,19 @@
  @param size A CGSize value defining the size of the view in points
   */
 - (id)initWithSize:(CGSize)size;
+
+
+#pragma mark - Clipping the View's Contents
+/** @name Clipping the View's Contents */
+
+/**
+ @brief Whether the view clips its children
+ */
+@property (nonatomic, assign, getter=clipsChildren, setter=setClipsChildren:) BOOL clipsChildren;
+
+
+#pragma mark - Controlling the View's Backing
+/** @name Controlling the View's Backing */
 
 /**
  @brief Creates or removes a standard render texture backing
@@ -148,6 +156,31 @@
  property.
  */
 - (void)setWantsRenderTextureBacking:(BOOL)wantsRenderTextureBacking;
+
+/**
+ @brief An ICRenderTexture object representing the backing of the view
+ 
+ When the backing property is set to a non-nil value, ICView will operate in buffer backed
+ mode. When setting the backing to a non-nil value, the view's children are automatically
+ moved to the backing's sub scene. Likewise, if the backing property is set to nil, its
+ children are moved back from the backing's sub scene to the view itself.
+ 
+ @note Switching a non-nil backing to another non-nil backing is not supported currently.
+ You should always switch the backing to nil before you replace it with another backing.
+ */
+@property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
+
+
+#pragma mark - Drawing a Background Sprite
+/** @name Drawing a Background Sprite */
+
+@property (nonatomic, retain) ICSprite *background;
+
+@property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
+
+
+#pragma mark - Manipulating the View Hierarchy
+/** @name Manipulating the View Hierarchy */
 
 /**
  @brief Returns the superview of the receiver
@@ -192,6 +225,18 @@
  */
 - (NSArray *)children;
 
+
+#pragma mark - Layouting Subviews
+/** @name Layouting Subviews */
+
+/**
+ @brief Whether the view's layout needs to be udpated
+ */
+@property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
+
+@property (nonatomic, assign, setter=setAutoResizingMask:) ICAutoResizingMask autoresizingMask;
+
+@property (nonatomic, assign) BOOL autoresizesSubviews;
 /**
  @brief Short hand for ICView::setNeedsLayout:YES
  */

@@ -33,7 +33,7 @@
     [super dealloc];
 }
 
-- (void)setupScene
+- (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
     [scene setSize:kmVec3Make(self.hostViewController.view.bounds.size.width,
@@ -69,7 +69,7 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     
-    [self setupScene];
+    [self setUpScene];
 }
 
 @end

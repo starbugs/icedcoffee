@@ -25,6 +25,9 @@
 
 @class ICSprite;
 
+/**
+ @brief Draws a rounded rectangle with a gradient background and solid border
+ */
 @interface ICRectangle : ICView
 {
 @protected
@@ -34,6 +37,9 @@
     icColor4B _gradientStartColor;
     icColor4B _gradientEndColor;
 }
+
+#pragma mark - Controlling the Rectangle's Appearance
+/** @name Controlling the Rectangle's Appearance */
 
 @property (nonatomic, assign, getter=borderWidth, setter=setBorderWidth:) float borderWidth; // in points
 

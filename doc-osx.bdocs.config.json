@@ -1,0 +1,31 @@
+{
+	"doxyfilePath": "~/github/icedcoffee/Doxyfile-Mac",
+	"doxygenOutputPath": "~/github/icedcoffee/docs-Mac",
+	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"relativeOutputPath": "content/reference/osx/",
+
+	"executeDoxygen": true,
+	"executeNanoc": true,
+	"cleanIntermediates": true,
+
+	"mainTitle": "Icedcoffee OS X API Reference",
+	"version": "0.6.6",
+	
+	"classPrefix": "IC",
+	"macroPrefix": "IC_",
+	
+	"generateYAML": true,
+	"documentIvars": false,
+	
+	"nameMap": {
+		"anonEnum": {
+			"ICHitTest(.*)": "ICHitTestResult",
+			"ICControlEvent(.*)": "ICControlEvents",
+			"ICAbstractControlEvent(.*)": "ICAbstractControlEvents",
+			"IC(.*)MouseButton": "ICMouseButton",
+			"ICMouse(.*)": "ICAbstractMouseEventType",
+			"IC(.*)Version(.*)": "ICOSVersion",
+			"ICLeftMouseDown": "ICOSXEventType"
+		}
+	}
+}
