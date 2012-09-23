@@ -59,7 +59,7 @@ typedef NSUInteger ICAutoResizingMask;
  - Buffering your view's contents in a rectangular area using a render texture backing
  - Clipping the view's children both in normal and in buffer backed mode
  - Providing a system for layouting the view's children
- - Allowing you to conviniently draw a 2D background based on ICSprite
+ - Allowing you to conveniently draw a 2D background based on ICSprite
   
  ### Setup ###
  
