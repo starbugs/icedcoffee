@@ -48,16 +48,20 @@ enum {
 typedef NSUInteger ICAutoResizingMask;
 
 /**
- @brief Base class for user interface views
+ @brief Base class for icedcoffee user interface views
+
+ The ICView class represents a base class for all user interface views in the icedcofeee
+ framework. Like all other drawable elements in icedcoffee, ICView is based on ICNode. It
+ adds functionality that is commonly required when building user interfaces, such as
+ clipping, buffering and layouting of the view's contents. The following is a list of the
+ most notable features added by the ICView class:
  
- <h3>Overview</h3>
- 
- The ICView class represents a base class for all user interface views in the IcedCofeee
- framework. Most notably, it allows you to buffer your view's contents in a rectangular
- area using a render texture backing. Additionally, ICView allows for clipping the view's
- children both in normal and in buffer backed mode.
+ - Buffering your view's contents in a rectangular area using a render texture backing
+ - Clipping the view's children both in normal and in buffer backed mode
+ - Providing a system for layouting the view's children
+ - Allowing you to conviniently draw a 2D background based on ICSprite
   
- <h3>Setup</h3>
+ ### Setup ###
  
  A view must be initialized with a predefined size using the ICView::initWithSize: method.
  After initialization, you define the contents of the view by adding children to it using
@@ -65,39 +69,38 @@ typedef NSUInteger ICAutoResizingMask;
  
  By default, freshly initialized views will have no render texture backing. If your view
  requires such backing, send it an ICView::setWantsRenderTextureBacking: message specifying
- <code>YES</code> for the <code>wantsRenderTextureBacking</code> argument. The view will
- then automatically create a render texture along with a corresponding sub scene and
- reorganize its contents so as to draw its children to the backing render texture FBO.
- Backings generated using ICView::setWantsRenderTextureBacking: are simple ICRenderTexture
- nodes providing a color buffer and a stencil buffer. If you need a backing with more
- capabilities, you may create it on your own and set it on the view using the
- ICView::backing property.
+ ``YES`` for the ``wantsRenderTextureBacking`` argument. The view will then automatically
+ create a render texture along with a corresponding sub scene and reorganize its contents
+ so as to draw its children to the backing render texture FBO. Backings generated using
+ ICView::setWantsRenderTextureBacking: are simple ICRenderTexture nodes providing a color
+ buffer and a stencil buffer. If you need a backing with more capabilities, you may create
+ it on your own and set it on the view using the ICView::backing property.
  
  If a view uses a render texture backing, it will automatically clip its children to 
  the backing's bounds. Otherwise, the view will not clip its children unless you
- explicitly set ICView::clipsChildren to <code>YES</code>. Unbacked views clip their
+ explicitly set ICView::clipsChildren to ``YES``. Unbacked views clip their
  children using the stencil buffer. The FBO the view is rendered to must provide such
  stencil buffer consequently. If no stencil buffer is present, no clipping will occur.
  
- <h3>Subclassing</h3>
+ ### Subclassing ###
  
  You should subclass ICView to implement user interface views or controls. The following
  points should be considered when subclassing the ICView class:
- <ul>
-    <li>ICView's designated initializer is ICView::initWithSize:. If you need to implement
-    custom initialization logic, override this method instead of ICNode::init.</li>
-    <li>As mentioned before, ICView allows for buffered rendering using a render texture
-    backing. When ICView::backing is set, ICView automatically moves its children to the
-    backing's sub scene. However, since ICView overrides all methods related to scene graph
-    composition, its children still appear as its own children to the outside. Usually,
-    you do not have to care about this explicitly, but there are exceptions to that rule.
-    Just in case, keep in mind that ICView::addChild:, ICView::insertChild:atIndex:,
-    ICView::removeChild:, ICView::removeChildAtIndex, ICView::removeAllChildren, and
-    ICView::children are overriden by ICView.</li>
-    <li>As ICView may operate in buffer backed mode, you need to call ICNode::setNeedsDisplay
-    if a descendant node changes its appearance. Calling ICView::setNeedsDisplay on ICView
-    also marks the view's contents for redrawing.</li>
- </ul>
+
+ - ICView's designated initializer is ICView::initWithSize:. If you need to implement
+   custom initialization logic, override this method instead of ICNode::init.
+ - As mentioned before, ICView allows for buffered rendering using a render texture
+   backing. When ICView::backing is set, ICView automatically moves its children to the
+   backing's sub scene. However, since ICView overrides all methods related to scene graph
+   composition, its children still appear as its own children to the outside. Usually,
+   you do not have to care about this explicitly, but there are exceptions to that rule.
+   Just in case, keep in mind that ICView::addChild:, ICView::insertChild:atIndex:,
+   ICView::removeChild:, ICView::removeChildAtIndex:, ICView::removeAllChildren, and
+   ICView::children are overriden by ICView.
+ - As ICView may operate in buffer backed mode, you need to call ICNode::setNeedsDisplay
+   if a descendant node changes its appearance. Calling ICView::setNeedsDisplay on ICView
+   also marks the view's contents for redrawing.
+ - You may implement custom layouting by overriding the ICView::layoutChildren method.
  */
 @interface ICView : ICPlanarNode {
 @protected
@@ -142,11 +145,11 @@ typedef NSUInteger ICAutoResizingMask;
 /**
  @brief Creates or removes a standard render texture backing
  
- If <code>wantsRenderTextureBacking</code> is set to YES, this method will create a
+ If ``wantsRenderTextureBacking`` is set to ``YES``, this method will create a
  standard render texture backing along with a corresponding sub scene for the view
  and reorganize the view's children as described in ICView::backing.
  
- @param wantsRenderTextureBacking A BOOL value indicating whether the view should
+ @param wantsRenderTextureBacking A ``BOOL`` value indicating whether the view should
  have a render texture backing
  
  @remarks Using this method is essentially a shortcut to creating an ICRenderTexture
@@ -174,8 +177,14 @@ typedef NSUInteger ICAutoResizingMask;
 #pragma mark - Drawing a Background Sprite
 /** @name Drawing a Background Sprite */
 
+/**
+ @brief The view's background sprite
+ */
 @property (nonatomic, retain) ICSprite *background;
 
+/**
+ @brief Whether or not the view draws its background sprite
+ */
 @property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
 
 
@@ -230,13 +239,20 @@ typedef NSUInteger ICAutoResizingMask;
 /** @name Layouting Subviews */
 
 /**
- @brief Whether the view's layout needs to be udpated
+ @brief Whether the receiver's layout needs to be udpated
  */
 @property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
 
+/**
+ @brief The receiver's autoresizing mask
+ */
 @property (nonatomic, assign, setter=setAutoResizingMask:) ICAutoResizingMask autoresizingMask;
 
+/**
+ @brief Whether the receiver should autoresize its subviews or not
+ */
 @property (nonatomic, assign) BOOL autoresizesSubviews;
+
 /**
  @brief Short hand for ICView::setNeedsLayout:YES
  */
@@ -245,8 +261,12 @@ typedef NSUInteger ICAutoResizingMask;
 /**
  @brief Layouts the receiver's children
  
+ When the receiver's ICView::needsLayout property is set to ``YES``, this method is called by
+ ICView::drawWithVisitor: before the view is drawn. You should implement this method in subclasses
+ that need to perform custom layouting of their children.
+ 
  You should not call this method directly. Instead, mark the view for layouting by setting
- its ICView::needsLayout property to <code>YES</code>.
+ its ICView::needsLayout property to ``YES``.
  */
 - (void)layoutChildren;
 
