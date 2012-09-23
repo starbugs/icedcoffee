@@ -52,6 +52,8 @@
 #elif defined(__IC_PLATFORM_IOS)
     EAGLContext *_auxGLContext;
 #endif
+    
+    ICHostViewController *_hostViewController;
 }
 
 #pragma mark - Obtaining/Creating a Texture Cache

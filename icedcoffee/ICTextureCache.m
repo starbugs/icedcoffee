@@ -30,6 +30,10 @@
 #import "ICRenderContext.h"
 #import "icUtils.h"
 
+@interface ICTextureCache (Private)
+- (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo;
+@end
+
 @implementation ICTextureCache
 
 + (id)currentTextureCache
@@ -54,6 +58,8 @@
 
         _auxGLContext = icCreateAuxGLContextForView(view, YES);
 		NSAssert(_auxGLContext, @"Could not create OpenGL context");
+        
+        _hostViewController = hostViewController;
     }
     return self;
 }
@@ -97,6 +103,15 @@
                                withObject:object];
 }
 
+// Called on HVC thread to perform notification of async texture delegate
+- (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo
+{
+    id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
+    id object = [textureInfo objectForKey:@"object"];
+    ICTexture2D *texture = [textureInfo objectForKey:@"asyncTexture"];
+    [target textureDidLoad:texture object:object];
+}
+
 - (void)loadTextureFromFileAsync:(NSString *)path
                   resolutionType:(ICResolutionType)resolutionType
                       withTarget:(id<ICAsyncTextureCacheDelegate>)target
@@ -129,9 +144,15 @@
         
 		glFlush();
         
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[target textureDidLoad:asyncTexture object:object];
-		});
+        NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     target, @"target",
+                                     asyncTexture, @"asyncTexture",
+                                     object, @"object",
+                                     nil];
+        [self performSelector:@selector(notifyAsyncTextureDidLoad:)
+                     onThread:_hostViewController.thread
+                   withObject:textureInfo
+                waitUntilDone:NO];
         
 		[NSOpenGLContext clearCurrentContext];
         
@@ -141,9 +162,15 @@
             
 			glFlush();
             
-			dispatch_async(dispatch_get_main_queue(), ^{
-                [target textureDidLoad:asyncTexture object:object];
-			});
+            NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         target, @"target",
+                                         asyncTexture, @"asyncTexture",
+                                         object, @"object",
+                                         nil];
+            [self performSelector:@selector(notifyAsyncTextureDidLoad:)
+                         onThread:_hostViewController.thread
+                       withObject:textureInfo
+                    waitUntilDone:NO];
             
 			[EAGLContext setCurrentContext:nil];
 		} else {
