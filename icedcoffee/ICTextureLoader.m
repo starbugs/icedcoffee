@@ -35,26 +35,8 @@
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename
                       resolutionType:(ICResolutionType)resolutionType
 {
-    ICTexture2D *texture = nil;
-    
-#ifdef __IC_PLATFORM_MAC
-    
-    NSData *data = [[NSData alloc] initWithContentsOfFile:filename];
-    NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
-    texture = [[[ICTexture2D alloc] initWithCGImage:[image CGImage]] autorelease];
-    
-    [data release];
-    [image release];
-    
-#elif __IC_PLATFORM_IOS
-    
-    UIImage *image = [[UIImage alloc] initWithContentsOfFile:filename];
-    texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolutionType] autorelease];
-    [image release];
-    
-#endif
-    
-    return texture;    
+    return [[self class] loadTextureFromURL:[NSURL fileURLWithPath:filename]
+                             resolutionType:resolutionType];
 }
 
 + (ICTexture2D *)loadTextureFromURL:(NSURL *)url
