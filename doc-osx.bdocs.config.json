@@ -23,7 +23,9 @@
 			"ICControlEvent(.*)": "ICControlEvents",
 			"ICAbstractControlEvent(.*)": "ICAbstractControlEvents",
 			"IC(.*)MouseButton": "ICMouseButton",
-			"ICMouse(.*)": "ICAbstractMouseEventType"
+			"ICMouse(.*)": "ICAbstractMouseEventType",
+			"IC(.*)Version(.*)": "ICOSVersion",
+			"ICLeftMouseDown": "ICOSXEventType"
 		}
 	}
 }

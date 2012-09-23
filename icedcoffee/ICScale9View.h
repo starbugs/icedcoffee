@@ -25,12 +25,22 @@
 
 @class ICScale9Sprite;
 
+/**
+ @brief Provides a view with a scale-9 sprite background
+ */
 @interface ICScale9View : ICView {
     ICScale9Sprite *_sprite;
 }
 
-@property (nonatomic, retain) ICScale9Sprite *sprite;
+#pragma mark - Creating a Scale-9 View
+/** @name Creating a Scale-9 View */
 
 - (id)initWithSize:(CGSize)size;
+
+
+#pragma mark - Accessing the View's Scale-9 Sprite
+/** @name Accessing the View's Scale-9 Sprite */
+
+@property (nonatomic, retain) ICScale9Sprite *sprite;
 
 @end

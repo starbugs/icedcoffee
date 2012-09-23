@@ -22,8 +22,7 @@
 			"ICHitTest(.*)": "ICHitTestResult",
 			"ICControlEvent(.*)": "ICControlEvents",
 			"ICAbstractControlEvent(.*)": "ICAbstractControlEvents",
-			"IC(.*)MouseButton": "ICMouseButton",
-			"ICMouse(.*)": "ICAbstractMouseEventType"
+			"IC(.*)Version(.*)": "ICOSVersion"			
 		}
 	}
 }

@@ -32,6 +32,10 @@
 
 @required
 
+
+#pragma mark - Transforming Points to a Node's Coordinate Space
+/** @name Transforming Points to a Node's Coordinate Space */
+
 /**
  @brief Implementations must transform a given parent framebuffer location to a local node location
  */

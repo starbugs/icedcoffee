@@ -26,7 +26,13 @@
 
 @class ICTexture2D;
 
+/**
+ @brief Implements texture file loading
+ */
 @interface ICTextureLoader : NSObject
+
+#pragma mark - Loading Textures from Local Files
+/** @name Loading Textures from Local Files */
 
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename;
 

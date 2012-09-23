@@ -63,22 +63,23 @@
     BOOL _mouseButtonPressed;
 }
 
+#pragma mark - Creating a Button
+/** @name Creating a Button */
+
++ (id)buttonWithSize:(CGSize)size;
+
+
+#pragma mark - Changing the Button's Label
+/** @name Changing the Button's Label */
+
 /**
  @brief Defines the button label
  */
 @property (nonatomic, retain, setter=setLabel:) ICLabel *label;
 
-/**
- @brief A boolean flag indicating whether backgrounds for certain states should be mixed
- 
- If set to <code>YES</code>, ICButton will draw highlighted and selected background views on top
- of normal, disabled or pressed backgrounds. Otherwise, background states are treated in a
- mutually exclusive manner, meaning that only one background will be drawn at a time.
- The default value for this property is <code>YES</code>.
- */
-@property (nonatomic, assign) BOOL mixesBackgroundStates;
 
-+ (id)buttonWithSize:(CGSize)size;
+#pragma mark - Changing the Button's Background
+/** @name Changing the Button's Background */
 
 /**
  @brief Sets a background view for the given control state
@@ -94,5 +95,15 @@
  @brief Returns the background view for the specified state
  */
 - (ICView *)backgroundForState:(ICControlState)state;
+
+/**
+ @brief A boolean flag indicating whether backgrounds for certain states should be mixed
+ 
+ If set to <code>YES</code>, ICButton will draw highlighted and selected background views on top
+ of normal, disabled or pressed backgrounds. Otherwise, background states are treated in a
+ mutually exclusive manner, meaning that only one background will be drawn at a time.
+ The default value for this property is <code>YES</code>.
+ */
+@property (nonatomic, assign) BOOL mixesBackgroundStates;
 
 @end

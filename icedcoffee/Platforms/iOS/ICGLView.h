@@ -76,12 +76,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @class ICHostViewController;
 
-//CLASS INTERFACE:
-
-/** ICGLView Class.
- * This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
- * The view content is basically an EAGL surface you render your OpenGL scene into.
- * Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
+/**
+ @brief Provides an icedcoffee OpenGL view in UIKit
+ 
+ This class wraps the CAEAGLLayer from CoreAnimation into a convenient UIView subclass.
+ The view content is basically an EAGL surface you render your OpenGL scene into.
+ Note that setting the view non-opaque will only work if the EAGL surface has an alpha channel.
  */
 @interface ICGLView : UIView
 {
@@ -102,6 +102,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 	unsigned int			requestedSamples_;
 }
 
+#pragma mark - Creating a GL View
+/** @name Creating a GL View */
+
 /** creates an initializes an CCGLView with a frame and 0-bit depth buffer, and a RGB565 color buffer. */
 + (id) viewWithFrame:(CGRect)frame;
 /** creates an initializes an CCGLView with a frame, a color buffer format, and 0-bit depth buffer. */
@@ -118,6 +121,10 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 /** Initializes an CCGLView with a frame, a color buffer format, a depth buffer format, a sharegroup and multisampling support */
 - (id) initWithFrame:(CGRect)frame pixelFormat:(NSString*)format depthFormat:(GLuint)depth preserveBackbuffer:(BOOL)retained sharegroup:(EAGLSharegroup*)sharegroup multiSampling:(BOOL)sampling numberOfSamples:(unsigned int)nSamples;
 
+
+#pragma mark - Working with the View's Framebuffer
+/** @name Working with the View's Framebuffer */
+
 /** pixel format: it could be RGBA8 (32-bit) or RGB565 (16-bit) */
 @property(nonatomic,readonly) NSString* pixelFormat;
 /** depth format of the render buffer: 0, 16 or 24 bits*/
@@ -131,12 +138,21 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property(nonatomic,readwrite) BOOL multiSampling;
 
+
+#pragma mark - Accessing the ES 2 Renderer
+/** @name Accessing the ES 2 Renderer */
+
 @property (nonatomic, readonly) id<ICESRenderer> renderer;
 
-/** touch delegate */
-//@property(nonatomic,readwrite,assign) id<CCTouchDelegate> touchDelegate;
+
+#pragma mark - Working with the Associated Host View Controller
+/** @name Working with the Associated Host View Controller */
 
 @property (nonatomic, assign, setter=setHostViewController:) ICHostViewController *hostViewController;
+
+
+#pragma mark - Misc.
+/** @name Misc. */
 
 /** CCGLView uses double-buffer. This method swaps the buffers */
 -(void) swapBuffers;

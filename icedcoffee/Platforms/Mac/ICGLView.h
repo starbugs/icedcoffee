@@ -32,6 +32,9 @@
 
 @class ICHostViewController;
 
+/**
+ @brief Implements an icedcoffee OpenGL view in AppKit
+ */
 @interface ICGLView : NSOpenGLView
 {
 @private
@@ -39,12 +42,19 @@
     NSCursor *_cursor;
 }
 
-@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
-    IBOutlet ICHostViewController *hostViewController;
+#pragma mark - Initializing a View
+/** @name Initializing a View */
 
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController;
+
+
+#pragma mark - Working with the View
+/** @name Working with the View */
+
+@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
+    IBOutlet ICHostViewController *hostViewController;
 
 - (void)setCursor:(NSCursor *)cursor;
 

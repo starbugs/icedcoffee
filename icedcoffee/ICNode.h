@@ -145,8 +145,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 }
 
 
-#pragma mark - Lifecycle
-/** @name Lifecycle */
+#pragma mark - Initializing a Node
+/** @name Initializing a Node */
 
 /**
 @brief Initializes the receiver
@@ -156,8 +156,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (id)init;
 
 
-#pragma mark - Composition
-/** @name Composition */
+#pragma mark - Compositing Nodes
+/** @name Compositing Nodes */
 
 /**
  @brief Returns an array containing the receiver's children nodes
@@ -479,8 +479,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (ICHostViewController *)hostViewController;
 
 
-#pragma mark - Transforms
-/** @name Transforms */
+#pragma mark - Transforming a Node
+/** @name Transforming a Node */
 
 /**
  @brief The transform matrix of the receiver
@@ -708,8 +708,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
 
-#pragma mark - Order
-/** @name Order */
+#pragma mark - Managing Order
+/** @name Managing Order */
 
 /**
  @brief The index of the receiver in its parent's children array
@@ -737,8 +737,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)orderBack;
 
 
-#pragma mark - Bounds
-/** @name Bounds */
+#pragma mark - Managing a Node's Bounds
+/** @name Managing a Node's Bounds */
 
 /**
  @brief The receiver's axis-aligned bounding box
@@ -875,8 +875,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setNeedsDisplay;
 
 
-#pragma mark - Ray-based Hit Testing
-/** @name Ray-based Hit Testing */
+#pragma mark - Performing Ray-based Hit Testing
+/** @name Performing Ray-based Hit Testing */
 
 /**
  @brief Performs a local ray-based hit test on the receiver
@@ -893,8 +893,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (ICHitTestResult)localRayHitTest:(icRay3)ray;
 
 
-#pragma mark - User Interaction Support
-/** @name User Interaction Support */
+#pragma mark - Managing User Interaction Support
+/** @name Managing User Interaction Support */
 
 /**
  @brief Indicates whether the receiver should receive user interaction events from the event

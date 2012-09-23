@@ -108,7 +108,8 @@
     ICRenderContext *_renderContext;
 }
 
-/** @name Initialization */
+#pragma mark - Initializing a Picking Node Visitor
+/** @name Initializing a Picking Node Visitor */
 
 /**
  @brief Initializes the receiver with the given owner node
@@ -136,7 +137,8 @@
 - (id)initWithOwner:(ICNode *)owner useAuxiliaryOpenGLContext:(BOOL)useAuxContext;
 
 
-/** @name Auxiliary OpenGL Context */
+#pragma mark - Using an Auxiliary OpenGL Context
+/** @name Using an Auxiliary OpenGL Context */
 
 /**
  @brief A boolean flag indicating whether the receiver uses an auxiliary OpenGL context for picking
@@ -144,7 +146,8 @@
 @property (nonatomic, readonly) BOOL usesAuxiliaryOpenGLContext;
 
 
-/** @name Render Texture */
+#pragma mark - Managing the Visitor's Render Texture
+/** @name Managing the Visitor's Render Texture */
 
 /**
  @brief The receiver's render texture size in pixels
@@ -162,7 +165,8 @@
 - (uint)renderTextureMemorySize;
 
 
-/** @name Pick Context Stack */
+#pragma mark - Using the Pick Context Stack
+/** @name Using the Pick Context Stack */
 
 /**
  @brief Pushes the given pick context to the receiver's pick context stack
@@ -190,7 +194,8 @@
 - (GLint *)currentViewport;
 
 
-/** @name Ray Stack */
+#pragma mark - Using the Ray Stack
+/** @name Using the Ray Stack */
 
 /**
  @brief Pushes a ray to the receiver's ray stack
@@ -208,7 +213,8 @@
 - (icRay3 *)currentRay;
 
 
-/** @name Picking Tests */
+#pragma mark - Performing Picking Tests
+/** @name Performing Picking Tests */
 
 /**
  @brief Performs a picking test and returns the resulting nodes

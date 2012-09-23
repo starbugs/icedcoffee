@@ -181,31 +181,8 @@
     BOOL _needsDisplay;
 }
 
-/**
- @brief The texture object associated with the render texture node
- */
-@property (nonatomic, readonly) ICTexture2D *texture;
-
-/**
- @brief The sprite used to draw the texture on the framebuffer
- */
-@property (nonatomic, readonly) ICSprite *sprite;
-
-/**
- @brief The sub scene drawn into the render texture
- */
-@property (nonatomic, retain, setter=setSubScene:) ICScene *subScene;
-
-/**
- @brief A boolean flag indicating whether the render texture's FBO is currently set as the
- OpenGL target framebuffer
- */
-@property (nonatomic, readonly) BOOL isInRenderTextureDrawContext;
-
-/**
- @brief A mode defining when to update the render texture's contents
- */
-@property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+#pragma mark - Creating a Render Texture
+/** @name Creating a Render Texture */
 
 + (id)renderTextureWithWidth:(float)w height:(float)h;
 
@@ -300,7 +277,7 @@
  @param pixelFormat An ICPixelFormat enumerated type value indicating the texture's pixel format
  @param depthBufferFormat An ICDepthBufferFormat enumerated type value defining the texture's
  depth buffer format
-
+ 
  The render texture will be initialized with a color and depth buffer. No stencil buffer will
  be attached.
  */
@@ -334,6 +311,42 @@
   depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat
 stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
+
+#pragma mark - Obtaining the Associated Texture and Sprite
+/** @name Obtaining the Associated Texture and Sprite */
+
+/**
+ @brief The texture object associated with the render texture node
+ */
+@property (nonatomic, readonly) ICTexture2D *texture;
+
+/**
+ @brief The sprite used to draw the texture on the framebuffer
+ */
+@property (nonatomic, readonly) ICSprite *sprite;
+
+
+#pragma mark - Working with the Render Texture's Sub Scene
+/** @name Working with the Render Texture's Sub Scene */
+
+/**
+ @brief The sub scene drawn into the render texture
+ */
+@property (nonatomic, retain, setter=setSubScene:) ICScene *subScene;
+
+
+#pragma mark - Defining When to Update a Frame
+/** @name Defining When to Update a Frame */
+
+/**
+ @brief A mode defining when to update the render texture's contents
+ */
+@property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+
+
+#pragma mark - Managing the Render Texture's Size
+/** @name Managing the Render Texture's Size */
+
 /**
  @brief Sets the size of the render texture and automatically re-creates its buffers
  if necessary
@@ -341,6 +354,16 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 - (void)setSize:(kmVec3)size;
 
 - (CGSize)textureSizeInPixels;
+
+/**
+ @brief The size of the receiver's framebuffer, in points
+ */
+- (CGSize)framebufferSize;
+
+
+
+#pragma mark - Drawing to the Render Texture
+/** @name Drawing to the Render Texture */
 
 /**
  @brief Sets up the receiver's framebuffer for drawing
@@ -361,9 +384,23 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
  */
 - (void)end;
 
+/**
+ @brief A boolean flag indicating whether the render texture's FBO is currently set as the
+ OpenGL target framebuffer
+ */
+@property (nonatomic, readonly) BOOL isInRenderTextureDrawContext;
+
+
+#pragma mark - Managing the Render Texture's Internal Matrices
+/** @name Managing the Render Texture's Internal Matrices */
+
 - (void)pushRenderTextureMatrices;
 
 - (void)popRenderTextureMatrices;
+
+
+#pragma mark - Reading Back Pixel Colors
+/** @name Reading Back Pixel Colors */
 
 /**
  @brief Reads the color of the pixel at the given location in the receiver's framebuffer
@@ -372,16 +409,15 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
 - (void)readPixels:(void *)data inRect:(CGRect)rect;
 
+
+#pragma mark - Retrieving the Render Texture's Plane
+/** @name Retrieving the Render Texture's Plane */
+
 /**
  @brief The receiver's plane in local coordinate space
  
  This method essentially returns the render texture's sprite plane.
  */
 - (kmPlane)plane;
-
-/**
- @brief The size of the receiver's framebuffer, in points
- */
-- (CGSize)framebufferSize;
 
 @end

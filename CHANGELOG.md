@@ -74,15 +74,22 @@ Changes and Improvements:
 * Added ICTextureLoader::loadTextureFromFile:resolutionType:.
 * Added ICTextureCache::loadTextureFromFile:resolutionType and
   ICTextureCache::loadTextureFromFileAsync:resolutionType:withTarget:withObject:.
+* Renamed kICiOS... version enum values to ICIOS...
+* Renamed kICMac... version enum values to ICMacOSX...
+* Refactored the ICConfiguration class
+* Added and refined the header documentation
+* Created a new API reference site at http://icedcoffee-framework.org
     
 Fixes:
 
-* Fixed Issue #3 Interface Builder integration on iOS
+* Fixed Issue #3: Interface Builder integration on iOS
   (see https://github.com/starbugs/icedcoffee/issues/3)
 * Fixed ICGLView::initWithCoder:, depth buffer format now defaults to
   GL_DEPTH24_STENCIL8_OES when using Interface Builder views.
 * Fixed DepthBufferTest for iOS: depth buffer format must be GL_DEPTH24_STENCIL8_OES
   instead of GL_DEPTH_COMPONENT24_OES.
+* Partially fixed Issue #7: Performance problem with control events based on touchesMoved on iOS.
+  The fix is incomplete and will be continued in the next version.
 * Fixed a couple of warnings that occurred as of Xcode 4.4.
 
 

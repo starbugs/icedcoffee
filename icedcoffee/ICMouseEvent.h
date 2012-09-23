@@ -30,9 +30,12 @@
 @class ICNode;
 
 /**
- @brief Represents a mouse event (Mac OS X only)
+ @brief Represents a mouse event
  */
 @interface ICMouseEvent : ICOSXEvent
+
+#pragma mark - Accessing System Event Properties
+/** @name Accessing System Event Properties */
 
 /**
  @brief The receiver's NSEvent button number
@@ -63,6 +66,10 @@
  @brief The receiver's NSEvent deltaZ value for scroll events
  */
 @property (nonatomic, readonly, getter=deltaZ) CGFloat deltaZ;
+
+
+#pragma mark - Obtaining the Event's Location
+/** @name Obtaining the Event's Location */
 
 /**
  @brief The event's location inside the host view

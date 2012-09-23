@@ -57,10 +57,32 @@ typedef NSUInteger ICOSXEventType;
     NSView *_hostView;
 }
 
+
+#pragma mark - Creating an Event
+/** @name Creating an Event */
+
+/**
+ @brief Returns an autoreleased event with the given NSEvent object and host view
+ */
++ (id)eventWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
+
+/**
+ @brief Initializes an event with the given NSEvent object and host view
+ */
+- (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
+
+
+#pragma mark - Accessing the Native Event
+/** @name Accessing the Native Event */
+
 /**
  @brief The native NSEvent object aggregated by the receiver
  */
 @property (nonatomic, readonly) NSEvent *nativeEvent;
+
+
+#pragma mark - Accessing System Event Information
+/** @name Accessing System Event Information */
 
 /**
  @brief The host view the receiver is being dispatched to
@@ -111,17 +133,6 @@ typedef NSUInteger ICOSXEventType;
  @brief The CoreGraphics event object corresponding to the receiver's NSEvent
  */
 @property (nonatomic, readonly, getter=CGEvent) CGEventRef CGEvent;
-
-
-/**
- @brief Returns an autoreleased event with the given NSEvent object and host view
- */
-+ (id)eventWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
-
-/**
- @brief Initializes an event with the given NSEvent object and host view
- */
-- (id)initWithNativeEvent:(NSEvent *)event hostView:(NSView *)hostView;
 
 @end
 

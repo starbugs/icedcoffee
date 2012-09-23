@@ -184,69 +184,9 @@
     GLint _oldViewport[4];
 }
 
-/**
- @brief The ICHostViewController object associated with the receiver
- */
-@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
-    ICHostViewController *hostViewController;
 
-/**
- @brief An ICCamera object used to define the receiver's projection and model-view matrices
- */
-@property (nonatomic, retain) ICCamera *camera;
-
-/**
- @brief An ICNodeVisitor object defining the visitor used to draw the receiver's contents
- */
-@property (nonatomic, retain) ICNodeVisitorDrawing *drawingVisitor;
-
-/**
- @brief An ICNodeVisitor object defining the visitor used to perform hit tests on the receiver
- */
-@property (nonatomic, retain) ICNodeVisitorPicking *pickingVisitor;
-
-@property (nonatomic, assign) ICRenderTexture *renderTexture;
-
-/**
- @brief An icColor4B value defining the clear color used to clear the receiver's framebuffer
- before drawing its contents
- */
-@property (nonatomic, assign) icColor4B clearColor;
-
-/**
- @brief A boolean value indicating whether the receiver automatically clears the color buffer
- before drawing its contents
- */
-@property (nonatomic, assign) BOOL clearsColorBuffer;
-
-/**
- @brief A boolean value indicating whether the receiver automatically clears the depth buffer
- before drawing its contents
- */
-@property (nonatomic, assign) BOOL clearsDepthBuffer;
-
-/**
- @brief A boolean value indicating whether the receiver automatically clears the stencil buffer
- before drawing its contents
- */
-@property (nonatomic, assign) BOOL clearsStencilBuffer;
-
-/**
- @brief A boolean flag indicating whether depth testing is performed by the receiver
- 
- If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
- ``GL_DEPTH_TEST`` state before drawing the scene's contents. The default value for this flag
- is ``NO``.
- */
-@property (nonatomic, assign) BOOL performsDepthTesting;
-
-/**
- @brief A boolean flag indicating whether face culling is performed by the receiver
-
- If face culling is enabled, ICScene will enable the ``GL_CULL_FACE`` state before drawing the
- scene's contents. The default value for this flag is ``YES``.
- */
-@property (nonatomic, assign) BOOL performsFaceCulling;
+#pragma mark - Creating a Scene
+/** @name Creating a Scene */
 
 /**
  @brief Returns an autoreleased scene object initialized with a default camera
@@ -274,6 +214,94 @@
  */
 - (id)initWithCamera:(ICCamera *)camera;
 
+
+#pragma mark - Managing the Host View Controller
+/** @name Managing the Host View Controller */
+
+/**
+ @brief The ICHostViewController object associated with the receiver
+ */
+@property (nonatomic, assign, getter=hostViewController, setter=setHostViewController:)
+    ICHostViewController *hostViewController;
+
+
+#pragma mark - Managing the Camera
+/** @name Managing the Camera */
+
+/**
+ @brief An ICCamera object used to define the receiver's projection and model-view matrices
+ */
+@property (nonatomic, retain) ICCamera *camera;
+
+
+#pragma mark - Working with Visitors and Render Textures
+/** @name Working with Visitors and Render Textures */
+
+/**
+ @brief An ICNodeVisitor object defining the visitor used to draw the receiver's contents
+ */
+@property (nonatomic, retain) ICNodeVisitorDrawing *drawingVisitor;
+
+/**
+ @brief An ICNodeVisitor object defining the visitor used to perform hit tests on the receiver
+ */
+@property (nonatomic, retain) ICNodeVisitorPicking *pickingVisitor;
+
+@property (nonatomic, assign) ICRenderTexture *renderTexture;
+
+
+#pragma mark - Clearing the Scene's Framebuffer
+/** @name Clearing the Scene's Framebuffer */
+
+/**
+ @brief An icColor4B value defining the clear color used to clear the receiver's framebuffer
+ before drawing its contents
+ */
+@property (nonatomic, assign) icColor4B clearColor;
+
+/**
+ @brief A boolean value indicating whether the receiver automatically clears the color buffer
+ before drawing its contents
+ */
+@property (nonatomic, assign) BOOL clearsColorBuffer;
+
+/**
+ @brief A boolean value indicating whether the receiver automatically clears the depth buffer
+ before drawing its contents
+ */
+@property (nonatomic, assign) BOOL clearsDepthBuffer;
+
+/**
+ @brief A boolean value indicating whether the receiver automatically clears the stencil buffer
+ before drawing its contents
+ */
+@property (nonatomic, assign) BOOL clearsStencilBuffer;
+
+
+#pragma mark - Managing OpenGL-specific Scene Setup Properties
+/** @name Managing OpenGL-specific Scene Setup Properties */
+
+/**
+ @brief A boolean flag indicating whether depth testing is performed by the receiver
+ 
+ If depth testing is enabled, ICScene will clear the depth buffer contents and enable the
+ ``GL_DEPTH_TEST`` state before drawing the scene's contents. The default value for this flag
+ is ``NO``.
+ */
+@property (nonatomic, assign) BOOL performsDepthTesting;
+
+/**
+ @brief A boolean flag indicating whether face culling is performed by the receiver
+
+ If face culling is enabled, ICScene will enable the ``GL_CULL_FACE`` state before drawing the
+ scene's contents. The default value for this flag is ``YES``.
+ */
+@property (nonatomic, assign) BOOL performsFaceCulling;
+
+
+#pragma mark - Checking the Scene's Status
+/** @name Checking the Scene's Status */
+
 /**
  @brief Returns a boolean flag indicating whether the receiver is the root scene
  
@@ -281,6 +309,10 @@
  not have a parent node.
  */
 - (BOOL)isRootScene;
+
+
+#pragma mark - Drawing the Scene
+/** @name Drawing the Scene */
 
 /**
  @brief Sets up the drawing environment for the receiver before drawing
@@ -307,6 +339,10 @@
  drawing visitor, and finally tears down the scene's drawing environment
  */
 - (void)visit;
+
+
+#pragma mark - Performing Hit Tests
+/** @name Performing Hit Tests */
 
 /**
  @brief Performs a hit test on the receiver's node hierarchy
@@ -370,6 +406,10 @@
  receiver's camera
  */
 - (icRay3)worldRayFromFramebufferLocation:(CGPoint)location;
+
+
+#pragma mark - Managing the Scene's Size
+/** @name Managing the Scene's Size */
 
 /**
  @brief Sets the size of the receiver, adjusts the viewport of the camera and sets the size of

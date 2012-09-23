@@ -44,10 +44,9 @@
     BOOL _skipChildren;
 }
 
-/**
- @brief The receiver's owner node
- */
-@property (nonatomic, readonly) ICNode *owner;
+
+#pragma mark - Initializing a Node Visitor
+/** @name Initializing a Node Visitor */
 
 /**
  @brief Initializes the receiver with the given owner node
@@ -60,6 +59,19 @@
  parameter to indicate that the receiver does not have an owner.
  */
 - (id)initWithOwner:(ICNode *)owner;
+
+
+#pragma mark - Obtaining the Node Visitor's Owner
+/** @name Obtaining the Node Visitor's Owner */
+
+/**
+ @brief The receiver's owner node
+ */
+@property (nonatomic, readonly) ICNode *owner;
+
+
+#pragma mark - Performing Visitation
+/** @name Performing Visitation */
 
 /**
  @brief Performs visitation of the scene graph rooted in the given node

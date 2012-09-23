@@ -109,36 +109,8 @@ typedef NSUInteger ICAutoResizingMask;
     ICAutoResizingMask _autoresizingMask;
 }
 
-/**
- @brief An ICRenderTexture object representing the backing of the view
- 
- When the backing property is set to a non-nil value, ICView will operate in buffer backed
- mode. When setting the backing to a non-nil value, the view's children are automatically
- moved to the backing's sub scene. Likewise, if the backing property is set to nil, its
- children are moved back from the backing's sub scene to the view itself.
- 
- @note Switching a non-nil backing to another non-nil backing is not supported currently.
- You should always switch the backing to nil before you replace it with another backing.
- */
-@property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
-
-@property (nonatomic, retain) ICSprite *background;
-
-@property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
-
-/**
- @brief Whether the view clips its children
- */
-@property (nonatomic, assign, getter=clipsChildren, setter=setClipsChildren:) BOOL clipsChildren;
-
-/**
- @brief Whether the view's layout needs to be udpated
- */
-@property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
-
-@property (nonatomic, assign, setter=setAutoResizingMask:) ICAutoResizingMask autoresizingMask;
-
-@property (nonatomic, assign) BOOL autoresizesSubviews;
+#pragma mark - Creating a View
+/** @name Creating a View */
 
 /**
  @brief Creates a new autoreleased view with the given size
@@ -153,6 +125,19 @@ typedef NSUInteger ICAutoResizingMask;
  @param size A CGSize value defining the size of the view in points
   */
 - (id)initWithSize:(CGSize)size;
+
+
+#pragma mark - Clipping the View's Contents
+/** @name Clipping the View's Contents */
+
+/**
+ @brief Whether the view clips its children
+ */
+@property (nonatomic, assign, getter=clipsChildren, setter=setClipsChildren:) BOOL clipsChildren;
+
+
+#pragma mark - Controlling the View's Backing
+/** @name Controlling the View's Backing */
 
 /**
  @brief Creates or removes a standard render texture backing
@@ -171,6 +156,31 @@ typedef NSUInteger ICAutoResizingMask;
  property.
  */
 - (void)setWantsRenderTextureBacking:(BOOL)wantsRenderTextureBacking;
+
+/**
+ @brief An ICRenderTexture object representing the backing of the view
+ 
+ When the backing property is set to a non-nil value, ICView will operate in buffer backed
+ mode. When setting the backing to a non-nil value, the view's children are automatically
+ moved to the backing's sub scene. Likewise, if the backing property is set to nil, its
+ children are moved back from the backing's sub scene to the view itself.
+ 
+ @note Switching a non-nil backing to another non-nil backing is not supported currently.
+ You should always switch the backing to nil before you replace it with another backing.
+ */
+@property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
+
+
+#pragma mark - Drawing a Background Sprite
+/** @name Drawing a Background Sprite */
+
+@property (nonatomic, retain) ICSprite *background;
+
+@property (nonatomic, assign, setter=setDrawsBackground:) BOOL drawsBackground;
+
+
+#pragma mark - Manipulating the View Hierarchy
+/** @name Manipulating the View Hierarchy */
 
 /**
  @brief Returns the superview of the receiver
@@ -215,6 +225,18 @@ typedef NSUInteger ICAutoResizingMask;
  */
 - (NSArray *)children;
 
+
+#pragma mark - Layouting Subviews
+/** @name Layouting Subviews */
+
+/**
+ @brief Whether the view's layout needs to be udpated
+ */
+@property (nonatomic, assign, setter=setNeedsLayout:) BOOL needsLayout;
+
+@property (nonatomic, assign, setter=setAutoResizingMask:) ICAutoResizingMask autoresizingMask;
+
+@property (nonatomic, assign) BOOL autoresizesSubviews;
 /**
  @brief Short hand for ICView::setNeedsLayout:YES
  */

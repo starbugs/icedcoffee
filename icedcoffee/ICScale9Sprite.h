@@ -53,12 +53,19 @@
     GLuint _indexBuffer;    
 }
 
-@property (nonatomic, assign, setter=setScale9Rect:) CGRect scale9Rect;
+#pragma mark - Creating a Scale-9 Sprite
+/** @name Creating a Scale-9 Sprite */
 
 + (id)spriteWithTexture:(ICTexture2D *)texture scale9Rect:(CGRect)scale9Rect;
 
 - (id)init;
 
 - (id)initWithTexture:(ICTexture2D *)texture scale9Rect:(CGRect)scale9Rect;
+
+
+#pragma mark - Retrieving the Scale-9 Rect
+/** @name Retrieving the Scale-9 Rect */
+
+@property (nonatomic, assign, setter=setScale9Rect:) CGRect scale9Rect;
 
 @end

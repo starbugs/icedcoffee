@@ -134,20 +134,30 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 #endif
 
 
+/**
+ @brief Implements an action used in target-action dispatch in icedcoffee
+ */
 @interface ICAction : NSObject {
 @protected
     id  _target;
     SEL _action;
 }
 
-@property (nonatomic, retain) id target;
-@property (nonatomic, assign) SEL action;
+#pragma mark - ICAction: Creating an Action
+/** @name Creating an Action */
 
 - (id)initWithTarget:(id)target action:(SEL)action;
 
 - (BOOL)isEqual:(id)object;
 
+#pragma mark - ICAction: Changing the Target and Selector
+/** @name Changing the Target and Selector */
+
+@property (nonatomic, retain) id target;
+@property (nonatomic, assign) SEL action;
+
 @end
+
 
 /**
  @brief Base class for simple user interface controls (buttons, sliders, etc.)
@@ -161,7 +171,14 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
     ICControlState _state;
 }
 
+#pragma mark - ICControl: Initializing a Control
+/** @name Initializing a Control */
+
 - (id)initWithSize:(CGSize)size;
+
+
+#pragma mark - ICControl: Sending Actions
+/** @name Sending Actions */
 
 #ifdef __IC_PLATFORM_MAC
 - (void)sendAction:(SEL)action to:(id)target forEvent:(ICOSXEvent *)event;
@@ -179,11 +196,19 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 
 - (void)sendActionsForControlEvents:(ICControlEvents)controlEvents;
 
+
+#pragma mark - ICControl: Managing Targets
+/** @name Managing Targets */
+
 - (void)addTarget:(id)target action:(SEL)action forControlEvents:(ICControlEvents)controlEvents;
 - (void)removeTarget:(id)target action:(SEL)action forControlEvents:(ICControlEvents)controlEvents;
 - (NSArray *)actionsForTarget:(id)target forControlEvent:(ICControlEvents)controlEvent;
 - (ICControlEvents)allControlEvents;
 - (NSArray *)allTargets;
+
+
+#pragma mark - ICControl: Managing the Control's State
+/** @name Managing the Control's State */
 
 @property (nonatomic, assign, getter=state, setter=setState:) ICControlState state;
 @property (nonatomic, assign, getter=enabled, setter=setEnabled:) BOOL enabled;

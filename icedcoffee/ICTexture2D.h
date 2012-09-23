@@ -126,7 +126,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
        contentSize:(CGSize)contentSizeInPixels
     resolutionType:(ICResolutionType)resolutionType;
 
-/** Intializes with a texture2d with data */
+/** Intializes a texture with data */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
         pixelsWide:(NSUInteger)width

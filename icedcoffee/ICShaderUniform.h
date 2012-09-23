@@ -25,17 +25,35 @@
 #import "icTypes.h"
 #import "ICShaderValue.h"
 
+/** @brief Represents a Shader Uniform
+ 
+ The ICShaderUniform class provides an interface to a uniform used by a shader program
+ implemented in an ICShaderProgram object. You do not need to create ICShaderUniform objects
+ manually usually. The uniform itself is defined in the shader program's GLSL source code.
+ ICShaderProgram enumerates all uniforms implemented by a given shader program and automatically
+ creates ICShaderUniform objects for them. The ICShaderUniform class is then used to set uniforms
+ to a certain value represented by the ICShaderValue class.
+ */
 @interface ICShaderUniform : ICShaderValue {
 @protected
     GLint _location;
 }
 
-@property (nonatomic, assign) GLint location;
+#pragma mark - Creating a Shader Uniform Representation
+/** @name Creating a Shader Uniform Representation */
 
 + (id)shaderUniformWithType:(ICShaderValueType)type location:(GLint)location;
 
 - (id)initWithType:(ICShaderValueType)type location:(GLint)location;
 
+#pragma mark - Setting the Uniform's Value
+/** @name Setting the Uniform's Value */
+
 - (BOOL)setToShaderValue:(ICShaderValue *)value;
+
+#pragma mark - Obtaining the Uniform's Location
+/** @name Obtaining the Uniform's Location */
+
+@property (nonatomic, assign) GLint location;
 
 @end

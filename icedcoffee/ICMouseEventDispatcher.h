@@ -41,6 +41,9 @@ typedef NSUInteger ICAbstractMouseEventType;
 @class ICNode;
 @class ICControl;
 
+/**
+ @brief Dispatches mouse events into the icedcoffee responder chain
+ */
 @interface ICMouseEventDispatcher : NSObject <ICMouseResponder>
 {
 @private
@@ -58,14 +61,24 @@ typedef NSUInteger ICAbstractMouseEventType;
     BOOL _updatesEnterExitEventsContinuously;
 }
 
-@property (nonatomic, assign) BOOL acceptsMouseMovedEvents;
 
-@property (nonatomic, assign) BOOL updatesEnterExitEventsContinuously;
+#pragma mark - Initializing an Event Dispatcher
+/** @name Initializing an Event Dispatcher */
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;
 
+
+#pragma mark - Tracking the Mouse Movement
+/** @name Tracking the Mouse Movement */
+
+@property (nonatomic, assign) BOOL acceptsMouseMovedEvents;
+@property (nonatomic, assign) BOOL updatesEnterExitEventsContinuously;
 - (void)prepareUpdateMouseOverState;
 - (void)updateMouseOverState:(BOOL)deferredReadback;
+
+
+#pragma mark - Handling and Dispatching Mouse Events
+/** @name Handling and Dispatching Mouse Events */
 
 - (void)mouseDown:(NSEvent *)event;
 - (void)mouseDragged:(NSEvent *)event;

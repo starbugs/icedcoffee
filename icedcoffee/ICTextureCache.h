@@ -54,6 +54,9 @@
 #endif
 }
 
+#pragma mark - Obtaining/Creating a Texture Cache
+/** @name Obtaining/Creating a Texture Cache */
+
 /**
  @brief Returns the texture cache associated with the current OpenGL context
  */
@@ -67,6 +70,10 @@
  @brief Initializes the receiver with the given host view controller
  */
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController;
+
+
+#pragma mark - Loading Textures into the Cache
+/** @name Loading Textures into the Cache */
 
 /**
  @brief Loads a texture from a file synchronously
@@ -143,6 +150,10 @@
                   resolutionType:(ICResolutionType)resolutionType
                       withTarget:(id<ICAsyncTextureCacheDelegate>)target
                       withObject:(id)object;
+
+
+#pragma mark - Managing Cached Textures
+/** @name Managing Cached Textures */
 
 /**
  @brief Returns the texture for the specified key

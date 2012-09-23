@@ -27,8 +27,6 @@
  * Finally adapted for use in IcedCoffee.
  */
 
-// Only compile this code on iOS. These files should NOT be included on your Mac project.
-// But in case they are included, it won't be compiled.
 #import "../../icMacros.h"
 #ifdef __IC_PLATFORM_IOS
 
@@ -37,6 +35,9 @@
 #import <OpenGLES/EAGL.h>
 #import <OpenGLES/EAGLDrawable.h>
 
+/**
+ @brief Defines methods to be implemented by OpenGL ES 2 renderers
+ */
 @protocol ICESRenderer <NSObject>
 
 - (id)initWithDepthFormat:(unsigned int)depthFormat

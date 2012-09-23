@@ -35,6 +35,9 @@
 
 @optional
 
+#pragma mark - Responding to Mouse Events
+/** @name Responding to Mouse Events */
+
 - (void)mouseEntered:(ICMouseEvent *)event;
 - (void)mouseExited:(ICMouseEvent *)event;
 - (void)mouseMoved:(ICMouseEvent *)event;

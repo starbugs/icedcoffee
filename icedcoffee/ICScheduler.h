@@ -49,6 +49,10 @@ typedef enum _ICSchedulerPriority {
     NSMutableArray *_targetsWithHighPriority;
 }
 
+
+#pragma mark - Accessing the Current Scheduler
+/** @name Accessing the Current Scheduler */
+
 /**
  @brief Returns the scheduler for the current host view controller
  
@@ -59,6 +63,10 @@ typedef enum _ICSchedulerPriority {
  Note that this method is thread-safe while all other methods of this class are not.
  */
 + (id)currentScheduler;
+
+
+#pragma mark - Scheduling Updates
+/** @name Scheduling Update */
 
 /**
  @brief Schedule a frame-wise update for the given target

@@ -25,7 +25,16 @@
 
 @class ICTexture2D;
 
+/**
+ @brief A protocol for retrieving notifications for asynchronous texture loading
+ 
+ The ICAsyncTextureCacheDelegate is used in collaboration with the ICTextureCache class when
+ asynchronously loading textures up to the OpenGL driver.
+ */
 @protocol ICAsyncTextureCacheDelegate <NSObject>
+
+#pragma mark - Handling Texture Loaded Notifications
+/** @name Handling Texture Loaded Notifications */
 
 - (void)textureDidLoad:(ICTexture2D *)texture object:(id)object;
 

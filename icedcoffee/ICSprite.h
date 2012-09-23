@@ -47,25 +47,8 @@
     kmVec2       _texCoords[4];
 }
 
-/**
- @brief The sprite's color
- */
-@property (nonatomic, assign, getter=color, setter=setColor:) icColor4B color;
-
-/**
- @brief The sprite's texture
- */
-@property (nonatomic, retain, setter=setTexture:) ICTexture2D *texture;
-
-/**
- @brief The sprite's mask texture
- */
-@property (nonatomic, retain, setter=setMaskTexture:) ICTexture2D *maskTexture;
-
-/**
- @brief The sprite's blending function
- */
-@property (nonatomic, assign) icBlendFunc blendFunc;
+#pragma mark - Creating a Sprite
+/** @name Creating a Sprite */
 
 /**
  @brief A convenience method returning an autoreleased ICSprite instance
@@ -87,10 +70,33 @@
  */
 - (id)initWithTexture:(ICTexture2D *)texture;
 
+
+#pragma mark - Changing the Sprites Color and Blending Function
+/** @name Changing the Sprites Color and Blending Function */
+
 /**
- @brief Draws the sprite
+ @brief The sprite's color
  */
-- (void)drawWithVisitor:(ICNodeVisitor *)visitor;
+@property (nonatomic, assign, getter=color, setter=setColor:) icColor4B color;
+
+/**
+ @brief The sprite's blending function
+ */
+@property (nonatomic, assign) icBlendFunc blendFunc;
+
+
+#pragma mark - Working with the Sprite's Texture
+/** @name Working with the Sprite's Texture */
+
+/**
+ @brief The sprite's texture
+ */
+@property (nonatomic, retain, setter=setTexture:) ICTexture2D *texture;
+
+/**
+ @brief The sprite's mask texture
+ */
+@property (nonatomic, retain, setter=setMaskTexture:) ICTexture2D *maskTexture;
 
 /**
  @brief Flips the sprite's texture horizontally
@@ -111,5 +117,14 @@
  @brief Rotates the sprite's texture by 90 degrees in the counter clock-wise direction
  */
 - (void)rotateTextureCCW;
+
+
+#pragma mark - Drawing the Sprite
+/** @name Drawing the Sprite */
+
+/**
+ @brief Draws the sprite
+ */
+- (void)drawWithVisitor:(ICNodeVisitor *)visitor;
 
 @end

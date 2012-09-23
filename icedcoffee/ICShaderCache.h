@@ -52,15 +52,13 @@
     NSMutableDictionary *_programs;
 }
 
+#pragma mark - Obtaining/Creating a Shader Cache
+/** @name Obtaining/Creating a Shader Cache */
+
 /**
  @brief Returns the shader cache associated with the current OpenGL context
  */
 + (id)currentShaderCache;
-
-/**
- @brief Purges the internal shader cache
- */
-+ (void)purgeCurrentShaderCache;
 
 /**
  @brief Initializes the ICShaderCache class and loads default shaders
@@ -75,6 +73,10 @@
  </ul>
  */
 - (id)init;
+
+
+#pragma mark - Managing Shader Programs
+/** @name Managing Shader Programs */
 
 /**
  @brief Sets a shader program for a given key
@@ -98,5 +100,10 @@
  the given key no shader program is found.
  */
 - (ICShaderProgram *)shaderProgramForKey:(id)key;
+
+/**
+ @brief Purges the internal shader cache
+ */
++ (void)purgeCurrentShaderCache;
 
 @end

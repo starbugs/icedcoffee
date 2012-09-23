@@ -92,8 +92,8 @@
 }
 
 
-#pragma mark - Initialization
-/** @name Initialization */
+#pragma mark - Creating a Host View Controller
+/** @name Creating a Host View Controller */
 
 /**
  @brief Returns a new autoreleased default ICHostViewController subclass suitable for use with
@@ -120,11 +120,17 @@
  */
 - (id)init;
 
+/**
+ @brief Performs common initialization internally
+ 
+ This method should be called by all initializers to perform common initialization. Subclasses
+ should override this method in order to implement custom common initialization.
+ */
 - (void)commonInit;
 
 
-#pragma mark - Current Host View Controller
-/** @name Current Host View Controller */
+#pragma mark - Managing the Current Host View Controller
+/** @name Managing the Current Host View Controller */
 
 /**
  @brief Returns the current host view controller for the current thread
@@ -172,8 +178,8 @@
 - (id)makeCurrentHostViewController;
 
 
-#pragma mark - Event Handling
-/** @name Event Handling */
+#pragma mark - Managing the First Responder
+/** @name Managing the First Responder */
 
 /**
  @brief The receiver's current first responder
@@ -181,8 +187,8 @@
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
 
 
-#pragma mark - Caches and Management
-/** @name Caches and Management */
+#pragma mark - Obtaining Caches and Contexts
+/** @name Obtaining Caches and Contexts */
 
 /**
  @brief The receiver's render context
@@ -195,8 +201,8 @@
 @property (nonatomic, readonly, getter=textureCache) ICTextureCache *textureCache;
 
 
-#pragma mark - Run Loop, Drawing and Animation
-/** @name Run Loop, Drawing and Animation */
+#pragma mark - Managing the Run Loop, Drawing and Animation
+/** @name Managing the Run Loop, Drawing and Animation */
 
 /**
  @brief Called by the framework to calculate the delta time between two consecutive frames
@@ -298,8 +304,8 @@
 @property (nonatomic, readonly) ICTargetActionDispatcher *targetActionDispatcher;
 
 
-#pragma mark - Host View
-/** @name Host View */
+#pragma mark - Managing the Host View
+/** @name Managing the Host View */
 
 /**
  @brief Sets the view to be controlled by the receiver
@@ -331,8 +337,8 @@
 #endif
 
 
-#pragma mark - Hit Testing
-/** @name Hit Test */
+#pragma mark - Performing Hit Tests
+/** @name Performing Hit Tests */
 
 /**
  @brief Performs a hit test on the current scene
@@ -351,8 +357,8 @@
 - (BOOL)canPerformDeferredReadbacks;
 
 
-#pragma mark - Retina Display Support
-/** @name Retina Display Support */
+#pragma mark - Supporting Retina Displays
+/** @name Supporting Retina Displays */
 
 /**
  @brief Enables or disables retina display support (iOS only)
@@ -391,8 +397,8 @@
 
 #ifdef __IC_PLATFORM_MAC
 
-#pragma mark - Mouse Cursor
-/** @name Mouse Cursor */
+#pragma mark - Changing the Mouse Cursor
+/** @name Changing the Mouse Cursor */
 
 /**
  @brief Sets the mouse cursor (Mac only)

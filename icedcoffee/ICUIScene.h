@@ -36,10 +36,8 @@
     ICView *_contentView;
 }
 
-/**
- @brief The receiver's content view
- */
-@property (nonatomic, retain) ICView *contentView;
+#pragma mark - Creating a UI Scene
+/** @name Creating a UI Scene */
 
 /**
  @brief Initializes the receiver with a default size of 400x300 points
@@ -50,6 +48,19 @@
  @brief Initializes the receiver with the given size
  */
 - (id)initWithSize:(CGSize)size;
+
+
+#pragma mark - Working with the Content View
+/** @name Working with the Content View */
+
+/**
+ @brief The receiver's content view
+ */
+@property (nonatomic, retain) ICView *contentView;
+
+
+#pragma mark - Managing the Scene's Size
+/** @name Managing the Scene's Size */
 
 /**
  @brief Sets the size of the receiver and automatically adjusts the size of the content view

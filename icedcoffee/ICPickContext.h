@@ -32,15 +32,9 @@
     GLint _viewport[4];
 }
 
-/**
- @brief Defines the location to perform picking with
- */
-@property (nonatomic, readonly) CGPoint point;
 
-/**
- @brief Defines the viewport to perform picking in
- */
-@property (nonatomic, readonly, getter=viewport) GLint *viewport;
+#pragma mark - Creating a Pick Context
+/** @name Creating a Pick Context */
 
 /**
  @brief Returns an autoreleased context with the given point and viewport
@@ -51,5 +45,19 @@
  @brief Initializes the receiver with the given point and viewport
  */
 - (id)initWithPoint:(CGPoint)point viewport:(GLint *)viewport;
+
+
+#pragma mark - Using the Pick Context's Information
+/** @name Using the Pick Context's Information */
+
+/**
+ @brief Defines the location to perform picking with
+ */
+@property (nonatomic, readonly) CGPoint point;
+
+/**
+ @brief Defines the viewport to perform picking in
+ */
+@property (nonatomic, readonly, getter=viewport) GLint *viewport;
 
 @end

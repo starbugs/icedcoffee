@@ -60,6 +60,11 @@
 
 /** @} */
 
+/**
+ @addtogroup logging-and-debugging-macros Logging and Debugging Macros
+ @{
+ */
+
 NSString *NSStringFromGLError(GLenum error);
 
 #if DEBUG
@@ -80,6 +85,8 @@ NSString *NSStringFromGLError(GLenum error);
 #else
 #define IC_CHECK_GL_ERROR_DEBUG()
 #endif
+
+/** @} */
 
 /**
  @defgroup opengl-redefinitions OpenGL Redefinitions

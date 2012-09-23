@@ -27,13 +27,6 @@
 #import "icGLState.h"
 #import "icTypes.h"
 
-enum {
-	kICUniformMVPMatrix,
-	kICUniformSampler,
-    kICUniformSampler2,
-    
-	kICUniform_MAX,
-};
 
 #define kICShader_PositionTextureColor			@"ShaderPositionTextureColor"
 #define kICShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
@@ -72,29 +65,93 @@ enum {
     NSMutableDictionary *_uniforms;
 }
 
-@property (nonatomic, readonly) const GLuint program;
+#pragma mark - Creating a Shader Program
+/** @name Creating a Shader Program */
 
-@property (nonatomic, readonly) NSDictionary *uniforms;
-
+/**
+ @brief Initializes a shader program with the given vertex and fragment shader filenames
+ 
+ @param vShaderFilename An NSString defining a path to the vertex shader's GLSL source file
+ @param fShaderFilename An NSString defining a path to the fragment shader's GLSL source file
+ */
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
 
+
+#pragma mark - Managing Attributes and Uniforms
+/** @name Managing Attributes and Uniforms */
+
+/**
+ @brief Adds an attribute to the shader program
+ 
+ @param attributeName An NSString defining the attribute's name
+ @param index A ``GLuint`` value defining the index of the attribute
+ */
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
 
+/**
+ @brief Returns a dictionary of shader uniforms defined in the shader program
+ 
+ @return Returns an ``NSDictionary`` containing ICShaderUniform objects for ``NSString`` keys.
+ The keys identify each contained uniform by its name as defined in the GLSL program's source code.
+ */
+@property (nonatomic, readonly) NSDictionary *uniforms;
+
+/**
+ @brief Sets the specified uniform to the given shader value
+ */
 - (BOOL)setShaderValue:(ICShaderValue *)shaderValue forUniform:(NSString *)uniformName;
 
+/**
+ @brief Returns the shader value for the given uniform name
+ */
 - (ICShaderValue *)shaderValueForUniform:(NSString *)uniformName;
 
+
+#pragma mark - Linking and Using a Shader Program
+/** @name Linking and Using a Shader Program */
+
+/**
+ @brief Links the shader program
+ */
 - (BOOL)link;
 
+/**
+ @brief Uses the shader program in OpenGL
+ */
 - (void)use;
 
+/**
+ @brief Updates the shader's uniforms
+ */
 - (void)updateUniforms;
 
+
+#pragma mark - Obtaining Shader Program Logs
+/** @name Obtaining Shader Program Logs */
+
+/**
+ @brief Returns the vertex shader log
+ */
 - (NSString *)vertexShaderLog;
 
+/**
+ @brief Returns the fragment shader log
+ */
 - (NSString *)fragmentShaderLog;
 
+/**
+ @brief Returns the program log
+ */
 - (NSString *)programLog;
+
+
+#pragma mark - Obtaining OpenGL Information about the Program
+/** @name Obtaining OpenGL Information about the Program */
+
+/**
+ @brief A ``GLuint`` value identifying the program in OpenGL
+ */
+@property (nonatomic, readonly) const GLuint program;
 
 @end

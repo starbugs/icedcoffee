@@ -41,10 +41,18 @@
     NSMutableDictionary *_customObjects;
 }
 
+
+#pragma mark - Obtaining the Current Render Context
+/** @name Obtaining the Current Render Context */
+
 /**
  @brief Returns the render context for the current OpenGL context
  */
 + (id)currentRenderContext;
+
+
+#pragma mark - Creating a Render Context
+/** @name Creating a Render Context */
 
 /**
  @brief Initializes the receiver
@@ -56,6 +64,10 @@
  */
 - (id)initWithShareContext:(ICRenderContext *)shareContext;
 
+
+#pragma mark - Retrieving Caches
+/** @name Retrieving Caches */
+
 /**
  @brief The receiver's texture cache
  */
@@ -65,6 +77,10 @@
  @brief The receiver's shader cache
  */
 @property (nonatomic, retain) ICShaderCache *shaderCache;
+
+
+#pragma mark - Manging Custom Objects
+/** @name Managing Custom Objects */
 
 /**
  @brief Sets a custom object for the given key
