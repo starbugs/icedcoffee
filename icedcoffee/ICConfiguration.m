@@ -112,14 +112,14 @@ static char * glExtensions;
 		else
 			_maxSamplesAllowed = 0;
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		glGetIntegerv(GL_MAX_SAMPLES, &maxSamplesAllowed_);
+		glGetIntegerv(GL_MAX_SAMPLES, &_maxSamplesAllowed);
 #endif
 		
 		_supportsPVRTC = [self checkForGLExtension:@"GL_IMG_texture_compression_pvrtc"];
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 		_supportsNPOT = YES; // see cocos2d2
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		supportsNPOT_ = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
+		_supportsNPOT = [self checkForGLExtension:@"GL_ARB_texture_non_power_of_two"];
 #endif
 		// It seems that somewhere between firmware iOS 3.0 and 4.2 Apple renamed
 		// GL_IMG_... to GL_APPLE.... So we should check both names

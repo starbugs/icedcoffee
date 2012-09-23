@@ -68,7 +68,7 @@ typedef uint ICOSVersion;
 }
 
 
-/* @name Obtaining the Configuration */
+/** @name Obtaining the Configuration */
 
 /**
  @brief Returns a globally shared instance of ICConfiguration
@@ -76,7 +76,7 @@ typedef uint ICOSVersion;
 + (ICConfiguration *)sharedConfiguration;
 
 
-/* @name Retrieving Configuration Information */
+/** @name Retrieving Configuration Information */
 
 /**
  @brief The maximum texture size allowed by the current graphics hardware
