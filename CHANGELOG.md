@@ -1,6 +1,14 @@
 Changelog
 =========
 
+v0.6.7
+------
+
+* Added methods for synchronous and asynchronous texture loading via URLs to ICTextureCache
+  and ICTextureLoader. Refactored existing file loading methods to use their respective URL
+  loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute
+  strings of NSURL objects used to load the respective textures.
+
 v0.6.6
 ------
 
