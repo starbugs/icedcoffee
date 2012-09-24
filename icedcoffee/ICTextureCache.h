@@ -46,19 +46,20 @@
  
  The texture cache provides methods for loading textures synchronously and asynchronously. Once
  a texture is loaded, it is automatically cached in memory. When another component loads the same
- texture at a later time, the texture cache delivers the cached texture without reloading it from
- its source medium.
+ texture at a later time, the texture cache ensures that the cached texture is delivered without
+ reloading it from its source medium.
  
  You may load textures from local files synchronously using the
  ICTextureCache::loadTextureFromFile:resolutionType: method. If you wish to load textures
  from local files in the background, you may use
  ICTextureCache::loadTextureFromFileAsync:resolutionType:withTarget:withObject:.
  
- If you want to unload a certain texture, call ICTextureCache::removeTextureForKey:. If you wish
- to remove all unused textures from the cache, call ICTextureCache::removeUnusedTextures. If you
- need to remove all textures from the cache, call ICTextureCache::removeAllTextures:. Removing
- a texture from the cache does not mean it is necessarily unloaded from memory. To make sure a
- texture's memory is freed, you must remove all references to that texture.
+ If you need to unload a texture for a certain path or URL, use
+ ICTextureCache::removeTextureForKey:. If you wish to remove all unused textures from the cache,
+ call ICTextureCache::removeUnusedTextures. If you need to remove all textures from the cache,
+ call ICTextureCache::removeAllTextures:. Removing a texture from the cache does not mean it is
+ necessarily unloaded from memory. To make sure a texture's memory is freed, you must remove all
+ references to that texture.
  */
 @interface ICTextureCache : NSObject
 {
@@ -98,7 +99,7 @@
 /** @name Loading Textures into the Cache */
 
 /**
- @brief Loads a texture from the a file located at the given URL synchronously
+ @brief Loads a texture from a file located at the given URL synchronously
  
  The loaded texture is added to the texture cache. If a texture with the same URL has already
  been loaded, the method will return the cached texture instead of reloading it from the file.
@@ -112,7 +113,7 @@
 - (ICTexture2D *)loadTextureFromURL:(NSURL *)url;
 
 /**
- @brief Loads a texture from the a file located at the given URL synchronously using the
+ @brief Loads a texture from a file located at the given URL synchronously using the
  specified resolution type
  
  The loaded texture is added to the texture cache. If a texture with the same URL has already
@@ -130,7 +131,7 @@
                      resolutionType:(ICResolutionType)resolutionType;
 
 /**
- @brief Loads a texture from the a file located at the given URL synchronously using the
+ @brief Loads a texture from a file located at the given URL synchronously using the
  specified resolution type, returning error information upon failure
  
  The loaded texture is added to the texture cache. If a texture with the same URL has already
@@ -202,9 +203,11 @@
 /**
  @brief Loads a texture from a file synchronously
  
+ This method loads a texture from a file located on a locally mounted filesystem synchronously,
+ thereby blocking the execution of the calling thread until the texture has been loaded.
+ 
  The loaded texture is added to the texture cache. If a texture with the same path has already
  been loaded, the method will return the cached texture instead of reloading it from the file.
- The path parameter is used as the key to the texture in the texture cache.
  
  @param path The path of the texture file to be loaded
  
@@ -215,10 +218,12 @@
 
 /**
  @brief Loads a texture from a file synchronously using the given resolution type
- 
+
+ This method loads a texture from a file located on a locally mounted filesystem synchronously,
+ thereby blocking the execution of the calling thread until the texture has been loaded.
+
  The loaded texture is added to the texture cache. If a texture with the same path has already
  been loaded, the method will return the cached texture instead of reloading it from the file.
- The path parameter is used as the key to the texture in the texture cache.
  
  @param path The path of the texture file to be loaded
  @param resolutionType An ICResolutionType enumerated value defining the resolution type of the
@@ -233,10 +238,12 @@
 /**
  @brief Loads a texture from a file synchronously using the given resolution type, returning
  error information upon failure
- 
+
+ This method loads a texture from a file located on a locally mounted filesystem synchronously,
+ thereby blocking the execution of the calling thread until the texture has been loaded.
+
  The loaded texture is added to the texture cache. If a texture with the same path has already
  been loaded, the method will return the cached texture instead of reloading it from the file.
- The path parameter is used as the key to the texture in the texture cache.
  
  @param path The path of the texture file to be loaded
  @param resolutionType An ICResolutionType enumerated value defining the resolution type of the
@@ -313,18 +320,30 @@
 
 /**
  @brief Removes the texture for the specified key
+ 
+ @param key An ``NSString`` containing the absolute string of the URL used to load the texture.
+ 
+ If you loaded your texture using a path to a local file, specify
+ ``[[NSURL fileURLWithPath:texturePath] absoluteString]`` as ``key`` argument. If you loaded
+ your texture using a URL, specify ``[url absoluteString]`` as ``key`` argument.
  */
 - (void)removeTextureForKey:(NSString *)key;
 
 /**
  @brief Removes all textures from the cache
+ 
+ This method causes the texture cache to remove all textures from its internal dictionary, thereby
+ giving up its strong references to these textures. Note that only the memory of those textures
+ which are no longer referenced elsewhere will actually be freed.
  */
 - (void)removeAllTextures;
 
 /**
  @brief Removes unused textures from the cache
  
- The method removes all textures whose retain count is 1.
+ This method removes all textures whose retain count is ``1`` from the texture cache.
+ Note that only the memory of those textures which are no longer referenced elsewhere will
+ actually be freed.
  */
 - (void)removeUnusedTextures;
 
