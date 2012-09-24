@@ -35,8 +35,16 @@
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename
                       resolutionType:(ICResolutionType)resolutionType
 {
+    return [[self class] loadTextureFromFile:filename resolutionType:resolutionType error:nil];
+}
+
++ (ICTexture2D *)loadTextureFromFile:(NSString *)filename
+                      resolutionType:(ICResolutionType)resolutionType
+                               error:(NSError **)error
+{
     return [[self class] loadTextureFromURL:[NSURL fileURLWithPath:filename]
-                             resolutionType:resolutionType];
+                             resolutionType:resolutionType
+                                      error:error];
 }
 
 + (ICTexture2D *)loadTextureFromURL:(NSURL *)url
@@ -47,10 +55,20 @@
 + (ICTexture2D *)loadTextureFromURL:(NSURL *)url
                      resolutionType:(ICResolutionType)resolutionType
 {
+    return [[self class] loadTextureFromURL:url resolutionType:resolutionType error:nil];
+}
+
++ (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+                     resolutionType:(ICResolutionType)resolutionType
+                              error:(NSError **)error
+{
     ICTexture2D *texture = nil;
     
 #ifdef __IC_PLATFORM_MAC
-    NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+    
+    NSData *data = [[NSData alloc] initWithContentsOfURL:url
+                                                 options:NSDataReadingMappedIfSafe
+                                                   error:error];
     NSBitmapImageRep *image = [[NSBitmapImageRep alloc] initWithData:data];
     texture = [[[ICTexture2D alloc] initWithCGImage:[image CGImage]] autorelease];
     
@@ -59,7 +77,9 @@
     
 #elif __IC_PLATFORM_IOS
     
-    UIImage * image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url]];
+    UIImage * image = [[UIImage alloc] initWithData:[NSData dataWithContentsOfURL:url
+                                                                          options:NSDataReadingMappedIfSafe
+                                                                            error:error]];
     texture = [[[ICTexture2D alloc] initWithCGImage:image.CGImage resolutionType:resolutionType] autorelease];
     [image release];
     

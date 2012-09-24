@@ -39,6 +39,10 @@
 + (ICTexture2D *)loadTextureFromFile:(NSString *)filename
                       resolutionType:(ICResolutionType)resolutionType;
 
++ (ICTexture2D *)loadTextureFromFile:(NSString *)filename
+                      resolutionType:(ICResolutionType)resolutionType
+                               error:(NSError **)error;
+
 
 #pragma mark - Loading Textures from URLs
 /** @name Loading Textures from URLs */
@@ -47,5 +51,9 @@
 
 + (ICTexture2D *)loadTextureFromURL:(NSURL *)url
                      resolutionType:(ICResolutionType)resolutionType;
+
++ (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+                     resolutionType:(ICResolutionType)resolutionType
+                              error:(NSError **)error;
 
 @end
