@@ -4,10 +4,17 @@ Changelog
 v0.6.7
 ------
 
+Changes and Improvements:
+
 * Added methods for synchronous and asynchronous texture loading via URLs to ICTextureCache
   and ICTextureLoader. Refactored existing file loading methods to use their respective URL
   loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute
   strings of NSURL objects used to load the respective textures.
+
+Fixes:
+
+* Fixed issue #8: stencil buffer support on iOS. ICES2Renderer does now correctly bind
+  packed depth-stencil buffers.
 
 v0.6.6
 ------
