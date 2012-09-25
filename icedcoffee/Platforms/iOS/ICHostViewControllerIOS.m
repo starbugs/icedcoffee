@@ -73,6 +73,8 @@
 
 @implementation ICHostViewControllerIOS
 
+@synthesize glContextLock = _glContextLock;
+
 - (id)init
 {
     LOG_HVC_INITIALIZER();
@@ -184,6 +186,8 @@
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
     
+    [_glContextLock lock];
+    
 	ICGLView *openGLview = (ICGLView*)self.view;
 /*    if (openGLview.depthFormat && ![openGLview.renderer depthBuffer]) {
         // FIXME: this may lead to issues, e.g. blank screen when we switch from continuous to
@@ -205,6 +209,8 @@
         
         [openGLview swapBuffers];
     }
+    
+    [_glContextLock unlock];
 }
 
 // point is in UIView's coordinate system

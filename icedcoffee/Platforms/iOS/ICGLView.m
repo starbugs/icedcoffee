@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "ICGLView.h"
 #import "ICES2Renderer.h"
+#import "ICHostViewControllerIOS.h"
 #import "../../ICHostViewController.h"
 #import "../../ICConfiguration.h"
 #import "../../icConfig.h"
@@ -262,7 +263,9 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)layoutSubviews
 {
+    [((ICHostViewControllerIOS *)self.hostViewController).glContextLock lock];
 	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+    [((ICHostViewControllerIOS *)self.hostViewController).glContextLock unlock];
 	size_ = [renderer_ backingSize];
     
 	// Avoid flicker
