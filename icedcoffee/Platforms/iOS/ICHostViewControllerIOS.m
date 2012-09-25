@@ -108,12 +108,14 @@
 - (void)commonInit
 {
     [super commonInit];
+    _glContextLock = [[NSLock alloc] init];
     _touchEventDispatcher = [[ICTouchEventDispatcher alloc] initWithHostViewController:self];
 }
 
 - (void)dealloc
 {
     [_touchEventDispatcher release];
+    [_glContextLock release];
     [super dealloc];
 }
 

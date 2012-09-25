@@ -66,7 +66,7 @@
     NSLock *_glContextLock;
 }
 
-@property (nonatomic, retain) NSLock *glContextLock;
+@property (nonatomic, readonly) NSLock *glContextLock;
 
 @end
 
