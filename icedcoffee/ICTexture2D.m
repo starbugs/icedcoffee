@@ -79,6 +79,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "ICHostViewController.h"
 #import "icConfig.h"
 #import "ICConfiguration.h"
+#import "icDefaults.h"
 //#import "Support/ICUtils.h"
 
 
@@ -234,9 +235,16 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
     switch (_resolutionType) {
         case ICResolutionTypeUnknown:
         case ICResolutionTypeStandard:
-            ret.width *= ICContentScaleFactor();
+            // Scale up SD to retina
+            ret.width  *= ICContentScaleFactor();
             ret.height *= ICContentScaleFactor();
             break;
+        case ICResolutionTypeRetinaDisplay:
+            if (![[ICHostViewController currentHostViewController] retinaDisplaySupportEnabled]) {
+                // Scale down retina to SD
+                ret.width  /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
+                ret.height /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
+            }
         default:
             break;
     }

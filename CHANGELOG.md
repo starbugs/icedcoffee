@@ -10,6 +10,9 @@ Changes and Improvements:
   and ICTextureLoader. Refactored existing file loading methods to use their respective URL
   loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute
   strings of NSURL objects used to load the respective textures.
+* ICTexture2D::displayContentSize does now return the SD size of a HD texture if retina
+  display support is not enabled. This effectively scales down HD images on SD devices if
+  no SD image is present.
 
 Fixes:
 
