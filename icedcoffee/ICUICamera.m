@@ -41,6 +41,16 @@
     return self;
 }
 
+- (void)setViewport:(CGRect)viewport
+{
+    [super setViewport:viewport];
+    
+    float w = _viewport[2] - _viewport[0];
+    float h = _viewport[3] - _viewport[1];
+    self.aspect = w != 0 ? h / w : 0;
+    _dirty = YES;
+}
+
 - (void)setUpScreen
 {    
     float w = _viewport[2];

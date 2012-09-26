@@ -128,10 +128,6 @@
     _viewport[1] = ICPointsToPixels((GLint)viewport.origin.y);
     _viewport[2] = _viewport[0] + ICPointsToPixels((GLint)viewport.size.width);
     _viewport[3] = _viewport[1] + ICPointsToPixels((GLint)viewport.size.height);
-    float w = _viewport[2] - _viewport[0];
-    float h = _viewport[3] - _viewport[1];
-    self.aspect = w != 0 ? h / w : 0;
-    _dirty = YES;
 }
 
 - (CGRect)viewport
