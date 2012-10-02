@@ -1,14 +1,38 @@
 //
+//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  http://icedcoffee-framework.org
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy of
+//  this software and associated documentation files (the "Software"), to deal in
+//  the Software without restriction, including without limitation the rights to
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+//  of the Software, and to permit persons to whom the Software is furnished to do
+//  so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+//
+// Originally written by:
+//
 // Copyright 2011 Jeff Lamarche
 //
-// Redistribution and use in source and binary forms, with or without modification, are permitted provided
-// that the following conditions are met:
-//	1. Redistributions of source code must retain the above copyright notice, this list of conditions and
-//		the following disclaimer.
+// Redistribution and use in source and binary forms, with or without modification, are permitted
+// provided that the following conditions are met:
+//	1. Redistributions of source code must retain the above copyright notice, this list of
+//     conditions and the following disclaimer.
 //
-//	2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions
-//		and the following disclaimer in the documentation and/or other materials provided with the
-//		distribution.
+//	2. Redistributions in binary form must reproduce the above copyright notice, this list of
+//     conditions and the following disclaimer in the documentation and/or other materials
+//     provided with the distribution.
 //
 //	THIS SOFTWARE IS PROVIDED BY THE FREEBSD PROJECT ``AS IS'' AND ANY EXPRESS OR IMPLIED
 //	WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
@@ -28,33 +52,111 @@
 #import "icTypes.h"
 
 
-#define kICShader_PositionTextureColor			@"ShaderPositionTextureColor"
-#define kICShader_PositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
-#define kICShader_PositionColor					@"ShaderPositionColor"
-#define kICShader_PositionTexture				@"ShaderPositionTexture"
-#define kICShader_PositionTexture_uColor		@"ShaderPositionTexture_uColor"
-#define kICShader_PositionTextureA8Color		@"ShaderPositionTextureA8Color"
-#define kICShader_Picking                       @"ShaderPicking"
-#define kICShader_StencilMask                   @"ShaderStencilMask"
-#define kICShader_SpriteTextureMask             @"ShaderSpriteTextureMask"
-#define kICShader_Rectangle                     @"ShaderRectangle"
+#define ICUniformMVPMatrix              "u_MVPMatrix"
+#define ICUniformSampler                "u_texture"
+#define ICUniformSampler2               "u_texture2"
+#define ICUniformAlphaTestValue         "u_alpha_value"
 
-// uniform names
-#define kICUniformMVPMatrix_s			"u_MVPMatrix"
-#define kICUniformSampler_s				"u_texture"
-#define kICUniformSampler2_s            "u_texture2"
-#define kICUniformAlphaTestValue		"u_alpha_value"
+// Uniform names (deprecated)
+#define kICUniformMVPMatrix_s			ICUniformMVPMatrix
+#define kICUniformSampler_s				ICUniformSampler
+#define kICUniformSampler2_s            ICUniformSampler2
+#define kICUniformAlphaTestValue		ICUniformAlphaTestValue
 
 // Attribute names
-#define	kICAttributeNameColor			@"a_color"
-#define	kICAttributeNamePosition		@"a_position"
-#define	kICAttributeNameTexCoord		@"a_texCoord"
+#define	ICAttributeNameColor			@"a_color"
+#define	ICAttributeNamePosition         @"a_position"
+#define	ICAttributeNameTexCoord         @"a_texCoord"
+
+// Attribute names (deprecated)
+#define	kICAttributeNameColor           ICAttributeNameColor
+#define	kICAttributeNamePosition		ICAttributeNamePosition
+#define	kICAttributeNameTexCoord		ICAttributeNameTexCoord
 
 
 @class ICShaderValue;
 
 /**
- @brief Defines a GLSL vertex and fragment shader program
+ @brief Defines a GLSL shader program
+ 
+ The ICShaderProgram class represents a combination of a GLSL shader program consisting of a
+ vertex and fragment shader. Besides compiling, linking and providing access to program logs,
+ the class also allows you to add attributes and manage shader uniforms conveniently.
+ 
+ ### Creating a Shader Program ###
+ 
+ ICShaderProgram allows you to create a shader program either from ``NSString``s containing the
+ vertex and fragment shaders' source code using the
+ ICShaderProgram::shaderProgramWithName:vertexShaderString:fragmentShaderString: method, or from
+ files on a local drive using the
+ ICShaderProgram::shaderProgramWithVertexShaderFilename:fragmentShaderFilename: method.
+ 
+ The first method is thought to be used with shaders whose source code is embedded in your
+ application's binary as a string constant while the second is designed to be used with shader
+ sources stored in files shipped with your application bundle.
+ 
+ If you choose to embed your shader's source in your application's or component's source code,
+ you may use the #IC_SHADER_STRING method to stringify embedded shader sources.
+ 
+ ### Setting up a Shader Program ###
+ 
+ Shader programs operate on attributes defining vertex properties, e.g. position, color and
+ texture coordinates. You must add those attribute names pertaining to the given vertex shader
+ to make the shader program operable using the ICShaderProgram::addAttribute: method. icedcoffee
+ defines three default attribute variable names: #ICAttributeNamePosition, #ICAttributeNameColor
+ and #ICAttributeNameTexCoord.
+ 
+ ### Linking a Shader Program ###
+ 
+ After you have added all required attributes, you must link the program using the
+ ICShaderProgram::link method. ICShaderProgram::link combines both the vertex and the fragment
+ shader and makes them available for ICShaderProgram::use in OpenGL.
+ 
+ In debug mode, ICShaderProgram::link will validate the program and output an error message
+ if linking failed.
+ 
+ ### Managing Uniforms ###
+ 
+ Shader programs may define uniforms to pass values from your application running on the CPU to the
+ shader program running on the GPU. These uniforms are defined within the vertex or framgent
+ shader's source code and ICShaderProgram will automatically make them available for you once
+ the shader program has been linked.
+ 
+ Uniforms are identified by their variable name in the shader's source, which is called the uniform
+ name in this class. To set a value on a given uniform, you may use the
+ ICShaderProgram::setShaderValue:forUniform: method. To retrieve the current value of a
+ given uniform, you may use the ICShaderProgram::shaderValueForUniform: method.
+ 
+ In the icedcoffee framework, shader uniforms are represented by the ICShaderUniform class and
+ the values you may set on them are represented by the ICShaderValue class. You may retrieve a
+ full list of all ICShaderUniform objects fetched from the shader program's source using the
+ ICShaderProgramm::uniforms property.
+ 
+ ### Updating Uniforms ###
+ 
+ After linking a program or setting values on the program's uniforms, you have to call
+ ICShaderProgram::updateUniforms to update the uniforms in the shaders. This will upload the
+ values to the program and make them available for processing on the GPU.
+ 
+ ### Retrieving Program Logs ###
+ 
+ You may access the vertex and fragment shader's logs using the ICShaderProgram::vertexShaderLog
+ and ICShaderProgram::fragmentShaderLog methods. You may retrieve the program log using the
+ ICShaderProgram::progamLog method.
+ 
+ ### Using Shader Programs ###
+ 
+ Shader programs may be used in OpenGL using the ICShaderProgram::use method. This method will
+ automatically update the program's uniforms. Subsequent drawing calls in OpenGL will use the
+ set shader program until another program is used.
+ 
+ ### Caching and Reusing Shader Programs ###
+ 
+ Shader programs should be cached using ICShaderCache. Once you have created and set up your
+ program, set it on the cache using ICShaderCache::setShaderProgram:forKey:. When you need
+ to reuse the cached shader program, you may retrieve it using the
+ ICShaderProgram::shaderProgramForKey: method. This way, shader programs do not need to be
+ managed manually and are available for other components in your application.
  */
 @interface ICShaderProgram : NSObject {
 @protected
@@ -62,6 +164,7 @@
            _vertShader,
            _fragShader;
     
+    NSString *_programName;
     NSMutableDictionary *_uniforms;
 }
 
@@ -69,13 +172,54 @@
 /** @name Creating a Shader Program */
 
 /**
- @brief Initializes a shader program with the given vertex and fragment shader filenames
+ @brief Returns a new autoreleased shader program initialized with the given vertex
+ and fragment shader filenames
+
+ This method automatically compiles the shader sources. You will need to add attributes,
+ link the program and update it's uniforms before it can be used.
+
+ @sa initWithVertexShaderFilename:fragmentShaderFilename:
+ */
++ (id)shaderProgramWithVertexShaderFilename:(NSString *)vShaderFilename
+                     fragmentShaderFilename:(NSString *)fShaderFilename;
+
+/**
+ @brief Returns a new autoreleased shader program initialized with the given vertex
+ and fragment shader strings
  
+ This method automatically compiles the shader sources. You will need to add attributes,
+ link the program and update it's uniforms before it can be used.
+ 
+ @sa initWithVertexShaderString:fragmentShaderString:
+ */
++ (id)shaderProgramWithName:(NSString *)programName
+         vertexShaderString:(NSString *)vShaderString
+       fragmentShaderString:(NSString *)fShaderString;
+
+/**
+ @brief Initializes a shader program with the given vertex and fragment shader filenames
+
+ This method automatically compiles the shader sources. You will need to add attributes,
+ link the program and update it's uniforms before it can be used.
+
  @param vShaderFilename An NSString defining a path to the vertex shader's GLSL source file
  @param fShaderFilename An NSString defining a path to the fragment shader's GLSL source file
  */
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename;
+
+/**
+ @brief Initializes a shader program with the given vertex and fragment shader strings
+
+ This method automatically compiles the shader sources. You will need to add attributes,
+ link the program and update it's uniforms before it can be used.
+
+ @param vShaderString An NSString containing the vertex shader source code
+ @param fShaderString An NSString containing the fragment shader source code
+ */
+-   (id)initWithName:(NSString *)programName
+  vertexShaderString:(NSString *)vShaderString
+fragmentShaderString:(NSString *)fShaderString;
 
 
 #pragma mark - Managing Attributes and Uniforms
@@ -84,7 +228,7 @@
 /**
  @brief Adds an attribute to the shader program
  
- @param attributeName An NSString defining the attribute's name
+ @param attributeName An ``NSString`` defining the attribute's name
  @param index A ``GLuint`` value defining the index of the attribute
  */
 - (void)addAttribute:(NSString *)attributeName index:(GLuint)index;
@@ -122,7 +266,7 @@
 - (void)use;
 
 /**
- @brief Updates the shader's uniforms
+ @brief Updates the shader's uniform values
  */
 - (void)updateUniforms;
 
@@ -146,8 +290,13 @@
 - (NSString *)programLog;
 
 
-#pragma mark - Obtaining OpenGL Information about the Program
-/** @name Obtaining OpenGL Information about the Program */
+#pragma mark - Obtaining Detailed Program Information
+/** @name Obtaining Detailed Program Information */
+
+/**
+ @brief A human readable program name
+ */
+@property (nonatomic, readonly) NSString *programName;
 
 /**
  @brief A ``GLuint`` value identifying the program in OpenGL

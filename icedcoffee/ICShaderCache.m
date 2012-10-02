@@ -23,15 +23,18 @@
 //  Inspired by cocos2d-iphone.org
 
 #import "ICShaderCache.h"
+#import "ICShaderFactory.h"
 #import "ICShaderProgram.h"
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
 
 @interface ICShaderCache (Private)
-- (void)loadDefaultShaders;
+- (void)loadDefaultShaderPrograms;
 @end
 
 @implementation ICShaderCache
+
+@synthesize shaderFactory = _shaderFactory;
 
 + (id)currentShaderCache
 {
@@ -53,7 +56,8 @@
 {
     if ((self = [super init])) {
         _programs = [[NSMutableDictionary alloc] init];
-        [self loadDefaultShaders];
+        _shaderFactory = [[ICShaderFactory alloc] init];
+        [self loadDefaultShaderPrograms];
     }
     return self;
 }
@@ -61,107 +65,16 @@
 - (void)dealloc
 {
     [_programs release];
+    [_shaderFactory release];
     [super dealloc];
 }
 
-- (void)loadDefaultShaders
+- (void)loadDefaultShaderPrograms
 {
-    NSString *resourcePath = [[NSBundle bundleForClass:[self class]] resourcePath];
-    
-    NSString *positionColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionColor.vsh"];
-    NSString *positionColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionColor.fsh"];
-    NSString *positionTextureColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureColor.vsh"];
-    NSString *positionTextureColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureColor.fsh"];
-    NSString *positionTextureA8ColorVSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureA8Color.vsh"];
-    NSString *positionTextureA8ColorFSH = [resourcePath stringByAppendingPathComponent:@"PositionTextureA8Color.fsh"];
-    NSString *pickingFSH = [resourcePath stringByAppendingPathComponent:@"Picking.fsh"];
-    NSString *stencilMaskFSH = [resourcePath stringByAppendingPathComponent:@"StencilMask.fsh"];
-    NSString *spriteTextureMaskFSH = [resourcePath stringByAppendingPathComponent:@"SpriteTextureMask.fsh"];
-
-    ICShaderProgram *p;
-
-    // Standard position color shader
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionColorVSH
-                                       fragmentShaderFilename:positionColorFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_PositionColor];
-    [p release];
-
-    // Standard position texture color shader
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
-                                       fragmentShaderFilename:positionTextureColorFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_PositionTextureColor];
-    [p release];
-
-    // Standard position texture A8 color shader (for use with masks)
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureA8ColorVSH
-                                       fragmentShaderFilename:positionTextureA8ColorFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_PositionTextureA8Color];
-    [p release];
-
-    // Standard picking shader
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
-                                       fragmentShaderFilename:pickingFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_Picking];
-    [p release];
-
-    // Standard stencil mask shader
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
-                                       fragmentShaderFilename:stencilMaskFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_StencilMask];
-    [p release];
-    
-    // Sprite multi texture masking shader
-    p = [[ICShaderProgram alloc] initWithVertexShaderFilename:positionTextureColorVSH
-                                       fragmentShaderFilename:spriteTextureMaskFSH];
-    
-	[p addAttribute:kICAttributeNamePosition index:ICVertexAttribPosition];
-	[p addAttribute:kICAttributeNameColor index:ICVertexAttribColor];
-	[p addAttribute:kICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-    
-	[p link];
-	[p updateUniforms];
-    
-    [self setShaderProgram:p forKey:kICShader_SpriteTextureMask];
-    [p release];
+    NSDictionary *defaultShaderPrograms = [self.shaderFactory createDefaultShaderPrograms];
+    for (NSString *key in defaultShaderPrograms) {
+        [self setShaderProgram:[defaultShaderPrograms objectForKey:key] forKey:key];
+    }
 }
 
 - (void)setShaderProgram:(ICShaderProgram *)program forKey:(id)key

@@ -23,6 +23,7 @@
 //  Inspired by cocos2d-iphone.org
 
 #import <Foundation/Foundation.h>
+#import "ICShaderFactory.h"
 
 @class ICShaderProgram;
 
@@ -45,11 +46,12 @@
  While usually subclassing is not required, it might make sense to subclass ICShaderCache
  in order to implement custom initialization or shader management. If you plan to implement
  custom initialization, override the init method. If you plan to customize shader program
- management, you should override setShaderProgram:forKey: and shaderProgramForKey:.
+ management, override setShaderProgram:forKey: and shaderProgramForKey:.
  */
 @interface ICShaderCache : NSObject {
 @private
     NSMutableDictionary *_programs;
+    ICShaderFactory *_shaderFactory;
 }
 
 #pragma mark - Obtaining/Creating a Shader Cache
@@ -105,5 +107,11 @@
  @brief Purges the internal shader cache
  */
 + (void)purgeCurrentShaderCache;
+
+
+#pragma mark - Accessing the Shader Factory
+
+@property (nonatomic, readonly) ICShaderFactory *shaderFactory;
+
 
 @end

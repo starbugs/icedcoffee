@@ -92,7 +92,7 @@ typedef void (*GLLogFunction) (GLuint program,
 @interface ICShaderProgram (Private)
 - (BOOL)compileShader:(GLuint *)shader
                  type:(GLenum)type
-                 file:(NSString *)file;
+               source:(NSString *)sourceString;
 - (NSString *)logForOpenGLObject:(GLuint)object
                     infoCallback:(GLInfoFunction)infoFunc
                          logFunc:(GLLogFunction)logFunc;
@@ -102,35 +102,84 @@ typedef void (*GLLogFunction) (GLuint program,
 @implementation ICShaderProgram
 
 @synthesize program = _program;
+@synthesize programName = _programName;
 @synthesize uniforms = _uniforms;
+
++ (id)shaderProgramWithName:(NSString *)programName
+         vertexShaderString:(NSString *)vShaderString
+       fragmentShaderString:(NSString *)fShaderString
+{
+    return [[[[self class] alloc] initWithName:programName
+                            vertexShaderString:vShaderString
+                          fragmentShaderString:fShaderString] autorelease];
+}
+
++ (id)shaderProgramWithVertexShaderFilename:(NSString *)vShaderFilename
+                     fragmentShaderFilename:(NSString *)fShaderFilename
+{
+    return [[[[self class] alloc] initWithVertexShaderFilename:vShaderFilename
+                                        fragmentShaderFilename:fShaderFilename] autorelease];
+}
 
 - (id)initWithVertexShaderFilename:(NSString *)vShaderFilename
             fragmentShaderFilename:(NSString *)fShaderFilename
 {
+    NSString *programName = [[vShaderFilename lastPathComponent] stringByDeletingPathExtension];
+    
+    NSString *vShaderString;
+    NSString *fShaderString;
+    
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    
+    if (vShaderFilename && [fileManager fileExistsAtPath:vShaderFilename]) {
+        vShaderString = [NSString stringWithContentsOfFile:vShaderFilename
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:nil];
+    } else {
+        ICLog(@"Could not load vertex shader from file %@", vShaderFilename);
+    }
+    
+    if (fShaderFilename && [fileManager fileExistsAtPath:fShaderFilename]) {
+        fShaderString = [NSString stringWithContentsOfFile:fShaderFilename
+                                                  encoding:NSUTF8StringEncoding
+                                                     error:nil];
+    } else {
+        ICLog(@"Could not load fragment shader from file %@", fShaderFilename);
+    }
+    
+    [fileManager release];
+    
+    return [self initWithName:programName
+           vertexShaderString:vShaderString
+         fragmentShaderString:fShaderString];
+}
+
+-   (id)initWithName:(NSString *)programName
+  vertexShaderString:(NSString *)vShaderString
+fragmentShaderString:(NSString *)fShaderString
+{
     if ((self = [super init]))
     {
+        _programName = [programName copy];
+        
         _uniforms = [[NSMutableDictionary alloc] init];
         
         _program = glCreateProgram();
         
 		_vertShader = _fragShader = 0;
         
-		if (vShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:vShaderFilename]) {
-			if (![self compileShader:&_vertShader type:GL_VERTEX_SHADER file:vShaderFilename]) {
-				ICLog(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", vShaderFilename);
+		if (vShaderString) {
+			if (![self compileShader:&_vertShader type:GL_VERTEX_SHADER source:vShaderString]) {
+				ICLog(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", _programName);
             }
-		} else {
-            ICLog(@"Vertex shader %@ unavailable", vShaderFilename);
-        }
+		}
         
         // Create and compile fragment shader
-		if (fShaderFilename && [[NSFileManager defaultManager] fileExistsAtPath:fShaderFilename]) {
-			if (![self compileShader:&_fragShader type:GL_FRAGMENT_SHADER file:fShaderFilename]) {
-				ICLog(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", fShaderFilename);
+		if (fShaderString) {
+			if (![self compileShader:&_fragShader type:GL_FRAGMENT_SHADER source:fShaderString]) {
+				ICLog(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", _programName);
             }
-		} else {
-            ICLog(@"Fragment shader %@ unavailable", fShaderFilename);            
-        }
+		}
         
 		if (_vertShader)
 			glAttachShader(_program, _vertShader);
@@ -158,20 +207,19 @@ typedef void (*GLLogFunction) (GLuint program,
         glDeleteProgram(_program);
     }
     
+    [_programName release];
+    
     [super dealloc];
 }
 
 - (BOOL)compileShader:(GLuint *)shader
                  type:(GLenum)type
-                 file:(NSString *)file
+               source:(NSString *)sourceString
 {
     GLint status;
     const GLchar *source;
     
-    source =
-    (GLchar *)[[NSString stringWithContentsOfFile:file
-                                         encoding:NSUTF8StringEncoding
-                                            error:nil] UTF8String];
+    source = (GLchar *)[sourceString UTF8String];
     if (!source)
         return NO;
     
@@ -183,9 +231,9 @@ typedef void (*GLLogFunction) (GLuint program,
     
 	if (!status) {
 		if (type == GL_VERTEX_SHADER)
-			ICLog(@"IcedCoffee: %@: %@", file, [self vertexShaderLog]);
+			ICLog(@"IcedCoffee: %@: %@", _programName, [self vertexShaderLog]);
 		else
-			ICLog(@"IcedCoffee: %@: %@", file, [self fragmentShaderLog]);
+			ICLog(@"IcedCoffee: %@: %@", _programName, [self fragmentShaderLog]);
         
 	}
     
@@ -213,7 +261,6 @@ typedef void (*GLLogFunction) (GLuint program,
 
 - (void)updateUniforms
 {
-	// Since sample most probably won't change, set it to 0 now.
     glUseProgram(_program);
     NSEnumerator* e = [_uniforms objectEnumerator];
     

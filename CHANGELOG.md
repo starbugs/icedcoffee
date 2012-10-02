@@ -9,7 +9,7 @@ Changes and Improvements:
 * Added methods for synchronous and asynchronous texture loading via URLs to ICTextureCache
   and ICTextureLoader. Refactored existing file loading methods to use their respective URL
   loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute
-  strings of NSURL objects used to load the respective textures.
+  strings of NSURL objects used to load the corresponding textures.
 * ICTexture2D::displayContentSize does now return the SD size of a HD texture if retina
   display support is not enabled. This effectively scales down HD images on SD devices if
   no SD image is present.
@@ -18,6 +18,11 @@ Fixes:
 
 * Fixed issue #8: stencil buffer support on iOS. ICES2Renderer does now correctly bind
   packed depth-stencil buffers.
+* Fixed ICCamera::setViewport:. The method automatically recalculated the camera's aspect
+  property based on the given viewport, which is good for ICUICamera, but counterproductive
+  for ICCamera. The code was moved to ICUICamera::setViewport:. ICCamera::setViewport: does
+  now simply set the viewport and performs no calculation on other properties anymore.
+* Fixed a number of issues with the source code documentation.
 
 v0.6.6
 ------

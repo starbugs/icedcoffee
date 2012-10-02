@@ -23,6 +23,8 @@
 
 #import "ICSprite.h"
 
+#define ICShaderStencilMask @"ShaderStencilMask"
+
 @interface Mask : ICSprite
 
 @end

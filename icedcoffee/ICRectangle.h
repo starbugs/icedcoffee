@@ -25,6 +25,8 @@
 
 @class ICSprite;
 
+#define ICShaderRectangle @"ShaderRectangle"
+
 /**
  @brief Draws a rounded rectangle with a gradient background and solid border
  */
