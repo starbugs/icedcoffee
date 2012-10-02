@@ -46,7 +46,8 @@
  While usually subclassing is not required, it might make sense to subclass ICShaderCache
  in order to implement custom initialization or shader management. If you plan to implement
  custom initialization, override the init method. If you plan to customize shader program
- management, override setShaderProgram:forKey: and shaderProgramForKey:.
+ management, override ICShaderCache::setShaderProgram:forKey: and
+ ICShaderCache::shaderProgramForKey:.
  */
 @interface ICShaderCache : NSObject {
 @private
@@ -67,12 +68,15 @@
  
  This method initializes the ICShaderCache class and loads a number of default shaders.
  The following shader keys may be used to retrieve default programs:
- <ul>
-    <li><code>kICShader_Picking</code></li>
-    <li><code>kICShader_PositionColor</code></li>
-    <li><code>kICShader_PositionTextureColor</code></li>
-    <li><code>kICShader_PositionTextureA8Color</code></li>
- </ul>
+ 
+ - #ICShaderPositionColor
+ - #ICShaderPositionTexture
+ - #ICShaderPositionTexture_uColor
+ - #ICShaderPositionTextureColor
+ - #ICShaderPositionTextureColorAlphaTest
+ - #ICShaderPositionTextureA8Color
+ - #ICShaderPicking
+ - #ICShaderSpriteTextureMask
  */
 - (id)init;
 

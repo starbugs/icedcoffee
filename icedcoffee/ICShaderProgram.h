@@ -142,7 +142,7 @@
  
  You may access the vertex and fragment shader's logs using the ICShaderProgram::vertexShaderLog
  and ICShaderProgram::fragmentShaderLog methods. You may retrieve the program log using the
- ICShaderProgram::progamLog method.
+ ICShaderProgram::programLog method.
  
  ### Using Shader Programs ###
  
@@ -155,7 +155,7 @@
  Shader programs should be cached using ICShaderCache. Once you have created and set up your
  program, set it on the cache using ICShaderCache::setShaderProgram:forKey:. When you need
  to reuse the cached shader program, you may retrieve it using the
- ICShaderProgram::shaderProgramForKey: method. This way, shader programs do not need to be
+ ICShaderCache::shaderProgramForKey: method. This way, shader programs do not need to be
  managed manually and are available for other components in your application.
  */
 @interface ICShaderProgram : NSObject {
