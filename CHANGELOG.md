@@ -6,6 +6,16 @@ v0.6.7
 
 Changes and Improvements:
 
+* Default shaders are now integrated into the framework's source code.
+  * Created the ICShaderFactory class which contains all default shader sources and is from
+    now on responsible for creating default shader program objects.
+  * Changed ICShaderCache::init to load default shaders using
+    ICShaderFactory::createDefaultShaderPrograms.
+  * Included rectangle shader source in ICRectangle.h.
+  * Changed ICRectangle to create its shader program from the embedded shader source.
+  * Moved default shader key definitions to ICShaderFactory.h.
+  * Moved shader key definitions for non-default shaders to their respective headers
+    (ICShaderRectangle => ICRectangle.h, ICShaderStencilMask => tests-mac/StencilTest/Mask.m)
 * Added methods for synchronous and asynchronous texture loading via URLs to ICTextureCache
   and ICTextureLoader. Refactored existing file loading methods to use their respective URL
   loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute

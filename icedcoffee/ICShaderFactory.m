@@ -295,15 +295,15 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
 {
     if ((self = [super init])) {
         NSArray *positionTextureColorAttributes = [NSArray arrayWithObjects:
-                                                   kICAttributeNamePosition,
-                                                   kICAttributeNameColor,
-                                                   kICAttributeNameTexCoord, nil];
+                                                   ICAttributeNamePosition,
+                                                   ICAttributeNameColor,
+                                                   ICAttributeNameTexCoord, nil];
         NSArray *positionColorAttributes        = [NSArray arrayWithObjects:
-                                                   kICAttributeNamePosition,
-                                                   kICAttributeNameColor, nil];
+                                                   ICAttributeNamePosition,
+                                                   ICAttributeNameColor, nil];
         NSArray *positionTextureAttributes      = [NSArray arrayWithObjects:
-                                                   kICAttributeNamePosition,
-                                                   kICAttributeNameTexCoord, nil];
+                                                   ICAttributeNamePosition,
+                                                   ICAttributeNameTexCoord, nil];
         
         IC_DEFINE_SHADER(positionTextureColorDef,
                          __positionTextureColorVSH,

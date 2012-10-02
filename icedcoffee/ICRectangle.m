@@ -170,23 +170,26 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         
         // Rectangle shader
         ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
-        ICShaderFactory *shaderFactory = [shaderCache shaderFactory];
+        ICShaderProgram *p = [shaderCache shaderProgramForKey:ICShaderRectangle];
         
-        NSString *positionTextureColorVSH = [shaderFactory vertexShaderStringForKey:ICShaderPositionTextureColor];
-        
-        ICShaderProgram *p = [ICShaderProgram shaderProgramWithName:ICShaderRectangle
-                                                 vertexShaderString:positionTextureColorVSH
-                                               fragmentShaderString:__rectangleFSH];
-        
-        [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
-        [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
-        [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-        
-        [p link];
-        [p updateUniforms];
-        
-        self.shaderProgram = p;
-        [shaderCache setShaderProgram:self.shaderProgram forKey:ICShaderRectangle];
+        if (!p) {
+            ICShaderFactory *shaderFactory = [shaderCache shaderFactory];
+            
+            NSString *positionTextureColorVSH = [shaderFactory vertexShaderStringForKey:ICShaderPositionTextureColor];
+            
+            p = [ICShaderProgram shaderProgramWithName:ICShaderRectangle
+                                    vertexShaderString:positionTextureColorVSH
+                                  fragmentShaderString:__rectangleFSH];
+            
+            [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
+            [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
+            [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
+            
+            [p link];
+            [p updateUniforms];
+            
+            [shaderCache setShaderProgram:p forKey:ICShaderRectangle];
+        }
         
         [_sprite setShaderProgram:p];
         
