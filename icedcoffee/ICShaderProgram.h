@@ -52,6 +52,7 @@
 #import "icTypes.h"
 
 
+// Uniform names
 #define ICUniformMVPMatrix              "u_MVPMatrix"
 #define ICUniformSampler                "u_texture"
 #define ICUniformSampler2               "u_texture2"
@@ -63,12 +64,12 @@
 #define kICUniformSampler2_s            ICUniformSampler2
 #define kICUniformAlphaTestValue		ICUniformAlphaTestValue
 
-// Attribute names
+// Vertex attribute names
 #define	ICAttributeNameColor			@"a_color"
 #define	ICAttributeNamePosition         @"a_position"
 #define	ICAttributeNameTexCoord         @"a_texCoord"
 
-// Attribute names (deprecated)
+// Vertex attribute names (deprecated)
 #define	kICAttributeNameColor           ICAttributeNameColor
 #define	kICAttributeNamePosition		ICAttributeNamePosition
 #define	kICAttributeNameTexCoord		ICAttributeNameTexCoord
@@ -79,9 +80,9 @@
 /**
  @brief Defines a GLSL shader program
  
- The ICShaderProgram class represents a combination of a GLSL shader program consisting of a
- vertex and fragment shader. Besides compiling, linking and providing access to program logs,
- the class also allows you to add attributes and manage shader uniforms conveniently.
+ The ICShaderProgram class represents a GLSL shader program consisting of a vertex and a fragment
+ shader. Besides compiling, linking and providing access to program logs, the class also allows
+ you to add attributes and manage shader uniforms conveniently.
  
  ### Creating a Shader Program ###
  
@@ -102,9 +103,9 @@
  
  Shader programs operate on attributes defining vertex properties, e.g. position, color and
  texture coordinates. You must add those attribute names pertaining to the given vertex shader
- to make the shader program operable using the ICShaderProgram::addAttribute: method. icedcoffee
- defines three default attribute variable names: #ICAttributeNamePosition, #ICAttributeNameColor
- and #ICAttributeNameTexCoord.
+ to make the shader program operable using the ICShaderProgram::addAttribute:index: method.
+ icedcoffee defines three default attribute variable names: #ICAttributeNamePosition,
+ #ICAttributeNameColor and #ICAttributeNameTexCoord.
  
  ### Linking a Shader Program ###
  
@@ -117,8 +118,8 @@
  
  ### Managing Uniforms ###
  
- Shader programs may define uniforms to pass values from your application running on the CPU to the
- shader program running on the GPU. These uniforms are defined within the vertex or framgent
+ Shader programs may define uniforms to pass values from your application running on the CPU to
+ the shader program running on the GPU. These uniforms are defined within the vertex or framgent
  shader's source code and ICShaderProgram will automatically make them available for you once
  the shader program has been linked.
  
@@ -130,7 +131,7 @@
  In the icedcoffee framework, shader uniforms are represented by the ICShaderUniform class and
  the values you may set on them are represented by the ICShaderValue class. You may retrieve a
  full list of all ICShaderUniform objects fetched from the shader program's source using the
- ICShaderProgramm::uniforms property.
+ ICShaderProgram::uniforms property.
  
  ### Updating Uniforms ###
  
@@ -152,11 +153,14 @@
  
  ### Caching and Reusing Shader Programs ###
  
- Shader programs should be cached using ICShaderCache. Once you have created and set up your
- program, set it on the cache using ICShaderCache::setShaderProgram:forKey:. When you need
- to reuse the cached shader program, you may retrieve it using the
- ICShaderCache::shaderProgramForKey: method. This way, shader programs do not need to be
- managed manually and are available for other components in your application.
+ Shader programs should be cached using ICShaderCache based on a unique ``NSString`` key.
+ It is good practice to keep this key identical to the ICShaderProgram::programName.
+ 
+ Before creating and setting up a new ICShaderProgram instance, applications should check
+ whether the shader program is already cached using ICShaderCache::shaderProgramForKey:.
+ If the program is already cached, the program returned by the shader cache should be used.
+ Otherwise, applications should create and set up the program, then set it on the cache using
+ ICShaderCache::setShaderProgram:forKey:.
  */
 @interface ICShaderProgram : NSObject {
 @protected
@@ -174,6 +178,9 @@
 /**
  @brief Returns a new autoreleased shader program initialized with the given vertex
  and fragment shader filenames
+ 
+ @param vShaderFilename An ``NSString`` containing a path to the vertex shader file
+ @param fShaderFilename An ``NSString`` containing a path to the fragment shader file
 
  This method automatically compiles the shader sources. You will need to add attributes,
  link the program and update it's uniforms before it can be used.
@@ -187,10 +194,17 @@
  @brief Returns a new autoreleased shader program initialized with the given vertex
  and fragment shader strings
  
+ @param programName An ``NSString`` containing a name identifying the program. This will be
+ used in log output messages and may be retrieved using ICShaderProgram::programName. It is
+ good practice to keep the program name identical to the key used for caching the program
+ in ICShaderCache.
+ @param vShaderString An ``NSString`` containing the source code of the vertex shader
+ @param fShaderString An ``NSString`` containing the source code of the fragment shader
+ 
  This method automatically compiles the shader sources. You will need to add attributes,
  link the program and update it's uniforms before it can be used.
  
- @sa initWithVertexShaderString:fragmentShaderString:
+ @sa initWithName:vertexShaderString:fragmentShaderString:
  */
 + (id)shaderProgramWithName:(NSString *)programName
          vertexShaderString:(NSString *)vShaderString
@@ -198,6 +212,9 @@
 
 /**
  @brief Initializes a shader program with the given vertex and fragment shader filenames
+
+ @param vShaderFilename An ``NSString`` containing a path to the vertex shader file
+ @param fShaderFilename An ``NSString`` containing a path to the fragment shader file
 
  This method automatically compiles the shader sources. You will need to add attributes,
  link the program and update it's uniforms before it can be used.
@@ -211,11 +228,15 @@
 /**
  @brief Initializes a shader program with the given vertex and fragment shader strings
 
+ @param programName An ``NSString`` containing a name identifying the program. This will be
+ used in log output messages and may be retrieved using ICShaderProgram::programName. It is
+ good practice to keep the program name identical to the key used for caching the program
+ in ICShaderCache.
+ @param vShaderString An ``NSString`` containing the source code of the vertex shader
+ @param fShaderString An ``NSString`` containing the source code of the fragment shader
+
  This method automatically compiles the shader sources. You will need to add attributes,
  link the program and update it's uniforms before it can be used.
-
- @param vShaderString An NSString containing the vertex shader source code
- @param fShaderString An NSString containing the fragment shader source code
  */
 -   (id)initWithName:(NSString *)programName
   vertexShaderString:(NSString *)vShaderString

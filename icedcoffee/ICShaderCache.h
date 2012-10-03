@@ -32,14 +32,36 @@
  <h3>Overview</h3>
  
  The ICShaderCache class provides caching and management for ICShaderProgram objects.
- In the IcedCoffee framework, there is one default shader cache for each OpenGL context.
- The shader cache for the current OpenGL context can be retrieved using the
+ In the icedcoffee framework, there is one default shader cache for each OpenGL context.
+ The shader cache for the current OpenGL context may be retrieved using the
  ICShaderCache::currentShaderCache method.
  
- On initialization, ICShaderCache loads default shader programs which are required by
- core classes of the framework. If further shader programs are required, ICShaderCache
- can be used to cache arbitrary ICShaderProgram based shaders using the
- ICShaderCache::setShaderProgram:forKey: method.
+ On initialization, ICShaderCache loads a couple of standard shader programs which are
+ required by different core classes of the framework. These standard programs are defined
+ in and produced by the ICShaderFactory class. The shader programs for the following keys
+ will be created and set up automatically:
+ 
+ - #ICShaderPositionColor
+ - #ICShaderPositionTexture
+ - #ICShaderPositionTexture_uColor
+ - #ICShaderPositionTextureColor
+ - #ICShaderPositionTextureColorAlphaTest
+ - #ICShaderPositionTextureA8Color
+ - #ICShaderPicking
+ - #ICShaderSpriteTextureMask
+ 
+ All other shader programs should be managed by the component that requires them.
+ 
+ Shader programs are cached by a unique key, which in icedcoffee usually is an ``NSString``
+ constant naming the respective shader program. It is good practice to create a preprocessor
+ define for these string constants in the header file of the class that defines the program
+ (confer to ICRectangle for example).
+ 
+ Shader programs may be set on the shader cache using ICShaderCache::setShaderProgram:forKey:.
+ A cached shader program may be retrieved using ICShaderCache::shaderProgramForKey:.
+ 
+ Shader programs set on ICShaderCache are cached until the cache is released or purged using
+ ICShaderCache::purgeCurrentShaderCache.
  
  <h3>Subclassing</h3>
  
@@ -47,7 +69,8 @@
  in order to implement custom initialization or shader management. If you plan to implement
  custom initialization, override the init method. If you plan to customize shader program
  management, override ICShaderCache::setShaderProgram:forKey: and
- ICShaderCache::shaderProgramForKey:.
+ ICShaderCache::shaderProgramForKey:. If you plan to add shared standard shader programs
+ embedded in your application's source code, please see the ICShaderFactory class reference.
  */
 @interface ICShaderCache : NSObject {
 @private

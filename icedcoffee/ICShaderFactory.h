@@ -26,13 +26,44 @@
 
 // Default shader key definitions
 
+/**
+ @brief Key constant for the standard position-texture-color shader program
+ */
 #define ICShaderPositionTextureColor			@"ShaderPositionTextureColor"
+
+/**
+ @brief Key constant for the standard position-texture-color alpha testing shader program
+ */
 #define ICShaderPositionTextureColorAlphaTest	@"ShaderPositionTextureColorAlphaTest"
+
+/**
+ @brief Key constant for the standard position-color shader program
+ */
 #define ICShaderPositionColor					@"ShaderPositionColor"
+
+/**
+ @brief Key constant for the standard position-texture shader program
+ */
 #define ICShaderPositionTexture                 @"ShaderPositionTexture"
+
+/**
+ @brief Key constant for the standard position-texture plus custom color uniform shader program
+ */
 #define ICShaderPositionTexture_uColor          @"ShaderPositionTexture_uColor"
+
+/**
+ @brief Key constant for the standard position-texture alpha mask shader program
+ */
 #define ICShaderPositionTextureA8Color          @"ShaderPositionTextureA8Color"
+
+/**
+ @brief Key constant for the standard shader program for picking
+ */
 #define ICShaderPicking                         @"ShaderPicking"
+
+/**
+ @brief Key constant for the standard shader program for texture masking a sprite
+ */
 #define ICShaderSpriteTextureMask               @"ShaderSpriteTextureMask"
 
 
