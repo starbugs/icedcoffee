@@ -192,6 +192,7 @@ typedef struct _ICTexParams {
 /** @name Initializing a Texture with a CGImage */
 
 /*
+ FIXME: this needs to go into the docs
  Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
  */
 
