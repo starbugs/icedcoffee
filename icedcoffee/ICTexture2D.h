@@ -147,19 +147,20 @@ typedef struct _ICTexParams {
  @brief Initializes a texture with the given data, pixel format, size and resolution type
  
  @param data A buffer containing the data to be uploaded to the OpenGL texture
- @param pixelFormat An ICPixelFormat enumerated value defining the texture's pixel format
+ @param pixelFormat An ``ICPixelFormat`` enumerated value defining the texture's pixel format
  @param textureSizeInPixels The size of the texture in pixels
  @param contentSizeInPixels The size of the texture's contents in pixels
- @param resolutionType An ICResolutionType enumerated value defining the texture's resolution type
+ @param resolutionType An ``ICResolutionType`` enumerated value defining the texture's
+ resolution type
  
  The given ``data`` must contain pixels formatted as defined by the specified ``pixelFormat``.
- The most common pixel format in icedcoffee is ICPixelFormatRGBA8888.
+ The most common pixel format in icedcoffee is ``ICPixelFormatRGBA8888``.
  ``textureSizeInPixels`` may differ from ``contentSizeInPixels`` in cases where power of two
  textures must be used to store non-power of two (NPOT) contents. The former defines the size of
  the texture in memory whereas the latter defines the size of the content stored in the texture.
  The ``resolutionType`` argument specifies the native resolution of the texture. If the texture
  represents a high resolution (retina display) image, you should set this to
- ICResolutionTypeRetinaDisplay. Otherwise, this should be set to ICResolutionTypeStandard.
+ ``ICResolutionTypeRetinaDisplay``. Otherwise, this should be set to ``ICResolutionTypeStandard``.
  */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
@@ -172,7 +173,7 @@ typedef struct _ICTexParams {
  in pixels
  
  @param data A buffer containing the data to be uploaded to the OpenGL texture
- @param pixelFormat An ICPixelFormat enumerated value defining the texture's pixel format
+ @param pixelFormat An ``ICPixelFormat`` enumerated value defining the texture's pixel format
  @param pixelsWide The width of the texture in pixels
  @param pixelsHigh The height of the texture in pixels
  @param size The size of the contents in pixels
