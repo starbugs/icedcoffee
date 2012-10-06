@@ -80,10 +80,8 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "icConfig.h"
 #import "ICConfiguration.h"
 #import "icDefaults.h"
-//#import "Support/ICUtils.h"
 
 
-// (FIXME: Removed FontLabel support as in cocos2d-2, but didn't add alternative yet)
 // FIXME: ICLabel support for 32-bit textures
 
 // For Labels use 32-bit textures on iPhone 3GS / iPads since A8 textures are very slow
@@ -130,8 +128,8 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		glGenTextures(1, &_name);
 		glBindTexture(GL_TEXTURE_2D, _name);
         
-		[self setAntiAliasTexParameters];
-		
+        [self setAntiAliasTexParameters];
+        
 		// Specify OpenGL texture image
 		
 		switch(pixelFormat)
@@ -644,16 +642,16 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
-- (void)setTexParameters: (ICTexParams*) texParams
+- (void)setTexParameters:(ICTexParams*)texParams
 {
 	NSAssert( (_width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
-	glBindTexture( GL_TEXTURE_2D, self.name );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter );
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS );
-	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
+	glBindTexture(GL_TEXTURE_2D, self.name);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texParams->minFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texParams->magFilter);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texParams->wrapS);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT);
 }
 
 - (void)setAliasTexParameters

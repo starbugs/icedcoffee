@@ -155,12 +155,15 @@ typedef struct _ICTexParams {
  
  The given ``data`` must contain pixels formatted as defined by the specified ``pixelFormat``.
  The most common pixel format in icedcoffee is ``ICPixelFormatRGBA8888``.
- ``textureSizeInPixels`` may differ from ``contentSizeInPixels`` in cases where power of two
+  ``textureSizeInPixels`` may differ from ``contentSizeInPixels`` in cases where power of two
  textures must be used to store non-power of two (NPOT) contents. The former defines the size of
  the texture in memory whereas the latter defines the size of the content stored in the texture.
- The ``resolutionType`` argument specifies the native resolution of the texture. If the texture
+  The ``resolutionType`` argument specifies the native resolution of the texture. If the texture
  represents a high resolution (retina display) image, you should set this to
  ``ICResolutionTypeRetinaDisplay``. Otherwise, this should be set to ``ICResolutionTypeStandard``.
+ 
+ Note that this method calls ICTexture2D::setAntiAliasTexParameters before uploading the texture
+ and that it binds the texture to ``GL_TEXTURE_2D`` on the current OpenGL context.
  */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
@@ -315,7 +318,9 @@ typedef struct _ICTexParams {
 /**
  @brief Generates mipmap images for the receiver
  
- Note that this only works if the texture size is power of 2 (POT).
+ This only works if the texture size is power of 2 (POT).
+ 
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
 - (void)generateMipmap;
 
@@ -328,6 +333,8 @@ typedef struct _ICTexParams {
  
  If the texture size is NPOT (non power of 2), then it can only use ``GL_CLAMP_TO_EDGE`` in
  ``GL_TEXTURE_WRAP_{S,T}``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
 - (void)setTexParameters:(ICTexParams*)texParams;
 
@@ -336,6 +343,8 @@ typedef struct _ICTexParams {
  
  This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_LINEAR`` and ``GL_TEXTURE_MAG_FILTER``
  to ``GL_LINEAR``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
 - (void)setAntiAliasTexParameters;
 
@@ -344,6 +353,8 @@ typedef struct _ICTexParams {
  
  This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_NEAREST`` and ``GL_TEXTURE_MAG_FILTER``
  to ``GL_NEAREST``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
 - (void)setAliasTexParameters;
 
