@@ -20,9 +20,18 @@ Changes and Improvements:
   and ICTextureLoader. Refactored existing file loading methods to use their respective URL
   loading counterparts by utilizing file URLs. ICTextureCache's keys from now on are absolute
   strings of NSURL objects used to load the corresponding textures.
-* ICTexture2D::displayContentSize does now return the SD size of a HD texture if retina
-  display support is not enabled. This effectively scales down HD images on SD devices if
-  no SD image is present.
+* Refactored and improved the ICTexture2D class:
+  * ICTexture2D::displayContentSize does now return the SD size of a HD texture if retina
+    display support is not enabled. This effectively scales down HD images on SD devices if
+    no SD image is present.
+  * ICTexture2D::pixelsWide and ICTexture2D::pixelsHigh are now deprecated. Developers should
+    use ICTexture2D::sizeInPixels instead.
+  * Removed ICTexture2D::releaseData: and ICTexture2D::keepData:length; these methods were not
+    implemented correctly and ICTexture2D is not designed to be mutable anyway. At a later point
+    in time there probably will be something like ICMutableTexture2D in icedcoffee.
+  * Removed the Image and Text categories and integrated the respective methods directly
+    into the ICTexture2D class.
+  * Added a bunch of reference documentation to the class' header file.
 
 Fixes:
 

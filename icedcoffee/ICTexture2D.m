@@ -184,92 +184,6 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                resolutionType:ICResolutionTypeUnknown];
 }
 
-- (void) releaseData:(void*)data
-{
-	//Free data
-	free(data);
-}
-
-- (void*) keepData:(void*)data length:(NSUInteger)length
-{
-	//The texture data mustn't be saved becuase it isn't a mutable texture.
-	return data;
-}
-
-- (void)deleteGlTexture: (id)object
-{
-    glDeleteTextures(1, &_name);    
-}
-
-- (void) dealloc
-{
-	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
-	if(_name) {
-        // FIXME: Texture can only be deleted on main thread currently
-        [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
-    }
-	
-	[super dealloc];
-}
-
-- (NSString *) description
-{
-#ifdef __IC_PLATFORM_MAC
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %lix%li | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
-#elif defined(__IC_PLATFORM_IOS)
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];    
-#endif
-}
-
-- (CGSize)contentSize
-{
-	CGSize ret;
-	ret.width = _contentSizeInPixels.width / ICContentScaleFactor();
-	ret.height = _contentSizeInPixels.height / ICContentScaleFactor();
-	return ret;
-}
-
-- (CGSize)displayContentSize
-{
-    CGSize ret = [self contentSize];
-    switch (_resolutionType) {
-        case ICResolutionTypeUnknown:
-        case ICResolutionTypeStandard:
-            // Scale up SD to retina
-            ret.width  *= ICContentScaleFactor();
-            ret.height *= ICContentScaleFactor();
-            break;
-        case ICResolutionTypeRetinaDisplay:
-            if (![[ICHostViewController currentHostViewController] retinaDisplaySupportEnabled]) {
-                // Scale down retina to SD
-                ret.width  /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
-                ret.height /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
-            }
-        default:
-            break;
-    }
-    return ret;
-}
-
-// Deprecated as of v0.6.6
-- (CGSize)size
-{
-    return [self displayContentSize];
-}
-
-// Deprecated as of v0.6.6
-- (CGSize)sizeInPixels
-{
-    return self.contentSizeInPixels;
-}
-
-@end
-
-#pragma mark -
-#pragma mark ICTexture2D - Image
-
-@implementation ICTexture2D (Image)
-
 #ifdef __IC_PLATFORM_MAC
 - (id)initWithCGImage:(CGImageRef)cgImage
 {
@@ -277,11 +191,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 }
 #endif
 
-#ifdef __IC_PLATFORM_IOS
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
-#elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
-#endif
+- (id)initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution
 {
 	NSUInteger				POTWide, POTHigh;
 	CGContextRef			context = nil;
@@ -435,19 +345,15 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	_hasPremultipliedAlpha = (info == kCGImageAlphaPremultipliedLast || info == kCGImageAlphaPremultipliedFirst);
     
 	CGContextRelease(context);
-	[self releaseData:data];
+	free(data);
     
 	return self;
 }
-@end
 
-
-// FIXME: good start, but lots of stuff missing
-
-#pragma mark -
-#pragma mark ICTexture2D - Text
-
-@implementation ICTexture2D (Text)
+- (void)deleteGlTexture: (id)object
+{
+    glDeleteTextures(1, &_name);    
+}
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 
@@ -472,9 +378,9 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 #else
 	colorSpace = CGColorSpaceCreateDeviceRGB();
 	data = calloc(POTHigh, POTWide * 4);
-	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);				
+	context = CGBitmapContextCreate(data, POTWide, POTHigh, 8, 4 * POTWide, colorSpace, kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big);
 #endif
-
+    
 	CGColorSpaceRelease(colorSpace);
 	
 	if( ! context ) {
@@ -488,7 +394,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	CGContextScaleCTM(context, 1.0f, -1.0f); //NOTE: NSString draws in UIKit referential i.e. renders upside-down compared to CGBitmapContext referential
 	
 	UIGraphicsPushContext(context);
-
+    
 	// normal fonts
 	if( [uifont isKindOfClass:[UIFont class] ] )
 		[string drawInRect:CGRectMake(0, 0, dimensions.width, dimensions.height) withFont:uifont lineBreakMode:UILineBreakModeWordWrap alignment:alignment];
@@ -510,26 +416,26 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                   contentSize:CGSizeMake(POTWide, POTHigh)
                resolutionType:resolutionType];
 	CGContextRelease(context);
-	[self releaseData:data];
-			
+	free(data);
+    
 	return self;
 }
-				 
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 - (id) initWithString:(NSString*)string
            dimensions:(CGSize)dimensions
             alignment:(ICTextAlignment)alignment
      attributedString:(NSAttributedString*)stringWithAttributes
-{				
+{
 	NSAssert( stringWithAttributes, @"Invalid stringWithAttributes");
-
+    
 	NSUInteger POTWide = dimensions.width; //icNextPOT(dimensions.width);
 	NSUInteger POTHigh = dimensions.height; //icNextPOT(dimensions.height);
 	unsigned char*			data;
 	
 	NSSize realDimensions = [stringWithAttributes size];
-
+    
 	//Alignment
 	float xPadding = 0;
 	
@@ -543,12 +449,12 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		}
 		
 		//Disable antialias
-/*		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	*/
+        /*		[[NSGraphicsContext currentContext] setShouldAntialias:NO];	*/
 		
 		NSImage *image = [[NSImage alloc] initWithSize:NSMakeSize(POTWide, POTHigh)];
-		[image lockFocus];	
+		[image lockFocus];
 		
-		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, POTHigh-dimensions.height)]; // draw at offset position	
+		[stringWithAttributes drawAtPoint:NSMakePoint(xPadding, POTHigh-dimensions.height)]; // draw at offset position
 		
 		NSBitmapImageRep *bitmap = [[NSBitmapImageRep alloc] initWithFocusedViewRect:NSMakeRect (0.0f, 0.0f, POTWide, POTHigh)];
 		[image unlockFocus];
@@ -562,13 +468,13 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                 data[c++] = data[i*bytesPerRow+j*4+3];
 		
 		//data = (unsigned char*)[self keepData:data length:textureSize];
-//		self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
+        //		self = [self initWithData:data pixelFormat:ICPixelFormatA8 pixelsWide:POTWide pixelsHigh:POTHigh size:dimensions];
         ICResolutionType resolutionType = [[ICHostViewController currentHostViewController] bestResolutionTypeForCurrentScreen];
 		self = [self initWithData:data pixelFormat:ICPixelFormatA8 textureSize:CGSizeMake(POTWide, POTHigh) contentSize:dimensions resolutionType:resolutionType];
         
 		[bitmap release];
-		[image release]; 
-			
+		[image release];
+        
 	} else {
 		[self release];
 		return nil;
@@ -581,7 +487,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 - (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size
 {
     CGSize dim;
-
+    
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	id font;
 	font = [UIFont fontWithName:name size:ICPointsToPixels(size)];
@@ -598,7 +504,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 	{
-
+        
 		NSAttributedString *stringWithAttributes =
 		[[[NSAttributedString alloc] initWithString:string
 										 attributes:[NSDictionary dictionaryWithObject:[[NSFontManager sharedFontManager]
@@ -609,7 +515,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 																				forKey:NSFontAttributeName]
 		  ]
 		 autorelease];
-	
+        
         // Requires that GL_UNPACK_ALIGNMENT is set to 1 (see http://www.opengl.org/wiki/Common_Mistakes)
 		dim = NSSizeToCGSize( [stringWithAttributes size] );
         dim.width = ceilf(dim.width);
@@ -619,7 +525,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
         // the alpha texture
         //int remainder = (int)dim.width % 4 ? 4 - (int)dim.width % 4 : 0;
         //dim.width = remainder ? dim.width + remainder : dim.width;
-				
+        
 		return [self initWithString:string dimensions:dim alignment:ICTextAlignmentCenter attributedString:stringWithAttributes];
 	}
 #endif // __MAC_OS_X_VERSION_MAX_ALLOWED
@@ -634,9 +540,9 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 {
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
 	id						uifont = nil;
-
+    
 	uifont = [UIFont fontWithName:name size:size];
-
+    
 	if( ! uifont ) {
 		NSLog(@"IcedCoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];
@@ -660,9 +566,72 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	 autorelease];
 	
 	return [self initWithString:string dimensions:dimensions alignment:alignment attributedString:stringWithAttributes];
-		
+    
 #endif // Mac
 }
+
+- (void)dealloc
+{
+	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
+	if(_name) {
+        // FIXME: Texture can only be deleted on main thread currently
+        [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
+    }
+	
+	[super dealloc];
+}
+
+- (NSString *) description
+{
+#ifdef __IC_PLATFORM_MAC
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %lix%li | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
+#elif defined(__IC_PLATFORM_IOS)
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];    
+#endif
+}
+
+- (CGSize)contentSize
+{
+	CGSize ret;
+	ret.width = _contentSizeInPixels.width / ICContentScaleFactor();
+	ret.height = _contentSizeInPixels.height / ICContentScaleFactor();
+	return ret;
+}
+
+- (CGSize)displayContentSize
+{
+    CGSize ret = [self contentSize];
+    switch (_resolutionType) {
+        case ICResolutionTypeUnknown:
+        case ICResolutionTypeStandard:
+            // Scale up SD to retina
+            ret.width  *= ICContentScaleFactor();
+            ret.height *= ICContentScaleFactor();
+            break;
+        case ICResolutionTypeRetinaDisplay:
+            if (![[ICHostViewController currentHostViewController] retinaDisplaySupportEnabled]) {
+                // Scale down retina to SD
+                ret.width  /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
+                ret.height /= IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR;
+            }
+        default:
+            break;
+    }
+    return ret;
+}
+
+// Deprecated as of v0.6.6
+- (CGSize)size
+{
+    return [self displayContentSize];
+}
+
+// Deprecated as of v0.6.6
+- (CGSize)sizeInPixels
+{
+    return self.contentSizeInPixels;
+}
+
 @end
 
 

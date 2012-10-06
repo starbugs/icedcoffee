@@ -97,10 +97,11 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/ICNS.h"
 #import "icTypes.h"
 
-/** ICTexture2D class.
- * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * Depending on how you create the ICTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "size" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
- * Be aware that the content of the generated textures will be upside-down!
+/**
+ @brief Represents an immutable two-dimensional OpenGL texture
+ 
+ The ICTexture2D class provides methods allowing you to conveniently create and work with
+ immutable two-dimensional OpenGL textures.
  */
 @interface ICTexture2D : NSObject
 {
@@ -116,38 +117,127 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
     ICResolutionType    _resolutionType;
 }
 
+#pragma mark - Initializing a Texture with Data
+/** @name Initializing a Texture with Data */
+
 /** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable));
 /** @endcond */
 
+/**
+ @brief Initializes a texture with the given data, pixel format, size and resolution type
+ 
+ @param data A buffer containing the data to be uploaded to the OpenGL texture
+ @param pixelFormat An ICPixelFormat enumerated value defining the texture's pixel format
+ @param textureSizeInPixels The size of the texture in pixels
+ @param contentSizeInPixels The size of the texture's contents in pixels
+ @param resolutionType An ICResolutionType enumerated value defining the texture's resolution type
+ 
+ The given ``data`` must contain pixels formatted as defined by the specified ``pixelFormat``.
+ The most common pixel format in icedcoffee is ICPixelFormatRGBA8888.
+ ``textureSizeInPixels`` may differ from ``contentSizeInPixels`` in cases where power of two
+ textures must be used to store non-power of two (NPOT) contents. The former defines the size of
+ the texture in memory whereas the latter defines the size of the content stored in the texture.
+ The ``resolutionType`` argument specifies the native resolution of the texture. If the texture
+ represents a high resolution (retina display) image, you should set this to
+ ICResolutionTypeRetinaDisplay. Otherwise, this should be set to ICResolutionTypeStandard.
+ */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
        textureSize:(CGSize)textureSizeInPixels
        contentSize:(CGSize)contentSizeInPixels
     resolutionType:(ICResolutionType)resolutionType;
 
-/** Intializes a texture with data */
+/**
+ @brief Initializes a texture with the given data, pixel format, width, height and content size
+ in pixels
+ 
+ @param data A buffer containing the data to be uploaded to the OpenGL texture
+ @param pixelFormat An ICPixelFormat enumerated value defining the texture's pixel format
+ @param pixelsWide The width of the texture in pixels
+ @param pixelsHigh The height of the texture in pixels
+ @param size The size of the contents in pixels
+ 
+ @deprecated Deprecated as of v0.6.6. Use
+ ICTexture2D::initWithData:pixelFormat:textureSize:contentSize:resolutionType: instead.
+ */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
         pixelsWide:(NSUInteger)width
         pixelsHigh:(NSUInteger)height
               size:(CGSize)contentSizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
-/** These functions are needed to create mutable textures */
-- (void)releaseData:(void*)data;
-- (void *)keepData:(void*)data length:(NSUInteger)length;
 
-/** pixel format of the texture */
+#pragma mark - Initializing a Texture with a CGImage
+/** @name Initializing a Texture with a CGImage */
+
+/*
+ Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
+ */
+
+#ifdef __IC_PLATFORM_MAC
+
+/**
+ @brief Initializes a texture with the given ``CGImageRef``
+ 
+ This method internally calls ICTexture2D::initWithCGImage:resolutionType: and specifies
+ ICResolutionTypeUnknown as the resolution type.
+ */
+- (id)initWithCGImage:(CGImageRef)cgImage;
+
+#endif
+
+/**
+ @brief Initializes a texture with the given ``CGImageRef`` and resolution type
+ */
+- (id)initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
+
+
+#pragma mark - Initializing a Texture with Text
+/** @name Initializing a Texture with Text */
+
+/**
+ @brief Initializes a texture from a string with dimensions, alignment, font name and font size
+ */
+- (id)initWithString:(NSString*)string
+          dimensions:(CGSize)dimensions
+           alignment:(ICTextAlignment)alignment
+            fontName:(NSString*)name fontSize:(CGFloat)size;
+
+/**
+ @brief Initializes a texture from a string with font name and font size
+ */
+- (id)initWithString:(NSString*)string
+            fontName:(NSString*)name
+            fontSize:(CGFloat)size;
+
+
+/**
+ @brief Returns the pixel format of the receiver
+ */
 @property (nonatomic, readonly) ICPixelFormat pixelFormat;
-/** width in pixels */
-@property (nonatomic, readonly) NSUInteger pixelsWide;
-/** hight in pixels */
-@property (nonatomic, readonly) NSUInteger pixelsHigh;
 
-/** texture name */
+/**
+ @brief Returns the width of the receiver in pixels
+ 
+ @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ */
+@property (nonatomic, readonly) NSUInteger pixelsWide DEPRECATED_ATTRIBUTE /*v0.6.7*/;
+/**
+ @brief Returns the height of the receiver in pixels
+
+ @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ */
+@property (nonatomic, readonly) NSUInteger pixelsHigh DEPRECATED_ATTRIBUTE /*v0.6.7*/;
+
+/** 
+ @brief Returns the OpenGL texture name of the receiver
+ */
 @property (nonatomic, readonly) GLuint name;
 
-/** returns content size of the texture in pixels */
+/**
+ @brief Returns the content size of the receiver in pixels
+ */
 @property (nonatomic, readonly, nonatomic) CGSize contentSizeInPixels;
 
 /** texture max S */
@@ -159,44 +249,27 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 @property (nonatomic, readwrite) ICResolutionType resolutionType;
 
-/** returns the content size of the texture in points */
+/**
+ @brief Returns the content size of the receiver in points
+ */
 - (CGSize)contentSize;
 
-/** Returns the content size of the receiver in points scaled with regard to its resolution type
-    and the global content scale factor */
+/**
+ @brief Returns the content size of the receiver in points scaled with regard to its resolution
+ type and the global content scale factor
+ */
 - (CGSize)displayContentSize;
 
+/**
+ @brief Returns the size of the receiver in points
+ */
 - (CGSize)size DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
+/**
+ @brief Returns the size of the receiver in pixels
+ */
 - (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
-@end
 
-/**
-Extensions to make it easy to create a ICTexture2D object from an image file.
-Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
-*/
-@interface ICTexture2D (Image)
-#ifdef __IC_PLATFORM_MAC
-// Defaults to ICResolutionTypeUnknown
-- (id) initWithCGImage:(CGImageRef)cgImage;
-#endif
-/** Initializes a texture from a UIImage object */
-#ifdef __IC_PLATFORM_IOS
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
-#elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
-#endif
-@end
-
-/**
-Extensions to make it easy to create a ICTexture2D object from a string of text.
-Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-*/
-@interface ICTexture2D (Text)
-/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(ICTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** Initializes a texture from a string with font name and font size */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
 @end
 
 
