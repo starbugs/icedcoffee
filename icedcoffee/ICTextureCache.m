@@ -98,8 +98,8 @@
     });
     if (!texture) {
         texture = [ICTextureLoader loadTextureFromURL:url
-                                                    resolutionType:resolutionType
-                                                             error:error];
+                                       resolutionType:resolutionType
+                                                error:error];
     }
     NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
     dispatch_sync(_dictQueue, ^{
