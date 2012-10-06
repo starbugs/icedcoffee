@@ -31,6 +31,7 @@ Changes and Improvements:
     in time there probably will be something like ICMutableTexture2D in icedcoffee.
   * Removed the Image and Text categories and integrated the respective methods directly
     into the ICTexture2D class.
+  * The resolutionType property is now read only.
   * Added a bunch of reference documentation to the class' header file.
 
 Fixes:

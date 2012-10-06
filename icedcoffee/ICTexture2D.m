@@ -137,19 +137,24 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		switch(pixelFormat)
 		{
 			case ICPixelFormatRGBA8888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                             0, GL_RGBA, GL_UNSIGNED_BYTE, data);
 				break;
 			case ICPixelFormatRGBA4444:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                             0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
 				break;
 			case ICPixelFormatRGB5A1:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height, 0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                             0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
 				break;
 			case ICPixelFormatRGB565:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height, 0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height,
+                             0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
 				break;
 			case ICPixelFormatA8:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height, 0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height,
+                             0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
 				break;
 			default:
 				[NSException raise:NSInternalInconsistencyException format:@""];
@@ -632,25 +637,14 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
     return self.contentSizeInPixels;
 }
 
-@end
-
-
-#pragma mark -
-#pragma mark ICTexture2D - GLFilter
-
-//
-// Use to apply MIN/MAG filter
-//
-@implementation ICTexture2D (GLFilter)
-
--(void) generateMipmap
+- (void)generateMipmap
 {
 	NSAssert( _width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height), @"Mipmap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, _name );
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
--(void) setTexParameters: (ICTexParams*) texParams
+- (void)setTexParameters: (ICTexParams*) texParams
 {
 	NSAssert( (_width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
@@ -662,35 +656,26 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	glTexParameteri( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texParams->wrapT );
 }
 
--(void) setAliasTexParameters
+- (void)setAliasTexParameters
 {
 	ICTexParams texParams = { GL_NEAREST, GL_NEAREST, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 	[self setTexParameters: &texParams];
 }
 
--(void) setAntiAliasTexParameters
+- (void)setAntiAliasTexParameters
 {
 	ICTexParams texParams = { GL_LINEAR, GL_LINEAR, GL_CLAMP_TO_EDGE, GL_CLAMP_TO_EDGE };
 	[self setTexParameters: &texParams];
 }
-@end
 
-
-#pragma mark -
-#pragma mark ICTexture2D - Pixel Format
-
-//
-// Texture options for images that contains alpha
-//
-@implementation ICTexture2D (PixelFormat)
-+(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format
++ (void)setDefaultAlphaPixelFormat:(ICPixelFormat)format
 {
 	defaultAlphaPixel_format = format;
 }
 
-+(ICPixelFormat) defaultAlphaPixelFormat
++ (ICPixelFormat)defaultAlphaPixelFormat
 {
 	return defaultAlphaPixel_format;
 }
-@end
 
+@end

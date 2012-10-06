@@ -6,7 +6,7 @@
 
 	"executeDoxygen": true,
 	"executeNanoc": true,
-	"cleanIntermediates": true,
+	"cleanIntermediates": false,
 
 	"mainTitle": "Icedcoffee iOS API Reference",
 	"version": "0.6.7",

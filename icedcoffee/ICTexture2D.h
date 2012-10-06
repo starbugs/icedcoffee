@@ -97,11 +97,30 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/ICNS.h"
 #import "icTypes.h"
 
+
+typedef struct _ICTexParams {
+	GLuint minFilter;
+	GLuint magFilter;
+	GLuint wrapS;
+	GLuint wrapT;
+} ICTexParams;
+
+
 /**
  @brief Represents an immutable two-dimensional OpenGL texture
  
  The ICTexture2D class provides methods allowing you to conveniently create and work with
- immutable two-dimensional OpenGL textures.
+ immutable two-dimensional OpenGL textures. In particular, ICTexture2D provides the following
+ features:
+ 
+ - Create textures from arbitrary pixel data, ``CGImage``s and from text strings
+ - Manage the size of a texture with respect to SD and HD images and display devices
+ - Set texture parameters for texture filtering on the OpenGL state
+ 
+ The most common use case in most applications is loading a texture from a file. However,
+ this is not directly supported by ICTexture2D. The ICTextureLoader class provides many methods
+ that allow you to easily load textures from image files. The ICTextureCache class adds
+ functionality to asynchronously load and cache textures in your application.
  */
 @interface ICTexture2D : NSObject
 {
@@ -212,42 +231,32 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
             fontSize:(CGFloat)size;
 
 
+#pragma mark - Retrieving Information about the Texture's Format
+/** @name Retrieving Information about the Texture's Format */
+
 /**
- @brief Returns the pixel format of the receiver
+ @brief The pixel format of the receiver
  */
 @property (nonatomic, readonly) ICPixelFormat pixelFormat;
 
 /**
- @brief Returns the width of the receiver in pixels
- 
- @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ @brief Whether the receiver's color values are premultiplied with their respective alpha values
  */
-@property (nonatomic, readonly) NSUInteger pixelsWide DEPRECATED_ATTRIBUTE /*v0.6.7*/;
-/**
- @brief Returns the height of the receiver in pixels
-
- @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
- */
-@property (nonatomic, readonly) NSUInteger pixelsHigh DEPRECATED_ATTRIBUTE /*v0.6.7*/;
-
-/** 
- @brief Returns the OpenGL texture name of the receiver
- */
-@property (nonatomic, readonly) GLuint name;
-
-/**
- @brief Returns the content size of the receiver in pixels
- */
-@property (nonatomic, readonly, nonatomic) CGSize contentSizeInPixels;
-
-/** texture max S */
-@property (nonatomic, readwrite) GLfloat maxS;
-/** texture max T */
-@property (nonatomic, readwrite) GLfloat maxT;
-/** whether or not the texture has their Alpha premultiplied */
 @property (nonatomic, readonly) BOOL hasPremultipliedAlpha;
 
-@property (nonatomic, readwrite) ICResolutionType resolutionType;
+/**
+ @brief The receiver's resolution type
+ */
+@property (nonatomic, readonly) ICResolutionType resolutionType;
+
+
+#pragma mark - Retrieving Size Information from a Texture
+/** @name Retrieving Size Information from a Texture */
+
+/**
+ @brief The content size of the receiver in pixels
+ */
+@property (nonatomic, readonly) CGSize contentSizeInPixels;
 
 /**
  @brief Returns the content size of the receiver in points
@@ -270,78 +279,107 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
  */
 - (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
-@end
+/**
+ @brief The width of the receiver in pixels
+ 
+ @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ */
+@property (nonatomic, readonly) NSUInteger pixelsWide DEPRECATED_ATTRIBUTE /*v0.6.7*/;
+/**
+ @brief The height of the receiver in pixels
+ 
+ @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ */
+@property (nonatomic, readonly) NSUInteger pixelsHigh DEPRECATED_ATTRIBUTE /*v0.6.7*/;
 
+
+#pragma mark - Working with Texture Coordinate Information
+/** @name Working with Texture Coordinate Information */
 
 /**
- Extension to set the Min / Mag filter
+ @brief The texture max S coordinate
  */
-typedef struct _ICTexParams {
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ICTexParams;
+@property (nonatomic, readwrite) GLfloat maxS;
 
-@interface ICTexture2D (GLFilter)
-/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
- If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
- @since v0.8
+/**
+ @brief The texture max T coordinate
  */
--(void) setTexParameters: (ICTexParams*) texParams;
+@property (nonatomic, readwrite) GLfloat maxT;
 
-/** sets antialias texture parameters:
-  - GL_TEXTURE_MIN_FILTER = GL_LINEAR
-  - GL_TEXTURE_MAG_FILTER = GL_LINEAR
 
- @since v0.8
- */
-- (void) setAntiAliasTexParameters;
+#pragma mark - Generating Mipmaps
+/** @name Generating Mipmaps */
 
-/** sets alias texture parameters:
-  - GL_TEXTURE_MIN_FILTER = GL_NEAREST
-  - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+/**
+ @brief Generates mipmap images for the receiver
  
- @since v0.8
+ Note that this only works if the texture size is power of 2 (POT).
  */
-- (void) setAliasTexParameters;
+- (void)generateMipmap;
 
 
-/** Generates mipmap images for the texture.
- It only works if the texture size is POT (power of 2).
- @since v0.99.0
+#pragma mark - Setting Texture Parameters on the OpenGL State
+/** @name Setting Texture Parameters on the OpenGL State */
+
+/**
+ @brief Sets the min filter, mag filter, wrap s and wrap t texture parameters
+ 
+ If the texture size is NPOT (non power of 2), then it can only use ``GL_CLAMP_TO_EDGE`` in
+ ``GL_TEXTURE_WRAP_{S,T}``.
  */
--(void) generateMipmap;
+- (void)setTexParameters:(ICTexParams*)texParams;
 
+/**
+ @brief Sets texture parameters for antialiasing
+ 
+ This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_LINEAR`` and ``GL_TEXTURE_MAG_FILTER``
+ to ``GL_LINEAR``.
+ */
+- (void)setAntiAliasTexParameters;
+
+/**
+ @brief Sets alias texture parameters
+ 
+ This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_NEAREST`` and ``GL_TEXTURE_MAG_FILTER``
+ to ``GL_NEAREST``.
+ */
+- (void)setAliasTexParameters;
+
+
+#pragma mark - Retrieving OpenGL Parameters
+/** @name Retrieving OpenGL Parameters */
+
+/**
+ @brief The OpenGL texture name of the receiver
+ */
+@property (nonatomic, readonly) GLuint name;
+
+
+#pragma mark - Changing the Default Alpha Pixel Format
+/** @name Changing the Default Alpha Pixel Format */
+
+/**
+ @brief Sets the global default pixel format for creating textures from images that contain an
+ alpha channel
+ 
+ If the image contains an alpha channel, then the options are:
+ - generate 32-bit textures: ICPixelFormatRGBA8888 (default one)
+ - generate 16-bit textures: ICPixelFormatRGBA4444
+ - generate 16-bit textures: ICPixelFormatRGB5A1
+ - generate 16-bit textures: ICPixelFormatRGB565
+ - generate 8-bit textures: ICPixelFormatA8 (only use it if you use just 1 color)
+ 
+ Note that if the image is RGBA (with alpha) then the default pixel format will be used
+ (it can be a 8-bit, 16-bit or 32-bit texture). If the image is RGB (without alpha) then an
+ RGB565 texture will be used (16-bit texture).
+ 
+ Also note that this method is currently not thread-safe.
+ */
++ (void)setDefaultAlphaPixelFormat:(ICPixelFormat)format;
+
+/**
+ @brief Returns the global default alpha pixel format
+ */
++ (ICPixelFormat)defaultAlphaPixelFormat;
 
 @end
-
-@interface ICTexture2D (PixelFormat)
-/** sets the default pixel format for UIImages that contains alpha channel.
- If the UIImage contains alpha channel, then the options are:
-	- generate 32-bit textures: ICPixelFormatRGBA8888 (default one)
-	- generate 16-bit textures: ICPixelFormatRGBA4444
-	- generate 16-bit textures: ICPixelFormatRGB5A1
-	- generate 16-bit textures: ICPixelFormatRGB565
-	- generate 8-bit textures: ICPixelFormatA8 (only use it if you use just 1 color)
-
- How does it work ?
-   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-   - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
- 
- This parameter is not valid for PVR images.
- 
- @since v0.8
- */
-+(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format;
-
-/** returns the alpha pixel format
- @since v0.8
- */
-+(ICPixelFormat) defaultAlphaPixelFormat;
-@end
-
-
-
-
-
