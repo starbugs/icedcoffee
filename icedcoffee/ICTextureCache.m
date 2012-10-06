@@ -92,9 +92,15 @@
                      resolutionType:(ICResolutionType)resolutionType
                               error:(NSError **)error
 {
-    ICTexture2D *texture = [ICTextureLoader loadTextureFromURL:url
-                                                resolutionType:resolutionType
-                                                         error:error];
+    __block ICTexture2D *texture;
+    dispatch_sync(_dictQueue, ^{
+        texture = [_textures objectForKey:[url absoluteString]];
+    });
+    if (!texture) {
+        texture = [ICTextureLoader loadTextureFromURL:url
+                                                    resolutionType:resolutionType
+                                                             error:error];
+    }
     NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
     dispatch_sync(_dictQueue, ^{
         [_textures setObject:texture forKey:[url absoluteString]];
