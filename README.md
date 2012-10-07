@@ -12,7 +12,7 @@ Icedcoffee is designed to be clean, minimalistic, consistent and reusable for di
 It may be used to build interfaces for games, full application frontends or to extend existing
 application frontends with new OpenGL-based components such as infinitely scrollable views,
 animated overlays, and so on. Icedcoffee emphasizes easy integration and doesn't hijack your
-application.
+application. Promised!
 
 Icedcoffee is open source and free for both non-commercial and commercial use (MIT license).
 
