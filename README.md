@@ -32,7 +32,7 @@ Getting Started
 Documentation
 -------------
 
-Find a work-in-progress version of the [Icedcoffee API reference](http://icedcoffee-framework.org/docs)
+Find a work-in-progress version of the [Icedcoffee API reference](http://icedcoffee-framework.org/reference/)
 on [icedcoffee-framework.org](http://icedcoffee-framework.org). If you have questions or want to
 receive updates and release notes via email, please join the [Icedcoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
 
