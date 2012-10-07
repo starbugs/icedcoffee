@@ -48,7 +48,8 @@ Main Features
   * Font rendering via CoreGraphics
   * Convienent texture caching, asynchronous texture loading via GCD using shared OpenGL contexts
   * Rendering via display link, dedicated thread or main thread
-  * Retina display support for all suitable devices
+  * Retina display support for all suitable iOS devices
+  * GPUImage integration for efficiently displaying and filtering camera inputs and movie files
   * View/view controller architecture for easy integration with Cocoa/CocoaTouch
   * Minimalistic design with little dependencies: very easy to integrate into existing
     OpenGL and non-OpenGL applications or games

@@ -4,6 +4,17 @@ Changelog
 v0.6.7
 ------
 
+New Features:
+
+* GPUImage integration for efficiently displaying and filtering video inputs (from files or
+  built-in device cameras). icedcoffee now includes the ICGPUImageTexture2D class which
+  glues GPUImageTextureOutput to ICTexture2D by implementing the GPUImageTextureOutputDelegate
+  protocol. The GPUImage framework is from now on included in the icedcoffee framework source.
+  It can be found in the extensions/GPUImage folder. Projects using the GPUImage extension must
+  define IC_ENABLE_GPUIMAGE_EXTENSIONS=1 in their preprocessor macro build settings. A sample
+  project displaying the filtered camera input on an icedcoffee sprite can be found in the
+  icedcoffee-tests-ios project (target ICGPUImageTest).
+
 Changes and Improvements:
 
 * Default shaders are now integrated into the framework's source code.
@@ -24,8 +35,10 @@ Changes and Improvements:
   * ICTexture2D::displayContentSize does now return the SD size of a HD texture if retina
     display support is not enabled. This effectively scales down HD images on SD devices if
     no SD image is present.
-  * ICTexture2D::pixelsWide and ICTexture2D::pixelsHigh are now deprecated. Developers should
-    use ICTexture2D::sizeInPixels instead.
+  * ICTexture2D::size and ICTexture2D::sizeInPixels are no longer deprecated as we've chosen
+    to allow for differing texture/content sizes. ICTexture2D::size does now return the size
+    of the texture surface in points. Developers should check for backwards compatibility and
+    change to ICTexture2D::displayContentSize if needed.
   * Removed ICTexture2D::releaseData: and ICTexture2D::keepData:length; these methods were not
     implemented correctly and ICTexture2D is not designed to be mutable anyway. At a later point
     in time there probably will be something like ICMutableTexture2D in icedcoffee.
@@ -33,6 +46,12 @@ Changes and Improvements:
     into the ICTexture2D class.
   * The resolutionType property is now read only.
   * Added a bunch of reference documentation to the class' header file.
+* icedcoffee does from now on allow the use of optional extensions which are bundled with the
+  framework source or downloaded from a 3rd-party repository. Extension integrations including
+  the respective 3rd-party framework source can be found in the extensions folder from now on.
+  icConfig.h was extended with preprocessor macros allowing developers to selectively switch
+  support for an extension on and off. The first extension integration shipped with this version
+  of icedcoffee is GPUImage, which may be activated by defining IC_ENABLE_GPUIMAGE_EXTENSIONS=1.
 
 Fixes:
 
@@ -43,6 +62,7 @@ Fixes:
   for ICCamera. The code was moved to ICUICamera::setViewport:. ICCamera::setViewport: does
   now simply set the viewport and performs no calculation on other properties anymore.
 * Fixed a number of issues with the source code documentation.
+
 
 v0.6.6
 ------

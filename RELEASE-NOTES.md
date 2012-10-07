@@ -1,6 +1,27 @@
 Release Notes
 =============
 
+icedcoffee v0.6.7
+-----------------
+
+New Features:
+* GPUImage integration: OpenGL ES based video filtering, camera and movie file access
+* Default framework shaders are now embedded in the icedcoffee binary and do no longer
+  need file-based build phase integration
+* Added support for loading texture images from URLs in ICTextureCache and ICTextureLoader
+
+Deprecations:
+* ICTexture2D::size and ICTexture2D::sizeInPixels are no longer deprecated, as we've decided
+  to allow for differing texture surface/content sizes in ICTexture2D.
+  
+Important Changes:
+* The semantics of ICTexture2D::size have changed; developers should replace occurrences of
+  ICTexture2D::size with ICTexture2D::displayContentSize in their application code.
+* The keys used by ICTextureCache have changed: the class does now use [NSURL absoluteString]
+  as the key for textures loaded from files or URLs. File paths are converted to file urls
+  internally.
+
+
 icedcoffee v0.6.6
 -----------------
 
