@@ -128,8 +128,7 @@ typedef struct _ICTexParams {
 	GLuint				_name;
     BOOL                _wrapsForeignOpenGLTexture;
 	CGSize				_contentSizeInPixels;
-	NSUInteger			_width,
-						_height;
+    CGSize              _sizeInPixels;
 	ICPixelFormat		_format;
 	GLfloat				_maxS,
 						_maxT;
@@ -273,40 +272,41 @@ typedef struct _ICTexParams {
 @property (nonatomic, readonly) CGSize contentSizeInPixels;
 
 /**
- @brief Returns the content size of the receiver in points
+ @brief Returns the size of the receiver's contents in points
  */
 - (CGSize)contentSize;
 
 /**
- @brief Returns the content size of the receiver in points scaled with regard to its resolution
- type and the global content scale factor
+ @brief Returns the size of the receiver contents in points scaled with regard to its resolution
+ type and the current global content scale factor
  */
 - (CGSize)displayContentSize;
 
-// FIXME: this shouldn't be deprecated if we want to allow differing texture/content sizes
-
 /**
- @brief Returns the size of the receiver in points
+ @brief Returns the receiver's size in points
+ 
+ This method returns the size of the texture surface in points. If you need to know the size of
+ the texture's contents, use ICTexture2D::contentSize or ICTexture2D::displayContentSize instead.
  */
 - (CGSize)size;
 
 /**
- @brief Returns the size of the receiver in pixels
+ @brief The receiver's size in pixels
+
+ This property defines the size of the texture surface in pixels. If you need to know the size of
+ the texture's contents, use ICTexture2D::contentSize or ICTexture2D::displayContentSize instead.
  */
-- (CGSize)sizeInPixels;
+@property (nonatomic, readonly) CGSize sizeInPixels;
 
 /**
- @brief The width of the receiver in pixels
- 
- @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ @brief Returns the width of the receiver in pixels
  */
-@property (nonatomic, readonly) NSUInteger pixelsWide DEPRECATED_ATTRIBUTE /*v0.6.7*/;
+- (NSUInteger)pixelsWide;
+
 /**
- @brief The height of the receiver in pixels
- 
- @deprecated Deprecated as of v0.6.7. Use ICTexture2D::sizeInPixels instead.
+ @brief Returns the height of the receiver in pixels
  */
-@property (nonatomic, readonly) NSUInteger pixelsHigh DEPRECATED_ATTRIBUTE /*v0.6.7*/;
+- (NSUInteger)pixelsHigh;
 
 
 #pragma mark - Working with Texture Coordinate Information

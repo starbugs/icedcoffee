@@ -106,9 +106,8 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 @implementation ICTexture2D
 
 @synthesize contentSizeInPixels = _contentSizeInPixels,
+            sizeInPixels = _sizeInPixels,
             pixelFormat = _format,
-            pixelsWide = _width,
-            pixelsHigh = _height,
             name = _name,
             maxS = _maxS,
             maxT = _maxT,
@@ -162,8 +161,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
         IC_CHECK_GL_ERROR_DEBUG();
         
 		_contentSizeInPixels = contentSizeInPixels;
-		_width = width;
-		_height = height;
+        _sizeInPixels = textureSizeInPixels;
 		_format = pixelFormat;
 		_maxS = contentSizeInPixels.width / (float)width;
 		_maxT = contentSizeInPixels.height / (float)height;
@@ -579,8 +577,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
         _wrapsForeignOpenGLTexture = YES;
         _name = name;
         _contentSizeInPixels = sizeInPixels;
-        _width = sizeInPixels.width;
-        _height = sizeInPixels.height;
+        _sizeInPixels = sizeInPixels;
     }
     return self;
 }
@@ -599,10 +596,12 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (NSString *) description
 {
+    NSUInteger width = [self pixelsWide];
+    NSUInteger height = [self pixelsHigh];
 #ifdef __IC_PLATFORM_MAC
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %lix%li | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %lix%li | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, width, height, _maxS, _maxT];
 #elif defined(__IC_PLATFORM_IOS)
-	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, _width, _height, _maxS, _maxT];    
+	return [NSString stringWithFormat:@"<%@ = %08X | Name = %i | Dimensions = %ix%i | Coordinates = (%.2f, %.2f)>", [self class], (uint)self, _name, width, height, _maxS, _maxT];
 #endif
 }
 
@@ -636,28 +635,38 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
     return ret;
 }
 
-// Deprecated as of v0.6.6
 - (CGSize)size
 {
-    return [self displayContentSize];
+    CGSize sizeInPoints = _sizeInPixels;
+    sizeInPoints.width = ICPixelsToPoints(sizeInPoints.width);
+    sizeInPoints.height = ICPixelsToPoints(sizeInPoints.height);
+    return sizeInPoints;
 }
 
-// Deprecated as of v0.6.6
-- (CGSize)sizeInPixels
+- (NSUInteger)pixelsWide
 {
-    return self.contentSizeInPixels;
+    return (NSUInteger)_sizeInPixels.width;
+}
+
+- (NSUInteger)pixelsHigh
+{
+    return (NSUInteger)_sizeInPixels.height;
 }
 
 - (void)generateMipmap
 {
-	NSAssert( _width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height), @"Mipmap texture only works in POT textures");
+    NSUInteger width = [self pixelsWide];
+    NSUInteger height = [self pixelsHigh];
+	NSAssert( width == icNextPOT((unsigned int)width) && height == icNextPOT((unsigned int)height), @"Mipmap texture only works in POT textures");
 	glBindTexture( GL_TEXTURE_2D, _name );
 	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 - (void)setTexParameters:(ICTexParams*)texParams
 {
-	NSAssert( (_width == icNextPOT((unsigned int)_width) && _height == icNextPOT((unsigned int)_height)) ||
+    NSUInteger width = [self pixelsWide];
+    NSUInteger height = [self pixelsHigh];
+	NSAssert( (width == icNextPOT((unsigned int)width) && height == icNextPOT((unsigned int)height)) ||
 			 (texParams->wrapS == GL_CLAMP_TO_EDGE && texParams->wrapT == GL_CLAMP_TO_EDGE),
 			 @"GL_CLAMP_TO_EDGE should be used in NPOT textures");
 	glBindTexture(GL_TEXTURE_2D, self.name);
