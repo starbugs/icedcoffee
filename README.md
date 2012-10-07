@@ -70,5 +70,7 @@ Third-party Sources
 	  header files and LICENSE_cocos2d.txt for details).
   * The Kazmath project has been included to provide math structures and
 	  routines for IcedCoffee's linear algebra (see LICENSE_Kazmath.txt).
+  * The GPUImage project has been included as an extension to provide live fideo filtering,
+      access to the camera and movie files (see LICENSE_GPUImage.txt).
   * Creative Commons licensed images have been reused for demo purposes (see
 	  the respective license files in resource folders).
