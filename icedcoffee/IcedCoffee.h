@@ -71,3 +71,9 @@
 #import "ICTouch.h"
 #endif
 
+// Extensions
+
+#if defined(__IC_PLATFORM_IOS) && IC_ENABLE_GPUIMAGE_EXTENSIONS
+#import "GPUImage/ICGPUImageTexture2D.h"
+#endif
+

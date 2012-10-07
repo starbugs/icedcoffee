@@ -6,10 +6,10 @@
 
 	"executeDoxygen": true,
 	"executeNanoc": true,
-	"cleanIntermediates": true,
+	"cleanIntermediates": false,
 
 	"mainTitle": "Icedcoffee OS X API Reference",
-	"version": "0.6.6",
+	"version": "0.6.7",
 	
 	"classPrefix": "IC",
 	"macroPrefix": "IC_",

@@ -97,18 +97,38 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/ICNS.h"
 #import "icTypes.h"
 
-/** ICTexture2D class.
- * This class allows to easily create OpenGL 2D textures from images, text or raw data.
- * Depending on how you create the ICTexture2D object, the actual image area of the texture might be smaller than the texture dimensions i.e. "size" != (pixelsWide, pixelsHigh) and (maxS, maxT) != (1.0, 1.0).
- * Be aware that the content of the generated textures will be upside-down!
+
+typedef struct _ICTexParams {
+	GLuint minFilter;
+	GLuint magFilter;
+	GLuint wrapS;
+	GLuint wrapT;
+} ICTexParams;
+
+
+/**
+ @brief Represents an immutable two-dimensional OpenGL texture
+ 
+ The ICTexture2D class provides methods allowing you to conveniently create and work with
+ immutable two-dimensional OpenGL textures. In particular, ICTexture2D provides the following
+ features:
+ 
+ - Create textures from arbitrary pixel data, ``CGImage``s and from text strings
+ - Manage the size of a texture with respect to SD and HD images and display devices
+ - Set texture parameters for texture filtering on the OpenGL state
+ 
+ The most common use case in most applications is loading a texture from a file. However,
+ this is not directly supported by ICTexture2D. The ICTextureLoader class provides many methods
+ that allow you to easily load textures from image files. The ICTextureCache class adds
+ functionality to asynchronously load and cache textures in your application.
  */
 @interface ICTexture2D : NSObject
 {
 @protected
 	GLuint				_name;
+    BOOL                _wrapsForeignOpenGLTexture;
 	CGSize				_contentSizeInPixels;
-	NSUInteger			_width,
-						_height;
+    CGSize              _sizeInPixels;
 	ICPixelFormat		_format;
 	GLfloat				_maxS,
 						_maxT;
@@ -120,155 +140,270 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 - (id)init __attribute__((unavailable));
 /** @endcond */
 
+#pragma mark - Initializing a Texture with Data
+/** @name Initializing a Texture with Data */
+
+/**
+ @brief Initializes a texture with the given data, pixel format, size and resolution type
+ 
+ @param data A buffer containing the data to be uploaded to the OpenGL texture
+ @param pixelFormat An ``ICPixelFormat`` enumerated value defining the texture's pixel format
+ @param textureSizeInPixels The size of the texture in pixels
+ @param contentSizeInPixels The size of the texture's contents in pixels
+ @param resolutionType An ``ICResolutionType`` enumerated value defining the texture's
+ resolution type
+ 
+ The given ``data`` must contain pixels formatted as defined by the specified ``pixelFormat``.
+ The most common pixel format in icedcoffee is ``ICPixelFormatRGBA8888``.
+  ``textureSizeInPixels`` may differ from ``contentSizeInPixels`` in cases where power of two
+ textures must be used to store non-power of two (NPOT) contents. The former defines the size of
+ the texture in memory whereas the latter defines the size of the content stored in the texture.
+  The ``resolutionType`` argument specifies the native resolution of the texture. If the texture
+ represents a high resolution (retina display) image, you should set this to
+ ``ICResolutionTypeRetinaDisplay``. Otherwise, this should be set to ``ICResolutionTypeStandard``.
+ 
+ Note that this method calls ICTexture2D::setAntiAliasTexParameters before uploading the texture
+ and that it binds the texture to ``GL_TEXTURE_2D`` on the current OpenGL context.
+ */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
        textureSize:(CGSize)textureSizeInPixels
        contentSize:(CGSize)contentSizeInPixels
     resolutionType:(ICResolutionType)resolutionType;
 
-/** Intializes a texture with data */
+/**
+ @brief Initializes a texture with the given data, pixel format, width, height and content size
+ in pixels
+ 
+ @param data A buffer containing the data to be uploaded to the OpenGL texture
+ @param pixelFormat An ``ICPixelFormat`` enumerated value defining the texture's pixel format
+ @param pixelsWide The width of the texture in pixels
+ @param pixelsHigh The height of the texture in pixels
+ @param size The size of the contents in pixels
+ 
+ @deprecated Deprecated as of v0.6.6. Use
+ ICTexture2D::initWithData:pixelFormat:textureSize:contentSize:resolutionType: instead.
+ */
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
         pixelsWide:(NSUInteger)width
         pixelsHigh:(NSUInteger)height
               size:(CGSize)contentSizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
 
-/** These functions are needed to create mutable textures */
-- (void)releaseData:(void*)data;
-- (void *)keepData:(void*)data length:(NSUInteger)length;
 
-/** pixel format of the texture */
+#pragma mark - Initializing a Texture with a CGImage
+/** @name Initializing a Texture with a CGImage */
+
+/*
+ FIXME: this needs to go into the docs
+ Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
+ */
+
+#ifdef __IC_PLATFORM_MAC
+
+/**
+ @brief Initializes a texture with the given ``CGImageRef``
+ 
+ This method internally calls ICTexture2D::initWithCGImage:resolutionType: and specifies
+ ICResolutionTypeUnknown as the resolution type.
+ */
+- (id)initWithCGImage:(CGImageRef)cgImage;
+
+#endif
+
+/**
+ @brief Initializes a texture with the given ``CGImageRef`` and resolution type
+ */
+- (id)initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
+
+
+#pragma mark - Initializing a Texture with Text
+/** @name Initializing a Texture with Text */
+
+/**
+ @brief Initializes a texture from a string with dimensions, alignment, font name and font size
+ */
+- (id)initWithString:(NSString*)string
+          dimensions:(CGSize)dimensions
+           alignment:(ICTextAlignment)alignment
+            fontName:(NSString*)name fontSize:(CGFloat)size;
+
+/**
+ @brief Initializes a texture from a string with font name and font size
+ */
+- (id)initWithString:(NSString*)string
+            fontName:(NSString*)name
+            fontSize:(CGFloat)size;
+
+
+#pragma mark - Initializing a Texture with an Existing OpenGL Texture
+
+/**
+ @brief Initializes the receiver with the given OpenGL texture
+ */
+- (id)initWithOpenGLName:(GLuint)name size:(CGSize)sizeInPixels;
+
+
+#pragma mark - Retrieving Information about the Texture's Format
+/** @name Retrieving Information about the Texture's Format */
+
+/**
+ @brief The pixel format of the receiver
+ */
 @property (nonatomic, readonly) ICPixelFormat pixelFormat;
-/** width in pixels */
-@property (nonatomic, readonly) NSUInteger pixelsWide;
-/** hight in pixels */
-@property (nonatomic, readonly) NSUInteger pixelsHigh;
 
-/** texture name */
-@property (nonatomic, readonly) GLuint name;
-
-/** returns content size of the texture in pixels */
-@property (nonatomic, readonly, nonatomic) CGSize contentSizeInPixels;
-
-/** texture max S */
-@property (nonatomic, readwrite) GLfloat maxS;
-/** texture max T */
-@property (nonatomic, readwrite) GLfloat maxT;
-/** whether or not the texture has their Alpha premultiplied */
+/**
+ @brief Whether the receiver's color values are premultiplied with their respective alpha values
+ */
 @property (nonatomic, readonly) BOOL hasPremultipliedAlpha;
 
-@property (nonatomic, readwrite) ICResolutionType resolutionType;
+/**
+ @brief The receiver's resolution type
+ */
+@property (nonatomic, readonly) ICResolutionType resolutionType;
 
-/** returns the content size of the texture in points */
+
+#pragma mark - Retrieving Size Information from a Texture
+/** @name Retrieving Size Information from a Texture */
+
+/**
+ @brief The content size of the receiver in pixels
+ */
+@property (nonatomic, readonly) CGSize contentSizeInPixels;
+
+/**
+ @brief Returns the size of the receiver's contents in points
+ */
 - (CGSize)contentSize;
 
-/** Returns the content size of the receiver in points scaled with regard to its resolution type
-    and the global content scale factor */
+/**
+ @brief Returns the size of the receiver contents in points scaled with regard to its resolution
+ type and the current global content scale factor
+ */
 - (CGSize)displayContentSize;
 
-- (CGSize)size DEPRECATED_ATTRIBUTE /*v0.6.6*/;
-
-- (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
-@end
+/**
+ @brief Returns the receiver's size in points
+ 
+ This method returns the size of the texture surface in points. If you need to know the size of
+ the texture's contents, use ICTexture2D::contentSize or ICTexture2D::displayContentSize instead.
+ */
+- (CGSize)size;
 
 /**
-Extensions to make it easy to create a ICTexture2D object from an image file.
-Note that RGBA type textures will have their alpha premultiplied - use the blending mode (GL_ONE, GL_ONE_MINUS_SRC_ALPHA).
-*/
-@interface ICTexture2D (Image)
-#ifdef __IC_PLATFORM_MAC
-// Defaults to ICResolutionTypeUnknown
-- (id) initWithCGImage:(CGImageRef)cgImage;
-#endif
-/** Initializes a texture from a UIImage object */
-#ifdef __IC_PLATFORM_IOS
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
-#elif defined(__IC_PLATFORM_MAC)
-- (id) initWithCGImage:(CGImageRef)cgImage resolutionType:(ICResolutionType)resolution;
-#endif
-@end
+ @brief The receiver's size in pixels
+
+ This property defines the size of the texture surface in pixels. If you need to know the size of
+ the texture's contents, use ICTexture2D::contentSize or ICTexture2D::displayContentSize instead.
+ */
+@property (nonatomic, readonly) CGSize sizeInPixels;
 
 /**
-Extensions to make it easy to create a ICTexture2D object from a string of text.
-Note that the generated textures are of type A8 - use the blending mode (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA).
-*/
-@interface ICTexture2D (Text)
-/** Initializes a texture from a string with dimensions, alignment, font name and font size */
-- (id) initWithString:(NSString*)string dimensions:(CGSize)dimensions alignment:(ICTextAlignment)alignment fontName:(NSString*)name fontSize:(CGFloat)size;
-/** Initializes a texture from a string with font name and font size */
-- (id) initWithString:(NSString*)string fontName:(NSString*)name fontSize:(CGFloat)size;
-@end
-
+ @brief Returns the width of the receiver in pixels
+ */
+- (NSUInteger)pixelsWide;
 
 /**
- Extension to set the Min / Mag filter
+ @brief Returns the height of the receiver in pixels
  */
-typedef struct _ICTexParams {
-	GLuint	minFilter;
-	GLuint	magFilter;
-	GLuint	wrapS;
-	GLuint	wrapT;
-} ICTexParams;
+- (NSUInteger)pixelsHigh;
 
-@interface ICTexture2D (GLFilter)
-/** sets the min filter, mag filter, wrap s and wrap t texture parameters.
- If the texture size is NPOT (non power of 2), then in can only use GL_CLAMP_TO_EDGE in GL_TEXTURE_WRAP_{S,T}.
- @since v0.8
+
+#pragma mark - Working with Texture Coordinate Information
+/** @name Working with Texture Coordinate Information */
+
+/**
+ @brief The texture max S coordinate
  */
--(void) setTexParameters: (ICTexParams*) texParams;
+@property (nonatomic, readwrite) GLfloat maxS;
 
-/** sets antialias texture parameters:
-  - GL_TEXTURE_MIN_FILTER = GL_LINEAR
-  - GL_TEXTURE_MAG_FILTER = GL_LINEAR
-
- @since v0.8
+/**
+ @brief The texture max T coordinate
  */
-- (void) setAntiAliasTexParameters;
+@property (nonatomic, readwrite) GLfloat maxT;
 
-/** sets alias texture parameters:
-  - GL_TEXTURE_MIN_FILTER = GL_NEAREST
-  - GL_TEXTURE_MAG_FILTER = GL_NEAREST
+
+#pragma mark - Generating Mipmaps
+/** @name Generating Mipmaps */
+
+/**
+ @brief Generates mipmap images for the receiver
  
- @since v0.8
+ This only works if the texture size is power of 2 (POT).
+ 
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
-- (void) setAliasTexParameters;
+- (void)generateMipmap;
 
 
-/** Generates mipmap images for the texture.
- It only works if the texture size is POT (power of 2).
- @since v0.99.0
+#pragma mark - Setting Texture Parameters on the OpenGL State
+/** @name Setting Texture Parameters on the OpenGL State */
+
+/**
+ @brief Sets the min filter, mag filter, wrap s and wrap t texture parameters
+ 
+ If the texture size is NPOT (non power of 2), then it can only use ``GL_CLAMP_TO_EDGE`` in
+ ``GL_TEXTURE_WRAP_{S,T}``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
  */
--(void) generateMipmap;
+- (void)setTexParameters:(ICTexParams*)texParams;
 
+/**
+ @brief Sets texture parameters for antialiasing
+ 
+ This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_LINEAR`` and ``GL_TEXTURE_MAG_FILTER``
+ to ``GL_LINEAR``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
+ */
+- (void)setAntiAliasTexParameters;
+
+/**
+ @brief Sets alias texture parameters
+ 
+ This method sets ``GL_TEXTURE_MIN_FILTER`` to ``GL_NEAREST`` and ``GL_TEXTURE_MAG_FILTER``
+ to ``GL_NEAREST``.
+
+ Note that this method binds the texture to ``GL_TEXTURE_2D`` in the current OpenGL context.
+ */
+- (void)setAliasTexParameters;
+
+
+#pragma mark - Retrieving OpenGL Parameters
+/** @name Retrieving OpenGL Parameters */
+
+/**
+ @brief The OpenGL texture name of the receiver
+ */
+@property (nonatomic, readonly) GLuint name;
+
+
+#pragma mark - Changing the Default Alpha Pixel Format
+/** @name Changing the Default Alpha Pixel Format */
+
+/**
+ @brief Sets the global default pixel format for creating textures from images that contain an
+ alpha channel
+ 
+ If the image contains an alpha channel, then the options are:
+ - generate 32-bit textures: ICPixelFormatRGBA8888 (default one)
+ - generate 16-bit textures: ICPixelFormatRGBA4444
+ - generate 16-bit textures: ICPixelFormatRGB5A1
+ - generate 16-bit textures: ICPixelFormatRGB565
+ - generate 8-bit textures: ICPixelFormatA8 (only use it if you use just 1 color)
+ 
+ Note that if the image is RGBA (with alpha) then the default pixel format will be used
+ (it can be a 8-bit, 16-bit or 32-bit texture). If the image is RGB (without alpha) then an
+ RGB565 texture will be used (16-bit texture).
+ 
+ Also note that this method is currently not thread-safe.
+ */
++ (void)setDefaultAlphaPixelFormat:(ICPixelFormat)format;
+
+/**
+ @brief Returns the global default alpha pixel format
+ */
++ (ICPixelFormat)defaultAlphaPixelFormat;
 
 @end
-
-@interface ICTexture2D (PixelFormat)
-/** sets the default pixel format for UIImages that contains alpha channel.
- If the UIImage contains alpha channel, then the options are:
-	- generate 32-bit textures: ICPixelFormatRGBA8888 (default one)
-	- generate 16-bit textures: ICPixelFormatRGBA4444
-	- generate 16-bit textures: ICPixelFormatRGB5A1
-	- generate 16-bit textures: ICPixelFormatRGB565
-	- generate 8-bit textures: ICPixelFormatA8 (only use it if you use just 1 color)
-
- How does it work ?
-   - If the image is an RGBA (with Alpha) then the default pixel format will be used (it can be a 8-bit, 16-bit or 32-bit texture)
-   - If the image is an RGB (without Alpha) then an RGB565 texture will be used (16-bit texture)
- 
- This parameter is not valid for PVR images.
- 
- @since v0.8
- */
-+(void) setDefaultAlphaPixelFormat:(ICPixelFormat)format;
-
-/** returns the alpha pixel format
- @since v0.8
- */
-+(ICPixelFormat) defaultAlphaPixelFormat;
-@end
-
-
-
-
-

@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A61FD4E01620ECD9008A1BDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD4D71620ECD8008A1BDF /* AppDelegate.m */; };
+		A61FD4E11620ECD9008A1BDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4D81620ECD8008A1BDF /* Default-568h@2x.png */; };
+		A61FD4E21620ECD9008A1BDF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4D91620ECD8008A1BDF /* Default.png */; };
+		A61FD4E31620ECD9008A1BDF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4DA1620ECD8008A1BDF /* Default@2x.png */; };
+		A61FD4E41620ECD9008A1BDF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4DB1620ECD8008A1BDF /* InfoPlist.strings */; };
+		A61FD4E61620ECD9008A1BDF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD4DF1620ECD8008A1BDF /* main.m */; };
+		A61FD4E71620ECEF008A1BDF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
+		A61FD4E81620ECF1008A1BDF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F115AA521A0086B12A /* QuartzCore.framework */; };
+		A61FD4E91620ECF4008A1BDF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
+		A61FD4EA1620ECF7008A1BDF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F715AA52460086B12A /* OpenGLES.framework */; };
+		A61FD4EB1620ECFB008A1BDF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
+		A61FD4ED1620ED01008A1BDF /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD4EC1620ED01008A1BDF /* libGPUImage.a */; };
+		A61FD4F01620ED19008A1BDF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD4EE1620ED0E008A1BDF /* AVFoundation.framework */; };
+		A61FD5001620EEA9008A1BDF /* ICGPUImageTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD4FF1620EEA9008A1BDF /* ICGPUImageTestViewController.m */; };
+		A61FD5011620F222008A1BDF /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
+		A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51E1620F72F008A1BDF /* CoreMedia.framework */; };
 		A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6478F4D15FE7896003DB316 /* DraggableControl.m */; };
 		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
 		A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
@@ -24,16 +41,6 @@
 		A6EA1E4515CD67780007C4FF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F715AA52460086B12A /* OpenGLES.framework */; };
 		A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
 		A6EA1E5C15CD6C670007C4FF /* IBGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EA1E5B15CD6C670007C4FF /* IBGLView.m */; };
-		A6EA1E6815CD6EBB0007C4FF /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */; };
-		A6EA1E6915CD6EBB0007C4FF /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */; };
-		A6EA1E6A15CD6EBB0007C4FF /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */; };
-		A6EA1E6B15CD6EBB0007C4FF /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */; };
-		A6EA1E6C15CD6EBB0007C4FF /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */; };
-		A6EA1E6D15CD6EBB0007C4FF /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */; };
-		A6EA1E6E15CD6EBB0007C4FF /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */; };
-		A6EA1E6F15CD6EBB0007C4FF /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */; };
-		A6EA1E7015CD6EBB0007C4FF /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */; };
-		A6EA1E7115CD6EBB0007C4FF /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */; };
 		D21C980414F302320059BBBE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C97FE14F302320059BBBE /* AppDelegate.m */; };
 		D21C980514F302320059BBBE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21C97FF14F302320059BBBE /* InfoPlist.strings */; };
 		D21C980614F302320059BBBE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D21C980114F302320059BBBE /* main.m */; };
@@ -42,26 +49,7 @@
 		D2732882152F9F3A0004F557 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D273287C152F9F3A0004F557 /* InfoPlist.strings */; };
 		D2732883152F9F3A0004F557 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D273287E152F9F3A0004F557 /* main.m */; };
 		D273288A152F9FCE0004F557 /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
-		D2735AF2158D11DF00216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF0158D11CA00216F1B /* PositionColor.fsh */; };
-		D2735AF3158D11E200216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735AF1158D11CA00216F1B /* PositionColor.vsh */; };
-		D2735B35158E4C4E00216F1B /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B2F158E4C3300216F1B /* PositionColor.fsh */; };
-		D2735B36158E4C5100216F1B /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B30158E4C3300216F1B /* PositionColor.vsh */; };
-		D2735B37158E4C5E00216F1B /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */; };
-		D2735B38158E4C6100216F1B /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */; };
-		D2735B39158E4C6400216F1B /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */; };
-		D2735B3A158E4C6800216F1B /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2735B34158E4C3300216F1B /* StencilMask.fsh */; };
-		D29284D315AA48790086B12A /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284D215AA486E0086B12A /* Rectangle.fsh */; };
 		D29284D915AA50300086B12A /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
-		D29284E415AA507E0086B12A /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DA15AA507A0086B12A /* Picking.fsh */; };
-		D29284E515AA50800086B12A /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DB15AA507A0086B12A /* PositionColor.fsh */; };
-		D29284E615AA50820086B12A /* PositionColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DC15AA507A0086B12A /* PositionColor.vsh */; };
-		D29284E715AA50840086B12A /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DD15AA507A0086B12A /* PositionTextureA8Color.fsh */; };
-		D29284E815AA50870086B12A /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DE15AA507A0086B12A /* PositionTextureA8Color.vsh */; };
-		D29284E915AA50890086B12A /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284DF15AA507A0086B12A /* PositionTextureColor.fsh */; };
-		D29284EA15AA508C0086B12A /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284E015AA507A0086B12A /* PositionTextureColor.vsh */; };
-		D29284EB15AA508E0086B12A /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284E115AA507A0086B12A /* Rectangle.fsh */; };
-		D29284EC15AA50910086B12A /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284E215AA507A0086B12A /* SpriteTextureMask.fsh */; };
-		D29284ED15AA50930086B12A /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D29284E315AA507A0086B12A /* StencilMask.fsh */; };
 		D29284F015AA52100086B12A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
 		D29284F315AA52270086B12A /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F115AA521A0086B12A /* QuartzCore.framework */; };
 		D29284F615AA523A0086B12A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
@@ -87,9 +75,6 @@
 		D2A9AD6C15848CE5007EB224 /* ResponsiveView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */; };
 		D2AB774814F9399F0028CD04 /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
 		D2AB774D14F93AA20028CD04 /* ResponsiveSprite.m in Sources */ = {isa = PBXBuildFile; fileRef = D2AB774C14F93AA20028CD04 /* ResponsiveSprite.m */; };
-		D2D4A20114F93D5D000FCBA0 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D4A1FE14F93D5D000FCBA0 /* Picking.fsh */; };
-		D2D4A20214F93D5D000FCBA0 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D4A1FF14F93D5D000FCBA0 /* PositionTextureColor.fsh */; };
-		D2D4A20314F93D5D000FCBA0 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2D4A20014F93D5D000FCBA0 /* PositionTextureColor.vsh */; };
 		D2D4A20514F93D66000FCBA0 /* thiswayup.png in Resources */ = {isa = PBXBuildFile; fileRef = D2D4A20414F93D66000FCBA0 /* thiswayup.png */; };
 		D2D4A25D14FA1AF4000FCBA0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = D2D4A25714FA1AF4000FCBA0 /* AppDelegate.m */; };
 		D2D4A25E14FA1AF4000FCBA0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D2D4A25814FA1AF4000FCBA0 /* InfoPlist.strings */; };
@@ -99,14 +84,30 @@
 		D2FEE884153ABD5B004CFF62 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FEE880153ABD5B004CFF62 /* main.m */; };
 		D2FEE88A153ABDDF004CFF62 /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
 		D2FEE891153AD516004CFF62 /* thiswayup.png in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE890153AD516004CFF62 /* thiswayup.png */; };
-		D2FEE892153AD523004CFF62 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE88B153AD50F004CFF62 /* Picking.fsh */; };
-		D2FEE893153AD523004CFF62 /* PositionTextureA8Color.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE88C153AD50F004CFF62 /* PositionTextureA8Color.fsh */; };
-		D2FEE894153AD523004CFF62 /* PositionTextureA8Color.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE88D153AD50F004CFF62 /* PositionTextureA8Color.vsh */; };
-		D2FEE895153AD523004CFF62 /* PositionTextureColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE88E153AD50F004CFF62 /* PositionTextureColor.fsh */; };
-		D2FEE896153AD523004CFF62 /* PositionTextureColor.vsh in Resources */ = {isa = PBXBuildFile; fileRef = D2FEE88F153AD50F004CFF62 /* PositionTextureColor.vsh */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		A61FD5171620F6C2008A1BDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A61FD50E1620F6C1008A1BDF /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		A61FD5191620F6C2008A1BDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A61FD50E1620F6C1008A1BDF /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
+		};
+		A61FD5251620FC75008A1BDF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2FAC46514E7A80A0022BB3B;
+			remoteInfo = "icedcoffee-ios";
+		};
 		D21C97DC14F301D10059BBBE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */;
@@ -145,6 +146,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ICGPUImageTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A61FD4D61620ECD8008A1BDF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A61FD4D71620ECD8008A1BDF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A61FD4D81620ECD8008A1BDF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A61FD4D91620ECD8008A1BDF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A61FD4DA1620ECD8008A1BDF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A61FD4DC1620ECD8008A1BDF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A61FD4DD1620ECD8008A1BDF /* ICGPUImageTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ICGPUImageTest-Info.plist"; sourceTree = "<group>"; };
+		A61FD4DE1620ECD8008A1BDF /* ICGPUImageTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ICGPUImageTest-Prefix.pch"; sourceTree = "<group>"; };
+		A61FD4DF1620ECD8008A1BDF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A61FD4EC1620ED01008A1BDF /* libGPUImage.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libGPUImage.a; path = "extensions/build/Release-iphoneos/libGPUImage.a"; sourceTree = "<group>"; };
+		A61FD4EE1620ED0E008A1BDF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = DEVELOPER_DIR; };
+		A61FD4FE1620EEA9008A1BDF /* ICGPUImageTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICGPUImageTestViewController.h; sourceTree = "<group>"; };
+		A61FD4FF1620EEA9008A1BDF /* ICGPUImageTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICGPUImageTestViewController.m; sourceTree = "<group>"; };
+		A61FD50E1620F6C1008A1BDF /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = extensions/GPUImage/framework/GPUImage.xcodeproj; sourceTree = SOURCE_ROOT; };
+		A61FD51B1620F717008A1BDF /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = DEVELOPER_DIR; };
+		A61FD51E1620F72F008A1BDF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		A6478F4C15FE7896003DB316 /* DraggableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableControl.h; sourceTree = "<group>"; };
 		A6478F4D15FE7896003DB316 /* DraggableControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableControl.m; sourceTree = "<group>"; };
 		A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -164,16 +182,6 @@
 		A6EA1E3915CD65790007C4FF /* MasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MasterViewController.m; sourceTree = "<group>"; };
 		A6EA1E5A15CD6C670007C4FF /* IBGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IBGLView.h; sourceTree = "<group>"; };
 		A6EA1E5B15CD6C670007C4FF /* IBGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IBGLView.m; sourceTree = "<group>"; };
-		A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
-		A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = "icedcoffee-ios.xcodeproj"; sourceTree = "<group>"; };
 		D21C97E314F302050059BBBE /* PickingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PickingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D21C97FD14F302320059BBBE /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -194,25 +202,6 @@
 		D273287E152F9F3A0004F557 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		D273287F152F9F3A0004F557 /* RetinaDisplaySupportTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "RetinaDisplaySupportTest-Info.plist"; sourceTree = "<group>"; };
 		D2732880152F9F3A0004F557 /* RetinaDisplaySupportTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RetinaDisplaySupportTest-Prefix.pch"; sourceTree = "<group>"; };
-		D2735AF0158D11CA00216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
-		D2735AF1158D11CA00216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
-		D2735B2F158E4C3300216F1B /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
-		D2735B30158E4C3300216F1B /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
-		D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
-		D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
-		D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
-		D2735B34158E4C3300216F1B /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
-		D29284D215AA486E0086B12A /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
-		D29284DA15AA507A0086B12A /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
-		D29284DB15AA507A0086B12A /* PositionColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.fsh; path = resources/shaders/PositionColor.fsh; sourceTree = SOURCE_ROOT; };
-		D29284DC15AA507A0086B12A /* PositionColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionColor.vsh; path = resources/shaders/PositionColor.vsh; sourceTree = SOURCE_ROOT; };
-		D29284DD15AA507A0086B12A /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
-		D29284DE15AA507A0086B12A /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
-		D29284DF15AA507A0086B12A /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
-		D29284E015AA507A0086B12A /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
-		D29284E115AA507A0086B12A /* Rectangle.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Rectangle.fsh; path = resources/shaders/Rectangle.fsh; sourceTree = SOURCE_ROOT; };
-		D29284E215AA507A0086B12A /* SpriteTextureMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = SpriteTextureMask.fsh; path = resources/shaders/SpriteTextureMask.fsh; sourceTree = SOURCE_ROOT; };
-		D29284E315AA507A0086B12A /* StencilMask.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = StencilMask.fsh; path = resources/shaders/StencilMask.fsh; sourceTree = SOURCE_ROOT; };
 		D29284EE15AA51FC0086B12A /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
 		D29284F115AA521A0086B12A /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/QuartzCore.framework; sourceTree = DEVELOPER_DIR; };
 		D29284F415AA52300086B12A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
@@ -225,9 +214,6 @@
 		D2A9AD6B15848CE5007EB224 /* ResponsiveView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveView.m; path = "tests-shared-src/PickingTest/ResponsiveView.m"; sourceTree = SOURCE_ROOT; };
 		D2AB774B14F93AA20028CD04 /* ResponsiveSprite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResponsiveSprite.h; path = "tests-shared-src/PickingTest/ResponsiveSprite.h"; sourceTree = SOURCE_ROOT; };
 		D2AB774C14F93AA20028CD04 /* ResponsiveSprite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ResponsiveSprite.m; path = "tests-shared-src/PickingTest/ResponsiveSprite.m"; sourceTree = SOURCE_ROOT; };
-		D2D4A1FE14F93D5D000FCBA0 /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
-		D2D4A1FF14F93D5D000FCBA0 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
-		D2D4A20014F93D5D000FCBA0 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
 		D2D4A20414F93D66000FCBA0 /* thiswayup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thiswayup.png; path = resources/images/thiswayup.png; sourceTree = SOURCE_ROOT; };
 		D2D4A24114FA1AC4000FCBA0 /* MultiTouchSpritesTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MultiTouchSpritesTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2D4A25614FA1AF4000FCBA0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -243,15 +229,27 @@
 		D2FEE87D153ABD5B004CFF62 /* DepthBufferTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DepthBufferTest-Prefix.pch"; sourceTree = "<group>"; };
 		D2FEE87F153ABD5B004CFF62 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D2FEE880153ABD5B004CFF62 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		D2FEE88B153AD50F004CFF62 /* Picking.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
-		D2FEE88C153AD50F004CFF62 /* PositionTextureA8Color.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.fsh; path = resources/shaders/PositionTextureA8Color.fsh; sourceTree = SOURCE_ROOT; };
-		D2FEE88D153AD50F004CFF62 /* PositionTextureA8Color.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureA8Color.vsh; path = resources/shaders/PositionTextureA8Color.vsh; sourceTree = SOURCE_ROOT; };
-		D2FEE88E153AD50F004CFF62 /* PositionTextureColor.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.fsh; path = resources/shaders/PositionTextureColor.fsh; sourceTree = SOURCE_ROOT; };
-		D2FEE88F153AD50F004CFF62 /* PositionTextureColor.vsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; name = PositionTextureColor.vsh; path = resources/shaders/PositionTextureColor.vsh; sourceTree = SOURCE_ROOT; };
 		D2FEE890153AD516004CFF62 /* thiswayup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = thiswayup.png; path = resources/images/thiswayup.png; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A61FD4B81620ECB0008A1BDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */,
+				A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */,
+				A61FD4F01620ED19008A1BDF /* AVFoundation.framework in Frameworks */,
+				A61FD5011620F222008A1BDF /* libicedcoffee-ios.a in Frameworks */,
+				A61FD4ED1620ED01008A1BDF /* libGPUImage.a in Frameworks */,
+				A61FD4EB1620ECFB008A1BDF /* Foundation.framework in Frameworks */,
+				A61FD4E71620ECEF008A1BDF /* UIKit.framework in Frameworks */,
+				A61FD4E81620ECF1008A1BDF /* QuartzCore.framework in Frameworks */,
+				A61FD4E91620ECF4008A1BDF /* CoreGraphics.framework in Frameworks */,
+				A61FD4EA1620ECF7008A1BDF /* OpenGLES.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6EA1DFD15CD65110007C4FF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -320,10 +318,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A61FD4D51620ECD8008A1BDF /* ICGPUImageTest */ = {
+			isa = PBXGroup;
+			children = (
+				A61FD50E1620F6C1008A1BDF /* GPUImage.xcodeproj */,
+				A61FD4D61620ECD8008A1BDF /* AppDelegate.h */,
+				A61FD4D71620ECD8008A1BDF /* AppDelegate.m */,
+				A61FD4FE1620EEA9008A1BDF /* ICGPUImageTestViewController.h */,
+				A61FD4FF1620EEA9008A1BDF /* ICGPUImageTestViewController.m */,
+				A61FD4D81620ECD8008A1BDF /* Default-568h@2x.png */,
+				A61FD4D91620ECD8008A1BDF /* Default.png */,
+				A61FD4DA1620ECD8008A1BDF /* Default@2x.png */,
+				A61FD4DB1620ECD8008A1BDF /* InfoPlist.strings */,
+				A61FD4DD1620ECD8008A1BDF /* ICGPUImageTest-Info.plist */,
+				A61FD4DE1620ECD8008A1BDF /* ICGPUImageTest-Prefix.pch */,
+				A61FD4DF1620ECD8008A1BDF /* main.m */,
+			);
+			name = ICGPUImageTest;
+			path = "tests-ios/ICGPUImageTest";
+			sourceTree = "<group>";
+		};
+		A61FD50F1620F6C1008A1BDF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A61FD5181620F6C2008A1BDF /* libGPUImage.a */,
+				A61FD51A1620F6C2008A1BDF /* GPUImageTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		A6EA1E2615CD65790007C4FF /* IBIntegrationTest */ = {
 			isa = PBXGroup;
 			children = (
-				A6EA1E5D15CD6EB10007C4FF /* Shaders */,
 				A6EA1E2715CD65790007C4FF /* AppDelegate.h */,
 				A6EA1E2815CD65790007C4FF /* AppDelegate.m */,
 				A6EA1E2915CD65790007C4FF /* DetailViewController.h */,
@@ -345,23 +371,6 @@
 			path = "tests-ios/IBIntegrationTest";
 			sourceTree = "<group>";
 		};
-		A6EA1E5D15CD6EB10007C4FF /* Shaders */ = {
-			isa = PBXGroup;
-			children = (
-				A6EA1E5E15CD6EBB0007C4FF /* Picking.fsh */,
-				A6EA1E5F15CD6EBB0007C4FF /* PositionColor.fsh */,
-				A6EA1E6015CD6EBB0007C4FF /* PositionColor.vsh */,
-				A6EA1E6115CD6EBB0007C4FF /* PositionTextureA8Color.fsh */,
-				A6EA1E6215CD6EBB0007C4FF /* PositionTextureA8Color.vsh */,
-				A6EA1E6315CD6EBB0007C4FF /* PositionTextureColor.fsh */,
-				A6EA1E6415CD6EBB0007C4FF /* PositionTextureColor.vsh */,
-				A6EA1E6515CD6EBB0007C4FF /* Rectangle.fsh */,
-				A6EA1E6615CD6EBB0007C4FF /* SpriteTextureMask.fsh */,
-				A6EA1E6715CD6EBB0007C4FF /* StencilMask.fsh */,
-			);
-			name = Shaders;
-			sourceTree = "<group>";
-		};
 		D21C97C914F301A70059BBBE = {
 			isa = PBXGroup;
 			children = (
@@ -371,6 +380,7 @@
 				D2D4A25514FA1AF4000FCBA0 /* MultiTouchSpritesTest */,
 				D2732879152F9F3A0004F557 /* RetinaDisplaySupportTest */,
 				A6EA1E2615CD65790007C4FF /* IBIntegrationTest */,
+				A61FD4D51620ECD8008A1BDF /* ICGPUImageTest */,
 				D21C97E614F302050059BBBE /* Frameworks */,
 				D21C97E414F302050059BBBE /* Products */,
 			);
@@ -392,6 +402,7 @@
 				D2732865152F9F0E0004F557 /* RetinaDisplaySupportTest.app */,
 				D2FEE865153ABD2A004CFF62 /* DepthBufferTest.app */,
 				A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */,
+				A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -399,6 +410,10 @@
 		D21C97E614F302050059BBBE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A61FD51E1620F72F008A1BDF /* CoreMedia.framework */,
+				A61FD51B1620F717008A1BDF /* CoreVideo.framework */,
+				A61FD4EE1620ED0E008A1BDF /* AVFoundation.framework */,
+				A61FD4EC1620ED01008A1BDF /* libGPUImage.a */,
 				D29284EE15AA51FC0086B12A /* UIKit.framework */,
 				D29284F115AA521A0086B12A /* QuartzCore.framework */,
 				D29284F415AA52300086B12A /* CoreGraphics.framework */,
@@ -430,16 +445,6 @@
 			isa = PBXGroup;
 			children = (
 				D2D4A20414F93D66000FCBA0 /* thiswayup.png */,
-				D29284D215AA486E0086B12A /* Rectangle.fsh */,
-				D2D4A1FE14F93D5D000FCBA0 /* Picking.fsh */,
-				D2D4A1FF14F93D5D000FCBA0 /* PositionTextureColor.fsh */,
-				D2D4A20014F93D5D000FCBA0 /* PositionTextureColor.vsh */,
-				D2735B2F158E4C3300216F1B /* PositionColor.fsh */,
-				D2735B30158E4C3300216F1B /* PositionColor.vsh */,
-				D2735B31158E4C3300216F1B /* PositionTextureA8Color.fsh */,
-				D2735B32158E4C3300216F1B /* PositionTextureA8Color.vsh */,
-				D2735B33158E4C3300216F1B /* SpriteTextureMask.fsh */,
-				D2735B34158E4C3300216F1B /* StencilMask.fsh */,
 				D21C980114F302320059BBBE /* main.m */,
 				D21C97FF14F302320059BBBE /* InfoPlist.strings */,
 				D21C980214F302320059BBBE /* PickingTest-Info.plist */,
@@ -497,16 +502,6 @@
 			isa = PBXGroup;
 			children = (
 				D292850F15AA54E30086B12A /* thiswayup.png */,
-				D29284DA15AA507A0086B12A /* Picking.fsh */,
-				D29284DB15AA507A0086B12A /* PositionColor.fsh */,
-				D29284DC15AA507A0086B12A /* PositionColor.vsh */,
-				D29284DD15AA507A0086B12A /* PositionTextureA8Color.fsh */,
-				D29284DE15AA507A0086B12A /* PositionTextureA8Color.vsh */,
-				D29284DF15AA507A0086B12A /* PositionTextureColor.fsh */,
-				D29284E015AA507A0086B12A /* PositionTextureColor.vsh */,
-				D29284E115AA507A0086B12A /* Rectangle.fsh */,
-				D29284E215AA507A0086B12A /* SpriteTextureMask.fsh */,
-				D29284E315AA507A0086B12A /* StencilMask.fsh */,
 				D2D4A25A14FA1AF4000FCBA0 /* main.m */,
 				D2D4A25814FA1AF4000FCBA0 /* InfoPlist.strings */,
 				D2D4A25B14FA1AF4000FCBA0 /* MultiTouchSpritesTest-Info.plist */,
@@ -532,13 +527,6 @@
 			isa = PBXGroup;
 			children = (
 				D2FEE890153AD516004CFF62 /* thiswayup.png */,
-				D2FEE88B153AD50F004CFF62 /* Picking.fsh */,
-				D2735AF0158D11CA00216F1B /* PositionColor.fsh */,
-				D2735AF1158D11CA00216F1B /* PositionColor.vsh */,
-				D2FEE88C153AD50F004CFF62 /* PositionTextureA8Color.fsh */,
-				D2FEE88D153AD50F004CFF62 /* PositionTextureA8Color.vsh */,
-				D2FEE88E153AD50F004CFF62 /* PositionTextureColor.fsh */,
-				D2FEE88F153AD50F004CFF62 /* PositionTextureColor.vsh */,
 				D2FEE87C153ABD5B004CFF62 /* DepthBufferTest-Info.plist */,
 				D2FEE87D153ABD5B004CFF62 /* DepthBufferTest-Prefix.pch */,
 				D2FEE87E153ABD5B004CFF62 /* InfoPlist.strings */,
@@ -550,6 +538,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A61FD4BA1620ECB0008A1BDF /* ICGPUImageTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A61FD4D21620ECB0008A1BDF /* Build configuration list for PBXNativeTarget "ICGPUImageTest" */;
+			buildPhases = (
+				A61FD4B71620ECB0008A1BDF /* Sources */,
+				A61FD4B81620ECB0008A1BDF /* Frameworks */,
+				A61FD4B91620ECB0008A1BDF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A61FD5261620FC75008A1BDF /* PBXTargetDependency */,
+			);
+			name = ICGPUImageTest;
+			productName = ICGPUImageTest;
+			productReference = A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */;
@@ -660,6 +666,10 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
+					ProductGroup = A61FD50F1620F6C1008A1BDF /* Products */;
+					ProjectRef = A61FD50E1620F6C1008A1BDF /* GPUImage.xcodeproj */;
+				},
+				{
 					ProductGroup = D21C97D614F301D10059BBBE /* Products */;
 					ProjectRef = D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */;
 				},
@@ -671,11 +681,26 @@
 				D2732864152F9F0E0004F557 /* RetinaDisplaySupportTest */,
 				D2FEE864153ABD2A004CFF62 /* DepthBufferTest */,
 				A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */,
+				A61FD4BA1620ECB0008A1BDF /* ICGPUImageTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		A61FD5181620F6C2008A1BDF /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = A61FD5171620F6C2008A1BDF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		A61FD51A1620F6C2008A1BDF /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = A61FD5191620F6C2008A1BDF /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -686,20 +711,21 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A61FD4B91620ECB0008A1BDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61FD4E11620ECD9008A1BDF /* Default-568h@2x.png in Resources */,
+				A61FD4E21620ECD9008A1BDF /* Default.png in Resources */,
+				A61FD4E31620ECD9008A1BDF /* Default@2x.png in Resources */,
+				A61FD4E41620ECD9008A1BDF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6EA1DFE15CD65110007C4FF /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A6EA1E6815CD6EBB0007C4FF /* Picking.fsh in Resources */,
-				A6EA1E6915CD6EBB0007C4FF /* PositionColor.fsh in Resources */,
-				A6EA1E6A15CD6EBB0007C4FF /* PositionColor.vsh in Resources */,
-				A6EA1E6B15CD6EBB0007C4FF /* PositionTextureA8Color.fsh in Resources */,
-				A6EA1E6C15CD6EBB0007C4FF /* PositionTextureA8Color.vsh in Resources */,
-				A6EA1E6D15CD6EBB0007C4FF /* PositionTextureColor.fsh in Resources */,
-				A6EA1E6E15CD6EBB0007C4FF /* PositionTextureColor.vsh in Resources */,
-				A6EA1E6F15CD6EBB0007C4FF /* Rectangle.fsh in Resources */,
-				A6EA1E7015CD6EBB0007C4FF /* SpriteTextureMask.fsh in Resources */,
-				A6EA1E7115CD6EBB0007C4FF /* StencilMask.fsh in Resources */,
 				A6EA1E3C15CD65790007C4FF /* DetailViewController_iPad.xib in Resources */,
 				A6EA1E3D15CD65790007C4FF /* DetailViewController_iPhone.xib in Resources */,
 				A6EA1E3E15CD65790007C4FF /* InfoPlist.strings in Resources */,
@@ -712,18 +738,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2735B37158E4C5E00216F1B /* PositionTextureA8Color.fsh in Resources */,
-				D2735B38158E4C6100216F1B /* PositionTextureA8Color.vsh in Resources */,
-				D2735B39158E4C6400216F1B /* SpriteTextureMask.fsh in Resources */,
-				D2735B3A158E4C6800216F1B /* StencilMask.fsh in Resources */,
 				D21C980514F302320059BBBE /* InfoPlist.strings in Resources */,
 				D2D4A20514F93D66000FCBA0 /* thiswayup.png in Resources */,
-				D29284D315AA48790086B12A /* Rectangle.fsh in Resources */,
-				D2D4A20114F93D5D000FCBA0 /* Picking.fsh in Resources */,
-				D2D4A20214F93D5D000FCBA0 /* PositionTextureColor.fsh in Resources */,
-				D2D4A20314F93D5D000FCBA0 /* PositionTextureColor.vsh in Resources */,
-				D2735B35158E4C4E00216F1B /* PositionColor.fsh in Resources */,
-				D2735B36158E4C5100216F1B /* PositionColor.vsh in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -739,17 +755,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D29284E715AA50840086B12A /* PositionTextureA8Color.fsh in Resources */,
-				D29284E815AA50870086B12A /* PositionTextureA8Color.vsh in Resources */,
-				D29284E915AA50890086B12A /* PositionTextureColor.fsh in Resources */,
-				D29284EA15AA508C0086B12A /* PositionTextureColor.vsh in Resources */,
 				D2D4A25E14FA1AF4000FCBA0 /* InfoPlist.strings in Resources */,
-				D29284E415AA507E0086B12A /* Picking.fsh in Resources */,
-				D29284E515AA50800086B12A /* PositionColor.fsh in Resources */,
-				D29284EB15AA508E0086B12A /* Rectangle.fsh in Resources */,
-				D29284ED15AA50930086B12A /* StencilMask.fsh in Resources */,
-				D29284EC15AA50910086B12A /* SpriteTextureMask.fsh in Resources */,
-				D29284E615AA50820086B12A /* PositionColor.vsh in Resources */,
 				D292851015AA54E30086B12A /* thiswayup.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -758,13 +764,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D2FEE892153AD523004CFF62 /* Picking.fsh in Resources */,
-				D2735AF2158D11DF00216F1B /* PositionColor.fsh in Resources */,
-				D2735AF3158D11E200216F1B /* PositionColor.vsh in Resources */,
-				D2FEE893153AD523004CFF62 /* PositionTextureA8Color.fsh in Resources */,
-				D2FEE894153AD523004CFF62 /* PositionTextureA8Color.vsh in Resources */,
-				D2FEE895153AD523004CFF62 /* PositionTextureColor.fsh in Resources */,
-				D2FEE896153AD523004CFF62 /* PositionTextureColor.vsh in Resources */,
 				D2FEE883153ABD5B004CFF62 /* InfoPlist.strings in Resources */,
 				D2FEE891153AD516004CFF62 /* thiswayup.png in Resources */,
 			);
@@ -773,6 +772,16 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A61FD4B71620ECB0008A1BDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A61FD4E01620ECD9008A1BDF /* AppDelegate.m in Sources */,
+				A61FD4E61620ECD9008A1BDF /* main.m in Sources */,
+				A61FD5001620EEA9008A1BDF /* ICGPUImageTestViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6EA1DFC15CD65110007C4FF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -829,6 +838,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		A61FD5261620FC75008A1BDF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-ios";
+			targetProxy = A61FD5251620FC75008A1BDF /* PBXContainerItemProxy */;
+		};
 		D2732889152F9FA50004F557 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-ios";
@@ -852,6 +866,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		A61FD4DB1620ECD8008A1BDF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A61FD4DC1620ECD8008A1BDF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		A6EA1E2B15CD65790007C4FF /* DetailViewController_iPad.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -927,6 +949,80 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		A61FD4D31620ECB0008A1BDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/ICGPUImageTest/ICGPUImageTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"IC_ENABLE_GPUIMAGE_EXTENSIONS=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+					extensions,
+					extensions/GPUImage/framework/Source,
+				);
+				INFOPLIST_FILE = "tests-ios/ICGPUImageTest/ICGPUImageTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A61FD4D41620ECB0008A1BDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/ICGPUImageTest/ICGPUImageTest-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+					extensions,
+					extensions/GPUImage/framework/Source,
+				);
+				INFOPLIST_FILE = "tests-ios/ICGPUImageTest/ICGPUImageTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		A6EA1E2415CD65110007C4FF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1277,6 +1373,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A61FD4D21620ECB0008A1BDF /* Build configuration list for PBXNativeTarget "ICGPUImageTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A61FD4D31620ECB0008A1BDF /* Debug */,
+				A61FD4D41620ECB0008A1BDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

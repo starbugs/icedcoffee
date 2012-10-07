@@ -38,4 +38,8 @@
 
 - (void)textureDidLoad:(ICTexture2D *)texture object:(id)object;
 
+@optional
+
+- (void)textureLoadingDidFailWithError:(NSError *)error object:(id)object;
+
 @end

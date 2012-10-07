@@ -39,23 +39,36 @@
  */
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 /**
  @brief Defined when compiled for the iOS platform
  */
 #define __IC_PLATFORM_IOS 1
+
 /**
  @brief Defined when compiled for a touch platform
  */
 #define __IC_PLATFORM_TOUCH 1
+
+/**
+ @brief Defined when compiled for an OpenGL ES platform
+ 
+ This macro is thought to be used for built-in stringified shader sources
+ */
+#define GL_ES 1
+
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 /**
  @brief Defined when compiled for the Mac platform
  */
 #define __IC_PLATFORM_MAC 1
+
 /**
  @brief Defined when compiled for a desktop platform
  */
 #define __IC_PLATFORM_DESKTOP 1
+
 #endif
 
 /** @} */
@@ -83,7 +96,8 @@ extern float g_icContentScaleFactor;
  
  Use this macro to retrieve the current global content scale factor. Point coordinates must be
  multiplied by this factor to transform them to pixel coordinates. Consequently, pixel coordinates
- may be divided by this factor to yield point coordinates.
+ may be divided by this factor to yield point coordinates. For your convenience, icedcoffee
+ provides two macros for doing exactly this: #ICPointsToPixels and #ICPixelsToPoints.
  
  The default content scale factor on all platforms is 1.0. On iOS, you may enable retina display
  support using ICHostViewController::enableRetinaDisplaySupport:. If the device's software and
@@ -103,6 +117,38 @@ extern float g_icContentScaleFactor;
  @brief Converts the given value from pixels to points
  */
 #define ICPixelsToPoints(pixels) (pixels/ICContentScaleFactor())
+
+/** @} */
+
+
+/**
+ @defgroup stringifaction-macros Stringification Macros
+ @{
+ */
+
+// See http://gcc.gnu.org/onlinedocs/cpp/Stringification.html
+
+/**
+ @brief Creates a C string from the given argument
+ */
+#define IC_STRINGIFY(x) #x
+
+/**
+ @brief Macro for reusing #IC_STRINGIFY in other macros
+ */
+#define IC_STRINGIFY2(x) IC_STRINGIFY(x)
+
+/**
+ @brief Creates an Objective-C string from the given argument
+ */
+#define IC_STRINGIFY_OBJC(text) @ IC_STRINGIFY2(text)
+
+/**
+ @brief Creates a shader string from the given argument
+ 
+ This macro should be used to embed GLSL shader source code in Objective-C/C/C++ source files.
+ */
+#define IC_SHADER_STRING(text) IC_STRINGIFY_OBJC(text)
 
 /** @} */
 

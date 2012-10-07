@@ -103,6 +103,10 @@
 		glRenderbufferStorage(GL_RENDERBUFFER, depthFormat_, backingWidth_, backingHeight_);
 
 		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
+        
+        // Issue #8
+        if (depthFormat_ == GL_DEPTH24_STENCIL8_OES)
+            glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, depthBuffer_);
 
 		// bind color buffer
 		glBindRenderbuffer(GL_RENDERBUFFER, colorRenderbuffer_);

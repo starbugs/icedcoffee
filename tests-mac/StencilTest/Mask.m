@@ -24,13 +24,53 @@
 #import "Mask.h"
 #import "ICShaderProgram.h"
 #import "ICShaderCache.h"
+#import "icMacros.h"
+
+
+NSString *__stencilMaskFSH = IC_SHADER_STRING
+(
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    varying vec4 v_fragmentColor;
+    varying vec2 v_texCoord;
+    uniform sampler2D u_texture;
+
+    void main()
+    {
+        vec4 tex = texture2D(u_texture, v_texCoord);
+        if (tex.a < 0.9) {
+            discard;
+        }
+        gl_FragColor = v_fragmentColor * tex;
+    }
+);
+
 
 @implementation Mask
 
 - (id)initWithTexture:(ICTexture2D *)texture
 {
     if ((self = [super initWithTexture:texture])) {
-        self.shaderProgram = [[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_StencilMask];
+        ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
+        ICShaderFactory *shaderFactory = [shaderCache shaderFactory];
+        
+        NSString *positionTextureColorVSH = [shaderFactory vertexShaderStringForKey:ICShaderPositionTextureColor];
+        
+        ICShaderProgram *p = [ICShaderProgram shaderProgramWithName:ICShaderStencilMask
+                                                 vertexShaderString:positionTextureColorVSH
+                                               fragmentShaderString:__stencilMaskFSH];
+        
+        [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
+        [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
+        [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
+        
+        [p link];
+        [p updateUniforms];
+        
+        self.shaderProgram = p;
+        [shaderCache setShaderProgram:self.shaderProgram forKey:ICShaderStencilMask];
     }
     return self;
 }

@@ -27,12 +27,25 @@
 @class ICShaderCache;
 
 /**
- @brief Represents a render context for binding arbitrary objects to an OpenGL context
+ @brief A class for binding arbitrary objects to a native OpenGL context in icedcoffee
  
- The ICRenderContext class provides strong references to objects that should be bound
- to an OpenGL context in order to make them globally retrievable based on the current
- OpenGL context. Render contexts are registered and retrieved using the ICContextManager
- class.
+ The ICRenderContext class allows for attaching arbitrary objects to a native OpenGL context
+ object. This is useful for "extending" OpenGL contexts without forcing developers to change
+ existing code which is based on native context objects such as ``EAGLContext``on iOS or
+ ``NSOpenGLContext`` on Mac OS X.
+ 
+ Render contexts are primarily designed to provide an ICTextureCache and an ICShaderCache
+ object for each OpenGL context. However, they can also be used to hold custom objects
+ for a given OpenGL context.
+ 
+ Render contexts are managed by the ICContextManager class. In a standard icedcoffee setup,
+ ICHostViewController creates and registers a render context for the OpenGL context of its
+ associated ICHostViewController::view. Also, each auxiliary OpenGL context created by
+ the framework is equipped with a render context automatically.
+ 
+ If you wish to use icedcoffee with an OpenGL context that was not created by the framework,
+ you must create and register a render context for that OpenGL context, then set up the required
+ caches manually.
  */
 @interface ICRenderContext : NSObject {
 @protected

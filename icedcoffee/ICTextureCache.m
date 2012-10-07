@@ -30,6 +30,10 @@
 #import "ICRenderContext.h"
 #import "icUtils.h"
 
+@interface ICTextureCache (Private)
+- (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo;
+@end
+
 @implementation ICTextureCache
 
 + (id)currentTextureCache
@@ -54,6 +58,8 @@
 
         _auxGLContext = icCreateAuxGLContextForView(view, YES);
 		NSAssert(_auxGLContext, @"Could not create OpenGL context");
+        
+        _hostViewController = hostViewController;
     }
     return self;
 }
@@ -71,6 +77,135 @@
     [super dealloc];
 }
 
+- (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+{
+    return [self loadTextureFromURL:url resolutionType:ICResolutionTypeUnknown];
+}
+
+- (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+                     resolutionType:(ICResolutionType)resolutionType
+{
+    return [self loadTextureFromURL:url resolutionType:resolutionType error:nil];
+}
+
+- (ICTexture2D *)loadTextureFromURL:(NSURL *)url
+                     resolutionType:(ICResolutionType)resolutionType
+                              error:(NSError **)error
+{
+    __block ICTexture2D *texture;
+    dispatch_sync(_dictQueue, ^{
+        texture = [_textures objectForKey:[url absoluteString]];
+    });
+    if (!texture) {
+        texture = [ICTextureLoader loadTextureFromURL:url
+                                       resolutionType:resolutionType
+                                                error:error];
+    }
+    NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
+    dispatch_sync(_dictQueue, ^{
+        [_textures setObject:texture forKey:[url absoluteString]];
+    });
+    return texture;
+}
+
+- (void)loadTextureFromURLAsync:(NSURL *)url
+                     withTarget:(id<ICAsyncTextureCacheDelegate>)target
+                     withObject:(id)object
+{
+    [self loadTextureFromURLAsync:url
+                   resolutionType:ICResolutionTypeUnknown
+                       withTarget:target
+                       withObject:object];
+}
+
+// Called on HVC thread to perform notification of async texture delegate
+- (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo
+{
+    id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
+    id object = [textureInfo objectForKey:@"object"];
+    ICTexture2D *texture = [textureInfo objectForKey:@"asyncTexture"];
+    if ([target respondsToSelector:@selector(textureDidLoad:object:)])
+        [target textureDidLoad:texture object:object];
+}
+
+- (void)notifyAsyncTextureLoadingDidFail:(NSDictionary *)textureInfo
+{
+    id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
+    id object = [textureInfo objectForKey:@"object"];
+    NSError *error = [textureInfo objectForKey:@"error"];
+    if ([target respondsToSelector:@selector(textureLoadingDidFailWithError:object:)])
+        [target textureLoadingDidFailWithError:error object:object];
+}
+
+- (void)loadTextureFromURLAsync:(NSURL *)url
+                 resolutionType:(ICResolutionType)resolutionType
+                     withTarget:(id<ICAsyncTextureCacheDelegate>)target
+                     withObject:(id)object
+{
+    NSAssert(url != nil, @"URL cannot be nil");
+    NSAssert(target != nil, @"Target cannot be nil");
+    
+    __block ICTexture2D *texture;
+    
+    // Check whether the texture file has been cached already
+    dispatch_sync(_dictQueue, ^{
+        texture = [_textures objectForKey:[url absoluteString]];
+    });
+    
+    if (texture) {
+        // Texture has already been cached
+        [target textureDidLoad:texture object:object];
+        return;
+    }
+    
+    // Queue asynchronous loading of texture
+    dispatch_async(_loadingQueue, ^{
+        ICTexture2D *asyncTexture;
+        
+#ifdef __IC_PLATFORM_MAC
+		[_auxGLContext makeCurrentContext];
+#elif __IC_PLATFORM_IOS
+		if ([EAGLContext setCurrentContext:_auxGLContext]) {
+#endif
+        
+        NSError *error = nil;
+		asyncTexture = [self loadTextureFromURL:url resolutionType:resolutionType error:&error];
+        
+		glFlush();
+        
+        if (asyncTexture) {
+            NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         target, @"target",
+                                         asyncTexture, @"asyncTexture",
+                                         object, @"object",
+                                         nil];
+            [self performSelector:@selector(notifyAsyncTextureDidLoad:)
+                         onThread:_hostViewController.thread
+                       withObject:textureInfo
+                    waitUntilDone:NO];
+        } else {
+            NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         target, @"target",
+                                         error, @"error",
+                                         object, @"object",
+                                         nil];
+            [self performSelector:@selector(notifyAsyncTextureLoadingDidFail:)
+                         onThread:_hostViewController.thread
+                       withObject:textureInfo
+                    waitUntilDone:NO];
+        }
+        
+#ifdef __IC_PLATFORM_MAC
+		[NSOpenGLContext clearCurrentContext];
+#elif __IC_PLATFORM_IOS
+			[EAGLContext setCurrentContext:nil];
+		} else {
+			ICLog(@"IcedCoffee: ERROR: TextureCache: Could not set EAGLContext");
+		}
+#endif
+    });
+}
+
 - (ICTexture2D *)loadTextureFromFile:(NSString *)path
 {
     return [self loadTextureFromFile:path resolutionType:ICResolutionTypeUnknown];
@@ -79,12 +214,16 @@
 - (ICTexture2D *)loadTextureFromFile:(NSString *)path
                       resolutionType:(ICResolutionType)resolutionType
 {
-    ICTexture2D *texture = [ICTextureLoader loadTextureFromFile:path resolutionType:resolutionType];
-    NSAssert(texture, @"Texture object is nil, most likely the texture file could not be loaded");
-    dispatch_sync(_dictQueue, ^{
-        [_textures setObject:texture forKey:path];
-    });
-    return texture;
+    return [self loadTextureFromFile:path resolutionType:resolutionType error:nil];
+}
+
+- (ICTexture2D *)loadTextureFromFile:(NSString *)path
+                      resolutionType:(ICResolutionType)resolutionType
+                               error:(NSError **)error
+{
+    return [self loadTextureFromURL:[NSURL fileURLWithPath:path]
+                     resolutionType:resolutionType
+                              error:error];
 }
 
 - (void)loadTextureFromFileAsync:(NSString *)path
@@ -102,57 +241,10 @@
                       withTarget:(id<ICAsyncTextureCacheDelegate>)target
                       withObject:(id)object
 {
-    NSAssert(path != nil, @"Path cannot be nil");
-    NSAssert(target != nil, @"Target cannot be nil");
-    
-    __block ICTexture2D *texture;
-    
-    // Check whether the texture file has been cached already
-    dispatch_sync(_dictQueue, ^{
-        texture = [_textures objectForKey:path]; 
-    });
-    
-    if (texture) {
-        // Texture has already been cached
-        [target textureDidLoad:texture object:object];
-        return;
-    }
-    
-    // Queue asynchronous loading of texture
-    dispatch_async(_loadingQueue, ^{
-        ICTexture2D *asyncTexture;
-        
-#ifdef __IC_PLATFORM_MAC
-		[_auxGLContext makeCurrentContext];
-                
-		asyncTexture = [self loadTextureFromFile:path resolutionType:resolutionType];
-        
-		glFlush();
-        
-		dispatch_async(dispatch_get_main_queue(), ^{
-			[target textureDidLoad:asyncTexture object:object];
-		});
-        
-		[NSOpenGLContext clearCurrentContext];
-        
-#elif __IC_PLATFORM_IOS
-		if ([EAGLContext setCurrentContext:_auxGLContext]) {
-			asyncTexture = [self loadTextureFromFile:path];
-            
-			glFlush();
-            
-			dispatch_async(dispatch_get_main_queue(), ^{
-                [target textureDidLoad:asyncTexture object:object];
-			});
-            
-			[EAGLContext setCurrentContext:nil];
-		} else {
-			ICLog(@"IcedCoffee: ERROR: TextureCache: Could not set EAGLContext");
-		}
-        
-#endif // __IC_PLATFORM_MAC
-        
-    });
+    [self loadTextureFromURLAsync:[NSURL fileURLWithPath:path]
+                   resolutionType:resolutionType
+                       withTarget:target
+                       withObject:object];
 }
 
 - (ICTexture2D *)textureForKey:(NSString *)key
@@ -164,6 +256,13 @@
 	});
     
 	return texture;
+}
+
+- (void)removeTextureForKey:(NSString *)key
+{
+    dispatch_sync(_dictQueue, ^{
+        [_textures removeObjectForKey:key];
+    });
 }
 
 - (void)removeAllTextures

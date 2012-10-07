@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 #import "ICGLView.h"
 #import "ICES2Renderer.h"
+#import "ICHostViewControllerIOS.h"
 #import "../../ICHostViewController.h"
 #import "../../ICConfiguration.h"
 #import "../../icConfig.h"
@@ -262,8 +263,12 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)layoutSubviews
 {
-	[renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
+    [((ICHostViewControllerIOS *)self.hostViewController).glContextLock lock];
+	
+    [renderer_ resizeFromLayer:(CAEAGLLayer*)self.layer];
 	size_ = [renderer_ backingSize];
+
+    [((ICHostViewControllerIOS *)self.hostViewController).glContextLock unlock];
     
 	// Avoid flicker
     if (self.hostViewController.thread) {
@@ -319,6 +324,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 		}
 	}
 
+    // FIXME: this sometimes runs into a bad access when rotating the device
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
 		ICLog(@"IcedCoffee: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 

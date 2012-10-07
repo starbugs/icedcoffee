@@ -59,12 +59,14 @@
  */
 @interface ICHostViewControllerIOS : ICHostViewController
 {
-@private
+@protected
     CADisplayLink *_displayLink;
     ICTouchEventDispatcher *_touchEventDispatcher;
     BOOL _openGLReady;
-    
+    NSLock *_glContextLock;
 }
+
+@property (nonatomic, readonly) NSLock *glContextLock;
 
 @end
 
