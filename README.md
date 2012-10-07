@@ -5,7 +5,7 @@ Icedcoffee is a lightweight framework for building stunning, accelerated 2D and 
 based on OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X. Among its most
 notable features are: perspective UI rendering, sophisticated shader-based picking and hit tests,
 buffering of views via OpenGL render textures and full event handling for all drawable objects.
-Icedcoffee essentially gives you full control of what's on the screen -- it's a perfect match for
+Icedcoffee essentially gives you full control of what's on the screen – it's a perfect match for
 every developer reaching the limits of UIKit and CoreAnimation.
 
 Icedcoffee is designed to be clean, minimalistic, consistent and reusable for different purposes.
