@@ -236,7 +236,8 @@ typedef struct _ICTexParams {
             fontSize:(CGFloat)size;
 
 
-#pragma mark - Initializing a Texture with an Existing OpenGL Texture
+#pragma mark - Initializing a Texture with an OpenGL Texture
+/** @name Initializing a Texture with an OpenGL Texture */
 
 /**
  @brief Initializes the receiver with the given OpenGL texture
