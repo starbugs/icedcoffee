@@ -25,9 +25,15 @@
 
 @implementation ICGPUImageTexture2D
 
+@synthesize delegate = _delegate;
+
 - (void)newFrameReadyFromTextureOutput:(GPUImageTextureOutput *)callbackTextureOutput
 {
     _name = (GLuint)callbackTextureOutput.texture;
+    
+    if ([self.delegate respondsToSelector:@selector(newFrameReadyForTexture2D:fromTextureOutput:)]) {
+        [self.delegate newFrameReadyForTexture2D:self fromTextureOutput:callbackTextureOutput];
+    }
 }
 
 @end
