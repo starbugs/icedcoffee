@@ -1,14 +1,20 @@
-IcedCoffee v0.6.7
+Icedcoffee v0.6.7
 =================
 
-IcedCoffee is a lightweight framework for building stunning, accelerated user interfaces based
-on OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X.
+Icedcoffee is a lightweight framework for building stunning, accelerated 2D and 3D user interfaces
+based on OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X. Among its most
+notable features are: perspective UI rendering, sophisticated shader-based picking and hit tests,
+buffering of views via OpenGL render textures and full event handling for all drawable objects.
+Icedcoffee essentially gives you full control of what's on the screen -- it's a perfect match for
+every developer reaching the limits of UIKit and CoreAnimation.
 
-IcedCoffee is designed to be clean, minimalistic, consistent and reusable for different purposes.
-Its main focus is on user interfaces in the context of games, but of course you may use it for
-all kinds of rich and dynamic application frontends.
+Icedcoffee is designed to be clean, minimalistic, consistent and reusable for different purposes.
+It may be used to build interfaces for games, full application frontends or to extend existing
+application frontends with new OpenGL-based components such as infinitely scrollable views,
+animated overlays, and so on. Icedcoffee emphasizes easy integration and doesn't hijack your
+application.
 
-IcedCoffee is open source and free for both non-commercial and commercial use (MIT license).
+Icedcoffee is open source and free for both non-commercial and commercial use (MIT license).
 
 	Note: This is an early release, which means that some things aren't quite finished yet.
 
@@ -26,9 +32,9 @@ Getting Started
 Documentation
 -------------
 
-Find a work-in-progress version of the [IcedCoffee API reference](http://icedcoffee-framework.org/docs)
+Find a work-in-progress version of the [Icedcoffee API reference](http://icedcoffee-framework.org/docs)
 on [icedcoffee-framework.org](http://icedcoffee-framework.org). If you have questions or want to
-receive updates and release notes via email, please join the [IcedCoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
+receive updates and release notes via email, please join the [Icedcoffee Google Group](https://groups.google.com/d/forum/icedcoffee).
 
 
 Main Features
