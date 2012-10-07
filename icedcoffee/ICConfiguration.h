@@ -106,6 +106,11 @@ typedef uint ICOSVersion;
  */
 @property (nonatomic, readonly) BOOL supportsPixelBufferObject;
 
+/**
+ @brief Whether the system supports fast texture uploads
+ */
+- (BOOL)supportsFastTextureUpload;
+
 /** @brief Returns the OS version.
  
  On iOS devices, returns the firmware version. On Mac OS X, returns the OS version.

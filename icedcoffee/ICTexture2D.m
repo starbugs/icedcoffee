@@ -573,10 +573,23 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 #endif // Mac
 }
 
+- (id)initWithOpenGLName:(GLuint)name size:(CGSize)sizeInPixels
+{
+    if ((self = [super init])) {
+        _wrapsForeignOpenGLTexture = YES;
+        _name = name;
+        _contentSizeInPixels = sizeInPixels;
+        _width = sizeInPixels.width;
+        _height = sizeInPixels.height;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
 	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
-	if(_name) {
+    
+	if(_name && !_wrapsForeignOpenGLTexture) {
         // FIXME: Texture can only be deleted on main thread currently
         [self performSelectorOnMainThread: @selector(deleteGlTexture:) withObject: nil waitUntilDone: YES];
     }

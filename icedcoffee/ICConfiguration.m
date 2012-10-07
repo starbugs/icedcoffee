@@ -24,7 +24,9 @@
 
 #import <Availability.h>
 
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+#import "icMacros.h"
+
+#ifdef __IC_PLATFORM_IOS
 #import <UIKit/UIKit.h>		// Needed for UIDevice
 #endif
 
@@ -144,7 +146,7 @@ static char * glExtensions;
 		NSLog(@"IcedCoffee: GL supports discard_framebuffer: %s", (_supportsDiscardFramebuffer ? "YES" : "NO") );
 		NSLog(@"IcedCoffee: GL supports ARB_pixel_buffer_object: %s", (_supportsPixelBufferObject ? "YES" : "NO") );
 		
-		//CHECK_GL_ERROR();
+		IC_CHECK_GL_ERROR_DEBUG();
 	}
 	
 	return self;
@@ -158,4 +160,15 @@ static char * glExtensions;
     NSArray *extensionsNames = [extensionsString componentsSeparatedByString:@" "];
     return [extensionsNames containsObject:extensionName];
 }
+
+- (BOOL)supportsFastTextureUpload
+{
+#if defined(__IC_PLATFORM_IOS) && !defined(TARGET_IPHONE_SIMULATOR)
+    return (CVOpenGLESTextureCacheCreate != NULL);
+#else
+    // Fast texture upload not supported on Mac/iOS simulator
+    return NO;
+#endif
+}
+
 @end

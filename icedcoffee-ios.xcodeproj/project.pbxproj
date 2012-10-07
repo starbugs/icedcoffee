@@ -13,6 +13,8 @@
 		018C88671593D9C40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C88631593D9C40086319E /* ICShaderUniform.m */; };
 		018C88681593D9C40086319E /* ICShaderValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C88641593D9C40086319E /* ICShaderValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		018C88691593D9C40086319E /* ICShaderValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C88651593D9C40086319E /* ICShaderValue.m */; };
+		A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */; };
+		A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */; };
 		A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */; };
 		A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */; };
 		A6F73E0A15EC2B51001EE9B8 /* ICLine.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F73E0815EC2B51001EE9B8 /* ICLine.h */; };
@@ -159,6 +161,8 @@
 		018C88631593D9C40086319E /* ICShaderUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderUniform.m; path = icedcoffee/ICShaderUniform.m; sourceTree = "<group>"; };
 		018C88641593D9C40086319E /* ICShaderValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderValue.h; path = icedcoffee/ICShaderValue.h; sourceTree = "<group>"; };
 		018C88651593D9C40086319E /* ICShaderValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderValue.m; path = icedcoffee/ICShaderValue.m; sourceTree = "<group>"; };
+		A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGPUImageTexture2D.h; path = extensions/GPUImage/ICGPUImageTexture2D.h; sourceTree = "<group>"; };
+		A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGPUImageTexture2D.m; path = extensions/GPUImage/ICGPUImageTexture2D.m; sourceTree = "<group>"; };
 		A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
 		A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderFactory.m; path = icedcoffee/ICShaderFactory.m; sourceTree = "<group>"; };
 		A6F73E0815EC2B51001EE9B8 /* ICLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine.h; path = icedcoffee/ICLine.h; sourceTree = "<group>"; };
@@ -317,6 +321,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A61FD50D1620F5EB008A1BDF /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */,
+				A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		D22F25B015887ACB0049268C /* Nodes */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,6 +521,7 @@
 				D2918D4615887E4E0043C872 /* Sprites */,
 				D22F25B115887B180049268C /* Textures */,
 				D261C77215887C8D0001DC2D /* User Interface */,
+				A61FD50D1620F5EB008A1BDF /* Extensions */,
 			);
 			name = icedcoffee;
 			sourceTree = "<group>";
@@ -706,6 +720,7 @@
 				D20CA12115BB4CF900D89046 /* ICPickContext.h in Headers */,
 				A6F73E0A15EC2B51001EE9B8 /* ICLine.h in Headers */,
 				A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */,
+				A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -822,6 +837,7 @@
 				D20CA12215BB4CF900D89046 /* ICPickContext.m in Sources */,
 				A6F73E0B15EC2B51001EE9B8 /* ICLine.m in Sources */,
 				A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */,
+				A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -881,7 +897,10 @@
 					"$(inherited)",
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = "3rd-party/kazmath/include";
+				HEADER_SEARCH_PATHS = (
+					"3rd-party/kazmath/include",
+					extensions,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -897,7 +916,10 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = "3rd-party/kazmath/include";
+				HEADER_SEARCH_PATHS = (
+					"3rd-party/kazmath/include",
+					extensions,
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";

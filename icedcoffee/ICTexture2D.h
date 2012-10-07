@@ -126,6 +126,7 @@ typedef struct _ICTexParams {
 {
 @protected
 	GLuint				_name;
+    BOOL                _wrapsForeignOpenGLTexture;
 	CGSize				_contentSizeInPixels;
 	NSUInteger			_width,
 						_height;
@@ -136,12 +137,12 @@ typedef struct _ICTexParams {
     ICResolutionType    _resolutionType;
 }
 
-#pragma mark - Initializing a Texture with Data
-/** @name Initializing a Texture with Data */
-
 /** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable));
 /** @endcond */
+
+#pragma mark - Initializing a Texture with Data
+/** @name Initializing a Texture with Data */
 
 /**
  @brief Initializes a texture with the given data, pixel format, size and resolution type
@@ -236,6 +237,14 @@ typedef struct _ICTexParams {
             fontSize:(CGFloat)size;
 
 
+#pragma mark - Initializing a Texture with an Existing OpenGL Texture
+
+/**
+ @brief Initializes the receiver with the given OpenGL texture
+ */
+- (id)initWithOpenGLName:(GLuint)name size:(CGSize)sizeInPixels;
+
+
 #pragma mark - Retrieving Information about the Texture's Format
 /** @name Retrieving Information about the Texture's Format */
 
@@ -274,15 +283,17 @@ typedef struct _ICTexParams {
  */
 - (CGSize)displayContentSize;
 
+// FIXME: this shouldn't be deprecated if we want to allow differing texture/content sizes
+
 /**
  @brief Returns the size of the receiver in points
  */
-- (CGSize)size DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+- (CGSize)size;
 
 /**
  @brief Returns the size of the receiver in pixels
  */
-- (CGSize)sizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+- (CGSize)sizeInPixels;
 
 /**
  @brief The width of the receiver in pixels

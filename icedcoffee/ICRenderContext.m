@@ -23,6 +23,7 @@
 
 #import "ICRenderContext.h"
 #import "ICContextManager.h"
+#import "icMacros.h"
 
 @implementation ICRenderContext
 

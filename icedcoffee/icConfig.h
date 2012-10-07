@@ -37,6 +37,14 @@
 #endif
 
 
+// Extensions
+
+#ifndef IC_ENABLE_GPUIMAGE_EXTENSIONS
+#define IC_ENABLE_GPUIMAGE_EXTENSIONS 0
+#endif
+
+
+
 // Logging and Debugging
 
 // Break on GL errors
