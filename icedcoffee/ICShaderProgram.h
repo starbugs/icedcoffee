@@ -119,7 +119,7 @@
  ### Managing Uniforms ###
  
  Shader programs may define uniforms to pass values from your application running on the CPU to
- the shader program running on the GPU. These uniforms are defined within the vertex or framgent
+ the shader program running on the GPU. These uniforms are defined within the vertex or fragment
  shader's source code and ICShaderProgram will automatically make them available for you once
  the shader program has been linked.
  

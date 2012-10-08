@@ -49,6 +49,7 @@
 
 + (void)purgeCurrentShaderCache
 {
+    // FIXME: this is wrong
     [[[self class] currentShaderCache] release];
 }
 
