@@ -1380,6 +1380,7 @@
 				A61FD4D41620ECB0008A1BDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */ = {
 			isa = XCConfigurationList;
