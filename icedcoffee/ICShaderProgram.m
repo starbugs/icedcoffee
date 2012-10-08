@@ -126,8 +126,8 @@ typedef void (*GLLogFunction) (GLuint program,
 {
     NSString *programName = [[vShaderFilename lastPathComponent] stringByDeletingPathExtension];
     
-    NSString *vShaderString;
-    NSString *fShaderString;
+    NSString *vShaderString = nil;
+    NSString *fShaderString = nil;
     
     NSFileManager *fileManager = [[NSFileManager alloc] init];
     
