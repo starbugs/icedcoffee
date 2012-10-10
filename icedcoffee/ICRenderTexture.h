@@ -439,6 +439,10 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
 /**
  @brief Reads back pixels from the given rectangle
+ 
+ This method reads back all pixels located within the given ``rect`` from the internal OpenGL
+ render texture and copies them to the memory address pointed to by ``data``. The caller is
+ responsible for allocating an appropriate block of memory so that all pixels fit into ``data``.
  */
 - (void)readPixels:(void *)data inRect:(CGRect)rect;
 

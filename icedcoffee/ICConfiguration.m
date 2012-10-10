@@ -161,12 +161,12 @@ static char * glExtensions;
     return [extensionsNames containsObject:extensionName];
 }
 
-- (BOOL)supportsFastTextureUpload
+- (BOOL)supportsCVOpenGLESTextureCache
 {
-#if defined(__IC_PLATFORM_IOS) && !defined(TARGET_IPHONE_SIMULATOR)
+#if defined(__IC_PLATFORM_IOS) && !(TARGET_IPHONE_SIMULATOR) && (IC_ENABLE_CV_TEXTURE_CACHE)
     return (CVOpenGLESTextureCacheCreate != NULL);
 #else
-    // Fast texture upload not supported on Mac/iOS simulator
+    // Fast texture upload not supported on Mac/iOS simulator or if disabled via icConfig.h
     return NO;
 #endif
 }

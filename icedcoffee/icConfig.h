@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //  
 
+#import "icMacros.h"
 #pragma once
 
 /**
@@ -40,9 +41,25 @@
 // Extensions
 
 #ifndef IC_ENABLE_GPUIMAGE_EXTENSIONS
+/**
+ @brief Activate to enable the GPUImage extensions
+ 
+ Note that you may also add ``IC_ENABLE_GPUIMAGE_EXTENSIONS=1`` to the preprocessor build setting
+ of your custom target to activate the GPUImage extensions selectively.
+ */
 #define IC_ENABLE_GPUIMAGE_EXTENSIONS 0
 #endif
 
+
+// Optimizations
+
+#ifdef __IC_PLATFORM_IOS
+
+#ifndef IC_ENABLE_CV_TEXTURE_CACHE
+#define IC_ENABLE_CV_TEXTURE_CACHE 1
+#endif
+
+#endif // __IC_PLATFORM_IOS
 
 
 // Logging and Debugging

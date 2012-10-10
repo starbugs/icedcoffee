@@ -109,8 +109,11 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
             maxS = _maxS,
             maxT = _maxT,
             hasPremultipliedAlpha = _hasPremultipliedAlpha,
-            resolutionType = _resolutionType,
-            cvRenderTarget = _cvRenderTarget;
+            resolutionType = _resolutionType;
+
+#ifdef __IC_PLATFORM_IOS
+@synthesize cvRenderTarget = _cvRenderTarget;
+#endif
 
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
@@ -184,7 +187,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                resolutionType:ICResolutionTypeUnknown];
 }
 
-#if defined(__IC_PLATFORM_IOS) && IC_ENABLE_CV_TEXTURE_CACHE
+#if defined(__IC_PLATFORM_IOS)
 - (id)initAsCoreVideoRenderTextureWithTextureSize:(CGSize)textureSizeInPixels
                                    resolutionType:(ICResolutionType)resolutionType
 {
@@ -445,6 +448,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (void)deleteGlTexture: (id)object
 {
+#ifdef __IC_PLATFORM_IOS
     if (_cvTextureCache) {
         // CV texture
         CFRelease(_cvRenderTarget);
@@ -459,10 +463,13 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
         CFRelease(_cvTextureCache);
         _cvTextureCache = NULL;
     } else {
+#endif
         // Normal texture
         glDeleteTextures(1, &_name);
         _name = 0;
+#ifdef __IC_PLATFORM_IOS
     }
+#endif
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

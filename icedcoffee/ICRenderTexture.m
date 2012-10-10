@@ -412,6 +412,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     }
     
     if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+#ifdef __IC_PLATFORM_IOS
         glFlush();
         
         // Optimize readbacks for iOS devices
@@ -431,22 +432,17 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                         uint y = sy + i;
                         uint8_t *dest = data + i*w*4 + j*4;
                         uint8_t *src = pixels + y*textureWidth*4 + x*4;
+                        // Convert BGRA to RGBA
                         memcpy(dest+0, src+2, 1);
                         memcpy(dest+1, src+1, 1);
                         memcpy(dest+2, src+0, 1);
                         memcpy(dest+3, src+3, 1);
-/*                        icColor4B *destColor = (icColor4B *)dest;
-                        if (destColor->r != 0xff ||
-                            destColor->g != 0xff ||
-                            destColor->b != 0xff ||
-                            destColor->a != 0xff) {
-                            int brk = 1;
-                        }*/
                     }
                 }
             }
             CVPixelBufferUnlockBaseAddress(_texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
         }
+#endif
     } else {
         // Standard readback; most likely stalls the OpenGL pipeline
         glReadPixels(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,

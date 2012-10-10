@@ -27,6 +27,7 @@
 #import "ICRenderTexture.h"
 #import "icMacros.h"
 #import "icConfig.h"
+#import "ICConfiguration.h"
 #import "icUtils.h"
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
@@ -147,9 +148,12 @@ enum {
         
         if (_clientData) {
             free(_clientData);
+            _clientData = NULL;
         }
         
-        _clientData = malloc([self renderTextureMemorySize]);
+        if (![[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            _clientData = malloc([self renderTextureMemorySize]);
+        }
         
         [_pickNodes release];
         _pickNodes = [[NSMutableArray alloc] init];
@@ -440,6 +444,12 @@ enum {
     uint32_t i = 0;
     for (; i<_nodeCount+1; i++) {
         icColor4B *color = (icColor4B *)&data[i*4];
+        if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            // Convert BGRA to RGBA when using CoreVideo
+            GLbyte r = color->r;
+            color->r = color->b;
+            color->b = r;
+        }
         ICNode *node = [self nodeForPickColor:*color];
         if (node) {
             if (i == _nodeCount) {
@@ -479,12 +489,27 @@ enum {
 #endif
 
     // Read pixels from OpenGL framebuffer associated with our render texture
-    NSAssert(_clientData != NULL, @"No client buffer");
-    
-    CGRect rect = CGRectMake(0, 0, _renderTextureSizeInPixels.width, _renderTextureSizeInPixels.height);
-    [_renderTexture readPixels:_clientData inRect:rect];
-    
-    [self collectHitNodesIntoArray:resultNodes pixelData:_clientData];
+    if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+#ifdef __IC_PLATFORM_IOS
+        glFlush();
+        
+        // Optimized for iOS devices using CoreVideo
+        CVReturn err = CVPixelBufferLockBaseAddress(_renderTexture.texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+        if (err == kCVReturnSuccess) {
+            uint8_t *pixels = (uint8_t *)CVPixelBufferGetBaseAddress(_renderTexture.texture.cvRenderTarget);
+            [self collectHitNodesIntoArray:resultNodes pixelData:pixels];
+        }
+        CVPixelBufferUnlockBaseAddress(_renderTexture.texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+#endif
+    } else {
+        // Standard readback on Mac or iOS simulator
+        NSAssert(_clientData != NULL, @"No client buffer");
+        
+        CGRect rect = CGRectMake(0, 0, _renderTextureSizeInPixels.width, _renderTextureSizeInPixels.height);
+        [_renderTexture readPixels:_clientData inRect:rect];
+        
+        [self collectHitNodesIntoArray:resultNodes pixelData:_clientData];
+    }
     
     return resultNodes;
 }
