@@ -134,6 +134,12 @@ typedef struct _ICTexParams {
 						_maxT;
 	BOOL				_hasPremultipliedAlpha;
     ICResolutionType    _resolutionType;
+    
+#ifdef __IC_PLATFORM_IOS
+    CVImageBufferRef _cvRenderTarget;
+    CVOpenGLESTextureCacheRef _cvTextureCache;
+    CVOpenGLESTextureRef _cvTexture;
+#endif
 }
 
 /** @cond */ // Exclude from docs
@@ -189,6 +195,14 @@ typedef struct _ICTexParams {
         pixelsWide:(NSUInteger)width
         pixelsHigh:(NSUInteger)height
               size:(CGSize)contentSizeInPixels DEPRECATED_ATTRIBUTE /*v0.6.6*/;
+
+#ifdef __IC_PLATFORM_IOS
+/**
+ @brief Initializes a texture as a CoreVideo OpenGLES render target (iOS only)
+ */
+- (id)initAsCoreVideoRenderTextureWithTextureSize:(CGSize)textureSizeInPixels
+                                   resolutionType:(ICResolutionType)resolutionType;
+#endif // __IC_PLATFORM_IOS
 
 
 #pragma mark - Initializing a Texture with a CGImage
@@ -378,6 +392,10 @@ typedef struct _ICTexParams {
  @brief The OpenGL texture name of the receiver
  */
 @property (nonatomic, readonly) GLuint name;
+
+#ifdef __IC_PLATFORM_IOS
+@property (nonatomic, readonly) CVPixelBufferRef cvRenderTarget;
+#endif
 
 
 #pragma mark - Changing the Default Alpha Pixel Format

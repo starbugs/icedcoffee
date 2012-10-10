@@ -184,10 +184,27 @@
 #pragma mark - Creating a Render Texture
 /** @name Creating a Render Texture */
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width and height
+ 
+ @sa initWithWidth:height:
+ */
 + (id)renderTextureWithWidth:(float)w height:(float)h;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height and
+ and an optional depth buffer
+ 
+ @sa initWithWidth:height:depthBuffer:
+ */
 + (id)renderTextureWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height and
+ and an optional stencil and/or depth buffer
+ 
+ @sa initWithWidth:height:depthBuffer:stencilBuffer:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  depthBuffer:(BOOL)depthBuffer
@@ -196,15 +213,28 @@
 /**
  @brief Returns an autoreleased render texture initialized with the given width, height,
  and pixel format
+ 
  @sa initWithWidth:height:pixelFormat:
  */
 + (id)renderTextureWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height,
+ pixel format and depth buffer format
+ 
+ @sa initWithWidth:height:pixelFormat:depthBufferFormat:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height,
+ pixel format, depth buffer format and stencil buffer format
+ 
+ @sa initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
@@ -407,6 +437,9 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
  */
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 
+/**
+ @brief Reads back pixels from the given rectangle
+ */
 - (void)readPixels:(void *)data inRect:(CGRect)rect;
 
 
