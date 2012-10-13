@@ -347,4 +347,12 @@
  */
 - (void)removeUnusedTextures;
 
+
+#pragma mark - Converting URLs and Paths to Keys
+/** @name Converting URLs and Paths to Keys */
+
+- (NSString *)keyFromURL:(NSURL *)url;
+
+- (NSString *)keyFromPath:(NSString *)path;
+
 @end

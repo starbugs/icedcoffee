@@ -38,9 +38,10 @@
 
 + (id)currentTextureCache
 {
-    return [[[ICContextManager defaultContextManager]
-             renderContextForCurrentOpenGLContext]
-            textureCache];
+    ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
+                                      renderContextForCurrentOpenGLContext];
+    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
+    return [renderContext textureCache];
 }
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
@@ -121,6 +122,13 @@
 // Called on HVC thread to perform notification of async texture delegate
 - (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo
 {
+    // Ensure the associated host view controller's OpenGL context is set
+#ifdef __IC_PLATFORM_IOS
+    [EAGLContext setCurrentContext:_hostViewController.openGLContext];
+#elif defined(__IC_PLATFORM_MAC)
+    [_hostViewController.openGLContext makeCurrentContext];
+#endif
+    
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];
     ICTexture2D *texture = [textureInfo objectForKey:@"asyncTexture"];
@@ -130,6 +138,13 @@
 
 - (void)notifyAsyncTextureLoadingDidFail:(NSDictionary *)textureInfo
 {
+    // Ensure the associated host view controller's OpenGL context is set
+#ifdef __IC_PLATFORM_IOS
+    [EAGLContext setCurrentContext:_hostViewController.openGLContext];
+#elif defined(__IC_PLATFORM_MAC)
+    [_hostViewController.openGLContext makeCurrentContext];
+#endif
+
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];
     NSError *error = [textureInfo objectForKey:@"error"];
@@ -284,6 +299,16 @@
 			}
 		}
 	});
+}
+
+- (NSString *)keyFromURL:(NSURL *)url
+{
+    return [url absoluteString];
+}
+
+- (NSString *)keyFromPath:(NSString *)path
+{
+    return [self keyFromURL:[NSURL fileURLWithPath:path]];
 }
 
 @end

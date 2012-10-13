@@ -40,6 +40,7 @@
 {
     ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
                                       renderContextForCurrentOpenGLContext];
+    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
     ICShaderCache *shaderCache = renderContext.shaderCache;
     if (!shaderCache) {
         shaderCache = renderContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];

@@ -333,7 +333,11 @@ fragmentShaderString:(NSString *)fShaderString
                            &name_len, &num, &type, name);
         name[name_len] = 0;
         GLuint location = glGetUniformLocation(_program, name);
-        [_uniforms setObject:[ICShaderUniform shaderUniformWithType:shaderValueTypeForGLType(type) location:location]
+        ICShaderValueType shaderValueType = shaderValueTypeForGLType(type);
+        if (shaderValueType == ICShaderValueTypeInvalid) {
+            NSLog(@"Invalid shader value type for uniform %s", name);
+        }
+        [_uniforms setObject:[ICShaderUniform shaderUniformWithType:shaderValueType location:location]
                                                              forKey:[NSString stringWithCString:name encoding:NSUTF8StringEncoding]];
     }
     
