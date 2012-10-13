@@ -154,7 +154,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                  @"Only RGB and RGBA formats are valid for a render texture");
         
         // Store formats
-        _pixelFormat = pixelFormat;
+        if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            // Only RGBA8888 is supported for CV pixel buffers currently
+            _pixelFormat = ICPixelFormatRGBA8888;
+        } else {
+            _pixelFormat = pixelFormat;
+        }
         _depthBufferFormat = depthBufferFormat;
         _stencilBufferFormat = stencilBufferFormat;
 

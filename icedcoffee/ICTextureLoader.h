@@ -26,9 +26,34 @@
 
 @class ICTexture2D;
 
+#ifdef __IC_PLATFORM_IOS
 /**
- @brief Implements texture file loading
+ @brief Provides methods for loading textures from image files
+ 
+ This class provides methods for loading textures from image files based on image loading
+ functionality implemented in the CoreGraphics framework.
+ 
+ On iOS, the following file formats are supported:
+ - Tagged Image File Format (``TIFF``)
+ - Joint Photographic Experts Group (``JPEG``)
+ - Graphic Interchange Format (``GIF``)
+ - Portable Network Graphics (``PNG``)
+ - Windows Bitmap Format (``BMP``, ``BMPF``)
+ - Windows Icon Format (``ICO``)
+ - Windows Cursor (``CUR``)
+ - XWindow Bitmap (``XBM``)
  */
+#elif defined(__IC_PLATFORM_MAC)
+/**
+ @brief Provides methods for loading textures from image files
+ 
+ This class provides methods for loading textures from image files based on image loading
+ functionality implemented in the CoreGraphics framework.
+ 
+ On Mac OS X, all file formats supported by the ``NSBitmapImageRep`` class are also supported
+ by ICTextureLoader.
+ */
+#endif
 @interface ICTextureLoader : NSObject
 
 #pragma mark - Loading Textures from Local Files

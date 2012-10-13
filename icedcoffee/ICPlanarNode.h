@@ -93,4 +93,22 @@
  */
 - (kmVec3)hostViewToNodeLocation:(CGPoint)location;
 
+
+#pragma mark - Performing Ray-based Hit Tests
+/** @name Performing Ray-based Hit Tests */
+
+/**
+ @brief Performs a ray-based hit test on the receiver
+ 
+ @param ray An icRay3 defining the ray to use for the hit test
+ 
+ This method performs a ray-based hit test by calculating the intersection of the given ray
+ with the receiver's ICPlanarNode::plane, then checking whether that intersection lies within
+ the receiver's ICNode::bounds.
+ 
+ @sa
+ - ICNode::localRayHitTest:
+ */
+- (ICHitTestResult)localRayHitTest:(icRay3)ray;
+
 @end

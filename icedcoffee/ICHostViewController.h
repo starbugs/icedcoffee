@@ -48,7 +48,7 @@
 
 
 /**
- @brief View controller base class for displaying and updating an IcedCoffee framebuffer
+ @brief View controller base class for displaying and updating an icedcoffee framebuffer
  
  ICHostViewController is a base class for view controllers for CocoaTouch and Cocoa host views.
  Host view controllers represent a means to integrate IcedCoffee into iOS and Mac OS X applications.

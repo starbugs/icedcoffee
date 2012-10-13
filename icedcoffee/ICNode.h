@@ -469,12 +469,18 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (ICScene *)scene;
 
+/**
+ @brief Returns the node that directly provides a framebuffer for drawing the receiver
+ 
+ This method returns the first ancestor node that conforms to the ICFramebufferProvider protocol.
+ */
 - (ICNode<ICFramebufferProvider> *)framebufferProvider;
 
 /**
  @brief The host view controller of the receiver's root scene
  
  This method invokes rootScene, asks it for its ICHostViewController object and returns the result.
+ Consequently, if the receiver has not yet been added to a scene, the method returns ``nil``.
  */
 - (ICHostViewController *)hostViewController;
 
@@ -743,18 +749,17 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief The receiver's axis-aligned bounding box
  
- This method calculates the receiver's axis-aligned bounding box in its parent node
+ This method calculates and returns the receiver's axis-aligned bounding box in its parent node
  coordinate space.
  
  @remarks The calculations performed by this method are based on the ICNode::position and
  ICNode::size properties. For this method to work correctly, the following preconditions
  must be met:
- <ul>
-     <li>The receiver's ICNode::size property must be set correctly, that is, covering
-     the whole (cubic) space occupied by the receiver's visible contents.</li>
-     <li>The receiver must have been added to a valid ICScene object before this method is
-     called.</li>
- </ul>
+ 
+ - The receiver's ICNode::size property must be set correctly, that is, covering
+   the whole (cubic) space occupied by the receiver's visible contents.
+ - The receiver must have been added to a valid ICScene object before this method is
+   called.
  
  @return Returns an kmAABB object defining the node's axis-aligned bounding box. If the method
  fails to calculate the node's bounding box, a zero kmAABB is returned. When this happens,
@@ -763,7 +768,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (kmAABB)aabb;
 
 /**
- @brief Returns the rectangular bounds of the receiver
+ @brief Returns the rectangular 2D bounds of the receiver
  
  By default, the bounds of the receiver are defined as a rectangle with origin (0,0) and
  size (size.x,size.y). Subclasses may override this method to define custom bounds.
@@ -780,16 +785,14 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @remarks The calculations performed by this method are based on the ICNode::position and
  ICNode::size properties. For this method to work correctly, the following preconditions
  must be met:
- <ul>
-    <li>The receiver's ICNode::size property must be set correctly, that is, covering
-    the whole (cubic) space occupied by the receiver's visible contents.</li>
-    <li>The receiver must have been added to a valid ICScene object before this method is
-    called.</li>
-    <li>The parent scene of the receiver must have a valid target framebuffer.</li>
- </ul>
+ - The receiver's ICNode::size property must be set correctly, that is, covering
+   the whole (cubic) space occupied by the receiver's visible contents.
+ - The receiver must have been added to a valid ICScene object before this method is
+   called.
+ - The parent scene of the receiver must have a valid target framebuffer.
  
- @return Returns a CGRect defining the rectangle (in points) occupied by the node's visible
- contents. If the method fails to calculate the node's frame rect, a zero CGRect is returned.
+ @return Returns a ``CGRect`` defining the rectangle (in points) occupied by the node's visible
+ contents. If the method fails to calculate the node's frame rect, a zero ``CGRect`` is returned.
  When this happens, most likely one or many of the preconditions outlined above have not been met.
  */
 - (CGRect)frameRect;
@@ -799,7 +802,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /** @name Drawing and Picking */
 
 /**
- @brief The receiver's shader program, including vertex and fragment shader
+ @brief The receiver's shader program for drawing, including a vertex and a fragment shader
  */
 @property (nonatomic, retain) ICShaderProgram *shaderProgram;
 
@@ -807,6 +810,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief A BOOL property indicating whether the receiver is visible
  
  Invisible nodes are not drawn and do not receive user interaction events by the framework.
+ The default value for this property is ``YES``.
  */
 @property (nonatomic, assign) BOOL isVisible;
 
@@ -817,20 +821,20 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  appropriate standard drawing setup is applied to the current OpenGL context. The default
  implementation sets up vertex and fragment shader programs pertaining to the specified
  visitor. For non-picking visitors, the method applies the shader set in ICNode::shaderProgram,
- for picking visitors the method looks up the default picking shader (keyed kICShader_Picking)
- using ICShaderCache and applies it.
+ for picking visitors the method looks up the default picking shader (keyed ICShaderPicking)
+ using ICShaderCache and uses it on the current OpenGL context.
  */
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
  @brief Draws the receiver's contents
  
+ @param visitor The ICNodeVisitor instance used to visit the node
+
  This method is called by the framework to draw the receiver using a visitor. You should
  never call this method directly unless you know what you are doing.
  
  The default implementation does nothing.
-
- @param visitor The ICNodeVisitor instance used to visit the node
  
  You should override this method in drawable node subclasses to implement your custom drawing code.
  You may want to pply a standard drawing setup using the ICNode::applyStandardDrawSetupWithVisitor:
@@ -858,19 +862,32 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Called when all children of the receiver have been drawn
  
- Called by the framework when all children nodes have been drawn completely. You may override
- this method to reset states that have been set in ICNode::drawWithVisitor: and were not reset
- for drawing the receiver's children.
+ Called by the framework when all children of the receiver have been drawn.
+ 
+ You may override this method to reset states that have been set in ICNode::drawWithVisitor:
+ and were not reset for drawing the receiver's children.
  */
 - (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
  @brief Informs the framework that the receiver needs to be redrawn
  
- This method needs to be called only if the node is part of a drawing environment that does not
- redraw all its contents continuously. The default implementation simply calls
- ICNode::setNeedsDisplay on its parent. Specialized classes implementing updatable framebuffers
- such as ICRenderTexture should override this method in order to implement conditional redrawing.
+ This method must be called when the receiver's contents need to be redrawn and the receiver
+ is part of an ICScene object which is rendered on demand only. For instance, if the receiver
+ is a descendant of an ICRenderTexture's ICRenderTexture::subScene and the render texture's
+ ICRenderTexture::frameUpdateMode is set to ICFrameUpdateModeOnDemand, then you have to call
+ this method to ensure that the render texture's contents are redrawn to reflect a change
+ in the appearance of the receiver. Likewise, if the receiver's ICNode::hostViewController's
+ ICHostViewController::frameUpdateMode is set to ICFrameUpdateModeOnDemand, this method needs
+ to be called so that the whole scene is redrawn on the host view controller's view.
+ 
+ Note that this method does not actually redraw the receiver. Instead, it informs the framework
+ to redraw the content's of the receiver's parent frame buffer the next time it enters the
+ ICHostViewController::drawScene or ICRenderTexture::drawWithVisitor: method.
+ 
+ @sa
+ - ICHostViewController::frameUpdateMode
+ - ICRenderTexture::frameUpdateMode
  */
 - (void)setNeedsDisplay;
 
@@ -881,14 +898,19 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Performs a local ray-based hit test on the receiver
  
- To be implemented in subclasses. The default implementation does nothing and returns
- ICHitTestUnsupported.
- 
- Subclasses implementing this method should perform a hit test based on some approximation
- of the node's geometry and the specified ray.
- 
  @param ray An icRay3 object defining the ray to be used for hit testing in the receiver's local
  coordinate space.
+
+ To be implemented in subclasses. The default implementation does nothing and returns
+ ``ICHitTestUnsupported``.
+ 
+ Subclasses implementing this method should perform a hit test based on an appropriate
+ approximation of the node's geometry and the specified ray, then return an ICHitTestResult
+ enumerated value defining whether the hit test succeeded or not.
+ 
+ @sa
+ - ICPlanarNode
+ - ICNodeVisitorPicking
  */
 - (ICHitTestResult)localRayHitTest:(icRay3)ray;
 
