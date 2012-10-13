@@ -95,7 +95,7 @@
     
     icV3F_C4F_T2F vertices[NUM_VERTICES];    
     
-    // Note: Y-axis inverted by IcedCoffe UI camera, so we need to do this in CCW order
+    // Note: Y-axis inverted by icedcoffee UI camera, so we need to do this in CCW order
     kmVec3Fill(&vertices[0].vect, x1, y2, 0);
     kmVec3Fill(&vertices[1].vect, x2, y2, 0); 
     kmVec3Fill(&vertices[2].vect, x1, y1, 0);
