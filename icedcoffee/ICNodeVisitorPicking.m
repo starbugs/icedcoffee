@@ -322,6 +322,12 @@ enum {
     GLbitfield clearFlags = GL_COLOR_BUFFER_BIT |  GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
     glClear(clearFlags);
     IC_CHECK_GL_ERROR_DEBUG();
+
+#if IC_ENABLE_DEBUG_PICKING
+    ICLog(@"=====================");
+    ICLog(@"Computing single hits");
+    ICLog(@"=====================");
+#endif
     
     // Visit each node in node's branch
     _internalMode = InternalModeSingleNodes;
@@ -332,6 +338,12 @@ enum {
     
     // Reset node index for next run
     _nodeIndex = 0;
+    
+#if IC_ENABLE_DEBUG_PICKING
+    ICLog(@"===================");
+    ICLog(@"Computing final hit");
+    ICLog(@"===================");
+#endif
 
     _internalMode = InternalModeFinalNode;
     [self setUpScissorTestForPixelAtLocation:[self pixelLocationForNodeIndex:_nodeCount]];
