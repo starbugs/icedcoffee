@@ -194,7 +194,7 @@
     _childrenSortedByZIndex = [[NSMutableArray alloc] initWithArray:_children];
     [_childrenSortedByZIndex sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
         ICNode *node1 = obj1, *node2 = obj2;
-        if (node1.zIndex < node2.zIndex)
+        if (node1.zIndex > node2.zIndex)
             return NSOrderedDescending;
         else if(node1.zIndex < node2.zIndex)
             return NSOrderedAscending;
