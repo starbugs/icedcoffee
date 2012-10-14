@@ -136,6 +136,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     BOOL _computesTransform;
     BOOL _autoCenterAnchorPoint;
     
+    // Z sorting
+    int _zIndex;
+    NSMutableArray *_childrenSortedByZIndex;
+    BOOL _childrenSortedByZIndexDirty;
+    
     // Drawing
     ICShaderProgram *_shaderProgram;
     BOOL _isVisible;
@@ -716,6 +721,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 #pragma mark - Managing Order
 /** @name Managing Order */
+
+@property (nonatomic, assign, setter=setZIndex:) int zIndex;
 
 /**
  @brief The index of the receiver in its parent's children array

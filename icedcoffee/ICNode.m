@@ -82,7 +82,9 @@
         self.autoCenterAnchorPoint = YES;
         
         // Enable user interaction by default
-        self.userInteractionEnabled = YES;        
+        self.userInteractionEnabled = YES;
+        
+        _childrenSortedByZIndexDirty = YES;
     }
     return self;
 }
@@ -90,6 +92,8 @@
 - (void)dealloc
 {
     self.children = nil;
+    [_childrenSortedByZIndex release];
+    
     [super dealloc];
 }
 
@@ -107,6 +111,7 @@
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
     [(NSMutableArray *)_children addObject:child];
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)insertChild:(ICNode *)child atIndex:(uint)index
@@ -115,6 +120,7 @@
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
     [(NSMutableArray *)_children insertObject:child atIndex:index];
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeChild:(ICNode *)child
@@ -122,6 +128,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeObject:child];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeChildAtIndex:(uint)index
@@ -129,6 +136,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeObjectAtIndex:index];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeAllChildren
@@ -136,6 +144,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeAllObjects];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (BOOL)hasChildren
@@ -179,14 +188,33 @@
     return _children;
 }
 
+- (NSArray *)computeChildrenSortedByZIndex
+{
+    [_childrenSortedByZIndex release];
+    _childrenSortedByZIndex = [[NSMutableArray alloc] initWithArray:_children];
+    [_childrenSortedByZIndex sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+        ICNode *node1 = obj1, *node2 = obj2;
+        if (node1.zIndex > node2.zIndex)
+            return NSOrderedDescending;
+        else if(node1.zIndex < node2.zIndex)
+            return NSOrderedAscending;
+        return NSOrderedSame;
+    }];
+    return _childrenSortedByZIndex;
+}
+
 - (NSArray *)drawingChildren
 {
-    return _children;
+    if (_childrenSortedByZIndexDirty)
+        [self computeChildrenSortedByZIndex];
+    return _childrenSortedByZIndex;
 }
 
 - (NSArray *)pickingChildren
 {
-    return _children;
+    if (_childrenSortedByZIndexDirty)
+        [self computeChildrenSortedByZIndex];
+    return _childrenSortedByZIndex;
 }
 
 - (NSArray *)ancestorsOfType:(Class)classType
@@ -628,6 +656,13 @@
 
 
 #pragma mark - Order
+
+@synthesize zIndex = _zIndex;
+
+- (void)setZIndex:(int)zIndex
+{
+    self.parent->_childrenSortedByZIndexDirty = YES;
+}
 
 - (NSUInteger)order
 {
