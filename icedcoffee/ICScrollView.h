@@ -72,6 +72,7 @@
     kmVec3 _contentOffset;
     kmVec3 _contentMin;
     kmVec3 _contentMax;
+    ICView *_contentView;
 }
 
 #pragma mark - Working with the Scroll View's Content Size and Offset

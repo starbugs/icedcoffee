@@ -25,6 +25,10 @@
 #import "ICScene.h"
 #import "ICCamera.h"
 
+@interface ICScrollView (Private)
+- (ICView *)contentView;
+@end
+
 @implementation ICScrollView
 
 @synthesize contentSize = _contentSize;
@@ -36,6 +40,26 @@
         [self setClipsChildren:YES];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_contentView release];
+    [super dealloc];
+}
+
+- (ICView *)contentView
+{
+    if (self.backing) {
+        return [self backingContentView];
+    }
+    
+    if (!_contentView) {
+        _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.x, self.size.y)];
+        [super addChild:_contentView];
+    }
+    
+    return _contentView;
 }
 
 #ifdef __IC_PLATFORM_MAC
@@ -57,11 +81,7 @@
     
     _contentOffset = contentOffset;
 
-    if (_backing) {
-        // When the scroll view is in backed mode, modify the backing's sub scene
-        // position to offset its contents
-        [self.backing.subScene setPosition:_contentOffset];
-    }
+    [[self contentView] setPosition:_contentOffset];
     [self setNeedsDisplay];
 }
 
@@ -70,6 +90,7 @@
     _contentSize = contentSize;
     _contentMin = kmNullVec3;
     _contentMax = _contentSize;
+    [[self contentView] setSize:contentSize];
 }
 
 - (void)setSize:(kmVec3)size
@@ -77,18 +98,13 @@
     [super setSize:size];
 }
 
-- (void)addChild:(ICNode *)child
-{
-    [super addChild:child];
-    [self calculateContentSize];
-}
-
 - (void)calculateContentSize
 {
     _contentMin = kmNullVec3;
     _contentMax = kmNullVec3;
     
-    for (ICNode *child in self.children) {
+    // FIXME: this should be generalized to support arbitrary transforms
+    for (ICNode *child in [self contentView].children) {
         _contentMin.x = MIN(_contentMin.x, child.position.x);
         _contentMin.y = MIN(_contentMin.y, child.position.y);
         _contentMax.x = MAX(_contentMax.x, child.position.x + child.size.x);
@@ -98,27 +114,50 @@
     kmVec3Subtract(&_contentSize, &_contentMax, &_contentMin);
 }
 
-- (void)drawWithVisitor:(ICNodeVisitor *)visitor
+
+// Composition overrides
+
+- (void)addChild:(ICNode *)child
 {
-    // Draw self
-    [super drawWithVisitor:visitor];
-    
-    if (!_backing) {
-        // If not in backed mode, translate all descendants by contentOffset
-        kmMat4 matContentOffset;
-        kmMat4Translation(&matContentOffset, _contentOffset.x, _contentOffset.y, _contentOffset.z);
-        kmGLPushMatrix();
-        kmGLMultMatrix(&matContentOffset);
-    }
+    [[self contentView] addChild:child];
+    [self calculateContentSize];
 }
 
-- (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor
+- (void)insertChild:(ICNode *)child atIndex:(uint)index
 {
-    [super childrenDidDrawWithVisitor:visitor];
-    
-    if (!_backing) {
-        kmGLPopMatrix();
-    }
+    [[self contentView] insertChild:child atIndex:index];
 }
+
+- (void)removeChild:(ICNode *)child
+{
+    [[self contentView] removeChild:child];
+}
+
+- (void)removeChildAtIndex:(uint)index
+{
+    [[self contentView] removeChildAtIndex:index];
+}
+
+- (void)removeAllChildren
+{
+    [[self contentView] removeAllChildren];
+}
+
+- (NSArray *)children
+{
+    return [[self contentView] children];
+}
+
+// FIXME: childrenNotOfType missing
+- (NSArray *)childrenOfType:(Class)classType
+{
+    return [[self contentView] childrenOfType:classType];
+}
+
+- (ICNode *)childForTag:(uint)tag
+{
+    return [[self contentView] childForTag:tag];
+}
+
 
 @end

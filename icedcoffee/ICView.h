@@ -22,8 +22,10 @@
 //  
 
 #import <Foundation/Foundation.h>
+
 #import "ICSprite.h"
 #import "ICRenderTexture.h"
+#import "ICContainer.h"
 
 
 enum {
@@ -102,7 +104,7 @@ typedef NSUInteger ICAutoResizingMask;
    also marks the view's contents for redrawing.
  - You may implement custom layouting by overriding the ICView::layoutChildren method.
  */
-@interface ICView : ICPlanarNode {
+@interface ICView : ICPlanarNode <ICContainer> {
 @protected
     ICRenderTexture *_backing;
     ICSprite *_clippingMask;
@@ -172,6 +174,8 @@ typedef NSUInteger ICAutoResizingMask;
  You should always switch the backing to nil before you replace it with another backing.
  */
 @property (nonatomic, retain, setter=setBacking:) ICRenderTexture *backing;
+
+- (ICView *)backingContentView;
 
 
 #pragma mark - Drawing a Background Sprite

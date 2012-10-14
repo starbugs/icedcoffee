@@ -36,7 +36,8 @@
 
 enum {
     InternalModeSingleNodes = 1,
-    InternalModeFinalNode = 2
+    InternalModeContainers = 2,
+    InternalModeFinalNode = 3
 };
 
 @interface ICNodeVisitorPicking (Private)
@@ -336,14 +337,14 @@ enum {
     // Note count of nodes from this run
     _nodeCount = _nodeIndex;
     
-    // Reset node index for next run
-    _nodeIndex = 0;
-    
 #if IC_ENABLE_DEBUG_PICKING
     ICLog(@"===================");
     ICLog(@"Computing final hit");
     ICLog(@"===================");
 #endif
+
+    // Reset node index for next run
+    _nodeIndex = 0;
 
     _internalMode = InternalModeFinalNode;
     [self setUpScissorTestForPixelAtLocation:[self pixelLocationForNodeIndex:_nodeCount]];
@@ -357,6 +358,8 @@ enum {
     if ([node userInteractionEnabled]) {
         
         ICHitTestResult hitTestResult = ICHitTestUnsupported;
+        
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
         if ([self currentRay]) {
             icRay3 transformedRay = *[self currentRay];
             transformedRay.origin = [node convertToNodeSpace:transformedRay.origin];
@@ -366,8 +369,9 @@ enum {
             if (hitTestResult == ICHitTestFailed) {
                 ICLog(@"Picking visitor ray hit test failed for node: %@", [node description]);
             }
-#endif
+#endif // IC_ENABLE_DEBUG_PICKING
         }
+#endif // IC_ENABLE_RAY_BASED_HIT_TESTS
         
         if (hitTestResult != ICHitTestFailed) {
             

@@ -129,6 +129,9 @@
     [_hostViewController.openGLContext makeCurrentContext];
 #endif
     
+    // Ensure the associated host view controller is current
+    [_hostViewController makeCurrentHostViewController];
+    
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];
     ICTexture2D *texture = [textureInfo objectForKey:@"asyncTexture"];
@@ -144,6 +147,9 @@
 #elif defined(__IC_PLATFORM_MAC)
     [_hostViewController.openGLContext makeCurrentContext];
 #endif
+
+    // Ensure the associated host view controller is current
+    [_hostViewController makeCurrentHostViewController];
 
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];

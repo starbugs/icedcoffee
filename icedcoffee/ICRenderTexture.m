@@ -491,6 +491,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     }
 }
 
+// Note: the render texture's sprite is not used for picking
 - (NSArray *)pickingChildren
 {
     return [NSArray arrayWithObjects:self.subScene, nil];

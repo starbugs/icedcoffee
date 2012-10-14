@@ -59,6 +59,10 @@
 #define IC_ENABLE_CV_TEXTURE_CACHE 1
 #endif
 
+#ifndef IC_ENABLE_RAY_BASED_HIT_TESTS
+#define IC_ENABLE_RAY_BASED_HIT_TESTS 1
+#endif
+
 #endif // __IC_PLATFORM_IOS
 
 
