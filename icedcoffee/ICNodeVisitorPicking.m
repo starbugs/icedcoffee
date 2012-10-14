@@ -350,6 +350,11 @@ enum {
             transformedRay.origin = [node convertToNodeSpace:transformedRay.origin];
             transformedRay.direction = [node convertToNodeSpace:transformedRay.direction];
             hitTestResult = [node localRayHitTest:transformedRay];
+#if IC_ENABLE_DEBUG_PICKING
+            if (hitTestResult == ICHitTestFailed) {
+                ICLog(@"Picking visitor ray hit test failed for node: %@", [node description]);
+            }
+#endif
         }
         
         if (hitTestResult != ICHitTestFailed) {
