@@ -61,6 +61,13 @@
         _clippingMask = [[ICSprite alloc] init];
         _clippingMask.size = self.size;
         _clippingMask.color = (icColor4B){255,255,255,255};
+        
+#if defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
+        if ((size.width == 0 && size.height != 0) ||
+            (size.width != 0 && size.height == 0)) {
+            ICLog(@"Warning: initializing a view with an invalid size");
+        }
+#endif
     }
     return self;
 }
