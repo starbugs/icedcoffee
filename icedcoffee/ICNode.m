@@ -452,7 +452,7 @@
     kmMat4 nodeToParentTransform = [self nodeToParentTransform];
     for (ICNode *parent = _parent; parent != nil; parent = parent.parent) {
         kmMat4 parentNodeToParentTransform = [parent nodeToParentTransform];
-        kmMat4Multiply(&nodeToParentTransform, &nodeToParentTransform, &parentNodeToParentTransform);
+        kmMat4Multiply(&nodeToParentTransform, &parentNodeToParentTransform, &nodeToParentTransform);
         if ([parent isKindOfClass:[ICScene class]]) {
             break; // scene represents world coordinates
         }
@@ -466,6 +466,19 @@
     kmMat4 nodeToWorldTransform = [self nodeToWorldTransform];
     kmMat4Inverse(&inverseTransform, &nodeToWorldTransform);
     return inverseTransform;
+
+    /*NSArray *ancestors = [self ancestors];
+    NSEnumerator *enumerator = [ancestors reverseObjectEnumerator];
+    kmMat4 worldToNodeTransform = [[enumerator nextObject] parentToNodeTransform];
+    ICNode *node;
+    kmMat4 parentToNodeTransform;
+    while (node = [enumerator nextObject]) {
+        parentToNodeTransform = [node parentToNodeTransform];
+        kmMat4Multiply(&worldToNodeTransform, &parentToNodeTransform, &worldToNodeTransform);
+    }
+    parentToNodeTransform = [self parentToNodeTransform];
+    kmMat4Multiply(&worldToNodeTransform, &parentToNodeTransform, &worldToNodeTransform);
+    return worldToNodeTransform;*/
 }
 
 - (kmVec3)convertToNodeSpace:(kmVec3)worldVect
