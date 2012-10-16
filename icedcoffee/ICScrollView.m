@@ -56,6 +56,7 @@
     
     if (!_contentView) {
         _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.x, self.size.y)];
+        _contentView.name = @"Content view";
         [super addChild:_contentView];
     }
     
@@ -82,6 +83,7 @@
     _contentOffset = contentOffset;
 
     [[self contentView] setPosition:_contentOffset];
+    
     [self setNeedsDisplay];
 }
 
