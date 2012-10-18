@@ -33,11 +33,13 @@
 
 @synthesize contentSize = _contentSize;
 @synthesize contentOffset = _contentOffset;
+@synthesize automaticallyCalculatesContentSize = _automaticallyCalculatesContentSize;
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        [self setClipsChildren:YES];
+        self.clipsChildren = YES;
+        self.automaticallyCalculatesContentSize = YES;
     }
     return self;
 }
@@ -74,25 +76,30 @@
 
 - (void)setContentOffset:(kmVec3)contentOffset
 {
-    kmVec2 offsetMax = kmVec2Make(-_contentMax.x + _size.x, -_contentMax.y + _size.y);
+    kmVec3 offsetMax = kmVec3Make(-_contentMax.x + _size.x,
+                                  -_contentMax.y + _size.y,
+                                  -_contentMax.z + _size.z);
     contentOffset.x = MAX(offsetMax.x, contentOffset.x);
     contentOffset.y = MAX(offsetMax.y, contentOffset.y);
+    contentOffset.z = MAX(offsetMax.z, contentOffset.z);
     contentOffset.x = MIN(-_contentMin.x, contentOffset.x);
     contentOffset.y = MIN(-_contentMin.y, contentOffset.y);
+    contentOffset.z = MIN(-_contentMin.z, contentOffset.z);
     
     _contentOffset = contentOffset;
 
     [[self contentView] setPosition:_contentOffset];
-    
-    [self setNeedsDisplay];
+    [self setNeedsLayout];
 }
 
+// FIXME (negative min)
 - (void)setContentSize:(kmVec3)contentSize
 {
     _contentSize = contentSize;
     _contentMin = kmNullVec3;
     _contentMax = _contentSize;
     [[self contentView] setSize:contentSize];
+    [self setNeedsLayout];
 }
 
 - (void)setSize:(kmVec3)size
@@ -100,6 +107,7 @@
     [super setSize:size];
 }
 
+// FIXME (negative min)
 - (void)calculateContentSize
 {
     _contentMin = kmNullVec3;
@@ -107,13 +115,18 @@
     
     // FIXME: this should be generalized to support arbitrary transforms
     for (ICNode *child in [self contentView].children) {
-        _contentMin.x = MIN(_contentMin.x, child.position.x);
-        _contentMin.y = MIN(_contentMin.y, child.position.y);
-        _contentMax.x = MAX(_contentMax.x, child.position.x + child.size.x);
-        _contentMax.y = MAX(_contentMax.y, child.position.y + child.size.y);
+        kmAABB aabb = [child aabb];
+        _contentMin.x = MIN(_contentMin.x, aabb.min.x);
+        _contentMin.y = MIN(_contentMin.y, aabb.min.y);
+        _contentMin.z = MIN(_contentMin.z, aabb.min.z);
+        _contentMax.x = MAX(_contentMax.x, aabb.max.x);
+        _contentMax.y = MAX(_contentMax.y, aabb.max.y);
+        _contentMax.z = MAX(_contentMax.z, aabb.max.z);
     }
     
     kmVec3Subtract(&_contentSize, &_contentMax, &_contentMin);
+    [[self contentView] setSize:_contentSize];
+    [self setNeedsLayout];
 }
 
 
@@ -122,7 +135,9 @@
 - (void)addChild:(ICNode *)child
 {
     [[self contentView] addChild:child];
-    [self calculateContentSize];
+    
+    if (self.automaticallyCalculatesContentSize)
+        [self calculateContentSize];
 }
 
 - (void)insertChild:(ICNode *)child atIndex:(uint)index

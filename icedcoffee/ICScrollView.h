@@ -73,6 +73,7 @@
     kmVec3 _contentMin;
     kmVec3 _contentMax;
     ICView *_contentView;
+    BOOL _automaticallyCalculatesContentSize;
 }
 
 #pragma mark - Working with the Scroll View's Content Size and Offset
@@ -87,6 +88,8 @@
  @brief The current offset of the scroll view's contents
  */
 @property (nonatomic, assign, setter=setContentOffset:) kmVec3 contentOffset;
+
+@property (nonatomic, assign) BOOL automaticallyCalculatesContentSize;
 
 - (void)calculateContentSize;
 
