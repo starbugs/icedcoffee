@@ -466,19 +466,6 @@
     kmMat4 nodeToWorldTransform = [self nodeToWorldTransform];
     kmMat4Inverse(&inverseTransform, &nodeToWorldTransform);
     return inverseTransform;
-
-    /*NSArray *ancestors = [self ancestors];
-    NSEnumerator *enumerator = [ancestors reverseObjectEnumerator];
-    kmMat4 worldToNodeTransform = [[enumerator nextObject] parentToNodeTransform];
-    ICNode *node;
-    kmMat4 parentToNodeTransform;
-    while (node = [enumerator nextObject]) {
-        parentToNodeTransform = [node parentToNodeTransform];
-        kmMat4Multiply(&worldToNodeTransform, &parentToNodeTransform, &worldToNodeTransform);
-    }
-    parentToNodeTransform = [self parentToNodeTransform];
-    kmMat4Multiply(&worldToNodeTransform, &parentToNodeTransform, &worldToNodeTransform);
-    return worldToNodeTransform;*/
 }
 
 - (kmVec3)convertToNodeSpace:(kmVec3)worldVect
@@ -718,6 +705,7 @@
 
 #pragma mark - Bounds
 
+// FIXME
 - (kmAABB)aabb
 {
     kmVec3 vertices[2];
@@ -731,6 +719,7 @@
     return CGRectMake(0, 0, _size.x, _size.y);
 }
 
+// FIXME
 - (CGRect)frameRect
 {
     kmVec3 world[8], view[8];
