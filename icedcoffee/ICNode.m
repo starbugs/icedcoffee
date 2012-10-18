@@ -705,12 +705,16 @@
 
 #pragma mark - Bounds
 
-// FIXME
 - (kmAABB)aabb
 {
+    if (self.computesTransform) {
+        [self computeTransform];
+    }
     kmVec3 vertices[2];
-    vertices[0] = _position;
-    kmVec3Add(&vertices[1], &_position, &_size);
+    vertices[0] = kmVec3Make(0, 0, 0);
+    vertices[1] = _size;
+    kmVec3Transform(&vertices[0], &vertices[0], &_transform);
+    kmVec3Transform(&vertices[1], &vertices[1], &_transform);
     return icComputeAABBFromVertices(vertices, 2);
 }
 
