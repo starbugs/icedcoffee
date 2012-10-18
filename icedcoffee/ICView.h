@@ -50,17 +50,19 @@ enum {
 typedef NSUInteger ICAutoResizingMask;
 
 /**
- @brief Base class for icedcoffee user interface views
+ @brief Represents an icedcoffee user interface view
 
- The ICView class represents a base class for all user interface views in the icedcofeee
- framework. Like all other drawable elements in icedcoffee, ICView is based on ICNode. It
- adds functionality that is commonly required when building user interfaces, such as
- clipping, buffering and layouting of the view's contents. The following is a list of the
- most notable features added by the ICView class:
+ The ICView class implements the fundamental functionality of user interface views in the
+ icedcoffee framework. Like all other drawable elements in icedcoffee, ICView is based on
+ the ICNode class. It adds functionality that is commonly required when building user
+ interface elements, such as clipping, buffering and layouting the view's contents.
  
- - Buffering your view's contents in a rectangular area using a render texture backing
+ The following is a list of the most notable features introduced by the ICView class:
+ 
+ - Buffering a view's contents in a rectangular area using a render texture backing
  - Clipping the view's children both in normal and in buffer backed mode
- - Providing a system for layouting the view's children
+ - Providing an interface for layouting the view's children
+ - Providing a system to autoresize views based on autoresizing masks
  - Allowing you to conveniently draw a 2D background based on ICSprite
   
  ### Setup ###
@@ -79,15 +81,15 @@ typedef NSUInteger ICAutoResizingMask;
  it on your own and set it on the view using the ICView::backing property.
  
  If a view uses a render texture backing, it will automatically clip its children to 
- the backing's bounds. Otherwise, the view will not clip its children unless you
+ its backing's bounds. Otherwise, the view will not clip its children unless you
  explicitly set ICView::clipsChildren to ``YES``. Unbacked views clip their
- children using the stencil buffer. The FBO the view is rendered to must provide such
- stencil buffer consequently. If no stencil buffer is present, no clipping will occur.
+ children using stencil masks. Hence, the FBO the view is rendered to must provide a
+ stencil buffer. If no stencil buffer is present, no clipping will occur.
  
  ### Subclassing ###
  
- You should subclass ICView to implement user interface views or controls. The following
- points should be considered when subclassing the ICView class:
+ You should subclass ICView to implement classes representing user interface views.
+ The following points should be considered when subclassing the ICView class:
 
  - ICView's designated initializer is ICView::initWithSize:. If you need to implement
    custom initialization logic, override this method instead of ICNode::init.

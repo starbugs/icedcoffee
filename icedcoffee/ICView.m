@@ -278,6 +278,7 @@
 {
     if (_needsLayout) {
         [self layoutChildren];
+        _needsLayout = NO;
     }
     
     if (!_backing) {
