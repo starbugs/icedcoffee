@@ -19,8 +19,8 @@
 		A67CC12E162B130B0094014C /* ICContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC12D162B130A0094014C /* ICContainer.h */; };
 		A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */; };
 		A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */; };
-		A6F73E0A15EC2B51001EE9B8 /* ICLine.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F73E0815EC2B51001EE9B8 /* ICLine.h */; };
-		A6F73E0B15EC2B51001EE9B8 /* ICLine.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F73E0915EC2B51001EE9B8 /* ICLine.m */; };
+		A6F73E0A15EC2B51001EE9B8 /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F73E0815EC2B51001EE9B8 /* ICLine2D.h */; };
+		A6F73E0B15EC2B51001EE9B8 /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F73E0915EC2B51001EE9B8 /* ICLine2D.m */; };
 		D20CA12115BB4CF900D89046 /* ICPickContext.h in Headers */ = {isa = PBXBuildFile; fileRef = D20CA11F15BB4CF900D89046 /* ICPickContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D20CA12215BB4CF900D89046 /* ICPickContext.m in Sources */ = {isa = PBXBuildFile; fileRef = D20CA12015BB4CF900D89046 /* ICPickContext.m */; };
 		D20F5EA715B6224D0023B1C9 /* ICFramebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D20F5EA515B6224D0023B1C9 /* ICFramebuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -169,8 +169,8 @@
 		A67CC12D162B130A0094014C /* ICContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICContainer.h; path = icedcoffee/ICContainer.h; sourceTree = "<group>"; };
 		A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
 		A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderFactory.m; path = icedcoffee/ICShaderFactory.m; sourceTree = "<group>"; };
-		A6F73E0815EC2B51001EE9B8 /* ICLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine.h; path = icedcoffee/ICLine.h; sourceTree = "<group>"; };
-		A6F73E0915EC2B51001EE9B8 /* ICLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine.m; path = icedcoffee/ICLine.m; sourceTree = "<group>"; };
+		A6F73E0815EC2B51001EE9B8 /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
+		A6F73E0915EC2B51001EE9B8 /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
 		D20CA11F15BB4CF900D89046 /* ICPickContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPickContext.h; path = icedcoffee/ICPickContext.h; sourceTree = "<group>"; };
 		D20CA12015BB4CF900D89046 /* ICPickContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPickContext.m; path = icedcoffee/ICPickContext.m; sourceTree = "<group>"; };
 		D20F5EA515B6224D0023B1C9 /* ICFramebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebuffer.h; path = icedcoffee/ICFramebuffer.h; sourceTree = "<group>"; };
@@ -348,8 +348,8 @@
 			children = (
 				D2FAC4B714E7ABE80022BB3B /* ICNode.h */,
 				D2FAC4B814E7ABE80022BB3B /* ICNode.m */,
-				A6F73E0815EC2B51001EE9B8 /* ICLine.h */,
-				A6F73E0915EC2B51001EE9B8 /* ICLine.m */,
+				A6F73E0815EC2B51001EE9B8 /* ICLine2D.h */,
+				A6F73E0915EC2B51001EE9B8 /* ICLine2D.m */,
 				D253DA041566A1480027DA6C /* ICPlanarNode.h */,
 				D253DA051566A1480027DA6C /* ICPlanarNode.m */,
 				D2FAC4BF14E7ABE80022BB3B /* ICRenderTexture.h */,
@@ -732,7 +732,7 @@
 				D23CB58015A76D5300E2370D /* ICFramebufferProvider.h in Headers */,
 				D20F5EA715B6224D0023B1C9 /* ICFramebuffer.h in Headers */,
 				D20CA12115BB4CF900D89046 /* ICPickContext.h in Headers */,
-				A6F73E0A15EC2B51001EE9B8 /* ICLine.h in Headers */,
+				A6F73E0A15EC2B51001EE9B8 /* ICLine2D.h in Headers */,
 				A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */,
 				A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */,
 				A61FD5A71621C150008A1BDF /* ICGPUImageTexture2DDelegate.h in Headers */,
@@ -851,7 +851,7 @@
 				D2A04C9515A714D90097BDA3 /* ICTouch.m in Sources */,
 				D20F5EA815B6224D0023B1C9 /* ICFramebuffer.m in Sources */,
 				D20CA12215BB4CF900D89046 /* ICPickContext.m in Sources */,
-				A6F73E0B15EC2B51001EE9B8 /* ICLine.m in Sources */,
+				A6F73E0B15EC2B51001EE9B8 /* ICLine2D.m in Sources */,
 				A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */,
 				A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */,
 			);
