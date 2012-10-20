@@ -48,7 +48,7 @@
 #import "ICSprite.h"
 #import "ICScale9Sprite.h"
 #import "ICRectangle.h"
-#import "ICLine.h"
+#import "ICLine2D.h"
 #import "ICRenderTexture.h"
 #import "ICScheduler.h"
 #import "ICTableView.h"
