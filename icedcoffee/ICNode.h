@@ -128,6 +128,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     kmMat4 _transform;
     kmVec3 _position;
     kmVec3 _anchorPoint;
+    kmVec3 _origin;
     kmVec3 _size;
     kmVec3 _scale;
     kmVec3 _rotationAxis;
@@ -570,11 +571,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (kmVec3)convertToWorldSpace:(kmVec3)nodeVect;
 
 /**
- @brief Sets the position of the receiver
- 
- @param position A kmVec3 defining the position of the receiver relative to its parent's node space
+ @brief The position of the receiver
  */
-- (void)setPosition:(kmVec3)position;
+@property (nonatomic, assign, getter=position, setter=setPosition:) kmVec3 position;
 
 /**
  @brief Sets the x coordinate of the position of the receiver
@@ -616,14 +615,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)centerNodeHorizontally;
 
 /**
- @brief Returns the position of the receiver
+ @brief The anchor point of the receiver in local node space
  */
-- (kmVec3)position;
-
-/**
- @brief Sets the anchor point of the receiver in its local node space
- */
-- (void)setAnchorPoint:(kmVec3)anchorPoint;
+@property (nonatomic, assign, getter=anchorPoint, setter=setAnchorPoint:) kmVec3 anchorPoint;
 
 /**
  @brief Centers the anchor point of the receiver based on its ICNode::size property
@@ -631,14 +625,14 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)centerAnchorPoint;
 
 /**
- @brief The anchor point of the receiver in its own local node space
+ @brief The origin of the receiver's contents in local node space
  */
-- (kmVec3)anchorPoint;
+@property (nonatomic, assign) kmVec3 origin;
 
 /**
- @brief Sets the size of the receiver
+ @brief The size of the receiver
  */
-- (void)setSize:(kmVec3)size;
+@property (nonatomic, assign, getter=size, setter=setSize:) kmVec3 size;
 
 /**
  @brief Sets the width of the receiver
@@ -656,14 +650,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setDepth:(float)depth;
 
 /**
- @brief Returns the size of the receiver
+ @brief The scale of the receiver
  */
-- (kmVec3)size;
-
-/**
- @brief Sets the receiver's scale
- */
-- (void)setScale:(kmVec3)scale;
+@property (nonatomic, assign, getter=scale, setter=setScale:) kmVec3 scale;
 
 /**
  @brief Sets the receiver's x scale
@@ -684,11 +673,6 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief Sets the receiver's z scale
  */
 - (void)setScaleZ:(float)scaleZ;
-
-/**
- @brief Returns the scale of the node
- */
-- (kmVec3)scale;
 
 /**
  @brief Sets the rotation angle and axis of the receiver
@@ -754,33 +738,30 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /** @name Managing a Node's Bounds */
 
 /**
- @brief The receiver's axis-aligned bounding box
+ @brief Returns the receiver's axis-aligned bounding box in local coordinate space
  
- This method calculates and returns the receiver's axis-aligned bounding box in its parent node
- coordinate space.
+ The default implementation returns an axis-aligned bounding box based upon the node's
+ ICNode::origin and ICNode::size properties. Subclasses may override this method if their
+ bounding box needs to be calculated differently.
  
- @remarks The calculations performed by this method are based on the ICNode::position and
- ICNode::size properties. For this method to work correctly, the following preconditions
- must be met:
- 
- - The receiver's ICNode::size property must be set correctly, that is, covering
-   the whole (cubic) space occupied by the receiver's visible contents.
- - The receiver must have been added to a valid ICScene object before this method is
-   called.
- 
- @return Returns an kmAABB object defining the node's axis-aligned bounding box. If the method
- fails to calculate the node's bounding box, a zero kmAABB is returned. When this happens,
- most likely one or many of the preconditions mentioned above have not been met.
+ @return Returns a kmAABB object defining the node's axis aligned bounding box in local
+ coordinate space. If the method fails to calculate the node's bounding box, a zero kmAABB
+ is returned.
  */
-- (kmAABB)aabb;
+- (kmAABB)localAABB;
 
 /**
- @brief Returns the rectangular 2D bounds of the receiver
+ @brief Returns the receiver's axis-aligned bounding box in parent coordinate space
  
- By default, the bounds of the receiver are defined as a rectangle with origin (0,0) and
- size (size.x,size.y). Subclasses may override this method to define custom bounds.
+ This method internally invokes ICNode::localAABB, then transforms the returned ``min``
+ and ``max`` vectors into parent space using the receiver's ICNode::transform matrix. Finally,
+ the axis-aligned bounding box in parent space is computed based on the transformed vectors.
+ 
+ @return Returns a kmAABB object defining the node's axis-aligned bounding box in parent
+ coordinate space. If the method fails to calculate the node's bounding box, a zero kmAABB
+ is returned.
  */
-- (CGRect)bounds;
+- (kmAABB)aabb;
 
 /**
  @brief The rectangle occupied by the receiver on its parent scene's framebuffer

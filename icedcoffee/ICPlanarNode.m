@@ -114,6 +114,12 @@
     return kmVec3Make(location.x, location.y, 0.0f);
 }
 
+- (CGRect)bounds
+{
+    kmAABB localAABB = [self localAABB];
+    return CGRectMake(localAABB.min.x, localAABB.min.y, localAABB.max.x, localAABB.max.y);
+}
+
 - (ICHitTestResult)localRayHitTest:(icRay3)ray
 {
     CGRect bounds = [self bounds];

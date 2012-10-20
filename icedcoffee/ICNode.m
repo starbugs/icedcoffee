@@ -551,11 +551,13 @@
     return _anchorPoint;
 }
 
+@synthesize origin = _origin;
+
 - (void)setSize:(kmVec3)size
 {
     _size = size;
     if (_autoCenterAnchorPoint) {
-        _anchorPoint = (kmVec3){ _size.x/2, _size.y/2, _size.z/2 };
+        [self centerAnchorPoint];
     }
 }
 
@@ -705,22 +707,26 @@
 
 #pragma mark - Bounds
 
+- (kmAABB)localAABB
+{
+    return (kmAABB){
+        _origin,
+        kmVec3Make(_origin.x+_size.x,
+                   _origin.y+_size.y,
+                   _origin.z+_size.z)
+    };
+}
+
 - (kmAABB)aabb
 {
+    kmAABB aabb = [self localAABB];
+    
     if (self.computesTransform) {
         [self computeTransform];
     }
-    kmVec3 vertices[2];
-    vertices[0] = kmVec3Make(0, 0, 0);
-    vertices[1] = _size;
-    kmVec3Transform(&vertices[0], &vertices[0], &_transform);
-    kmVec3Transform(&vertices[1], &vertices[1], &_transform);
-    return icComputeAABBFromVertices(vertices, 2);
-}
-
-- (CGRect)bounds
-{
-    return CGRectMake(0, 0, _size.x, _size.y);
+    kmVec3Transform(&aabb.min, &aabb.min, &_transform);
+    kmVec3Transform(&aabb.max, &aabb.max, &_transform);
+    return icComputeAABBFromVertices((kmVec3*)&aabb, 2);
 }
 
 // FIXME
