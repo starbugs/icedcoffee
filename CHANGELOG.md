@@ -1,6 +1,32 @@
 Changelog
 =========
 
+v0.6.8
+------
+
+Changes and Improvements:
+
+* Redesigned ICNode's content metrics:
+  * Added the ICNode::origin property. The origin property defines the origin of the node's
+    contents in local coordinate space.
+  * Added ICNode::localAABB which calculates a node's local axis-aligned bounding box using
+    ICNode's origin and size properties (see documentation for details).
+  * Rewrote ICNode::aabb to simply transform what's returned by localAABB and compute the final
+    AABB in parent space.
+  * Moved ICNode::bounds to ICPlanarNode::bounds. The bounds method now calculates a node's
+    bounding rectangle using the ICNode::localAABB method.
+* Improved the performance of color-based picking on iOS.
+  * Added IC_ENABLE_CV_TEXTURE_CACHE to icConfig.h. If activated, ICTexture2D objects
+    use the CoreVideo texture cache to perform fast texture uploads and pixel readbacks
+    when initialized with initAsCoreVideoRenderTextureWithTextureSize:resolutionType.
+  * ICRenderTexture now uses CoreVideo texture cache based textures if IC_ENABLE_CV_TEXTURE_CACHE
+    is activated. What is more, ICRenderTexture::readPixels:inRect: performs optimized readbacks
+    based CVPixelBufferLockBaseAddress.
+
+Bugfixes:
+
+* Fixed wrong order of matrix multiplication in ICNode::nodeToWorldTransform.
+
 v0.6.7
 ------
 
