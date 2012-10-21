@@ -15,6 +15,20 @@ Changes and Improvements:
     AABB in parent space.
   * Moved ICNode::bounds to ICPlanarNode::bounds. The bounds method now calculates a node's
     bounding rectangle using the ICNode::localAABB method.
+* Reworked node centering based on new content metrics:
+  * Changed ICNode's centerNode, centerNodeHorizontally and centerNodeVertically methods to work
+    based on ICNode::localAABB instead of ICNode::size. This way, the origin of the node is
+    considered when calculating the node's center. Note that the three methods do no longer
+    use the floor of the calculated coordinate values.
+  * Added a couple of new methods related to retrieving and setting a node's center. The most
+    important new methods are: centerNodeRounded:, centerNodeHorizontallyRounded:,
+    centerNodeVerticallyRounded: and centerNodeOpticallyRounded:. These methods should be used
+    to center 2D user interface nodes to ensure correct pixel alignment.
+  * Developers may from now on use ICNode::center and ICNode::setCenter: to retrieve or set a
+    node's center with regard to its parent coordinate space. Setting a node's center using
+    setCenter: will reposition the node so as to match the given center coordinates. For nodes
+    used in 2D user interfaces ICNode::setCenter:rounded: should be used to ensure correct
+    pixel alignment.
 * Improved the performance of color-based picking on iOS.
   * Added IC_ENABLE_CV_TEXTURE_CACHE to icConfig.h. If activated, ICTexture2D objects
     use the CoreVideo texture cache to perform fast texture uploads and pixel readbacks

@@ -248,7 +248,7 @@
 
 - (void)centerLabel
 {
-    [self.label centerNode];
+    [self.label centerNodeOpticallyRounded:YES];
 }
 
 @end

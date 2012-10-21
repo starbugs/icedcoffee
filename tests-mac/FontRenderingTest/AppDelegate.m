@@ -58,13 +58,13 @@
                                fontSize:16];
     [self.label setColor:(icColor4B){255,255,255,255}];
     [scene addChild:self.label];
-    [self.label centerNode];
+    [self.label centerNodeOpticallyRounded:YES];
    
     ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
-    [button setPositionX:300];
     [button setPositionY:50];
     button.label.text = @"Test Button";
-    [scene addChild:button];    
+    [scene addChild:button];
+    [button centerNodeHorizontallyRounded:YES];
     
     [button addTarget:self action:@selector(buttonLeftMouseDown:) forControlEvents:ICControlEventLeftMouseDown];
     [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];

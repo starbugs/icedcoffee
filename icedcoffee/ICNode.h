@@ -591,36 +591,121 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setPositionZ:(float)positionZ;
 
 /**
- @brief Sets the position of the receiver so as to center it in its parent node's space
+ @brief Returns the receiver's center in local coordinate space
  
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
+ The local center is calculated based on the receiver's local axis-aligned bounding box as
+ retrieved via ICNode::localAABB.
+ 
+ @sa center
+ */
+- (kmVec3)localCenter;
+
+- (kmVec3)localCenterRounded:(BOOL)rounded;
+
+- (kmVec3)localOpticalCenter;
+
+- (kmVec3)localOpticalCenterRounded:(BOOL)rounded;
+
+/**
+ @brief Returns the receiver's center in parent coordinate space
+ 
+ This method retrieves the receiver's local center by invoking ICNode::localCenter, then transforms
+ the received coordinates to parent coordinate space using the node's ICNode::transform matrix.
+ 
+ @sa
+ - setCenter:
+ - localCenter
+ */
+- (kmVec3)center;
+
+- (kmVec3)centerRounded:(BOOL)rounded;
+
+- (kmVec3)opticalCenter;
+
+- (kmVec3)opticalCenterRounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's position so as to move its contents to the given center in
+ parent coordinate space
+ 
+ @sa
+ - position
+ */
+- (void)setCenter:(kmVec3)center;
+
+- (void)setCenter:(kmVec3)center rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's X position so as to move its contents to the given center's X in
+ parent coordinate space
+ */
+- (void)setCenterX:(float)centerX;
+
+- (void)setCenterX:(float)centerX rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's Y position so as to move its contents to the given center's Y in
+ parent coordinate space
+ */
+- (void)setCenterY:(float)centerY;
+
+- (void)setCenterY:(float)centerY rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's Z position so as to move its contents to the given center's Z in
+ parent coordinate space
+ */
+- (void)setCenterZ:(float)centerZ;
+
+- (void)setCenterZ:(float)centerZ rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the position of the receiver so as to center it in its parent node's coordinate space
+ 
+ @note The receiver must have been added as a child of a parent node for this method to work.
+ 
+ @sa
+ - setCenter:
  */
 - (void)centerNode;
 
-/**
- @brief Sets the position of the receiver so as to center it vertically in its parent node's space
- 
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
- */
-- (void)centerNodeVertically;
+- (void)centerNodeRounded:(BOOL)rounded;
+
+- (void)centerNodeOptically;
+
+- (void)centerNodeOpticallyRounded:(BOOL)rounded;
 
 /**
- @brief Sets the position of the receiver so as to center it horizontally in its parent node's space
+ @brief Sets the position of the receiver so as to center it horizontally in parent node's space
  
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
+ @note The receiver must have been added as a child of a parent node for this method to work.
+ 
+ @sa
+ - setCenterX:
  */
 - (void)centerNodeHorizontally;
 
+- (void)centerNodeHorizontallyRounded:(BOOL)rounded;
+
 /**
- @brief The anchor point of the receiver in local node space
+ @brief Sets the position of the receiver so as to center it vertically in parent node's space
+ 
+ @note The receiver must have been added as a child of a parent node for this method to work.
+
+ @sa
+ - setCenterY:
+ */
+- (void)centerNodeVertically;
+
+- (void)centerNodeVerticallyRounded:(BOOL)rounded;
+
+/**
+ @brief The anchor point of the receiver in local coordinate space
  */
 @property (nonatomic, assign, getter=anchorPoint, setter=setAnchorPoint:) kmVec3 anchorPoint;
 
 /**
- @brief Centers the anchor point of the receiver based on its ICNode::size property
+ @brief Sets the receiver's anchor point to its local center
  */
 - (void)centerAnchorPoint;
 

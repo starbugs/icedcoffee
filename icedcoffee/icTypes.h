@@ -47,6 +47,7 @@
 #define kmVec3ToCGSize(v) (CGSizeMake(v.x,v.y))
 #define CGSizeTokmVec3(s) (kmVec3Make(s.width,s.height,0.0f))
 #define kmVec4Make(x,y,z,w) ((kmVec4){x,y,z,w})
+#define kmVec3Round(v) ((kmVec3){roundf(v.x),roundf(v.y),roundf(v.z)})
 #define kmVec3Description(v) \
     ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
 #define kmMat4Description(m) \

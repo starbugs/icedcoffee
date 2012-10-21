@@ -51,8 +51,8 @@
         
         [self addChild:_previousSceneButton];
         [self addChild:_nextSceneButton];
-        [_previousSceneButton centerNodeVertically];
-        [_nextSceneButton centerNodeVertically];
+        [_previousSceneButton centerNodeVerticallyRounded:YES];
+        [_nextSceneButton centerNodeVerticallyRounded:YES];
         
         _statusLabel = [[ICLabel labelWithText:@"Showing Test i/n"
                                      fontName:@"Lucida Grande"

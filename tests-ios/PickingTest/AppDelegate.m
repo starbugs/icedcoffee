@@ -63,7 +63,7 @@
     button.label.text = @"Test Button";
     [button setPositionY:300];
     [scene addChild:button];
-    [button centerNodeHorizontally];
+    [button centerNodeHorizontallyRounded:YES];
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
     ICLine2D *line = [ICLine2D lineWithOrigin:kmVec3Make(150, 150, 0)

@@ -505,28 +505,173 @@
     [self setPosition:kmVec3Make(_position.x, _position.y, positionZ)];
 }
 
+- (kmVec3)localCenter
+{
+    return [self localCenterRounded:NO];
+}
+
+- (kmVec3)localCenterRounded:(BOOL)rounded
+{
+    kmAABB aabb = [self localAABB];
+    kmVec3Subtract(&aabb.max, &aabb.max, &aabb.min);
+    kmVec3Scale(&aabb.max, &aabb.max, 0.5f);
+    kmVec3Add(&aabb.max, &aabb.min, &aabb.max);
+    if (rounded)
+        aabb.max = kmVec3Round(aabb.max);
+    return aabb.max;
+}
+
+- (kmVec3)localOpticalCenter
+{
+    return [self localOpticalCenterRounded:NO];
+}
+
+- (kmVec3)localOpticalCenterRounded:(BOOL)rounded
+{
+    kmAABB aabb = [self localAABB];
+    kmVec3Subtract(&aabb.max, &aabb.max, &aabb.min);
+    aabb.max.x *= 0.5f;
+    aabb.max.y *= 0.47f;
+    aabb.max.z *= 0.5f;
+    kmVec3Add(&aabb.max, &aabb.min, &aabb.max);
+    if (rounded)
+        aabb.max = kmVec3Round(aabb.max);
+    return aabb.max;
+}
+
+- (kmVec3)center
+{
+    return [self centerRounded:NO];
+}
+
+- (kmVec3)centerRounded:(BOOL)rounded
+{
+    if ([self computesTransform]) {
+        [self computeTransform];
+    }
+    kmVec3 center = [self localCenter];
+    kmVec3Transform(&center, &center, &_transform);
+    if (rounded)
+        center = kmVec3Round(center);
+    return center;
+}
+
+- (kmVec3)opticalCenter
+{
+    return [self opticalCenterRounded:NO];
+}
+
+- (kmVec3)opticalCenterRounded:(BOOL)rounded
+{
+    if ([self computesTransform]) {
+        [self computeTransform];
+    }
+    kmVec3 center = [self localOpticalCenter];
+    kmVec3Transform(&center, &center, &_transform);
+    if (rounded)
+        center = kmVec3Round(center);
+    return center;
+}
+
+- (void)setCenter:(kmVec3)center
+{
+    [self setCenter:center rounded:NO];
+}
+
+- (void)setCenter:(kmVec3)center rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    kmVec3 position;
+    kmVec3Subtract(&position, &center, &localCenter);
+    if (rounded)
+        position = kmVec3Round(position);
+    self.position = position;
+}
+
+- (void)setCenterX:(float)centerX
+{
+    [self setCenterX:centerX rounded:NO];
+}
+
+- (void)setCenterX:(float)centerX rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionX = centerX - localCenter.x;
+    if (rounded)
+        positionX = roundf(positionX);
+    [self setPositionX:positionX];
+}
+
+- (void)setCenterY:(float)centerY
+{
+    [self setCenterY:centerY rounded:NO];
+}
+
+- (void)setCenterY:(float)centerY rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionY = centerY - localCenter.y;
+    if (rounded)
+        positionY = roundf(positionY);
+    [self setPositionY:positionY];
+}
+
+- (void)setCenterZ:(float)centerZ
+{
+    [self setCenterZ:centerZ rounded:NO];
+}
+
+- (void)setCenterZ:(float)centerZ rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionZ = centerZ - localCenter.z;
+    if (rounded)
+        positionZ = roundf(positionZ);
+    [self setPositionZ:positionZ];
+}
+
 - (void)centerNode
 {
-    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
-                             floorf(self.parent.size.y/2 - self.size.y/2),
-                             0};
-    [self setPosition:center];
+    [self centerNodeRounded:NO];
+}
+
+- (void)centerNodeRounded:(BOOL)rounded
+{
+    kmVec3 center = [self.parent localCenterRounded:rounded];
+    [self setCenter:center rounded:rounded];
+}
+
+- (void)centerNodeOptically
+{
+    [self centerNodeOpticallyRounded:NO];
+}
+
+- (void)centerNodeOpticallyRounded:(BOOL)rounded
+{
+    kmVec3 center = [self.parent localOpticalCenterRounded:rounded];
+    [self setCenter:center rounded:rounded];
 }
 
 - (void)centerNodeVertically
 {
-    kmVec3 center = (kmVec3){_position.x,
-                             floorf(self.parent.size.y/2 - self.size.y/2),
-                             0};
-    [self setPosition:center];
+    [self centerNodeVerticallyRounded:NO];
+}
+
+- (void)centerNodeVerticallyRounded:(BOOL)rounded
+{
+    float centerY = [self.parent localCenterRounded:rounded].y;
+    [self setCenterY:centerY rounded:rounded];
 }
 
 - (void)centerNodeHorizontally
 {
-    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
-                             _position.y,
-                             0};
-    [self setPosition:center];
+    [self centerNodeHorizontallyRounded:NO];
+}
+
+- (void)centerNodeHorizontallyRounded:(BOOL)rounded
+{
+    float centerX = [self.parent localCenterRounded:rounded].x;
+    [self setCenterX:centerX rounded:rounded];
 }
 
 - (kmVec3)position
@@ -542,8 +687,7 @@
 
 - (void)centerAnchorPoint
 {
-    kmVec3 ap = (kmVec3){_size.x/2, _size.y/2, _size.z/2};
-    [self setAnchorPoint:ap];
+    [self setAnchorPoint:[self localCenter]];
 }
 
 - (kmVec3)anchorPoint
