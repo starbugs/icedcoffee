@@ -59,6 +59,7 @@
         self.autoresizesSubviews = YES;
         self.size = kmVec3Make(size.width, size.height, 0);
         _clippingMask = [[ICSprite alloc] init];
+        _clippingMask.position = self.origin;
         _clippingMask.size = self.size;
         _clippingMask.color = (icColor4B){255,255,255,255};
         

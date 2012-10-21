@@ -235,22 +235,22 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 }
 
 - (void)drawScene
-{
-    [super drawScene];
-    
+{    
     if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
         return; // nothing to draw
     }
-    
-    [self calculateDeltaTime];
-    
+ 
     // We draw on a secondary thread through the display link
     // When resizing the view, -reshape is called automatically on the main thread
-    // Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
+    // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
     
     ICGLView *openGLview = (ICGLView*)self.view;
     CGLLockContext([[openGLview openGLContext] CGLContextObj]);
     [[openGLview openGLContext] makeCurrentContext];
+        
+    [super drawScene];
+    
+    [self calculateDeltaTime];
     
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
         [[self scheduler] update:_deltaTime];    

@@ -31,10 +31,12 @@ ICContextManager *g_defaultContextManager = nil;
 
 + (id)defaultContextManager
 {
-    if (!g_defaultContextManager) {
-        g_defaultContextManager = [[ICContextManager alloc] init];
+    @synchronized (self) {
+        if (!g_defaultContextManager) {
+            g_defaultContextManager = [[ICContextManager alloc] init];
+        }
+        return g_defaultContextManager;
     }
-    return g_defaultContextManager;
 }
 
 - (id)init

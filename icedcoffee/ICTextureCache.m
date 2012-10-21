@@ -29,6 +29,7 @@
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
 #import "icUtils.h"
+#import "icConfig.h"
 
 @interface ICTextureCache (Private)
 - (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo;
@@ -47,6 +48,9 @@
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
 {
     if ((self = [super init])) {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+        ICLog(@"Initializing texture cache for HVC %@", [hostViewController description]);
+#endif
         _textures = [[NSMutableDictionary alloc] init];
         
         // Setup GCD queues
@@ -67,6 +71,10 @@
 
 - (void)dealloc
 {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+    ICLog(@"Deallocating texture cache for HVC %@", [_hostViewController description]);
+#endif
+
     [self removeAllTextures];
     
     [_auxGLContext release];
@@ -93,6 +101,9 @@
                      resolutionType:(ICResolutionType)resolutionType
                               error:(NSError **)error
 {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+    ICLog(@"Loading texture %@", [url absoluteString]);
+#endif
     __block ICTexture2D *texture;
     dispatch_sync(_dictQueue, ^{
         texture = [_textures objectForKey:[url absoluteString]];
@@ -135,6 +146,11 @@
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];
     ICTexture2D *texture = [textureInfo objectForKey:@"asyncTexture"];
+    
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+    ICLog(@"Notifying textureDidLoad:object: for texture %@", [texture description]);
+#endif
+    
     if ([target respondsToSelector:@selector(textureDidLoad:object:)])
         [target textureDidLoad:texture object:object];
 }
@@ -154,6 +170,11 @@
     id<ICAsyncTextureCacheDelegate> target = [textureInfo objectForKey:@"target"];
     id object = [textureInfo objectForKey:@"object"];
     NSError *error = [textureInfo objectForKey:@"error"];
+    
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+    ICLog(@"Notifying textureLoadingDidFail:object: for error %@", [error description]);
+#endif
+    
     if ([target respondsToSelector:@selector(textureLoadingDidFailWithError:object:)])
         [target textureLoadingDidFailWithError:error object:object];
 }
@@ -166,6 +187,10 @@
     NSAssert(url != nil, @"URL cannot be nil");
     NSAssert(target != nil, @"Target cannot be nil");
     
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+    ICLog(@"Loading texture async: %@", [url absoluteString]);
+#endif
+    
     __block ICTexture2D *texture;
     
     // Check whether the texture file has been cached already
@@ -174,13 +199,27 @@
     });
     
     if (texture) {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+        ICLog(@"Texture already cached for key %@", [url absoluteString]);
+#endif
         // Texture has already been cached
-        [target textureDidLoad:texture object:object];
+        NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                     target, @"target",
+                                     texture, @"asyncTexture",
+                                     object, @"object",
+                                     nil];
+        [self performSelector:@selector(notifyAsyncTextureDidLoad:)
+                     onThread:_hostViewController.thread
+                   withObject:textureInfo
+                waitUntilDone:YES];
         return;
     }
     
     // Queue asynchronous loading of texture
     dispatch_async(_loadingQueue, ^{
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+        ICLog(@"Perform async load for texture %@", [url absoluteString]);
+#endif
         ICTexture2D *asyncTexture;
         
 #ifdef __IC_PLATFORM_MAC
@@ -195,25 +234,36 @@
 		glFlush();
         
         if (asyncTexture) {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+            ICLog(@"Issuing async notifyAsyncTextureDidLoad: for texture %@", [url absoluteString]);
+#endif
             NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                          target, @"target",
                                          asyncTexture, @"asyncTexture",
                                          object, @"object",
                                          nil];
+            NSThread *hvcThread = _hostViewController.thread;
+            NSAssert(hvcThread != nil, @"HVC thread must be running for this to work");
             [self performSelector:@selector(notifyAsyncTextureDidLoad:)
-                         onThread:_hostViewController.thread
+                         onThread:hvcThread
                        withObject:textureInfo
-                    waitUntilDone:NO];
+                    waitUntilDone:YES];
         } else {
+#if IC_ENABLE_DEBUG_TEXTURE_CACHE
+            ICLog(@"Texture loading failed, issuing async notifyAsyncTextureLoadingDidFail: " \
+                   "for texture %@", [url absoluteString]);
+#endif
             NSDictionary *textureInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                          target, @"target",
                                          error, @"error",
                                          object, @"object",
                                          nil];
+            NSThread *hvcThread = _hostViewController.thread;
+            NSAssert(hvcThread != nil, @"HVC thread must be running for this to work");
             [self performSelector:@selector(notifyAsyncTextureLoadingDidFail:)
-                         onThread:_hostViewController.thread
+                         onThread:hvcThread
                        withObject:textureInfo
-                    waitUntilDone:NO];
+                    waitUntilDone:YES];
         }
         
 #ifdef __IC_PLATFORM_MAC

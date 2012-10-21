@@ -50,12 +50,12 @@ enum {
 typedef NSUInteger ICAutoResizingMask;
 
 /**
- @brief Represents an icedcoffee user interface view
+ @brief Represents a user interface view
 
  The ICView class implements the fundamental functionality of user interface views in the
  icedcoffee framework. Like all other drawable elements in icedcoffee, ICView is based on
- the ICNode class. It adds functionality that is commonly required when building user
- interface elements, such as clipping, buffering and layouting the view's contents.
+ the ICNode class. It adds functionality that is commonly required when building visual user
+ interface elements, such as clipping, buffering and layouting contents.
  
  The following is a list of the most notable features introduced by the ICView class:
  

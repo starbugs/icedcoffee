@@ -91,6 +91,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _lastUpdate.tv_usec = 0;
     _frameUpdateMode = ICFrameUpdateModeSynchronized;
     _needsDisplay = YES;
+    _didDrawFirstFrame = NO;
     
     // Make current host view controller regardless of which initializer was called
     [self makeCurrentHostViewController];
@@ -195,12 +196,22 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _needsDisplay = YES;
 }
 
+- (void)willDrawFirstFrame
+{
+    // Implement in super class
+}
+
 - (void)drawScene
 {
     // Override in subclass, call base implementation before drawing
     
     // Make the receiver the current host view controller before drawing the scene
     [self makeCurrentHostViewController];
+    
+    if (!_didDrawFirstFrame) {
+        _didDrawFirstFrame = YES;
+        [self willDrawFirstFrame];
+    }
 }
 
 // Deprecated as of v0.6.6

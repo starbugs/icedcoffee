@@ -42,6 +42,13 @@ Changes and Improvements:
 Fixes:
 
 * Fixed wrong order of matrix multiplication in ICNode::nodeToWorldTransform.
+* Fixed a timing issue with ICTextureCache and host view controllers drawing concurrently.
+  Asynchronous texture caching cannot be done safely before the host view controller's thread
+  has started running. The ICHostViewController::willDrawFirstFrame method has been added to
+  provide a hook for starting asynchronous texture caching when the host view controller's thread
+  is about to draw the first frame (before the first frame is actually rendered). An NSAssert has
+  been added to ICTextureCache to alert developers in situations where the texture cache attempts
+  to access a not yet initialized HVC thread (ICHostViewController::thread = nil).
 
 v0.6.7
 ------

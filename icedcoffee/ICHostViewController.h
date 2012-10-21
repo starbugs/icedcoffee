@@ -79,6 +79,7 @@
 
     BOOL _isRunning;
     NSThread *_thread;
+    BOOL _didDrawFirstFrame;
 
     icTime _deltaTime;
     struct timeval _lastUpdate;
@@ -243,6 +244,8 @@
  @brief The thread used to draw the receiver's scene and process HID events
  */
 @property (atomic, retain) NSThread *thread;
+
+- (void)willDrawFirstFrame;
 
 /**
  @brief The scene that is currently managed by the receiver

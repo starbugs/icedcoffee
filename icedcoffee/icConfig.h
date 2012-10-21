@@ -68,7 +68,6 @@
 
 // Logging and Debugging
 
-// Break on GL errors
 #ifndef IC_BREAK_ON_GL_ERRORS
 /**
  @brief Activate to break on GL errors when debugging
@@ -76,7 +75,6 @@
 #define IC_BREAK_ON_GL_ERRORS 0
 #endif
 
-// Debug output FPS (once a second) on the console
 #ifndef IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
 /**
  @brief Activate to output an FPS log message to the console once per second
@@ -84,7 +82,6 @@
 #define IC_DEBUG_OUTPUT_FPS_ON_CONSOLE 0
 #endif
 
-// Output debug log messages to console for hit test results
 #ifndef IC_ENABLE_DEBUG_HITTEST
 /**
  @brief Activate to output log messages for hit test results
@@ -92,7 +89,6 @@
 #define IC_ENABLE_DEBUG_HITTEST 0
 #endif
 
-// Output debug log messages to console when picking is being performed
 #ifndef IC_ENABLE_DEBUG_PICKING
 /**
  @brief Activate to output log messages for picking
@@ -100,7 +96,6 @@
 #define IC_ENABLE_DEBUG_PICKING 0
 #endif
 
-// Output debug log messages to console in host view controllers
 #ifndef IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER
 /**
  @brief Activate to output log messages for host view controllers
@@ -108,7 +103,6 @@
 #define IC_ENABLE_DEBUG_HOSTVIEWCONTROLLER 0
 #endif
 
-// Output debug log messages to console when dispatching touch events (iOS only)
 #ifndef IC_ENABLE_DEBUG_TOUCH_DISPATCHER
 /**
  @brief Activate to output log messages when dispatching touch events (iOS only)
@@ -116,12 +110,15 @@
 #define IC_ENABLE_DEBUG_TOUCH_DISPATCHER 0
 #endif
 
-// Output debug log messages to console pertaining to OpenGL context setup and management
 #ifndef IC_ENABLE_DEBUG_OPENGL_CONTEXTS
 /**
  @brief Activate to output log messages pertaining to OpenGL context setup and management
  */
 #define IC_ENABLE_DEBUG_OPENGL_CONTEXTS 0
+#endif
+
+#ifndef IC_ENABLE_DEBUG_TEXTURE_CACHE
+#define IC_ENABLE_DEBUG_TEXTURE_CACHE 0
 #endif
 
 /** @} */
