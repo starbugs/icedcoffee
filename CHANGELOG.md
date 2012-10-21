@@ -36,8 +36,10 @@ Changes and Improvements:
   * ICRenderTexture now uses CoreVideo texture cache based textures if IC_ENABLE_CV_TEXTURE_CACHE
     is activated. What is more, ICRenderTexture::readPixels:inRect: performs optimized readbacks
     based CVPixelBufferLockBaseAddress.
+* Renamed the ICLine class to ICLine2D.
+* Renamed ICLine2D's origin and target properties to lineOrigin and lineTarget.
 
-Bugfixes:
+Fixes:
 
 * Fixed wrong order of matrix multiplication in ICNode::nodeToWorldTransform.
 
