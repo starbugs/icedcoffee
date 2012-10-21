@@ -596,14 +596,34 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  The local center is calculated based on the receiver's local axis-aligned bounding box as
  retrieved via ICNode::localAABB.
  
- @sa center
+ @sa
+ - center
  */
 - (kmVec3)localCenter;
 
+/**
+ @brief Returns the receiver's (rounded) center in local coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned local center should be rounded
+ 
+ @sa
+ - localCenter
+ */
 - (kmVec3)localCenterRounded:(BOOL)rounded;
 
+/**
+ @brief Returns the local optical center in local coordinate space
+ 
+ The optical center is calculated based on the receiver's local axis-aligned bounding box
+ as retrieved via ICNode::localAABB.
+ */
 - (kmVec3)localOpticalCenter;
 
+/**
+ @brief Returns the local (rounded) optical center in local coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned local optical center should be rounded
+ */
 - (kmVec3)localOpticalCenterRounded:(BOOL)rounded;
 
 /**
@@ -618,10 +638,26 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (kmVec3)center;
 
+/**
+ @brief Returns the receiver's (rounded) center in parent coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned center should be rounded
+ */
 - (kmVec3)centerRounded:(BOOL)rounded;
 
+/**
+ @brief Returns the receiver's optical center in parent coordinate space
+ 
+ @sa
+ - localOpticalCenter
+ */
 - (kmVec3)opticalCenter;
 
+/**
+ @brief Returns the receiver's (rounded) optical center in parent coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned optical center should be rounded
+ */
 - (kmVec3)opticalCenterRounded:(BOOL)rounded;
 
 /**
@@ -633,6 +669,15 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (void)setCenter:(kmVec3)center;
 
+/**
+ @brief Sets the receiver's (rounded) position so as to move its contents to the given center in
+ parent coordinate space
+
+ @param rounded A boolean flag defining whether the position set on the receiver should be rounded
+
+ @sa
+ - position
+ */
 - (void)setCenter:(kmVec3)center rounded:(BOOL)rounded;
 
 /**
@@ -641,6 +686,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (void)setCenterX:(float)centerX;
 
+/**
+ @brief Sets the receiver's (rounded) X position so as to move its contents to the given center's
+ X in parent coordinate space
+ */
 - (void)setCenterX:(float)centerX rounded:(BOOL)rounded;
 
 /**
@@ -649,6 +698,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (void)setCenterY:(float)centerY;
 
+/**
+ @brief Sets the receiver's (rounded) Y position so as to move its contents to the given center's
+ Y in parent coordinate space
+ */
 - (void)setCenterY:(float)centerY rounded:(BOOL)rounded;
 
 /**
@@ -657,46 +710,74 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (void)setCenterZ:(float)centerZ;
 
+/**
+ @brief Sets the receiver's (rounded) Z position so as to move its contents to the given center's
+ Z in parent coordinate space
+ */
 - (void)setCenterZ:(float)centerZ rounded:(BOOL)rounded;
 
 /**
  @brief Sets the position of the receiver so as to center it in its parent node's coordinate space
- 
- @note The receiver must have been added as a child of a parent node for this method to work.
  
  @sa
  - setCenter:
  */
 - (void)centerNode;
 
+/**
+ @brief Sets the (rounded) position of the receiver so as to center it in its parent node's
+ coordinate space
+ 
+ @sa
+ - setCenter:
+ */
 - (void)centerNodeRounded:(BOOL)rounded;
 
+/**
+ @brief Sets the position of the receiver so as to center it optically in its parent node's
+ coordinate space
+ */
 - (void)centerNodeOptically;
 
+/**
+ @brief Sets the (rounded) position of the receiver so as to center it optically in its parent
+ node's coordinate space
+ */
 - (void)centerNodeOpticallyRounded:(BOOL)rounded;
 
 /**
  @brief Sets the position of the receiver so as to center it horizontally in parent node's space
- 
- @note The receiver must have been added as a child of a parent node for this method to work.
  
  @sa
  - setCenterX:
  */
 - (void)centerNodeHorizontally;
 
+/**
+ @brief Sets the (rounded) position of the receiver so as to center it horizontally in parent
+ node's space
+ 
+ @sa
+ - setCenterX:rounded:
+ */
 - (void)centerNodeHorizontallyRounded:(BOOL)rounded;
 
 /**
  @brief Sets the position of the receiver so as to center it vertically in parent node's space
  
- @note The receiver must have been added as a child of a parent node for this method to work.
-
  @sa
  - setCenterY:
  */
 - (void)centerNodeVertically;
 
+
+/**
+ @brief Sets the (rounded) position of the receiver so as to center it vertically in parent
+ node's space
+ 
+ @sa
+ - setCenterY:rounded:
+ */
 - (void)centerNodeVerticallyRounded:(BOOL)rounded;
 
 /**
