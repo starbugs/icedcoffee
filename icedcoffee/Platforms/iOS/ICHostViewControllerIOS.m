@@ -213,6 +213,10 @@
     }
     
     [_glContextLock unlock];
+    
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
+        _needsDisplay = NO;
+    }
 }
 
 // point is in UIView's coordinate system

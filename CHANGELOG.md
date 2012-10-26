@@ -6,6 +6,12 @@ v0.6.8
 
 Changes and Improvements:
 
+* Added Z-sorting to the ICNode class
+  * Added the zIndex property to ICNode which may be used to sort the node's children
+    for drawing.
+  * Added the private computeChildrenSortedByZIndex method to ICNode, which is used together with
+    _childrenSortedByZIndex and _childrenSortedByZIndexDirty to compute and cache a sorted array
+    of a node's children.
 * Redesigned ICNode's content metrics:
   * Added the ICNode::origin property. The origin property defines the origin of the node's
     contents in local coordinate space.
@@ -49,6 +55,8 @@ Fixes:
   is about to draw the first frame (before the first frame is actually rendered). An NSAssert has
   been added to ICTextureCache to alert developers in situations where the texture cache attempts
   to access a not yet initialized HVC thread (ICHostViewController::thread = nil).
+* Fixed a bug in ICHostViewControllerIOS preventing on demand frame updates (frameUpdateMode set
+  to ICFrameUpdateModeOnDemand) from working correctly on iOS.
 
 v0.6.7
 ------
