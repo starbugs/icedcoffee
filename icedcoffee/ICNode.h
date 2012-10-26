@@ -181,6 +181,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Returns an array containing the receiver's children nodes to be used for drawing
  
+ This method is called by ICNodeVisitorDrawing to retrieve a list of children nodes which should
+ be visited for drawing when the visitor traverses the scene graph.
+ 
  @sa
     - pickingChildren
     - children
@@ -189,7 +192,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 /**
  @brief Returns an array containing the receiver's children nodes to be used for picking
- 
+
+ This method is called by ICNodeVisitorPicking to retrieve a list of children nodes which should
+ be visited for picking when the visitor traverses the scene graph.
+
  @sa
     - drawingChildren
     - children
