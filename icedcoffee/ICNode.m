@@ -808,8 +808,10 @@
 
 - (void)setZIndex:(int)zIndex
 {
-    _zIndex = zIndex;
-    self.parent->_childrenSortedByZIndexDirty = YES;
+    if (zIndex != _zIndex) {
+        _zIndex = zIndex;
+        self.parent->_childrenSortedByZIndexDirty = YES;
+    }
 }
 
 - (NSUInteger)order
