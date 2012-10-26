@@ -125,6 +125,7 @@
     }
     
     kmVec3Subtract(&_contentSize, &_contentMax, &_contentMin);
+    [[self contentView] setOrigin:_contentMin];
     [[self contentView] setSize:_contentSize];
     [self setNeedsLayout];
 }
