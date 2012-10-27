@@ -246,6 +246,7 @@
 
 - (BOOL)clipsChildren
 {
+    // Render texture always implicitly clips children
     if (_backing)
         return YES;
     
@@ -255,6 +256,14 @@
 - (void)setClipsChildren:(BOOL)clipsChildren
 {
     _clipsChildren = clipsChildren;
+}
+
+- (ICHitTestResult)localRayHitTest:(icRay3)ray
+{
+    if (!self.clipsChildren) {
+        return ICHitTestDismissed;
+    }
+    return [super localRayHitTest:ray];
 }
 
 - (void)setNeedsDisplay
