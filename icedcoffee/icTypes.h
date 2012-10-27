@@ -157,7 +157,8 @@ typedef enum _ICResolutionType {
 enum {
     ICHitTestUnsupported = 0,
     ICHitTestHit = 1,
-    ICHitTestFailed = 2
+    ICHitTestFailed = 2,
+    ICHitTestDismissed = 3
 };
 
 typedef uint ICHitTestResult;
