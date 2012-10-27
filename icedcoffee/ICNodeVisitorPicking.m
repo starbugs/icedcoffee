@@ -375,7 +375,7 @@ enum {
         
         if (hitTestResult != ICHitTestFailed) {
             
-            // Simple hit test succeeded, proceed with picking test
+            // Simple ray-based hit test succeeded, proceed with picking test
             CGPoint nodePixelLocation;
             if (_internalMode == InternalModeSingleNodes) {
                 // Set up scissor test, so we draw only to the pixel reserved for the node while picking
