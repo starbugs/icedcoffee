@@ -194,8 +194,13 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (void)continuouslyUpdateFramesUntilDate:(NSDate *)date
 {
-    [_continuousFrameUpdateExpiryDate release];
-    _continuousFrameUpdateExpiryDate = [date retain];
+    if (!_continuousFrameUpdateExpiryDate ||
+        ((_continuousFrameUpdateExpiryDate) &&
+         [_continuousFrameUpdateExpiryDate compare:date] != NSOrderedDescending))
+    {
+        [_continuousFrameUpdateExpiryDate release];
+        _continuousFrameUpdateExpiryDate = [date retain];
+    }
 }
 
 - (void)setNeedsDisplay

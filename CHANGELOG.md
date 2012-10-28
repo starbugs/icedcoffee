@@ -42,6 +42,10 @@ Changes and Improvements:
   * ICRenderTexture now uses CoreVideo texture cache based textures if IC_ENABLE_CV_TEXTURE_CACHE
     is activated. What is more, ICRenderTexture::readPixels:inRect: performs optimized readbacks
     based CVPixelBufferLockBaseAddress.
+* Added support for temporary continous frame updates when animation objects managed by host
+  view controllers in on demand drawing mode. Developers may use
+  ICHostViewController::continuouslyUpdateFramesUntilDate: to initiate temporary animations for
+  a limited time period.
 * Renamed the ICLine class to ICLine2D.
 * Renamed ICLine2D's origin and target properties to lineOrigin and lineTarget.
 
