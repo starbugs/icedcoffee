@@ -86,6 +86,7 @@
     uint64_t _frameCount;
     
     ICFrameUpdateMode _frameUpdateMode;
+    NSDate *_continuousFrameUpdateExpiryDate;
     BOOL _needsDisplay;
     
     // Issue #3
@@ -234,6 +235,8 @@
  for scheduling animation updates in this case.
  */
 @property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+
+- (void)continuouslyUpdateFramesUntilDate:(NSDate *)date;
 
 /**
  @brief Called by the framework to signal that the receiver's view contents need to be redrawn

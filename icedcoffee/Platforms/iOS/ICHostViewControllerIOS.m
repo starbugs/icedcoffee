@@ -176,7 +176,11 @@
 
 - (void)drawScene
 {
-    if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
+        !_needsDisplay &&
+        (!_continuousFrameUpdateExpiryDate ||
+         [_continuousFrameUpdateExpiryDate compare:[NSDate date]] == NSOrderedAscending)
+        ) {
         return; // nothing to draw
     }
     

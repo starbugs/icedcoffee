@@ -236,10 +236,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene
 {    
-    if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
+        !_needsDisplay &&
+        (!_continuousFrameUpdateExpiryDate ||
+         [_continuousFrameUpdateExpiryDate compare:[NSDate date]] == NSOrderedAscending)
+        ) {
         return; // nothing to draw
     }
- 
     // We draw on a secondary thread through the display link
     // When resizing the view, -reshape is called automatically on the main thread
     // Add a mutex around to avoid the threads accessing the context simultaneously when resizing

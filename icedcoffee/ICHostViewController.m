@@ -112,6 +112,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     [_scheduler release];
     [_renderContext release];
     [_targetActionDispatcher release];
+    [_continuousFrameUpdateExpiryDate release];
 
     // Make sure no bad access can occur with the current host view controller
     ICHostViewController *currentHVC = [[self class] currentHostViewController];
@@ -189,6 +190,12 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         }
 #endif
     }
+}
+
+- (void)continuouslyUpdateFramesUntilDate:(NSDate *)date
+{
+    [_continuousFrameUpdateExpiryDate release];
+    _continuousFrameUpdateExpiryDate = [date retain];
 }
 
 - (void)setNeedsDisplay
