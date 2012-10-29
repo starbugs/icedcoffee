@@ -25,7 +25,6 @@
 
 #import "ICSprite.h"
 #import "ICRenderTexture.h"
-#import "ICContainer.h"
 
 
 enum {
@@ -106,7 +105,7 @@ typedef NSUInteger ICAutoResizingMask;
    also marks the view's contents for redrawing.
  - You may implement custom layouting by overriding the ICView::layoutChildren method.
  */
-@interface ICView : ICPlanarNode <ICContainer> {
+@interface ICView : ICPlanarNode {
 @protected
     ICRenderTexture *_backing;
     ICSprite *_clippingMask;

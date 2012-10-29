@@ -439,11 +439,4 @@
     // Override in subclass
 }
 
-// ICContainer Protocol
-
-- (BOOL)isContainer
-{
-    return YES;
-}
-
 @end
