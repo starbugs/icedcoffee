@@ -47,23 +47,33 @@
 #endif
 
 
+#ifdef __IC_PLATFORM_IOS
 /**
- @brief View controller base class for displaying and updating an icedcoffee framebuffer
+ @brief View controller base class integrating icedcoffee into Cocoa/CocoaTouch applications
  
- ICHostViewController is a base class for view controllers for CocoaTouch and Cocoa host views.
- Host view controllers represent a means to integrate IcedCoffee into iOS and Mac OS X applications.
- They play a central role as they provide the foundation for drawing, scheduling and event handling
- for a given host view. The framework provides built-in view controller subclasses specialized for
- each supported platform: ICHostViewControllerIOS for use in CocoaTouch applications on iOS and
- ICHostViewControllerMac for use in Cocoa applications on Mac OS X. Host view controllers work in
- collaboration with the ICGLView class, which exists in two different versions for each platform
- as well.
-
- As a framework user, you should subclass the ICHostViewControllerIOS or ICHostViewControllerMac
- class to implement custom view controllers for managing your application's native OS views.
- See the respective class documentation for more information on subclassing and working with
- host view controllers on iOS and Mac OS X.
+ ICHostViewController is an abstract base class that defines an interface for platform and
+ application specific view controllers managing an icedcoffee host view. Host view controllers
+ provide the foundation for drawing, animation and event handling within an icedcoffee view
+ (see ICGLView) in your iOS or Mac OS X application.
+ 
+ On iOS, the standard way of integrating a host view controller into your application is
+ subclassing ICHostViewControllerIOS, which is the platform specific implementation for
+ integration with UIKit.
  */
+#elif defined(__IC_PLATFORM_MAC)
+/**
+ @brief View controller base class integrating icedcoffee into Cocoa/CocoaTouch applications
+ 
+ ICHostViewController is an abstract base class that defines an interface for platform and
+ application specific view controllers managing an icedcoffee host view. Host view controllers
+ provide the foundation for drawing, animation and event handling within an icedcoffee view
+ (see ICGLView) in your iOS or Mac OS X application.
+ 
+ On Mac OS X, the standard way of integrating a host view controller into your application is
+ subclassing ICHostViewControllerMac, which is the platform specific implementation for
+ integration with AppKit.
+ */
+#endif
 @interface ICHostViewController : IC_VIEWCONTROLLER <EVENT_PROTOCOLS>
 {
 @protected
@@ -248,6 +258,9 @@
  */
 @property (atomic, retain) NSThread *thread;
 
+/**
+ @brief Called before the first frame is drawn by the receiver
+ */
 - (void)willDrawFirstFrame;
 
 /**
