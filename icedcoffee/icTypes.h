@@ -72,6 +72,8 @@
 
 /** @name Misc. */
 
+#define ICZIndexUndefined NSIntegerMin
+
 typedef enum _ICShaderValueType {
     ICShaderValueTypeInvalid,
     ICShaderValueTypeInt,

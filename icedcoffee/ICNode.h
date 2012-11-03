@@ -138,7 +138,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     BOOL _autoCenterAnchorPoint;
     
     // Z sorting
-    int _zIndex;
+    NSInteger _zIndex;
     NSMutableArray *_childrenSortedByZIndex;
     BOOL _childrenSortedByZIndexDirty;
     
@@ -218,6 +218,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     - children
  */
 @property (nonatomic, assign, setter=setParent:) ICNode *parent;
+
+/**
+ @brief The index of the receiver in its parent's children array
+ */
+- (NSUInteger)index;
 
 /**
  @brief Adds a child node to the receiver's children array
@@ -793,6 +798,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 /**
  @brief Sets the receiver's anchor point to its local center
+ 
+ @sa
+ - localCenter
  */
 - (void)centerAnchorPoint;
 
@@ -875,33 +883,37 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
 
-#pragma mark - Managing Order
-/** @name Managing Order */
-
-@property (nonatomic, assign, setter=setZIndex:) int zIndex;
+#pragma mark - Managing Z Sorting
+/** @name Managing Z Sorting */
 
 /**
- @brief The index of the receiver in its parent's children array
+ @brief The receiver's z-index
  */
-- (NSUInteger)order;
+@property (nonatomic, assign, setter=setZIndex:) NSInteger zIndex;
 
 /**
- @brief Exchanges the receiver with the last node of its parent's children array
+ @brief Sets the receiver's z-index so as to make it the frontmost node on its branch
+ 
+ This method computes the z-index of the frontmost node on the receiver's branch, sets that z-index
+ on the receiver and orders the former frontmost node backward.
  */
 - (void)orderFront;
 
 /**
- @brief Exchanges the receiver with the next node of its parent's children array
+ @brief Exchanges the receiver's z-index with the z-index of its first sibling ordered forward
  */
 - (void)orderForward;
 
 /**
- @brief Exchanges the receiver with the previous node of its parent's children array
+ @brief Exchanges the receiver's z-index with the z-index of its first sibling ordered backward
  */
 - (void)orderBackward;
 
 /**
- @brief Exchanges the receiver with the first node of its parent's children array
+ @brief Sets the receiver's z-index so as to make it the backmost node in its branch
+
+ This method computes the z-index of the backmost node on the receiver's branch, sets that z-index
+ on the receiver and orders the former backmost node forward.
  */
 - (void)orderBack;
 

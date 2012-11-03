@@ -43,7 +43,7 @@
 - (void)setParent:(ICNode *)parent;
 - (void)setChildren:(NSMutableArray *)children;
 - (void)setNeedsDisplayForNode:(ICNode *)node;
-- (NSArray *)computeChildrenSortedByZIndex;
+- (NSArray *)childrenSortedByZIndex;
 @end
 
 
@@ -85,6 +85,9 @@
         // Enable user interaction by default
         self.userInteractionEnabled = YES;
         
+        // Z Index is undefined by default
+        self.zIndex = ICZIndexUndefined;
+        
         _childrenSortedByZIndexDirty = YES;
     }
     return self;
@@ -111,6 +114,8 @@
     if (!_children) {
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
+    if (child.zIndex == ICZIndexUndefined)
+        child.zIndex = [_children count];
     [(NSMutableArray *)_children addObject:child];
     _childrenSortedByZIndexDirty = YES;
 }
@@ -120,6 +125,8 @@
     if (!_children) {
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
+    if (self.zIndex == ICZIndexUndefined)
+        self.zIndex = [_children count];
     [(NSMutableArray *)_children insertObject:child atIndex:index];
     _childrenSortedByZIndexDirty = YES;
 }
@@ -189,7 +196,7 @@
     return _children;
 }
 
-- (NSArray *)computeChildrenSortedByZIndex
+- (NSArray *)childrenSortedByZIndex
 {
     if (_childrenSortedByZIndexDirty) {
         [_childrenSortedByZIndex release];
@@ -202,20 +209,19 @@
                 return NSOrderedAscending;
             return NSOrderedSame;
         }];
+        _childrenSortedByZIndexDirty = NO;
     }
     return _childrenSortedByZIndex;
 }
 
 - (NSArray *)drawingChildren
 {
-    [self computeChildrenSortedByZIndex];
-    return _childrenSortedByZIndex;
+    return [self childrenSortedByZIndex];
 }
 
 - (NSArray *)pickingChildren
 {
-    [self computeChildrenSortedByZIndex];
-    return _childrenSortedByZIndex;
+    return [self childrenSortedByZIndex];
 }
 
 - (NSArray *)ancestorsOfType:(Class)classType
@@ -804,51 +810,76 @@
 
 #pragma mark - Order
 
-@synthesize zIndex = _zIndex;
-
-- (void)setZIndex:(int)zIndex
-{
-    if (zIndex != _zIndex) {
-        _zIndex = zIndex;
-        self.parent->_childrenSortedByZIndexDirty = YES;
-    }
-}
-
-- (NSUInteger)order
+- (NSUInteger)index
 {
     return [self.parent.children indexOfObject:self];
 }
 
-- (void)orderFront
-{
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
-                                                withObjectAtIndex:[self.parent.children count]-1];
-}
+@synthesize zIndex = _zIndex;
 
-- (void)orderForward
+- (void)setZIndex:(NSInteger)zIndex
 {
-    NSUInteger order = [self order];
-    if ([self.parent.children count] <= order+1)
-        return;
-    
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
-                                                withObjectAtIndex:order+1];
-}
-
-- (void)orderBackward
-{
-    NSUInteger order = [self order];
-    if (order == 0)
-        return;
-    
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
-                                                withObjectAtIndex:order-1];
+    if (zIndex != _zIndex) {
+        _zIndex = zIndex;
+        if (self.parent)
+            self.parent->_childrenSortedByZIndexDirty = YES;
+    }
 }
 
 - (void)orderBack
 {
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
-                                                withObjectAtIndex:0];
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSInteger zIndex = 0;
+        self.zIndex = zIndex++;
+        for (ICNode *child in sortedChildren) {
+            if (child != self) {
+                child.zIndex = zIndex++;
+            }
+        }
+    }
+}
+
+- (void)orderBackward
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSUInteger index = [sortedChildren indexOfObject:self];
+        if (index > 0) {
+            NSInteger zIndex = self.zIndex;
+            ICNode *reorderNode = [sortedChildren objectAtIndex:index - 1];
+            self.zIndex = reorderNode.zIndex;
+            reorderNode.zIndex = zIndex;
+        }
+    }
+}
+
+- (void)orderForward
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSUInteger index = [sortedChildren indexOfObject:self];
+        if (index < [sortedChildren count] - 1) {
+            NSInteger zIndex = self.zIndex;
+            ICNode *reorderNode = [sortedChildren objectAtIndex:index + 1];
+            self.zIndex = reorderNode.zIndex;
+            reorderNode.zIndex = zIndex;
+        }
+    }
+}
+
+- (void)orderFront
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSInteger zIndex = 0;
+        for (ICNode *child in sortedChildren) {
+            if (child != self) {
+                child.zIndex = zIndex++;
+            }
+        }
+        self.zIndex = zIndex;
+    }
 }
 
 
@@ -973,8 +1004,8 @@
 
 - (NSString *)description
 {
-	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@ (%@)>",
-            [self class], (uint)self, self.name, [_parent class], [_parent name]];
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@ (%@) | zIndex = %ld>",
+            [self class], (uint)self, self.name, [_parent class], [_parent name], self.zIndex];
 }
 
 // private

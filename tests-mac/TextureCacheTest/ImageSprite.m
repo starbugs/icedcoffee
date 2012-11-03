@@ -22,8 +22,26 @@
 //  
 
 #import "ImageSprite.h"
+#import "ICLabel.h"
 
 @implementation ImageSprite
+
+- (id)initWithTexture:(ICTexture2D *)texture
+{
+    if ((self = [super initWithTexture:texture])) {
+        ICLabel *label = [ICLabel labelWithText:@"" fontName:@"Arial" fontSize:12.0f];
+        [label setTag:1];
+        [label setColor:(icColor4B){0,0,0,255}];
+        [self addChild:label];
+    }
+    return self;
+}
+
+- (void)setZIndex:(NSInteger)zIndex
+{
+    [super setZIndex:zIndex];
+    [(ICLabel *)[self childForTag:1] setText:[NSString stringWithFormat:@"%ld", zIndex]];
+}
 
 - (void)mouseEntered:(ICMouseEvent *)event
 {
