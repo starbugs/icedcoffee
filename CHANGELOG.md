@@ -9,9 +9,16 @@ Changes and Improvements:
 * Added Z-sorting to the ICNode class
   * Added the zIndex property to ICNode which may be used to sort the node's children
     for drawing.
-  * Added the private computeChildrenSortedByZIndex method to ICNode, which is used together with
+  * Added the private childrenSortedByZIndex method to ICNode, which is used together with
     _childrenSortedByZIndex and _childrenSortedByZIndexDirty to compute and cache a sorted array
     of a node's children.
+  * Renamed the order method to index.
+  * Rewrote methods orderBack, orderFront, orderBackward, and orderForward. These methods do
+    now manipulate the node's z indices rather than moving them around in their parent's children
+    array.
+  * Changed pickingChildren and drawingChildren to return childrenSortedByZIndex. Hence, the
+    default behavior of ICNodeVisitorPicking and ICNodeVisitorDrawing is from now on to draw
+    nodes sorted by their zIndex property values.
 * Redesigned ICNode's content metrics:
   * Added the ICNode::origin property. The origin property defines the origin of the node's
     contents in local coordinate space.
