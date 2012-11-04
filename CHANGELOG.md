@@ -55,6 +55,7 @@ Changes and Improvements:
   a limited time period.
 * Renamed the ICLine class to ICLine2D.
 * Renamed ICLine2D's origin and target properties to lineOrigin and lineTarget.
+* Added ICShaderCache::removeAllShaderPrograms and ICShaderCache::removeUnusedShaderPrograms.
 
 Fixes:
 
@@ -68,6 +69,7 @@ Fixes:
   to access a not yet initialized HVC thread (ICHostViewController::thread = nil).
 * Fixed a bug in ICHostViewControllerIOS preventing on demand frame updates (frameUpdateMode set
   to ICFrameUpdateModeOnDemand) from working correctly on iOS.
+* Fixed ICShaderCache::purgeCurrentShaderCache.
 
 v0.6.7
 ------
