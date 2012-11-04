@@ -9,6 +9,7 @@ Immediate:
 Near term:
 * icedcoffee project templates for Xcode
 * Solution for gesture recognizers in icedcoffee
+* Improvements to font rendering based on CoreGraphics
 * Check/improve KVC/KVO compliance of central framework classes
 * Simple property animations and transitions (interfaces similar to CA)
 * Full featured ICScrollView implementation (bouncing, gestures, etc.)
@@ -18,6 +19,7 @@ Near term:
 * Full blown scheduler tests (including priorities)
 
 Medium term:
+* GPU-based glyph caching, using CoreText metrics for efficient type setting
 * icedcoffee view controllers
 * Simple widgets:
   * Slider
