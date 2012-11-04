@@ -135,6 +135,9 @@
  */
 + (void)purgeCurrentShaderCache;
 
+- (void)removeAllShaderPrograms;
+
+- (void)removeUnusedShaderPrograms;
 
 #pragma mark - Accessing the Shader Factory
 
