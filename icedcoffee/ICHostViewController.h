@@ -222,6 +222,9 @@
  */
 - (void)calculateDeltaTime;
 
+/**
+ @brief The number of seconds passed since the first frame was rendered by the receiver
+ */
 @property (nonatomic, readonly) icTime elapsedTime;
 
 /**
