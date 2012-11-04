@@ -345,6 +345,8 @@
     return [self childrenOfType:[ICView class]];
 }
 
+// FIXME: missing overrides
+
 - (void)addChild:(ICNode *)child
 {
     if (!_backing) {

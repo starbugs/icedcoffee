@@ -133,6 +133,8 @@
 
 // Composition overrides
 
+// FIXME: missing overrides
+
 - (void)addChild:(ICNode *)child
 {
     [[self contentView] addChild:child];

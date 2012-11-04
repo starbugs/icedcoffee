@@ -1,6 +1,29 @@
 Release Notes
 =============
 
+icedcoffee v0.6.8
+-----------------
+
+New Features:
+* Z-sorting: ICNode does now allow for z-sorted rendering based on the zIndex property.
+  ICNode's order, orderFront, orderBack, orderForward, and orderBackward have been
+  reworked to affect z-indexes rather than the node's physical order.
+* Node metrics: ICNode does now provide an origin property allowing you to define
+  the node's local origin w.r.t. to the space occupied by its contents. What is more,
+  ICNode provides a couple of new methods for centering, e.g. center, setCenter:,
+  localCenter, and setLocalCenter:.
+* Vastly improved picking performance on iOS devices using CoreVideo texture caches
+  (no more stalling framebuffer readbacks).
+
+New Test Projects:
+* Added ShaderTest (Mac) demonstrating the implementation of a simple animated fragment
+  shader sourced from http://glsl.heroku.com/.
+
+Important Changes:
+* The ICNode::order method has been renamed to ICNode::index.
+* The ICLine class has been renamed to ICLine2D.
+
+
 icedcoffee v0.6.7
 -----------------
 
