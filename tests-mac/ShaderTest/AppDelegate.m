@@ -47,6 +47,8 @@
     [self.window setAcceptsMouseMovedEvents:YES];
     [self.window makeFirstResponder:self.window.contentView];
     [self.window makeKeyAndOrderFront:self];
+    
+    [glView release];
 }
 
 @end
