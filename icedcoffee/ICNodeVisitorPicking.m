@@ -382,7 +382,9 @@ enum {
                 nodePixelLocation = [self pixelLocationForNodeIndex:_nodeIndex];
                 [self setUpScissorTestForPixelAtLocation:nodePixelLocation];
             } else {
-                nodePixelLocation = [self pixelLocationForNodeIndex:_nodeCount];            
+#if IC_ENABLE_DEBUG_PICKING
+                nodePixelLocation = [self pixelLocationForNodeIndex:_nodeCount];
+#endif
             }
 
 #if IC_ENABLE_DEBUG_PICKING
