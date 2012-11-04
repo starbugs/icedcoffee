@@ -23,6 +23,25 @@
 
 #import "ICShaderProgram.h"
 
+/**
+ @brief Defines a generic animated shader program
+ 
+ ICAnimatedShaderProgram is a convenience class extending the functionality of ICShaderProgram
+ to allow for continuously animated shaders based on a time uniform.
+ 
+ Shaders used with this class must provide a ``time`` uniform of type ``float``.
+ ICAnimatedShaderProgram automatically updates that time uniform with the current
+ host view controller's ICHostViewController::elapsedTime value when the program is used.
+ */
 @interface ICAnimatedShaderProgram : ICShaderProgram
+
+/**
+ @brief Refreshes the ``time`` value and updates the receiver's uniforms
+ 
+ The ICAnimatedShaderProgram class overrides ICShaderProgram::updateUniforms to add automatic
+ updates of the ``time`` uniform. ``time`` is set to the current host view controller's
+ ICHostViewController::elapsedTime value before the super classes' implementation is called.
+ */
+- (void)updateUniforms;
 
 @end
