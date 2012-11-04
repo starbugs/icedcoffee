@@ -44,6 +44,7 @@
 #import "ICUIScene.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
+#import "ICAnimatedShaderProgram.h"
 #import "ICShaderValue.h"
 #import "ICSprite.h"
 #import "ICScale9Sprite.h"

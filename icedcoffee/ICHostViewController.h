@@ -92,6 +92,7 @@
     BOOL _didDrawFirstFrame;
 
     icTime _deltaTime;
+    icTime _elapsedTime;
     struct timeval _lastUpdate;
     uint64_t _frameCount;
     
@@ -220,6 +221,8 @@
  @brief Called by the framework to calculate the delta time between two consecutive frames
  */
 - (void)calculateDeltaTime;
+
+@property (nonatomic, readonly) icTime elapsedTime;
 
 /**
  @brief The number of frames drawn by the receiver so far

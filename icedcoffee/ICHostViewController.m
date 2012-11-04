@@ -63,6 +63,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
 @synthesize frameCount = _frameCount;
+@synthesize elapsedTime = _elapsedTime;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 
 + (id)platformSpecificHostViewController
@@ -174,6 +175,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
             _deltaTime = MAX(0, _deltaTime);
         }
         
+        _elapsedTime += _deltaTime;
         _lastUpdate = now;
         _frameCount++;
         
