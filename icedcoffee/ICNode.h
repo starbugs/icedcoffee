@@ -56,10 +56,6 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  ICNode::setRotationAngle:axis:) and ICNode::anchorPoint properties. Furthermore, nodes provide
  methods for calculating inverse and world transforms.
  
- Nodes have implicit order, that is, their order is defined by the index they occupy in their
- parent's children array. ICNode provides convenience methods for manipulating this order, e.g.
- ICNode::orderFront, ICNode::orderForward, ICNode::orderBackward and ICNode::orderBack.
- 
  Visitors are used to traverse a given scene graph for drawing on a framebuffer. A visitor is
  an external object of class ICNodeVisitor. The framework ships with two built-in visitor classes,
  ICNodeVisitorDrawing for drawing nodes on screen and ICNodeVisitorPicking for drawing nodes
