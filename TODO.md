@@ -5,6 +5,7 @@ Immediate:
 * Rename AutoResizingMask to AutoresizingMask in ICView
 * Fix missing composition overrides in ICView and ICScrollView
 * Fix issues with depth testing an ICView
+* Remove large image assets from workspace, host those on icedcoffee-framework.org
 
 Near term:
 * icedcoffee project templates for Xcode
