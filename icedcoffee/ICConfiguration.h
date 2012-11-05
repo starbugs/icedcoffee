@@ -107,9 +107,9 @@ typedef uint ICOSVersion;
 @property (nonatomic, readonly) BOOL supportsPixelBufferObject;
 
 /**
- @brief Whether the system supports fast texture uploads
+ @brief Whether the system supports CoreVideo texture caches
  */
-- (BOOL)supportsFastTextureUpload;
+- (BOOL)supportsCVOpenGLESTextureCache;
 
 /** @brief Returns the OS version.
  

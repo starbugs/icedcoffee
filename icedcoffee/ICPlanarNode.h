@@ -93,4 +93,34 @@
  */
 - (kmVec3)hostViewToNodeLocation:(CGPoint)location;
 
+
+#pragma mark - Getting the Node's Bounds
+/** @name Getting the Node's Bounds */
+
+// FIXME
+/**
+ @brief Returns the two-dimensional rectangular bounds of the receiver in local coordinate space
+ 
+ Returns a ``CGRect`` defining the bounds of the receiver based on its ICNode::localAABB.
+ */
+- (CGRect)bounds;
+
+
+#pragma mark - Performing Ray-based Hit Tests
+/** @name Performing Ray-based Hit Tests */
+
+/**
+ @brief Performs a ray-based hit test on the receiver
+ 
+ @param ray An icRay3 defining the ray to use for the hit test
+ 
+ This method performs a ray-based hit test by calculating the intersection of the given ray
+ with the receiver's ICPlanarNode::plane, then checking whether that intersection lies within
+ the receiver's ICNode::bounds.
+ 
+ @sa
+ - ICNode::localRayHitTest:
+ */
+- (ICHitTestResult)localRayHitTest:(icRay3)ray;
+
 @end

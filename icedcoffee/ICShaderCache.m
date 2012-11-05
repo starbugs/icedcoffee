@@ -40,6 +40,7 @@
 {
     ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
                                       renderContextForCurrentOpenGLContext];
+    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
     ICShaderCache *shaderCache = renderContext.shaderCache;
     if (!shaderCache) {
         shaderCache = renderContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
@@ -49,7 +50,7 @@
 
 + (void)purgeCurrentShaderCache
 {
-    [[[self class] currentShaderCache] release];
+    [[[self class] currentShaderCache] removeAllShaderPrograms];
 }
 
 - (id)init
@@ -85,6 +86,23 @@
 - (ICShaderProgram *)shaderProgramForKey:(id)key
 {
     return [_programs objectForKey:key];
+}
+
+- (void)removeAllShaderPrograms
+{
+    [_programs removeAllObjects];
+}
+
+- (void)removeUnusedShaderPrograms
+{
+    NSArray *keys = [_programs allKeys];
+    for (id key in keys) {
+        id value = [_programs objectForKey:key];
+        if ([value retainCount] == 1) {
+            ICLog(@"IcedCoffee: ICShaderCache: removing unused shader program: %@", key);
+            [_programs removeObjectForKey:key];
+        }
+    }
 }
 
 

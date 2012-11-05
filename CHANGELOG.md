@@ -1,6 +1,82 @@
 Changelog
 =========
 
+v0.6.8
+------
+
+Changes and Improvements:
+
+* Added Z-sorting to the ICNode class
+  * Added the zIndex property to ICNode which may be used to sort the node's children
+    for drawing/picking.
+  * Added the private childrenSortedByZIndex method to ICNode, which is used together with
+    _childrenSortedByZIndex and _childrenSortedByZIndexDirty to compute and cache a sorted array
+    of a node's children.
+  * Renamed the ICNode::order method to ICNode::index.
+  * Rewrote methods orderBack, orderFront, orderBackward, and orderForward. These methods do
+    now manipulate the node's z indices rather than moving them around in their parent's children
+    array physically.
+  * Changed pickingChildren and drawingChildren to return childrenSortedByZIndex. Hence, the
+    default behavior of ICNodeVisitorPicking and ICNodeVisitorDrawing is from now on to draw
+    nodes sorted by their zIndex property values.
+* Redesigned ICNode's content metrics (this change is widely backwards compatible):
+  * Added the ICNode::origin property. The origin property defines the origin of the node's
+    contents in local coordinate space.
+  * Added ICNode::localAABB which calculates a node's local axis-aligned bounding box using
+    ICNode's origin and size properties (see documentation for details).
+  * Rewrote ICNode::aabb to simply transform what's returned by localAABB and compute the final
+    AABB in parent space.
+  * Moved ICNode::bounds to ICPlanarNode::bounds. The bounds method now calculates a node's
+    bounding rectangle using the ICNode::localAABB method.
+* Reworked node centering based on new content metrics:
+  * Changed ICNode's centerNode, centerNodeHorizontally and centerNodeVertically methods to work
+    based on ICNode::localAABB instead of ICNode::size. This way, the origin of the node is
+    considered when calculating the node's center. Note that the three methods do no longer
+    use the floor of the calculated coordinate values.
+  * Added a couple of new methods related to retrieving and setting a node's center. The most
+    important new methods are: centerNodeRounded:, centerNodeHorizontallyRounded:,
+    centerNodeVerticallyRounded: and centerNodeOpticallyRounded:. These methods should be used
+    to center 2D user interface nodes to ensure correct pixel alignment.
+  * Developers may from now on use ICNode::center and ICNode::setCenter: to retrieve or set a
+    node's center with regard to its parent coordinate space. Setting a node's center using
+    setCenter: will reposition the node so as to match the given center coordinates. For nodes
+    used in 2D user interfaces ICNode::setCenter:rounded: should be used to ensure correct
+    pixel alignment.
+* Improved the performance of color-based picking on iOS.
+  * Added IC_ENABLE_CV_TEXTURE_CACHE to icConfig.h. If activated, ICTexture2D objects
+    use the CoreVideo texture cache to perform fast texture uploads and pixel readbacks
+    when initialized with initAsCoreVideoRenderTextureWithTextureSize:resolutionType.
+  * ICRenderTexture now uses CoreVideo texture cache based textures if IC_ENABLE_CV_TEXTURE_CACHE
+    is activated. What is more, ICRenderTexture::readPixels:inRect: performs optimized readbacks
+    based CVPixelBufferLockBaseAddress.
+* Added support for temporary continous frame updates when animation objects managed by host
+  view controllers in on demand drawing mode. Developers may use
+  ICHostViewController::continuouslyUpdateFramesUntilDate: to initiate temporary animations for
+  a limited time period.
+* Added the ICHostViewController::elapsedTime property, which returns the number of seconds
+  since the first frame was drawn by a given host view controller. elapsedTime is updated
+  internally when the host view's frame is updated. It may be used as a time value for animated
+  shaders or property animations on nodes.
+* Added the ICAnimatedShaderProgram class. The class implements a shader program with a time
+  uniform, which is continuously updated when updateUniforms is called.
+* Renamed the ICLine class to ICLine2D.
+* Renamed ICLine2D's origin and target properties to lineOrigin and lineTarget.
+* Added ICShaderCache::removeAllShaderPrograms and ICShaderCache::removeUnusedShaderPrograms.
+
+Fixes:
+
+* Fixed wrong order of matrix multiplication in ICNode::nodeToWorldTransform.
+* Fixed a timing issue with ICTextureCache and host view controllers drawing concurrently.
+  Asynchronous texture caching cannot be done safely before the host view controller's thread
+  has started running. The ICHostViewController::willDrawFirstFrame method has been added to
+  provide a hook for starting asynchronous texture caching when the host view controller's thread
+  is about to draw the first frame (before the first frame is actually rendered). An NSAssert has
+  been added to ICTextureCache to alert developers in situations where the texture cache attempts
+  to access a not yet initialized HVC thread (ICHostViewController::thread = nil).
+* Fixed a bug in ICHostViewControllerIOS preventing on demand frame updates (frameUpdateMode set
+  to ICFrameUpdateModeOnDemand) from working correctly on iOS.
+* Fixed ICShaderCache::purgeCurrentShaderCache.
+
 v0.6.7
 ------
 

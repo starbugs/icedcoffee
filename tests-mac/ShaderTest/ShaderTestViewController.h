@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //
@@ -21,17 +21,8 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
-#import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import "IcedCoffee.h"
 
-@interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
-@protected
-    id<ICGPUImageTexture2DDelegate> _delegate;
-}
-
-@property (nonatomic, assign) id<ICGPUImageTexture2DDelegate> delegate;
-
-- (void)newFrameReadyFromTextureOutput:(GPUImageTextureOutput *)callbackTextureOutput;
+@interface ShaderTestViewController : ICHostViewControllerMac
 
 @end

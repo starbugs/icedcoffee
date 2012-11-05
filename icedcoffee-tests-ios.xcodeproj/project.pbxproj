@@ -25,6 +25,8 @@
 		A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51E1620F72F008A1BDF /* CoreMedia.framework */; };
 		A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6478F4D15FE7896003DB316 /* DraggableControl.m */; };
+		A67CC09C16262A290094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
 		A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
 		A6EA1E0415CD65110007C4FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
@@ -272,6 +274,7 @@
 				D29284FF15AA52AA0086B12A /* CoreGraphics.framework in Frameworks */,
 				D292850015AA52AA0086B12A /* OpenGLES.framework in Frameworks */,
 				D292850115AA52AA0086B12A /* Foundation.framework in Frameworks */,
+				A67CC09C16262A290094014C /* CoreVideo.framework in Frameworks */,
 				D2AB774814F9399F0028CD04 /* libicedcoffee-ios.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,6 +315,7 @@
 				D292850915AA52B80086B12A /* CoreGraphics.framework in Frameworks */,
 				D292850A15AA52B80086B12A /* OpenGLES.framework in Frameworks */,
 				D292850B15AA52B80086B12A /* Foundation.framework in Frameworks */,
+				A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1380,6 +1384,7 @@
 				A61FD4D41620ECB0008A1BDF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6EA1E2315CD65110007C4FF /* Build configuration list for PBXNativeTarget "IBIntegrationTest" */ = {
 			isa = XCConfigurationList;

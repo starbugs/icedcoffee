@@ -34,23 +34,11 @@
 #endif
 
 /**
- @brief An abstract base class providing the foundation for event processing
- in the IcedCoffee framework
+ @brief Defines an interface for handling events
  
- <h3>Overview</h3>
- 
- The ICResponder abstract base class is the IcedCoffee pendant to the
- <a href="http://goo.gl/7kL9i">NSResponder</a> and <a href="http://goo.gl/5WIzx">UIResponder</a>
- classes.
-  
- In contrast to Apple's design, IcedCoffee implements both mouse and touch event handling in one
- class. Only those events supported by the respective target platform will be sent to the responder.
- An advantage of this design is that you may implement both mouse and touch event handlers in one
- subclass without further modification and thus reuse your code for both platforms. 
- 
- <h3>Subclassing</h3>
- 
- ICResponder should not be subclassed directly. Instead, you should subclass ICNode.
+ ICResponder defines an interface for handling events within the icedcoffee framework.
+ Subclasses of ICResponder may receive user interface events and respond to them by implementing
+ the corresponding event handling methods.
  */
 @interface ICResponder : ICIdentifiable <EVENT_PROTOCOLS>
 {

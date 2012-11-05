@@ -135,6 +135,15 @@
  */
 + (void)purgeCurrentShaderCache;
 
+/**
+ @brief Removes all shader programs from the receiver
+ */
+- (void)removeAllShaderPrograms;
+
+/**
+ @brief Removes all unused shader programs from the receiver
+ */
+- (void)removeUnusedShaderPrograms;
 
 #pragma mark - Accessing the Shader Factory
 

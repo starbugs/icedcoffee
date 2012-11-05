@@ -9,7 +9,7 @@
 	"cleanIntermediates": false,
 
 	"mainTitle": "Icedcoffee iOS API Reference",
-	"version": "0.6.7",
+	"version": "0.6.8",
 	
 	"classPrefix": "IC",
 	"macroPrefix": "IC_",

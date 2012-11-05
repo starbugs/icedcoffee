@@ -27,6 +27,10 @@
 
 /**
  @brief Base class for identifiable objects
+ 
+ ICIdentifiable is a base class for all identifiable objects in icedcoffee. It allows you to
+ identify objects based on a ICIdentifiable::tag and ICIdentifiable::name property. What is more,
+ you may attach arbitrary user data to an object using the ICIdentifiable::userData property.
  */
 @interface ICIdentifiable : NSObject
 {

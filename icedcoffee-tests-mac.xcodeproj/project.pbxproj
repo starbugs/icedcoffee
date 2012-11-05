@@ -17,6 +17,17 @@
 		A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
+		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
+		A6CB74B31646D1EC00CDEEAC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74AA1646D1EC00CDEEAC /* InfoPlist.strings */; };
+		A6CB74B41646D1EC00CDEEAC /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74AC1646D1EC00CDEEAC /* MainMenu.xib */; };
+		A6CB74B51646D1EC00CDEEAC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74AE1646D1EC00CDEEAC /* main.m */; };
+		A6CB74B71646D7CD00CDEEAC /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		A6CB74B81646D7D100CDEEAC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		A6CB74B91646D7D600CDEEAC /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		A6CB74BC1646D81800CDEEAC /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A6CB74BF1646D85000CDEEAC /* ShaderTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74BE1646D85000CDEEAC /* ShaderTestViewController.m */; };
 		A6F0489F15DE9C5C00321D86 /* MyHostViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F0489E15DE9C5C00321D86 /* MyHostViewController.m */; };
 		A6F048AB15DE9E5A00321D86 /* Picking.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A115DE9E5A00321D86 /* Picking.fsh */; };
 		A6F048AC15DE9E5A00321D86 /* PositionColor.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A215DE9E5A00321D86 /* PositionColor.fsh */; };
@@ -192,6 +203,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		A6CB74BA1646D81100CDEEAC /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		D21F88921533065500E2496C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -317,6 +335,17 @@
 		A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
 		A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
 		A61D6F5615DC3AD1005AFDA5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6CB74A61646D1EC00CDEEAC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A6CB74A91646D1EC00CDEEAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A6CB74AB1646D1EC00CDEEAC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A6CB74AD1646D1EC00CDEEAC /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A6CB74AE1646D1EC00CDEEAC /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A6CB74AF1646D1EC00CDEEAC /* ShaderTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShaderTest-Info.plist"; sourceTree = "<group>"; };
+		A6CB74B01646D1EC00CDEEAC /* ShaderTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShaderTest-Prefix.pch"; sourceTree = "<group>"; };
+		A6CB74BD1646D85000CDEEAC /* ShaderTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderTestViewController.h; sourceTree = "<group>"; };
+		A6CB74BE1646D85000CDEEAC /* ShaderTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderTestViewController.m; sourceTree = "<group>"; };
 		A6F0489D15DE9C5C00321D86 /* MyHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyHostViewController.h; sourceTree = "<group>"; };
 		A6F0489E15DE9C5C00321D86 /* MyHostViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyHostViewController.m; sourceTree = "<group>"; };
 		A6F048A115DE9E5A00321D86 /* Picking.fsh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.glsl; name = Picking.fsh; path = resources/shaders/Picking.fsh; sourceTree = SOURCE_ROOT; };
@@ -508,6 +537,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6CB748A1646D1AA00CDEEAC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6CB74BC1646D81800CDEEAC /* libicedcoffee-mac.a in Frameworks */,
+				A6CB74B71646D7CD00CDEEAC /* Carbon.framework in Frameworks */,
+				A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */,
+				A6CB74B81646D7D100CDEEAC /* CoreVideo.framework in Frameworks */,
+				A6CB74B91646D7D600CDEEAC /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21F887D1533064A00E2496C /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -681,6 +722,24 @@
 				A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A6CB74A51646D1EC00CDEEAC /* ShaderTest */ = {
+			isa = PBXGroup;
+			children = (
+				A6CB74A61646D1EC00CDEEAC /* AppDelegate.h */,
+				A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */,
+				A6CB74A81646D1EC00CDEEAC /* Credits.rtf */,
+				A6CB74AA1646D1EC00CDEEAC /* InfoPlist.strings */,
+				A6CB74AC1646D1EC00CDEEAC /* MainMenu.xib */,
+				A6CB74AE1646D1EC00CDEEAC /* main.m */,
+				A6CB74AF1646D1EC00CDEEAC /* ShaderTest-Info.plist */,
+				A6CB74B01646D1EC00CDEEAC /* ShaderTest-Prefix.pch */,
+				A6CB74BD1646D85000CDEEAC /* ShaderTestViewController.h */,
+				A6CB74BE1646D85000CDEEAC /* ShaderTestViewController.m */,
+			);
+			name = ShaderTest;
+			path = "tests-mac/ShaderTest";
 			sourceTree = "<group>";
 		};
 		A6F048A015DE9E4C00321D86 /* Shaders */ = {
@@ -991,6 +1050,7 @@
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
 				D253D9D715663DFD0027DA6C /* Scale9SpriteTest */,
 				D2ADCFDE157EB37400B6E519 /* ScrollViewTest */,
+				A6CB74A51646D1EC00CDEEAC /* ShaderTest */,
 				D2EDC3591572BBD200EBB417 /* StencilTest */,
 				D22F25711587D5EE0049268C /* TableViewTest */,
 				D2F3502315285DCD00DF2D5B /* TextureCacheTest */,
@@ -1016,6 +1076,7 @@
 				D2850483158B204E00CD71ED /* ViewTest.app */,
 				D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */,
 				A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */,
+				A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1128,6 +1189,24 @@
 			name = IBIntegrationTest;
 			productName = IBIntegrationTest;
 			productReference = A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A6CB748C1646D1AA00CDEEAC /* ShaderTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A6CB74A21646D1AA00CDEEAC /* Build configuration list for PBXNativeTarget "ShaderTest" */;
+			buildPhases = (
+				A6CB74891646D1AA00CDEEAC /* Sources */,
+				A6CB748A1646D1AA00CDEEAC /* Frameworks */,
+				A6CB748B1646D1AA00CDEEAC /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A6CB74BB1646D81100CDEEAC /* PBXTargetDependency */,
+			);
+			name = ShaderTest;
+			productName = ShaderTest;
+			productReference = A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		D21F88801533064A00E2496C /* KazmathTests */ = {
@@ -1388,6 +1467,7 @@
 				D2850482158B204E00CD71ED /* ViewTest */,
 				D2735B42159126E200216F1B /* MultipleCocoaViewsTest */,
 				A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */,
+				A6CB748C1646D1AA00CDEEAC /* ShaderTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1420,6 +1500,16 @@
 				A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */,
 				A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */,
 				A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6CB748B1646D1AA00CDEEAC /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */,
+				A6CB74B31646D1EC00CDEEAC /* InfoPlist.strings in Resources */,
+				A6CB74B41646D1EC00CDEEAC /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1588,6 +1678,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6CB74891646D1AA00CDEEAC /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */,
+				A6CB74B51646D1EC00CDEEAC /* main.m in Sources */,
+				A6CB74BF1646D85000CDEEAC /* ShaderTestViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D21F887C1533064A00E2496C /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1711,6 +1811,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */;
 		};
+		A6CB74BB1646D81100CDEEAC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = A6CB74BA1646D81100CDEEAC /* PBXContainerItemProxy */;
+		};
 		D21F88931533065500E2496C /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1794,6 +1899,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				A61D6F5315DC3AD1005AFDA5 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A6CB74A81646D1EC00CDEEAC /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6CB74A91646D1EC00CDEEAC /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A6CB74AA1646D1EC00CDEEAC /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6CB74AB1646D1EC00CDEEAC /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A6CB74AC1646D1EC00CDEEAC /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6CB74AD1646D1EC00CDEEAC /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2091,6 +2220,50 @@
 					"3rd-party/kazmath/include",
 				);
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A6CB74A31646D1AA00CDEEAC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ShaderTest/ShaderTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6CB74A41646D1AA00CDEEAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ShaderTest/ShaderTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = (
+					icedcoffee,
+					"3rd-party/kazmath/include",
+				);
+				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2564,6 +2737,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A6CB74A21646D1AA00CDEEAC /* Build configuration list for PBXNativeTarget "ShaderTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A6CB74A31646D1AA00CDEEAC /* Debug */,
+				A6CB74A41646D1AA00CDEEAC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */ = {
 			isa = XCConfigurationList;

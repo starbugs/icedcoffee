@@ -93,9 +93,6 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #endif
 
 
-//CLASS IMPLEMENTATIONS:
-
-
 // If the image has alpha, you can create RGBA8 (32-bit) or RGBA4 (16-bit) or RGB5A1 (16-bit)
 // Default is: RGBA8888 (32-bit textures)
 static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
@@ -114,6 +111,10 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
             hasPremultipliedAlpha = _hasPremultipliedAlpha,
             resolutionType = _resolutionType;
 
+#ifdef __IC_PLATFORM_IOS
+@synthesize cvRenderTarget = _cvRenderTarget;
+#endif
+
 - (id)initWithData:(const void*)data
        pixelFormat:(ICPixelFormat)pixelFormat
        textureSize:(CGSize)textureSizeInPixels
@@ -122,7 +123,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 {
     GLsizei width = textureSizeInPixels.width;
     GLsizei height = textureSizeInPixels.height;
-    
+        
 	if((self = [super init])) {
 		glGenTextures(1, &_name);
 		glBindTexture(GL_TEXTURE_2D, _name);
@@ -169,6 +170,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
         
 		_hasPremultipliedAlpha = NO;
 	}
+    
 	return self;    
 }
 
@@ -184,6 +186,99 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                   contentSize:contentSizeInPixels
                resolutionType:ICResolutionTypeUnknown];
 }
+
+#if defined(__IC_PLATFORM_IOS)
+- (id)initAsCoreVideoRenderTextureWithTextureSize:(CGSize)textureSizeInPixels
+                                   resolutionType:(ICResolutionType)resolutionType
+{
+    GLsizei width = textureSizeInPixels.width;
+    GLsizei height = textureSizeInPixels.height;
+    
+    // Taken from http://allmybrain.com/2011/12/08/rendering-to-a-texture-with-ios-5-texture-cache-api/
+    if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache])
+    {
+        if ((self = [super init])) {
+            CVReturn err;
+            
+            CVOpenGLESTextureCacheCreate(kCFAllocatorDefault,
+                                         NULL,
+                                         [EAGLContext currentContext],
+                                         NULL,
+                                         &_cvTextureCache);
+            
+            CFDictionaryRef empty;
+            CFMutableDictionaryRef attrs;
+            empty = CFDictionaryCreate(kCFAllocatorDefault,
+                                       NULL,
+                                       NULL,
+                                       0,
+                                       &kCFTypeDictionaryKeyCallBacks,
+                                       &kCFTypeDictionaryValueCallBacks);
+            attrs = CFDictionaryCreateMutable(kCFAllocatorDefault,
+                                              1,
+                                              &kCFTypeDictionaryKeyCallBacks,
+                                              &kCFTypeDictionaryValueCallBacks);
+            CFDictionarySetValue(attrs, kCVPixelBufferIOSurfacePropertiesKey, empty);
+            
+            err = CVPixelBufferCreate(kCFAllocatorDefault,
+                                      width,
+                                      height,
+                                      kCVPixelFormatType_32BGRA,
+                                      attrs,
+                                      &_cvRenderTarget);
+            if (err) {
+                NSAssert(nil, @"Error creating CoreVideo pixel buffer (%d)", err);
+            }
+            
+            err = CVOpenGLESTextureCacheCreateTextureFromImage(kCFAllocatorDefault,
+                                                               _cvTextureCache,
+                                                               _cvRenderTarget,
+                                                               NULL, // texture attributes
+                                                               GL_TEXTURE_2D,
+                                                               GL_RGBA, // opengl format
+                                                               width,
+                                                               height,
+                                                               GL_BGRA, // native iOS format
+                                                               GL_UNSIGNED_BYTE,
+                                                               0,
+                                                               &_cvTexture);
+            if (err) {
+                NSAssert(nil, @"Error creating CoreVideo texture (%d)", err);
+            }
+            
+            CFRelease(attrs);
+            CFRelease(empty);
+            
+            glBindTexture(CVOpenGLESTextureGetTarget(_cvTexture),
+                          CVOpenGLESTextureGetName(_cvTexture));
+            
+            _name = CVOpenGLESTextureGetName(_cvTexture);
+            _format = ICPixelFormatRGBA8888;
+            _sizeInPixels = textureSizeInPixels;
+            _contentSizeInPixels = textureSizeInPixels;
+            _maxS = _maxT = 1.0f;
+            _resolutionType = resolutionType;
+            
+            [self setAntiAliasTexParameters];            
+            
+        }
+    } else {
+        // Fast texture upload unsupported
+        uint surfaceSize = width * height * 4;
+        void *data = malloc(surfaceSize);
+        memset(data, 0, surfaceSize);
+        
+        self = [self initWithData:data
+                      pixelFormat:ICPixelFormatRGBA8888
+                      textureSize:textureSizeInPixels
+                      contentSize:textureSizeInPixels
+                   resolutionType:resolutionType];
+        
+        free(data);
+    }
+    return self;
+}
+#endif
 
 #ifdef __IC_PLATFORM_MAC
 - (id)initWithCGImage:(CGImageRef)cgImage
@@ -353,7 +448,28 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (void)deleteGlTexture: (id)object
 {
-    glDeleteTextures(1, &_name);    
+#ifdef __IC_PLATFORM_IOS
+    if (_cvTextureCache) {
+        // CV texture
+        CFRelease(_cvRenderTarget);
+        _cvRenderTarget = NULL;
+        
+        if (_cvTexture) {
+            CFRelease(_cvTexture);
+            _cvTexture = NULL;
+        }
+        
+        CVOpenGLESTextureCacheFlush(_cvTextureCache, 0);
+        CFRelease(_cvTextureCache);
+        _cvTextureCache = NULL;
+    } else {
+#endif
+        // Normal texture
+        glDeleteTextures(1, &_name);
+        _name = 0;
+#ifdef __IC_PLATFORM_IOS
+    }
+#endif
 }
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED

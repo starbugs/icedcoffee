@@ -31,7 +31,7 @@
  
  The ICRenderContext class allows for attaching arbitrary objects to a native OpenGL context
  object. This is useful for "extending" OpenGL contexts without forcing developers to change
- existing code which is based on native context objects such as ``EAGLContext``on iOS or
+ existing code which is based on native context objects such as ``EAGLContext`` on iOS or
  ``NSOpenGLContext`` on Mac OS X.
  
  Render contexts are primarily designed to provide an ICTextureCache and an ICShaderCache

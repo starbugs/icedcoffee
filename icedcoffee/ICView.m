@@ -59,8 +59,16 @@
         self.autoresizesSubviews = YES;
         self.size = kmVec3Make(size.width, size.height, 0);
         _clippingMask = [[ICSprite alloc] init];
+        _clippingMask.position = self.origin;
         _clippingMask.size = self.size;
         _clippingMask.color = (icColor4B){255,255,255,255};
+        
+#if defined(DEBUG) && defined(ICEDCOFFEE_DEBUG)
+        if ((size.width == 0 && size.height != 0) ||
+            (size.width != 0 && size.height == 0)) {
+            ICLog(@"Warning: initializing a view with an invalid size");
+        }
+#endif
     }
     return self;
 }
@@ -188,6 +196,11 @@
     }
 }
 
+- (ICView *)backingContentView
+{
+    return ((ICUIScene *)_backing.subScene).contentView;
+}
+
 // FIXME: doesn't support exchanging an existing backing yet
 - (void)setBacking:(ICRenderTexture *)renderTexture
 {
@@ -196,27 +209,27 @@
     }
     
     if (renderTexture && !renderTexture.subScene) {
-        renderTexture.subScene = [ICScene scene];
+        renderTexture.subScene = [ICUIScene scene];
         renderTexture.subScene.clearColor = (icColor4B){0,0,0,0};
     }
     
     if (_backing && !renderTexture) {
         // Move render texture children back to self
-        for (ICNode *child in _backing.subScene.children) {
+        for (ICNode *child in [self backingContentView].children) {
             [super addChild:child];
         }
-        [_backing.subScene removeAllChildren];
+        [[self backingContentView] removeAllChildren];
     }
     
     if (!_backing && renderTexture) {
         for (ICNode *child in _children) {
-            [renderTexture.subScene addChild:child];
+            [((ICUIScene *)renderTexture.subScene).contentView addChild:child];
         }
         [super removeAllChildren];
     }
     
     if (_backing) {
-        [super removeChild:_backing];        
+        [super removeChild:_backing];
     }
     
     [_backing release];
@@ -233,6 +246,7 @@
 
 - (BOOL)clipsChildren
 {
+    // Render texture always implicitly clips children
     if (_backing)
         return YES;
     
@@ -242,6 +256,14 @@
 - (void)setClipsChildren:(BOOL)clipsChildren
 {
     _clipsChildren = clipsChildren;
+}
+
+- (ICHitTestResult)localRayHitTest:(icRay3)ray
+{
+    if (!self.clipsChildren) {
+        return ICHitTestDismissed;
+    }
+    return [super localRayHitTest:ray];
 }
 
 - (void)setNeedsDisplay
@@ -266,6 +288,7 @@
 {
     if (_needsLayout) {
         [self layoutChildren];
+        _needsLayout = NO;
     }
     
     if (!_backing) {
@@ -289,10 +312,18 @@
             glStencilFunc(GL_EQUAL, 1, 1);
         }
         
+        // FIXME: this can be a problem when doing depth testing
         if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
-            // Draw view as solid sprite for picking, so the view reacts to
-            // mouseEntered/mouseExited events
+            BOOL depthTestingEnabled = glIsEnabled(GL_DEPTH_TEST);
+            if (depthTestingEnabled) {
+                glDisable(GL_DEPTH_TEST);
+            }
+            // Draw view as solid sprite for picking, so the view itself reacts to
+            // user interaction events
             [_clippingMask drawWithVisitor:visitor];
+            if (depthTestingEnabled) {
+                glEnable(GL_DEPTH_TEST);
+            }
         }
     }
 }
@@ -314,12 +345,14 @@
     return [self childrenOfType:[ICView class]];
 }
 
+// FIXME: missing overrides
+
 - (void)addChild:(ICNode *)child
 {
     if (!_backing) {
         [super addChild:child];
     } else {
-        [self.backing.subScene addChild:child];
+        [[self backingContentView] addChild:child];
     }
 }
 
@@ -328,7 +361,7 @@
     if (!_backing) {
         [super insertChild:child atIndex:index];
     } else {
-        [self.backing.subScene insertChild:child atIndex:index];
+        [[self backingContentView] insertChild:child atIndex:index];
     }
 }
 
@@ -337,7 +370,7 @@
     if (!_backing) {
         [super removeChild:child];
     } else {
-        [self.backing.subScene removeChild:child];
+        [[self backingContentView] removeChild:child];
     }
 }
 
@@ -346,7 +379,7 @@
     if (!_backing) {
         [super removeChildAtIndex:index];
     } else {
-        [self.backing.subScene removeChildAtIndex:index];
+        [[self backingContentView] removeChildAtIndex:index];
     }
 }
 
@@ -355,29 +388,8 @@
     if (!_backing) {
         [super removeAllChildren];
     } else {
-        [self.backing.subScene removeAllChildren];
+        [[self backingContentView] removeAllChildren];
     }
-}
-
-// FIXME: childrenNotOfType missing
-- (NSArray *)childrenOfType:(Class)classType
-{
-    NSArray *viewChildren = _backing ? _backing.subScene.children : [super children];
-    NSMutableArray *children = [NSMutableArray array];
-    for (ICNode *child in viewChildren) {
-        if ([child isKindOfClass:classType]) {
-            [children addObject:child];
-        }
-    }
-    return children;
-}
-
-- (ICNode *)childForTag:(uint)tag
-{
-    if (!_backing) {
-        return [super childForTag:tag];
-    }
-    return [self.backing.subScene childForTag:tag];
 }
 
 - (NSArray *)children
@@ -385,8 +397,25 @@
     if (!_backing) {
         return [super children];
     } else {
-        return self.backing.subScene.children;
+        return [self backingContentView].children;
     }
+}
+
+// FIXME: childrenNotOfType missing
+- (NSArray *)childrenOfType:(Class)classType
+{
+    if (!_backing) {
+        return [super childrenOfType:classType];
+    }
+    return [[self backingContentView] childrenOfType:classType];
+}
+
+- (ICNode *)childForTag:(uint)tag
+{
+    if (!_backing) {
+        return [super childForTag:tag];
+    }
+    return [[self backingContentView] childForTag:tag];
 }
 
 - (void)setAutoResizingMask:(ICAutoResizingMask)autoresizingMask

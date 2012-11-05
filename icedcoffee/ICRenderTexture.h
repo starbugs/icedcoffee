@@ -184,10 +184,27 @@
 #pragma mark - Creating a Render Texture
 /** @name Creating a Render Texture */
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width and height
+ 
+ @sa initWithWidth:height:
+ */
 + (id)renderTextureWithWidth:(float)w height:(float)h;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height and
+ and an optional depth buffer
+ 
+ @sa initWithWidth:height:depthBuffer:
+ */
 + (id)renderTextureWithWidth:(float)w height:(float)h depthBuffer:(BOOL)depthBuffer;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height and
+ and an optional stencil and/or depth buffer
+ 
+ @sa initWithWidth:height:depthBuffer:stencilBuffer:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  depthBuffer:(BOOL)depthBuffer
@@ -196,15 +213,28 @@
 /**
  @brief Returns an autoreleased render texture initialized with the given width, height,
  and pixel format
+ 
  @sa initWithWidth:height:pixelFormat:
  */
 + (id)renderTextureWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height,
+ pixel format and depth buffer format
+ 
+ @sa initWithWidth:height:pixelFormat:depthBufferFormat:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
            depthBufferFormat:(ICDepthBufferFormat)depthBufferFormat;
 
+/**
+ @brief Returns an autoreleased render texture initialized with the given width, height,
+ pixel format, depth buffer format and stencil buffer format
+ 
+ @sa initWithWidth:height:pixelFormat:depthBufferFormat:stencilBufferFormat:
+ */
 + (id)renderTextureWithWidth:(float)w
                       height:(float)h
                  pixelFormat:(ICPixelFormat)pixelFormat
@@ -265,6 +295,10 @@
  
  The render texture will be initialized with a color buffer backing only. Neither a depth buffer
  nor a stencil buffer will be attached.
+ 
+ Note that on iOS, if #IC_ENABLE_CV_TEXTURE_CACHE is activated, the only supported pixel format
+ currently is ``ICPixelFormatRGBA8888``. If another pixel format is specified, the method will
+ internally set the receiver's pixel format to ``ICPixelFormatRGBA8888``.
  */
 - (id)initWithWidth:(float)w height:(float)h pixelFormat:(ICPixelFormat)format;
 
@@ -280,6 +314,10 @@
  
  The render texture will be initialized with a color and depth buffer. No stencil buffer will
  be attached.
+ 
+ Note that on iOS, if #IC_ENABLE_CV_TEXTURE_CACHE is activated, the only supported pixel format
+ currently is ``ICPixelFormatRGBA8888``. If another pixel format is specified, the method will
+ internally set the receiver's pixel format to ``ICPixelFormatRGBA8888``. 
  */
 - (id)initWithWidth:(float)w
              height:(float)h
@@ -304,6 +342,10 @@
  stencil buffer format is defined, a packed depth-stencil buffer will be attached to the
  render texture. In this case, the depth format will default to ICDepthBufferFormat24 and
  the stencil buffer format will be ICStencilBufferFormat8.
+ 
+ Note that on iOS, if #IC_ENABLE_CV_TEXTURE_CACHE is activated, the only supported pixel format
+ currently is ``ICPixelFormatRGBA8888``. If another pixel format is specified, the method will
+ internally set the receiver's pixel format to ``ICPixelFormatRGBA8888``.
  */
 - (id)initWithWidth:(float)w
              height:(float)h
@@ -316,12 +358,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 /** @name Obtaining the Associated Texture and Sprite */
 
 /**
- @brief The texture object associated with the render texture node
+ @brief The texture object associated with the receiver
  */
 @property (nonatomic, readonly) ICTexture2D *texture;
 
 /**
- @brief The sprite used to draw the texture on the framebuffer
+ @brief The sprite used to draw the receiver's contents within a scene
  */
 @property (nonatomic, readonly) ICSprite *sprite;
 
@@ -330,7 +372,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 /** @name Working with the Render Texture's Sub Scene */
 
 /**
- @brief The sub scene drawn into the render texture
+ @brief The sub scene drawn into the receiver's OpenGL render texture target
  */
 @property (nonatomic, retain, setter=setSubScene:) ICScene *subScene;
 
@@ -340,6 +382,18 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 
 /**
  @brief A mode defining when to update the render texture's contents
+
+ By default, the frame update mode is set to ICFrameUpdateModeSynchronized, indicating that the
+ receiver's ICRenderTexture::subScene should be drawn whenever its parent scene is drawn. You may
+ set this property to ICFrameUpdateModeOnDemand so as to make the receiver update its frame buffer
+ only if display is needed (see ICNode::setNeedsDisplay). The former is appropriate when the
+ receiver's ICRenderTexture::subScene changes frequently, i.e. when its contents change in each
+ drawn frame. The latter is particularly useful to optimize performance if the receiver's
+ ICRenderTexture::subScene is updated occasionally.
+ 
+ @sa
+ - ICNode::setNeedsDisplay
+ - ICHostViewController::frameUpdateMode
  */
 @property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
 
@@ -403,10 +457,30 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat;
 /** @name Reading Back Pixel Colors */
 
 /**
- @brief Reads the color of the pixel at the given location in the receiver's framebuffer
+ @brief Reads and returns the color of the pixel at the given location in the receiver's framebuffer
+ 
+ @param location A ``CGPoint`` specifying the pixel location to read from
+ 
+ @return Returns an icColor4B value describing the pixel's RGBA color components
  */
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location;
 
+/**
+ @brief Reads back pixels from the given rectangle
+ 
+ @param data A pointer to the memory block which receives the pixel values upon return
+ @param rect A ``CGRect`` defining the location and size in pixels to read pixels from
+
+ This method reads back all pixels located within the given ``rect`` from the internal OpenGL
+ render texture and copies them to the memory address pointed to by ``data``. The caller is
+ responsible for allocating an appropriate block of memory so that all requested pixels fit
+ into ``data``.
+ 
+ Note that if running on an iOS device supporting CoreVideo texture caches and the
+ #IC_ENABLE_CV_TEXTURE_CACHE configuration directive is activated, this method uses a
+ performance optimized technique to access the render texture's pixel buffer. In this case,
+ the returned pixels will always be of type RGBA (compatible with icColor4B).
+ */
 - (void)readPixels:(void *)data inRect:(CGRect)rect;
 
 

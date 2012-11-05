@@ -63,6 +63,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize targetActionDispatcher = _targetActionDispatcher;
 @synthesize frameUpdateMode = _frameUpdateMode;
 @synthesize frameCount = _frameCount;
+@synthesize elapsedTime = _elapsedTime;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 
 + (id)platformSpecificHostViewController
@@ -91,6 +92,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _lastUpdate.tv_usec = 0;
     _frameUpdateMode = ICFrameUpdateModeSynchronized;
     _needsDisplay = YES;
+    _didDrawFirstFrame = NO;
     
     // Make current host view controller regardless of which initializer was called
     [self makeCurrentHostViewController];
@@ -111,6 +113,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     [_scheduler release];
     [_renderContext release];
     [_targetActionDispatcher release];
+    [_continuousFrameUpdateExpiryDate release];
 
     // Make sure no bad access can occur with the current host view controller
     ICHostViewController *currentHVC = [[self class] currentHostViewController];
@@ -172,6 +175,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
             _deltaTime = MAX(0, _deltaTime);
         }
         
+        _elapsedTime += _deltaTime;
         _lastUpdate = now;
         _frameCount++;
         
@@ -190,9 +194,25 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     }
 }
 
+- (void)continuouslyUpdateFramesUntilDate:(NSDate *)date
+{
+    if (!_continuousFrameUpdateExpiryDate ||
+        ((_continuousFrameUpdateExpiryDate) &&
+         [_continuousFrameUpdateExpiryDate compare:date] != NSOrderedDescending))
+    {
+        [_continuousFrameUpdateExpiryDate release];
+        _continuousFrameUpdateExpiryDate = [date retain];
+    }
+}
+
 - (void)setNeedsDisplay
 {
     _needsDisplay = YES;
+}
+
+- (void)willDrawFirstFrame
+{
+    // Implement in super class
 }
 
 - (void)drawScene
@@ -201,6 +221,11 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     
     // Make the receiver the current host view controller before drawing the scene
     [self makeCurrentHostViewController];
+    
+    if (!_didDrawFirstFrame) {
+        _didDrawFirstFrame = YES;
+        [self willDrawFirstFrame];
+    }
 }
 
 // Deprecated as of v0.6.6

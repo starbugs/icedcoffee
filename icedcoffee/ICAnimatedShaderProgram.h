@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //
@@ -21,17 +21,27 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
-#import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import "ICShaderProgram.h"
 
-@interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
-@protected
-    id<ICGPUImageTexture2DDelegate> _delegate;
-}
+/**
+ @brief Defines a generic animated shader program
+ 
+ ICAnimatedShaderProgram is a convenience class extending the functionality of ICShaderProgram
+ to allow for continuously animated shaders based on a time uniform.
+ 
+ Shaders used with this class must provide a ``time`` uniform of type ``float``.
+ ICAnimatedShaderProgram automatically updates that time uniform with the current
+ host view controller's ICHostViewController::elapsedTime value when the program is used.
+ */
+@interface ICAnimatedShaderProgram : ICShaderProgram
 
-@property (nonatomic, assign) id<ICGPUImageTexture2DDelegate> delegate;
-
-- (void)newFrameReadyFromTextureOutput:(GPUImageTextureOutput *)callbackTextureOutput;
+/**
+ @brief Refreshes the ``time`` value and updates the receiver's uniforms
+ 
+ The ICAnimatedShaderProgram class overrides ICShaderProgram::updateUniforms to add automatic
+ updates of the ``time`` uniform. ``time`` is set to the current host view controller's
+ ICHostViewController::elapsedTime value before the super classes' implementation is called.
+ */
+- (void)updateUniforms;
 
 @end

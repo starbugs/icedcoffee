@@ -67,20 +67,6 @@ enum {
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [scene.contentView addChild:rs];
     
-    ICLine *line = [ICLine lineWithOrigin:kmVec3Make(150, 150, 0)
-                                   target:kmVec3Make(200, 250, 0)
-                                lineWidth:1];
-    [scene.contentView addChild:line];
-    ICLine *line2 = [ICLine lineWithOrigin:kmVec3Make(250, 150, 0)
-                                    target:kmVec3Make(200, 250, 0)
-                                 lineWidth:1];
-    [scene.contentView addChild:line2];
-    ICLine *line3 = [ICLine lineWithOrigin:kmVec3Make(200, 250, 0)
-                                    target:kmVec3Make(250, 150, 0)
-                                 lineWidth:1];
-    [scene.contentView addChild:line3];
-    
-    
     [self addTestScene:scene withHint:@"Sprite flips its texture vertically when clicked"];
 }
 
@@ -207,7 +193,7 @@ enum {
     buttonPanel.tag = CombinedTestButtonPanelTag;
     [self.testHostScene.contentView addChild:buttonPanel];
     [buttonPanel setPositionY:20];
-    [buttonPanel centerNodeHorizontally];
+    [buttonPanel centerNodeHorizontallyRounded:YES];
     buttonPanel.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible |
     ICAutoResizingMaskRightMarginFlexible |
     ICAutoResizingMaskBottomMarginFlexible;

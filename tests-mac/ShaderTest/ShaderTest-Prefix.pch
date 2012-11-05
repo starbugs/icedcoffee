@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'ShaderTest' target in the 'ShaderTest' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

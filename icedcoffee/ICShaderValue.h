@@ -27,9 +27,8 @@
 /**
  @brief Represents the value of a shader program's uniform
  
- The ICShaderValue class provides a representation for a value of an ICShaderUniform object.
- ICShaderUniform objects are used to represent shader program uniforms defined in GLSL shaders
- represented by ICShaderProgram objects.
+ The ICShaderValue class represents a value of an ICShaderUniform object. ICShaderUniform objects
+ correspond to shader uniforms defined in GLSL shaders interfaced via ICShaderProgram objects.
  
  Shader values exhibit a certain type, defined in the source code of a given shader program.
  The ICShaderValue class must be initialized with the correct type for its target uniform.

@@ -63,20 +63,20 @@
     button.label.text = @"Test Button";
     [button setPositionY:300];
     [scene addChild:button];
-    [button centerNodeHorizontally];
+    [button centerNodeHorizontallyRounded:YES];
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
-    ICLine *line = [ICLine lineWithOrigin:kmVec3Make(150, 150, 0)
-                                   target:kmVec3Make(200, 250, 0)
-                                lineWidth:1];
+    ICLine2D *line = [ICLine2D lineWithOrigin:kmVec3Make(150, 150, 0)
+                                       target:kmVec3Make(200, 250, 0)
+                                    lineWidth:1];
     [scene addChild:line];
-    ICLine *line2 = [ICLine lineWithOrigin:kmVec3Make(250, 150, 0)
-                                    target:kmVec3Make(200, 250, 0)
-                                 lineWidth:1];
+    ICLine2D *line2 = [ICLine2D lineWithOrigin:kmVec3Make(250, 150, 0)
+                                        target:kmVec3Make(200, 250, 0)
+                                     lineWidth:1];
     [scene addChild:line2];
-    ICLine *line3 = [ICLine lineWithOrigin:kmVec3Make(200, 250, 0)
-                                    target:kmVec3Make(250, 150, 0)
-                                 lineWidth:1];
+    ICLine2D *line3 = [ICLine2D lineWithOrigin:kmVec3Make(200, 250, 0)
+                                        target:kmVec3Make(250, 150, 0)
+                                     lineWidth:1];
     [scene addChild:line3];
     
     // FIXME: remove this

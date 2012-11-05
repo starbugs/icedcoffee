@@ -23,12 +23,12 @@
 
 #import "ICPlanarNode.h"
 
-@interface ICLine : ICPlanarNode {
+@interface ICLine2D : ICPlanarNode {
 @protected
     icColor4B   _color;
     GLuint      _vertexBuffer;
-    kmVec3      _origin;
-    kmVec3      _target;
+    kmVec3      _lineOrigin;
+    kmVec3      _lineTarget;
     float       _lineWidth;
     float       _antialiasStrength;
     kmMat4      _lineTransform;
@@ -38,9 +38,9 @@
 
 @property (nonatomic, assign) icColor4B color;
 
-@property (nonatomic, assign, setter=setOrigin:) kmVec3 origin;
+@property (nonatomic, assign, setter=setLineOrigin:) kmVec3 lineOrigin;
 
-@property (nonatomic, assign, setter=setTarget:) kmVec3 target;
+@property (nonatomic, assign, setter=setLineTarget:) kmVec3 lineTarget;
 
 @property (nonatomic, assign, setter=setLineWidth:) float lineWidth;
 

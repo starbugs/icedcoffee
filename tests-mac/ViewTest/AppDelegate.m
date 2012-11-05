@@ -41,7 +41,7 @@
     ICView *subSceneView = [ICView viewWithSize:CGSizeMake(300, 200)];    
     [rootScene.contentView addChild:subSceneView];
     [subSceneView setClipsChildren:YES];
-    [subSceneView centerNode]; 
+    [subSceneView centerNodeRounded:YES];
     [subSceneView setAutoResizingMask:ICAutoResizingMaskLeftMarginFlexible | 
                                       ICAutoResizingMaskRightMarginFlexible |
                                       ICAutoResizingMaskTopMarginFlexible |

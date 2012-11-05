@@ -5,7 +5,7 @@
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
 //  the Software without restriction, including without limitation the rights to
-//  use, copy, modify, merge, publish, disttribute, sublicense, and/or sell copies
+//  use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
 //  of the Software, and to permit persons to whom the Software is furnished to do
 //  so, subject to the following conditions:
 //
@@ -21,17 +21,34 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
-#import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import "AppDelegate.h"
 
-@interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
-@protected
-    id<ICGPUImageTexture2DDelegate> _delegate;
+@implementation AppDelegate
+
+@synthesize viewController = _viewController;
+
+- (void)dealloc
+{
+    [super dealloc];
 }
 
-@property (nonatomic, assign) id<ICGPUImageTexture2DDelegate> delegate;
-
-- (void)newFrameReadyFromTextureOutput:(GPUImageTextureOutput *)callbackTextureOutput;
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    self.viewController = [ShaderTestViewController hostViewController];
+    self.viewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
+    [self.viewController setAcceptsMouseMovedEvents:YES];
+    [self.viewController setUpdatesMouseEnterExitEventsContinuously:YES];
+    
+    ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
+                                          shareContext:nil
+                                    hostViewController:self.viewController];
+    
+    self.window.contentView = glView;
+    [self.window setAcceptsMouseMovedEvents:YES];
+    [self.window makeFirstResponder:self.window.contentView];
+    [self.window makeKeyAndOrderFront:self];
+    
+    [glView release];
+}
 
 @end

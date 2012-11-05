@@ -27,6 +27,7 @@
 #import "ICRenderTexture.h"
 #import "icMacros.h"
 #import "icConfig.h"
+#import "ICConfiguration.h"
 #import "icUtils.h"
 #import "ICContextManager.h"
 #import "ICRenderContext.h"
@@ -35,7 +36,8 @@
 
 enum {
     InternalModeSingleNodes = 1,
-    InternalModeFinalNode = 2
+    InternalModeContainers = 2,
+    InternalModeFinalNode = 3
 };
 
 @interface ICNodeVisitorPicking (Private)
@@ -147,9 +149,12 @@ enum {
         
         if (_clientData) {
             free(_clientData);
+            _clientData = NULL;
         }
         
-        _clientData = malloc([self renderTextureMemorySize]);
+        if (![[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            _clientData = malloc([self renderTextureMemorySize]);
+        }
         
         [_pickNodes release];
         _pickNodes = [[NSMutableArray alloc] init];
@@ -318,6 +323,12 @@ enum {
     GLbitfield clearFlags = GL_COLOR_BUFFER_BIT |  GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
     glClear(clearFlags);
     IC_CHECK_GL_ERROR_DEBUG();
+
+#if IC_ENABLE_DEBUG_PICKING
+    ICLog(@"=====================");
+    ICLog(@"Computing single hits");
+    ICLog(@"=====================");
+#endif
     
     // Visit each node in node's branch
     _internalMode = InternalModeSingleNodes;
@@ -326,6 +337,12 @@ enum {
     // Note count of nodes from this run
     _nodeCount = _nodeIndex;
     
+#if IC_ENABLE_DEBUG_PICKING
+    ICLog(@"===================");
+    ICLog(@"Computing final hit");
+    ICLog(@"===================");
+#endif
+
     // Reset node index for next run
     _nodeIndex = 0;
 
@@ -341,23 +358,33 @@ enum {
     if ([node userInteractionEnabled]) {
         
         ICHitTestResult hitTestResult = ICHitTestUnsupported;
+        
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
         if ([self currentRay]) {
             icRay3 transformedRay = *[self currentRay];
             transformedRay.origin = [node convertToNodeSpace:transformedRay.origin];
             transformedRay.direction = [node convertToNodeSpace:transformedRay.direction];
             hitTestResult = [node localRayHitTest:transformedRay];
+#if IC_ENABLE_DEBUG_PICKING
+            if (hitTestResult == ICHitTestFailed) {
+                ICLog(@"Picking visitor ray hit test failed for node: %@", [node description]);
+            }
+#endif // IC_ENABLE_DEBUG_PICKING
         }
+#endif // IC_ENABLE_RAY_BASED_HIT_TESTS
         
         if (hitTestResult != ICHitTestFailed) {
             
-            // Simple hit test succeeded, proceed with picking test
+            // Simple ray-based hit test succeeded, proceed with picking test
             CGPoint nodePixelLocation;
             if (_internalMode == InternalModeSingleNodes) {
                 // Set up scissor test, so we draw only to the pixel reserved for the node while picking
                 nodePixelLocation = [self pixelLocationForNodeIndex:_nodeIndex];
                 [self setUpScissorTestForPixelAtLocation:nodePixelLocation];
             } else {
-                nodePixelLocation = [self pixelLocationForNodeIndex:_nodeCount];            
+#if IC_ENABLE_DEBUG_PICKING
+                nodePixelLocation = [self pixelLocationForNodeIndex:_nodeCount];
+#endif
             }
 
 #if IC_ENABLE_DEBUG_PICKING
@@ -440,6 +467,12 @@ enum {
     uint32_t i = 0;
     for (; i<_nodeCount+1; i++) {
         icColor4B *color = (icColor4B *)&data[i*4];
+        if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            // Convert BGRA to RGBA when using CoreVideo
+            GLbyte r = color->r;
+            color->r = color->b;
+            color->b = r;
+        }
         ICNode *node = [self nodeForPickColor:*color];
         if (node) {
             if (i == _nodeCount) {
@@ -479,12 +512,27 @@ enum {
 #endif
 
     // Read pixels from OpenGL framebuffer associated with our render texture
-    NSAssert(_clientData != NULL, @"No client buffer");
-    
-    CGRect rect = CGRectMake(0, 0, _renderTextureSizeInPixels.width, _renderTextureSizeInPixels.height);
-    [_renderTexture readPixels:_clientData inRect:rect];
-    
-    [self collectHitNodesIntoArray:resultNodes pixelData:_clientData];
+    if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+#ifdef __IC_PLATFORM_IOS
+        glFlush();
+        
+        // Optimized for iOS devices using CoreVideo
+        CVReturn err = CVPixelBufferLockBaseAddress(_renderTexture.texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+        if (err == kCVReturnSuccess) {
+            uint8_t *pixels = (uint8_t *)CVPixelBufferGetBaseAddress(_renderTexture.texture.cvRenderTarget);
+            [self collectHitNodesIntoArray:resultNodes pixelData:pixels];
+        }
+        CVPixelBufferUnlockBaseAddress(_renderTexture.texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+#endif
+    } else {
+        // Standard readback on Mac or iOS simulator
+        NSAssert(_clientData != NULL, @"No client buffer");
+        
+        CGRect rect = CGRectMake(0, 0, _renderTextureSizeInPixels.width, _renderTextureSizeInPixels.height);
+        [_renderTexture readPixels:_clientData inRect:rect];
+        
+        [self collectHitNodesIntoArray:resultNodes pixelData:_clientData];
+    }
     
     return resultNodes;
 }

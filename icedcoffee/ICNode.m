@@ -43,6 +43,7 @@
 - (void)setParent:(ICNode *)parent;
 - (void)setChildren:(NSMutableArray *)children;
 - (void)setNeedsDisplayForNode:(ICNode *)node;
+- (NSArray *)childrenSortedByZIndex;
 @end
 
 
@@ -82,7 +83,12 @@
         self.autoCenterAnchorPoint = YES;
         
         // Enable user interaction by default
-        self.userInteractionEnabled = YES;        
+        self.userInteractionEnabled = YES;
+        
+        // Z Index is undefined by default
+        self.zIndex = ICZIndexUndefined;
+        
+        _childrenSortedByZIndexDirty = YES;
     }
     return self;
 }
@@ -90,6 +96,8 @@
 - (void)dealloc
 {
     self.children = nil;
+    [_childrenSortedByZIndex release];
+    
     [super dealloc];
 }
 
@@ -106,7 +114,10 @@
     if (!_children) {
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
+    if (child.zIndex == ICZIndexUndefined)
+        child.zIndex = [_children count];
     [(NSMutableArray *)_children addObject:child];
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)insertChild:(ICNode *)child atIndex:(uint)index
@@ -114,7 +125,10 @@
     if (!_children) {
         _children = [[NSMutableArray alloc] initWithCapacity:1];
     }
+    if (self.zIndex == ICZIndexUndefined)
+        self.zIndex = [_children count];
     [(NSMutableArray *)_children insertObject:child atIndex:index];
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeChild:(ICNode *)child
@@ -122,6 +136,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeObject:child];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeChildAtIndex:(uint)index
@@ -129,6 +144,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeObjectAtIndex:index];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (void)removeAllChildren
@@ -136,6 +152,7 @@
     if (_children) {
         [(NSMutableArray *)_children removeAllObjects];
     }
+    _childrenSortedByZIndexDirty = YES;
 }
 
 - (BOOL)hasChildren
@@ -179,14 +196,32 @@
     return _children;
 }
 
+- (NSArray *)childrenSortedByZIndex
+{
+    if (_childrenSortedByZIndexDirty) {
+        [_childrenSortedByZIndex release];
+        _childrenSortedByZIndex = [[NSMutableArray alloc] initWithArray:_children];
+        [_childrenSortedByZIndex sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            ICNode *node1 = obj1, *node2 = obj2;
+            if (node1.zIndex > node2.zIndex)
+                return NSOrderedDescending;
+            else if(node1.zIndex < node2.zIndex)
+                return NSOrderedAscending;
+            return NSOrderedSame;
+        }];
+        _childrenSortedByZIndexDirty = NO;
+    }
+    return _childrenSortedByZIndex;
+}
+
 - (NSArray *)drawingChildren
 {
-    return _children;
+    return [self childrenSortedByZIndex];
 }
 
 - (NSArray *)pickingChildren
 {
-    return _children;
+    return [self childrenSortedByZIndex];
 }
 
 - (NSArray *)ancestorsOfType:(Class)classType
@@ -424,7 +459,7 @@
     kmMat4 nodeToParentTransform = [self nodeToParentTransform];
     for (ICNode *parent = _parent; parent != nil; parent = parent.parent) {
         kmMat4 parentNodeToParentTransform = [parent nodeToParentTransform];
-        kmMat4Multiply(&nodeToParentTransform, &nodeToParentTransform, &parentNodeToParentTransform);
+        kmMat4Multiply(&nodeToParentTransform, &parentNodeToParentTransform, &nodeToParentTransform);
         if ([parent isKindOfClass:[ICScene class]]) {
             break; // scene represents world coordinates
         }
@@ -477,28 +512,173 @@
     [self setPosition:kmVec3Make(_position.x, _position.y, positionZ)];
 }
 
+- (kmVec3)localCenter
+{
+    return [self localCenterRounded:NO];
+}
+
+- (kmVec3)localCenterRounded:(BOOL)rounded
+{
+    kmAABB aabb = [self localAABB];
+    kmVec3Subtract(&aabb.max, &aabb.max, &aabb.min);
+    kmVec3Scale(&aabb.max, &aabb.max, 0.5f);
+    kmVec3Add(&aabb.max, &aabb.min, &aabb.max);
+    if (rounded)
+        aabb.max = kmVec3Round(aabb.max);
+    return aabb.max;
+}
+
+- (kmVec3)localOpticalCenter
+{
+    return [self localOpticalCenterRounded:NO];
+}
+
+- (kmVec3)localOpticalCenterRounded:(BOOL)rounded
+{
+    kmAABB aabb = [self localAABB];
+    kmVec3Subtract(&aabb.max, &aabb.max, &aabb.min);
+    aabb.max.x *= 0.5f;
+    aabb.max.y *= 0.47f;
+    aabb.max.z *= 0.5f;
+    kmVec3Add(&aabb.max, &aabb.min, &aabb.max);
+    if (rounded)
+        aabb.max = kmVec3Round(aabb.max);
+    return aabb.max;
+}
+
+- (kmVec3)center
+{
+    return [self centerRounded:NO];
+}
+
+- (kmVec3)centerRounded:(BOOL)rounded
+{
+    if ([self computesTransform]) {
+        [self computeTransform];
+    }
+    kmVec3 center = [self localCenter];
+    kmVec3Transform(&center, &center, &_transform);
+    if (rounded)
+        center = kmVec3Round(center);
+    return center;
+}
+
+- (kmVec3)opticalCenter
+{
+    return [self opticalCenterRounded:NO];
+}
+
+- (kmVec3)opticalCenterRounded:(BOOL)rounded
+{
+    if ([self computesTransform]) {
+        [self computeTransform];
+    }
+    kmVec3 center = [self localOpticalCenter];
+    kmVec3Transform(&center, &center, &_transform);
+    if (rounded)
+        center = kmVec3Round(center);
+    return center;
+}
+
+- (void)setCenter:(kmVec3)center
+{
+    [self setCenter:center rounded:NO];
+}
+
+- (void)setCenter:(kmVec3)center rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    kmVec3 position;
+    kmVec3Subtract(&position, &center, &localCenter);
+    if (rounded)
+        position = kmVec3Round(position);
+    self.position = position;
+}
+
+- (void)setCenterX:(float)centerX
+{
+    [self setCenterX:centerX rounded:NO];
+}
+
+- (void)setCenterX:(float)centerX rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionX = centerX - localCenter.x;
+    if (rounded)
+        positionX = roundf(positionX);
+    [self setPositionX:positionX];
+}
+
+- (void)setCenterY:(float)centerY
+{
+    [self setCenterY:centerY rounded:NO];
+}
+
+- (void)setCenterY:(float)centerY rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionY = centerY - localCenter.y;
+    if (rounded)
+        positionY = roundf(positionY);
+    [self setPositionY:positionY];
+}
+
+- (void)setCenterZ:(float)centerZ
+{
+    [self setCenterZ:centerZ rounded:NO];
+}
+
+- (void)setCenterZ:(float)centerZ rounded:(BOOL)rounded
+{
+    kmVec3 localCenter = [self localCenter];
+    float positionZ = centerZ - localCenter.z;
+    if (rounded)
+        positionZ = roundf(positionZ);
+    [self setPositionZ:positionZ];
+}
+
 - (void)centerNode
 {
-    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
-                             floorf(self.parent.size.y/2 - self.size.y/2),
-                             0};
-    [self setPosition:center];
+    [self centerNodeRounded:NO];
+}
+
+- (void)centerNodeRounded:(BOOL)rounded
+{
+    kmVec3 center = [self.parent localCenterRounded:rounded];
+    [self setCenter:center rounded:rounded];
+}
+
+- (void)centerNodeOptically
+{
+    [self centerNodeOpticallyRounded:NO];
+}
+
+- (void)centerNodeOpticallyRounded:(BOOL)rounded
+{
+    kmVec3 center = [self.parent localOpticalCenterRounded:rounded];
+    [self setCenter:center rounded:rounded];
 }
 
 - (void)centerNodeVertically
 {
-    kmVec3 center = (kmVec3){_position.x,
-                             floorf(self.parent.size.y/2 - self.size.y/2),
-                             0};
-    [self setPosition:center];
+    [self centerNodeVerticallyRounded:NO];
+}
+
+- (void)centerNodeVerticallyRounded:(BOOL)rounded
+{
+    float centerY = [self.parent localCenterRounded:rounded].y;
+    [self setCenterY:centerY rounded:rounded];
 }
 
 - (void)centerNodeHorizontally
 {
-    kmVec3 center = (kmVec3){floorf(self.parent.size.x/2 - self.size.x/2),
-                             _position.y,
-                             0};
-    [self setPosition:center];
+    [self centerNodeHorizontallyRounded:NO];
+}
+
+- (void)centerNodeHorizontallyRounded:(BOOL)rounded
+{
+    float centerX = [self.parent localCenterRounded:rounded].x;
+    [self setCenterX:centerX rounded:rounded];
 }
 
 - (kmVec3)position
@@ -514,8 +694,7 @@
 
 - (void)centerAnchorPoint
 {
-    kmVec3 ap = (kmVec3){_size.x/2, _size.y/2, _size.z/2};
-    [self setAnchorPoint:ap];
+    [self setAnchorPoint:[self localCenter]];
 }
 
 - (kmVec3)anchorPoint
@@ -523,11 +702,13 @@
     return _anchorPoint;
 }
 
+@synthesize origin = _origin;
+
 - (void)setSize:(kmVec3)size
 {
     _size = size;
     if (_autoCenterAnchorPoint) {
-        _anchorPoint = (kmVec3){ _size.x/2, _size.y/2, _size.z/2 };
+        [self centerAnchorPoint];
     }
 }
 
@@ -629,59 +810,104 @@
 
 #pragma mark - Order
 
-- (NSUInteger)order
+- (NSUInteger)index
 {
     return [self.parent.children indexOfObject:self];
 }
 
-- (void)orderFront
-{
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
-                                                withObjectAtIndex:[self.parent.children count]-1];
-}
+@synthesize zIndex = _zIndex;
 
-- (void)orderForward
+- (void)setZIndex:(NSInteger)zIndex
 {
-    NSUInteger order = [self order];
-    if ([self.parent.children count] <= order+1)
-        return;
-    
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
-                                                withObjectAtIndex:order+1];
-}
-
-- (void)orderBackward
-{
-    NSUInteger order = [self order];
-    if (order == 0)
-        return;
-    
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:order
-                                                withObjectAtIndex:order-1];
+    if (zIndex != _zIndex) {
+        _zIndex = zIndex;
+        if (self.parent)
+            self.parent->_childrenSortedByZIndexDirty = YES;
+    }
 }
 
 - (void)orderBack
 {
-    [(NSMutableArray *)self.parent.children exchangeObjectAtIndex:[self order]
-                                                withObjectAtIndex:0];
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSInteger zIndex = 0;
+        self.zIndex = zIndex++;
+        for (ICNode *child in sortedChildren) {
+            if (child != self) {
+                child.zIndex = zIndex++;
+            }
+        }
+    }
+}
+
+- (void)orderBackward
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSUInteger index = [sortedChildren indexOfObject:self];
+        if (index > 0) {
+            NSInteger zIndex = self.zIndex;
+            ICNode *reorderNode = [sortedChildren objectAtIndex:index - 1];
+            self.zIndex = reorderNode.zIndex;
+            reorderNode.zIndex = zIndex;
+        }
+    }
+}
+
+- (void)orderForward
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSUInteger index = [sortedChildren indexOfObject:self];
+        if (index < [sortedChildren count] - 1) {
+            NSInteger zIndex = self.zIndex;
+            ICNode *reorderNode = [sortedChildren objectAtIndex:index + 1];
+            self.zIndex = reorderNode.zIndex;
+            reorderNode.zIndex = zIndex;
+        }
+    }
+}
+
+- (void)orderFront
+{
+    NSArray *sortedChildren = [[self parent] childrenSortedByZIndex];
+    if ([sortedChildren count] > 1) {
+        NSInteger zIndex = 0;
+        for (ICNode *child in sortedChildren) {
+            if (child != self) {
+                child.zIndex = zIndex++;
+            }
+        }
+        self.zIndex = zIndex;
+    }
 }
 
 
 #pragma mark - Bounds
 
+- (kmAABB)localAABB
+{
+    return (kmAABB){
+        _origin,
+        kmVec3Make(_origin.x+_size.x,
+                   _origin.y+_size.y,
+                   _origin.z+_size.z)
+    };
+}
+
 - (kmAABB)aabb
 {
-    kmVec3 vertices[2];
-    vertices[0] = _position;
-    kmVec3Add(&vertices[1], &_position, &_size);
-    return icComputeAABBFromVertices(vertices, 2);
+    kmAABB aabb = [self localAABB];
+    
+    if (self.computesTransform) {
+        [self computeTransform];
+    }
+    kmVec3Transform(&aabb.min, &aabb.min, &_transform);
+    kmVec3Transform(&aabb.max, &aabb.max, &_transform);
+    return icComputeAABBFromVertices((kmVec3*)&aabb, 2);
 }
 
-- (CGRect)bounds
-{
-    return CGRectMake(0, 0, _size.x, _size.y);
-}
-
+// FIXME
 - (CGRect)frameRect
 {
     kmVec3 world[8], view[8];

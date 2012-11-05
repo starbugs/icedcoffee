@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 
-#import "ICLine.h"
+#import "ICLine2D.h"
 #import "ICShaderProgram.h"
 #import "ICShaderCache.h"
 
@@ -32,11 +32,11 @@
 #define ICLINE_PROTOTYPE_VECT kmVec3Make(0,1,0)
 #define ICLINE_PROTOTYPE_NORM kmVec3Make(1,0,0)
 
-@implementation ICLine
+@implementation ICLine2D
 
 @synthesize color = _color;
-@synthesize origin = _origin;
-@synthesize target = _target;
+@synthesize lineOrigin = _lineOrigin;
+@synthesize lineTarget = _lineTarget;
 @synthesize lineWidth = _lineWidth;
 @synthesize antialiasStrength = _antialiasStrength;
 
@@ -90,8 +90,8 @@
                color:(icColor4B)color
 {
     if ((self = [super init])) {
-        self.origin = origin;
-        self.target = target;
+        self.lineOrigin = origin;
+        self.lineTarget = target;
         self.lineWidth = lineWidth;
         self.antialiasStrength = antialiasStrength;
         self.color = color;
@@ -112,21 +112,21 @@
 - (void)updateSize
 {
     kmVec3 size;
-    kmVec3Subtract(&size, &_target, &_origin);
+    kmVec3Subtract(&size, &_lineTarget, &_origin);
     self.size = size;
 }
 
-- (void)setOrigin:(kmVec3)origin
+- (void)setLineOrigin:(kmVec3)origin
 {
-    _origin = origin;
+    _lineOrigin = origin;
     self.position = origin;
     [self updateSize];
     _lineTransformDirty = YES;
 }
 
-- (void)setTarget:(kmVec3)target
+- (void)setLineTarget:(kmVec3)target
 {
-    _target = target;
+    _lineTarget = target;
     [self updateSize];
     _lineTransformDirty = YES;
 }
@@ -208,7 +208,7 @@
 - (void)updateLineTransform
 {
     kmVec3 t, x, p = ICLINE_PROTOTYPE_VECT, n = ICLINE_PROTOTYPE_NORM;
-    kmVec3Subtract(&t, &_target, &_origin);
+    kmVec3Subtract(&t, &_lineTarget, &_lineOrigin);
     float l = kmVec3Length(&t);
     kmVec3Normalize(&t, &t);
     

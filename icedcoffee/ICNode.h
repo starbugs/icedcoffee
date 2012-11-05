@@ -128,6 +128,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     kmMat4 _transform;
     kmVec3 _position;
     kmVec3 _anchorPoint;
+    kmVec3 _origin;
     kmVec3 _size;
     kmVec3 _scale;
     kmVec3 _rotationAxis;
@@ -135,6 +136,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     BOOL _transformDirty;
     BOOL _computesTransform;
     BOOL _autoCenterAnchorPoint;
+    
+    // Z sorting
+    NSInteger _zIndex;
+    NSMutableArray *_childrenSortedByZIndex;
+    BOOL _childrenSortedByZIndexDirty;
     
     // Drawing
     ICShaderProgram *_shaderProgram;
@@ -175,6 +181,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Returns an array containing the receiver's children nodes to be used for drawing
  
+ This method is called by ICNodeVisitorDrawing to retrieve a list of children nodes which should
+ be visited for drawing when the visitor traverses the scene graph.
+ 
  @sa
     - pickingChildren
     - children
@@ -183,7 +192,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 /**
  @brief Returns an array containing the receiver's children nodes to be used for picking
- 
+
+ This method is called by ICNodeVisitorPicking to retrieve a list of children nodes which should
+ be visited for picking when the visitor traverses the scene graph.
+
  @sa
     - drawingChildren
     - children
@@ -206,6 +218,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     - children
  */
 @property (nonatomic, assign, setter=setParent:) ICNode *parent;
+
+/**
+ @brief The index of the receiver in its parent's children array
+ */
+- (NSUInteger)index;
 
 /**
  @brief Adds a child node to the receiver's children array
@@ -469,12 +486,18 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (ICScene *)scene;
 
+/**
+ @brief Returns the node that directly provides a framebuffer for drawing the receiver
+ 
+ This method returns the first ancestor node that conforms to the ICFramebufferProvider protocol.
+ */
 - (ICNode<ICFramebufferProvider> *)framebufferProvider;
 
 /**
  @brief The host view controller of the receiver's root scene
  
  This method invokes rootScene, asks it for its ICHostViewController object and returns the result.
+ Consequently, if the receiver has not yet been added to a scene, the method returns ``nil``.
  */
 - (ICHostViewController *)hostViewController;
 
@@ -559,11 +582,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (kmVec3)convertToWorldSpace:(kmVec3)nodeVect;
 
 /**
- @brief Sets the position of the receiver
- 
- @param position A kmVec3 defining the position of the receiver relative to its parent's node space
+ @brief The position of the receiver
  */
-- (void)setPosition:(kmVec3)position;
+@property (nonatomic, assign, getter=position, setter=setPosition:) kmVec3 position;
 
 /**
  @brief Sets the x coordinate of the position of the receiver
@@ -581,53 +602,217 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setPositionZ:(float)positionZ;
 
 /**
- @brief Sets the position of the receiver so as to center it in its parent node's space
+ @brief Returns the receiver's center in local coordinate space
  
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
+ The local center is calculated based on the receiver's local axis-aligned bounding box as
+ retrieved via ICNode::localAABB.
+ 
+ @sa
+ - center
+ */
+- (kmVec3)localCenter;
+
+/**
+ @brief Returns the receiver's (rounded) center in local coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned local center should be rounded
+ 
+ @sa
+ - localCenter
+ */
+- (kmVec3)localCenterRounded:(BOOL)rounded;
+
+/**
+ @brief Returns the local optical center in local coordinate space
+ 
+ The optical center is calculated based on the receiver's local axis-aligned bounding box
+ as retrieved via ICNode::localAABB.
+ */
+- (kmVec3)localOpticalCenter;
+
+/**
+ @brief Returns the local (rounded) optical center in local coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned local optical center should be rounded
+ */
+- (kmVec3)localOpticalCenterRounded:(BOOL)rounded;
+
+/**
+ @brief Returns the receiver's center in parent coordinate space
+ 
+ This method retrieves the receiver's local center by invoking ICNode::localCenter, then transforms
+ the received coordinates to parent coordinate space using the node's ICNode::transform matrix.
+ 
+ @sa
+ - setCenter:
+ - localCenter
+ */
+- (kmVec3)center;
+
+/**
+ @brief Returns the receiver's (rounded) center in parent coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned center should be rounded
+ */
+- (kmVec3)centerRounded:(BOOL)rounded;
+
+/**
+ @brief Returns the receiver's optical center in parent coordinate space
+ 
+ @sa
+ - localOpticalCenter
+ */
+- (kmVec3)opticalCenter;
+
+/**
+ @brief Returns the receiver's (rounded) optical center in parent coordinate space
+ 
+ @param rounded A boolean flag defining whether the returned optical center should be rounded
+ */
+- (kmVec3)opticalCenterRounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's position so as to move its contents to the given center in
+ parent coordinate space
+ 
+ @sa
+ - position
+ */
+- (void)setCenter:(kmVec3)center;
+
+/**
+ @brief Sets the receiver's (rounded) position so as to move its contents to the given center in
+ parent coordinate space
+
+ @param rounded A boolean flag defining whether the position set on the receiver should be rounded
+
+ @sa
+ - position
+ */
+- (void)setCenter:(kmVec3)center rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's X position so as to move its contents to the given center's X in
+ parent coordinate space
+ */
+- (void)setCenterX:(float)centerX;
+
+/**
+ @brief Sets the receiver's (rounded) X position so as to move its contents to the given center's
+ X in parent coordinate space
+ */
+- (void)setCenterX:(float)centerX rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's Y position so as to move its contents to the given center's Y in
+ parent coordinate space
+ */
+- (void)setCenterY:(float)centerY;
+
+/**
+ @brief Sets the receiver's (rounded) Y position so as to move its contents to the given center's
+ Y in parent coordinate space
+ */
+- (void)setCenterY:(float)centerY rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the receiver's Z position so as to move its contents to the given center's Z in
+ parent coordinate space
+ */
+- (void)setCenterZ:(float)centerZ;
+
+/**
+ @brief Sets the receiver's (rounded) Z position so as to move its contents to the given center's
+ Z in parent coordinate space
+ */
+- (void)setCenterZ:(float)centerZ rounded:(BOOL)rounded;
+
+/**
+ @brief Sets the position of the receiver so as to center it in its parent node's coordinate space
+ 
+ @sa
+ - setCenter:
  */
 - (void)centerNode;
 
 /**
- @brief Sets the position of the receiver so as to center it vertically in its parent node's space
+ @brief Sets the (rounded) position of the receiver so as to center it in its parent node's
+ coordinate space
  
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
+ @sa
+ - setCenter:
  */
-- (void)centerNodeVertically;
+- (void)centerNodeRounded:(BOOL)rounded;
 
 /**
- @brief Sets the position of the receiver so as to center it horizontally in its parent node's space
+ @brief Sets the position of the receiver so as to center it optically in its parent node's
+ coordinate space
+ */
+- (void)centerNodeOptically;
+
+/**
+ @brief Sets the (rounded) position of the receiver so as to center it optically in its parent
+ node's coordinate space
+ */
+- (void)centerNodeOpticallyRounded:(BOOL)rounded;
+
+/**
+ @brief Sets the position of the receiver so as to center it horizontally in parent node's space
  
- @note Both the receiver and its parent must have a valid ICNode::size for this method
- to work correctly.
+ @sa
+ - setCenterX:
  */
 - (void)centerNodeHorizontally;
 
 /**
- @brief Returns the position of the receiver
+ @brief Sets the (rounded) position of the receiver so as to center it horizontally in parent
+ node's space
+ 
+ @sa
+ - setCenterX:rounded:
  */
-- (kmVec3)position;
+- (void)centerNodeHorizontallyRounded:(BOOL)rounded;
 
 /**
- @brief Sets the anchor point of the receiver in its local node space
+ @brief Sets the position of the receiver so as to center it vertically in parent node's space
+ 
+ @sa
+ - setCenterY:
  */
-- (void)setAnchorPoint:(kmVec3)anchorPoint;
+- (void)centerNodeVertically;
+
 
 /**
- @brief Centers the anchor point of the receiver based on its ICNode::size property
+ @brief Sets the (rounded) position of the receiver so as to center it vertically in parent
+ node's space
+ 
+ @sa
+ - setCenterY:rounded:
+ */
+- (void)centerNodeVerticallyRounded:(BOOL)rounded;
+
+/**
+ @brief The anchor point of the receiver in local coordinate space
+ */
+@property (nonatomic, assign, getter=anchorPoint, setter=setAnchorPoint:) kmVec3 anchorPoint;
+
+/**
+ @brief Sets the receiver's anchor point to its local center
+ 
+ @sa
+ - localCenter
  */
 - (void)centerAnchorPoint;
 
 /**
- @brief The anchor point of the receiver in its own local node space
+ @brief The origin of the receiver's contents in local node space
  */
-- (kmVec3)anchorPoint;
+@property (nonatomic, assign) kmVec3 origin;
 
 /**
- @brief Sets the size of the receiver
+ @brief The size of the receiver
  */
-- (void)setSize:(kmVec3)size;
+@property (nonatomic, assign, getter=size, setter=setSize:) kmVec3 size;
 
 /**
  @brief Sets the width of the receiver
@@ -645,14 +830,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setDepth:(float)depth;
 
 /**
- @brief Returns the size of the receiver
+ @brief The scale of the receiver
  */
-- (kmVec3)size;
-
-/**
- @brief Sets the receiver's scale
- */
-- (void)setScale:(kmVec3)scale;
+@property (nonatomic, assign, getter=scale, setter=setScale:) kmVec3 scale;
 
 /**
  @brief Sets the receiver's x scale
@@ -673,11 +853,6 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief Sets the receiver's z scale
  */
 - (void)setScaleZ:(float)scaleZ;
-
-/**
- @brief Returns the scale of the node
- */
-- (kmVec3)scale;
 
 /**
  @brief Sets the rotation angle and axis of the receiver
@@ -708,31 +883,37 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 @property (nonatomic, assign) BOOL autoCenterAnchorPoint;
 
 
-#pragma mark - Managing Order
-/** @name Managing Order */
+#pragma mark - Managing Z Sorting
+/** @name Managing Z Sorting */
 
 /**
- @brief The index of the receiver in its parent's children array
+ @brief The receiver's z-index
  */
-- (NSUInteger)order;
+@property (nonatomic, assign, setter=setZIndex:) NSInteger zIndex;
 
 /**
- @brief Exchanges the receiver with the last node of its parent's children array
+ @brief Sets the receiver's z-index so as to make it the frontmost node on its branch
+ 
+ This method computes the z-index of the frontmost node on the receiver's branch, sets that z-index
+ on the receiver and orders the former frontmost node backward.
  */
 - (void)orderFront;
 
 /**
- @brief Exchanges the receiver with the next node of its parent's children array
+ @brief Exchanges the receiver's z-index with the z-index of its first sibling ordered forward
  */
 - (void)orderForward;
 
 /**
- @brief Exchanges the receiver with the previous node of its parent's children array
+ @brief Exchanges the receiver's z-index with the z-index of its first sibling ordered backward
  */
 - (void)orderBackward;
 
 /**
- @brief Exchanges the receiver with the first node of its parent's children array
+ @brief Sets the receiver's z-index so as to make it the backmost node in its branch
+
+ This method computes the z-index of the backmost node on the receiver's branch, sets that z-index
+ on the receiver and orders the former backmost node forward.
  */
 - (void)orderBack;
 
@@ -741,34 +922,30 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /** @name Managing a Node's Bounds */
 
 /**
- @brief The receiver's axis-aligned bounding box
+ @brief Returns the receiver's axis-aligned bounding box in local coordinate space
  
- This method calculates the receiver's axis-aligned bounding box in its parent node
- coordinate space.
+ The default implementation returns an axis-aligned bounding box based upon the node's
+ ICNode::origin and ICNode::size properties. Subclasses may override this method if their
+ bounding box needs to be calculated differently.
  
- @remarks The calculations performed by this method are based on the ICNode::position and
- ICNode::size properties. For this method to work correctly, the following preconditions
- must be met:
- <ul>
-     <li>The receiver's ICNode::size property must be set correctly, that is, covering
-     the whole (cubic) space occupied by the receiver's visible contents.</li>
-     <li>The receiver must have been added to a valid ICScene object before this method is
-     called.</li>
- </ul>
- 
- @return Returns an kmAABB object defining the node's axis-aligned bounding box. If the method
- fails to calculate the node's bounding box, a zero kmAABB is returned. When this happens,
- most likely one or many of the preconditions mentioned above have not been met.
+ @return Returns a kmAABB object defining the node's axis aligned bounding box in local
+ coordinate space. If the method fails to calculate the node's bounding box, a zero kmAABB
+ is returned.
  */
-- (kmAABB)aabb;
+- (kmAABB)localAABB;
 
 /**
- @brief Returns the rectangular bounds of the receiver
+ @brief Returns the receiver's axis-aligned bounding box in parent coordinate space
  
- By default, the bounds of the receiver are defined as a rectangle with origin (0,0) and
- size (size.x,size.y). Subclasses may override this method to define custom bounds.
+ This method internally invokes ICNode::localAABB, then transforms the returned ``min``
+ and ``max`` vectors into parent space using the receiver's ICNode::transform matrix. Finally,
+ the axis-aligned bounding box in parent space is computed based on the transformed vectors.
+ 
+ @return Returns a kmAABB object defining the node's axis-aligned bounding box in parent
+ coordinate space. If the method fails to calculate the node's bounding box, a zero kmAABB
+ is returned.
  */
-- (CGRect)bounds;
+- (kmAABB)aabb;
 
 /**
  @brief The rectangle occupied by the receiver on its parent scene's framebuffer
@@ -780,16 +957,14 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @remarks The calculations performed by this method are based on the ICNode::position and
  ICNode::size properties. For this method to work correctly, the following preconditions
  must be met:
- <ul>
-    <li>The receiver's ICNode::size property must be set correctly, that is, covering
-    the whole (cubic) space occupied by the receiver's visible contents.</li>
-    <li>The receiver must have been added to a valid ICScene object before this method is
-    called.</li>
-    <li>The parent scene of the receiver must have a valid target framebuffer.</li>
- </ul>
+ - The receiver's ICNode::size property must be set correctly, that is, covering
+   the whole (cubic) space occupied by the receiver's visible contents.
+ - The receiver must have been added to a valid ICScene object before this method is
+   called.
+ - The parent scene of the receiver must have a valid target framebuffer.
  
- @return Returns a CGRect defining the rectangle (in points) occupied by the node's visible
- contents. If the method fails to calculate the node's frame rect, a zero CGRect is returned.
+ @return Returns a ``CGRect`` defining the rectangle (in points) occupied by the node's visible
+ contents. If the method fails to calculate the node's frame rect, a zero ``CGRect`` is returned.
  When this happens, most likely one or many of the preconditions outlined above have not been met.
  */
 - (CGRect)frameRect;
@@ -799,7 +974,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /** @name Drawing and Picking */
 
 /**
- @brief The receiver's shader program, including vertex and fragment shader
+ @brief The receiver's shader program for drawing, including a vertex and a fragment shader
  */
 @property (nonatomic, retain) ICShaderProgram *shaderProgram;
 
@@ -807,6 +982,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief A BOOL property indicating whether the receiver is visible
  
  Invisible nodes are not drawn and do not receive user interaction events by the framework.
+ The default value for this property is ``YES``.
  */
 @property (nonatomic, assign) BOOL isVisible;
 
@@ -817,20 +993,20 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  appropriate standard drawing setup is applied to the current OpenGL context. The default
  implementation sets up vertex and fragment shader programs pertaining to the specified
  visitor. For non-picking visitors, the method applies the shader set in ICNode::shaderProgram,
- for picking visitors the method looks up the default picking shader (keyed kICShader_Picking)
- using ICShaderCache and applies it.
+ for picking visitors the method looks up the default picking shader (keyed ICShaderPicking)
+ using ICShaderCache and uses it on the current OpenGL context.
  */
 - (void)applyStandardDrawSetupWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
  @brief Draws the receiver's contents
  
+ @param visitor The ICNodeVisitor instance used to visit the node
+
  This method is called by the framework to draw the receiver using a visitor. You should
  never call this method directly unless you know what you are doing.
  
  The default implementation does nothing.
-
- @param visitor The ICNodeVisitor instance used to visit the node
  
  You should override this method in drawable node subclasses to implement your custom drawing code.
  You may want to pply a standard drawing setup using the ICNode::applyStandardDrawSetupWithVisitor:
@@ -858,19 +1034,32 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Called when all children of the receiver have been drawn
  
- Called by the framework when all children nodes have been drawn completely. You may override
- this method to reset states that have been set in ICNode::drawWithVisitor: and were not reset
- for drawing the receiver's children.
+ Called by the framework when all children of the receiver have been drawn.
+ 
+ You may override this method to reset states that have been set in ICNode::drawWithVisitor:
+ and were not reset for drawing the receiver's children.
  */
 - (void)childrenDidDrawWithVisitor:(ICNodeVisitor *)visitor;
 
 /**
  @brief Informs the framework that the receiver needs to be redrawn
  
- This method needs to be called only if the node is part of a drawing environment that does not
- redraw all its contents continuously. The default implementation simply calls
- ICNode::setNeedsDisplay on its parent. Specialized classes implementing updatable framebuffers
- such as ICRenderTexture should override this method in order to implement conditional redrawing.
+ This method must be called when the receiver's contents need to be redrawn and the receiver
+ is part of an ICScene object which is rendered on demand only. For instance, if the receiver
+ is a descendant of an ICRenderTexture's ICRenderTexture::subScene and the render texture's
+ ICRenderTexture::frameUpdateMode is set to ICFrameUpdateModeOnDemand, then you have to call
+ this method to ensure that the render texture's contents are redrawn to reflect a change
+ in the appearance of the receiver. Likewise, if the receiver's ICNode::hostViewController's
+ ICHostViewController::frameUpdateMode is set to ICFrameUpdateModeOnDemand, this method needs
+ to be called so that the whole scene is redrawn on the host view controller's view.
+ 
+ Note that this method does not actually redraw the receiver. Instead, it informs the framework
+ to redraw the content's of the receiver's parent frame buffer the next time it enters the
+ ICHostViewController::drawScene or ICRenderTexture::drawWithVisitor: method.
+ 
+ @sa
+ - ICHostViewController::frameUpdateMode
+ - ICRenderTexture::frameUpdateMode
  */
 - (void)setNeedsDisplay;
 
@@ -881,14 +1070,19 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Performs a local ray-based hit test on the receiver
  
- To be implemented in subclasses. The default implementation does nothing and returns
- ICHitTestUnsupported.
- 
- Subclasses implementing this method should perform a hit test based on some approximation
- of the node's geometry and the specified ray.
- 
  @param ray An icRay3 object defining the ray to be used for hit testing in the receiver's local
  coordinate space.
+
+ To be implemented in subclasses. The default implementation does nothing and returns
+ ``ICHitTestUnsupported``.
+ 
+ Subclasses implementing this method should perform a hit test based on an appropriate
+ approximation of the node's geometry and the specified ray, then return an ICHitTestResult
+ enumerated value defining whether the hit test succeeded or not.
+ 
+ @sa
+ - ICPlanarNode
+ - ICNodeVisitorPicking
  */
 - (ICHitTestResult)localRayHitTest:(icRay3)ray;
 

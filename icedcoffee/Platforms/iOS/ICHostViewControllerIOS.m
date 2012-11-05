@@ -162,7 +162,7 @@
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
 	[_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSDefaultRunLoopMode];
-    
+        
 	// start the run loop
 	[[NSRunLoop currentRunLoop] run];
     
@@ -176,14 +176,14 @@
 
 - (void)drawScene
 {
-    [super drawScene];
-    
-    if (_frameUpdateMode == ICFrameUpdateModeOnDemand && !_needsDisplay) {
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
+        !_needsDisplay &&
+        (!_continuousFrameUpdateExpiryDate ||
+         [_continuousFrameUpdateExpiryDate compare:[NSDate date]] == NSOrderedAscending)
+        ) {
         return; // nothing to draw
     }
     
-    [self calculateDeltaTime];
-
 	// We draw on a secondary thread through the display link
 	// When resizing the view, -reshape is called automatically on the main thread
 	// Add a mutex around to avoid the threads accessing the context simultaneously	when resizing
@@ -191,13 +191,17 @@
     [_glContextLock lock];
     
 	ICGLView *openGLview = (ICGLView*)self.view;
-/*    if (openGLview.depthFormat && ![openGLview.renderer depthBuffer]) {
-        // FIXME: this may lead to issues, e.g. blank screen when we switch from continuous to
-        // on demand rendering of the screen FBO!
-        return; // depth buffer not ready
-    }*/
+    /*    if (openGLview.depthFormat && ![openGLview.renderer depthBuffer]) {
+     // FIXME: this may lead to issues, e.g. blank screen when we switch from continuous to
+     // on demand rendering of the screen FBO!
+     return; // depth buffer not ready
+     }*/
     
 	[EAGLContext setCurrentContext:[openGLview context]];
+
+    [super drawScene];
+    
+    [self calculateDeltaTime];
 
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
         [[self scheduler] update:_deltaTime];
@@ -213,6 +217,10 @@
     }
     
     [_glContextLock unlock];
+    
+    if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
+        _needsDisplay = NO;
+    }
 }
 
 // point is in UIView's coordinate system

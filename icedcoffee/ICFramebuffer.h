@@ -26,7 +26,7 @@
 #import "icTypes.h"
 
 /**
- @brief Represents an OpenGL framebufer object
+ @brief Represents an OpenGL framebuffer object
  */
 @interface ICFramebuffer : NSObject {
 @protected

@@ -29,13 +29,13 @@
 #import "icMacros.h"
 #import "icGL.h"
 #import "icUtils.h"
+#import "icConfig.h"
 #import "ICConfiguration.h"
 #import "ICScene.h"
 #import "ICCamera.h"
 #import "ICHostViewController.h"
 #import "ICNodeVisitorPicking.h"
 #import "icGL.h"
-#import "icConfig.h"
 
 @interface ICNode (Private)
 - (void)setNeedsDisplayForNode:(ICNode *)node;
@@ -154,7 +154,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                  @"Only RGB and RGBA formats are valid for a render texture");
         
         // Store formats
-        _pixelFormat = pixelFormat;
+        if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+            // Only RGBA8888 is supported for CV pixel buffers currently
+            _pixelFormat = ICPixelFormatRGBA8888;
+        } else {
+            _pixelFormat = pixelFormat;
+        }
         _depthBufferFormat = depthBufferFormat;
         _stencilBufferFormat = stencilBufferFormat;
 
@@ -182,6 +187,12 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     if (_fbo) {
         glDeleteFramebuffers(1, &_fbo);
         _fbo = 0;
+    }
+    if (_depthRBO) {
+        glDeleteRenderbuffers(1, &_depthRBO);
+    }
+    if (_stencilRBO) {
+        glDeleteRenderbuffers(1, &_stencilRBO);
     }
     
 	[super dealloc];
@@ -213,24 +224,25 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     h = ICPointsToPixels(h);
     
     // Textures must be power of two unless we have NPOT support
-    NSUInteger powW;
-    NSUInteger powH;
+    NSUInteger textureWidth;
+    NSUInteger textureHeight;
     
-    if( [[ICConfiguration sharedConfiguration] supportsNPOT] ) {
-        powW = w;
-        powH = h;
+    if ([[ICConfiguration sharedConfiguration] supportsNPOT]) {
+        textureWidth = w;
+        textureHeight = h;
     } else {
-        powW = icNextPOT(w);
-        powH = icNextPOT(h);
+        textureWidth = icNextPOT(w);
+        textureHeight = icNextPOT(h);
     }        
     
+    // Store current FBO
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &_oldFBO);
     
-    // Delete old FBO, if any
+    // Delete previous render texture FBO, if applicable
     if (_fbo) {
         glDeleteFramebuffers(1, &_fbo);
     }
-    
+        
     // Generate an FBO
     glGenFramebuffers(1, &_fbo);
     glBindFramebuffer(GL_FRAMEBUFFER, _fbo);
@@ -239,17 +251,25 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     if (!hostViewController)
         hostViewController = [ICHostViewController currentHostViewController];
     ICResolutionType resolutionType = [hostViewController bestResolutionTypeForCurrentScreen];
-    
-    void *data = malloc((int)(powW * powH * 4));
-    memset(data, 0, (int)(powW * powH * 4));
-    
+
     [_texture release];
+
+#ifdef __IC_PLATFORM_IOS
+    // Optimize render texture for iOS devices
+    _texture = [[ICTexture2D alloc] initAsCoreVideoRenderTextureWithTextureSize:CGSizeMake(textureWidth, textureHeight)
+                                                                 resolutionType:resolutionType];
+#else
+    NSUInteger surfaceSize = textureWidth * textureHeight * 4;
+    void *data = malloc(surfaceSize);
+    memset(data, 0, surfaceSize);
+    
     _texture = [[ICTexture2D alloc] initWithData:data
                                      pixelFormat:_pixelFormat
-                                     textureSize:CGSizeMake(powW, powH)
+                                     textureSize:CGSizeMake(textureWidth, textureHeight)
                                      contentSize:CGSizeMake(w, h)
                                   resolutionType:resolutionType];
     free(data);
+#endif
     
     // Associate texture with FBO
     glFramebufferTexture2D(GL_FRAMEBUFFER,
@@ -297,7 +317,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
                         
         glGenRenderbuffers(1, &_depthRBO);
         glBindRenderbuffer(GL_RENDERBUFFER, _depthRBO);
-        glRenderbufferStorage(GL_RENDERBUFFER, depthFormat, (GLsizei)powW, (GLsizei)powH);
+        glRenderbufferStorage(GL_RENDERBUFFER, depthFormat, (GLsizei)textureWidth, (GLsizei)textureHeight);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _depthRBO);
         if (_stencilBufferFormat) {
             glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, _depthRBO);
@@ -383,18 +403,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 - (icColor4B)colorOfPixelAtLocation:(CGPoint)location
 {
     icColor4B color;
-    BOOL      performBeginEnd = NO;
-    
-    if (!self.isInRenderTextureDrawContext) {
-        performBeginEnd = YES;
-        [self begin];
-    }
-    
-    glReadPixels(location.x, location.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, &color);
-    
-    if (performBeginEnd)
-        [self end];
-    
+    [self readPixels:&color inRect:CGRectMake(location.x, location.y, 1, 1)];
     return color;
 }
 
@@ -407,8 +416,43 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
         [self begin];
     }
     
-    glReadPixels(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,
-                 GL_RGBA, GL_UNSIGNED_BYTE, data);
+    if ([[ICConfiguration sharedConfiguration] supportsCVOpenGLESTextureCache]) {
+#ifdef __IC_PLATFORM_IOS
+        glFlush();
+        
+        // Optimize readbacks for iOS devices
+        CVReturn err = CVPixelBufferLockBaseAddress(_texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+        if (err == kCVReturnSuccess) {
+            uint textureWidth = CVPixelBufferGetWidth(_texture.cvRenderTarget);
+            uint textureHeight = CVPixelBufferGetHeight(_texture.cvRenderTarget);
+            uint8_t *pixels = (uint8_t *)CVPixelBufferGetBaseAddress(_texture.cvRenderTarget);
+            uint sx = rect.origin.x, sy = rect.origin.y;
+            uint w = (uint)rect.size.width;
+            uint h = (uint)rect.size.height;
+            if (sx + w <= textureWidth && sy + h <= textureHeight) {
+                uint i = 0, j;
+                for (; i<h; i++) {
+                    for (j=0; j<w; j++) {
+                        uint x = sx + j;
+                        uint y = sy + i;
+                        uint8_t *dest = data + i*w*4 + j*4;
+                        uint8_t *src = pixels + y*textureWidth*4 + x*4;
+                        // Convert BGRA to RGBA
+                        memcpy(dest+0, src+2, 1);
+                        memcpy(dest+1, src+1, 1);
+                        memcpy(dest+2, src+0, 1);
+                        memcpy(dest+3, src+3, 1);
+                    }
+                }
+            }
+            CVPixelBufferUnlockBaseAddress(_texture.cvRenderTarget, kCVPixelBufferLock_ReadOnly);
+        }
+#endif
+    } else {
+        // Standard readback; most likely stalls the OpenGL pipeline
+        glReadPixels(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height,
+                     GL_RGBA, GL_UNSIGNED_BYTE, data);
+    }
     
     if (performBeginEnd)
         [self end];
@@ -447,6 +491,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
     }
 }
 
+// Note: the render texture's sprite is not used for picking
 - (NSArray *)pickingChildren
 {
     return [NSArray arrayWithObjects:self.subScene, nil];

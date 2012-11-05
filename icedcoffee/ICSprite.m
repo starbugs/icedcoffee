@@ -34,7 +34,7 @@
 
 
 @interface ICSprite (Private)
-- (void)resetQuad;
+- (void)setDefaultTexCoords;
 @end
 
 @implementation ICSprite
@@ -61,12 +61,8 @@
 
 - (id)initWithTexture:(ICTexture2D *)texture
 {
-    _texCoords[0] = kmVec2Make(0, 1);
-    _texCoords[1] = kmVec2Make(1, 1);
-    _texCoords[2] = kmVec2Make(0, 0);
-    _texCoords[3] = kmVec2Make(1, 0);
-    
     if ((self = [super init])) {
+        [self setDefaultTexCoords];
         [self setColor:(icColor4B){255,255,255,255}];
         self.texture = texture;
 		[self setBlendFunc:(icBlendFunc){GL_ONE, GL_ONE_MINUS_SRC_ALPHA}];
@@ -86,31 +82,52 @@
     [super dealloc];
 }
 
-- (void)updateQuad
+- (void)setDefaultTexCoords
+{
+    _texCoords[0] = kmVec2Make(0, 1);
+    _texCoords[1] = kmVec2Make(1, 1);
+    _texCoords[2] = kmVec2Make(0, 0);
+    _texCoords[3] = kmVec2Make(1, 0);    
+}
+
+- (void)updateQuadPositionsWithVertices:(icV3F_C4F_T2F *)vertices
 {
     float x1 = 0.0f;
     float x2 = _size.x;
     float y1 = 0.0f;
     float y2 = _size.y;
     
-    icV3F_C4F_T2F vertices[NUM_VERTICES];    
-    
-    // Note: Y-axis inverted by IcedCoffe UI camera, so we need to do this in CCW order
+    // Note: Y-axis inverted by icedcoffee UI camera, so we need to do this in CCW order
     kmVec3Fill(&vertices[0].vect, x1, y2, 0);
-    kmVec3Fill(&vertices[1].vect, x2, y2, 0); 
+    kmVec3Fill(&vertices[1].vect, x2, y2, 0);
     kmVec3Fill(&vertices[2].vect, x1, y1, 0);
     kmVec3Fill(&vertices[3].vect, x2, y1, 0);
-    
+}
+
+- (void)updateQuadTexCoordsWithVertices:(icV3F_C4F_T2F *)vertices
+{
     // .. and flip the texture coordinates vertically
     kmVec2Fill(&vertices[0].texCoords, _texCoords[0].x, _texCoords[0].y);
     kmVec2Fill(&vertices[1].texCoords, _texCoords[1].x, _texCoords[1].y);
     kmVec2Fill(&vertices[2].texCoords, _texCoords[2].x, _texCoords[2].y);
     kmVec2Fill(&vertices[3].texCoords, _texCoords[3].x, _texCoords[3].y);
-    
+}
+
+- (void)updateQuadColorsWithVertices:(icV3F_C4F_T2F *)vertices
+{
     vertices[0].color = color4FFromColor4B(_color);
     vertices[1].color = color4FFromColor4B(_color);
     vertices[2].color = color4FFromColor4B(_color);
     vertices[3].color = color4FFromColor4B(_color);
+}
+
+- (void)updateQuad
+{
+    icV3F_C4F_T2F vertices[NUM_VERTICES];    
+
+    [self updateQuadPositionsWithVertices:vertices];
+    [self updateQuadTexCoordsWithVertices:vertices];
+    [self updateQuadColorsWithVertices:vertices];
     
     if (!_vertexBuffer)
         glGenBuffers(1, &_vertexBuffer);

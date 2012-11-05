@@ -48,7 +48,7 @@
         
         ICSprite *backgroundSprite = [ICSprite sprite];
         [backgroundSprite setSize:(kmVec3){624, 624, 0}];
-        [backgroundSprite setColor:(icColor4B){0,0,0,10}];
+        [backgroundSprite setColor:(icColor4B){240,240,240,255}];
         [self addChild:backgroundSprite];
         
         uint col=0, row=0;

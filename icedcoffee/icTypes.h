@@ -47,6 +47,7 @@
 #define kmVec3ToCGSize(v) (CGSizeMake(v.x,v.y))
 #define CGSizeTokmVec3(s) (kmVec3Make(s.width,s.height,0.0f))
 #define kmVec4Make(x,y,z,w) ((kmVec4){x,y,z,w})
+#define kmVec3Round(v) ((kmVec3){roundf(v.x),roundf(v.y),roundf(v.z)})
 #define kmVec3Description(v) \
     ([NSString stringWithFormat:@"[ %f, %f, %f ]", v.x, v.y, v.z])
 #define kmMat4Description(m) \
@@ -70,6 +71,8 @@
  */
 
 /** @name Misc. */
+
+#define ICZIndexUndefined NSIntegerMin
 
 typedef enum _ICShaderValueType {
     ICShaderValueTypeInvalid,
@@ -156,7 +159,8 @@ typedef enum _ICResolutionType {
 enum {
     ICHitTestUnsupported = 0,
     ICHitTestHit = 1,
-    ICHitTestFailed = 2
+    ICHitTestFailed = 2,
+    ICHitTestDismissed = 3
 };
 
 typedef uint ICHitTestResult;

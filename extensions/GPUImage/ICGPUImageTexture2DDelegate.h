@@ -21,17 +21,16 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
-#import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import <Foundation/Foundation.h>
 
-@interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
-@protected
-    id<ICGPUImageTexture2DDelegate> _delegate;
-}
+@class ICGPUImageTexture2D;
+@class GPUImageTextureOutput;
 
-@property (nonatomic, assign) id<ICGPUImageTexture2DDelegate> delegate;
+@protocol ICGPUImageTexture2DDelegate <NSObject>
 
-- (void)newFrameReadyFromTextureOutput:(GPUImageTextureOutput *)callbackTextureOutput;
+@optional
+
+- (void)newFrameReadyForTexture2D:(ICGPUImageTexture2D *)texture
+                fromTextureOutput:(GPUImageTextureOutput *)textureOutput;
 
 @end
