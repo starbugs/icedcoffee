@@ -23,11 +23,12 @@ Getting Started
 ---------------
 
 1. **Pull the code from github**: the easiest way to stay updated is to use *Git Read-only*
-   by typing `git clone git://github.com/starbugs/icedcoffee.git` on a terminal.
+   by typing `git clone git://github.com/starbugs/icedcoffee.git` on the terminal.
 
-2. Open icedcoffee.xcworkspace using Xcode 4.2+
+2. Open `icedcoffee.xcworkspace` using Xcode 4.2 or newer.
 
-3. Run the tests and have fun!
+3. Pick and run some of the tests and have fun!
+
 
 
 Documentation
