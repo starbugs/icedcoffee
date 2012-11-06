@@ -22,7 +22,7 @@ Icedcoffee is open source and free for both non-commercial and commercial use (M
 Getting Started
 ---------------
 
-1. **Pull the code from github**: the easiest way to stay updated is to use *Git Read-only*
+1. Pull the code from github: the easiest way to stay updated is to use *Git Read-only*
    by typing `git clone git://github.com/starbugs/icedcoffee.git` on the terminal.
 
 2. Open `icedcoffee.xcworkspace` using Xcode 4.2 or newer.
