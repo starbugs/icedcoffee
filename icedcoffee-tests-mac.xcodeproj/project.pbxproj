@@ -2745,6 +2745,7 @@
 				A6CB74A41646D1AA00CDEEAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		D21F888F1533064B00E2496C /* Build configuration list for PBXNativeTarget "KazmathTests" */ = {
 			isa = XCConfigurationList;
