@@ -2195,10 +2195,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2215,10 +2212,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/IBIntegrationTest/IBIntegrationTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2237,10 +2231,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ShaderTest/ShaderTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2259,10 +2250,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ShaderTest/ShaderTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2277,10 +2265,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -2294,10 +2279,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(DEVELOPER_LIBRARY_DIR)/Frameworks";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
@@ -2315,10 +2297,7 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
@@ -2333,10 +2312,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TableViewTest/TableViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
@@ -2351,10 +2327,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2368,10 +2341,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2385,10 +2355,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2402,10 +2369,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2419,10 +2383,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2436,10 +2397,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ViewTest/ViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2458,10 +2416,7 @@
 					"$(inherited)",
 				);
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2475,10 +2430,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/ScrollViewTest/ScrollViewTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2492,10 +2444,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/StencilTest/StencilTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2509,10 +2458,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/StencilTest/StencilTest-Prefix.pch";
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/StencilTest/StencilTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2525,10 +2471,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2541,10 +2484,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2557,10 +2497,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2573,10 +2510,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2589,10 +2523,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2605,10 +2536,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2667,10 +2595,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2684,10 +2609,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/PickingTest/PickingTest-Prefix.pch";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2700,10 +2622,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2716,10 +2635,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
-				HEADER_SEARCH_PATHS = (
-					icedcoffee,
-					"3rd-party/kazmath/include",
-				);
+				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;

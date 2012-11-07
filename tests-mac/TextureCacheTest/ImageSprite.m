@@ -22,7 +22,7 @@
 //  
 
 #import "ImageSprite.h"
-#import "ICLabel.h"
+#import "icedcoffee/ICLabel.h"
 
 @implementation ImageSprite
 

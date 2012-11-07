@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "ICScale9Sprite.h"
+#import "icedcoffee/ICScale9Sprite.h"
 
 @interface ICResizableScale9Sprite : ICScale9Sprite {
     uint _resizeEdge;

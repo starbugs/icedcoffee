@@ -1,6 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
-//  http://icedcoffee-framework.org
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -21,13 +20,9 @@
 //  SOFTWARE.
 //  
 
-#import <UIKit/UIKit.h>
-
-#import "AppDelegate.h"
+#import <Cocoa/Cocoa.h>
 
 int main(int argc, char *argv[])
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([AppDelegate class]));
-    }
+    return NSApplicationMain(argc, (const char **)argv);
 }

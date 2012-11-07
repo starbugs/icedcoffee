@@ -23,7 +23,7 @@
 
 #import "ICNode.h"
 #import "ICProjectionTransforms.h"
-#import "kazmath/kazmath.h"
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
 
 /**
  @brief Base class for all planar nodes

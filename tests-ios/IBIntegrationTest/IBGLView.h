@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Tobias Lensing. All rights reserved.
 //
 
-#import <icedcoffee.h>
+#import <icedcoffee/icedcoffee.h>
 
 @interface IBGLView : ICGLView
 

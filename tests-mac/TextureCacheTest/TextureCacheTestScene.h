@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "IcedCoffee.h"
+#import "icedcoffee/IcedCoffee.h"
 
 @interface TextureCacheTestScene : ICScene <ICAsyncTextureCacheDelegate>
 

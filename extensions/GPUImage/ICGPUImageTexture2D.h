@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
+#import "../../icedcoffee/ICTexture2D.h"
 #import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import "framework/Source/GPUImageTextureOutput.h"
 
 @interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
 @protected

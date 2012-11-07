@@ -22,7 +22,8 @@
 //  
 
 #import <Foundation/Foundation.h>
-#import "kazmath/kazmath.h"
+
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
 #import "Platforms/icGL.h"
 
 #import "ICResponder.h"

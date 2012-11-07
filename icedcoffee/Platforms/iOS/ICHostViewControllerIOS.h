@@ -45,11 +45,11 @@
  * THE SOFTWARE.
  */
 
-#import "icMacros.h"
+#import "../../icMacros.h"
 
 #ifdef __IC_PLATFORM_IOS
 
-#import "ICHostViewController.h"
+#import "../../ICHostViewController.h"
 #import "ICGLView.h"
 
 @class ICTouchEventDispatcher;

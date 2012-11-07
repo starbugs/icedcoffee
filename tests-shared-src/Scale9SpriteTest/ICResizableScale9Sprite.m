@@ -22,9 +22,9 @@
 //  
 
 #import "ICResizableScale9Sprite.h"
-#import "ICHostViewController.h"
-#import "Platforms/Mac/ICGLView.h"
-#import "ICLabel.h"
+#import "icedcoffee/ICHostViewController.h"
+#import "icedcoffee/Platforms/Mac/ICGLView.h"
+#import "icedcoffee/ICLabel.h"
 
 #define RESIZE_BAR_THICKNESS 10
 

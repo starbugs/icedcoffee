@@ -30,7 +30,7 @@
 #endif
 
 #import "Platforms/icGL.h"
-#import "kazmath/kazmath.h"
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
 
 /**
  @brief Camera base class providing standard 3D projection and model-view transforms

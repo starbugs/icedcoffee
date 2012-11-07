@@ -30,8 +30,8 @@
 #pragma once
 
 #import "Platforms/icGL.h"
-#import "kazmath/kazmath.h"
-#import "kazmath/vec4.h"
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
+#import "../3rd-party/kazmath/include/kazmath/vec4.h"
 
 
 /**

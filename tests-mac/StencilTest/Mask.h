@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "ICSprite.h"
+#import "icedcoffee/ICSprite.h"
 
 #define ICShaderStencilMask @"ShaderStencilMask"
 

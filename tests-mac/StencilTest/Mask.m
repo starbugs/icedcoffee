@@ -22,9 +22,9 @@
 //  
 
 #import "Mask.h"
-#import "ICShaderProgram.h"
-#import "ICShaderCache.h"
-#import "icMacros.h"
+#import "icedcoffee/ICShaderProgram.h"
+#import "icedcoffee/ICShaderCache.h"
+#import "icedcoffee/icMacros.h"
 
 
 NSString *__stencilMaskFSH = IC_SHADER_STRING

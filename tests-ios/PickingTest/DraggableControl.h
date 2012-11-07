@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Tobias Lensing. All rights reserved.
 //
 
-#import "IcedCoffee.h"
+#import "icedcoffee/IcedCoffee.h"
 
 @interface DraggableControl : ICControl {
 @protected

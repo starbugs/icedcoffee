@@ -1,6 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
-//  http://icedcoffee-framework.org
+//  Copyright (C) 2012 Tobias Lensing, http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
 //  this software and associated documentation files (the "Software"), to deal in
@@ -21,10 +20,15 @@
 //  SOFTWARE.
 //  
 
-#import <UIKit/UIKit.h>
+#import <Cocoa/Cocoa.h>
+#import "icedcoffee/IcedCoffee.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow *window;
+@property (retain) NSWindow *window1;
+@property (retain) ICHostViewController *hvc1;
+
+@property (retain) NSWindow *window2;
+@property (retain) ICHostViewController *hvc2;
 
 @end

@@ -43,9 +43,9 @@
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
 #endif
 
-#import "icMacros.h"
-#import "icConfig.h"
-#import "kazmath/GL/matrix.h"
+#import "../icMacros.h"
+#import "../icConfig.h"
+#import "../../3rd-party/kazmath/include/kazmath/GL/matrix.h"
 
 /**
  @addtogroup platform-macros Platform Macros

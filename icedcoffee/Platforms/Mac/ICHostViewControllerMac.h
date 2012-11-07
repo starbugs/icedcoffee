@@ -45,11 +45,11 @@
  * THE SOFTWARE.
  */
 
-#import "ICHostViewController.h"
-#import "ICMouseResponder.h"
-#import "ICMouseEventDispatcher.h"
+#import "../../ICHostViewController.h"
+#import "../../ICMouseResponder.h"
+#import "../../ICMouseEventDispatcher.h"
+#import "../../icMacros.h"
 #import "ICGLView.h"
-#import "icMacros.h"
 #import <QuartzCore/CVDisplayLink.h>
 
 #ifdef __IC_PLATFORM_MAC

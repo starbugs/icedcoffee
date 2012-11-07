@@ -22,7 +22,7 @@
 //  
 
 #import "KazmathTests.h"
-#import "kazmath/kazmath.h"
+#import "3rd-party/kazmath/include/kazmath/kazmath.h"
 
 @implementation KazmathTests
 

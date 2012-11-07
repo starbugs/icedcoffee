@@ -22,7 +22,7 @@
 //  
 
 #import "ICCamera.h"
-#import "kazmath/kazmath.h"
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
 
 /**
  @brief Camara mapping world coordinates in points to framebuffer coordinates in pixels

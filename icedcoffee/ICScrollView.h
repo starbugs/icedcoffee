@@ -22,7 +22,7 @@
 //  
 
 #import "ICView.h"
-#import "kazmath/kazmath.h"
+#import "../3rd-party/kazmath/include/kazmath/kazmath.h"
 
 /**
  @brief A scrollable view for displaying content exceeding a view's bounds

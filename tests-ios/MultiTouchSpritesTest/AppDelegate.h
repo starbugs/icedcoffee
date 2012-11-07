@@ -23,7 +23,7 @@
 
 
 #import <UIKit/UIKit.h>
-#import "IcedCoffee.h"
+#import "icedcoffee/IcedCoffee.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
