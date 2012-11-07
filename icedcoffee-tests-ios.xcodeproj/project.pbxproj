@@ -27,6 +27,8 @@
 		A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6478F4D15FE7896003DB316 /* DraggableControl.m */; };
 		A67CC09C16262A290094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A698AE831649E36F009E9001 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A698AE841649E399009E9001 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
 		A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
 		A6EA1E0415CD65110007C4FF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
@@ -257,6 +259,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */,
+				A698AE841649E399009E9001 /* CoreVideo.framework in Frameworks */,
 				A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */,
 				A6EA1E0315CD65110007C4FF /* Foundation.framework in Frameworks */,
 				A6EA1E4415CD67720007C4FF /* QuartzCore.framework in Frameworks */,
@@ -296,6 +299,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A698AE831649E36F009E9001 /* CoreVideo.framework in Frameworks */,
 				D29284FC15AA526C0086B12A /* Foundation.framework in Frameworks */,
 				D29284F615AA523A0086B12A /* CoreGraphics.framework in Frameworks */,
 				D29284F915AA524F0086B12A /* OpenGLES.framework in Frameworks */,
