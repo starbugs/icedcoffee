@@ -278,22 +278,9 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     ICNode *dispatchTarget = deepestHitNode;
     
     // Assign new first responder via mouse down events
-    if ([self isMouseDownEventType:[mouseEvent type]]) {
-        
-        if ([dispatchTarget acceptsFirstResponder]) {
-            // Make the dispatch target the current first responder
-            _hostViewController.currentFirstResponder = dispatchTarget;
-        } else {
-            // Make the first ancestor of the dispatch target accepting first responder
-            // the new current first responder
-            NSArray *ancestors = [dispatchTarget ancestors];
-            for (ICNode *ancestor in ancestors) {
-                if ([ancestor acceptsFirstResponder]) {
-                    _hostViewController.currentFirstResponder = ancestor;
-                    break;
-                }
-            }
-        }
+    if ([self isMouseDownEventType:[mouseEvent type]]) {        
+        // Make the dispatch target the current first responder
+        _hostViewController.currentFirstResponder = dispatchTarget;
         
         // Note last mouse down control
         _lastMouseDownControl = ICControlForNode(dispatchTarget);

@@ -369,10 +369,19 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (void)setCurrentFirstResponder:(ICResponder *)currentFirstResponder
 {
-    [_currentFirstResponder resignFirstResponder];
-    [_currentFirstResponder release];
-    _currentFirstResponder = [currentFirstResponder retain];
-    [_currentFirstResponder becomeFirstResponder];
+    if ([currentFirstResponder acceptsFirstResponder] &&
+        (!_currentFirstResponder || [_currentFirstResponder resignFirstResponder]) &&
+        [currentFirstResponder becomeFirstResponder])
+    {
+        [_currentFirstResponder release];
+        _currentFirstResponder = [currentFirstResponder retain];
+    }
+}
+
+- (BOOL)makeFirstResponder:(ICResponder *)newFirstResponder
+{
+    self.currentFirstResponder = newFirstResponder;
+    return self.currentFirstResponder == newFirstResponder;
 }
 
 - (float)contentScaleFactor

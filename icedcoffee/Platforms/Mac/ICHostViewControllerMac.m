@@ -63,6 +63,12 @@
         [_mouseEventDispatcher eventMethod:event]; \
     }
 
+#define DISPATCH_KEY_EVENT(eventMethod) \
+    - (void)eventMethod:(NSEvent *)event { \
+        [self makeCurrentHostViewController]; \
+        [_keyEventDispatcher eventMethod:event]; \
+    }
+
 
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
@@ -94,6 +100,7 @@
     [super commonInit];
     
     _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
+    _keyEventDispatcher = [[ICKeyEventDispatcher alloc] initWithHostViewController:self];
     _usesDisplayLink = YES;
     _drawsConcurrently = YES;
     
@@ -106,6 +113,7 @@
 {
     [self stopAnimation];
     [_mouseEventDispatcher release];
+    [_keyEventDispatcher release];
     
     if (_thread && _isThreadOwner) {
         [self.thread cancel];
@@ -370,6 +378,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     [super setView:view];
 }
 
+
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 // ICMouseResponder Protocol Implementation
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -390,6 +399,14 @@ DISPATCH_MOUSE_EVENT(otherMouseDragged)
 DISPATCH_MOUSE_EVENT(otherMouseUp)
 
 DISPATCH_MOUSE_EVENT(scrollWheel)
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// ICKeyResponder Protocol Implementation
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+DISPATCH_KEY_EVENT(keyDown)
+DISPATCH_KEY_EVENT(keyUp)
 
 @end
 

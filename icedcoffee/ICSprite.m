@@ -298,7 +298,8 @@
 
 - (BOOL)acceptsFirstResponder
 {
-    return YES;
+    [[self nextResponder] makeFirstResponder];
+    return NO;
 }
 
 @end

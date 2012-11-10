@@ -26,8 +26,6 @@
 
 #ifdef __IC_PLATFORM_MAC
 
-#import "ICMouseResponder.h"
-
 enum {
     ICMouseDown     = 1 << 0,
     ICMouseUp       = 1 << 1,
@@ -44,7 +42,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 /**
  @brief Dispatches mouse events into the icedcoffee responder chain
  */
-@interface ICMouseEventDispatcher : NSObject <ICMouseResponder>
+@interface ICMouseEventDispatcher : NSObject
 {
 @private
     ICHostViewController *_hostViewController;

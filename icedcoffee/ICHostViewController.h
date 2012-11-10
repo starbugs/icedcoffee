@@ -196,8 +196,26 @@
 
 /**
  @brief The receiver's current first responder
+ 
+ Setting this property to an ICResponder object will first check whether that object accepts
+ first responder status by calling ICResponder::acceptsFirstResponder. If so, the setter checks
+ whether the current first responder is willing to resign first responder status by sending it
+ an ICResponder::resignFirstResponder message. If the current first responder resigns first
+ responder, the setter finally sets the given responder as new current first responder of the
+ receiver.
  */
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
+
+/**
+ @brief Attempts to make the given responder new current first responder of the receiver
+ 
+ This method sets the ICHostViewController::currentFirstResponder property to the given responder
+ on the receiver.
+ 
+ @return If setting the given responder as the new first responder succeeds, the method
+ returns ``YES``. Otherwise ``NO`` is returned.
+ */
+- (BOOL)makeFirstResponder:(ICResponder *)newFirstResponder;
 
 
 #pragma mark - Obtaining Caches and Contexts

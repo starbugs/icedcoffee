@@ -15,6 +15,13 @@
 		018C88611593B8F40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C885F1593B8F40086319E /* ICShaderUniform.m */; };
 		01DCA966159CD0EA002DEA20 /* ICScale9View.h in Headers */ = {isa = PBXBuildFile; fileRef = 01DCA964159CD0EA002DEA20 /* ICScale9View.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		01DCA967159CD0EA002DEA20 /* ICScale9View.m in Sources */ = {isa = PBXBuildFile; fileRef = 01DCA965159CD0EA002DEA20 /* ICScale9View.m */; };
+		A60501AF164EA5A400A51A3A /* ICKeyEventDispatcher.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501AD164EA5A400A51A3A /* ICKeyEventDispatcher.h */; };
+		A60501B0164EA5A400A51A3A /* ICKeyEventDispatcher.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501AE164EA5A400A51A3A /* ICKeyEventDispatcher.m */; };
+		A60501B3164EA86100A51A3A /* ICKeyResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501B2164EA86100A51A3A /* ICKeyResponder.h */; };
+		A60501B6164EAA9800A51A3A /* ICKeyEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501B4164EAA9700A51A3A /* ICKeyEvent.h */; };
+		A60501B7164EAA9800A51A3A /* ICKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501B5164EAA9700A51A3A /* ICKeyEvent.m */; };
+		A60501F1164ECAEC00A51A3A /* ICTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501EF164ECAEC00A51A3A /* ICTextField.h */; };
+		A60501F2164ECAEC00A51A3A /* ICTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501F0164ECAEC00A51A3A /* ICTextField.m */; };
 		A67CC25F16330D570094014C /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC25D16330D570094014C /* ICLine2D.h */; };
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
 		A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */; };
@@ -161,6 +168,13 @@
 		018C885F1593B8F40086319E /* ICShaderUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderUniform.m; path = icedcoffee/ICShaderUniform.m; sourceTree = "<group>"; };
 		01DCA964159CD0EA002DEA20 /* ICScale9View.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScale9View.h; path = icedcoffee/ICScale9View.h; sourceTree = "<group>"; };
 		01DCA965159CD0EA002DEA20 /* ICScale9View.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScale9View.m; path = icedcoffee/ICScale9View.m; sourceTree = "<group>"; };
+		A60501AD164EA5A400A51A3A /* ICKeyEventDispatcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICKeyEventDispatcher.h; path = icedcoffee/ICKeyEventDispatcher.h; sourceTree = "<group>"; };
+		A60501AE164EA5A400A51A3A /* ICKeyEventDispatcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICKeyEventDispatcher.m; path = icedcoffee/ICKeyEventDispatcher.m; sourceTree = "<group>"; };
+		A60501B2164EA86100A51A3A /* ICKeyResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICKeyResponder.h; path = icedcoffee/ICKeyResponder.h; sourceTree = "<group>"; };
+		A60501B4164EAA9700A51A3A /* ICKeyEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICKeyEvent.h; path = icedcoffee/ICKeyEvent.h; sourceTree = "<group>"; };
+		A60501B5164EAA9700A51A3A /* ICKeyEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICKeyEvent.m; path = icedcoffee/ICKeyEvent.m; sourceTree = "<group>"; };
+		A60501EF164ECAEC00A51A3A /* ICTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextField.h; path = icedcoffee/ICTextField.h; sourceTree = "<group>"; };
+		A60501F0164ECAEC00A51A3A /* ICTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextField.m; path = icedcoffee/ICTextField.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
 		A67CC25D16330D570094014C /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
@@ -483,6 +497,8 @@
 				D2B8AD9C1582AE53006F6419 /* ICTableView.m */,
 				D2B8ADA21582AF69006F6419 /* ICTableViewCell.h */,
 				D2B8ADA31582AF69006F6419 /* ICTableViewCell.m */,
+				A60501EF164ECAEC00A51A3A /* ICTextField.h */,
+				A60501F0164ECAEC00A51A3A /* ICTextField.m */,
 				D2E6488F15042F3700D71A6D /* ICView.h */,
 				D2E6489015042F3700D71A6D /* ICView.m */,
 			);
@@ -519,6 +535,11 @@
 				D24BAF5814EDB142000E65AA /* ICHostViewController.m */,
 				D24BAF5914EDB142000E65AA /* ICIdentifiable.h */,
 				D24BAF5A14EDB142000E65AA /* ICIdentifiable.m */,
+				A60501B4164EAA9700A51A3A /* ICKeyEvent.h */,
+				A60501B5164EAA9700A51A3A /* ICKeyEvent.m */,
+				A60501AD164EA5A400A51A3A /* ICKeyEventDispatcher.h */,
+				A60501AE164EA5A400A51A3A /* ICKeyEventDispatcher.m */,
+				A60501B2164EA86100A51A3A /* ICKeyResponder.h */,
 				D24BAF5B14EDB142000E65AA /* icMacros.h */,
 				D2A04C9615A71FE50097BDA3 /* ICMouseEvent.h */,
 				D2A04C9715A71FE50097BDA3 /* ICMouseEvent.m */,
@@ -732,6 +753,10 @@
 				A6F11F72161668EB00DFA4CB /* ICShaderFactory.h in Headers */,
 				A67CC25F16330D570094014C /* ICLine2D.h in Headers */,
 				A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */,
+				A60501AF164EA5A400A51A3A /* ICKeyEventDispatcher.h in Headers */,
+				A60501B3164EA86100A51A3A /* ICKeyResponder.h in Headers */,
+				A60501B6164EAA9800A51A3A /* ICKeyEvent.h in Headers */,
+				A60501F1164ECAEC00A51A3A /* ICTextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +875,9 @@
 				A6F11F73161668EB00DFA4CB /* ICShaderFactory.m in Sources */,
 				A67CC26016330D570094014C /* ICLine2D.m in Sources */,
 				A6CB74551645E2F300CDEEAC /* ICAnimatedShaderProgram.m in Sources */,
+				A60501B0164EA5A400A51A3A /* ICKeyEventDispatcher.m in Sources */,
+				A60501B7164EAA9800A51A3A /* ICKeyEvent.m in Sources */,
+				A60501F2164ECAEC00A51A3A /* ICTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

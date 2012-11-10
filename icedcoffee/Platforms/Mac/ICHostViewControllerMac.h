@@ -48,6 +48,7 @@
 #import "../../ICHostViewController.h"
 #import "../../ICMouseResponder.h"
 #import "../../ICMouseEventDispatcher.h"
+#import "../../ICKeyEventDispatcher.h"
 #import "../../icMacros.h"
 #import "ICGLView.h"
 #import <QuartzCore/CVDisplayLink.h>
@@ -68,12 +69,13 @@
  ICHostViewControllerMac in order to implement a specialized view controller for each
  application view that should display an IcedCoffee scene.
  */
-@interface ICHostViewControllerMac : ICHostViewController <ICMouseResponder>
+@interface ICHostViewControllerMac : ICHostViewController
 {
 @protected
     CVDisplayLinkRef _displayLink;
     ICGLView *_view;
     ICMouseEventDispatcher *_mouseEventDispatcher;
+    ICKeyEventDispatcher *_keyEventDispatcher;
     BOOL _usesDisplayLink;
     BOOL _drawsConcurrently;
     BOOL _isThreadOwner;

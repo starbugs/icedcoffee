@@ -1028,6 +1028,21 @@
 }
 
 
+#pragma mark - ICResponder Overrides
+
+- (BOOL)makeFirstResponder
+{
+    return [self.hostViewController makeFirstResponder:self];
+}
+
+#ifdef __IC_PLATFORM_DESKTOP
+- (void)noResponderFor:(SEL)selector
+{
+    [self.hostViewController.view noResponderFor:selector];
+}
+#endif // __IC_PLATFORM_DESKTOP
+
+
 #pragma mark - Private
 
 - (void)setParent:(ICNode *)parent

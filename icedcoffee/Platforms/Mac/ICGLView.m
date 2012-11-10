@@ -180,6 +180,9 @@ DISPATCH_EVENT(otherMouseDragged)
 
 DISPATCH_EVENT(scrollWheel)
 
+DISPATCH_EVENT(keyDown)
+DISPATCH_EVENT(keyUp)
+
 - (void)setCursor:(NSCursor *)cursor
 {
     [self.window invalidateCursorRectsForView:self];
