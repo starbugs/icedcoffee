@@ -36,6 +36,7 @@
 @class ICShaderProgram;
 @class ICScene;
 @class ICHostViewController;
+@class ICAnimation;
 
 /**
  @brief Block type for filtering nodes
@@ -1106,6 +1107,28 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  influenced by the ICNode::userInteractionEnabled property.
  */
 @property (nonatomic, assign) BOOL userInteractionEnabled;
+
+
+#pragma mark - Animating a Node
+/** @name Animating a Node */
+
+/**
+ @brief Adds the given animation to the receiver
+ 
+ The animation is started automatically once it has been added.
+ */
+- (void)addAnimation:(ICAnimation *)animation;
+
+/**
+ @brief Removes the given animation from the receiver
+ */
+- (void)removeAnimation:(ICAnimation *)animation;
+
+/**
+ @brief Removes all animations from the receiver
+ */
+- (void)removeAllAnimations;
+
 
 #ifdef DEBUG
 

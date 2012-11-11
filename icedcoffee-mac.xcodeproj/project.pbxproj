@@ -22,8 +22,19 @@
 		A60501B7164EAA9800A51A3A /* ICKeyEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501B5164EAA9700A51A3A /* ICKeyEvent.m */; };
 		A60501F1164ECAEC00A51A3A /* ICTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501EF164ECAEC00A51A3A /* ICTextField.h */; };
 		A60501F2164ECAEC00A51A3A /* ICTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501F0164ECAEC00A51A3A /* ICTextField.m */; };
+		A60501F6164F0C2F00A51A3A /* ICAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501F4164F0C2F00A51A3A /* ICAnimation.h */; };
+		A60501F7164F0C2F00A51A3A /* ICAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501F5164F0C2F00A51A3A /* ICAnimation.m */; };
+		A60501FA164F0CEE00A51A3A /* ICAnimationTimingFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501F8164F0CEE00A51A3A /* ICAnimationTimingFunction.h */; };
+		A60501FB164F0CEE00A51A3A /* ICAnimationTimingFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501F9164F0CEE00A51A3A /* ICAnimationTimingFunction.m */; };
+		A60501FD164F0DB400A51A3A /* ICAnimationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501FC164F0DB400A51A3A /* ICAnimationDelegate.h */; };
+		A6050200164F0F9700A51A3A /* ICPropertyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A60501FE164F0F9700A51A3A /* ICPropertyAnimation.h */; };
+		A6050201164F0F9700A51A3A /* ICPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */; };
+		A6050204164F15CC00A51A3A /* ICBasicAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A6050202164F15CB00A51A3A /* ICBasicAnimation.h */; };
+		A6050205164F15CC00A51A3A /* ICBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A6050203164F15CB00A51A3A /* ICBasicAnimation.m */; };
 		A67CC25F16330D570094014C /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC25D16330D570094014C /* ICLine2D.h */; };
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
+		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
+		A68DBF4D165010DC0035E0B6 /* ICNodeRef.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */; };
 		A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74551645E2F300CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -175,9 +186,20 @@
 		A60501B5164EAA9700A51A3A /* ICKeyEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICKeyEvent.m; path = icedcoffee/ICKeyEvent.m; sourceTree = "<group>"; };
 		A60501EF164ECAEC00A51A3A /* ICTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextField.h; path = icedcoffee/ICTextField.h; sourceTree = "<group>"; };
 		A60501F0164ECAEC00A51A3A /* ICTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextField.m; path = icedcoffee/ICTextField.m; sourceTree = "<group>"; };
+		A60501F4164F0C2F00A51A3A /* ICAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimation.h; path = icedcoffee/ICAnimation.h; sourceTree = "<group>"; };
+		A60501F5164F0C2F00A51A3A /* ICAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimation.m; path = icedcoffee/ICAnimation.m; sourceTree = "<group>"; };
+		A60501F8164F0CEE00A51A3A /* ICAnimationTimingFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimationTimingFunction.h; path = icedcoffee/ICAnimationTimingFunction.h; sourceTree = "<group>"; };
+		A60501F9164F0CEE00A51A3A /* ICAnimationTimingFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimationTimingFunction.m; path = icedcoffee/ICAnimationTimingFunction.m; sourceTree = "<group>"; };
+		A60501FC164F0DB400A51A3A /* ICAnimationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimationDelegate.h; path = icedcoffee/ICAnimationDelegate.h; sourceTree = "<group>"; };
+		A60501FE164F0F9700A51A3A /* ICPropertyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPropertyAnimation.h; path = icedcoffee/ICPropertyAnimation.h; sourceTree = "<group>"; };
+		A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPropertyAnimation.m; path = icedcoffee/ICPropertyAnimation.m; sourceTree = "<group>"; };
+		A6050202164F15CB00A51A3A /* ICBasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICBasicAnimation.h; path = icedcoffee/ICBasicAnimation.h; sourceTree = "<group>"; };
+		A6050203164F15CB00A51A3A /* ICBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICBasicAnimation.m; path = icedcoffee/ICBasicAnimation.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
 		A67CC25D16330D570094014C /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
+		A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeRef.h; path = icedcoffee/ICNodeRef.h; sourceTree = "<group>"; };
+		A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeRef.m; path = icedcoffee/ICNodeRef.m; sourceTree = "<group>"; };
 		A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
@@ -334,6 +356,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A60501F3164F0C1800A51A3A /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				A60501F4164F0C2F00A51A3A /* ICAnimation.h */,
+				A60501F5164F0C2F00A51A3A /* ICAnimation.m */,
+				A60501FC164F0DB400A51A3A /* ICAnimationDelegate.h */,
+				A60501F8164F0CEE00A51A3A /* ICAnimationTimingFunction.h */,
+				A60501F9164F0CEE00A51A3A /* ICAnimationTimingFunction.m */,
+				A6050202164F15CB00A51A3A /* ICBasicAnimation.h */,
+				A6050203164F15CB00A51A3A /* ICBasicAnimation.m */,
+				A60501FE164F0F9700A51A3A /* ICPropertyAnimation.h */,
+				A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */,
+			);
+			name = Animation;
+			sourceTree = "<group>";
+		};
 		D24BAF2714EDB05D000E65AA = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +413,7 @@
 		D24BAF4A14EDB123000E65AA /* icedcoffee */ = {
 			isa = PBXGroup;
 			children = (
+				A60501F3164F0C1800A51A3A /* Animation */,
 				D2918D4D15887F250043C872 /* Cameras */,
 				D2918D4E15887F8A0043C872 /* Core */,
 				D2918D4915887EA70043C872 /* Nodes */,
@@ -546,6 +585,8 @@
 				D24BAF5C14EDB142000E65AA /* ICMouseEventDispatcher.h */,
 				D24BAF5D14EDB142000E65AA /* ICMouseEventDispatcher.m */,
 				D24BAF5E14EDB142000E65AA /* ICMouseResponder.h */,
+				A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */,
+				A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */,
 				D24BAF6114EDB142000E65AA /* ICNodeVisitor.h */,
 				D24BAF6214EDB142000E65AA /* ICNodeVisitor.m */,
 				D24BAF6314EDB142000E65AA /* ICNodeVisitorDrawing.h */,
@@ -757,6 +798,12 @@
 				A60501B3164EA86100A51A3A /* ICKeyResponder.h in Headers */,
 				A60501B6164EAA9800A51A3A /* ICKeyEvent.h in Headers */,
 				A60501F1164ECAEC00A51A3A /* ICTextField.h in Headers */,
+				A60501F6164F0C2F00A51A3A /* ICAnimation.h in Headers */,
+				A60501FA164F0CEE00A51A3A /* ICAnimationTimingFunction.h in Headers */,
+				A60501FD164F0DB400A51A3A /* ICAnimationDelegate.h in Headers */,
+				A6050200164F0F9700A51A3A /* ICPropertyAnimation.h in Headers */,
+				A6050204164F15CC00A51A3A /* ICBasicAnimation.h in Headers */,
+				A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -878,6 +925,11 @@
 				A60501B0164EA5A400A51A3A /* ICKeyEventDispatcher.m in Sources */,
 				A60501B7164EAA9800A51A3A /* ICKeyEvent.m in Sources */,
 				A60501F2164ECAEC00A51A3A /* ICTextField.m in Sources */,
+				A60501F7164F0C2F00A51A3A /* ICAnimation.m in Sources */,
+				A60501FB164F0CEE00A51A3A /* ICAnimationTimingFunction.m in Sources */,
+				A6050201164F0F9700A51A3A /* ICPropertyAnimation.m in Sources */,
+				A6050205164F15CC00A51A3A /* ICBasicAnimation.m in Sources */,
+				A68DBF4D165010DC0035E0B6 /* ICNodeRef.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

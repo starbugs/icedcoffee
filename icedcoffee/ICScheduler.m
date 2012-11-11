@@ -23,6 +23,12 @@
 
 #import "ICScheduler.h"
 #import "ICHostViewController.h"
+#import "ICAnimation.h"
+#import "ICNode.h"
+
+@interface ICScheduler (Private)
+- (void)processAnimations:(icTime)dt;
+@end
 
 @implementation ICScheduler
 
@@ -37,6 +43,7 @@
         _targets = [[NSMutableArray alloc] init];
         _targetsWithHighPriority = [[NSMutableArray alloc] init];
         _targetsWithLowPriority = [[NSMutableArray alloc] init];
+        _animations = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -46,6 +53,7 @@
     [_targets release];
     [_targetsWithLowPriority release];
     [_targetsWithHighPriority release];
+    [_animations release];
     
     [super dealloc];
 }
@@ -92,6 +100,8 @@
 
 - (void)update:(icTime)dt
 {
+    [self processAnimations:dt];
+    
     for (id<ICUpdatable> target in _targetsWithHighPriority) {
         [target update:dt];
     }
@@ -102,6 +112,51 @@
 
     for (id<ICUpdatable> target in _targetsWithLowPriority) {
         [target update:dt];
+    }
+}
+
+- (NSArray *)animationsForNode:(ICNode *)node
+{
+    NSMutableArray *animations = [_animations objectForKey:[NSValue valueWithPointer:node]];
+    if (!animations) {
+        animations = [NSMutableArray arrayWithCapacity:1];
+        [_animations setObject:animations forKey:[NSValue valueWithPointer:node]];
+    }
+    return animations;
+}
+
+- (void)addAnimation:(ICAnimation *)animation forNode:(ICNode *)node
+{
+    NSAssert(node != nil, @"target must not be nil");
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    NSMutableArray *animations = (NSMutableArray *)[self animationsForNode:node];
+    [animations addObject:animation];
+}
+
+- (void)removeAnimation:(ICAnimation *)animation forNode:(ICNode *)node
+{
+    NSAssert(node != nil, @"target must not be nil");
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    NSMutableArray *animations = (NSMutableArray *)[self animationsForNode:node];
+    [animations removeObject:animation];
+    if ([animation.delegate respondsToSelector:@selector(animationDidStop:finished:)]) {
+        [animation.delegate animationDidStop:animation finished:NO];
+    }
+}
+
+- (void)processAnimations:(icTime)dt
+{
+    for (NSValue *nodeValue in _animations) {
+        NSArray *animations = [_animations objectForKey:nodeValue];
+        for (NSInteger i=[animations count] - 1; i>=0; i--) {
+            ICNode *node = (ICNode *)[nodeValue pointerValue];
+            ICAnimation *animation = [animations objectAtIndex:i];
+            [animation processAnimationWithTarget:node deltaTime:dt];
+            if (animation.isFinished)
+                [node removeAnimation:animation];
+        }
     }
 }
 

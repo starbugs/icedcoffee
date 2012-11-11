@@ -37,6 +37,8 @@
 #import "ICNodeVisitorPicking.h"
 #import "ICHostViewController.h"
 #import "ICRenderTexture.h"
+#import "ICAnimation.h"
+#import "ICScheduler.h"
 
 
 @interface ICNode (Private)
@@ -97,6 +99,7 @@
 {
     self.children = nil;
     [_childrenSortedByZIndex release];
+    [self removeAllAnimations];
     
     [super dealloc];
 }
@@ -1000,6 +1003,40 @@
 @synthesize userInteractionEnabled = _userInteractionEnabled;
 
 
+#pragma mark - Animations
+
+- (void)addAnimation:(ICAnimation *)animation
+{
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    [hvc.scheduler addAnimation:animation forNode:self];
+}
+
+- (void)removeAnimation:(ICAnimation *)animation
+{
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    [hvc.scheduler removeAnimation:animation forNode:self];
+}
+
+- (void)removeAllAnimations
+{
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    NSArray *animations = [hvc.scheduler animationsForNode:self];
+    for (ICAnimation *animation in animations) {
+        [hvc.scheduler removeAnimation:animation forNode:self];
+    }
+}
+
+
 #pragma mark - Debugging
 
 - (NSString *)description
@@ -1041,6 +1078,38 @@
     [self.hostViewController.view noResponderFor:selector];
 }
 #endif // __IC_PLATFORM_DESKTOP
+
+
+#pragma mark - NSObject Overrides
+
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath
+{
+    if ([keyPath isEqualToString:@"positionX"]) {
+        [self setPositionX:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"positionY"]) {
+        [self setPositionY:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"positionZ"]) {
+        [self setPositionZ:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerX"]) {
+        [self setCenterX:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerY"]) {
+        [self setCenterY:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerZ"]) {
+        [self setCenterZ:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerXRounded"]) {
+        [self setCenterX:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerYRounded"]) {
+        [self setCenterY:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerZRounded"]) {
+        [self setCenterZ:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerRounded"]) {
+        kmVec3 center;
+        [(NSValue *)value getValue:&center];
+        [self setCenter:center rounded:YES];
+    } else {
+        [super setValue:value forKey:keyPath];
+    }
+}
 
 
 #pragma mark - Private

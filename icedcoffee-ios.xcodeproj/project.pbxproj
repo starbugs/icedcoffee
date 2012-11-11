@@ -16,6 +16,15 @@
 		A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */; };
 		A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */; };
 		A61FD5A71621C150008A1BDF /* ICGPUImageTexture2DDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A61FD5A61621C150008A1BDF /* ICGPUImageTexture2DDelegate.h */; };
+		A68DBF5916505BEF0035E0B6 /* ICAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5016505BEF0035E0B6 /* ICAnimation.h */; };
+		A68DBF5A16505BEF0035E0B6 /* ICAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF5116505BEF0035E0B6 /* ICAnimation.m */; };
+		A68DBF5B16505BEF0035E0B6 /* ICAnimationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5216505BEF0035E0B6 /* ICAnimationDelegate.h */; };
+		A68DBF5C16505BEF0035E0B6 /* ICAnimationTimingFunction.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5316505BEF0035E0B6 /* ICAnimationTimingFunction.h */; };
+		A68DBF5D16505BEF0035E0B6 /* ICAnimationTimingFunction.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF5416505BEF0035E0B6 /* ICAnimationTimingFunction.m */; };
+		A68DBF5E16505BEF0035E0B6 /* ICBasicAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5516505BEF0035E0B6 /* ICBasicAnimation.h */; };
+		A68DBF5F16505BEF0035E0B6 /* ICBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF5616505BEF0035E0B6 /* ICBasicAnimation.m */; };
+		A68DBF6016505BEF0035E0B6 /* ICPropertyAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5716505BEF0035E0B6 /* ICPropertyAnimation.h */; };
+		A68DBF6116505BEF0035E0B6 /* ICPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF5816505BEF0035E0B6 /* ICPropertyAnimation.m */; };
 		A6CB74261645D7F200CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74271645D7F200CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */; };
 		A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */; };
@@ -167,6 +176,15 @@
 		A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGPUImageTexture2D.h; path = extensions/GPUImage/ICGPUImageTexture2D.h; sourceTree = "<group>"; };
 		A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGPUImageTexture2D.m; path = extensions/GPUImage/ICGPUImageTexture2D.m; sourceTree = "<group>"; };
 		A61FD5A61621C150008A1BDF /* ICGPUImageTexture2DDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGPUImageTexture2DDelegate.h; path = extensions/GPUImage/ICGPUImageTexture2DDelegate.h; sourceTree = "<group>"; };
+		A68DBF5016505BEF0035E0B6 /* ICAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimation.h; path = icedcoffee/ICAnimation.h; sourceTree = "<group>"; };
+		A68DBF5116505BEF0035E0B6 /* ICAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimation.m; path = icedcoffee/ICAnimation.m; sourceTree = "<group>"; };
+		A68DBF5216505BEF0035E0B6 /* ICAnimationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimationDelegate.h; path = icedcoffee/ICAnimationDelegate.h; sourceTree = "<group>"; };
+		A68DBF5316505BEF0035E0B6 /* ICAnimationTimingFunction.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimationTimingFunction.h; path = icedcoffee/ICAnimationTimingFunction.h; sourceTree = "<group>"; };
+		A68DBF5416505BEF0035E0B6 /* ICAnimationTimingFunction.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimationTimingFunction.m; path = icedcoffee/ICAnimationTimingFunction.m; sourceTree = "<group>"; };
+		A68DBF5516505BEF0035E0B6 /* ICBasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICBasicAnimation.h; path = icedcoffee/ICBasicAnimation.h; sourceTree = "<group>"; };
+		A68DBF5616505BEF0035E0B6 /* ICBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICBasicAnimation.m; path = icedcoffee/ICBasicAnimation.m; sourceTree = "<group>"; };
+		A68DBF5716505BEF0035E0B6 /* ICPropertyAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPropertyAnimation.h; path = icedcoffee/ICPropertyAnimation.h; sourceTree = "<group>"; };
+		A68DBF5816505BEF0035E0B6 /* ICPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPropertyAnimation.m; path = icedcoffee/ICPropertyAnimation.m; sourceTree = "<group>"; };
 		A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
 		A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
@@ -343,6 +361,22 @@
 				A61FD5A61621C150008A1BDF /* ICGPUImageTexture2DDelegate.h */,
 			);
 			name = GPUImage;
+			sourceTree = "<group>";
+		};
+		A68DBF4E16505BD00035E0B6 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				A68DBF5016505BEF0035E0B6 /* ICAnimation.h */,
+				A68DBF5116505BEF0035E0B6 /* ICAnimation.m */,
+				A68DBF5216505BEF0035E0B6 /* ICAnimationDelegate.h */,
+				A68DBF5316505BEF0035E0B6 /* ICAnimationTimingFunction.h */,
+				A68DBF5416505BEF0035E0B6 /* ICAnimationTimingFunction.m */,
+				A68DBF5516505BEF0035E0B6 /* ICBasicAnimation.h */,
+				A68DBF5616505BEF0035E0B6 /* ICBasicAnimation.m */,
+				A68DBF5716505BEF0035E0B6 /* ICPropertyAnimation.h */,
+				A68DBF5816505BEF0035E0B6 /* ICPropertyAnimation.m */,
+			);
+			name = Animation;
 			sourceTree = "<group>";
 		};
 		D22F25B015887ACB0049268C /* Nodes */ = {
@@ -530,6 +564,7 @@
 		D2FAC4A214E7ABBE0022BB3B /* icedcoffee */ = {
 			isa = PBXGroup;
 			children = (
+				A68DBF4E16505BD00035E0B6 /* Animation */,
 				D261C77315887D0E0001DC2D /* Cameras */,
 				D261C77415887D370001DC2D /* Core */,
 				D22F25B015887ACB0049268C /* Nodes */,
@@ -740,6 +775,11 @@
 				A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */,
 				A61FD5A71621C150008A1BDF /* ICGPUImageTexture2DDelegate.h in Headers */,
 				A6CB74261645D7F200CDEEAC /* ICAnimatedShaderProgram.h in Headers */,
+				A68DBF5916505BEF0035E0B6 /* ICAnimation.h in Headers */,
+				A68DBF5B16505BEF0035E0B6 /* ICAnimationDelegate.h in Headers */,
+				A68DBF5C16505BEF0035E0B6 /* ICAnimationTimingFunction.h in Headers */,
+				A68DBF5E16505BEF0035E0B6 /* ICBasicAnimation.h in Headers */,
+				A68DBF6016505BEF0035E0B6 /* ICPropertyAnimation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -858,6 +898,10 @@
 				A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */,
 				A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */,
 				A6CB74271645D7F200CDEEAC /* ICAnimatedShaderProgram.m in Sources */,
+				A68DBF5A16505BEF0035E0B6 /* ICAnimation.m in Sources */,
+				A68DBF5D16505BEF0035E0B6 /* ICAnimationTimingFunction.m in Sources */,
+				A68DBF5F16505BEF0035E0B6 /* ICBasicAnimation.m in Sources */,
+				A68DBF6116505BEF0035E0B6 /* ICPropertyAnimation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

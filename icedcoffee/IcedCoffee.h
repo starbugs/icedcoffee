@@ -60,6 +60,7 @@
 #import "ICView.h"
 #import "ICScrollView.h"
 #import "icTypes.h"
+#import "ICBasicAnimation.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

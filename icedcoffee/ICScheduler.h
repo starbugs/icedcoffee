@@ -24,6 +24,9 @@
 #import <Foundation/Foundation.h>
 #import "ICUpdatable.h"
 
+@class ICNode;
+@class ICAnimation;
+
 typedef enum _ICSchedulerPriority {
     kICSchedulerPriority_Default,
     kICSchedulerPriority_High,
@@ -47,6 +50,7 @@ typedef enum _ICSchedulerPriority {
     NSMutableArray *_targets;
     NSMutableArray *_targetsWithLowPriority;
     NSMutableArray *_targetsWithHighPriority;
+    NSMutableDictionary *_animations;
 }
 
 
@@ -121,5 +125,24 @@ typedef enum _ICSchedulerPriority {
  scheduled with low priority.
  */
 - (void)update:(icTime)dt;
+
+
+#pragma mark - Managing Animations
+/** @name Managing Animations */
+
+/**
+ @brief Returns all animations for the given node
+ */
+- (NSArray *)animationsForNode:(ICNode *)node;
+
+/**
+ @brief Adds the given animation for the specified node to the receiver
+ */
+- (void)addAnimation:(ICAnimation *)animation forNode:(ICNode *)node;
+
+/**
+ @brief Removes the given animation for the specified node from the receiver
+ */
+- (void)removeAnimation:(ICAnimation *)animation forNode:(ICNode *)node;
 
 @end

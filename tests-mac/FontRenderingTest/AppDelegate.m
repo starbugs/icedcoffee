@@ -58,7 +58,36 @@
                                fontSize:16];
     [self.label setColor:(icColor4B){255,255,255,255}];
     [scene addChild:self.label];
-    [self.label centerNodeOpticallyRounded:YES];
+    
+    //[self.label centerNodeOpticallyRounded:YES];
+    kmVec3 center = [scene localCenterRounded:YES];
+    [self.label setCenterY:center.y];
+    
+    /*ICBasicAnimation *animation = [ICBasicAnimation animation];
+    animation.keyPath = @"centerX";
+    animation.fromValue = [NSNumber numberWithFloat:-self.label.size.x];
+    animation.toValue = [NSNumber numberWithFloat:center.x];
+    animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    animation.duration = 1.0;
+    [self.label addAnimation:animation];*/
+    
+    kmVec3 startCenter = kmVec3Make(-self.label.size.x, 0, 0);
+    ICBasicAnimation *animation = [ICBasicAnimation animation];
+    animation.keyPath = @"centerRounded";
+    animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    animation.fromValue = [NSValue valueWithBytes:&startCenter objCType:@encode(kmVec3)];
+    animation.toValue = [NSValue valueWithBytes:&center objCType:@encode(kmVec3)];
+    animation.duration = 1.0;
+    [self.label addAnimation:animation];
+    
+    icColor4B startColor = (icColor4B){255,255,255,0};
+    icColor4B endColor = (icColor4B){255,255,255,255};
+    ICBasicAnimation *colorAnimation = [ICBasicAnimation animation];
+    colorAnimation.keyPath = @"color";
+    colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
+    colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
+    colorAnimation.duration = 1.0;
+    [self.label addAnimation:colorAnimation];
    
     ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
     [button setPositionY:50];
