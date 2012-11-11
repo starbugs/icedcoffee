@@ -23,6 +23,8 @@
 
 #import "ICOSXEvent.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @interface ICKeyEvent : ICOSXEvent
 
 + (NSUInteger)modifierFlags;
@@ -40,3 +42,5 @@
 - (unsigned short)keyCode;
 
 @end
+
+#endif // __IC_PLATFORM_MAC

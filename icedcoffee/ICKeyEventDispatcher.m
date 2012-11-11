@@ -26,6 +26,8 @@
 #import "ICKeyEvent.h"
 #import "Platforms/Mac/ICGLView.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 #define DISPATCH_KEY_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event \
     { \
@@ -54,3 +56,5 @@ DISPATCH_KEY_EVENT(keyDown)
 DISPATCH_KEY_EVENT(keyUp)
 
 @end
+
+#endif // __IC_PLATFORM_MAC

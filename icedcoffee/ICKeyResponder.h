@@ -23,6 +23,8 @@
 
 #import <Foundation/Foundation.h>
 
+#ifdef __IC_PLATFORM_DESKTOP
+
 @class ICKeyEvent;
 
 @protocol ICKeyResponder <NSObject>
@@ -34,3 +36,5 @@
 - (void)keyUp:(ICKeyEvent *)keyEvent;
 
 @end
+
+#endif // __IC_PLATFORM_DESKTOP

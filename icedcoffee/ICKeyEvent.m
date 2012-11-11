@@ -23,6 +23,8 @@
 
 #import "ICKeyEvent.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @implementation ICKeyEvent
 
 + (NSUInteger)modifierFlags
@@ -61,3 +63,5 @@
 }
 
 @end
+
+#endif // __IC_PLATFORM_MAC

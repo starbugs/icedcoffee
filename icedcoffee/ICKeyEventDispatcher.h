@@ -24,6 +24,8 @@
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @class ICHostViewController;
 
 @interface ICKeyEventDispatcher : NSObject {
@@ -42,3 +44,5 @@
 - (void)keyUp:(NSEvent *)keyEvent;
 
 @end
+
+#endif // __IC_PLATFORM_MAC
