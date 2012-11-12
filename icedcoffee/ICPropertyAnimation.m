@@ -32,6 +32,11 @@
     return [[[[self class] alloc] initWithKeyPath:keyPath] autorelease];
 }
 
+- (id)init
+{
+    return [self initWithKeyPath:nil];
+}
+
 - (id)initWithKeyPath:(NSString *)keyPath
 {
     if ((self = [super init])) {

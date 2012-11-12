@@ -37,6 +37,14 @@
 @synthesize toValue = _toValue;
 @synthesize duration = _duration;
 
+- (id)initWithKeyPath:(NSString *)keyPath
+{
+    if ((self = [super initWithKeyPath:keyPath])) {
+        self.duration = 1.0;
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     self.fromValue = nil;
