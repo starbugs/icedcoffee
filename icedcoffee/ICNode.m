@@ -770,6 +770,21 @@
     return _scale;
 }
 
+@synthesize rotationAngle = _rotationAngle;
+@synthesize rotationAxis = _rotationAxis;
+
+- (void)setRotationAngle:(float)angle
+{
+    _rotationAngle = angle;
+    _transformDirty = YES;
+}
+
+- (void)setRotationAxis:(kmVec3)axis
+{
+    _rotationAxis = axis;
+    _transformDirty = YES;
+}
+
 - (void)setRotationAngle:(float)angle axis:(kmVec3)axis
 {
     _rotationAxis = axis;

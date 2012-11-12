@@ -853,6 +853,16 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setScaleZ:(float)scaleZ;
 
 /**
+ @brief The rotation angle of the receiver
+ */
+@property (nonatomic, assign, setter=setRotationAngle:) float rotationAngle;
+
+/**
+ @brief The rotation axis of the receiver
+ */
+@property (nonatomic, assign, setter=setRotationAxis:) kmVec3 rotationAxis;
+
+/**
  @brief Sets the rotation angle and axis of the receiver
  */
 - (void)setRotationAngle:(float)angle axis:(kmVec3)axis;
