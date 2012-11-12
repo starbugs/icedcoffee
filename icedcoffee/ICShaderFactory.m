@@ -340,7 +340,7 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
                          __spriteTextureMaskFSH,
                          positionTextureColorAttributes);
         
-        _shaderDefinitions = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+        _shaderDefinitions = [[NSMutableDictionary dictionaryWithObjectsAndKeys:
                               positionTextureColorDef, ICShaderPositionTextureColor,
                               positionTextureA8ColorDef, ICShaderPositionTextureA8Color,
                               positionTextureColorAlphaTestDef, ICShaderPositionTextureColorAlphaTest,
@@ -348,9 +348,15 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
                               positionColorDef, ICShaderPositionColor,
                               pickingDef, ICShaderPicking,
                               spriteTextureMaskDef, ICShaderSpriteTextureMask,
-                              nil];
+                              nil] retain];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_shaderDefinitions release];
+    [super dealloc];
 }
 
 - (ICShaderProgram *)setupShaderProgramWithName:(NSString *)name
@@ -394,12 +400,14 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
 
 - (NSString *)vertexShaderStringForKey:(NSString *)key
 {
-    return [[_shaderDefinitions objectForKey:key] objectForKey:@"vshString"];
+    NSDictionary *shaderDef = [_shaderDefinitions objectForKey:key];
+    return [shaderDef objectForKey:@"vshString"];
 }
 
 - (NSString *)fragmentShaderStringForKey:(NSString *)key
 {
-    return [[_shaderDefinitions objectForKey:key] objectForKey:@"fshString"];
+    NSDictionary *shaderDef = [_shaderDefinitions objectForKey:key];
+    return [shaderDef objectForKey:@"fshString"];
 }
 
 @end
