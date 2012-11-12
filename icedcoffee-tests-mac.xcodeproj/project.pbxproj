@@ -17,6 +17,18 @@
 		A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A68DBF8A1650621F0035E0B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF801650621F0035E0B6 /* AppDelegate.m */; };
+		A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF811650621F0035E0B6 /* Credits.rtf */; };
+		A68DBF8C1650621F0035E0B6 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF831650621F0035E0B6 /* InfoPlist.strings */; };
+		A68DBF8D1650621F0035E0B6 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF851650621F0035E0B6 /* MainMenu.xib */; };
+		A68DBF8E1650621F0035E0B6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF871650621F0035E0B6 /* main.m */; };
+		A68DBF92165063510035E0B6 /* ShaderPlaygroundViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF91165063510035E0B6 /* ShaderPlaygroundViewController.m */; };
+		A68DBF931650648C0035E0B6 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		A68DBF941650648F0035E0B6 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		A68DBF95165064A70035E0B6 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */; };
 		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
 		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
@@ -203,6 +215,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		A68DBF96165064B70035E0B6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		A6CB74BA1646D81100CDEEAC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -335,6 +354,19 @@
 		A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
 		A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
 		A61D6F5615DC3AD1005AFDA5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A68DBF66165062020035E0B6 /* ShaderPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A68DBF7F1650621F0035E0B6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A68DBF801650621F0035E0B6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A68DBF821650621F0035E0B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A68DBF841650621F0035E0B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A68DBF861650621F0035E0B6 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A68DBF871650621F0035E0B6 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A68DBF881650621F0035E0B6 /* ShaderPlayground-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "ShaderPlayground-Info.plist"; sourceTree = "<group>"; };
+		A68DBF891650621F0035E0B6 /* ShaderPlayground-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ShaderPlayground-Prefix.pch"; sourceTree = "<group>"; };
+		A68DBF90165063510035E0B6 /* ShaderPlaygroundViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderPlaygroundViewController.h; sourceTree = "<group>"; };
+		A68DBF91165063510035E0B6 /* ShaderPlaygroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderPlaygroundViewController.m; sourceTree = "<group>"; };
+		A68DBF991650688A0035E0B6 /* ShaderSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderSourceViewController.h; sourceTree = "<group>"; };
+		A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderSourceViewController.m; sourceTree = "<group>"; };
 		A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6CB74A61646D1EC00CDEEAC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -537,6 +569,18 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A68DBF63165062020035E0B6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */,
+				A68DBF931650648C0035E0B6 /* Carbon.framework in Frameworks */,
+				A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */,
+				A68DBF941650648F0035E0B6 /* OpenGL.framework in Frameworks */,
+				A68DBF95165064A70035E0B6 /* CoreVideo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6CB748A1646D1AA00CDEEAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -722,6 +766,26 @@
 				A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A68DBF7E1650621F0035E0B6 /* ShaderPlayground */ = {
+			isa = PBXGroup;
+			children = (
+				A68DBF7F1650621F0035E0B6 /* AppDelegate.h */,
+				A68DBF801650621F0035E0B6 /* AppDelegate.m */,
+				A68DBF811650621F0035E0B6 /* Credits.rtf */,
+				A68DBF831650621F0035E0B6 /* InfoPlist.strings */,
+				A68DBF851650621F0035E0B6 /* MainMenu.xib */,
+				A68DBF871650621F0035E0B6 /* main.m */,
+				A68DBF881650621F0035E0B6 /* ShaderPlayground-Info.plist */,
+				A68DBF891650621F0035E0B6 /* ShaderPlayground-Prefix.pch */,
+				A68DBF90165063510035E0B6 /* ShaderPlaygroundViewController.h */,
+				A68DBF91165063510035E0B6 /* ShaderPlaygroundViewController.m */,
+				A68DBF991650688A0035E0B6 /* ShaderSourceViewController.h */,
+				A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */,
+			);
+			name = ShaderPlayground;
+			path = "tests-mac/ShaderPlayground";
 			sourceTree = "<group>";
 		};
 		A6CB74A51646D1EC00CDEEAC /* ShaderTest */ = {
@@ -1051,6 +1115,7 @@
 				D253D9D715663DFD0027DA6C /* Scale9SpriteTest */,
 				D2ADCFDE157EB37400B6E519 /* ScrollViewTest */,
 				A6CB74A51646D1EC00CDEEAC /* ShaderTest */,
+				A68DBF7E1650621F0035E0B6 /* ShaderPlayground */,
 				D2EDC3591572BBD200EBB417 /* StencilTest */,
 				D22F25711587D5EE0049268C /* TableViewTest */,
 				D2F3502315285DCD00DF2D5B /* TextureCacheTest */,
@@ -1077,6 +1142,7 @@
 				D2735B43159126E200216F1B /* MultipleCocoaViewsTest.app */,
 				A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */,
 				A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */,
+				A68DBF66165062020035E0B6 /* ShaderPlayground.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1189,6 +1255,24 @@
 			name = IBIntegrationTest;
 			productName = IBIntegrationTest;
 			productReference = A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A68DBF65165062020035E0B6 /* ShaderPlayground */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */;
+			buildPhases = (
+				A68DBF62165062020035E0B6 /* Sources */,
+				A68DBF63165062020035E0B6 /* Frameworks */,
+				A68DBF64165062020035E0B6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A68DBF97165064B70035E0B6 /* PBXTargetDependency */,
+			);
+			name = ShaderPlayground;
+			productName = ShaderPlayground;
+			productReference = A68DBF66165062020035E0B6 /* ShaderPlayground.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A6CB748C1646D1AA00CDEEAC /* ShaderTest */ = {
@@ -1468,6 +1552,7 @@
 				D2735B42159126E200216F1B /* MultipleCocoaViewsTest */,
 				A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */,
 				A6CB748C1646D1AA00CDEEAC /* ShaderTest */,
+				A68DBF65165062020035E0B6 /* ShaderPlayground */,
 			);
 		};
 /* End PBXProject section */
@@ -1500,6 +1585,16 @@
 				A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */,
 				A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */,
 				A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A68DBF64165062020035E0B6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */,
+				A68DBF8C1650621F0035E0B6 /* InfoPlist.strings in Resources */,
+				A68DBF8D1650621F0035E0B6 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1678,6 +1773,17 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A68DBF62165062020035E0B6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A68DBF8A1650621F0035E0B6 /* AppDelegate.m in Sources */,
+				A68DBF8E1650621F0035E0B6 /* main.m in Sources */,
+				A68DBF92165063510035E0B6 /* ShaderPlaygroundViewController.m in Sources */,
+				A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6CB74891646D1AA00CDEEAC /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1811,6 +1917,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */;
 		};
+		A68DBF97165064B70035E0B6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = A68DBF96165064B70035E0B6 /* PBXContainerItemProxy */;
+		};
 		A6CB74BB1646D81100CDEEAC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -1899,6 +2010,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				A61D6F5315DC3AD1005AFDA5 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A68DBF811650621F0035E0B6 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A68DBF821650621F0035E0B6 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A68DBF831650621F0035E0B6 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A68DBF841650621F0035E0B6 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A68DBF851650621F0035E0B6 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A68DBF861650621F0035E0B6 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2214,6 +2349,44 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A68DBF7C165062020035E0B6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ShaderPlayground/ShaderPlayground-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A68DBF7D165062020035E0B6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/ShaderPlayground/ShaderPlayground-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2650,6 +2823,15 @@
 			buildConfigurations = (
 				A61D6F4915DC3A8F005AFDA5 /* Debug */,
 				A61D6F4A15DC3A8F005AFDA5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A68DBF7C165062020035E0B6 /* Debug */,
+				A68DBF7D165062020035E0B6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
