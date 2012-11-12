@@ -99,7 +99,7 @@
     for (id key in keys) {
         id value = [_programs objectForKey:key];
         if ([value retainCount] == 1) {
-            ICLog(@"IcedCoffee: ICShaderCache: removing unused shader program: %@", key);
+            ICLog(@"icedcoffee: ICShaderCache: removing unused shader program: %@", key);
             [_programs removeObjectForKey:key];
         }
     }

@@ -27,7 +27,7 @@
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         _objects = [[NSMutableArray alloc] init];
-        [_objects addObject:@"IcedCoffee Detail VC"];
+        [_objects addObject:@"icedcoffee Detail VC"];
     }
     return self;
 }

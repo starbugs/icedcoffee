@@ -23,8 +23,8 @@
 
 #import <UIKit/UIKit.h>
 
-// Wherever you want to use IcedCoffee, just import IcedCoffee.h
-#import "IcedCoffee.h"
+// Wherever you want to use icedcoffee, just import icedcoffee.h
+#import "icedcoffee.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 

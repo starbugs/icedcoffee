@@ -302,7 +302,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	ICPixelFormat	pixelFormat;
     
 	if(cgImage == NULL) {
-		ICLog(@"IcedCoffee: ICTexture2D. Can't create Texture. cgImage is nil");
+		ICLog(@"icedcoffee: ICTexture2D. Can't create Texture. cgImage is nil");
 		[self release];
 		return nil;
 	}
@@ -322,7 +322,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
     
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		ICLog(@"IcedCoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+		ICLog(@"icedcoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			  (long)POTWide, (long)POTHigh,
 			  (long)maxTextureSize, (long)maxTextureSize);
 		[self release];
@@ -339,12 +339,12 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixel_format;
 		else {
-			ICLog(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
+			ICLog(@"icedcoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
 			pixelFormat = ICPixelFormatRGB565;
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
-		ICLog(@"IcedCoffee: ICTexture2D: Using A8 texture since image is a mask");
+		ICLog(@"icedcoffee: ICTexture2D: Using A8 texture since image is a mask");
 		pixelFormat = ICPixelFormatA8;
 	}
     
@@ -612,7 +612,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		dim = [string sizeWithFont:font];
 	
 	if( ! font ) {
-		NSLog(@"IcedCoffee: Unable to load font %@", name);
+		NSLog(@"icedcoffee: Unable to load font %@", name);
 		[self release];
 		return nil;
 	}
@@ -661,7 +661,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	uifont = [UIFont fontWithName:name size:size];
     
 	if( ! uifont ) {
-		NSLog(@"IcedCoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
+		NSLog(@"icedcoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];
 		return nil;
 	}
@@ -700,7 +700,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (void)dealloc
 {
-	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"icedcoffee: deallocing %@", self);
     
 	if(_name && !_wrapsForeignOpenGLTexture) {
         // FIXME: Texture can only be deleted on main thread currently

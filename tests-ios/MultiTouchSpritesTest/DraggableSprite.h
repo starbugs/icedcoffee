@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 
 @interface DraggableSprite : ICSprite {
     kmVec3 _locationInNode;

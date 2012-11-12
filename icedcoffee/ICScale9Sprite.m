@@ -105,7 +105,7 @@
     float y4 = _size.y;
     float z = 0;
     
-    // IcedCoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
+    // icedcoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
     float tx4 = 0;
     float ty4 = 1.0f;
     float tx3 = _scale9Rect.origin.x / textureDisplaySize.width;

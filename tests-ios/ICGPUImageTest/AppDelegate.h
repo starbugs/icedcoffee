@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 #import "GPUImage.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>

@@ -24,7 +24,7 @@
 
 /**
  @file icTypes.h
- @brief IcedCoffee types
+ @brief icedcoffee types
  */
 
 #pragma once

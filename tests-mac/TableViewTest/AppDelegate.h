@@ -22,7 +22,7 @@
 //  
 
 #import <Cocoa/Cocoa.h>
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, ICTableViewDataSource>
 

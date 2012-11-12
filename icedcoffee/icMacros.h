@@ -23,7 +23,7 @@
 
 /**
  @file icMacros.h
- @brief Preprocessor macros commonly used in IcedCoffee
+ @brief Preprocessor macros commonly used in icedcoffee
  */
 
 #pragma once
@@ -172,7 +172,7 @@ extern float g_icContentScaleFactor;
 #define ICLogDealloc(...) do {} while(0)
 #endif // IC_LOG_DEALLOCATIONS
 
-// Macro for general IcedCoffee logging
+// Macro for general icedcoffee logging
 #define ICLog(...) NSLog(__VA_ARGS__)
 
 #else

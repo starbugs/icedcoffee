@@ -27,7 +27,7 @@
 //
 //  ===================
 //
-//  Import this file in modules using IcedCoffee
+//  Import this file in modules using icedcoffee
 
 #import "icMacros.h"
 #import "ICCamera.h"

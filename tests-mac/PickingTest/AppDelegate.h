@@ -22,7 +22,7 @@
 //  
 
 #import <Cocoa/Cocoa.h>
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 #import "PickingTestViewController.h"
 
 @interface AppDelegate : NSObject <NSApplicationDelegate>

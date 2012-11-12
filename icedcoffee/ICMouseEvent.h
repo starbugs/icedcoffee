@@ -75,7 +75,7 @@
  @brief The event's location inside the host view
  
  @return Returns a CGPoint defining the location of the event relative to the host view's frame.
- Note that the returned location conforms to IcedCoffee's coordinate space, that is, the upper
+ Note that the returned location conforms to icedcoffee's coordinate space, that is, the upper
  left corner of the host view is the origin of the coordinate space.
  */
 - (CGPoint)locationInHostView;

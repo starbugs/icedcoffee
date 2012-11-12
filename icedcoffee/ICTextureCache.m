@@ -271,7 +271,7 @@
 #elif __IC_PLATFORM_IOS
 			[EAGLContext setCurrentContext:nil];
 		} else {
-			ICLog(@"IcedCoffee: ERROR: TextureCache: Could not set EAGLContext");
+			ICLog(@"icedcoffee: ERROR: TextureCache: Could not set EAGLContext");
 		}
 #endif
     });
@@ -350,7 +350,7 @@
 		for (id key in keys) {
 			id value = [_textures objectForKey:key];
 			if ([value retainCount] == 1) {
-				ICLog(@"IcedCoffee: ICTextureCache: removing unused texture: %@", key);
+				ICLog(@"icedcoffee: ICTextureCache: removing unused texture: %@", key);
 				[_textures removeObjectForKey:key];
 			}
 		}

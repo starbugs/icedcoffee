@@ -30,7 +30,7 @@
 @class ICNode;
 
 /**
- @brief Represents a touch in an IcedCoffee scene on iOS
+ @brief Represents a touch in an icedcoffee scene on iOS
  */
 @interface ICTouch : NSObject {
 @protected

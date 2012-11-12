@@ -63,7 +63,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  ICNodeVisitorDrawing for drawing nodes on screen and ICNodeVisitorPicking for drawing nodes
  on an invisible framebuffer for picking.
  
- Since IcedCoffee is based on GLES2, each node uses shader programs for drawing. Shader programs
+ Since icedcoffee is based on GLES2, each node uses shader programs for drawing. Shader programs
  are managed using the ICShaderProgram and ICShaderCache classes.
  
  Nodes provide the basis for user interaction event handling for mice, touch, and keyboard
@@ -84,7 +84,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     a framebuffer. It is used for both drawing and picking.
   - When you override ICNode::drawWithVisitor:, first check whether the node is visible and
     skip any drawing if it is not.
-  - IcedCoffee does by default provide two different visitors. ICNodeVisitorDrawing is
+  - icedcoffee does by default provide two different visitors. ICNodeVisitorDrawing is
     used for rendering objects on screen while ICNodeVisitorPicking is used to draw objects
     on an internal picking framebuffer. ICNode provides a standard way of setting up shaders
     for drawing and picking. Hence, after checking for visibility, you should call
@@ -554,7 +554,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  parent, until an ICScene object's parent (or nil) is reached. It invokes nodeToParentTransform
  on all ancestor nodes to retrieve their updated transform matrices.
  
- Note that in IcedCoffee the world space of a given node is represented by its nearest ICScene
+ Note that in icedcoffee the world space of a given node is represented by its nearest ICScene
  ancestor's local coordinate space. This is done to ensure that nested scenes are represented
  as nested worlds, each having its own world coordinate space.
  */
@@ -1111,7 +1111,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  disable user interaction by default by overriding ICNode::init.
  
  @note Even if ICNode::userInteractionEnabled is set to NO, the node may still receive events
- indirectly as a result of the responder chain implemented in IcedCoffee's event processing
+ indirectly as a result of the responder chain implemented in icedcoffee's event processing
  system. The default ICResponder implementation will forward events to the next responder if they
  are not handled by the node itself. Event forwarding as part of the responder chain is not
  influenced by the ICNode::userInteractionEnabled property.

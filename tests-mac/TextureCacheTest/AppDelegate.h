@@ -22,7 +22,7 @@
 //  
 
 #import <Cocoa/Cocoa.h>
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 
 #define MAX_WIDTH 128
 #define MAX_HEIGHT MAX_WIDTH

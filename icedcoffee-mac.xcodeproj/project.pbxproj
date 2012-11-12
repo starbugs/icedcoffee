@@ -35,6 +35,7 @@
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
 		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
 		A68DBF4D165010DC0035E0B6 /* ICNodeRef.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */; };
+		A68DBFD416519D560035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD316519D560035E0B6 /* icedcoffee.h */; };
 		A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74551645E2F300CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -59,7 +60,6 @@
 		D24BAF9214EDB142000E65AA /* ICConfiguration.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5014EDB142000E65AA /* ICConfiguration.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D24BAF9314EDB142000E65AA /* ICConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5114EDB142000E65AA /* ICConfiguration.m */; };
 		D24BAF9414EDB142000E65AA /* icDefaults.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5214EDB142000E65AA /* icDefaults.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D24BAF9514EDB142000E65AA /* IcedCoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5314EDB142000E65AA /* IcedCoffee.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D24BAF9714EDB142000E65AA /* icGLState.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5514EDB142000E65AA /* icGLState.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D24BAF9814EDB142000E65AA /* icGLState.m in Sources */ = {isa = PBXBuildFile; fileRef = D24BAF5614EDB142000E65AA /* icGLState.m */; };
 		D24BAF9914EDB142000E65AA /* ICHostViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = D24BAF5714EDB142000E65AA /* ICHostViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -200,6 +200,7 @@
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
 		A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeRef.h; path = icedcoffee/ICNodeRef.h; sourceTree = "<group>"; };
 		A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeRef.m; path = icedcoffee/ICNodeRef.m; sourceTree = "<group>"; };
+		A68DBFD316519D560035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
 		A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
@@ -230,7 +231,6 @@
 		D24BAF5014EDB142000E65AA /* ICConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICConfiguration.h; path = icedcoffee/ICConfiguration.h; sourceTree = "<group>"; };
 		D24BAF5114EDB142000E65AA /* ICConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICConfiguration.m; path = icedcoffee/ICConfiguration.m; sourceTree = "<group>"; };
 		D24BAF5214EDB142000E65AA /* icDefaults.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icDefaults.h; path = icedcoffee/icDefaults.h; sourceTree = "<group>"; };
-		D24BAF5314EDB142000E65AA /* IcedCoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = IcedCoffee.h; path = icedcoffee/IcedCoffee.h; sourceTree = "<group>"; };
 		D24BAF5514EDB142000E65AA /* icGLState.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icGLState.h; path = icedcoffee/icGLState.h; sourceTree = "<group>"; };
 		D24BAF5614EDB142000E65AA /* icGLState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = icGLState.m; path = icedcoffee/icGLState.m; sourceTree = "<group>"; };
 		D24BAF5714EDB142000E65AA /* ICHostViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICHostViewController.h; path = icedcoffee/ICHostViewController.h; sourceTree = "<group>"; };
@@ -564,7 +564,7 @@
 				D2735AFA158DE2B400216F1B /* ICContextManager.h */,
 				D2735AFB158DE2B400216F1B /* ICContextManager.m */,
 				D24BAF5214EDB142000E65AA /* icDefaults.h */,
-				D24BAF5314EDB142000E65AA /* IcedCoffee.h */,
+				A68DBFD316519D560035E0B6 /* icedcoffee.h */,
 				D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */,
 				D20F5EA215B6223E0023B1C9 /* ICFramebuffer.m */,
 				D23CB58115A76DB100E2370D /* ICFramebufferProvider.h */,
@@ -721,7 +721,6 @@
 				D24BAF9114EDB142000E65AA /* icConfig.h in Headers */,
 				D24BAF9214EDB142000E65AA /* ICConfiguration.h in Headers */,
 				D24BAF9414EDB142000E65AA /* icDefaults.h in Headers */,
-				D24BAF9514EDB142000E65AA /* IcedCoffee.h in Headers */,
 				D24BAF9714EDB142000E65AA /* icGLState.h in Headers */,
 				D24BAF9914EDB142000E65AA /* ICHostViewController.h in Headers */,
 				D24BAF9B14EDB142000E65AA /* ICIdentifiable.h in Headers */,
@@ -804,6 +803,7 @@
 				A6050200164F0F9700A51A3A /* ICPropertyAnimation.h in Headers */,
 				A6050204164F15CC00A51A3A /* ICBasicAnimation.h in Headers */,
 				A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */,
+				A68DBFD416519D560035E0B6 /* icedcoffee.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

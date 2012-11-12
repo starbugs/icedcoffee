@@ -117,7 +117,7 @@
  @param program An ICShaderProgram instance representing the shader program to set
  @param key An arbitrary key identifying the shader program for later retrieval
  
- @remarks It is recommended to use NSString keys. The default keys available in IcedCoffee
+ @remarks It is recommended to use NSString keys. The default keys available in icedcoffee
  are defined in ICShaderProgram.h.
  */
 - (void)setShaderProgram:(ICShaderProgram *)program forKey:(id)key;

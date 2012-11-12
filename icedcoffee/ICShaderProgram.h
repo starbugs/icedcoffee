@@ -46,7 +46,7 @@
 //
 //
 // Adapted for cocos2d http://www.cocos2d-iphone.org
-// Then adapted for IcedCoffee http://www.icedcoffee-framework.org
+// Then adapted for icedcoffee http://www.icedcoffee-framework.org
 
 #import "icGLState.h"
 #import "icTypes.h"

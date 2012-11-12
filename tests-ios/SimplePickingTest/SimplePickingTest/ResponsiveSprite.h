@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "IcedCoffee.h"
+#import "icedcoffee.h"
 
 @interface ResponsiveSprite : ICSprite
 

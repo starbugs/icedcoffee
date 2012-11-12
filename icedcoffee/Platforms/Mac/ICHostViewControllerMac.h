@@ -61,13 +61,13 @@
  @brief Host view controller for the Mac OS X platform
  
  ICHostViewControllerMac specializes and extends ICHostViewController to implement view management
- for the Mac OS X platform. Each Cocoa view that should display an IcedCoffee scene in your
+ for the Mac OS X platform. Each Cocoa view that should display an icedcoffee scene in your
  application must have a distinct host view controller.
  
- When creating an IcedCoffee-based application or integrating an IcedCoffee-based OpenGL view
+ When creating an icedcoffee-based application or integrating an icedcoffee-based OpenGL view
  into an existing Cocoa application on the Mac, it is recommended to subclass
  ICHostViewControllerMac in order to implement a specialized view controller for each
- application view that should display an IcedCoffee scene.
+ application view that should display an icedcoffee scene.
  */
 @interface ICHostViewControllerMac : ICHostViewController
 {

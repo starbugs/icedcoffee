@@ -131,7 +131,7 @@
     if (_openGLReady && !self.isRunning) {
         _isRunning = YES;
     
-        ICLog(@"IcedCoffee: animation started");
+        ICLog(@"icedcoffee: animation started");
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 
@@ -147,7 +147,7 @@
     if (self.isRunning) {
         _isRunning = NO;
         
-        ICLog(@"IcedCoffee: animation stopped");
+        ICLog(@"icedcoffee: animation stopped");
         
         [self.thread cancel];
         self.thread = nil;

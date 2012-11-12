@@ -6,7 +6,7 @@
 //  Copyright (c) 2012 Tobias Lensing. All rights reserved.
 //
 
-#import "icedcoffee/IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 #import "GPUImage.h"
 
 @interface ICGPUImageTestViewController : ICHostViewControllerIOS {

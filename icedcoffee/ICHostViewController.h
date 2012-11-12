@@ -180,7 +180,7 @@
  appropriate situations. For example, this method is called automatically at the end of
  ICHostViewController initialization (before ICHostViewController::setupScene is called), before a
  scene is drawn in ICHostViewController::drawScene, and before an event is dispatched. This way,
- framework or user code written to set up, draw or interact in an IcedCoffee scene is usually
+ framework or user code written to set up, draw or interact in an icedcoffee scene is usually
  guaranteed to retrieve the correct current host view controller via
  ICHostViewController::currentHostViewController.
  

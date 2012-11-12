@@ -163,7 +163,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     @synchronized (self) {
         struct timeval now;
         if (gettimeofday(&now, NULL) != 0) {
-            ICLog(@"IcedCoffee: error occurred in gettimeofday");
+            ICLog(@"icedcoffee: error occurred in gettimeofday");
             _deltaTime = 0;
             return;
         }

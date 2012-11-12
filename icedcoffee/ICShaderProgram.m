@@ -22,7 +22,7 @@
 //
 //
 // Adapted for cocos2d http://www.cocos2d-iphone.org
-// Then adapted for IcedCoffee
+// Then adapted for icedcoffee
 
 #import "ICShaderProgram.h"
 #import "ICShaderValue.h"
@@ -170,14 +170,14 @@ fragmentShaderString:(NSString *)fShaderString
         
 		if (vShaderString) {
 			if (![self compileShader:&_vertShader type:GL_VERTEX_SHADER source:vShaderString]) {
-				ICLog(@"IcedCoffee: ERROR: Failed to compile vertex shader: %@", _programName);
+				ICLog(@"icedcoffee: ERROR: Failed to compile vertex shader: %@", _programName);
             }
 		}
         
         // Create and compile fragment shader
 		if (fShaderString) {
 			if (![self compileShader:&_fragShader type:GL_FRAGMENT_SHADER source:fShaderString]) {
-				ICLog(@"IcedCoffee: ERROR: Failed to compile fragment shader: %@", _programName);
+				ICLog(@"icedcoffee: ERROR: Failed to compile fragment shader: %@", _programName);
             }
 		}
         
@@ -195,7 +195,7 @@ fragmentShaderString:(NSString *)fShaderString
 
 - (void)dealloc
 {
-	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"icedcoffee: deallocing %@", self);
     
     [_uniforms release];
     
@@ -231,9 +231,9 @@ fragmentShaderString:(NSString *)fShaderString
     
 	if (!status) {
 		if (type == GL_VERTEX_SHADER)
-			ICLog(@"IcedCoffee: %@: %@", _programName, [self vertexShaderLog]);
+			ICLog(@"icedcoffee: %@: %@", _programName, [self vertexShaderLog]);
 		else
-			ICLog(@"IcedCoffee: %@: %@", _programName, [self fragmentShaderLog]);
+			ICLog(@"icedcoffee: %@: %@", _programName, [self fragmentShaderLog]);
         
 	}
     
@@ -359,7 +359,7 @@ fragmentShaderString:(NSString *)fShaderString
     
     glGetProgramiv(_program, GL_LINK_STATUS, &status);
     if (status == GL_FALSE) {
-		ICLog(@"IcedCoffee: ERROR: Failed to link program: %i", _program);
+		ICLog(@"icedcoffee: ERROR: Failed to link program: %i", _program);
 		if (_vertShader)
 			glDeleteShader(_vertShader);
 		if (_fragShader)

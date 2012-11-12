@@ -23,7 +23,7 @@
 
 /**
  @file icDefaults.h
- @brief Provides preprocessor defines for global IcedCoffee compile-time defaults
+ @brief Provides preprocessor defines for global icedcoffee compile-time defaults
  */
 
 #pragma once

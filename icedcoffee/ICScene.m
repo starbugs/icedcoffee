@@ -312,14 +312,14 @@
     }
 }
 
-// Must be in valid GL context, point must conform to IcedCoffee view axes (Y points downwards)
+// Must be in valid GL context, point must conform to icedcoffee view axes (Y points downwards)
 - (NSArray *)hitTest:(CGPoint)point
 {
     // Perform synchronous hit test
     return [self hitTest:point deferredReadback:NO];
 }
 
-// Must be in valid GL context, point must conform to IcedCoffee view axes (Y points downwards)
+// Must be in valid GL context, point must conform to icedcoffee view axes (Y points downwards)
 - (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
 #if IC_ENABLE_DEBUG_HITTEST

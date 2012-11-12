@@ -30,11 +30,11 @@
 @class ICTestButtonPanel;
 
 /**
- @brief Host view controller for IcedCoffee test applications
+ @brief Host view controller for icedcoffee test applications
  
- The ICTestHostViewController class defines a host view controller for IcedCoffee test applications
+ The ICTestHostViewController class defines a host view controller for icedcoffee test applications
  for both iOS and Mac OS X. It provides a user interface for running a sequence of multiple test
- scenes along with the required methods and properties to manage these scenes. An IcedCoffee test
+ scenes along with the required methods and properties to manage these scenes. An icedcoffee test
  application should subclass ICTestHostViewController and override ICHostViewController::setUpScene
  in order to set up test scenes. Test scenes are finally added to the controller using the
  ICTestHostViewController::addTestScene: method.
