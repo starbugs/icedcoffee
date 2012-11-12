@@ -88,6 +88,12 @@
     colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
     colorAnimation.duration = 1.0;
     [self.label addAnimation:colorAnimation];
+    
+    ICBasicAnimation *rotationAnimation = [ICBasicAnimation animationWithKeyPath:@"rotationAngle"];
+    rotationAnimation.fromValue = [NSNumber numberWithFloat:M_PI];
+    rotationAnimation.toValue = [NSNumber numberWithFloat:0];
+    rotationAnimation.duration = 1.0;
+    [self.label addAnimation:rotationAnimation];
    
     ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
     [button setPositionY:50];
