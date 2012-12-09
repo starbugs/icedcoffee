@@ -45,7 +45,7 @@
 
 #import "../icMacros.h"
 #import "../icConfig.h"
-#import "../../3rd-party/kazmath/include/kazmath/GL/matrix.h"
+#import "../../3rd-party/kazmath/kazmath/GL/matrix.h"
 
 /**
  @addtogroup platform-macros Platform Macros

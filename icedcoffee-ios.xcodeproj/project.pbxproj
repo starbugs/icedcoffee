@@ -28,6 +28,31 @@
 		A68DBFD716519D680035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD616519D680035E0B6 /* icedcoffee.h */; };
 		A6CB74261645D7F200CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74271645D7F200CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */; };
+		A6EF8D4D167488AF005B2605 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D32167488AF005B2605 /* aabb.c */; };
+		A6EF8D4E167488AF005B2605 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D33167488AF005B2605 /* aabb.h */; };
+		A6EF8D4F167488AF005B2605 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D36167488AF005B2605 /* mat4stack.c */; };
+		A6EF8D50167488AF005B2605 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D37167488AF005B2605 /* mat4stack.h */; };
+		A6EF8D51167488AF005B2605 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D38167488AF005B2605 /* matrix.c */; };
+		A6EF8D52167488AF005B2605 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D39167488AF005B2605 /* matrix.h */; };
+		A6EF8D53167488AF005B2605 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D3A167488AF005B2605 /* kazmath.h */; };
+		A6EF8D54167488AF005B2605 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D3B167488AF005B2605 /* mat3.c */; };
+		A6EF8D55167488AF005B2605 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D3C167488AF005B2605 /* mat3.h */; };
+		A6EF8D56167488AF005B2605 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D3D167488AF005B2605 /* mat4.c */; };
+		A6EF8D57167488AF005B2605 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D3E167488AF005B2605 /* mat4.h */; };
+		A6EF8D58167488AF005B2605 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D3F167488AF005B2605 /* plane.c */; };
+		A6EF8D59167488AF005B2605 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D40167488AF005B2605 /* plane.h */; };
+		A6EF8D5A167488AF005B2605 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D41167488AF005B2605 /* quaternion.c */; };
+		A6EF8D5B167488AF005B2605 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D42167488AF005B2605 /* quaternion.h */; };
+		A6EF8D5C167488AF005B2605 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D43167488AF005B2605 /* ray2.c */; };
+		A6EF8D5D167488AF005B2605 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D44167488AF005B2605 /* ray2.h */; };
+		A6EF8D5E167488AF005B2605 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D45167488AF005B2605 /* utility.c */; };
+		A6EF8D5F167488AF005B2605 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D46167488AF005B2605 /* utility.h */; };
+		A6EF8D60167488AF005B2605 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D47167488AF005B2605 /* vec2.c */; };
+		A6EF8D61167488AF005B2605 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D48167488AF005B2605 /* vec2.h */; };
+		A6EF8D62167488AF005B2605 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D49167488AF005B2605 /* vec3.c */; };
+		A6EF8D63167488AF005B2605 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D4A167488AF005B2605 /* vec3.h */; };
+		A6EF8D64167488AF005B2605 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D4B167488AF005B2605 /* vec4.c */; };
+		A6EF8D65167488AF005B2605 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D4C167488AF005B2605 /* vec4.h */; };
 		A6F11F7C16166E1900DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */; };
 		A6F11F7D16166E1900DFA4CB /* ICShaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */; };
 		A6F73E0A15EC2B51001EE9B8 /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F73E0815EC2B51001EE9B8 /* ICLine2D.h */; };
@@ -135,33 +160,6 @@
 		D2FAC56414E7B6510022BB3B /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC55C14E7B6350022BB3B /* OpenGLES.framework */; };
 		D2FAC56514E7B6510022BB3B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC55D14E7B6360022BB3B /* QuartzCore.framework */; };
 		D2FAC56614E7B6510022BB3B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FAC55E14E7B6360022BB3B /* UIKit.framework */; };
-		D2FD859314F0728A006A9A90 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857314F0728A006A9A90 /* aabb.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859414F0728A006A9A90 /* mat4stack.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857514F0728A006A9A90 /* mat4stack.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859514F0728A006A9A90 /* matrix.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857614F0728A006A9A90 /* matrix.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859614F0728A006A9A90 /* kazmath.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857714F0728A006A9A90 /* kazmath.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859714F0728A006A9A90 /* mat3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857814F0728A006A9A90 /* mat3.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859814F0728A006A9A90 /* mat4.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857914F0728A006A9A90 /* mat4.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859914F0728A006A9A90 /* neon_matrix_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857A14F0728A006A9A90 /* neon_matrix_impl.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859A14F0728A006A9A90 /* plane.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857B14F0728A006A9A90 /* plane.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859B14F0728A006A9A90 /* quaternion.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857C14F0728A006A9A90 /* quaternion.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859C14F0728A006A9A90 /* ray2.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857D14F0728A006A9A90 /* ray2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859D14F0728A006A9A90 /* utility.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857E14F0728A006A9A90 /* utility.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859E14F0728A006A9A90 /* vec2.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD857F14F0728A006A9A90 /* vec2.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD859F14F0728A006A9A90 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD858014F0728A006A9A90 /* vec3.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD85A014F0728A006A9A90 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FD858114F0728A006A9A90 /* vec4.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2FD85A114F0728A006A9A90 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858314F0728A006A9A90 /* aabb.c */; };
-		D2FD85A214F0728A006A9A90 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858714F0728A006A9A90 /* mat4stack.c */; };
-		D2FD85A314F0728A006A9A90 /* matrix.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858814F0728A006A9A90 /* matrix.c */; };
-		D2FD85A414F0728A006A9A90 /* mat3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858914F0728A006A9A90 /* mat3.c */; };
-		D2FD85A514F0728A006A9A90 /* mat4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858A14F0728A006A9A90 /* mat4.c */; };
-		D2FD85A614F0728A006A9A90 /* neon_matrix_impl.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858B14F0728A006A9A90 /* neon_matrix_impl.c */; };
-		D2FD85A714F0728A006A9A90 /* plane.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858C14F0728A006A9A90 /* plane.c */; };
-		D2FD85A814F0728A006A9A90 /* quaternion.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858D14F0728A006A9A90 /* quaternion.c */; };
-		D2FD85A914F0728A006A9A90 /* ray2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858E14F0728A006A9A90 /* ray2.c */; };
-		D2FD85AA14F0728A006A9A90 /* utility.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD858F14F0728A006A9A90 /* utility.c */; };
-		D2FD85AB14F0728A006A9A90 /* vec2.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD859014F0728A006A9A90 /* vec2.c */; };
-		D2FD85AC14F0728A006A9A90 /* vec3.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD859114F0728A006A9A90 /* vec3.c */; };
-		D2FD85AD14F0728A006A9A90 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = D2FD859214F0728A006A9A90 /* vec4.c */; };
 		D2FEE81D15338CE2004CFF62 /* ICScheduler.h in Headers */ = {isa = PBXBuildFile; fileRef = D2FEE81B15338CE2004CFF62 /* ICScheduler.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2FEE81E15338CE2004CFF62 /* ICScheduler.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FEE81C15338CE2004CFF62 /* ICScheduler.m */; };
 /* End PBXBuildFile section */
@@ -188,6 +186,32 @@
 		A68DBFD616519D680035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
 		A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
+		A6EF8D32167488AF005B2605 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
+		A6EF8D33167488AF005B2605 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
+		A6EF8D34167488AF005B2605 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
+		A6EF8D36167488AF005B2605 /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
+		A6EF8D37167488AF005B2605 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
+		A6EF8D38167488AF005B2605 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
+		A6EF8D39167488AF005B2605 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
+		A6EF8D3A167488AF005B2605 /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
+		A6EF8D3B167488AF005B2605 /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
+		A6EF8D3C167488AF005B2605 /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
+		A6EF8D3D167488AF005B2605 /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
+		A6EF8D3E167488AF005B2605 /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
+		A6EF8D3F167488AF005B2605 /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
+		A6EF8D40167488AF005B2605 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
+		A6EF8D41167488AF005B2605 /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
+		A6EF8D42167488AF005B2605 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
+		A6EF8D43167488AF005B2605 /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
+		A6EF8D44167488AF005B2605 /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
+		A6EF8D45167488AF005B2605 /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
+		A6EF8D46167488AF005B2605 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
+		A6EF8D47167488AF005B2605 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
+		A6EF8D48167488AF005B2605 /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
+		A6EF8D49167488AF005B2605 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
+		A6EF8D4A167488AF005B2605 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
+		A6EF8D4B167488AF005B2605 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
+		A6EF8D4C167488AF005B2605 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
 		A6F11F7A16166E1900DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
 		A6F11F7B16166E1900DFA4CB /* ICShaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderFactory.m; path = icedcoffee/ICShaderFactory.m; sourceTree = "<group>"; };
 		A6F73E0815EC2B51001EE9B8 /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
@@ -296,35 +320,6 @@
 		D2FAC55C14E7B6350022BB3B /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
 		D2FAC55D14E7B6360022BB3B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		D2FAC55E14E7B6360022BB3B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
-		D2FD857314F0728A006A9A90 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
-		D2FD857514F0728A006A9A90 /* mat4stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4stack.h; sourceTree = "<group>"; };
-		D2FD857614F0728A006A9A90 /* matrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix.h; sourceTree = "<group>"; };
-		D2FD857714F0728A006A9A90 /* kazmath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kazmath.h; sourceTree = "<group>"; };
-		D2FD857814F0728A006A9A90 /* mat3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat3.h; sourceTree = "<group>"; };
-		D2FD857914F0728A006A9A90 /* mat4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mat4.h; sourceTree = "<group>"; };
-		D2FD857A14F0728A006A9A90 /* neon_matrix_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = neon_matrix_impl.h; sourceTree = "<group>"; };
-		D2FD857B14F0728A006A9A90 /* plane.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = plane.h; sourceTree = "<group>"; };
-		D2FD857C14F0728A006A9A90 /* quaternion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = quaternion.h; sourceTree = "<group>"; };
-		D2FD857D14F0728A006A9A90 /* ray2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ray2.h; sourceTree = "<group>"; };
-		D2FD857E14F0728A006A9A90 /* utility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = utility.h; sourceTree = "<group>"; };
-		D2FD857F14F0728A006A9A90 /* vec2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec2.h; sourceTree = "<group>"; };
-		D2FD858014F0728A006A9A90 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
-		D2FD858114F0728A006A9A90 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
-		D2FD858314F0728A006A9A90 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
-		D2FD858414F0728A006A9A90 /* ChangeLog */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog; sourceTree = "<group>"; };
-		D2FD858514F0728A006A9A90 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
-		D2FD858714F0728A006A9A90 /* mat4stack.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4stack.c; sourceTree = "<group>"; };
-		D2FD858814F0728A006A9A90 /* matrix.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = matrix.c; sourceTree = "<group>"; };
-		D2FD858914F0728A006A9A90 /* mat3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat3.c; sourceTree = "<group>"; };
-		D2FD858A14F0728A006A9A90 /* mat4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mat4.c; sourceTree = "<group>"; };
-		D2FD858B14F0728A006A9A90 /* neon_matrix_impl.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = neon_matrix_impl.c; sourceTree = "<group>"; };
-		D2FD858C14F0728A006A9A90 /* plane.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = plane.c; sourceTree = "<group>"; };
-		D2FD858D14F0728A006A9A90 /* quaternion.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = quaternion.c; sourceTree = "<group>"; };
-		D2FD858E14F0728A006A9A90 /* ray2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ray2.c; sourceTree = "<group>"; };
-		D2FD858F14F0728A006A9A90 /* utility.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utility.c; sourceTree = "<group>"; };
-		D2FD859014F0728A006A9A90 /* vec2.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec2.c; sourceTree = "<group>"; };
-		D2FD859114F0728A006A9A90 /* vec3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec3.c; sourceTree = "<group>"; };
-		D2FD859214F0728A006A9A90 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		D2FEE81B15338CE2004CFF62 /* ICScheduler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICScheduler.h; path = icedcoffee/ICScheduler.h; sourceTree = "<group>"; };
 		D2FEE81C15338CE2004CFF62 /* ICScheduler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICScheduler.m; path = icedcoffee/ICScheduler.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -377,6 +372,48 @@
 				A68DBF5816505BEF0035E0B6 /* ICPropertyAnimation.m */,
 			);
 			name = Animation;
+			sourceTree = "<group>";
+		};
+		A6EF8D31167488AF005B2605 /* kazmath */ = {
+			isa = PBXGroup;
+			children = (
+				A6EF8D32167488AF005B2605 /* aabb.c */,
+				A6EF8D33167488AF005B2605 /* aabb.h */,
+				A6EF8D34167488AF005B2605 /* CMakeLists.txt */,
+				A6EF8D35167488AF005B2605 /* GL */,
+				A6EF8D3A167488AF005B2605 /* kazmath.h */,
+				A6EF8D3B167488AF005B2605 /* mat3.c */,
+				A6EF8D3C167488AF005B2605 /* mat3.h */,
+				A6EF8D3D167488AF005B2605 /* mat4.c */,
+				A6EF8D3E167488AF005B2605 /* mat4.h */,
+				A6EF8D3F167488AF005B2605 /* plane.c */,
+				A6EF8D40167488AF005B2605 /* plane.h */,
+				A6EF8D41167488AF005B2605 /* quaternion.c */,
+				A6EF8D42167488AF005B2605 /* quaternion.h */,
+				A6EF8D43167488AF005B2605 /* ray2.c */,
+				A6EF8D44167488AF005B2605 /* ray2.h */,
+				A6EF8D45167488AF005B2605 /* utility.c */,
+				A6EF8D46167488AF005B2605 /* utility.h */,
+				A6EF8D47167488AF005B2605 /* vec2.c */,
+				A6EF8D48167488AF005B2605 /* vec2.h */,
+				A6EF8D49167488AF005B2605 /* vec3.c */,
+				A6EF8D4A167488AF005B2605 /* vec3.h */,
+				A6EF8D4B167488AF005B2605 /* vec4.c */,
+				A6EF8D4C167488AF005B2605 /* vec4.h */,
+			);
+			name = kazmath;
+			path = "3rd-party/kazmath/kazmath";
+			sourceTree = "<group>";
+		};
+		A6EF8D35167488AF005B2605 /* GL */ = {
+			isa = PBXGroup;
+			children = (
+				A6EF8D36167488AF005B2605 /* mat4stack.c */,
+				A6EF8D37167488AF005B2605 /* mat4stack.h */,
+				A6EF8D38167488AF005B2605 /* matrix.c */,
+				A6EF8D39167488AF005B2605 /* matrix.h */,
+			);
+			path = GL;
 			sourceTree = "<group>";
 		};
 		D22F25B015887ACB0049268C /* Nodes */ = {
@@ -604,87 +641,10 @@
 			path = iOS;
 			sourceTree = "<group>";
 		};
-		D2FD857014F0728A006A9A90 /* kazmath */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD857114F0728A006A9A90 /* include */,
-				D2FD858214F0728A006A9A90 /* src */,
-			);
-			name = kazmath;
-			path = "3rd-party/kazmath";
-			sourceTree = "<group>";
-		};
-		D2FD857114F0728A006A9A90 /* include */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD857214F0728A006A9A90 /* kazmath */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		D2FD857214F0728A006A9A90 /* kazmath */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD857314F0728A006A9A90 /* aabb.h */,
-				D2FD857414F0728A006A9A90 /* GL */,
-				D2FD857714F0728A006A9A90 /* kazmath.h */,
-				D2FD857814F0728A006A9A90 /* mat3.h */,
-				D2FD857914F0728A006A9A90 /* mat4.h */,
-				D2FD857A14F0728A006A9A90 /* neon_matrix_impl.h */,
-				D2FD857B14F0728A006A9A90 /* plane.h */,
-				D2FD857C14F0728A006A9A90 /* quaternion.h */,
-				D2FD857D14F0728A006A9A90 /* ray2.h */,
-				D2FD857E14F0728A006A9A90 /* utility.h */,
-				D2FD857F14F0728A006A9A90 /* vec2.h */,
-				D2FD858014F0728A006A9A90 /* vec3.h */,
-				D2FD858114F0728A006A9A90 /* vec4.h */,
-			);
-			path = kazmath;
-			sourceTree = "<group>";
-		};
-		D2FD857414F0728A006A9A90 /* GL */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD857514F0728A006A9A90 /* mat4stack.h */,
-				D2FD857614F0728A006A9A90 /* matrix.h */,
-			);
-			path = GL;
-			sourceTree = "<group>";
-		};
-		D2FD858214F0728A006A9A90 /* src */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD858314F0728A006A9A90 /* aabb.c */,
-				D2FD858414F0728A006A9A90 /* ChangeLog */,
-				D2FD858514F0728A006A9A90 /* CMakeLists.txt */,
-				D2FD858614F0728A006A9A90 /* GL */,
-				D2FD858914F0728A006A9A90 /* mat3.c */,
-				D2FD858A14F0728A006A9A90 /* mat4.c */,
-				D2FD858B14F0728A006A9A90 /* neon_matrix_impl.c */,
-				D2FD858C14F0728A006A9A90 /* plane.c */,
-				D2FD858D14F0728A006A9A90 /* quaternion.c */,
-				D2FD858E14F0728A006A9A90 /* ray2.c */,
-				D2FD858F14F0728A006A9A90 /* utility.c */,
-				D2FD859014F0728A006A9A90 /* vec2.c */,
-				D2FD859114F0728A006A9A90 /* vec3.c */,
-				D2FD859214F0728A006A9A90 /* vec4.c */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
-		D2FD858614F0728A006A9A90 /* GL */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD858714F0728A006A9A90 /* mat4stack.c */,
-				D2FD858814F0728A006A9A90 /* matrix.c */,
-			);
-			path = GL;
-			sourceTree = "<group>";
-		};
 		D2FD85AE14F0728E006A9A90 /* 3rd-party */ = {
 			isa = PBXGroup;
 			children = (
-				D2FD857014F0728A006A9A90 /* kazmath */,
+				A6EF8D31167488AF005B2605 /* kazmath */,
 			);
 			name = "3rd-party";
 			sourceTree = "<group>";
@@ -726,20 +686,6 @@
 				D2FAC51B14E7AC0D0022BB3B /* ICESRenderer.h in Headers */,
 				D2FAC51C14E7AC0D0022BB3B /* ICGLView.h in Headers */,
 				D2FAC51E14E7AC0D0022BB3B /* ICHostViewControllerIOS.h in Headers */,
-				D2FD859314F0728A006A9A90 /* aabb.h in Headers */,
-				D2FD859414F0728A006A9A90 /* mat4stack.h in Headers */,
-				D2FD859514F0728A006A9A90 /* matrix.h in Headers */,
-				D2FD859614F0728A006A9A90 /* kazmath.h in Headers */,
-				D2FD859714F0728A006A9A90 /* mat3.h in Headers */,
-				D2FD859814F0728A006A9A90 /* mat4.h in Headers */,
-				D2FD859914F0728A006A9A90 /* neon_matrix_impl.h in Headers */,
-				D2FD859A14F0728A006A9A90 /* plane.h in Headers */,
-				D2FD859B14F0728A006A9A90 /* quaternion.h in Headers */,
-				D2FD859C14F0728A006A9A90 /* ray2.h in Headers */,
-				D2FD859D14F0728A006A9A90 /* utility.h in Headers */,
-				D2FD859E14F0728A006A9A90 /* vec2.h in Headers */,
-				D2FD859F14F0728A006A9A90 /* vec3.h in Headers */,
-				D2FD85A014F0728A006A9A90 /* vec4.h in Headers */,
 				D2AB773114F92F7F0028CD04 /* ICTouchEventDispatcher.h in Headers */,
 				D2E6488C15042F1900D71A6D /* ICView.h in Headers */,
 				D2F35004151F6A3B00DF2D5B /* ICLabel.h in Headers */,
@@ -780,6 +726,19 @@
 				A68DBF5E16505BEF0035E0B6 /* ICBasicAnimation.h in Headers */,
 				A68DBF6016505BEF0035E0B6 /* ICPropertyAnimation.h in Headers */,
 				A68DBFD716519D680035E0B6 /* icedcoffee.h in Headers */,
+				A6EF8D4E167488AF005B2605 /* aabb.h in Headers */,
+				A6EF8D50167488AF005B2605 /* mat4stack.h in Headers */,
+				A6EF8D52167488AF005B2605 /* matrix.h in Headers */,
+				A6EF8D53167488AF005B2605 /* kazmath.h in Headers */,
+				A6EF8D55167488AF005B2605 /* mat3.h in Headers */,
+				A6EF8D57167488AF005B2605 /* mat4.h in Headers */,
+				A6EF8D59167488AF005B2605 /* plane.h in Headers */,
+				A6EF8D5B167488AF005B2605 /* quaternion.h in Headers */,
+				A6EF8D5D167488AF005B2605 /* ray2.h in Headers */,
+				A6EF8D5F167488AF005B2605 /* utility.h in Headers */,
+				A6EF8D61167488AF005B2605 /* vec2.h in Headers */,
+				A6EF8D63167488AF005B2605 /* vec3.h in Headers */,
+				A6EF8D65167488AF005B2605 /* vec4.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -856,19 +815,6 @@
 				D2FAC51A14E7AC0D0022BB3B /* ICES2Renderer.m in Sources */,
 				D2FAC51D14E7AC0D0022BB3B /* ICGLView.m in Sources */,
 				D2FAC51F14E7AC0D0022BB3B /* ICHostViewControllerIOS.m in Sources */,
-				D2FD85A114F0728A006A9A90 /* aabb.c in Sources */,
-				D2FD85A214F0728A006A9A90 /* mat4stack.c in Sources */,
-				D2FD85A314F0728A006A9A90 /* matrix.c in Sources */,
-				D2FD85A414F0728A006A9A90 /* mat3.c in Sources */,
-				D2FD85A514F0728A006A9A90 /* mat4.c in Sources */,
-				D2FD85A614F0728A006A9A90 /* neon_matrix_impl.c in Sources */,
-				D2FD85A714F0728A006A9A90 /* plane.c in Sources */,
-				D2FD85A814F0728A006A9A90 /* quaternion.c in Sources */,
-				D2FD85A914F0728A006A9A90 /* ray2.c in Sources */,
-				D2FD85AA14F0728A006A9A90 /* utility.c in Sources */,
-				D2FD85AB14F0728A006A9A90 /* vec2.c in Sources */,
-				D2FD85AC14F0728A006A9A90 /* vec3.c in Sources */,
-				D2FD85AD14F0728A006A9A90 /* vec4.c in Sources */,
 				D2AB773214F92F7F0028CD04 /* ICTouchEventDispatcher.m in Sources */,
 				D2E6488D15042F1900D71A6D /* ICView.m in Sources */,
 				D2F35005151F6A3B00DF2D5B /* ICLabel.m in Sources */,
@@ -902,6 +848,18 @@
 				A68DBF5D16505BEF0035E0B6 /* ICAnimationTimingFunction.m in Sources */,
 				A68DBF5F16505BEF0035E0B6 /* ICBasicAnimation.m in Sources */,
 				A68DBF6116505BEF0035E0B6 /* ICPropertyAnimation.m in Sources */,
+				A6EF8D4D167488AF005B2605 /* aabb.c in Sources */,
+				A6EF8D4F167488AF005B2605 /* mat4stack.c in Sources */,
+				A6EF8D51167488AF005B2605 /* matrix.c in Sources */,
+				A6EF8D54167488AF005B2605 /* mat3.c in Sources */,
+				A6EF8D56167488AF005B2605 /* mat4.c in Sources */,
+				A6EF8D58167488AF005B2605 /* plane.c in Sources */,
+				A6EF8D5A167488AF005B2605 /* quaternion.c in Sources */,
+				A6EF8D5C167488AF005B2605 /* ray2.c in Sources */,
+				A6EF8D5E167488AF005B2605 /* utility.c in Sources */,
+				A6EF8D60167488AF005B2605 /* vec2.c in Sources */,
+				A6EF8D62167488AF005B2605 /* vec3.c in Sources */,
+				A6EF8D64167488AF005B2605 /* vec4.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -962,7 +920,7 @@
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = (
-					"3rd-party/kazmath/include",
+					"3rd-party/kazmath",
 					extensions,
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -981,7 +939,7 @@
 				GCC_PREFIX_HEADER = "";
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = (
-					"3rd-party/kazmath/include",
+					"3rd-party/kazmath",
 					extensions,
 				);
 				OTHER_LDFLAGS = "-ObjC";

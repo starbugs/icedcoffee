@@ -1,0 +1,15 @@
+Source: libkazmath-dev
+Priority: optional
+Section: libs
+Maintainer: Luke Benstead (Kazade) <kazade@gmail.com>
+Build-Depends: dpkg (>= 1.13.2), debhelper (>= 4.0), cmake (>= 2), libunittest++-dev
+Standards-Version: 3.9.1
+
+Package: libkazmath-dev
+Architecture: any
+Section: libdevel
+Description: Kazmath 3D math library development files
+ Kazmath is a 3D math library written in C.
+ .
+ This package contains the files needed to compile and link programs which
+ use Kazmath.
