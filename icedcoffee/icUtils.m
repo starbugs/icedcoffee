@@ -29,8 +29,6 @@ ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
     ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
                                             openGLContextForNativeOpenGLContext:[view openGLContext]]
                                          : nil;
-    return [[ICOpenGLContextMac openGLContextWithNativeOpenGLContext:nativeContext
-                                                        shareContext:viewContext] registerContext];
 #elif defined(__IC_PLATFORM_IOS)
     EAGLSharegroup *sharegroup = share ? [[view context] sharegroup] : nil;
     EAGLContext *nativeContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
@@ -38,9 +36,9 @@ ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
     ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
                                             openGLContextForNativeOpenGLContext:[view context]];
                                          : nil;
-    return [[ICOpenGLContextIOS openGLContextWithNativeOpenGLContext:nativeContext
-                                                        shareContext:viewContext] registerContext];
 #endif
+    return [[ICPlatformOpenGLContext openGLContextWithNativeOpenGLContext:nativeContext
+                                                             shareContext:viewContext] registerContext];
 }
 
 unsigned long icNextPOT(unsigned long x)
