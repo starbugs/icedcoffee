@@ -22,28 +22,29 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "icMacros.h"
-#import "Platforms/icGL.h"
+#import "ICOpenGLContext.h"
 
-#ifdef __IC_PLATFORM_MAC
-
-@class ICHostViewController;
-
-@interface ICKeyEventDispatcher : NSObject {
+@interface ICOpenGLContextManager : NSObject {
 @protected
-    ICHostViewController *_hostViewController;
+    NSMutableDictionary *_contexts;
+    NSMutableDictionary *_currentContextByThread;
 }
 
-@property (nonatomic, readonly) ICHostViewController *hostViewController;
++ (id)defaultOpenGLContextManager;
 
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController;
+- (id)init;
 
-- (void)dispatchEvent:(NSEvent *)event withSelector:(SEL)selector;
+- (void)registerOpenGLContext:(ICOpenGLContext *)context
+       forNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
-- (void)keyDown:(NSEvent *)keyEvent;
+- (void)unregisterOpenGLContextForNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
-- (void)keyUp:(NSEvent *)keyEvent;
+- (ICOpenGLContext *)openGLContextForNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
+
+- (ICOpenGLContext *)openGLContextForCurrentNativeOpenGLContext;
+
+- (ICOpenGLContext *)currentContext;
+
+- (void)currentContextDidChange:(ICOpenGLContext *)context;
 
 @end
-
-#endif // __IC_PLATFORM_MAC

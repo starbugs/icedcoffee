@@ -21,29 +21,15 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "icMacros.h"
-#import "Platforms/icGL.h"
+#import "../../ICOpenGLContext.h"
 
-#ifdef __IC_PLATFORM_MAC
+@interface ICOpenGLContextIOS : ICOpenGLContext
 
-@class ICHostViewController;
+- (void)makeCurrentContext;
 
-@interface ICKeyEventDispatcher : NSObject {
-@protected
-    ICHostViewController *_hostViewController;
-}
-
-@property (nonatomic, readonly) ICHostViewController *hostViewController;
-
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController;
-
-- (void)dispatchEvent:(NSEvent *)event withSelector:(SEL)selector;
-
-- (void)keyDown:(NSEvent *)keyEvent;
-
-- (void)keyUp:(NSEvent *)keyEvent;
++ (void)clearCurrentContext;
 
 @end
 
-#endif // __IC_PLATFORM_MAC
+typedef ICOpenGLContextIOS ICPlatformOpenGLContext;
+

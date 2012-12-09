@@ -62,7 +62,7 @@
     
     [self.camera startCameraCapture];
     
-    [EAGLContext setCurrentContext:self.openGLContext];
+    [self.openGLContext makeCurrentContext];
     
     ICUIScene *scene = [ICUIScene scene];
     ICSprite *sprite = [ICSprite spriteWithTexture:self.texture];

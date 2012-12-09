@@ -68,11 +68,7 @@
     dispatch_queue_t _dictQueue;
     dispatch_queue_t _loadingQueue;
     
-#ifdef __IC_PLATFORM_MAC
-    NSOpenGLContext *_auxGLContext;
-#elif defined(__IC_PLATFORM_IOS)
-    EAGLContext *_auxGLContext;
-#endif
+    ICOpenGLContext *_auxGLContext;
     
     ICHostViewController *_hostViewController;
 }

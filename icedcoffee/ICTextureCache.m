@@ -26,8 +26,6 @@
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
 #import "ICHostViewController.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
 #import "icUtils.h"
 #import "icConfig.h"
 
@@ -39,10 +37,9 @@
 
 + (id)currentTextureCache
 {
-    ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
-                                      renderContextForCurrentOpenGLContext];
-    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
-    return [renderContext textureCache];
+    ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
+    NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
+    return [openGLContext textureCache];
 }
 
 - (id)initWithHostViewController:(ICHostViewController *)hostViewController
@@ -134,11 +131,7 @@
 - (void)notifyAsyncTextureDidLoad:(NSDictionary *)textureInfo
 {
     // Ensure the associated host view controller's OpenGL context is set
-#ifdef __IC_PLATFORM_IOS
-    [EAGLContext setCurrentContext:_hostViewController.openGLContext];
-#elif defined(__IC_PLATFORM_MAC)
     [_hostViewController.openGLContext makeCurrentContext];
-#endif
     
     // Ensure the associated host view controller is current
     [_hostViewController makeCurrentHostViewController];
@@ -158,11 +151,7 @@
 - (void)notifyAsyncTextureLoadingDidFail:(NSDictionary *)textureInfo
 {
     // Ensure the associated host view controller's OpenGL context is set
-#ifdef __IC_PLATFORM_IOS
-    [EAGLContext setCurrentContext:_hostViewController.openGLContext];
-#elif defined(__IC_PLATFORM_MAC)
     [_hostViewController.openGLContext makeCurrentContext];
-#endif
 
     // Ensure the associated host view controller is current
     [_hostViewController makeCurrentHostViewController];
@@ -222,11 +211,7 @@
 #endif
         ICTexture2D *asyncTexture;
         
-#ifdef __IC_PLATFORM_MAC
 		[_auxGLContext makeCurrentContext];
-#elif __IC_PLATFORM_IOS
-		if ([EAGLContext setCurrentContext:_auxGLContext]) {
-#endif
         
         NSError *error = nil;
 		asyncTexture = [self loadTextureFromURL:url resolutionType:resolutionType error:&error];
@@ -266,14 +251,7 @@
                     waitUntilDone:YES];
         }
         
-#ifdef __IC_PLATFORM_MAC
-		[NSOpenGLContext clearCurrentContext];
-#elif __IC_PLATFORM_IOS
-			[EAGLContext setCurrentContext:nil];
-		} else {
-			ICLog(@"icedcoffee: ERROR: TextureCache: Could not set EAGLContext");
-		}
-#endif
+		[ICPlatformOpenGLContext clearCurrentContext];
     });
 }
 

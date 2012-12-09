@@ -37,7 +37,6 @@
 @class ICResponder;
 @class ICScheduler;
 @class ICTargetActionDispatcher;
-@class ICRenderContext;
 
 
 #if defined(__IC_PLATFORM_MAC)
@@ -79,7 +78,7 @@
 @protected
     ICScene *_scene;
 
-    ICRenderContext *_renderContext;
+    ICOpenGLContext *_openGLContext;
     ICScheduler *_scheduler;
     ICTargetActionDispatcher *_targetActionDispatcher;
     
@@ -222,9 +221,9 @@
 /** @name Obtaining Caches and Contexts */
 
 /**
- @brief The receiver's render context
+ @brief The receiver's OpenGL context
  */
-@property (nonatomic, readonly) ICRenderContext *renderContext;
+@property (nonatomic, readonly) ICOpenGLContext *openGLContext;
 
 /**
  @brief The ICTextureCache object associated with the receiver
@@ -374,9 +373,9 @@
 - (void)viewDidLoad;
 
 #ifdef __IC_PLATFORM_IOS
-- (EAGLContext *)openGLContext;
+- (EAGLContext *)nativeOpenGLContext;
 #elif defined(__IC_PLATFORM_MAC)
-- (NSOpenGLContext *)openGLContext;
+- (NSOpenGLContext *)nativeOpenGLContext;
 #endif
 
 

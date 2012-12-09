@@ -256,8 +256,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
     
     ICGLView *openGLview = (ICGLView*)self.view;
-    CGLLockContext([[openGLview openGLContext] CGLContextObj]);
-    [[openGLview openGLContext] makeCurrentContext];
+    CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
+    [self.openGLContext makeCurrentContext];
         
     [super drawScene];
     
@@ -302,16 +302,16 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         }        
     }
     
-    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
+    CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);
 }
 
 - (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
     NSArray *resultNodeStack;
     
-	ICGLView *openGLview = (ICGLView*)self.view;
-	CGLLockContext([[openGLview openGLContext] CGLContextObj]);
-	[[openGLview openGLContext] makeCurrentContext];
+    ICGLView *openGLview = (ICGLView*)self.view;    
+    CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
+    [self.openGLContext makeCurrentContext];
 
 	glViewport(0, 0,
                ICPointsToPixels(openGLview.bounds.size.width),
@@ -319,7 +319,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     
     resultNodeStack = [self.scene hitTest:point deferredReadback:deferredReadback];
     
-    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
+    CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);
     
     return resultNodeStack;
 }

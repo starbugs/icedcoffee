@@ -30,6 +30,7 @@
 #import "icGL.h"
 #import "icMacros.h"
 #import "icConfig.h"
+#import "icGLState.h"
 
 #ifdef __IC_PLATFORM_IOS
 #import "Platforms/iOS/ICGLView.h"

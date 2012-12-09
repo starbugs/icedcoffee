@@ -35,8 +35,8 @@
 #define IC_DEFAULT_PICKING_RT_SIZE_IN_PIXELS    CGSizeMake(256,256)
 
 @class ICRenderTexture;
-@class ICRenderContext;
 @class ICScene;
+@class ICOpenGLContext;
 
 /**
  @brief Node visitor for color-based picking using GLSL shaders
@@ -100,12 +100,7 @@
     GLuint _pbo;
     BOOL _asyncReadbackIssued;
     
-#ifdef __IC_PLATFORM_MAC
-    NSOpenGLContext *_auxGLContext;
-#elif defined(__IC_PLATFORM_IOS)
-    EAGLContext *_auxGLContext;
-#endif
-    ICRenderContext *_renderContext;
+    ICOpenGLContext *_auxGLContext;
 }
 
 #pragma mark - Initializing a Picking Node Visitor

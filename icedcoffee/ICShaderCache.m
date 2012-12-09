@@ -25,8 +25,6 @@
 #import "ICShaderCache.h"
 #import "ICShaderFactory.h"
 #import "ICShaderProgram.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
 
 @interface ICShaderCache (Private)
 - (void)loadDefaultShaderPrograms;
@@ -38,12 +36,11 @@
 
 + (id)currentShaderCache
 {
-    ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
-                                      renderContextForCurrentOpenGLContext];
-    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
-    ICShaderCache *shaderCache = renderContext.shaderCache;
+    ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
+    NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
+    ICShaderCache *shaderCache = openGLContext.shaderCache;
     if (!shaderCache) {
-        shaderCache = renderContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
+        shaderCache = openGLContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
     }
     return shaderCache;
 }

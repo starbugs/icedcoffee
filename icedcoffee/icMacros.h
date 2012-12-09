@@ -74,9 +74,6 @@
 /** @} */
 
 
-#import "icGLState.h"
-
-
 // Constants
 
 #define IC_HUGE 1.0e+38f

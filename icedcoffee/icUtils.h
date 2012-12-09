@@ -39,11 +39,7 @@ extern "C" {
      @{
      */
     
-#ifdef __IC_PLATFORM_MAC
-    NSOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share);
-#elif defined(__IC_PLATFORM_IOS)
-    EAGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share);
-#endif
+    ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share);
     
     /**
      @brief Calculates the next power of two for the given value

@@ -64,6 +64,12 @@
 		A6EF8D98167488C6005B2605 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D7F167488C5005B2605 /* vec3.h */; };
 		A6EF8D99167488C6005B2605 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D80167488C5005B2605 /* vec4.c */; };
 		A6EF8D9A167488C6005B2605 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D81167488C5005B2605 /* vec4.h */; };
+		A6EF8DC91674CC66005B2605 /* ICOpenGLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DC71674CC66005B2605 /* ICOpenGLContext.h */; };
+		A6EF8DCA1674CC66005B2605 /* ICOpenGLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DC81674CC66005B2605 /* ICOpenGLContext.m */; };
+		A6EF8DCD1674CFF3005B2605 /* ICOpenGLContextManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DCB1674CFF3005B2605 /* ICOpenGLContextManager.h */; };
+		A6EF8DCE1674CFF3005B2605 /* ICOpenGLContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DCC1674CFF3005B2605 /* ICOpenGLContextManager.m */; };
+		A6EF8DD11674EE9E005B2605 /* ICOpenGLContextMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */; };
+		A6EF8DD21674EE9E005B2605 /* ICOpenGLContextMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */; };
 		A6F11F72161668EB00DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F70161668EB00DFA4CB /* ICShaderFactory.h */; };
 		A6F11F73161668EB00DFA4CB /* ICShaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F11F71161668EB00DFA4CB /* ICShaderFactory.m */; };
 		D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -133,10 +139,6 @@
 		D24BAFCD14EDB1FF000E65AA /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */; };
 		D253DA0115666DDD0027DA6C /* ICPlanarNode.h in Headers */ = {isa = PBXBuildFile; fileRef = D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D253DA0215666DDD0027DA6C /* ICPlanarNode.m in Sources */ = {isa = PBXBuildFile; fileRef = D253DA0015666DDD0027DA6C /* ICPlanarNode.m */; };
-		D2735AFC158DE2B400216F1B /* ICContextManager.h in Headers */ = {isa = PBXBuildFile; fileRef = D2735AFA158DE2B400216F1B /* ICContextManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2735AFD158DE2B400216F1B /* ICContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735AFB158DE2B400216F1B /* ICContextManager.m */; };
-		D2735B01158DE4F000216F1B /* ICRenderContext.h in Headers */ = {isa = PBXBuildFile; fileRef = D2735AFF158DE4EF00216F1B /* ICRenderContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		D2735B02158DE4F000216F1B /* ICRenderContext.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735B00158DE4F000216F1B /* ICRenderContext.m */; };
 		D2735B3E158E566B00216F1B /* icGL.m in Sources */ = {isa = PBXBuildFile; fileRef = D2735B3D158E566B00216F1B /* icGL.m */; };
 		D2918D511589DEE00043C872 /* ICUIScene.h in Headers */ = {isa = PBXBuildFile; fileRef = D2918D4F1589DEDF0043C872 /* ICUIScene.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D2918D521589DEE00043C872 /* ICUIScene.m in Sources */ = {isa = PBXBuildFile; fileRef = D2918D501589DEE00043C872 /* ICUIScene.m */; };
@@ -228,6 +230,12 @@
 		A6EF8D7F167488C5005B2605 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
 		A6EF8D80167488C5005B2605 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A6EF8D81167488C5005B2605 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
+		A6EF8DC71674CC66005B2605 /* ICOpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOpenGLContext.h; path = icedcoffee/ICOpenGLContext.h; sourceTree = "<group>"; };
+		A6EF8DC81674CC66005B2605 /* ICOpenGLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOpenGLContext.m; path = icedcoffee/ICOpenGLContext.m; sourceTree = "<group>"; };
+		A6EF8DCB1674CFF3005B2605 /* ICOpenGLContextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOpenGLContextManager.h; path = icedcoffee/ICOpenGLContextManager.h; sourceTree = "<group>"; };
+		A6EF8DCC1674CFF3005B2605 /* ICOpenGLContextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOpenGLContextManager.m; path = icedcoffee/ICOpenGLContextManager.m; sourceTree = "<group>"; };
+		A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICOpenGLContextMac.h; sourceTree = "<group>"; };
+		A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICOpenGLContextMac.m; sourceTree = "<group>"; };
 		A6F11F70161668EB00DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
 		A6F11F71161668EB00DFA4CB /* ICShaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderFactory.m; path = icedcoffee/ICShaderFactory.m; sourceTree = "<group>"; };
 		D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebuffer.h; path = icedcoffee/ICFramebuffer.h; sourceTree = "<group>"; };
@@ -303,10 +311,6 @@
 		D24BAFCC14EDB1FF000E65AA /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		D253D9FF15666DDD0027DA6C /* ICPlanarNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICPlanarNode.h; path = icedcoffee/ICPlanarNode.h; sourceTree = "<group>"; };
 		D253DA0015666DDD0027DA6C /* ICPlanarNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPlanarNode.m; path = icedcoffee/ICPlanarNode.m; sourceTree = "<group>"; };
-		D2735AFA158DE2B400216F1B /* ICContextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICContextManager.h; path = icedcoffee/ICContextManager.h; sourceTree = "<group>"; };
-		D2735AFB158DE2B400216F1B /* ICContextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICContextManager.m; path = icedcoffee/ICContextManager.m; sourceTree = "<group>"; };
-		D2735AFF158DE4EF00216F1B /* ICRenderContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICRenderContext.h; path = icedcoffee/ICRenderContext.h; sourceTree = "<group>"; };
-		D2735B00158DE4F000216F1B /* ICRenderContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICRenderContext.m; path = icedcoffee/ICRenderContext.m; sourceTree = "<group>"; };
 		D2735B3D158E566B00216F1B /* icGL.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = icGL.m; sourceTree = "<group>"; };
 		D2918D4F1589DEDF0043C872 /* ICUIScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUIScene.h; path = icedcoffee/ICUIScene.h; sourceTree = "<group>"; };
 		D2918D501589DEE00043C872 /* ICUIScene.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICUIScene.m; path = icedcoffee/ICUIScene.m; sourceTree = "<group>"; };
@@ -485,6 +489,8 @@
 				D24BAF8A14EDB142000E65AA /* ICGLView.m */,
 				D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */,
 				D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */,
+				A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */,
+				A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -598,8 +604,6 @@
 				D24BAF4F14EDB142000E65AA /* icConfig.h */,
 				D24BAF5014EDB142000E65AA /* ICConfiguration.h */,
 				D24BAF5114EDB142000E65AA /* ICConfiguration.m */,
-				D2735AFA158DE2B400216F1B /* ICContextManager.h */,
-				D2735AFB158DE2B400216F1B /* ICContextManager.m */,
 				D24BAF5214EDB142000E65AA /* icDefaults.h */,
 				A68DBFD316519D560035E0B6 /* icedcoffee.h */,
 				D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */,
@@ -630,13 +634,15 @@
 				D24BAF6414EDB142000E65AA /* ICNodeVisitorDrawing.m */,
 				D24BAF6514EDB142000E65AA /* ICNodeVisitorPicking.h */,
 				D24BAF6614EDB142000E65AA /* ICNodeVisitorPicking.m */,
+				A6EF8DC71674CC66005B2605 /* ICOpenGLContext.h */,
+				A6EF8DC81674CC66005B2605 /* ICOpenGLContext.m */,
+				A6EF8DCB1674CFF3005B2605 /* ICOpenGLContextManager.h */,
+				A6EF8DCC1674CFF3005B2605 /* ICOpenGLContextManager.m */,
 				D2A04C9A15A727D00097BDA3 /* ICOSXEvent.h */,
 				D2A04C9B15A727D10097BDA3 /* ICOSXEvent.m */,
 				D2FB3E3215B340C1007169B1 /* ICPickContext.h */,
 				D2FB3E3315B340C1007169B1 /* ICPickContext.m */,
 				D23CB57D15A76B2600E2370D /* ICProjectionTransforms.h */,
-				D2735AFF158DE4EF00216F1B /* ICRenderContext.h */,
-				D2735B00158DE4F000216F1B /* ICRenderContext.m */,
 				D24BAF6914EDB142000E65AA /* ICResponder.h */,
 				D24BAF6A14EDB142000E65AA /* ICResponder.m */,
 				D2FEE81615338B74004CFF62 /* ICScheduler.h */,
@@ -722,8 +728,6 @@
 				D2B8ADA41582AF69006F6419 /* ICTableViewCell.h in Headers */,
 				D22F25AE158879FA0049268C /* ICUICamera.h in Headers */,
 				D2918D511589DEE00043C872 /* ICUIScene.h in Headers */,
-				D2735AFC158DE2B400216F1B /* ICContextManager.h in Headers */,
-				D2735B01158DE4F000216F1B /* ICRenderContext.h in Headers */,
 				018C884C1593A5DF0086319E /* ICRectangle.h in Headers */,
 				018C885C1593B3CF0086319E /* ICShaderValue.h in Headers */,
 				018C88601593B8F40086319E /* ICShaderUniform.h in Headers */,
@@ -763,6 +767,9 @@
 				A6EF8D96167488C5005B2605 /* vec2.h in Headers */,
 				A6EF8D98167488C6005B2605 /* vec3.h in Headers */,
 				A6EF8D9A167488C6005B2605 /* vec4.h in Headers */,
+				A6EF8DC91674CC66005B2605 /* ICOpenGLContext.h in Headers */,
+				A6EF8DCD1674CFF3005B2605 /* ICOpenGLContextManager.h in Headers */,
+				A6EF8DD11674EE9E005B2605 /* ICOpenGLContextMac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -852,8 +859,6 @@
 				D2B8ADA51582AF69006F6419 /* ICTableViewCell.m in Sources */,
 				D22F25AF158879FA0049268C /* ICUICamera.m in Sources */,
 				D2918D521589DEE00043C872 /* ICUIScene.m in Sources */,
-				D2735AFD158DE2B400216F1B /* ICContextManager.m in Sources */,
-				D2735B02158DE4F000216F1B /* ICRenderContext.m in Sources */,
 				D2735B3E158E566B00216F1B /* icGL.m in Sources */,
 				018C884D1593A5DF0086319E /* ICRectangle.m in Sources */,
 				018C885D1593B3CF0086319E /* ICShaderValue.m in Sources */,
@@ -888,6 +893,9 @@
 				A6EF8D95167488C5005B2605 /* vec2.c in Sources */,
 				A6EF8D97167488C6005B2605 /* vec3.c in Sources */,
 				A6EF8D99167488C6005B2605 /* vec4.c in Sources */,
+				A6EF8DCA1674CC66005B2605 /* ICOpenGLContext.m in Sources */,
+				A6EF8DCE1674CFF3005B2605 /* ICOpenGLContextManager.m in Sources */,
+				A6EF8DD21674EE9E005B2605 /* ICOpenGLContextMac.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

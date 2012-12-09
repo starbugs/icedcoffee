@@ -23,6 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
+#import "Platforms/icGL.h"
 
 #ifdef __IC_PLATFORM_MAC
 

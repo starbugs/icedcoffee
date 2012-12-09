@@ -28,8 +28,6 @@
 #import "ICTextureCache.h"
 #import "ICScheduler.h"
 #import "ICCamera.h"
-#import "ICRenderContext.h"
-#import "ICContextManager.h"
 #import "ICTargetActionDispatcher.h"
 #import "icDefaults.h"
 #import "icConfig.h"
@@ -57,7 +55,6 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize scene = _scene;
 @synthesize isRunning = _isRunning;
 @synthesize thread = _thread;
-@synthesize renderContext = _renderContext;
 @synthesize currentFirstResponder = _currentFirstResponder;
 @synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
@@ -65,6 +62,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize frameCount = _frameCount;
 @synthesize elapsedTime = _elapsedTime;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
+@synthesize openGLContext = _openGLContext;
 
 + (id)platformSpecificHostViewController
 {
@@ -101,17 +99,16 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (void)dealloc
 {
 #ifdef __IC_PLATFORM_MAC
-    [[ICContextManager defaultContextManager]
-     unregisterRenderContextForOpenGLContext:[[self view] openGLContext]];
+    [[ICOpenGLContextManager defaultOpenGLContextManager]
+     unregisterOpenGLContextForNativeOpenGLContext:[[self view] openGLContext]];
 #elif defined(__IC_PLATFORM_IOS)
-    [[ICContextManager defaultContextManager]
-     unregisterRenderContextForOpenGLContext:[((ICGLView *)[self view]) context]];
+    [[ICOpenGLContextManager defaultOpenGLContextManager]
+     unregisterOpenGLContextForNativeOpenGLContext:[((ICGLView *)[self view]) context]];
 #endif
     
     self.scene = nil;
     [_currentFirstResponder release];
     [_scheduler release];
-    [_renderContext release];
     [_targetActionDispatcher release];
     [_continuousFrameUpdateExpiryDate release];
 
@@ -336,19 +333,24 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
     // render context yet, create and register a new render context for it, so it's possible
     // for other components to retrieve it via the OpenGL context globally
-    ICContextManager *contextManager = [ICContextManager defaultContextManager];
-    _renderContext = [contextManager renderContextForOpenGLContext:[self openGLContext]];
-    if (!_renderContext) {
-        _renderContext = [[ICRenderContext alloc] init];
-        [contextManager registerRenderContext:_renderContext
-                             forOpenGLContext:[self openGLContext]];
+    _openGLContext = [[ICOpenGLContextManager defaultOpenGLContextManager]
+                      openGLContextForNativeOpenGLContext:[self nativeOpenGLContext]];
+    if (!_openGLContext) {
+#ifdef __IC_PLATFORM_MAC
+        _openGLContext = [[[ICOpenGLContextMac alloc]
+                           initWithNativeOpenGLContext:[self nativeOpenGLContext]] registerContext];
+#elif defined(__IC_PLATFORM_IOS)
+        _openGLContext = [[[ICOpenGLContextIOS alloc]
+                           initWithNativeOpenGLContext:[self nativeOpenGLContext]] registerContext];
+#endif
+        [_openGLContext makeCurrentContext];
     }
     
     // If not already existing, create a texture cache bound to our OpenGL context
     // (required for auxiliary OpenGL contexts)
     if (!self.textureCache) {
-        _renderContext.textureCache =
-        [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+        _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
+                                       autorelease];
     }
     
     // Allow subclasses to set up their custom scene
@@ -356,12 +358,12 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 }
 
 #ifdef __IC_PLATFORM_IOS
-- (EAGLContext *)openGLContext
+- (EAGLContext *)nativeOpenGLContext
 {
     return [(ICGLView *)[self view] context];
 }
 #elif defined(__IC_PLATFORM_MAC)
-- (NSOpenGLContext *)openGLContext
+- (NSOpenGLContext *)nativeOpenGLContext
 {
     return [[self view] openGLContext];
 }
@@ -428,7 +430,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (ICTextureCache *)textureCache
 {
-    return _renderContext.textureCache;
+    return _openGLContext.textureCache;
 }
 
 

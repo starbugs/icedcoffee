@@ -24,6 +24,7 @@
 #import "ICScale9Sprite.h"
 #import "ICTexture2D.h"
 #import "ICNodeVisitorPicking.h"
+#import "icGLState.h"
 
 @interface ICScale9Sprite (Private)
 - (void)updateMultiQuad;

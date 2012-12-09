@@ -4,6 +4,7 @@
 
 #import "icUtils.h"
 #import "icMacros.h"
+#import "Platforms/icGL.h"
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
@@ -18,22 +19,29 @@
 #import "Platforms/iOS/ICGLView.h"
 #endif
 
+ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
+{
 #ifdef __IC_PLATFORM_MAC
-NSOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
-{
     NSOpenGLPixelFormat *pixelFormat = [view pixelFormat];
-    NSOpenGLContext *shareContext = share ? [view openGLContext] : nil;
-    return [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shareContext];    
-}
+    NSOpenGLContext *nativeShareContext = share ? [view openGLContext] : nil;
+    NSOpenGLContext *nativeContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat
+                                                                shareContext:nativeShareContext];
+    ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
+                                            openGLContextForNativeOpenGLContext:[view openGLContext]]
+                                         : nil;
+    return [[ICOpenGLContextMac openGLContextWithNativeOpenGLContext:nativeContext
+                                                        shareContext:viewContext] registerContext];
 #elif defined(__IC_PLATFORM_IOS)
-EAGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
-{
     EAGLSharegroup *sharegroup = share ? [[view context] sharegroup] : nil;
-    return [[EAGLContext alloc]
-            initWithAPI:kEAGLRenderingAPIOpenGLES2
-            sharegroup:sharegroup];    
-}
+    EAGLContext *nativeContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                                       sharegroup:sharegroup];
+    ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
+                                            openGLContextForNativeOpenGLContext:[view context]];
+                                         : nil;
+    return [[ICOpenGLContextIOS openGLContextWithNativeOpenGLContext:nativeContext
+                                                        shareContext:viewContext] registerContext];
 #endif
+}
 
 unsigned long icNextPOT(unsigned long x)
 {

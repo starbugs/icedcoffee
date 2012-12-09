@@ -29,8 +29,6 @@
 #import "icConfig.h"
 #import "ICConfiguration.h"
 #import "icUtils.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
 #import "ICScene.h"
 #import "ICCamera.h"
 
@@ -84,13 +82,6 @@ enum {
             // Create an auxiliary OpenGL context which will be used for writing pick colors
             // to a render texture and performing readbacks
             _auxGLContext = icCreateAuxGLContextForView((ICGLView *)hostViewController.view, YES);
-            
-            // Create a render context for our auxiliary OpenGL context
-            _renderContext = [[ICRenderContext alloc] initWithShareContext:hostViewController.renderContext];
-            
-            // Register the render context
-            ICContextManager *contextManager = [ICContextManager defaultContextManager];
-            [contextManager registerRenderContext:_renderContext forOpenGLContext:_auxGLContext];
         }
     }
     return self;
@@ -98,7 +89,7 @@ enum {
 
 - (void)dealloc
 {
-    [_auxGLContext release];
+    [[_auxGLContext unregisterContext] release];
     _auxGLContext = nil;
     
     [_renderTexture release];
@@ -232,19 +223,10 @@ enum {
 {
     NSArray *hitNodes = nil;
     
-#ifdef __IC_PLATFORM_MAC
-    NSOpenGLContext *oldContext = nil;
-#elif defined(__IC_PLATFORM_IOS)
-    EAGLContext *oldContext = nil;
-#endif
+    ICOpenGLContext *oldContext = nil;
     if (_usesAuxiliaryOpenGLContext) {
-#ifdef __IC_PLATFORM_MAC
-        oldContext = [NSOpenGLContext currentContext];
+        oldContext = [ICOpenGLContext currentContext];
         [_auxGLContext makeCurrentContext];
-#elif defined(__IC_PLATFORM_IOS)
-        oldContext = [EAGLContext currentContext];
-        [EAGLContext setCurrentContext:_auxGLContext];
-#endif
     }
     
     if ([node isKindOfClass:[ICScene class]]) {
@@ -290,14 +272,10 @@ enum {
     [self popPickContext];
     
     if (_usesAuxiliaryOpenGLContext) {
-#ifdef __IC_PLATFORM_MAC
         if (oldContext)
             [oldContext makeCurrentContext];
         else
-            [NSOpenGLContext clearCurrentContext];
-#elif defined(__IC_PLATFORM_IOS)
-        [EAGLContext setCurrentContext:oldContext];
-#endif
+            [ICPlatformOpenGLContext clearCurrentContext];
     }
     
     return hitNodes;
