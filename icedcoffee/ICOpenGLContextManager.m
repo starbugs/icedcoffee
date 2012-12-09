@@ -91,9 +91,11 @@ ICOpenGLContextManager *g_defaultOpenGLContextManager = nil;
 - (void)currentContextDidChange:(ICOpenGLContext *)context
 {
     if (context) {
+        kmGLSetCurrentContext(context);
         [_currentContextByThread setObject:context
                                     forKey:[NSValue valueWithPointer:[NSThread currentThread]]];
     } else {
+        kmGLSetCurrentContext(NULL);
         [_currentContextByThread removeObjectForKey:[NSValue valueWithPointer:[NSThread currentThread]]];
     }
 }
