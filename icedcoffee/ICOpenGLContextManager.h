@@ -24,26 +24,43 @@
 #import <Foundation/Foundation.h>
 #import "ICOpenGLContext.h"
 
+/**
+ @brief Manages ICOpenGLContext objects
+ 
+ The ICOpenGLContextManager class provides methods for registering and retrieving ICOpenGLContext
+ objects based on native OpenGL contexts and threads.
+ */
 @interface ICOpenGLContextManager : NSObject {
 @protected
     NSMutableDictionary *_contexts;
     NSMutableDictionary *_currentContextByThread;
 }
 
+/** @name Initialization */
+
 + (id)defaultOpenGLContextManager;
 
 - (id)init;
+
+
+/** @name Registering and Unregistering OpenGL Contexts */
 
 - (void)registerOpenGLContext:(ICOpenGLContext *)context
        forNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
 - (void)unregisterOpenGLContextForNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
+
+/** @name Retrieving OpenGL Contexts */
+
 - (ICOpenGLContext *)openGLContextForNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
 - (ICOpenGLContext *)openGLContextForCurrentNativeOpenGLContext;
 
 - (ICOpenGLContext *)currentContext;
+
+
+/** @name Tracking Context Changes */
 
 - (void)currentContextDidChange:(ICOpenGLContext *)context;
 

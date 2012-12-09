@@ -37,9 +37,18 @@
 
 /**
  @brief Wraps an OpenGL context for icedcoffee
+
+ ICOpenGLContext is an abstract base class wrapping a native OpenGL context object.
  
- ICOpenGLContext is a base class representing an abstract wrapper around a native
- (platform-dependent) OpenGL context object.
+ The class serves three main purposes:
+ - Provide a unified interface for working with OpenGL contexts
+ - Allow users to attach caches and arbitrary objects to an OpenGL context
+ - Implement internal mechanisms for efficiently updating dependent contexts, such as
+   kazmath matrix stack contexts
+
+ You will almost always work with ICPlatformOpenGLContext rather than using ICOpenGLContext
+ directly. ICPlatformOpenGLContext provides the OpenGL context implementation suitable
+ for the target platform of your application.
  */
 @interface ICOpenGLContext : NSObject {
 @protected
