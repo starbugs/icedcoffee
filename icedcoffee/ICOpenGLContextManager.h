@@ -33,7 +33,6 @@
 @interface ICOpenGLContextManager : NSObject {
 @protected
     NSMutableDictionary *_contexts;
-    NSMutableDictionary *_currentContextByThread;
 }
 
 /** @name Initialization */

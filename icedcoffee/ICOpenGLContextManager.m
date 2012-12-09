@@ -42,7 +42,6 @@ ICOpenGLContextManager *g_defaultOpenGLContextManager = nil;
 {
     if ((self = [super init])) {
         _contexts = [[NSMutableDictionary alloc] initWithCapacity:1];
-        _currentContextByThread = [[NSMutableDictionary alloc] initWithCapacity:1];
     }
     return self;
 }
@@ -50,7 +49,6 @@ ICOpenGLContextManager *g_defaultOpenGLContextManager = nil;
 - (void)dealloc
 {
     [_contexts release];
-    [_currentContextByThread release];
     [super dealloc];
 }
 
@@ -85,18 +83,18 @@ ICOpenGLContextManager *g_defaultOpenGLContextManager = nil;
 
 - (ICOpenGLContext *)currentContext
 {
-    return [_currentContextByThread objectForKey:[NSValue valueWithPointer:[NSThread currentThread]]];
+    return [[[NSThread currentThread] threadDictionary] objectForKey:@"currentICOpenGLContext"];
 }
 
 - (void)currentContextDidChange:(ICOpenGLContext *)context
 {
+    // FIXME: better solution might be to use [NSThread threadDictionary]
     if (context) {
         kmGLSetCurrentContext(context);
-        [_currentContextByThread setObject:context
-                                    forKey:[NSValue valueWithPointer:[NSThread currentThread]]];
+        [[[NSThread currentThread] threadDictionary] setObject:context forKey:@"currentICOpenGLContext"];
     } else {
         kmGLSetCurrentContext(NULL);
-        [_currentContextByThread removeObjectForKey:[NSValue valueWithPointer:[NSThread currentThread]]];
+        [[[NSThread currentThread] threadDictionary] removeObjectForKey:@"currentICOpenGLContext"];
     }
 }
 
