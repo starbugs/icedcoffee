@@ -31,6 +31,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #include "matrix.h"
 #include "mat4stack.h"
 
+// ---
+// Begin additions by Tobias Lensing for icedcoffee-framework.org
+
 typedef struct km_mat4_stack_context {
     km_mat4_stack modelview_matrix_stack;
     km_mat4_stack projection_matrix_stack;
@@ -164,6 +167,9 @@ void kmGLClearAllContexts()
     
     pthread_setspecific(current_context_key, NULL);
 }
+
+// End additions by Tobias Lensing for icedcoffee-framework.org
+// ---
 
 km_mat4_stack_context *lazyInitializeCurrentContext()
 {
