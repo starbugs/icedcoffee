@@ -34,7 +34,7 @@ ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
     EAGLContext *nativeContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
                                                        sharegroup:sharegroup];
     ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
-                                            openGLContextForNativeOpenGLContext:[view context]];
+                                            openGLContextForNativeOpenGLContext:[view context]]
                                          : nil;
 #endif
     return [[ICPlatformOpenGLContext openGLContextWithNativeOpenGLContext:nativeContext
