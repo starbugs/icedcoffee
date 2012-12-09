@@ -50,6 +50,7 @@ typedef struct km_mat4_stack_context_list {
 static pthread_key_t current_context_key;
 static km_mat4_stack_context_list *contexts;
 static unsigned char initialized = 0;
+static pthread_mutex_t contexts_mutex = PTHREAD_MUTEX_INITIALIZER;
 
 void lazyInitialize()
 {
@@ -65,10 +66,14 @@ km_mat4_stack_context *lookUpContext(void *contextRef)
     
     if (contexts) {
         km_mat4_stack_context_list *entry = contexts;
+        pthread_mutex_lock(&contexts_mutex);
         do {
-            if (entry->context.contextRef == contextRef)
+            if (entry->context.contextRef == contextRef) {
+                pthread_mutex_unlock(&contexts_mutex);
                 return &entry->context;
+            }
         } while ((entry = entry->next));
+        pthread_mutex_unlock(&contexts_mutex);
     }
     
     return NULL;
@@ -83,11 +88,13 @@ km_mat4_stack_context *registerContext(void *contextRef)
         km_mat4_stack_context_list *entry = contexts;
         km_mat4_stack_context_list *last = NULL;
         
+        pthread_mutex_lock(&contexts_mutex);
         if (entry) {
             do {
                 last = entry;
             } while((entry = entry->next));
         }
+        pthread_mutex_unlock(&contexts_mutex);
         
         km_mat4_stack_context_list *newEntry = (km_mat4_stack_context_list *)malloc(sizeof(km_mat4_stack_context_list));
         memset(newEntry, 0, sizeof(km_mat4_stack_context_list));
@@ -95,13 +102,14 @@ km_mat4_stack_context *registerContext(void *contextRef)
         newEntry->context.entry = newEntry;
         newEntry->prev = last;
         
+        pthread_mutex_lock(&contexts_mutex);
         if (last) {
             last->next = newEntry;
         }
-        
         if (!contexts) {
             contexts = newEntry;
         }
+        pthread_mutex_unlock(&contexts_mutex);
         
         return &newEntry->context;
     }
@@ -111,7 +119,8 @@ km_mat4_stack_context *registerContext(void *contextRef)
 
 void kmGLSetCurrentContext(void *contextRef)
 {
-    pthread_setspecific(current_context_key, registerContext(contextRef));
+    km_mat4_stack_context *current_context = registerContext(contextRef);
+    pthread_setspecific(current_context_key, current_context);
 }
 
 void *kmGLGetCurrentContext()
