@@ -81,8 +81,6 @@
 
 // Retina display support
 
-extern float g_icContentScaleFactor;
-
 /**
  @defgroup retina-display-support-macros Retina Display Support Macros
  @{
@@ -103,7 +101,7 @@ extern float g_icContentScaleFactor;
  The default content scale factors are defined in #IC_DEFAULT_CONTENT_SCALE_FACTOR
  and #IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR.
  */
-#define ICContentScaleFactor() g_icContentScaleFactor
+#define ICContentScaleFactor() ([[ICOpenGLContext currentContext] contentScaleFactor])
 
 /**
  @brief Converts the given value from points to pixels

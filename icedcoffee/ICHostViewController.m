@@ -34,9 +34,7 @@
 #import "ICConfiguration.h"
 #import "sys/time.h"
 
-// Global content scale factor (applies to all ICHostViewController instances)
-float g_icContentScaleFactor = IC_DEFAULT_CONTENT_SCALE_FACTOR;
-
+// FIXME: should be implemented using TLS
 // Globally current host view controller (weak references via NSValue with pointers)
 NSMutableDictionary *g_currentHVCForThread = nil; // lazy allocation
 NSLock *g_hvcDictLock = nil; // lazy allocation
@@ -383,12 +381,13 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (float)contentScaleFactor
 {
-    return g_icContentScaleFactor;
+    return self.openGLContext.contentScaleFactor;
 }
 
 - (void)setContentScaleFactor:(float)contentScaleFactor
 {
-    g_icContentScaleFactor = contentScaleFactor;
+    NSAssert(self.openGLContext != nil, @"Must have a valid OpenGL context at this point");
+    self.openGLContext.contentScaleFactor = contentScaleFactor;
 }
 
 - (BOOL)retinaDisplaySupportEnabled

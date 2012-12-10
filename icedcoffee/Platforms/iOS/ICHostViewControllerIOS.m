@@ -235,11 +235,6 @@
     return resultNodeStack;
 }
 
-- (void)setContentScaleFactor:(float)contentScaleFactor
-{
-    [super setContentScaleFactor:contentScaleFactor];
-}
-
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
 #if IC_ENABLE_DEBUG_TOUCH_DISPATCHER

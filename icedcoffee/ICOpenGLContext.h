@@ -56,6 +56,7 @@
     ICTextureCache *_textureCache;
     ICShaderCache *_shaderCache;
     NSMutableDictionary *_customObjects;
+    float _contentScaleFactor;
 }
 
 /** @name Initialization */
@@ -120,6 +121,8 @@
  @brief The shader cache associated with the receiver
  */
 @property (nonatomic, retain) ICShaderCache *shaderCache;
+
+@property (nonatomic, assign) float contentScaleFactor;
 
 @property (nonatomic, readonly) NSDictionary *customObjects;
 

@@ -23,6 +23,7 @@
 
 #import "ICOpenGLContext.h"
 #import "ICOpenGLContextManager.h"
+#import "icDefaults.h"
 
 @implementation ICOpenGLContext
 
@@ -30,6 +31,7 @@
 @synthesize textureCache = _textureCache;
 @synthesize shaderCache = _shaderCache;
 @synthesize customObjects = _customObjects;
+@synthesize contentScaleFactor = _contentScaleFactor;
 
 + (id)openGLContextWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext
 {
@@ -58,9 +60,12 @@
         if (shareContext) {
             self.textureCache = shareContext.textureCache;
             self.shaderCache = shareContext.shaderCache;
+            self.contentScaleFactor = shareContext.contentScaleFactor;
             for (id key in shareContext.customObjects) {
                 [self setCustomObject:[shareContext customObjectForKey:key] forKey:key];
             }
+        } else {
+            self.contentScaleFactor = IC_DEFAULT_CONTENT_SCALE_FACTOR;
         }
     }
     return self;
