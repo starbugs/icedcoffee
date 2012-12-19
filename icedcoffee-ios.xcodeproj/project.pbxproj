@@ -28,6 +28,12 @@
 		A68DBFD716519D680035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD616519D680035E0B6 /* icedcoffee.h */; };
 		A6CB74261645D7F200CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74271645D7F200CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */; };
+		A6E53E22167CEE6C00701D89 /* ICGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */; };
+		A6E53E23167CEE6C00701D89 /* ICGlyphCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */; };
+		A6E53E2A167CF1DB00701D89 /* ICFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E53E28167CF1DB00701D89 /* ICFont.h */; };
+		A6E53E2B167CF1DB00701D89 /* ICFont.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E53E29167CF1DB00701D89 /* ICFont.m */; };
+		A6E53E2E167D31F500701D89 /* ICMutableTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E53E2C167D31F500701D89 /* ICMutableTexture2D.h */; };
+		A6E53E2F167D31F500701D89 /* ICMutableTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E53E2D167D31F500701D89 /* ICMutableTexture2D.m */; };
 		A6EF8D4D167488AF005B2605 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D32167488AF005B2605 /* aabb.c */; };
 		A6EF8D4E167488AF005B2605 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D33167488AF005B2605 /* aabb.h */; };
 		A6EF8D4F167488AF005B2605 /* mat4stack.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D36167488AF005B2605 /* mat4stack.c */; };
@@ -53,8 +59,6 @@
 		A6EF8D63167488AF005B2605 /* vec3.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D4A167488AF005B2605 /* vec3.h */; };
 		A6EF8D64167488AF005B2605 /* vec4.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D4B167488AF005B2605 /* vec4.c */; };
 		A6EF8D65167488AF005B2605 /* vec4.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D4C167488AF005B2605 /* vec4.h */; };
-		A6EF8DD51674EF6A005B2605 /* ICOpenGLContextIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DD31674EF69005B2605 /* ICOpenGLContextIOS.h */; };
-		A6EF8DD61674EF6A005B2605 /* ICOpenGLContextIOS.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DD41674EF6A005B2605 /* ICOpenGLContextIOS.m */; };
 		A6EF8DDB1674EF83005B2605 /* ICOpenGLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DD71674EF83005B2605 /* ICOpenGLContext.h */; };
 		A6EF8DDC1674EF83005B2605 /* ICOpenGLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DD81674EF83005B2605 /* ICOpenGLContext.m */; };
 		A6EF8DDD1674EF83005B2605 /* ICOpenGLContextManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DD91674EF83005B2605 /* ICOpenGLContextManager.h */; };
@@ -188,6 +192,13 @@
 		A68DBFD616519D680035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
 		A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
+		A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphCache.h; path = icedcoffee/ICGlyphCache.h; sourceTree = "<group>"; };
+		A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGlyphCache.m; path = icedcoffee/ICGlyphCache.m; sourceTree = "<group>"; };
+		A6E53E28167CF1DB00701D89 /* ICFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFont.h; path = icedcoffee/ICFont.h; sourceTree = "<group>"; };
+		A6E53E29167CF1DB00701D89 /* ICFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFont.m; path = icedcoffee/ICFont.m; sourceTree = "<group>"; };
+		A6E53E2C167D31F500701D89 /* ICMutableTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMutableTexture2D.h; path = icedcoffee/ICMutableTexture2D.h; sourceTree = "<group>"; };
+		A6E53E2D167D31F500701D89 /* ICMutableTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMutableTexture2D.m; path = icedcoffee/ICMutableTexture2D.m; sourceTree = "<group>"; };
+		A6E53E30167D443400701D89 /* ICTexture2D_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ICTexture2D_Private.h; path = icedcoffee/ICTexture2D_Private.h; sourceTree = "<group>"; };
 		A6EF8D32167488AF005B2605 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
 		A6EF8D33167488AF005B2605 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
 		A6EF8D34167488AF005B2605 /* CMakeLists.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CMakeLists.txt; sourceTree = "<group>"; };
@@ -214,8 +225,6 @@
 		A6EF8D4A167488AF005B2605 /* vec3.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec3.h; sourceTree = "<group>"; };
 		A6EF8D4B167488AF005B2605 /* vec4.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = vec4.c; sourceTree = "<group>"; };
 		A6EF8D4C167488AF005B2605 /* vec4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = vec4.h; sourceTree = "<group>"; };
-		A6EF8DD31674EF69005B2605 /* ICOpenGLContextIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICOpenGLContextIOS.h; sourceTree = "<group>"; };
-		A6EF8DD41674EF6A005B2605 /* ICOpenGLContextIOS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICOpenGLContextIOS.m; sourceTree = "<group>"; };
 		A6EF8DD71674EF83005B2605 /* ICOpenGLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOpenGLContext.h; path = icedcoffee/ICOpenGLContext.h; sourceTree = "<group>"; };
 		A6EF8DD81674EF83005B2605 /* ICOpenGLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOpenGLContext.m; path = icedcoffee/ICOpenGLContext.m; sourceTree = "<group>"; };
 		A6EF8DD91674EF83005B2605 /* ICOpenGLContextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOpenGLContextManager.h; path = icedcoffee/ICOpenGLContextManager.h; sourceTree = "<group>"; };
@@ -378,6 +387,17 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
+		A6E53E1E167CEE5000701D89 /* Font Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				A6E53E28167CF1DB00701D89 /* ICFont.h */,
+				A6E53E29167CF1DB00701D89 /* ICFont.m */,
+				A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */,
+				A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */,
+			);
+			name = "Font Rendering";
+			sourceTree = "<group>";
+		};
 		A6EF8D31167488AF005B2605 /* kazmath */ = {
 			isa = PBXGroup;
 			children = (
@@ -443,8 +463,11 @@
 			isa = PBXGroup;
 			children = (
 				D2A9AD5915840F81007EB224 /* ICAsyncTextureCacheDelegate.h */,
+				A6E53E2C167D31F500701D89 /* ICMutableTexture2D.h */,
+				A6E53E2D167D31F500701D89 /* ICMutableTexture2D.m */,
 				D2FAC4CB14E7ABE80022BB3B /* ICTexture2D.h */,
 				D2FAC4CC14E7ABE80022BB3B /* ICTexture2D.m */,
+				A6E53E30167D443400701D89 /* ICTexture2D_Private.h */,
 				D2FAC4CD14E7ABE80022BB3B /* ICTextureCache.h */,
 				D2FAC4CE14E7ABE80022BB3B /* ICTextureCache.m */,
 				D2FAC4CF14E7ABE80022BB3B /* ICTextureLoader.h */,
@@ -608,6 +631,7 @@
 				A68DBF4E16505BD00035E0B6 /* Animation */,
 				D261C77315887D0E0001DC2D /* Cameras */,
 				D261C77415887D370001DC2D /* Core */,
+				A6E53E1E167CEE5000701D89 /* Font Rendering */,
 				D22F25B015887ACB0049268C /* Nodes */,
 				D2FAC50714E7AC0D0022BB3B /* Platforms */,
 				D261C77515887DAD0001DC2D /* Shaders */,
@@ -641,8 +665,6 @@
 				D2FAC50F14E7AC0D0022BB3B /* ICGLView.m */,
 				D2FAC51014E7AC0D0022BB3B /* ICHostViewControllerIOS.h */,
 				D2FAC51114E7AC0D0022BB3B /* ICHostViewControllerIOS.m */,
-				A6EF8DD31674EF69005B2605 /* ICOpenGLContextIOS.h */,
-				A6EF8DD41674EF6A005B2605 /* ICOpenGLContextIOS.m */,
 			);
 			path = iOS;
 			sourceTree = "<group>";
@@ -743,9 +765,11 @@
 				A6EF8D61167488AF005B2605 /* vec2.h in Headers */,
 				A6EF8D63167488AF005B2605 /* vec3.h in Headers */,
 				A6EF8D65167488AF005B2605 /* vec4.h in Headers */,
-				A6EF8DD51674EF6A005B2605 /* ICOpenGLContextIOS.h in Headers */,
 				A6EF8DDB1674EF83005B2605 /* ICOpenGLContext.h in Headers */,
 				A6EF8DDD1674EF83005B2605 /* ICOpenGLContextManager.h in Headers */,
+				A6E53E22167CEE6C00701D89 /* ICGlyphCache.h in Headers */,
+				A6E53E2A167CF1DB00701D89 /* ICFont.h in Headers */,
+				A6E53E2E167D31F500701D89 /* ICMutableTexture2D.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -865,9 +889,11 @@
 				A6EF8D60167488AF005B2605 /* vec2.c in Sources */,
 				A6EF8D62167488AF005B2605 /* vec3.c in Sources */,
 				A6EF8D64167488AF005B2605 /* vec4.c in Sources */,
-				A6EF8DD61674EF6A005B2605 /* ICOpenGLContextIOS.m in Sources */,
 				A6EF8DDC1674EF83005B2605 /* ICOpenGLContext.m in Sources */,
 				A6EF8DDE1674EF83005B2605 /* ICOpenGLContextManager.m in Sources */,
+				A6E53E23167CEE6C00701D89 /* ICGlyphCache.m in Sources */,
+				A6E53E2B167CF1DB00701D89 /* ICFont.m in Sources */,
+				A6E53E2F167D31F500701D89 /* ICMutableTexture2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -334,7 +334,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _openGLContext = [[ICOpenGLContextManager defaultOpenGLContextManager]
                       openGLContextForNativeOpenGLContext:[self nativeOpenGLContext]];
     if (!_openGLContext) {
-        _openGLContext = [[[ICPlatformOpenGLContext alloc]
+        _openGLContext = [[[ICOpenGLContext alloc]
                            initWithNativeOpenGLContext:[self nativeOpenGLContext]] registerContext];
         [_openGLContext makeCurrentContext];
     }

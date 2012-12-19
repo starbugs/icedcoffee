@@ -275,7 +275,7 @@ enum {
         if (oldContext)
             [oldContext makeCurrentContext];
         else
-            [ICPlatformOpenGLContext clearCurrentContext];
+            [ICOpenGLContext clearCurrentContext];
     }
     
     return hitNodes;

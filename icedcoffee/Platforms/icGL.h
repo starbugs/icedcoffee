@@ -37,14 +37,12 @@
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/ICGLView.h"
-#import "iOS/ICOpenGLContextIOS.h"
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
 
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
-#import "Mac/ICOpenGLContextMac.h"
 
 #endif
 
