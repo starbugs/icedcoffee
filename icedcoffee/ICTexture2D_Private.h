@@ -21,21 +21,8 @@
 //  SOFTWARE.
 //
 
-#import "ICOpenGLContextMac.h"
-#import "icGL.h"
+@interface ICTexture2D ()
 
-@implementation ICOpenGLContextMac
-
-- (void)makeCurrentContext
-{
-    [_nativeContext makeCurrentContext];
-    [super makeCurrentContext];
-}
-
-+ (void)clearCurrentContext
-{
-    [NSOpenGLContext clearCurrentContext];
-    [super clearCurrentContext];
-}
+- (void)internalUploadData:(const void *)data;
 
 @end

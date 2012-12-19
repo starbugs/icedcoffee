@@ -251,7 +251,7 @@
                     waitUntilDone:YES];
         }
         
-		[ICPlatformOpenGLContext clearCurrentContext];
+		[ICOpenGLContext clearCurrentContext];
     });
 }
 

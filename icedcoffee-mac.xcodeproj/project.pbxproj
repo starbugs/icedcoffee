@@ -68,8 +68,6 @@
 		A6EF8DCA1674CC66005B2605 /* ICOpenGLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DC81674CC66005B2605 /* ICOpenGLContext.m */; };
 		A6EF8DCD1674CFF3005B2605 /* ICOpenGLContextManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DCB1674CFF3005B2605 /* ICOpenGLContextManager.h */; };
 		A6EF8DCE1674CFF3005B2605 /* ICOpenGLContextManager.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DCC1674CFF3005B2605 /* ICOpenGLContextManager.m */; };
-		A6EF8DD11674EE9E005B2605 /* ICOpenGLContextMac.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */; };
-		A6EF8DD21674EE9E005B2605 /* ICOpenGLContextMac.m in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */; };
 		A6F11F72161668EB00DFA4CB /* ICShaderFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = A6F11F70161668EB00DFA4CB /* ICShaderFactory.h */; };
 		A6F11F73161668EB00DFA4CB /* ICShaderFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A6F11F71161668EB00DFA4CB /* ICShaderFactory.m */; };
 		D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -234,8 +232,6 @@
 		A6EF8DC81674CC66005B2605 /* ICOpenGLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOpenGLContext.m; path = icedcoffee/ICOpenGLContext.m; sourceTree = "<group>"; };
 		A6EF8DCB1674CFF3005B2605 /* ICOpenGLContextManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICOpenGLContextManager.h; path = icedcoffee/ICOpenGLContextManager.h; sourceTree = "<group>"; };
 		A6EF8DCC1674CFF3005B2605 /* ICOpenGLContextManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICOpenGLContextManager.m; path = icedcoffee/ICOpenGLContextManager.m; sourceTree = "<group>"; };
-		A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICOpenGLContextMac.h; sourceTree = "<group>"; };
-		A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICOpenGLContextMac.m; sourceTree = "<group>"; };
 		A6F11F70161668EB00DFA4CB /* ICShaderFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderFactory.h; path = icedcoffee/ICShaderFactory.h; sourceTree = "<group>"; };
 		A6F11F71161668EB00DFA4CB /* ICShaderFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderFactory.m; path = icedcoffee/ICShaderFactory.m; sourceTree = "<group>"; };
 		D20F5EA115B6223E0023B1C9 /* ICFramebuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFramebuffer.h; path = icedcoffee/ICFramebuffer.h; sourceTree = "<group>"; };
@@ -489,8 +485,6 @@
 				D24BAF8A14EDB142000E65AA /* ICGLView.m */,
 				D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */,
 				D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */,
-				A6EF8DCF1674EE9E005B2605 /* ICOpenGLContextMac.h */,
-				A6EF8DD01674EE9E005B2605 /* ICOpenGLContextMac.m */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -769,7 +763,6 @@
 				A6EF8D9A167488C6005B2605 /* vec4.h in Headers */,
 				A6EF8DC91674CC66005B2605 /* ICOpenGLContext.h in Headers */,
 				A6EF8DCD1674CFF3005B2605 /* ICOpenGLContextManager.h in Headers */,
-				A6EF8DD11674EE9E005B2605 /* ICOpenGLContextMac.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -895,7 +888,6 @@
 				A6EF8D99167488C6005B2605 /* vec4.c in Sources */,
 				A6EF8DCA1674CC66005B2605 /* ICOpenGLContext.m in Sources */,
 				A6EF8DCE1674CFF3005B2605 /* ICOpenGLContextManager.m in Sources */,
-				A6EF8DD21674EE9E005B2605 /* ICOpenGLContextMac.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

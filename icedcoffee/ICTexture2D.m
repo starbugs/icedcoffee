@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 #import "ICTexture2D.h"
+#import "ICTexture2D_Private.h"
 #import "icMacros.h"
 #import "icUtils.h"
 
@@ -120,55 +121,17 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
        textureSize:(CGSize)textureSizeInPixels
        contentSize:(CGSize)contentSizeInPixels
     resolutionType:(ICResolutionType)resolutionType
-{
-    GLsizei width = textureSizeInPixels.width;
-    GLsizei height = textureSizeInPixels.height;
-        
+{        
 	if((self = [super init])) {
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
-        
-        [self setAntiAliasTexParameters];
-        
-		// Specify OpenGL texture image
-		
-		switch(pixelFormat)
-		{
-			case ICPixelFormatRGBA8888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				break;
-			case ICPixelFormatRGBA4444:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-				break;
-			case ICPixelFormatRGB5A1:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-				break;
-			case ICPixelFormatRGB565:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-				break;
-			case ICPixelFormatA8:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height,
-                             0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-				break;
-			default:
-				[NSException raise:NSInternalInconsistencyException format:@""];
-				
-		}
-        
-        IC_CHECK_GL_ERROR_DEBUG();
-        
 		_contentSizeInPixels = contentSizeInPixels;
         _sizeInPixels = textureSizeInPixels;
 		_format = pixelFormat;
-		_maxS = contentSizeInPixels.width / (float)width;
-		_maxT = contentSizeInPixels.height / (float)height;
+		_maxS = contentSizeInPixels.width / textureSizeInPixels.width;
+		_maxT = contentSizeInPixels.height / textureSizeInPixels.height;
         _resolutionType = resolutionType;
-        
 		_hasPremultipliedAlpha = NO;
+        
+        [self internalUploadData:data];
 	}
     
 	return self;    
@@ -185,6 +148,47 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                   textureSize:CGSizeMake(width, height)
                   contentSize:contentSizeInPixels
                resolutionType:ICResolutionTypeUnknown];
+}
+
+- (void)internalUploadData:(const void *)data
+{
+    if (!_name)
+        glGenTextures(1, &_name);    
+    glBindTexture(GL_TEXTURE_2D, _name);
+    
+    [self setAntiAliasTexParameters];
+    
+    GLsizei width = self.sizeInPixels.width;
+    GLsizei height = self.sizeInPixels.height;
+    
+    switch(_format)
+    {
+        case ICPixelFormatRGBA8888:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            break;
+        case ICPixelFormatRGBA4444:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+            break;
+        case ICPixelFormatRGB5A1:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+            break;
+        case ICPixelFormatRGB565:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+            break;
+        case ICPixelFormatA8:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height,
+                         0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+            break;
+        default:
+            [NSException raise:NSInternalInconsistencyException format:@""];
+            
+    }
+    
+    IC_CHECK_GL_ERROR_DEBUG();
 }
 
 #if defined(__IC_PLATFORM_IOS)

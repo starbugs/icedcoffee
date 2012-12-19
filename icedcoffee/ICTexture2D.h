@@ -142,9 +142,11 @@ typedef struct _ICTexParams {
 #endif
 }
 
+#ifndef __ICTEXTURE2D_PRIVATE
 /** @cond */ // Exclude from docs
 - (id)init __attribute__((unavailable));
 /** @endcond */
+#endif
 
 #pragma mark - Initializing a Texture with Data
 /** @name Initializing a Texture with Data */

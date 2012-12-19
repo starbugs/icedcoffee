@@ -83,6 +83,9 @@
 
 /**
  @brief Returns the shader cache associated with the current OpenGL context
+ 
+ If no shader cache has been set for the current OpenGL context, this method will create
+ and assign a new one.
  */
 + (id)currentShaderCache;
 

@@ -24,37 +24,33 @@
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
 
-@class NSOpenGLContext;
-@class EAGLContext;
 @class ICTextureCache;
 @class ICShaderCache;
+@class ICGlyphCache;
 
 #ifdef __IC_PLATFORM_MAC
+@class NSOpenGLContext;
 #define IC_NATIVE_OPENGL_CONTEXT NSOpenGLContext
 #elif defined(__IC_PLATFORM_IOS)
+@class EAGLContext;
 #define IC_NATIVE_OPENGL_CONTEXT EAGLContext
 #endif
 
 /**
  @brief Wraps an OpenGL context for icedcoffee
 
- ICOpenGLContext is an abstract base class wrapping a native OpenGL context object.
- 
- The class serves three main purposes:
+ The ICOpenGLContext class wraps a native OpenGL context to serve three main purposes:
  - Provide a unified interface for working with OpenGL contexts
  - Allow users to attach caches and arbitrary objects to an OpenGL context
  - Implement internal mechanisms for efficiently updating dependent contexts, such as
    kazmath matrix stack contexts
-
- You will almost always work with ICPlatformOpenGLContext rather than using ICOpenGLContext
- directly. ICPlatformOpenGLContext provides the OpenGL context implementation suitable
- for the target platform of your application.
  */
 @interface ICOpenGLContext : NSObject {
 @protected
     IC_NATIVE_OPENGL_CONTEXT *_nativeContext;
     ICTextureCache *_textureCache;
     ICShaderCache *_shaderCache;
+    ICGlyphCache *_glyphCache;
     NSMutableDictionary *_customObjects;
     float _contentScaleFactor;
 }
@@ -63,23 +59,36 @@
 
 /**
  @brief Creates a new autoreleased OpenGL context object with the given native context
- */
+
+ @sa initWithNativeOpenGLContext:
+*/
 + (id)openGLContextWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
 /**
  @brief Creates a new autoreleased OpenGL context object with the given native context and
  share context
+ 
+ @sa initWithNativeOpenGLContext:shareContext:
  */
 + (id)openGLContextWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext
                               shareContext:(ICOpenGLContext *)shareContext;
 
 /**
  @brief Initializes a new OpenGL context object with the given native context
+ 
+ @param nativeContext The native OpenGL context to be represented by the receiver
  */
 - (id)initWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext;
 
 /**
  @brief Initializes a new OpenGL context object with the given native context and share context
+
+ @param nativeContext The native OpenGL context to be represented by the receiver
+ @param shareContext A context to share caches and custom objects with. Specifying ``nil`` will
+ initialize the receiver without shared caches or cutom objects.
+ 
+ If ``shareContext`` is set to a non-nil value, the receiver will copy all caches and custom
+ objects from the given share context upon initialization.
  */
 - (id)initWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext
                      shareContext:(ICOpenGLContext *)shareContext;
@@ -87,8 +96,14 @@
 
 /** @name Registration */
 
+/**
+ @brief Registers the receiver with the default ICOpenGLContextManager object
+ */
 - (id)registerContext;
 
+/**
+ @brief Unregisters the receiver with the default ICOpenGLContextManager object
+ */
 - (id)unregisterContext;
 
 
@@ -110,7 +125,7 @@
 + (void)clearCurrentContext;
 
 
-/** @name Managing Objects Associated with an OpenGL context */
+/** @name Managing Caches Associated with an OpenGL context */
 
 /**
  @brief The texture cache associated with the receiver
@@ -122,16 +137,42 @@
  */
 @property (nonatomic, retain) ICShaderCache *shaderCache;
 
+/**
+ @brief The glyph cache associated with the receiver
+ */
+@property (nonatomic, retain) ICGlyphCache *glyphCache;
+
+/**
+ @brief The content scale factor used by the receiver
+ */
 @property (nonatomic, assign) float contentScaleFactor;
 
+
+/** @name Managing Custom Objects Associated with an OpenGL context */
+
+/**
+ @brief A dictionary of custom objects associated with the receiver
+ */
 @property (nonatomic, readonly) NSDictionary *customObjects;
 
+/**
+ @brief Sets a custom object for the given key on the receiver
+ */
 - (void)setCustomObject:(id)object forKey:(id)key;
 
+/**
+ @brief Retrieves the custom object for the given key from the receiver
+ */
 - (id)customObjectForKey:(id)key;
 
+/**
+ @brief Removes the custom object for the given key from the receiver
+ */
 - (void)removeCustomObjectForKey:(id)key;
 
+/**
+ @brief Removes all custom objects associated with the receiver
+ */
 - (void)removeAllCustomObjects;
 
 

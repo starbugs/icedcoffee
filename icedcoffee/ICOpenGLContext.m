@@ -30,6 +30,7 @@
 @synthesize nativeContext = _nativeContext;
 @synthesize textureCache = _textureCache;
 @synthesize shaderCache = _shaderCache;
+@synthesize glyphCache = _glyphCache;
 @synthesize customObjects = _customObjects;
 @synthesize contentScaleFactor = _contentScaleFactor;
 
@@ -53,8 +54,6 @@
 - (id)initWithNativeOpenGLContext:(IC_NATIVE_OPENGL_CONTEXT *)nativeContext
                      shareContext:(ICOpenGLContext *)shareContext
 {
-    NSAssert([self class] != [ICOpenGLContext class], @"Instanciate a concrete ICOpenGLContext");
-    
     if ((self = [super init])) {
         _nativeContext = [nativeContext retain];
         if (shareContext) {
@@ -99,17 +98,23 @@
 
 - (void)makeCurrentContext
 {
-    NSAssert([self class] != [ICOpenGLContext class], @"ICOpenGLContext is abstract, instantiate " \
-                                                       "ICOpenGLContextMac or ICOpenGLContextIOS");
-    // Override in platform-dependent subclass and call [super makeCurrentContext]
+#ifdef __IC_PLATFORM_IOS
+    [EAGLContext setCurrentContext:self.nativeContext];
+#elif defined(__IC_PLATFORM_MAC)
+    [self.nativeContext makeCurrentContext];
+#endif
+    
     [[ICOpenGLContextManager defaultOpenGLContextManager] currentContextDidChange:self];
 }
 
 + (void)clearCurrentContext
 {
-    NSAssert([self class] != [ICOpenGLContext class], @"ICOpenGLContext is abstract, instantiate " \
-                                                       "ICOpenGLContextMac or ICOpenGLContextIOS");
-    // Override in platform-dependent subclass and call [super clearCurrentContext]
+#ifdef __IC_PLATFORM_IOS
+    [EAGLContext setCurrentContext:nil];
+#elif defined(__IC_PLATFORM_MAC)
+    [NSOpenGLContext clearCurrentContext];
+#endif
+    
     [[ICOpenGLContextManager defaultOpenGLContextManager] currentContextDidChange:nil];
 }
 
