@@ -65,13 +65,13 @@
     
     /*ICBasicAnimation *animation = [ICBasicAnimation animation];
     animation.keyPath = @"centerX";
-    animation.fromValue = [NSNumber numberWithFloat:-self.label.size.x];
+    animation.fromValue = [NSNumber numberWithFloat:-self.label.size.width];
     animation.toValue = [NSNumber numberWithFloat:center.x];
     animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     animation.duration = 1.0;
     [self.label addAnimation:animation];*/
     
-    kmVec3 startCenter = kmVec3Make(-self.label.size.x, 0, 0);
+    kmVec3 startCenter = kmVec3Make(-self.label.size.width, 0, 0);
     ICBasicAnimation *animation = [ICBasicAnimation animation];
     animation.keyPath = @"centerRounded";
     animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];

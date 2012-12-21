@@ -32,10 +32,19 @@ struct kmMat3;
 
 #pragma pack(push)  /* push current alignment to stack */
 #pragma pack(1)     /* set alignment to 1 byte boundary */
-typedef struct kmVec2 {
-    kmScalar x;
-    kmScalar y;
+typedef union kmVec2
+{
+	kmScalar data[2];
+    struct {
+        kmScalar x;
+        kmScalar y;
+    };
+    struct {
+        kmScalar width;
+        kmScalar height;
+    };
 } kmVec2;
+
 
 #pragma pack(pop)
 

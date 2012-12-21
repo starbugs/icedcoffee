@@ -69,7 +69,7 @@ void main( void )
     [[change objectForKey:NSKeyValueChangeNewKey] getValue:&size];
     ICSprite *shaderSprite = (ICSprite *)[self.scene childForTag:1];
     shaderSprite.size = size;
-    [shaderSprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(self.scene.size.x, self.scene.size.y)]
+    [shaderSprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(self.scene.size.width, self.scene.size.height)]
                                     forUniform:@"resolution"];
 }
 

@@ -93,9 +93,9 @@
 - (void)updateQuadPositionsWithVertices:(icV3F_C4F_T2F *)vertices
 {
     float x1 = 0.0f;
-    float x2 = _size.x;
+    float x2 = _size.width;
     float y1 = 0.0f;
-    float y2 = _size.y;
+    float y2 = _size.height;
     
     // Note: Y-axis inverted by icedcoffee UI camera, so we need to do this in CCW order
     kmVec3Fill(&vertices[0].vect, x1, y2, 0);
@@ -236,7 +236,7 @@
 
 - (void)setSize:(kmVec3)size
 {
-    if (_size.x != size.x || _size.y != size.y || _size.z != size.z) {
+    if (_size.width != size.width || _size.height != size.height || _size.depth != size.depth) {
         [super setSize:size];
         [self updateQuad];
     }

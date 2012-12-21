@@ -42,12 +42,12 @@
         _nextSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
         _nextSceneButton.label.text = @"Next";
         _nextSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
-        [_nextSceneButton setPositionX:self.size.x - _nextSceneButton.size.x - 25];
+        [_nextSceneButton setPositionX:self.size.width - _nextSceneButton.size.width - 25];
 
         _previousSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
         _previousSceneButton.label.text = @"Previous";
         _previousSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
-        [_previousSceneButton setPositionX:_nextSceneButton.position.x - _previousSceneButton.size.x - 10];
+        [_previousSceneButton setPositionX:_nextSceneButton.position.x - _previousSceneButton.size.width - 10];
         
         [self addChild:_previousSceneButton];
         [self addChild:_nextSceneButton];
@@ -88,8 +88,8 @@
 - (void)setSize:(kmVec3)size
 {
     [super setSize:size];
-    [_statusLabel setWidth:self.size.x - (_previousSceneButton.size.x + _nextSceneButton.size.x + 70)];
-    [_hintLabel setWidth:self.size.x - (_previousSceneButton.size.x + _nextSceneButton.size.x + 70)];
+    [_statusLabel setWidth:self.size.width - (_previousSceneButton.size.width + _nextSceneButton.size.width + 70)];
+    [_hintLabel setWidth:self.size.width - (_previousSceneButton.size.width + _nextSceneButton.size.width + 70)];
 }
 
 @end

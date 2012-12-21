@@ -722,17 +722,17 @@
 
 - (void)setWidth:(float)width
 {
-    [self setSize:kmVec3Make(width, _size.y, _size.z)];
+    [self setSize:kmVec3Make(width, _size.height, _size.depth)];
 }
 
 - (void)setHeight:(float)height
 {
-    [self setSize:kmVec3Make(_size.x, height, _size.z)];
+    [self setSize:kmVec3Make(_size.width, height, _size.depth)];
 }
 
 - (void)setDepth:(float)depth
 {
-    [self setSize:kmVec3Make(_size.x, _size.y, depth)];
+    [self setSize:kmVec3Make(_size.width, _size.height, depth)];
 }
 
 - (void)setScale:(kmVec3)scale
@@ -907,9 +907,9 @@
 {
     return (kmAABB){
         _origin,
-        kmVec3Make(_origin.x+_size.x,
-                   _origin.y+_size.y,
-                   _origin.z+_size.z)
+        kmVec3Make(_origin.x+_size.width,
+                   _origin.y+_size.height,
+                   _origin.z+_size.depth)
     };
 }
 
@@ -931,13 +931,13 @@
     kmVec3 world[8], view[8];
     
     world[0] = _position;
-    world[1] = (kmVec3){_position.x + _size.x, _position.y, _position.z};
-    world[2] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z};
-    world[3] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z + _size.z};
-    world[4] = (kmVec3){_position.x, _position.y + _size.y, _position.z};
-    world[5] = (kmVec3){_position.x, _position.y + _size.y, _position.z + _size.z};
+    world[1] = (kmVec3){_position.x + _size.width, _position.y, _position.z};
+    world[2] = (kmVec3){_position.x + _size.width, _position.y + _size.height, _position.z};
+    world[3] = (kmVec3){_position.x + _size.width, _position.y + _size.height, _position.z + _size.z};
+    world[4] = (kmVec3){_position.x, _position.y + _size.height, _position.z};
+    world[5] = (kmVec3){_position.x, _position.y + _size.height, _position.z + _size.z};
     world[6] = (kmVec3){_position.x, _position.y, _position.z + _size.z};
-    world[7] = (kmVec3){_position.x + _size.x, _position.y, _position.z + _size.z};
+    world[7] = (kmVec3){_position.x + _size.width, _position.y, _position.z + _size.z};
 
     ICScene *scene = [self parentScene];
     if (!scene && [self isKindOfClass:[ICScene class]] && !_parent) {

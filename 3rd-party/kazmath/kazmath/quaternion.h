@@ -34,7 +34,7 @@ extern "C" {
 
 struct kmMat4;
 struct kmMat3;
-struct kmVec3;
+union kmVec3;
 
 typedef struct kmQuaternion {
 	kmScalar x;
@@ -84,7 +84,7 @@ kmQuaternion* kmQuaternionNormalize(kmQuaternion* pOut, const kmQuaternion* pIn)
 
 ///< Rotates a quaternion around an axis
 
-kmQuaternion* kmQuaternionRotationAxis(kmQuaternion* pOut, const struct kmVec3* pV, kmScalar angle);
+kmQuaternion* kmQuaternionRotationAxis(kmQuaternion* pOut, const union kmVec3* pV, kmScalar angle);
 
 ///< Creates a quaternion from a rotation matrix
 
@@ -97,14 +97,14 @@ kmQuaternion* kmQuaternionRotationYawPitchRoll(kmQuaternion* pOut, kmScalar yaw,
 kmQuaternion* kmQuaternionSlerp(kmQuaternion* pOut, const kmQuaternion* q1, const kmQuaternion* q2, kmScalar t);
 
 ///< Get the axis and angle of rotation from a quaternion
-void kmQuaternionToAxisAngle(const kmQuaternion* pIn, struct kmVec3* pVector, kmScalar* pAngle);
+void kmQuaternionToAxisAngle(const kmQuaternion* pIn, union kmVec3* pVector, kmScalar* pAngle);
 
 ///< Scale a quaternion
 kmQuaternion* kmQuaternionScale(kmQuaternion* pOut, const kmQuaternion* pIn, kmScalar s);
 kmQuaternion* kmQuaternionAssign(kmQuaternion* pOut, const kmQuaternion* pIn);
 kmQuaternion* kmQuaternionAdd(kmQuaternion* pOut, const kmQuaternion* pQ1, const kmQuaternion* pQ2);
-kmQuaternion* kmQuaternionRotationBetweenVec3(kmQuaternion* pOut, const struct kmVec3* vec1, const struct kmVec3* vec2, const struct kmVec3* fallback);
-struct kmVec3* kmQuaternionMultiplyVec3(struct kmVec3* pOut, const kmQuaternion* q, const struct kmVec3* v);
+kmQuaternion* kmQuaternionRotationBetweenVec3(kmQuaternion* pOut, const union kmVec3* vec1, const union kmVec3* vec2, const union kmVec3* fallback);
+union kmVec3* kmQuaternionMultiplyVec3(union kmVec3* pOut, const kmQuaternion* q, const union kmVec3* v);
 
 #ifdef __cplusplus
 }

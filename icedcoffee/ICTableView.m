@@ -62,8 +62,8 @@
         for (NSInteger i=0; i<numRows; i++) {
             ICTableViewCell *cell = [_dataSource tableView:self cellForRowAtIndex:i];
             [self addChild:cell];
-            [cell setPositionY:i * cell.size.y];
-            [cell setSize:kmVec3Make(self.size.x, cell.size.y, 0)];
+            [cell setPositionY:i * cell.size.height];
+            [cell setSize:kmVec3Make(self.size.width, cell.size.height, 0)];
         }
         [self setNeedsDisplay];
     }

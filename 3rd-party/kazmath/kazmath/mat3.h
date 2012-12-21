@@ -32,7 +32,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "utility.h"
 
-struct kmVec3;
+union kmVec3;
 struct kmQuaternion;
 
 typedef struct kmMat3{
@@ -56,9 +56,9 @@ kmMat3* const kmMat3ScalarMultiply(kmMat3* pOut, const kmMat3* pM, const kmScala
 kmMat3* const kmMat3Assign(kmMat3* pOut, const kmMat3* pIn);
 const int  kmMat3AreEqual(const kmMat3* pM1, const kmMat3* pM2);
 
-struct kmVec3* const kmMat3GetUpVec3(struct kmVec3* pOut, const kmMat3* pIn);
-struct kmVec3* const kmMat3GetRightVec3(struct kmVec3* pOut, const kmMat3* pIn);
-struct kmVec3* const kmMat3GetForwardVec3(struct kmVec3* pOut, const kmMat3* pIn);
+union kmVec3* const kmMat3GetUpVec3(union kmVec3* pOut, const kmMat3* pIn);
+union kmVec3* const kmMat3GetRightVec3(union kmVec3* pOut, const kmMat3* pIn);
+union kmVec3* const kmMat3GetForwardVec3(union kmVec3* pOut, const kmMat3* pIn);
 
 kmMat3* const kmMat3RotationX(kmMat3* pOut, const kmScalar radians);
 kmMat3* const kmMat3RotationY(kmMat3* pOut, const kmScalar radians);
@@ -70,8 +70,8 @@ kmMat3* const kmMat3Translation(kmMat3* pOut, const kmScalar x, const kmScalar y
 
 kmMat3* const kmMat3RotationQuaternion(kmMat3* pOut, const struct kmQuaternion* pIn);
 
-kmMat3* const kmMat3RotationAxisAngle(kmMat3* pOut, const struct kmVec3* axis, kmScalar radians);
-struct kmVec3* const kmMat3RotationToAxisAngle(struct kmVec3* pAxis, kmScalar* radians, const kmMat3* pIn);
+kmMat3* const kmMat3RotationAxisAngle(kmMat3* pOut, const union kmVec3* axis, kmScalar radians);
+union kmVec3* const kmMat3RotationToAxisAngle(union kmVec3* pAxis, kmScalar* radians, const kmMat3* pIn);
 
 #ifdef __cplusplus
 }

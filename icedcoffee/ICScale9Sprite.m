@@ -72,7 +72,7 @@
 
 - (void)updateMultiQuad
 {
-    if (_size.x == 0 && _size.y == 0)
+    if (_size.width == 0 && _size.height == 0)
         return;
     if (_scale9Rect.origin.x == 0 && _scale9Rect.origin.y == 0 &&
         _scale9Rect.size.width == 0 && _scale9Rect.size.height == 0)
@@ -100,10 +100,10 @@
     float y1 = 0;
     float x2 = _scale9Rect.origin.x;
     float y2 = _scale9Rect.origin.y;
-    float x3 = _size.x - (textureDisplaySize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
-    float y3 = _size.y - (textureDisplaySize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
-    float x4 = _size.x;
-    float y4 = _size.y;
+    float x3 = _size.width - (textureDisplaySize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
+    float y3 = _size.height - (textureDisplaySize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
+    float x4 = _size.width;
+    float y4 = _size.height;
     float z = 0;
     
     // icedcoffee's UI camera inverts the Y axis, so the texture must be flipped vertically

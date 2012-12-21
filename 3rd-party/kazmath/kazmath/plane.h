@@ -35,8 +35,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "utility.h"
 
-struct kmVec3;
-struct kmVec4;
+union kmVec3;
+union kmVec4;
 struct kmMat4;
 
 typedef struct kmPlane {
@@ -53,12 +53,12 @@ typedef enum POINT_CLASSIFICATION {
 	POINT_ON_PLANE,
 } POINT_CLASSIFICATION;
 
-const kmScalar kmPlaneDot(const kmPlane* pP, const struct kmVec4* pV);
-const kmScalar kmPlaneDotCoord(const kmPlane* pP, const struct kmVec3* pV);
-const kmScalar kmPlaneDotNormal(const kmPlane* pP, const struct kmVec3* pV);
-kmPlane* const kmPlaneFromPointNormal(kmPlane* pOut, const struct kmVec3* pPoint, const struct kmVec3* pNormal);
-kmPlane* const kmPlaneFromPoints(kmPlane* pOut, const struct kmVec3* p1, const struct kmVec3* p2, const struct kmVec3* p3);
-kmVec3*  const kmPlaneIntersectLine(struct kmVec3* pOut, const kmPlane* pP, const struct kmVec3* pV1, const struct kmVec3* pV2);
+const kmScalar kmPlaneDot(const kmPlane* pP, const union kmVec4* pV);
+const kmScalar kmPlaneDotCoord(const kmPlane* pP, const union kmVec3* pV);
+const kmScalar kmPlaneDotNormal(const kmPlane* pP, const union kmVec3* pV);
+kmPlane* const kmPlaneFromPointNormal(kmPlane* pOut, const union kmVec3* pPoint, const union kmVec3* pNormal);
+kmPlane* const kmPlaneFromPoints(kmPlane* pOut, const union kmVec3* p1, const union kmVec3* p2, const union kmVec3* p3);
+kmVec3*  const kmPlaneIntersectLine(union kmVec3* pOut, const kmPlane* pP, const union kmVec3* pV1, const union kmVec3* pV2);
 kmPlane* const kmPlaneNormalize(kmPlane* pOut, const kmPlane* pP);
 kmPlane* const kmPlaneScale(kmPlane* pOut, const kmPlane* pP, kmScalar s);
 const POINT_CLASSIFICATION kmPlaneClassifyPoint(const kmPlane* pIn, const kmVec3* pP); /** Classifys a point against a plane */

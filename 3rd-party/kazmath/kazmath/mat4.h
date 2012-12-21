@@ -28,7 +28,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #include "utility.h"
 
-struct kmVec3;
+union kmVec3;
 struct kmMat3;
 struct kmQuaternion;
 struct kmPlane;
@@ -71,22 +71,22 @@ kmMat4* const kmMat4RotationY(kmMat4* pOut, const kmScalar radians);
 kmMat4* const kmMat4RotationZ(kmMat4* pOut, const kmScalar radians);
 kmMat4* const kmMat4RotationPitchYawRoll(kmMat4* pOut, const kmScalar pitch, const kmScalar yaw, const kmScalar roll);
 kmMat4* const kmMat4RotationQuaternion(kmMat4* pOut, const struct kmQuaternion* pQ);
-kmMat4* const kmMat4RotationTranslation(kmMat4* pOut, const struct kmMat3* rotation, const struct kmVec3* translation);
+kmMat4* const kmMat4RotationTranslation(kmMat4* pOut, const struct kmMat3* rotation, const union kmVec3* translation);
 kmMat4* const kmMat4Scaling(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
 kmMat4* const kmMat4Translation(kmMat4* pOut, const kmScalar x, const kmScalar y, const kmScalar z);
 
-struct kmVec3* const kmMat4GetUpVec3(struct kmVec3* pOut, const kmMat4* pIn);
-struct kmVec3* const kmMat4GetRightVec3(struct kmVec3* pOut, const kmMat4* pIn);
-struct kmVec3* const kmMat4GetForwardVec3(struct kmVec3* pOut, const kmMat4* pIn);
+union kmVec3* const kmMat4GetUpVec3(union kmVec3* pOut, const kmMat4* pIn);
+union kmVec3* const kmMat4GetRightVec3(union kmVec3* pOut, const kmMat4* pIn);
+union kmVec3* const kmMat4GetForwardVec3(union kmVec3* pOut, const kmMat4* pIn);
 
 kmMat4* const kmMat4PerspectiveProjection(kmMat4* pOut, kmScalar fovY, kmScalar aspect, kmScalar zNear, kmScalar zFar);
 kmMat4* const kmMat4OrthographicProjection(kmMat4* pOut, kmScalar left, kmScalar right, kmScalar bottom, kmScalar top, kmScalar nearVal, kmScalar farVal);
-kmMat4* const kmMat4LookAt(kmMat4* pOut, const struct kmVec3* pEye, const struct kmVec3* pCenter, const struct kmVec3* pUp);
+kmMat4* const kmMat4LookAt(kmMat4* pOut, const union kmVec3* pEye, const union kmVec3* pCenter, const union kmVec3* pUp);
 
-kmMat4* const kmMat4RotationAxisAngle(kmMat4* pOut, const struct kmVec3* axis, kmScalar radians);
+kmMat4* const kmMat4RotationAxisAngle(kmMat4* pOut, const union kmVec3* axis, kmScalar radians);
 struct kmMat3* const kmMat4ExtractRotation(struct kmMat3* pOut, const kmMat4* pIn);
 struct kmPlane* const kmMat4ExtractPlane(struct kmPlane* pOut, const kmMat4* pIn, const kmEnum plane);
-struct kmVec3* const kmMat4RotationToAxisAngle(struct kmVec3* pAxis, kmScalar* radians, const kmMat4* pIn);
+union kmVec3* const kmMat4RotationToAxisAngle(union kmVec3* pAxis, kmScalar* radians, const kmMat4* pIn);
 #ifdef __cplusplus
 }
 #endif
