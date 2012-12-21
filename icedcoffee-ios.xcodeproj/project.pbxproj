@@ -28,6 +28,8 @@
 		A68DBFD716519D680035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD616519D680035E0B6 /* icedcoffee.h */; };
 		A6CB74261645D7F200CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74271645D7F200CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */; };
+		A6DECB871684B59400D6918A /* ICGlyphTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A6DECB851684B59400D6918A /* ICGlyphTextureAtlas.h */; };
+		A6DECB881684B59400D6918A /* ICGlyphTextureAtlas.m in Sources */ = {isa = PBXBuildFile; fileRef = A6DECB861684B59400D6918A /* ICGlyphTextureAtlas.m */; };
 		A6E53E22167CEE6C00701D89 /* ICGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */; };
 		A6E53E23167CEE6C00701D89 /* ICGlyphCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */; };
 		A6E53E2A167CF1DB00701D89 /* ICFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A6E53E28167CF1DB00701D89 /* ICFont.h */; };
@@ -192,6 +194,9 @@
 		A68DBFD616519D680035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
 		A6CB74241645D7F200CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74251645D7F200CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
+		A6DECB851684B59400D6918A /* ICGlyphTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphTextureAtlas.h; path = icedcoffee/ICGlyphTextureAtlas.h; sourceTree = "<group>"; };
+		A6DECB861684B59400D6918A /* ICGlyphTextureAtlas.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGlyphTextureAtlas.m; path = icedcoffee/ICGlyphTextureAtlas.m; sourceTree = "<group>"; };
+		A6DECB8A1684B84A00D6918A /* icFontTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = icFontTypes.h; path = icedcoffee/icFontTypes.h; sourceTree = "<group>"; };
 		A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphCache.h; path = icedcoffee/ICGlyphCache.h; sourceTree = "<group>"; };
 		A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGlyphCache.m; path = icedcoffee/ICGlyphCache.m; sourceTree = "<group>"; };
 		A6E53E28167CF1DB00701D89 /* ICFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFont.h; path = icedcoffee/ICFont.h; sourceTree = "<group>"; };
@@ -392,8 +397,11 @@
 			children = (
 				A6E53E28167CF1DB00701D89 /* ICFont.h */,
 				A6E53E29167CF1DB00701D89 /* ICFont.m */,
+				A6DECB8A1684B84A00D6918A /* icFontTypes.h */,
 				A6E53E20167CEE6C00701D89 /* ICGlyphCache.h */,
 				A6E53E21167CEE6C00701D89 /* ICGlyphCache.m */,
+				A6DECB851684B59400D6918A /* ICGlyphTextureAtlas.h */,
+				A6DECB861684B59400D6918A /* ICGlyphTextureAtlas.m */,
 			);
 			name = "Font Rendering";
 			sourceTree = "<group>";
@@ -770,6 +778,7 @@
 				A6E53E22167CEE6C00701D89 /* ICGlyphCache.h in Headers */,
 				A6E53E2A167CF1DB00701D89 /* ICFont.h in Headers */,
 				A6E53E2E167D31F500701D89 /* ICMutableTexture2D.h in Headers */,
+				A6DECB871684B59400D6918A /* ICGlyphTextureAtlas.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -894,6 +903,7 @@
 				A6E53E23167CEE6C00701D89 /* ICGlyphCache.m in Sources */,
 				A6E53E2B167CF1DB00701D89 /* ICFont.m in Sources */,
 				A6E53E2F167D31F500701D89 /* ICMutableTexture2D.m in Sources */,
+				A6DECB881684B59400D6918A /* ICGlyphTextureAtlas.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
