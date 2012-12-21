@@ -47,6 +47,12 @@ typedef union kmVec4
         kmScalar b;
         kmScalar a;
     };
+    struct {
+        kmScalar x_;
+        kmScalar y_;
+        kmScalar width;
+        kmScalar height;
+    };
 	struct {
         kmScalar red;
         kmScalar green;
