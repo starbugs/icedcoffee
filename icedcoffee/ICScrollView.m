@@ -57,7 +57,7 @@
     }
     
     if (!_contentView) {
-        _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.x, self.size.y)];
+        _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.width, self.size.height)];
         _contentView.name = @"Content view";
         [super addChild:_contentView];
     }
@@ -76,9 +76,9 @@
 
 - (void)setContentOffset:(kmVec3)contentOffset
 {
-    kmVec3 offsetMax = kmVec3Make(-_contentMax.x + _size.x,
-                                  -_contentMax.y + _size.y,
-                                  -_contentMax.z + _size.z);
+    kmVec3 offsetMax = kmVec3Make(-_contentMax.x + _size.width,
+                                  -_contentMax.y + _size.height,
+                                  -_contentMax.z + _size.depth);
     contentOffset.x = MAX(offsetMax.x, contentOffset.x);
     contentOffset.y = MAX(offsetMax.y, contentOffset.y);
     contentOffset.z = MAX(offsetMax.z, contentOffset.z);

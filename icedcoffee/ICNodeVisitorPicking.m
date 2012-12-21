@@ -245,8 +245,8 @@ enum {
         hitNodes = [self hitNodes];
     } else {
 #ifdef __IC_PLATFORM_MAC
-        uint pboMemorySize = ICPointsToPixels(_renderTexture.size.x) *
-                             ICPointsToPixels(_renderTexture.size.y) * 4;
+        uint pboMemorySize = ICPointsToPixels(_renderTexture.size.width) *
+                             ICPointsToPixels(_renderTexture.size.height) * 4;
         if (!_pbo) {
             glGenBuffers(1, &_pbo);
             glBindBuffer(GL_PIXEL_PACK_BUFFER, _pbo);
@@ -256,8 +256,8 @@ enum {
         }
         glBindBuffer(GL_PIXEL_PACK_BUFFER, _pbo);
         glReadPixels(0, 0,
-                     ICPointsToPixels(_renderTexture.size.x),
-                     ICPointsToPixels(_renderTexture.size.y),
+                     ICPointsToPixels(_renderTexture.size.width),
+                     ICPointsToPixels(_renderTexture.size.height),
                      GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, 0);
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
         IC_CHECK_GL_ERROR_DEBUG();
@@ -568,7 +568,7 @@ enum {
 
 - (CGPoint)pixelLocationForNodeIndex:(uint32_t)nodeIndex
 {
-    float width = ICPointsToPixels(_renderTexture.size.x);
+    float width = ICPointsToPixels(_renderTexture.size.width);
     int row = nodeIndex / width;
     int column = nodeIndex - row * width;
     return CGPointMake(column, row);

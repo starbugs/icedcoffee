@@ -210,8 +210,8 @@
         
         viewport = malloc(sizeof(GLint)*4);
         viewport[0] = viewport[1] = 0;
-        viewport[2] = ICPointsToPixels(_renderTexture.size.x);
-        viewport[3] = ICPointsToPixels(_renderTexture.size.y);
+        viewport[2] = ICPointsToPixels(_renderTexture.size.width);
+        viewport[3] = ICPointsToPixels(_renderTexture.size.height);
         
         if (ICPointsToPixels(point.x) < viewport[0] ||
             ICPointsToPixels(point.y) < viewport[1] ||
@@ -469,11 +469,11 @@
 // must be identical to the framebuffer size in order to get a correct projection.
 - (void)setSize:(kmVec3)size
 {
-    if (size.x != self.size.x || size.y != self.size.y || size.z != self.size.z) {
+    if (size.width != self.size.width || size.height != self.size.height || size.depth != self.size.depth) {
         [super setSize:size];
         
         // Set the camera's viewport according to the new size of the scene
-        CGRect viewport = CGRectMake(0, 0, size.x, size.y);
+        CGRect viewport = CGRectMake(0, 0, size.width, size.height);
         [self.camera setViewport:viewport];
         [self setNeedsDisplay];
         

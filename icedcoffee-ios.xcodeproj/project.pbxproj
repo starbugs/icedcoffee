@@ -639,7 +639,6 @@
 				A68DBF4E16505BD00035E0B6 /* Animation */,
 				D261C77315887D0E0001DC2D /* Cameras */,
 				D261C77415887D370001DC2D /* Core */,
-				A6E53E1E167CEE5000701D89 /* Font Rendering */,
 				D22F25B015887ACB0049268C /* Nodes */,
 				D2FAC50714E7AC0D0022BB3B /* Platforms */,
 				D261C77515887DAD0001DC2D /* Shaders */,
@@ -775,8 +774,6 @@
 				A6EF8D65167488AF005B2605 /* vec4.h in Headers */,
 				A6EF8DDB1674EF83005B2605 /* ICOpenGLContext.h in Headers */,
 				A6EF8DDD1674EF83005B2605 /* ICOpenGLContextManager.h in Headers */,
-				A6E53E22167CEE6C00701D89 /* ICGlyphCache.h in Headers */,
-				A6E53E2A167CF1DB00701D89 /* ICFont.h in Headers */,
 				A6E53E2E167D31F500701D89 /* ICMutableTexture2D.h in Headers */,
 				A6DECB871684B59400D6918A /* ICGlyphTextureAtlas.h in Headers */,
 			);
@@ -900,8 +897,6 @@
 				A6EF8D64167488AF005B2605 /* vec4.c in Sources */,
 				A6EF8DDC1674EF83005B2605 /* ICOpenGLContext.m in Sources */,
 				A6EF8DDE1674EF83005B2605 /* ICOpenGLContextManager.m in Sources */,
-				A6E53E23167CEE6C00701D89 /* ICGlyphCache.m in Sources */,
-				A6E53E2B167CF1DB00701D89 /* ICFont.m in Sources */,
 				A6E53E2F167D31F500701D89 /* ICMutableTexture2D.m in Sources */,
 				A6DECB881684B59400D6918A /* ICGlyphTextureAtlas.m in Sources */,
 			);

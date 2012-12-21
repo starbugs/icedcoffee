@@ -125,9 +125,9 @@
     _testHostScene = [ICUIScene scene];
     [self runWithScene:_testHostScene]; // retained by super in self.scene
     
-    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:CGSizeMake(_testHostScene.size.x, 50)];
+    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:CGSizeMake(_testHostScene.size.width, 50)];
     _buttonPanel.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
-    [_buttonPanel setPositionY:_testHostScene.size.y - _buttonPanel.size.y];
+    [_buttonPanel setPositionY:_testHostScene.size.height - _buttonPanel.size.height];
     [_testHostScene.contentView addChild:_buttonPanel];
 
     [_buttonPanel.previousSceneButton addTarget:self

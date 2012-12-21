@@ -31,10 +31,29 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 struct kmMat4;
 
-typedef struct kmVec3 {
-	kmScalar x;
-	kmScalar y;
-	kmScalar z;
+typedef union kmVec3
+{
+	kmScalar data[3];
+    struct {
+        kmScalar x;
+        kmScalar y;
+        kmScalar z;
+    };
+    struct {
+        kmScalar r;
+        kmScalar g;
+        kmScalar b;
+    };
+	struct {
+        kmScalar red;
+        kmScalar green;
+        kmScalar blue;
+    };
+    struct {
+        kmScalar width;
+        kmScalar height;
+        kmScalar depth;
+    };
 } kmVec3;
 
 #ifdef __cplusplus
