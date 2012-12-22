@@ -12,25 +12,25 @@ namespace RectangleBinPack {
 /*
 #include "clb/Algorithm/Sort.h"
 
-int CompareRectShortSide(const Rect &a, const Rect &b)
+long CompareRectShortSide(const Rect &a, const Rect &b)
 {
 	using namespace std;
 
-	int smallerSideA = min(a.width, a.height);
-	int smallerSideB = min(b.width, b.height);
+	long smallerSideA = min(a.width, a.height);
+	long smallerSideB = min(b.width, b.height);
 
 	if (smallerSideA != smallerSideB)
 		return clb::sort::TriCmp(smallerSideA, smallerSideB);
 
 	// Tie-break on the larger side.
-	int largerSideA = max(a.width, a.height);
-	int largerSideB = max(b.width, b.height);
+	long largerSideA = max(a.width, a.height);
+	long largerSideB = max(b.width, b.height);
 
 	return clb::sort::TriCmp(largerSideA, largerSideB);
 }
 */
 /*
-int NodeSortCmp(const Rect &a, const Rect &b)
+long NodeSortCmp(const Rect &a, const Rect &b)
 {
 	if (a.x != b.x)
 		return clb::sort::TriCmp(a.x, b.x);

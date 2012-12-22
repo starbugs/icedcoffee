@@ -22,12 +22,12 @@ binHeight(0)
 {
 }
 
-SkylineBinPack::SkylineBinPack(int width, int height, bool useWasteMap)
+SkylineBinPack::SkylineBinPack(long width, long height, bool useWasteMap)
 {
 	Init(width, height, useWasteMap);
 }
 
-void SkylineBinPack::Init(int width, int height, bool useWasteMap_)
+void SkylineBinPack::Init(long width, long height, bool useWasteMap_)
 {
 	binWidth = width;
 	binHeight = height;
@@ -35,7 +35,7 @@ void SkylineBinPack::Init(int width, int height, bool useWasteMap_)
 	useWasteMap = useWasteMap_;
 
 #ifdef DEBUG
-	disjointRects.Clear();
+	disjolongRects.Clear();
 #endif
 
 	usedSurfaceArea = 0;
@@ -60,25 +60,25 @@ void SkylineBinPack::Insert(std::vector<RectSize> &rects, std::vector<Rect> &dst
 	while(rects.size() > 0)
 	{
 		Rect bestNode;
-		int bestScore1 = std::numeric_limits<int>::max();
-		int bestScore2 = std::numeric_limits<int>::max();
-		int bestSkylineIndex = -1;
-		int bestRectIndex = -1;
+		long bestScore1 = std::numeric_limits<long>::max();
+		long bestScore2 = std::numeric_limits<long>::max();
+		long bestSkylineIndex = -1;
+		long bestRectIndex = -1;
 		for(size_t i = 0; i < rects.size(); ++i)
 		{
 			Rect newNode;
-			int score1;
-			int score2;
-			int index;
+			long score1;
+			long score2;
+			long index;
 			switch(method)
 			{
 			case LevelBottomLeft:
 				newNode = FindPositionForNewNodeBottomLeft(rects[i].width, rects[i].height, score1, score2, index);
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 				break;
 			case LevelMinWasteFit:
 				newNode = FindPositionForNewNodeMinWaste(rects[i].width, rects[i].height, score2, score1, index);
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 				break;
 			default: assert(false); break;
 			}
@@ -99,9 +99,9 @@ void SkylineBinPack::Insert(std::vector<RectSize> &rects, std::vector<Rect> &dst
 			return;
 
 		// Perform the actual packing.
-		assert(disjointRects.Disjoint(bestNode));
+		assert(disjolongRects.Disjolong(bestNode));
 #ifdef DEBUG
-		disjointRects.Add(bestNode);
+		disjolongRects.Add(bestNode);
 #endif
 		AddSkylineLevel(bestSkylineIndex, bestNode);
 		usedSurfaceArea += rects[bestRectIndex].width * rects[bestRectIndex].height;
@@ -110,12 +110,12 @@ void SkylineBinPack::Insert(std::vector<RectSize> &rects, std::vector<Rect> &dst
 	}
 }
 
-Rect SkylineBinPack::Insert(int width, int height, LevelChoiceHeuristic method)
+Rect SkylineBinPack::Insert(long width, long height, LevelChoiceHeuristic method)
 {
-	// First try to pack this rectangle into the waste map, if it fits.
+	// First try to pack this rectangle longo the waste map, if it fits.
 	Rect node = wasteMap.Insert(width, height, true, GuillotineBinPack::RectBestShortSideFit, 
 		GuillotineBinPack::SplitMaximizeArea);
-	assert(disjointRects.Disjoint(node));
+	assert(disjolongRects.Disjolong(node));
 
 	if (node.height != 0)
 	{
@@ -125,9 +125,9 @@ Rect SkylineBinPack::Insert(int width, int height, LevelChoiceHeuristic method)
 		newNode.width = node.width;
 		newNode.height = node.height;
 		usedSurfaceArea += width * height;
-		assert(disjointRects.Disjoint(newNode));
+		assert(disjolongRects.Disjolong(newNode));
 #ifdef DEBUG
-		disjointRects.Add(newNode);
+		disjolongRects.Add(newNode);
 #endif
 		return newNode;
 	}
@@ -140,13 +140,13 @@ Rect SkylineBinPack::Insert(int width, int height, LevelChoiceHeuristic method)
 	}
 }
 
-bool SkylineBinPack::RectangleFits(int skylineNodeIndex, int width, int height, int &y) const
+bool SkylineBinPack::RectangleFits(long skylineNodeIndex, long width, long height, long &y) const
 {
-	int x = skyLine[skylineNodeIndex].x;
+	long x = skyLine[skylineNodeIndex].x;
 	if (x + width > binWidth)
 		return false;
-	int widthLeft = width;
-	int i = skylineNodeIndex;
+	long widthLeft = width;
+	long i = skylineNodeIndex;
 	y = skyLine[skylineNodeIndex].y;
 	while(widthLeft > 0)
 	{
@@ -155,30 +155,30 @@ bool SkylineBinPack::RectangleFits(int skylineNodeIndex, int width, int height, 
 			return false;
 		widthLeft -= skyLine[i].width;
 		++i;
-		assert(i < (int)skyLine.size() || widthLeft <= 0);
+		assert(i < (long)skyLine.size() || widthLeft <= 0);
 	}
 	return true;
 }
 
-int SkylineBinPack::ComputeWastedArea(int skylineNodeIndex, int width, int height, int y) const
+long SkylineBinPack::ComputeWastedArea(long skylineNodeIndex, long width, long height, long y) const
 {
-	int wastedArea = 0;
-	const int rectLeft = skyLine[skylineNodeIndex].x;
-	const int rectRight = rectLeft + width;
-	for(; skylineNodeIndex < (int)skyLine.size() && skyLine[skylineNodeIndex].x < rectRight; ++skylineNodeIndex)
+	long wastedArea = 0;
+	const long rectLeft = skyLine[skylineNodeIndex].x;
+	const long rectRight = rectLeft + width;
+	for(; skylineNodeIndex < (long)skyLine.size() && skyLine[skylineNodeIndex].x < rectRight; ++skylineNodeIndex)
 	{
 		if (skyLine[skylineNodeIndex].x >= rectRight || skyLine[skylineNodeIndex].x + skyLine[skylineNodeIndex].width <= rectLeft)
 			break;
 
-		int leftSide = skyLine[skylineNodeIndex].x;
-		int rightSide = min(rectRight, leftSide + skyLine[skylineNodeIndex].width);
+		long leftSide = skyLine[skylineNodeIndex].x;
+		long rightSide = min(rectRight, leftSide + skyLine[skylineNodeIndex].width);
 		assert(y >= skyLine[skylineNodeIndex].y);
 		wastedArea += (rightSide - leftSide) * (y - skyLine[skylineNodeIndex].y);
 	}
 	return wastedArea;
 }
 
-bool SkylineBinPack::RectangleFits(int skylineNodeIndex, int width, int height, int &y, int &wastedArea) const
+bool SkylineBinPack::RectangleFits(long skylineNodeIndex, long width, long height, long &y, long &wastedArea) const
 {
 	bool fits = RectangleFits(skylineNodeIndex, width, height, y);
 	if (fits)
@@ -187,18 +187,18 @@ bool SkylineBinPack::RectangleFits(int skylineNodeIndex, int width, int height, 
 	return fits;
 }
 
-void SkylineBinPack::AddWasteMapArea(int skylineNodeIndex, int width, int height, int y)
+void SkylineBinPack::AddWasteMapArea(long skylineNodeIndex, long width, long height, long y)
 {
-	//int wastedArea = 0;
-	const int rectLeft = skyLine[skylineNodeIndex].x;
-	const int rectRight = rectLeft + width;
-	for(; skylineNodeIndex < (int)skyLine.size() && skyLine[skylineNodeIndex].x < rectRight; ++skylineNodeIndex)
+	//long wastedArea = 0;
+	const long rectLeft = skyLine[skylineNodeIndex].x;
+	const long rectRight = rectLeft + width;
+	for(; skylineNodeIndex < (long)skyLine.size() && skyLine[skylineNodeIndex].x < rectRight; ++skylineNodeIndex)
 	{
 		if (skyLine[skylineNodeIndex].x >= rectRight || skyLine[skylineNodeIndex].x + skyLine[skylineNodeIndex].width <= rectLeft)
 			break;
 
-		int leftSide = skyLine[skylineNodeIndex].x;
-		int rightSide = min(rectRight, leftSide + skyLine[skylineNodeIndex].width);
+		long leftSide = skyLine[skylineNodeIndex].x;
+		long rightSide = min(rectRight, leftSide + skyLine[skylineNodeIndex].width);
 		assert(y >= skyLine[skylineNodeIndex].y);
 
 		Rect waste;
@@ -207,14 +207,14 @@ void SkylineBinPack::AddWasteMapArea(int skylineNodeIndex, int width, int height
 		waste.width = rightSide - leftSide;
 		waste.height = y - skyLine[skylineNodeIndex].y;
 
-		assert(disjointRects.Disjoint(waste));
+		assert(disjolongRects.Disjolong(waste));
 		wasteMap.GetFreeRectangles().push_back(waste);
 	}
 }
 
-void SkylineBinPack::AddSkylineLevel(int skylineNodeIndex, const Rect &rect)
+void SkylineBinPack::AddSkylineLevel(long skylineNodeIndex, const Rect &rect)
 {
-	// First track all wasted areas and mark them into the waste map if we're using one.
+	// First track all wasted areas and mark them longo the waste map if we're using one.
 	if (useWasteMap)
 		AddWasteMapArea(skylineNodeIndex, rect.width, rect.height, rect.y);
 
@@ -233,7 +233,7 @@ void SkylineBinPack::AddSkylineLevel(int skylineNodeIndex, const Rect &rect)
 
 		if (skyLine[i].x < skyLine[i-1].x + skyLine[i-1].width)
 		{
-			int shrink = skyLine[i-1].x + skyLine[i-1].width - skyLine[i].x;
+			long shrink = skyLine[i-1].x + skyLine[i-1].width - skyLine[i].x;
 
 			skyLine[i].x += shrink;
 			skyLine[i].width -= shrink;
@@ -263,22 +263,22 @@ void SkylineBinPack::MergeSkylines()
 		}
 }
 
-Rect SkylineBinPack::InsertBottomLeft(int width, int height)
+Rect SkylineBinPack::InsertBottomLeft(long width, long height)
 {
-	int bestHeight;
-	int bestWidth;
-	int bestIndex;
+	long bestHeight;
+	long bestWidth;
+	long bestIndex;
 	Rect newNode = FindPositionForNewNodeBottomLeft(width, height, bestHeight, bestWidth, bestIndex);
 
 	if (bestIndex != -1)
 	{
-		assert(disjointRects.Disjoint(newNode));
+		assert(disjolongRects.Disjolong(newNode));
 		// Perform the actual packing.
 		AddSkylineLevel(bestIndex, newNode);
 
 		usedSurfaceArea += width * height;
 #ifdef DEBUG
-		disjointRects.Add(newNode);
+		disjolongRects.Add(newNode);
 #endif
 	}
 	else
@@ -287,17 +287,17 @@ Rect SkylineBinPack::InsertBottomLeft(int width, int height)
 	return newNode;
 }
 
-Rect SkylineBinPack::FindPositionForNewNodeBottomLeft(int width, int height, int &bestHeight, int &bestWidth, int &bestIndex) const
+Rect SkylineBinPack::FindPositionForNewNodeBottomLeft(long width, long height, long &bestHeight, long &bestWidth, long &bestIndex) const
 {
-	bestHeight = std::numeric_limits<int>::max();
+	bestHeight = std::numeric_limits<long>::max();
 	bestIndex = -1;
 	// Used to break ties if there are nodes at the same level. Then pick the narrowest one.
-	bestWidth = std::numeric_limits<int>::max();
+	bestWidth = std::numeric_limits<long>::max();
 	Rect newNode;
 	memset(&newNode, 0, sizeof(newNode));
 	for(size_t i = 0; i < skyLine.size(); ++i)
 	{
-		int y;
+		long y;
 		if (RectangleFits(i, width, height, y))
 		{
 			if (y + height < bestHeight || (y + height == bestHeight && skyLine[i].width < bestWidth))
@@ -309,7 +309,7 @@ Rect SkylineBinPack::FindPositionForNewNodeBottomLeft(int width, int height, int
 				newNode.y = y;
 				newNode.width = width;
 				newNode.height = height;
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 			}
 		}
 		if (RectangleFits(i, height, width, y))
@@ -323,7 +323,7 @@ Rect SkylineBinPack::FindPositionForNewNodeBottomLeft(int width, int height, int
 				newNode.y = y;
 				newNode.width = height;
 				newNode.height = width;
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 			}
 		}
 	}
@@ -331,22 +331,22 @@ Rect SkylineBinPack::FindPositionForNewNodeBottomLeft(int width, int height, int
 	return newNode;
 }
 
-Rect SkylineBinPack::InsertMinWaste(int width, int height)
+Rect SkylineBinPack::InsertMinWaste(long width, long height)
 {
-	int bestHeight;
-	int bestWastedArea;
-	int bestIndex;
+	long bestHeight;
+	long bestWastedArea;
+	long bestIndex;
 	Rect newNode = FindPositionForNewNodeMinWaste(width, height, bestHeight, bestWastedArea, bestIndex);
 
 	if (bestIndex != -1)
 	{
-		assert(disjointRects.Disjoint(newNode));
+		assert(disjolongRects.Disjolong(newNode));
 		// Perform the actual packing.
 		AddSkylineLevel(bestIndex, newNode);
 
 		usedSurfaceArea += width * height;
 #ifdef DEBUG
-		disjointRects.Add(newNode);
+		disjolongRects.Add(newNode);
 #endif
 	}
 	else
@@ -355,17 +355,17 @@ Rect SkylineBinPack::InsertMinWaste(int width, int height)
 	return newNode;
 }
 
-Rect SkylineBinPack::FindPositionForNewNodeMinWaste(int width, int height, int &bestHeight, int &bestWastedArea, int &bestIndex) const
+Rect SkylineBinPack::FindPositionForNewNodeMinWaste(long width, long height, long &bestHeight, long &bestWastedArea, long &bestIndex) const
 {
-	bestHeight = std::numeric_limits<int>::max();
-	bestWastedArea = std::numeric_limits<int>::max();
+	bestHeight = std::numeric_limits<long>::max();
+	bestWastedArea = std::numeric_limits<long>::max();
 	bestIndex = -1;
 	Rect newNode;
 	memset(&newNode, 0, sizeof(newNode));
 	for(size_t i = 0; i < skyLine.size(); ++i)
 	{
-		int y;
-		int wastedArea;
+		long y;
+		long wastedArea;
 
 		if (RectangleFits(i, width, height, y, wastedArea))
 		{
@@ -378,7 +378,7 @@ Rect SkylineBinPack::FindPositionForNewNodeMinWaste(int width, int height, int &
 				newNode.y = y;
 				newNode.width = width;
 				newNode.height = height;
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 			}
 		}
 		if (RectangleFits(i, height, width, y, wastedArea))
@@ -392,7 +392,7 @@ Rect SkylineBinPack::FindPositionForNewNodeMinWaste(int width, int height, int &
 				newNode.y = y;
 				newNode.width = height;
 				newNode.height = width;
-				assert(disjointRects.Disjoint(newNode));
+				assert(disjolongRects.Disjolong(newNode));
 			}
 		}
 	}

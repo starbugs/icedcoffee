@@ -25,12 +25,12 @@ usedSurfaceArea(0)
 {
 }
 
-ShelfBinPack::ShelfBinPack(int width, int height, bool useWasteMap)
+ShelfBinPack::ShelfBinPack(long width, long height, bool useWasteMap)
 {
 	Init(width, height, useWasteMap);
 }
 
-void ShelfBinPack::Init(int width, int height, bool useWasteMap_)
+void ShelfBinPack::Init(long width, long height, bool useWasteMap_)
 {
 	useWasteMap = useWasteMap_;
 	binWidth = width;
@@ -49,12 +49,12 @@ void ShelfBinPack::Init(int width, int height, bool useWasteMap_)
 	}
 }
 
-bool ShelfBinPack::CanStartNewShelf(int height) const
+bool ShelfBinPack::CanStartNewShelf(long height) const
 {
 	return shelves.back().startY + shelves.back().height + height <= binHeight;
 }
 
-void ShelfBinPack::StartNewShelf(int startingHeight)
+void ShelfBinPack::StartNewShelf(long startingHeight)
 {
 	if (shelves.size() > 0)
 	{
@@ -73,9 +73,9 @@ void ShelfBinPack::StartNewShelf(int startingHeight)
 	shelves.push_back(shelf);
 }
 
-bool ShelfBinPack::FitsOnShelf(const Shelf &shelf, int width, int height, bool canResize) const
+bool ShelfBinPack::FitsOnShelf(const Shelf &shelf, long width, long height, bool canResize) const
 {
-	const int shelfHeight = canResize ? (binHeight - shelf.startY) : shelf.height;
+	const long shelfHeight = canResize ? (binHeight - shelf.startY) : shelf.height;
 	if ((shelf.currentX + width <= binWidth && height <= shelfHeight) ||
 		(shelf.currentX + height <= binWidth && width <= shelfHeight))
 		return true;
@@ -83,7 +83,7 @@ bool ShelfBinPack::FitsOnShelf(const Shelf &shelf, int width, int height, bool c
 		return false;
 }
 
-void ShelfBinPack::RotateToShelf(const Shelf &shelf, int &width, int &height) const
+void ShelfBinPack::RotateToShelf(const Shelf &shelf, long &width, long &height) const
 {	
 	// If the width > height and the long edge of the new rectangle fits vertically onto the current shelf,
 	// flip it. If the short edge is larger than the current shelf height, store
@@ -94,7 +94,7 @@ void ShelfBinPack::RotateToShelf(const Shelf &shelf, int &width, int &height) co
 		swap(width, height);
 }
 
-void ShelfBinPack::AddToShelf(Shelf &shelf, int width, int height, Rect &newNode)
+void ShelfBinPack::AddToShelf(Shelf &shelf, long width, long height, Rect &newNode)
 {
 	assert(FitsOnShelf(shelf, width, height, true));
 
@@ -119,11 +119,11 @@ void ShelfBinPack::AddToShelf(Shelf &shelf, int width, int height, Rect &newNode
 	usedSurfaceArea += width * height;
 }
 
-Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
+Rect ShelfBinPack::Insert(long width, long height, ShelfChoiceHeuristic method)
 {
 	Rect newNode;
 
-	// First try to pack this rectangle into the waste map, if it fits.
+	// First try to pack this rectangle longo the waste map, if it fits.
 	if (useWasteMap)
 	{
 		newNode = wasteMap.Insert(width, height, true, GuillotineBinPack::RectBestShortSideFit, 
@@ -188,7 +188,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 		{
 			// Worst Area Fit rule: Choose the shelf with smallest remaining shelf area.
 			Shelf *bestShelf = 0;
-			int bestShelfSurfaceArea = -1;
+			long bestShelfSurfaceArea = -1;
 			for(size_t i = 0; i < shelves.size(); ++i)
 			{
 				// Pre-rotate the rect onto the shelf here already so that the area fit computation
@@ -196,7 +196,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 				RotateToShelf(shelves[i], width, height);
 				if (FitsOnShelf(shelves[i], width, height, i == shelves.size()-1))
 				{
-					int surfaceArea = (binWidth - shelves[i].currentX) * shelves[i].height;
+					long surfaceArea = (binWidth - shelves[i].currentX) * shelves[i].height;
 					if (surfaceArea > bestShelfSurfaceArea)
 					{
 						bestShelf = &shelves[i];
@@ -217,7 +217,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 		{
 			// Best Height Fit rule: Choose the shelf with best-matching height.
 			Shelf *bestShelf = 0;
-			int bestShelfHeightDifference = 0x7FFFFFFF;
+			long bestShelfHeightDifference = 0x7FFFFFFF;
 			for(size_t i = 0; i < shelves.size(); ++i)
 			{
 				// Pre-rotate the rect onto the shelf here already so that the height fit computation
@@ -225,7 +225,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 				RotateToShelf(shelves[i], width, height);
 				if (FitsOnShelf(shelves[i], width, height, i == shelves.size()-1))
 				{
-					int heightDifference = max(shelves[i].height - height, 0);
+					long heightDifference = max<long>(shelves[i].height - height, 0);
 					assert(heightDifference >= 0);
 
 					if (heightDifference < bestShelfHeightDifference)
@@ -248,7 +248,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 		{
 			// Best Width Fit rule: Choose the shelf with smallest remaining shelf width.
 			Shelf *bestShelf = 0;
-			int bestShelfWidthDifference = 0x7FFFFFFF;
+			long bestShelfWidthDifference = 0x7FFFFFFF;
 			for(size_t i = 0; i < shelves.size(); ++i)
 			{
 				// Pre-rotate the rect onto the shelf here already so that the height fit computation
@@ -256,7 +256,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 				RotateToShelf(shelves[i], width, height);
 				if (FitsOnShelf(shelves[i], width, height, i == shelves.size()-1))
 				{
-					int widthDifference = binWidth - shelves[i].currentX - width;
+					long widthDifference = binWidth - shelves[i].currentX - width;
 					assert(widthDifference >= 0);
 
 					if (widthDifference < bestShelfWidthDifference)
@@ -279,7 +279,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 		{
 			// Worst Width Fit rule: Choose the shelf with smallest remaining shelf width.
 			Shelf *bestShelf = 0;
-			int bestShelfWidthDifference = -1;
+			long bestShelfWidthDifference = -1;
 			for(size_t i = 0; i < shelves.size(); ++i)
 			{
 				// Pre-rotate the rect onto the shelf here already so that the height fit computation
@@ -287,7 +287,7 @@ Rect ShelfBinPack::Insert(int width, int height, ShelfChoiceHeuristic method)
 				RotateToShelf(shelves[i], width, height);
 				if (FitsOnShelf(shelves[i], width, height, i == shelves.size()-1))
 				{
-					int widthDifference = binWidth - shelves[i].currentX - width;
+					long widthDifference = binWidth - shelves[i].currentX - width;
 					assert(widthDifference >= 0);
 
 					if (widthDifference > bestShelfWidthDifference)

@@ -23,11 +23,11 @@ public:
 	SkylineBinPack();
 
 	/// Instantiates a bin of the given size.
-	SkylineBinPack(int binWidth, int binHeight, bool useWasteMap);
+	SkylineBinPack(long binWidth, long binHeight, bool useWasteMap);
 
 	/// (Re)initializes the packer to an empty bin of width x height units. Call whenever
 	/// you need to restart with a new bin.
-	void Init(int binWidth, int binHeight, bool useWasteMap);
+	void Init(long binWidth, long binHeight, bool useWasteMap);
 
 	/// Defines the different heuristic rules that can be used to decide how to make the rectangle placements.
 	enum LevelChoiceHeuristic
@@ -42,54 +42,54 @@ public:
 	/// @param method The rectangle placement rule to use when packing.
 	void Insert(std::vector<RectSize> &rects, std::vector<Rect> &dst, LevelChoiceHeuristic method);
 
-	/// Inserts a single rectangle into the bin, possibly rotated.
-	Rect Insert(int width, int height, LevelChoiceHeuristic method);
+	/// Inserts a single rectangle longo the bin, possibly rotated.
+	Rect Insert(long width, long height, LevelChoiceHeuristic method);
 
 	/// Computes the ratio of used surface area to the total bin area.
 	float Occupancy() const;
 
 private:
-	int binWidth;
-	int binHeight;
+	long binWidth;
+	long binHeight;
 
 #ifdef DEBUG
-	DisjointRectCollection disjointRects;
+	DisjolongRectCollection disjolongRects;
 #endif
 
 	/// Represents a single level (a horizontal line) of the skyline/horizon/envelope.
 	struct SkylineNode
 	{
 		/// The starting x-coordinate (leftmost).
-		int x;
+		long x;
 
 		/// The y-coordinate of the skyline level line.
-		int y;
+		long y;
 
 		/// The line width. The ending coordinate (inclusive) will be x+width-1.
-		int width;
+		long width;
 	};
 
 	std::vector<SkylineNode> skyLine;
 
 	unsigned long usedSurfaceArea;
 
-	/// If true, we use the GuillotineBinPack structure to recover wasted areas into a waste map.
+	/// If true, we use the GuillotineBinPack structure to recover wasted areas longo a waste map.
 	bool useWasteMap;
 	GuillotineBinPack wasteMap;
 
-	Rect InsertBottomLeft(int width, int height);
-	Rect InsertMinWaste(int width, int height);
+	Rect InsertBottomLeft(long width, long height);
+	Rect InsertMinWaste(long width, long height);
 
-	Rect FindPositionForNewNodeMinWaste(int width, int height, int &bestHeight, int &bestWastedArea, int &bestIndex) const;
-	Rect FindPositionForNewNodeBottomLeft(int width, int height, int &bestHeight, int &bestWidth, int &bestIndex) const;
+	Rect FindPositionForNewNodeMinWaste(long width, long height, long &bestHeight, long &bestWastedArea, long &bestIndex) const;
+	Rect FindPositionForNewNodeBottomLeft(long width, long height, long &bestHeight, long &bestWidth, long &bestIndex) const;
 
-	bool RectangleFits(int skylineNodeIndex, int width, int height, int &y) const;
-	bool RectangleFits(int skylineNodeIndex, int width, int height, int &y, int &wastedArea) const;
-	int ComputeWastedArea(int skylineNodeIndex, int width, int height, int y) const;
+	bool RectangleFits(long skylineNodeIndex, long width, long height, long &y) const;
+	bool RectangleFits(long skylineNodeIndex, long width, long height, long &y, long &wastedArea) const;
+	long ComputeWastedArea(long skylineNodeIndex, long width, long height, long y) const;
 
-	void AddWasteMapArea(int skylineNodeIndex, int width, int height, int y);
+	void AddWasteMapArea(long skylineNodeIndex, long width, long height, long y);
 
-	void AddSkylineLevel(int skylineNodeIndex, const Rect &rect);
+	void AddSkylineLevel(long skylineNodeIndex, const Rect &rect);
 
 	/// Merges all skyline nodes that are at the same level.
 	void MergeSkylines();
