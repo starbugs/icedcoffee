@@ -22,7 +22,60 @@
 //
 
 #import "ICMutableTexture2D.h"
+#import "icFontTypes.h"
+#import "ICTextureGlyph.h"
 
+@class ICFont;
+
+/**
+ @brief Represents a texture atlas for typographic glyphs
+ */
 @interface ICGlyphTextureAtlas : ICMutableTexture2D
 
+/**
+ @brief Initializes the receiver with a given size, pixel format and resolution type
+ 
+ @param sizeInPixels The size of the receiver in pixels
+ @param pixelFormat The pixel format of the receiver. Currently only ``ICPixelFormatRGBA8888``
+ and ``ICPixelFormatA8`` are supported by this class.
+ @param resolutionType The resolution type to use for the receiver
+ */
+- (id)initWithSize:(CGSize)sizeInPixels
+       pixelFormat:(ICPixelFormat)pixelFormat
+    resolutionType:(ICResolutionType)resolutionType;
+
+/**
+ @brief Adds the given glyph bitmap data to the receiver
+ 
+ @param bitmapData Bitmap data conforming to the receiver's pixel format and the specified size
+ @param sizeInPixels The size of the given bitmap data in pixels
+ @param glyph An ICGlyph specifying the internal index of the glyph within its font
+ @param font An ICFont object defining the font which the given glyph belongs to
+ @param uploadImmediately A boolean flag indicating whether to upload the given data to the
+ receiver's OpenGL texture immediately.
+ 
+ This method first employs a Skyline-BL bin packing algorithm to determine the destination
+ rectangle of the given rectangular glyph bitmap data in the receiver. If there's enough space
+ left in the receiver to contain the glyph's bitmap data, the method creates an ICTextureGlyph
+ object for the given glyph and copies the specified bitmap data to the receiver.
+ 
+ If ``uploadImmediately`` is set to ``YES``, this method immediately uploads the glyph's bitmap data
+ to its destination rectangle in the receiver's OpenGL texture. If no OpenGL texture exists, it
+ is implicitly created. If ``uploadImmediately`` is set to ``NO``, this method copies the glyph's
+ bitmap data to an internal pixel buffer in RAM. In this case, the caller is responsible to upload
+ the receiver's internal data to OpenGL at a suitable point in time, i.e. when there are no more
+ glyphs to add to the receiver or the texture needs to be used by a view component.
+ 
+ @return If the given glyph bitmap data fits into the receiver, this method returns an
+ ICTextureGlyph object holding information about the texture glyph. If the glyph bitmap data
+ does not fit into the receiver, this method returns ``nil``. In this case, the caller must
+ allocate another ICGlyphTextureAtlas object with a suitable size to store the given glyph.
+ */
+- (ICTextureGlyph *)addGlyphBitmapData:(void *)bitmapData
+                              withSize:(CGSize)sizeInPixels
+                              forGlyph:(ICGlyph)glyph
+                                  font:(ICFont *)font
+                     uploadImmediately:(BOOL)uploadImmediately;
+
 @end
+

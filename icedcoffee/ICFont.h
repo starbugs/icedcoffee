@@ -25,9 +25,17 @@
 
 @interface ICFont : NSObject {
 @protected
-    CTFontRef _font;
+    CTFontRef _fontRef;
+    NSString *_name;
+    CGFloat _size;
 }
 
 - (id)initWithName:(NSString *)fontName size:(CGFloat)size;
+
+@property (nonatomic, readonly) NSString *name;
+
+@property (nonatomic, readonly) CTFontRef fontRef;
+
+@property (nonatomic, readonly) CGFloat size;
 
 @end

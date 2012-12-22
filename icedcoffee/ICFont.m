@@ -24,21 +24,44 @@
 #import <CoreText/CoreText.h>
 #import "ICFont.h"
 
+@interface ICFont ()
+- (void)setName:(NSString *)name;
+- (void)setSize:(CGFloat)size;
+@end
+
 @implementation ICFont
+
+@synthesize name = _name;
+@synthesize fontRef = _fontRef;
+@synthesize size = _size;
 
 - (id)initWithName:(NSString *)fontName size:(CGFloat)size
 {
     if ((self = [super init])) {
-        _font = CTFontCreateWithName((CFStringRef)fontName, size, nil);
+        _fontRef = CTFontCreateWithName((CFStringRef)fontName, size, nil);
+        self.name = fontName;
+        self.size = size;
     }
     return self;
 }
 
 - (void)dealloc
 {
-    CFRelease(_font);
+    CFRelease(_fontRef);
+    self.name = nil;
     
     [super dealloc];
+}
+
+- (void)setName:(NSString *)name
+{
+    [_name release];
+    _name = [name copy];
+}
+
+- (void)setSize:(CGFloat)size
+{
+    _size = size;
 }
 
 @end

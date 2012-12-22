@@ -22,14 +22,23 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "icFontTypes.h"
+
+@class ICFont;
+@class ICTextureGlyph;
 
 @interface ICGlyphCache : NSObject {
 @protected
+    NSMutableDictionary *_textureGlyphs;
     NSMutableArray *_textures;
 }
 
 + (id)currentGlyphCache;
 
 - (id)init;
+
+- (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
+
+- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
 
 @end
