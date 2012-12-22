@@ -134,26 +134,26 @@ using RectangleBinPack::SkylineBinPack;
     float x1, x2, y1, y2;
     x1 = rect.x / self.sizeInPixels.width;
     y1 = rect.y / self.sizeInPixels.height;
-    x2 = (rect.x + rect.width) / self.sizeInPixels.height;
+    x2 = (rect.x + rect.width) / self.sizeInPixels.width;
     y2 = (rect.y + rect.height) / self.sizeInPixels.height;
     
     kmVec2 *texCoords = (kmVec2 *)malloc(sizeof(kmVec2)*4);
     if (rotated) {
-        texCoords[1] = kmVec2Make(x1, y2);
-        texCoords[3] = kmVec2Make(x2, y2);
         texCoords[0] = kmVec2Make(x1, y1);
-        texCoords[2] = kmVec2Make(x2, y1);
+        texCoords[2] = kmVec2Make(x1, y2);
+        texCoords[1] = kmVec2Make(x2, y1);
+        texCoords[3] = kmVec2Make(x2, y2);
     } else {
-        texCoords[0] = kmVec2Make(x1, y2);
-        texCoords[1] = kmVec2Make(x2, y2);
-        texCoords[2] = kmVec2Make(x1, y1);
-        texCoords[3] = kmVec2Make(x2, y1);
+        texCoords[0] = kmVec2Make(x1, y1);
+        texCoords[1] = kmVec2Make(x1, y2);
+        texCoords[2] = kmVec2Make(x2, y1);
+        texCoords[3] = kmVec2Make(x2, y2);
     }
     
     // Create ICTextureGlyph object
     ICTextureGlyph *textureGlyph = [[[ICTextureGlyph alloc] initWithGlyphTextureAtlas:self
                                                                             texCoords:texCoords
-                                                                                 size:*((kmVec2 *)&sizeInPixels)
+                                                                                 size:kmVec2Make(sizeInPixels.width, sizeInPixels.height)
                                                                                 glyph:glyph
                                                                                  font:font] autorelease];
     return textureGlyph;

@@ -3025,6 +3025,7 @@
 				A62633CF1685DA3600286AC0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */ = {
 			isa = XCConfigurationList;

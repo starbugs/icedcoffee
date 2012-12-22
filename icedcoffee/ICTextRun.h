@@ -30,8 +30,7 @@
     NSString *_text;
     ICFont *_font;
     BOOL _buffersDirty;
-    GLuint _vbo;
-    GLuint _ibo;
+    NSMutableArray *_buffers;
 }
 
 - (id)initWithText:(NSString *)text font:(ICFont *)font;

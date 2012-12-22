@@ -21,31 +21,49 @@
 //  SOFTWARE.
 //
 
-#import "GlyphCacheTestViewController.h"
+#import "ICGLBuffer.h"
 
-@implementation GlyphCacheTestViewController
+@implementation ICGLBuffer
 
-- (void)setUpScene
+@synthesize bufferObject = _bo;
+@synthesize target = _target;
+@synthesize count = _count;
+@synthesize stride = _stride;
+
+- (id)initWithTarget:(GLenum)target
+                data:(const void *)data
+               count:(GLuint)count
+              stride:(GLuint)stride
+               usage:(GLenum)usage
 {
-    ICUIScene *scene = [ICUIScene scene];
-    [self runWithScene:scene];
-    
-    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-    ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:150];
-    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:font];
-    
-    /*ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
-    if (textureAtlas.dataDirty)
-        [textureAtlas upload];
-    ICSprite *sprite = [ICSprite spriteWithTexture:textureAtlas];
-    [sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
-    [sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
-    [sprite setColor:(icColor4B){0,0,0,255}];
-    [scene addChild:sprite];*/
-    
-    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"Hallo du da" font:font];
-    [textRun setPositionY:100];
-    [scene addChild:textRun];
+    if ((self = [super init])) {
+        glGenBuffers(1, &_bo);
+        glBindBuffer(target, _bo);
+        GLsizeiptr size = count * stride;
+        glBufferData(target, size, data, usage);
+        glBindBuffer(target, 0);
+        
+        _target = target;
+        _count = count;
+        _stride = stride;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    glDeleteBuffers(1, &_bo);
+    [super dealloc];
+}
+
+- (void)bind
+{
+    glBindBuffer(_target, _bo);
+}
+
+- (void)unbind
+{
+    glBindBuffer(_target, 0);
 }
 
 @end

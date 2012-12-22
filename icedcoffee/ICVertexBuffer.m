@@ -21,31 +21,36 @@
 //  SOFTWARE.
 //
 
-#import "GlyphCacheTestViewController.h"
+#import "ICVertexBuffer.h"
 
-@implementation GlyphCacheTestViewController
+@implementation ICVertexBuffer
 
-- (void)setUpScene
++ (id)vertexBufferWithVertices:(const void *)vertices
+                         count:(GLuint)count
+                        stride:(GLuint)stride
+                         usage:(GLenum)usage
 {
-    ICUIScene *scene = [ICUIScene scene];
-    [self runWithScene:scene];
-    
-    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-    ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:150];
-    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:font];
-    
-    /*ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
-    if (textureAtlas.dataDirty)
-        [textureAtlas upload];
-    ICSprite *sprite = [ICSprite spriteWithTexture:textureAtlas];
-    [sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
-    [sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
-    [sprite setColor:(icColor4B){0,0,0,255}];
-    [scene addChild:sprite];*/
-    
-    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"Hallo du da" font:font];
-    [textRun setPositionY:100];
-    [scene addChild:textRun];
+    return [[[[self class] alloc] initWithVertices:vertices
+                                             count:count
+                                            stride:stride
+                                             usage:usage] autorelease];
+}
+
+- (id)initWithVertices:(const void *)vertices
+                 count:(GLuint)count
+                stride:(GLuint)stride
+                 usage:(GLenum)usage
+{
+    return [super initWithTarget:GL_ARRAY_BUFFER
+                            data:vertices
+                           count:count
+                          stride:stride
+                           usage:usage];
+}
+
+- (void)dealloc
+{
+    [super dealloc];
 }
 
 @end

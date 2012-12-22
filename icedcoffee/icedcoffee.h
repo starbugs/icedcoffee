@@ -62,12 +62,14 @@
 #import "ICScrollView.h"
 #import "icTypes.h"
 #import "ICBasicAnimation.h"
+#import "ICCombinedVertexIndexBuffer.h"
 
 // Font rendering
 #import "ICFont.h"
 #import "ICGlyphCache.h"
 #import "ICGlyphTextureAtlas.h"
 #import "ICTextureGlyph.h"
+#import "ICTextRun.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

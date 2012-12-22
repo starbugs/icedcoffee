@@ -27,6 +27,33 @@
 #import "ICTextureGlyph.h"
 #import "ICNodeVisitorPicking.h"
 #import "Platforms/icGL.h"
+#import "ICCombinedVertexIndexBuffer.h"
+#import "ICGlyphTextureAtlas.h"
+#import "icGLState.h"
+#import "ICShaderCache.h"
+
+@interface ICTextureGlyphBuffer : ICCombinedVertexIndexBuffer {
+@protected
+    ICGlyphTextureAtlas *_textureAtlas;
+}
+
+@property (nonatomic, retain) ICGlyphTextureAtlas *textureAtlas;
+
+@end
+
+@implementation ICTextureGlyphBuffer
+
+@synthesize textureAtlas = _textureAtlas;
+
+- (void)dealloc
+{
+    self.textureAtlas = nil;
+    [super dealloc];
+}
+
+@end
+
+
 
 @interface ICTextRun ()
 - (void)updateBuffers;
@@ -45,6 +72,9 @@
         
         self.text = text;
         self.font = font;
+        
+        self.shaderProgram = [[ICShaderCache currentShaderCache]
+                              shaderProgramForKey:kICShader_PositionTextureA8Color];
     }
     return self;
 }
@@ -56,11 +86,8 @@
     
     [self removeObserver:self forKeyPath:@"text"];
     [self removeObserver:self forKeyPath:@"font"];
-    
-    if (_vbo)
-        glDeleteBuffers(1, &_vbo);
-    if (_ibo)
-        glDeleteBuffers(1, &_ibo);
+
+    [_buffers release];
     
     [super dealloc];
 }
@@ -78,6 +105,9 @@
 
 - (void)updateBuffers
 {
+    [_buffers release];
+    _buffers = [[NSMutableArray alloc] initWithCapacity:1];
+
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.text
@@ -86,6 +116,7 @@
     CFArrayRef runs = CTLineGetGlyphRuns(line);
     CFIndex runCount = CFArrayGetCount(runs);
     NSAssert(runCount == 1, @"Shouldn't be more than 1 run");
+    
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
         
@@ -99,61 +130,71 @@
         CGPoint *positions = (CGPoint *)malloc(sizeof(CGPoint) * glyphCount);
         CTRunGetPositions(run, CFRangeMake(0, glyphCount), positions);
         
-        icV3F_C4F_T2F_Quad *quads = (icV3F_C4F_T2F_Quad *)malloc(sizeof(icV3F_C4F_T2F) * glyphCount);
-        icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * glyphCount);
-        
         ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-        for (CFIndex j=0; j<glyphCount; j++) {
-            ICTextureGlyph *textureGlyph = [glyphCache textureGlyphForGlyph:glyphs[j] font:self.font];
-            
-            float x1, x2, y1, y2, z;
-            x1 = positions[j].x;
-            y1 = positions[j].y;
-            x2 = x1 + textureGlyph.size.width;
-            y2 = y1 + textureGlyph.size.height;
-            z = 0;
-            
-            quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
-            quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
-            quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
-            quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
-            
-            for (ushort k=0; k<4; k++) {
-                quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
-                quads[j].vertices[k].color = icColor4FMake(0, 0, 0, 1);
+        NSDictionary *glyphsByTexture = [glyphCache textureGlyphsSeparatedByTextureForGlyphs:glyphs
+                                                                                       count:glyphCount
+                                                                                        font:self.font];
+        
+        for (NSValue *textureKey in glyphsByTexture) {
+            NSArray *glyphEntries = [glyphsByTexture objectForKey:textureKey];
+            NSInteger textureGlyphCount = [glyphEntries count];
+            icV3F_C4F_T2F_Quad *quads = (icV3F_C4F_T2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_Quad) * textureGlyphCount);
+            icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * textureGlyphCount);
+            CFIndex j = 0;
+            for (NSArray *glyphEntry in glyphEntries) {
+                NSInteger glyphIndex = [[glyphEntry objectAtIndex:0] integerValue];
+                ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
+                
+                float x1, x2, y1, y2, z;
+                x1 = positions[glyphIndex].x;
+                y1 = positions[glyphIndex].y;
+                x2 = x1 + textureGlyph.size.width;
+                y2 = y1 + textureGlyph.size.height;
+                z = 0;
+                
+                quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
+                quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
+                quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
+                quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
+                
+                for (ushort k=0; k<4; k++) {
+                    quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
+                    quads[j].vertices[k].color = icColor4FMake(0, 0, 0, 1);
+                }
+                
+                GLushort offset = (GLushort)j * 4;
+                GLushort indices[] = {
+                    offset+0, offset+1, offset+2,
+                    offset+3, offset+2, offset+1
+                };
+                memcpy(quadIndices[j].indices, indices, sizeof(GLushort) * 6);
+                j++;
             }
-            
-            GLushort indices[] = {
-                j+0, j+2, j+1,
-                j+3, j+2, j+1
-            };
-            memcpy(quadIndices[j].indices, indices, sizeof(GLushort) * 6);
+    
+            ICVertexBuffer *vertexBuffer = [ICVertexBuffer vertexBufferWithVertices:quads
+                                                                              count:(GLuint)textureGlyphCount * 4
+                                                                             stride:sizeof(icV3F_C4F_T2F)
+                                                                              usage:GL_STATIC_DRAW];
+            ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
+                                                                         count:(GLuint)glyphCount * 6
+                                                                        stride:sizeof(GLushort)
+                                                                         usage:GL_STATIC_DRAW];
+            ICTextureGlyphBuffer *glyphBuffer =
+                [ICTextureGlyphBuffer combinedVertexIndexBufferWithVertexBuffer:vertexBuffer
+                                                                    indexBuffer:indexBuffer];
+            glyphBuffer.textureAtlas = [textureKey pointerValue];
+            [_buffers addObject:glyphBuffer];
+    
+            free(quads);
+            free(quadIndices);
         }
-        
-        if (_vbo)
-            glDeleteBuffers(1, &_vbo);
-        if (_ibo)
-            glDeleteBuffers(1, &_ibo);
-        
-        glGenBuffers(1, &_vbo);
-        glGenBuffers(1, &_ibo);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, _vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(icV3F_C4F_T2F) * glyphCount * 4, quads, GL_STATIC_DRAW);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _ibo);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLushort) * glyphCount * 6, quadIndices, GL_STATIC_DRAW);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-        
+
         free(glyphs);
         free(positions);
-        free(quads);
-        free(quadIndices);
     }
+    
     CFRelease(line);
     [attributedString release];
-    
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
@@ -161,50 +202,51 @@
     if (_buffersDirty)
         [self updateBuffers];
     
-    /*[self applyStandardDrawSetupWithVisitor:visitor];
+    [self applyStandardDrawSetupWithVisitor:visitor];
     
-    if (![visitor isKindOfClass:[ICNodeVisitorPicking class]])
-        glBindTexture(GL_TEXTURE_2D, [_texture name]);
-    
-    // FIXME: support for textured picking?
-    if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
-        icGLDisable(GL_BLEND);
-    } else {
-        icGLBlendFunc(_blendFunc.src, _blendFunc.dst);
-        icGLEnable(IC_GL_BLEND);
-    }
-    
-    // FIXME: needs to go into icGLState
-    glEnableVertexAttribArray(ICVertexAttribPosition);
-    glEnableVertexAttribArray(ICVertexAttribColor);
-    glEnableVertexAttribArray(ICVertexAttribTexCoords);
-    IC_CHECK_GL_ERROR_DEBUG();
-    
-    glBindBuffer(GL_ARRAY_BUFFER, _scale9VertexBuffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _indexBuffer);
-    
+    for (ICTextureGlyphBuffer *buffer in _buffers) {
+        if (![visitor isKindOfClass:[ICNodeVisitorPicking class]])
+            glBindTexture(GL_TEXTURE_2D, buffer.textureAtlas.name);
+        
+        if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
+            icGLDisable(GL_BLEND);
+        } else {
+            icGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            icGLEnable(IC_GL_BLEND);
+        }
+        
+        // FIXME: needs to go into icGLState
+        glEnableVertexAttribArray(ICVertexAttribPosition);
+        glEnableVertexAttribArray(ICVertexAttribColor);
+        glEnableVertexAttribArray(ICVertexAttribTexCoords);
+        IC_CHECK_GL_ERROR_DEBUG();
+        
+        [buffer.vertexBuffer bind];
+        [buffer.indexBuffer bind];
+        
 #define kVertexSize sizeof(icV3F_C4F_T2F)
-    
-	// vertex
-	NSInteger diff = offsetof(icV3F_C4F_T2F, vect);
-	glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
-    
-	// color
-	diff = offsetof(icV3F_C4F_T2F, color);
-	glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
-    
-	// texCoords
-	diff = offsetof(icV3F_C4F_T2F, texCoords);
-	glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
-    
-	glDrawElements(GL_TRIANGLES, NUM_INDICES, GL_UNSIGNED_SHORT, NULL);
-    IC_CHECK_GL_ERROR_DEBUG();
-    
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-    
-    glBindTexture(GL_TEXTURE_2D, 0);
-    IC_CHECK_GL_ERROR_DEBUG();*/
+        
+        // vertex
+        NSInteger diff = offsetof(icV3F_C4F_T2F, vect);
+        glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+        
+        // color
+        diff = offsetof(icV3F_C4F_T2F, color);
+        glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+        
+        // texCoords
+        diff = offsetof(icV3F_C4F_T2F, texCoords);
+        glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+        
+        glDrawElements(GL_TRIANGLES, buffer.indexBuffer.count, GL_UNSIGNED_SHORT, NULL);
+        IC_CHECK_GL_ERROR_DEBUG();
+        
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        
+        glBindTexture(GL_TEXTURE_2D, 0);
+        IC_CHECK_GL_ERROR_DEBUG();
+    }
 }
 
 @end

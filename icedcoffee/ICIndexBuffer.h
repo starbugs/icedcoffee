@@ -21,31 +21,22 @@
 //  SOFTWARE.
 //
 
-#import "GlyphCacheTestViewController.h"
+#import <Foundation/Foundation.h>
+#import "ICGLBuffer.h"
 
-@implementation GlyphCacheTestViewController
+/**
+ @brief Represents an immutable OpenGL index buffer object
+ */
+@interface ICIndexBuffer : ICGLBuffer
 
-- (void)setUpScene
-{
-    ICUIScene *scene = [ICUIScene scene];
-    [self runWithScene:scene];
-    
-    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-    ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:150];
-    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:font];
-    
-    /*ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
-    if (textureAtlas.dataDirty)
-        [textureAtlas upload];
-    ICSprite *sprite = [ICSprite spriteWithTexture:textureAtlas];
-    [sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
-    [sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
-    [sprite setColor:(icColor4B){0,0,0,255}];
-    [scene addChild:sprite];*/
-    
-    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"Hallo du da" font:font];
-    [textRun setPositionY:100];
-    [scene addChild:textRun];
-}
++ (id)indexBufferWithIndices:(const void *)indices
+                       count:(GLuint)count
+                      stride:(GLuint)stride
+                       usage:(GLenum)usage;
+
+- (id)initWithIndices:(const void *)indices
+                count:(GLuint)count
+               stride:(GLuint)stride
+                usage:(GLenum)usage;
 
 @end
