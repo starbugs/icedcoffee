@@ -116,10 +116,6 @@
     CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, glyphs, boundingRects, glyphCount);
     
     for (CFIndex i=0; i<glyphCount; i++) {
-        /*CGFloat ascent, descent;
-        float width = CTRunGetTypographicBounds(run, CFRangeMake(i, 1), &ascent, &descent, NULL);
-        float height = ascent + descent;
-        size_t w = ceilf(width) + 2, h = ceilf(height) + 2;*/
         CGRect *boundingRect = &boundingRects[i];
         size_t w = ceilf(boundingRect->size.width) + ceilf(fabs(boundingRect->origin.x)) + 2;
         size_t h = ceilf(boundingRect->size.height) + ceilf(fabs(boundingRect->origin.y)) + 2;
@@ -146,14 +142,6 @@
         CGContextSetGrayFillColor(context, 1, 1);
         CGContextShowGlyphsAtPoint(context, 1 + xOffset, 1 + yOffset, &glyphs[i], 1);
         CFRelease(cgFont);
-        
-        /*for (int y=0; y<h; y++) {
-            for (int x=0; x<w; x++) {
-                printf("%02x", *((uint8_t *)(&data[y*w+x])));
-            }
-            printf("\n");
-        }
-        printf("\n");*/
         
         ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
         ICTextureGlyph *textureGlyph = [textureAtlas addGlyphBitmapData:data

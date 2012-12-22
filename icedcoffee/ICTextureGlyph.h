@@ -33,11 +33,11 @@
 @protected
     ICGlyphTextureAtlas *_textureAtlas; // weak
     ICFont *_font;
-    kmVec2 *_texCoordsMinMax;
+    kmVec2 *_texCoords;
 }
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
-                texCoordsMinMax:(kmVec2 *)texCoordsMinMax
+                      texCoords:(kmVec2 *)texCoords
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font;
 
@@ -47,6 +47,6 @@
 
 @property (nonatomic, readonly) ICFont *font;
 
-@property (nonatomic, readonly) kmVec2 *texCoordsMinMax;
+@property (nonatomic, readonly) kmVec2 *texCoords;
 
 @end

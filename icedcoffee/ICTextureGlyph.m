@@ -28,16 +28,16 @@
 @synthesize textureAtlas = _textureAtlas;
 @synthesize font = _font;
 @synthesize glyph = _glyph;
-@synthesize texCoordsMinMax = _texCoordsMinMax;
+@synthesize texCoords = _texCoords;
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
-                texCoordsMinMax:(kmVec2 *)texCoordsMinMax
+                      texCoords:(kmVec2 *)texCoords
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font
 {
     if ((self = [super init])) {
         _textureAtlas = textureAtlas;
-        _texCoordsMinMax = texCoordsMinMax;
+        _texCoords = texCoords;
         _glyph = glyph;
         _font = [font retain];
     }
@@ -46,8 +46,8 @@
 
 - (void)dealloc
 {
-    if (_texCoordsMinMax) {
-        free(_texCoordsMinMax);
+    if (_texCoords) {
+        free(_texCoords);
     }
     
     [_font release];

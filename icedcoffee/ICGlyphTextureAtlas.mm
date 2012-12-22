@@ -106,12 +106,14 @@ using RectangleBinPack::SkylineBinPack;
         int i;
         int textureWidth = (int)self.sizeInPixels.width;
         if (!rotated) {
+            // Straight copy
             for (i=0; i<rect.height; i++) {
                 uint8_t *glyphRow = (uint8_t *)bitmapData + (i * rect.width * stride);
                 uint8_t *textureRow = (uint8_t *)self.data + ((rect.y + i) * textureWidth * stride + rect.x * stride);
                 memcpy(textureRow, glyphRow, stride * rect.width);
             }
         } else {
+            // Rotated copy
             int j, k;
             for (i=0; i<bitmapHeight; i++) {
                 uint8_t *glyphRow = (uint8_t *)bitmapData + (i * bitmapWidth * stride);
@@ -123,30 +125,34 @@ using RectangleBinPack::SkylineBinPack;
                 }
             }
         }
-        
-        /*int h=rect.height, w=rect.width;
-        uint8_t *data = (uint8_t *)bitmapData; // (uint8_t *)self.data;
-        for (int y=0; y<h; y++) {
-            for (int x=0; x<w; x++) {
-                printf("%02x", *((uint8_t *)(&data[y*w+x])));
-            }
-            printf("\n");
-        }*/
     } else {
         // Upload immediately without storing data in RAM
         [self uploadData:bitmapData inRect:CGRectMake(rect.x, rect.y, rect.width, rect.height)];
     }
 
     // Calculate tex coords
-    kmVec2 *texCoords = (kmVec2 *)malloc(sizeof(kmVec2)*2);
-    texCoords[0] = kmVec2Make(rect.x / self.sizeInPixels.width,
-                              rect.y / self.sizeInPixels.height);
-    texCoords[1] = kmVec2Make((rect.x + rect.width) / self.sizeInPixels.width,
-                              (rect.y + rect.height) / self.sizeInPixels.height);
+    float x1, x2, y1, y2;
+    x1 = rect.x / self.sizeInPixels.width;
+    y1 = rect.y / self.sizeInPixels.height;
+    x2 = (rect.x + rect.width) / self.sizeInPixels.height;
+    y2 = (rect.y + rect.height) / self.sizeInPixels.height;
+    
+    kmVec2 *texCoords = (kmVec2 *)malloc(sizeof(kmVec2)*4);
+    if (rotated) {
+        texCoords[1] = kmVec2Make(x1, y2);
+        texCoords[3] = kmVec2Make(x2, y2);
+        texCoords[0] = kmVec2Make(x1, y1);
+        texCoords[2] = kmVec2Make(x2, y1);
+    } else {
+        texCoords[0] = kmVec2Make(x1, y2);
+        texCoords[1] = kmVec2Make(x2, y2);
+        texCoords[2] = kmVec2Make(x1, y1);
+        texCoords[3] = kmVec2Make(x2, y1);
+    }
     
     // Create ICTextureGlyph object
     ICTextureGlyph *textureGlyph = [[[ICTextureGlyph alloc] initWithGlyphTextureAtlas:self
-                                                                     texCoordsMinMax:texCoords
+                                                                            texCoords:texCoords
                                                                                glyph:glyph
                                                                                 font:font] autorelease];
     return textureGlyph;
