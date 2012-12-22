@@ -21,26 +21,30 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "icFontTypes.h"
+#import "AppDelegate.h"
 
-@class ICFont;
-@class ICTextureGlyph;
+@implementation AppDelegate
 
-@interface ICGlyphCache : NSObject {
-@protected
-    NSMutableDictionary *_textureGlyphs;
-    NSMutableArray *_textures;
+@synthesize window = _window;
+@synthesize viewController = _viewController;
+
+- (void)dealloc
+{
+    [super dealloc];
 }
 
-+ (id)currentGlyphCache;
-
-- (id)init;
-
-- (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
-
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
-
-@property (nonatomic, readonly) NSArray *textures;
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+{
+    self.viewController = [GlyphCacheTestViewController hostViewController];
+    self.viewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
+    
+    ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
+                                          shareContext:nil
+                                    hostViewController:self.viewController];
+    
+    self.window.contentView = glView;
+    [self.window makeFirstResponder:self.window.contentView];
+    [self.window makeKeyAndOrderFront:self];
+}
 
 @end

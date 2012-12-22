@@ -55,12 +55,19 @@
 #import "ICTableView.h"
 #import "ICTableViewCell.h"
 #import "ICTexture2D.h"
+#import "ICMutableTexture2D.h"
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
 #import "ICView.h"
 #import "ICScrollView.h"
 #import "icTypes.h"
 #import "ICBasicAnimation.h"
+
+// Font rendering
+#import "ICFont.h"
+#import "ICGlyphCache.h"
+#import "ICGlyphTextureAtlas.h"
+#import "ICTextureGlyph.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

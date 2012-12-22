@@ -17,6 +17,24 @@
 		A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A62633BA1685DA3600286AC0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A62633DC1685DA5700286AC0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633D21685DA5700286AC0 /* AppDelegate.m */; };
+		A62633DD1685DA5700286AC0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633D21685DA5700286AC0 /* AppDelegate.m */; };
+		A62633DE1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
+		A62633DF1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
+		A62633E01685DA5700286AC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A62633D51685DA5700286AC0 /* InfoPlist.strings */; };
+		A62633E11685DA5700286AC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A62633D51685DA5700286AC0 /* InfoPlist.strings */; };
+		A62633E21685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
+		A62633E31685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
+		A62633E41685DA5700286AC0 /* GlyphCacheTest-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */; };
+		A62633E61685DA5700286AC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633DB1685DA5700286AC0 /* main.m */; };
+		A62633E71685DA5700286AC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633DB1685DA5700286AC0 /* main.m */; };
+		A62633E81685DA8300286AC0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		A62633E91685DA8700286AC0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		A62633EA1685DA8A00286AC0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		A62633EE1685DAA000286AC0 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A62633F11685DBD100286AC0 /* GlyphCacheTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */; };
+		A62633F41685DE4D00286AC0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A68DBF8A1650621F0035E0B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF801650621F0035E0B6 /* AppDelegate.m */; };
 		A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF811650621F0035E0B6 /* Credits.rtf */; };
@@ -215,6 +233,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		A62633EC1685DA9C00286AC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		A68DBF96165064B70035E0B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -354,6 +379,18 @@
 		A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
 		A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
 		A61D6F5615DC3AD1005AFDA5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A62633B81685DA3600286AC0 /* GlyphCacheTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlyphCacheTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A62633D11685DA5700286AC0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A62633D21685DA5700286AC0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A62633D41685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A62633D61685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A62633D81685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GlyphCacheTest-Info.plist"; sourceTree = "<group>"; };
+		A62633DA1685DA5700286AC0 /* GlyphCacheTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GlyphCacheTest-Prefix.pch"; sourceTree = "<group>"; };
+		A62633DB1685DA5700286AC0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A62633EF1685DBD100286AC0 /* GlyphCacheTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphCacheTestViewController.h; sourceTree = "<group>"; };
+		A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlyphCacheTestViewController.m; sourceTree = "<group>"; };
+		A62633F21685DE2E00286AC0 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		A68DBF66165062020035E0B6 /* ShaderPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A68DBF7F1650621F0035E0B6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A68DBF801650621F0035E0B6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -569,6 +606,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A62633B51685DA3600286AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633F41685DE4D00286AC0 /* libstdc++.dylib in Frameworks */,
+				A62633EE1685DAA000286AC0 /* libicedcoffee-mac.a in Frameworks */,
+				A62633E81685DA8300286AC0 /* Carbon.framework in Frameworks */,
+				A62633BA1685DA3600286AC0 /* Cocoa.framework in Frameworks */,
+				A62633E91685DA8700286AC0 /* CoreVideo.framework in Frameworks */,
+				A62633EA1685DA8A00286AC0 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A68DBF63165062020035E0B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -766,6 +816,24 @@
 				A61D6F4E15DC3AD1005AFDA5 /* Credits.rtf */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A62633D01685DA5700286AC0 /* GlyphCacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				A62633D11685DA5700286AC0 /* AppDelegate.h */,
+				A62633D21685DA5700286AC0 /* AppDelegate.m */,
+				A62633D31685DA5700286AC0 /* Credits.rtf */,
+				A62633D51685DA5700286AC0 /* InfoPlist.strings */,
+				A62633D71685DA5700286AC0 /* MainMenu.xib */,
+				A62633EF1685DBD100286AC0 /* GlyphCacheTestViewController.h */,
+				A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */,
+				A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */,
+				A62633DA1685DA5700286AC0 /* GlyphCacheTest-Prefix.pch */,
+				A62633DB1685DA5700286AC0 /* main.m */,
+			);
+			name = GlyphCacheTest;
+			path = "tests-mac/GlyphCacheTest";
 			sourceTree = "<group>";
 		};
 		A68DBF7E1650621F0035E0B6 /* ShaderPlayground */ = {
@@ -1109,6 +1177,7 @@
 				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
 				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
 				A61D6F4B15DC3AD1005AFDA5 /* IBIntegrationTest */,
+				A62633D01685DA5700286AC0 /* GlyphCacheTest */,
 				D21F88941533068E00E2496C /* KazmathTests */,
 				D2735B5B1591270100216F1B /* MultipleCocoaViewsTest */,
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
@@ -1143,6 +1212,7 @@
 				A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */,
 				A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */,
 				A68DBF66165062020035E0B6 /* ShaderPlayground.app */,
+				A62633B81685DA3600286AC0 /* GlyphCacheTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1150,6 +1220,7 @@
 		D2FD85D614F0E4A6006A9A90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A62633F21685DE2E00286AC0 /* libstdc++.dylib */,
 				D2FD86A214F0ED95006A9A90 /* Carbon.framework */,
 				D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */,
 				D2FD865114F0E7AB006A9A90 /* OpenGL.framework */,
@@ -1255,6 +1326,24 @@
 			name = IBIntegrationTest;
 			productName = IBIntegrationTest;
 			productReference = A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A62633B71685DA3600286AC0 /* GlyphCacheTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A62633CD1685DA3600286AC0 /* Build configuration list for PBXNativeTarget "GlyphCacheTest" */;
+			buildPhases = (
+				A62633B41685DA3600286AC0 /* Sources */,
+				A62633B51685DA3600286AC0 /* Frameworks */,
+				A62633B61685DA3600286AC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A62633ED1685DA9C00286AC0 /* PBXTargetDependency */,
+			);
+			name = GlyphCacheTest;
+			productName = GlyphCacheTest;
+			productReference = A62633B81685DA3600286AC0 /* GlyphCacheTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A68DBF65165062020035E0B6 /* ShaderPlayground */ = {
@@ -1553,6 +1642,7 @@
 				A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */,
 				A6CB748C1646D1AA00CDEEAC /* ShaderTest */,
 				A68DBF65165062020035E0B6 /* ShaderPlayground */,
+				A62633B71685DA3600286AC0 /* GlyphCacheTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1585,6 +1675,16 @@
 				A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */,
 				A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */,
 				A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A62633B61685DA3600286AC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633DF1685DA5700286AC0 /* Credits.rtf in Resources */,
+				A62633E11685DA5700286AC0 /* InfoPlist.strings in Resources */,
+				A62633E31685DA5700286AC0 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1698,6 +1798,10 @@
 				D2F34FE6151F09BF00DF2D5B /* MainMenu.xib in Resources */,
 				D2F34FFA151F2FA100DF2D5B /* gradient-white-transparent.png in Resources */,
 				D2F35001151F563800DF2D5B /* iced-coffee-npot.png in Resources */,
+				A62633DE1685DA5700286AC0 /* Credits.rtf in Resources */,
+				A62633E01685DA5700286AC0 /* InfoPlist.strings in Resources */,
+				A62633E21685DA5700286AC0 /* MainMenu.xib in Resources */,
+				A62633E41685DA5700286AC0 /* GlyphCacheTest-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1770,6 +1874,16 @@
 				A61D6F5715DC3AD1005AFDA5 /* AppDelegate.m in Sources */,
 				A61D6F5C15DC3AD1005AFDA5 /* main.m in Sources */,
 				A6F0489F15DE9C5C00321D86 /* MyHostViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A62633B41685DA3600286AC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633DD1685DA5700286AC0 /* AppDelegate.m in Sources */,
+				A62633E71685DA5700286AC0 /* main.m in Sources */,
+				A62633F11685DBD100286AC0 /* GlyphCacheTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1864,6 +1978,8 @@
 			files = (
 				D2F34FE3151F09BF00DF2D5B /* AppDelegate.m in Sources */,
 				D2F34FE7151F09BF00DF2D5B /* main.m in Sources */,
+				A62633DC1685DA5700286AC0 /* AppDelegate.m in Sources */,
+				A62633E61685DA5700286AC0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1916,6 +2032,11 @@
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
 			targetProxy = A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */;
+		};
+		A62633ED1685DA9C00286AC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = A62633EC1685DA9C00286AC0 /* PBXContainerItemProxy */;
 		};
 		A68DBF97165064B70035E0B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -2010,6 +2131,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				A61D6F5315DC3AD1005AFDA5 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A62633D31685DA5700286AC0 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D41685DA5700286AC0 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A62633D51685DA5700286AC0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D61685DA5700286AC0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A62633D71685DA5700286AC0 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D81685DA5700286AC0 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2349,6 +2494,52 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A62633CE1685DA3600286AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/GlyphCacheTest/GlyphCacheTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A62633CF1685DA3600286AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/GlyphCacheTest/GlyphCacheTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2826,6 +3017,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A62633CD1685DA3600286AC0 /* Build configuration list for PBXNativeTarget "GlyphCacheTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A62633CE1685DA3600286AC0 /* Debug */,
+				A62633CF1685DA3600286AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */ = {
 			isa = XCConfigurationList;

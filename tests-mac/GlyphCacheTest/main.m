@@ -21,26 +21,9 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "icFontTypes.h"
+#import <Cocoa/Cocoa.h>
 
-@class ICFont;
-@class ICTextureGlyph;
-
-@interface ICGlyphCache : NSObject {
-@protected
-    NSMutableDictionary *_textureGlyphs;
-    NSMutableArray *_textures;
+int main(int argc, char *argv[])
+{
+    return NSApplicationMain(argc, (const char **)argv);
 }
-
-+ (id)currentGlyphCache;
-
-- (id)init;
-
-- (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
-
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
-
-@property (nonatomic, readonly) NSArray *textures;
-
-@end

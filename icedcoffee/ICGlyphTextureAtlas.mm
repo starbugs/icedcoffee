@@ -70,6 +70,9 @@ using RectangleBinPack::SkylineBinPack;
                                   font:(ICFont *)font
                      uploadImmediately:(BOOL)uploadImmediately
 {
+    long bitmapWidth = (long)sizeInPixels.width;
+    long bitmapHeight = (long)sizeInPixels.height;
+    
     RectangleBinPack::Rect rect = _skylineBinPack->Insert(sizeInPixels.width,
                                                           sizeInPixels.height,
                                                           SkylineBinPack::LevelBottomLeft);
@@ -78,12 +81,11 @@ using RectangleBinPack::SkylineBinPack;
         return nil;
     }
     
+    BOOL rotated = NO;
+    if (rect.width == bitmapHeight && rect.height == bitmapWidth)
+        rotated = YES;
+    
     if (!uploadImmediately) {
-        // If we're not uploading immediately, allocate pixel data for the whole texture atlas if
-        // not already available
-        if (!self.data)
-            self.data = malloc(self.sizeInPixels.width * self.sizeInPixels.height * 4);
-
         // Determine stride of one pixel (supported formats: RGBA8888 and A8)
         uint stride = 0;
         if (self.pixelFormat == ICPixelFormatRGBA8888) {
@@ -94,19 +96,42 @@ using RectangleBinPack::SkylineBinPack;
             [NSException raise:NSInternalInconsistencyException
                         format:@"Unsupported or invalid pixel format"];
         }
-        
+
+        // If we're not uploading immediately, allocate pixel data for the whole texture atlas if
+        // not already available
+        if (!self.data)
+            self.data = calloc((int)self.sizeInPixels.height, (int)self.sizeInPixels.width * stride);
+
         // Copy bitmap data to texture pixel data
-        int i, j;
+        int i;
         int textureWidth = (int)self.sizeInPixels.width;
-        uint8_t *glyphPixels = (uint8_t *)bitmapData;
-        uint8_t *texturePixels = (uint8_t *)self.data;
-        for (i=0; i<sizeInPixels.height; i++) {
-            for (j=0; j<sizeInPixels.width; j++) {
-                texturePixels[j*stride] = glyphPixels[j*stride];
+        if (!rotated) {
+            for (i=0; i<rect.height; i++) {
+                uint8_t *glyphRow = (uint8_t *)bitmapData + (i * rect.width * stride);
+                uint8_t *textureRow = (uint8_t *)self.data + ((rect.y + i) * textureWidth * stride + rect.x * stride);
+                memcpy(textureRow, glyphRow, stride * rect.width);
             }
-            glyphPixels += rect.width * stride;
-            texturePixels += textureWidth * stride;
+        } else {
+            int j, k;
+            for (i=0; i<bitmapHeight; i++) {
+                uint8_t *glyphRow = (uint8_t *)bitmapData + (i * bitmapWidth * stride);
+                for (j=0; j<bitmapWidth; j++) {
+                    uint8_t *texturePixel = (uint8_t *)self.data + ((rect.y + j) * textureWidth * stride + (rect.x + i) * stride);
+                    for (k=0; k<stride; k++) {
+                        texturePixel[k] = glyphRow[j+k];
+                    }
+                }
+            }
         }
+        
+        /*int h=rect.height, w=rect.width;
+        uint8_t *data = (uint8_t *)bitmapData; // (uint8_t *)self.data;
+        for (int y=0; y<h; y++) {
+            for (int x=0; x<w; x++) {
+                printf("%02x", *((uint8_t *)(&data[y*w+x])));
+            }
+            printf("\n");
+        }*/
     } else {
         // Upload immediately without storing data in RAM
         [self uploadData:bitmapData inRect:CGRectMake(rect.x, rect.y, rect.width, rect.height)];

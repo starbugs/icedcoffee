@@ -29,9 +29,11 @@
 #import "ICHostViewController.h"
 #import "ICTextureGlyph.h"
 
-#define TEXTURE_ATLAS_SIZE CGSizeMake(2048.0f, 2048.0f)
+#define TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
 
 @implementation ICGlyphCache
+
+@synthesize textures = _textures;
 
 + (id)currentGlyphCache
 {
@@ -107,15 +109,24 @@
     CFIndex glyphCount = CTRunGetGlyphCount(run);
     CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph)*glyphCount);
     CTRunGetGlyphs(run, CFRangeMake(0, 0), glyphs);
+    CGFloat runDescent;
+    CTRunGetTypographicBounds(run, CFRangeMake(0, 0), NULL, &runDescent, NULL);
+    CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
+    CGRect *boundingRects = (CGRect *)malloc(sizeof(CGRect) * glyphCount);
+    CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, glyphs, boundingRects, glyphCount);
+    
     for (CFIndex i=0; i<glyphCount; i++) {
-        CGFloat ascent, descent;
+        /*CGFloat ascent, descent;
         float width = CTRunGetTypographicBounds(run, CFRangeMake(i, 1), &ascent, &descent, NULL);
         float height = ascent + descent;
-        size_t w = ceilf(height) + 2, h = ceilf(height) + 2;
+        size_t w = ceilf(width) + 2, h = ceilf(height) + 2;*/
+        CGRect *boundingRect = &boundingRects[i];
+        size_t w = ceilf(boundingRect->size.width) + ceilf(fabs(boundingRect->origin.x)) + 2;
+        size_t h = ceilf(boundingRect->size.height) + ceilf(fabs(boundingRect->origin.y)) + 2;
         
         void *data = calloc(h, w);
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-        CGContextRef context = CGBitmapContextCreate(data, width, height, 8, width, colorSpace, kCGImageAlphaNone);
+        CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
         CGColorSpaceRelease(colorSpace);
         
         NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
@@ -125,14 +136,24 @@
             return;
         }
         
-        CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
+        float xOffset = boundingRect->origin.x < 0 ? -boundingRect->origin.x : 0;
+        float yOffset = boundingRect->origin.y < 0 ? -boundingRect->origin.y : 0;
+        
         CGFontRef cgFont = CTFontCopyGraphicsFont(runFont, NULL);
-        CGContextSetTextPosition(context, 1, 1);
+        CGContextSetTextMatrix(context, CGAffineTransformIdentity);
         CGContextSetFont(context, cgFont);
         CGContextSetFontSize(context, CTFontGetSize(runFont));
         CGContextSetGrayFillColor(context, 1, 1);
-        CGContextShowGlyphsAtPoint(context, 0, 0, glyphs, 1);
+        CGContextShowGlyphsAtPoint(context, 1 + xOffset, 1 + yOffset, &glyphs[i], 1);
         CFRelease(cgFont);
+        
+        /*for (int y=0; y<h; y++) {
+            for (int x=0; x<w; x++) {
+                printf("%02x", *((uint8_t *)(&data[y*w+x])));
+            }
+            printf("\n");
+        }
+        printf("\n");*/
         
         ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
         ICTextureGlyph *textureGlyph = [textureAtlas addGlyphBitmapData:data
@@ -158,6 +179,8 @@
         CGContextRelease(context);
         free(data);
     }
+    
+    free(boundingRects);
     
 }
 

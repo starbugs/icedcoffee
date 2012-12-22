@@ -21,26 +21,8 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "icFontTypes.h"
+#import "icedcoffee/icedcoffee.h"
 
-@class ICFont;
-@class ICTextureGlyph;
-
-@interface ICGlyphCache : NSObject {
-@protected
-    NSMutableDictionary *_textureGlyphs;
-    NSMutableArray *_textures;
-}
-
-+ (id)currentGlyphCache;
-
-- (id)init;
-
-- (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
-
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
-
-@property (nonatomic, readonly) NSArray *textures;
+@interface GlyphCacheTestViewController : ICHostViewControllerMac
 
 @end

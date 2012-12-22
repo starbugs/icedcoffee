@@ -21,26 +21,26 @@
 //  SOFTWARE.
 //
 
-#import <Foundation/Foundation.h>
-#import "icFontTypes.h"
+#import "GlyphCacheTestViewController.h"
 
-@class ICFont;
-@class ICTextureGlyph;
+@implementation GlyphCacheTestViewController
 
-@interface ICGlyphCache : NSObject {
-@protected
-    NSMutableDictionary *_textureGlyphs;
-    NSMutableArray *_textures;
+- (void)setUpScene
+{
+    ICUIScene *scene = [ICUIScene scene];
+    [self runWithScene:scene];
+    
+    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
+    ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:150];
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:font];
+    ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
+    if (textureAtlas.dataDirty)
+        [textureAtlas upload];
+    ICSprite *sprite = [ICSprite spriteWithTexture:textureAtlas];
+    [sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
+    [sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
+    [sprite setColor:(icColor4B){0,0,0,255}];
+    [scene addChild:sprite];
 }
-
-+ (id)currentGlyphCache;
-
-- (id)init;
-
-- (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
-
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
-
-@property (nonatomic, readonly) NSArray *textures;
 
 @end
