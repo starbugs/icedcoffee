@@ -27,19 +27,58 @@
 @class ICFont;
 @class ICTextureGlyph;
 
+/**
+ @brief Represents a CoreText/OpenGL based glyph cache
+ */
 @interface ICGlyphCache : NSObject {
 @protected
+    // Glyphs by font name
     NSMutableDictionary *_textureGlyphs;
+    // Textures used by the glyph cache
     NSMutableArray *_textures;
 }
 
+/**
+ @brief Retrieves or creates the glyph cache for the current OpenGL context
+ */
 + (id)currentGlyphCache;
 
+/**
+ @brief Initializes the receiver
+ */
 - (id)init;
 
+/**
+ @brief Precaches all glyphcs from the given string and font
+ */
 - (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
 
+/**
+ @brief Retrieves a texture glyph for the given glyph and font
+ 
+ If the glyph has not yet been cached, this method implicitly adds the given glyph to the receiver.
+ */
 - (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
+
+/**
+ @brief Retrieves a number of texture glyphs for the given glyphs and font
+ */
+- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font;
+
+/**
+ @brief Retrieves a number of texture glyphs separated by texture for the given glyphs and font
+ 
+ @return This method returns an ``NSDictionary`` containing ``NSValue`` keys each representing the
+ pointer address of an ICGlyphTextureAtlas object pertaining to a texture atlas used to cache
+ a list of corresponding texture glyphs. For those keys the dictionary contains ``NSArray`` values
+ each representing such list of glyphs. The ``NSArray`` value again contains a number of
+ ``NSArray``s each containing a pair of an ``NSNumber`` defining the index of the glyph and an
+ ICTextureGlyph object defining the corresponding texture glyph.
+ */
+- (NSDictionary *)textureGlyphsSeparatedByTextureForGlyphs:(ICGlyph *)glyphs
+                                                     count:(NSInteger)count
+                                                      font:(ICFont *)font;
+
 
 @property (nonatomic, readonly) NSArray *textures;
 

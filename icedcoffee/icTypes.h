@@ -209,6 +209,18 @@ typedef struct _icV3F_C4F_T2F {
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4F_T2F;
 
+typedef struct _icV3F_C4B_T2F_Quad {
+    icV3F_C4B_T2F vertices[4];
+} icV3F_C4B_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_Quad {
+    icV3F_C4F_T2F vertices[4];
+} icV3F_C4F_T2F_Quad;
+
+typedef struct _icUShort_QuadIndices {
+    GLushort indices[6];
+} icUShort_QuadIndices;
+
 
 typedef struct _icRay3 {
     kmVec3 origin;

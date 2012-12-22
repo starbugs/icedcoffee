@@ -22,35 +22,22 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "icMacros.h"
-#import "../3rd-party/kazmath/kazmath/kazmath.h"
-#import "icFontTypes.h"
+#import "ICNode.h"
+#import "ICFont.h"
 
-@class ICGlyphTextureAtlas;
-@class ICFont;
-
-@interface ICTextureGlyph : NSObject {
+@interface ICTextRun : ICNode {
 @protected
-    ICGlyphTextureAtlas *_textureAtlas; // weak
+    NSString *_text;
     ICFont *_font;
-    kmVec2 *_texCoords;
-    kmVec2 _size;
+    BOOL _buffersDirty;
+    GLuint _vbo;
+    GLuint _ibo;
 }
 
-- (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
-                      texCoords:(kmVec2 *)texCoords
-                           size:(kmVec2)size
-                          glyph:(ICGlyph)glyph
-                           font:(ICFont *)font;
+- (id)initWithText:(NSString *)text font:(ICFont *)font;
 
-@property (nonatomic, readonly) ICGlyphTextureAtlas *textureAtlas;
+@property (nonatomic, copy) NSString *text;
 
-@property (nonatomic, readonly) ICGlyph glyph;
-
-@property (nonatomic, readonly) ICFont *font;
-
-@property (nonatomic, readonly) kmVec2 *texCoords;
-
-@property (nonatomic, readonly) kmVec2 size;
+@property (nonatomic, retain) ICFont *font;
 
 @end

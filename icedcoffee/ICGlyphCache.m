@@ -104,18 +104,14 @@
     [glyphsForFont setObject:textureGlyph forKey:[NSNumber numberWithUnsignedShort:textureGlyph.glyph]];
 }
 
-- (void)cacheGlyphsWithRun:(CTRunRef)run font:(ICFont *)font
+- (NSArray *)cacheGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
 {
-    CFIndex glyphCount = CTRunGetGlyphCount(run);
-    CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph)*glyphCount);
-    CTRunGetGlyphs(run, CFRangeMake(0, 0), glyphs);
-    CGFloat runDescent;
-    CTRunGetTypographicBounds(run, CFRangeMake(0, 0), NULL, &runDescent, NULL);
-    CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
-    CGRect *boundingRects = (CGRect *)malloc(sizeof(CGRect) * glyphCount);
-    CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, glyphs, boundingRects, glyphCount);
+    NSMutableArray *textureGlyphs = [NSMutableArray arrayWithCapacity:count];
     
-    for (CFIndex i=0; i<glyphCount; i++) {
+    CGRect *boundingRects = (CGRect *)malloc(sizeof(CGRect) * count);
+    CTFontGetBoundingRectsForGlyphs(font.fontRef, kCTFontDefaultOrientation, glyphs, boundingRects, count);
+    
+    for (CFIndex i=0; i<count; i++) {
         CGRect *boundingRect = &boundingRects[i];
         size_t w = ceilf(boundingRect->size.width) + ceilf(fabs(boundingRect->origin.x)) + 2;
         size_t h = ceilf(boundingRect->size.height) + ceilf(fabs(boundingRect->origin.y)) + 2;
@@ -129,16 +125,16 @@
         
         if (!context) {
             free(data);
-            return;
+            return nil;
         }
         
         float xOffset = boundingRect->origin.x < 0 ? -boundingRect->origin.x : 0;
         float yOffset = boundingRect->origin.y < 0 ? -boundingRect->origin.y : 0;
         
-        CGFontRef cgFont = CTFontCopyGraphicsFont(runFont, NULL);
+        CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
         CGContextSetTextMatrix(context, CGAffineTransformIdentity);
         CGContextSetFont(context, cgFont);
-        CGContextSetFontSize(context, CTFontGetSize(runFont));
+        CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
         CGContextSetGrayFillColor(context, 1, 1);
         CGContextShowGlyphsAtPoint(context, 1 + xOffset, 1 + yOffset, &glyphs[i], 1);
         CFRelease(cgFont);
@@ -163,6 +159,7 @@
         NSAssert(textureGlyph != nil, @"Something went terribly wrong here");
         
         [self cacheTextureGlyph:textureGlyph];
+        [textureGlyphs addObject:textureGlyph];
         
         CGContextRelease(context);
         free(data);
@@ -170,6 +167,27 @@
     
     free(boundingRects);
     
+    if ([textureGlyphs count] > 0)
+        return textureGlyphs;
+    
+    return nil; // something went wrong
+}
+
+- (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font
+{
+    NSArray *textureGlyphs = [self cacheGlyphs:&glyph count:1 font:font];
+    if ([textureGlyphs count] > 0) {
+        return [textureGlyphs objectAtIndex:0];
+    }
+    return nil;
+}
+
+- (void)cacheGlyphsWithRun:(CTRunRef)run font:(ICFont *)font
+{
+    CFIndex glyphCount = CTRunGetGlyphCount(run);
+    CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph)*glyphCount);
+    CTRunGetGlyphs(run, CFRangeMake(0, 0), glyphs);
+    [self cacheGlyphs:glyphs count:glyphCount font:font];
 }
 
 - (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font
@@ -189,14 +207,85 @@
     [attributedString release];
 }
 
+// FIXME: caching lots of single glyphs using this method may be terribly inefficient
+// if data is kept by texture atlas (as it is currently)
 - (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font
 {
     NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
-    ICTextureGlyph *textureGlpyh = [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
-    if (textureGlpyh.textureAtlas.dataDirty) {
-        [textureGlpyh.textureAtlas upload];
+    ICTextureGlyph *textureGlyph = [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
+    
+    // If glyph not already cached, cache it now
+    if (!textureGlyph) {
+        textureGlyph = [self cacheGlyph:glyph font:font];
     }
-    return textureGlpyh;
+    
+    // Upload texture if data is dirty
+    if (textureGlyph.textureAtlas.dataDirty) {
+        [textureGlyph.textureAtlas upload];
+    }
+    
+    return textureGlyph;
+}
+
+- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
+{
+    NSMutableArray *resultTextureGlyphs = [NSMutableArray arrayWithCapacity:count];
+    
+    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
+    NSNumber *notFoundMarker = [NSNumber numberWithInteger:NSNotFound];
+    
+    NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
+    NSInteger i=0;
+    for (; i<count; i++) {
+        [keys addObject:[NSNumber numberWithUnsignedShort:glyphs[i]]];
+    }
+    
+    i = 0;
+    NSArray *textureGlyphs = [glyphsForFont objectsForKeys:keys notFoundMarker:notFoundMarker];
+    for (id object in textureGlyphs) {
+        ICTextureGlyph *textureGlyph = (ICTextureGlyph *)object;
+        
+        if ([object isKindOfClass:[NSNumber class]] &&
+            [object integerValue] == NSNotFound) {
+            // Hit a not found marker -- this glyph has not been cached yet, so cache it
+            textureGlyph = [self cacheGlyph:glyphs[i] font:font];
+        }
+        
+        [resultTextureGlyphs addObject:textureGlyph];
+        
+        i++;
+    }
+    
+    // Upload all dirty textures
+    for (ICTextureGlyph *textureGlyph in resultTextureGlyphs) {
+        if (textureGlyph.textureAtlas.dataDirty) {
+            [textureGlyph.textureAtlas upload];
+        }
+    }
+    
+    return resultTextureGlyphs;
+}
+
+- (NSDictionary *)textureGlyphsSeparatedByTextureForGlyphs:(ICGlyph *)glyphs
+                                                     count:(NSInteger)count
+                                                      font:(ICFont *)font
+{
+    NSInteger i = 0;
+    NSMutableDictionary *glyphsByTexture = [NSMutableDictionary dictionary];
+    NSArray *textureGlyphs = [self textureGlyphsForGlyphs:glyphs count:count font:font];
+    for (ICTextureGlyph *textureGlyph in textureGlyphs) {
+        NSValue *textureKey = [NSValue valueWithPointer:textureGlyph.textureAtlas];
+        NSMutableArray *glyphsForTexture = [glyphsByTexture objectForKey:textureKey];
+        if (!glyphsForTexture) {
+            glyphsForTexture = [[NSMutableArray alloc] initWithCapacity:1];
+            [glyphsByTexture setObject:glyphsForTexture forKey:textureKey];
+        }
+        NSArray *glyphEntry = [NSArray arrayWithObjects:[NSNumber numberWithInteger:i], textureGlyph, nil];
+        [glyphsForTexture addObject:glyphEntry];
+        i++;
+    }
+    
+    return glyphsByTexture;
 }
 
 @end

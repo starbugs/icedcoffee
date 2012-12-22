@@ -53,6 +53,8 @@
 		A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */; };
 		A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */; };
 		A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633B21685D70200286AC0 /* ICTexture2D_Private.h */; };
+		A62633F71686088F00286AC0 /* ICTextRun.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633F51686088F00286AC0 /* ICTextRun.h */; };
+		A62633F81686088F00286AC0 /* ICTextRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F61686088F00286AC0 /* ICTextRun.m */; };
 		A67CC25F16330D570094014C /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC25D16330D570094014C /* ICLine2D.h */; };
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
 		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
@@ -237,6 +239,8 @@
 		A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMutableTexture2D.h; path = icedcoffee/ICMutableTexture2D.h; sourceTree = "<group>"; };
 		A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMutableTexture2D.m; path = icedcoffee/ICMutableTexture2D.m; sourceTree = "<group>"; };
 		A62633B21685D70200286AC0 /* ICTexture2D_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTexture2D_Private.h; path = icedcoffee/ICTexture2D_Private.h; sourceTree = "<group>"; };
+		A62633F51686088F00286AC0 /* ICTextRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextRun.h; path = icedcoffee/ICTextRun.h; sourceTree = "<group>"; };
+		A62633F61686088F00286AC0 /* ICTextRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextRun.m; path = icedcoffee/ICTextRun.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
 		A67CC25D16330D570094014C /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
@@ -439,6 +443,8 @@
 				A62633A01685D6BC00286AC0 /* ICGlyphCache.m */,
 				A62633A11685D6BC00286AC0 /* ICGlyphTextureAtlas.h */,
 				A62633A21685D6BC00286AC0 /* ICGlyphTextureAtlas.mm */,
+				A62633F51686088F00286AC0 /* ICTextRun.h */,
+				A62633F61686088F00286AC0 /* ICTextRun.m */,
 				A62633AA1685D6D100286AC0 /* ICTextureGlyph.h */,
 				A62633AB1685D6D100286AC0 /* ICTextureGlyph.m */,
 			);
@@ -858,6 +864,7 @@
 				A62633AC1685D6D100286AC0 /* ICTextureGlyph.h in Headers */,
 				A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */,
 				A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */,
+				A62633F71686088F00286AC0 /* ICTextRun.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -993,6 +1000,7 @@
 				A62633A91685D6BC00286AC0 /* ICGlyphTextureAtlas.mm in Sources */,
 				A62633AD1685D6D100286AC0 /* ICTextureGlyph.m in Sources */,
 				A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */,
+				A62633F81686088F00286AC0 /* ICTextRun.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

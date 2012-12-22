@@ -29,9 +29,11 @@
 @synthesize font = _font;
 @synthesize glyph = _glyph;
 @synthesize texCoords = _texCoords;
+@synthesize size = _size;
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
+                           size:(kmVec2)size
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font
 {
@@ -40,6 +42,7 @@
         _texCoords = texCoords;
         _glyph = glyph;
         _font = [font retain];
+        _size = size;
     }
     return self;
 }
