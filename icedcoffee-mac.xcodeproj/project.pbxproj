@@ -31,6 +31,28 @@
 		A6050201164F0F9700A51A3A /* ICPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */; };
 		A6050204164F15CC00A51A3A /* ICBasicAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A6050202164F15CB00A51A3A /* ICBasicAnimation.h */; };
 		A6050205164F15CC00A51A3A /* ICBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A6050203164F15CB00A51A3A /* ICBasicAnimation.m */; };
+		A62633901685D67500286AC0 /* GuillotineBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633861685D67500286AC0 /* GuillotineBinPack.cpp */; };
+		A62633911685D67500286AC0 /* GuillotineBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633871685D67500286AC0 /* GuillotineBinPack.h */; };
+		A62633921685D67500286AC0 /* MaxRectsBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */; };
+		A62633931685D67500286AC0 /* MaxRectsBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633891685D67500286AC0 /* MaxRectsBinPack.h */; };
+		A62633941685D67500286AC0 /* Rect.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A626338A1685D67500286AC0 /* Rect.cpp */; };
+		A62633951685D67500286AC0 /* Rect.h in Headers */ = {isa = PBXBuildFile; fileRef = A626338B1685D67500286AC0 /* Rect.h */; };
+		A62633961685D67500286AC0 /* ShelfBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A626338C1685D67500286AC0 /* ShelfBinPack.cpp */; };
+		A62633971685D67500286AC0 /* ShelfBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A626338D1685D67500286AC0 /* ShelfBinPack.h */; };
+		A62633981685D67500286AC0 /* SkylineBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A626338E1685D67500286AC0 /* SkylineBinPack.cpp */; };
+		A62633991685D67500286AC0 /* SkylineBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A626338F1685D67500286AC0 /* SkylineBinPack.h */; };
+		A62633A31685D6BC00286AC0 /* ICFont.h in Headers */ = {isa = PBXBuildFile; fileRef = A626339C1685D6BC00286AC0 /* ICFont.h */; };
+		A62633A41685D6BC00286AC0 /* ICFont.m in Sources */ = {isa = PBXBuildFile; fileRef = A626339D1685D6BC00286AC0 /* ICFont.m */; };
+		A62633A51685D6BC00286AC0 /* icFontTypes.h in Headers */ = {isa = PBXBuildFile; fileRef = A626339E1685D6BC00286AC0 /* icFontTypes.h */; };
+		A62633A61685D6BC00286AC0 /* ICGlyphCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A626339F1685D6BC00286AC0 /* ICGlyphCache.h */; };
+		A62633A71685D6BC00286AC0 /* ICGlyphCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633A01685D6BC00286AC0 /* ICGlyphCache.m */; };
+		A62633A81685D6BC00286AC0 /* ICGlyphTextureAtlas.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633A11685D6BC00286AC0 /* ICGlyphTextureAtlas.h */; };
+		A62633A91685D6BC00286AC0 /* ICGlyphTextureAtlas.mm in Sources */ = {isa = PBXBuildFile; fileRef = A62633A21685D6BC00286AC0 /* ICGlyphTextureAtlas.mm */; };
+		A62633AC1685D6D100286AC0 /* ICTextureGlyph.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633AA1685D6D100286AC0 /* ICTextureGlyph.h */; };
+		A62633AD1685D6D100286AC0 /* ICTextureGlyph.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633AB1685D6D100286AC0 /* ICTextureGlyph.m */; };
+		A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */; };
+		A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */; };
+		A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633B21685D70200286AC0 /* ICTexture2D_Private.h */; };
 		A67CC25F16330D570094014C /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC25D16330D570094014C /* ICLine2D.h */; };
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
 		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
@@ -193,6 +215,28 @@
 		A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPropertyAnimation.m; path = icedcoffee/ICPropertyAnimation.m; sourceTree = "<group>"; };
 		A6050202164F15CB00A51A3A /* ICBasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICBasicAnimation.h; path = icedcoffee/ICBasicAnimation.h; sourceTree = "<group>"; };
 		A6050203164F15CB00A51A3A /* ICBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICBasicAnimation.m; path = icedcoffee/ICBasicAnimation.m; sourceTree = "<group>"; };
+		A62633861685D67500286AC0 /* GuillotineBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuillotineBinPack.cpp; sourceTree = "<group>"; };
+		A62633871685D67500286AC0 /* GuillotineBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuillotineBinPack.h; sourceTree = "<group>"; };
+		A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaxRectsBinPack.cpp; sourceTree = "<group>"; };
+		A62633891685D67500286AC0 /* MaxRectsBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaxRectsBinPack.h; sourceTree = "<group>"; };
+		A626338A1685D67500286AC0 /* Rect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Rect.cpp; sourceTree = "<group>"; };
+		A626338B1685D67500286AC0 /* Rect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Rect.h; sourceTree = "<group>"; };
+		A626338C1685D67500286AC0 /* ShelfBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShelfBinPack.cpp; sourceTree = "<group>"; };
+		A626338D1685D67500286AC0 /* ShelfBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShelfBinPack.h; sourceTree = "<group>"; };
+		A626338E1685D67500286AC0 /* SkylineBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SkylineBinPack.cpp; sourceTree = "<group>"; };
+		A626338F1685D67500286AC0 /* SkylineBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SkylineBinPack.h; sourceTree = "<group>"; };
+		A626339C1685D6BC00286AC0 /* ICFont.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFont.h; path = icedcoffee/ICFont.h; sourceTree = "<group>"; };
+		A626339D1685D6BC00286AC0 /* ICFont.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFont.m; path = icedcoffee/ICFont.m; sourceTree = "<group>"; };
+		A626339E1685D6BC00286AC0 /* icFontTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icFontTypes.h; path = icedcoffee/icFontTypes.h; sourceTree = "<group>"; };
+		A626339F1685D6BC00286AC0 /* ICGlyphCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphCache.h; path = icedcoffee/ICGlyphCache.h; sourceTree = "<group>"; };
+		A62633A01685D6BC00286AC0 /* ICGlyphCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGlyphCache.m; path = icedcoffee/ICGlyphCache.m; sourceTree = "<group>"; };
+		A62633A11685D6BC00286AC0 /* ICGlyphTextureAtlas.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphTextureAtlas.h; path = icedcoffee/ICGlyphTextureAtlas.h; sourceTree = "<group>"; };
+		A62633A21685D6BC00286AC0 /* ICGlyphTextureAtlas.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = ICGlyphTextureAtlas.mm; path = icedcoffee/ICGlyphTextureAtlas.mm; sourceTree = "<group>"; };
+		A62633AA1685D6D100286AC0 /* ICTextureGlyph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextureGlyph.h; path = icedcoffee/ICTextureGlyph.h; sourceTree = "<group>"; };
+		A62633AB1685D6D100286AC0 /* ICTextureGlyph.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextureGlyph.m; path = icedcoffee/ICTextureGlyph.m; sourceTree = "<group>"; };
+		A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMutableTexture2D.h; path = icedcoffee/ICMutableTexture2D.h; sourceTree = "<group>"; };
+		A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMutableTexture2D.m; path = icedcoffee/ICMutableTexture2D.m; sourceTree = "<group>"; };
+		A62633B21685D70200286AC0 /* ICTexture2D_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTexture2D_Private.h; path = icedcoffee/ICTexture2D_Private.h; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
 		A67CC25D16330D570094014C /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
@@ -367,6 +411,40 @@
 			name = Animation;
 			sourceTree = "<group>";
 		};
+		A62633851685D67400286AC0 /* RectangleBinPack */ = {
+			isa = PBXGroup;
+			children = (
+				A62633861685D67500286AC0 /* GuillotineBinPack.cpp */,
+				A62633871685D67500286AC0 /* GuillotineBinPack.h */,
+				A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */,
+				A62633891685D67500286AC0 /* MaxRectsBinPack.h */,
+				A626338A1685D67500286AC0 /* Rect.cpp */,
+				A626338B1685D67500286AC0 /* Rect.h */,
+				A626338C1685D67500286AC0 /* ShelfBinPack.cpp */,
+				A626338D1685D67500286AC0 /* ShelfBinPack.h */,
+				A626338E1685D67500286AC0 /* SkylineBinPack.cpp */,
+				A626338F1685D67500286AC0 /* SkylineBinPack.h */,
+			);
+			name = RectangleBinPack;
+			path = "3rd-party/RectangleBinPack";
+			sourceTree = "<group>";
+		};
+		A626339B1685D69000286AC0 /* Font Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				A626339C1685D6BC00286AC0 /* ICFont.h */,
+				A626339D1685D6BC00286AC0 /* ICFont.m */,
+				A626339E1685D6BC00286AC0 /* icFontTypes.h */,
+				A626339F1685D6BC00286AC0 /* ICGlyphCache.h */,
+				A62633A01685D6BC00286AC0 /* ICGlyphCache.m */,
+				A62633A11685D6BC00286AC0 /* ICGlyphTextureAtlas.h */,
+				A62633A21685D6BC00286AC0 /* ICGlyphTextureAtlas.mm */,
+				A62633AA1685D6D100286AC0 /* ICTextureGlyph.h */,
+				A62633AB1685D6D100286AC0 /* ICTextureGlyph.m */,
+			);
+			name = "Font Rendering";
+			sourceTree = "<group>";
+		};
 		A6EF8D66167488C5005B2605 /* kazmath */ = {
 			isa = PBXGroup;
 			children = (
@@ -453,6 +531,7 @@
 				A60501F3164F0C1800A51A3A /* Animation */,
 				D2918D4D15887F250043C872 /* Cameras */,
 				D2918D4E15887F8A0043C872 /* Core */,
+				A626339B1685D69000286AC0 /* Font Rendering */,
 				D2918D4915887EA70043C872 /* Nodes */,
 				D24BAF7D14EDB142000E65AA /* Platforms */,
 				D2918D4A15887ED40043C872 /* Shaders */,
@@ -493,8 +572,11 @@
 			isa = PBXGroup;
 			children = (
 				D2F3504815286EFA00DF2D5B /* ICAsyncTextureCacheDelegate.h */,
+				A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */,
+				A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */,
 				D24BAF7314EDB142000E65AA /* ICTexture2D.h */,
 				D24BAF7414EDB142000E65AA /* ICTexture2D.m */,
+				A62633B21685D70200286AC0 /* ICTexture2D_Private.h */,
 				D24BAF7514EDB142000E65AA /* ICTextureCache.h */,
 				D24BAF7614EDB142000E65AA /* ICTextureCache.m */,
 				D24BAF7714EDB142000E65AA /* ICTextureLoader.h */,
@@ -666,6 +748,7 @@
 			isa = PBXGroup;
 			children = (
 				A6EF8D66167488C5005B2605 /* kazmath */,
+				A62633851685D67400286AC0 /* RectangleBinPack */,
 			);
 			name = "3rd-party";
 			sourceTree = "<group>";
@@ -763,6 +846,18 @@
 				A6EF8D9A167488C6005B2605 /* vec4.h in Headers */,
 				A6EF8DC91674CC66005B2605 /* ICOpenGLContext.h in Headers */,
 				A6EF8DCD1674CFF3005B2605 /* ICOpenGLContextManager.h in Headers */,
+				A62633911685D67500286AC0 /* GuillotineBinPack.h in Headers */,
+				A62633931685D67500286AC0 /* MaxRectsBinPack.h in Headers */,
+				A62633951685D67500286AC0 /* Rect.h in Headers */,
+				A62633971685D67500286AC0 /* ShelfBinPack.h in Headers */,
+				A62633991685D67500286AC0 /* SkylineBinPack.h in Headers */,
+				A62633A31685D6BC00286AC0 /* ICFont.h in Headers */,
+				A62633A51685D6BC00286AC0 /* icFontTypes.h in Headers */,
+				A62633A61685D6BC00286AC0 /* ICGlyphCache.h in Headers */,
+				A62633A81685D6BC00286AC0 /* ICGlyphTextureAtlas.h in Headers */,
+				A62633AC1685D6D100286AC0 /* ICTextureGlyph.h in Headers */,
+				A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */,
+				A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -888,6 +983,16 @@
 				A6EF8D99167488C6005B2605 /* vec4.c in Sources */,
 				A6EF8DCA1674CC66005B2605 /* ICOpenGLContext.m in Sources */,
 				A6EF8DCE1674CFF3005B2605 /* ICOpenGLContextManager.m in Sources */,
+				A62633901685D67500286AC0 /* GuillotineBinPack.cpp in Sources */,
+				A62633921685D67500286AC0 /* MaxRectsBinPack.cpp in Sources */,
+				A62633941685D67500286AC0 /* Rect.cpp in Sources */,
+				A62633961685D67500286AC0 /* ShelfBinPack.cpp in Sources */,
+				A62633981685D67500286AC0 /* SkylineBinPack.cpp in Sources */,
+				A62633A41685D6BC00286AC0 /* ICFont.m in Sources */,
+				A62633A71685D6BC00286AC0 /* ICGlyphCache.m in Sources */,
+				A62633A91685D6BC00286AC0 /* ICGlyphTextureAtlas.mm in Sources */,
+				A62633AD1685D6D100286AC0 /* ICTextureGlyph.m in Sources */,
+				A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
