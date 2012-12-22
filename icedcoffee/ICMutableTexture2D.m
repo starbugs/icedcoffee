@@ -30,6 +30,7 @@
 
 @synthesize data = _data;
 @synthesize ownsData = _ownsData;
+@synthesize dataDirty = _dataDirty;
 
 - (id)initWithData:(void *)data
        pixelFormat:(ICPixelFormat)pixelFormat
@@ -48,13 +49,19 @@
         _resolutionType = resolutionType;
 		_hasPremultipliedAlpha = NO;
         
+        NSAssert(!(data == nil && uploadImmediately), @"Cannot upload nil data immediately");
+        
         if (keepData) {
             self.data = data;
             self.ownsData = YES;
         }
         
-        if (uploadImmediately)
+        if (data && uploadImmediately) {
             [self uploadData:data];
+        } else if (data && keepData) {
+            // Data was given, but not uploaded yet
+            self.dataDirty = YES;
+        }
     }
     return self;
 }
@@ -71,11 +78,23 @@
         free(_data);
     }
     _data = data;
+    if (_data)
+        self.dataDirty = YES;
+}
+
+- (void)internalUploadData:(const void *)data
+{
+    [super internalUploadData:data];
+    if (data == self.data) {
+        self.dataDirty = NO;
+    }
 }
 
 - (void)upload
 {
-    [self internalUploadData:self.data];
+    if (self.data) {
+        [self internalUploadData:self.data];
+    }
 }
 
 - (void)uploadData:(const void *)data
@@ -85,6 +104,8 @@
 
 - (void)uploadData:(const void *)data inRect:(CGRect)rect
 {
+    NSAssert(data != self.data, @"This method is not thought to upload the texture's internal data");
+    
     if (_name) {
         glBindTexture(GL_TEXTURE_2D, _name);
         glTexSubImage2D(GL_TEXTURE_2D, 0, (GLint)rect.origin.x, (GLint)rect.origin.y,
