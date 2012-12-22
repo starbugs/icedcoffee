@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace RectangleBinPack {
+
 SkylineBinPack::SkylineBinPack()
 :binWidth(0),
 binHeight(0)
@@ -402,4 +404,6 @@ Rect SkylineBinPack::FindPositionForNewNodeMinWaste(int width, int height, int &
 float SkylineBinPack::Occupancy() const
 {
 	return (float)usedSurfaceArea / (binWidth * binHeight);
+}
+
 }

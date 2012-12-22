@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace RectangleBinPack {
+
 GuillotineBinPack::GuillotineBinPack()
 :binWidth(0),
 binHeight(0)
@@ -632,4 +634,6 @@ void GuillotineBinPack::MergeFreeList()
 	for(size_t i = 0; i < freeRectangles.size(); ++i)
 		assert(test.Add(freeRectangles[i]) == true);
 #endif
+}
+    
 }

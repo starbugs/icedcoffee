@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace RectangleBinPack {
+    
 MaxRectsBinPack::MaxRectsBinPack()
 :binWidth(0),
 binHeight(0)
@@ -507,4 +509,6 @@ void MaxRectsBinPack::PruneFreeList()
 				--j;
 			}
 		}
+}
+
 }

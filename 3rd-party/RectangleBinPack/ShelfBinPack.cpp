@@ -14,6 +14,8 @@
 
 using namespace std;
 
+namespace RectangleBinPack {
+
 ShelfBinPack::ShelfBinPack()
 :binWidth(0),
 binHeight(0),
@@ -389,4 +391,6 @@ void ShelfBinPack::MoveShelfToWasteMap(Shelf &shelf)
 float ShelfBinPack::Occupancy() const
 {
 	return (float)usedSurfaceArea / (binWidth * binHeight);
+}
+
 }

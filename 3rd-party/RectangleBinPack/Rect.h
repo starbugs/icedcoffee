@@ -7,6 +7,8 @@
 
 #include <vector>
 
+namespace RectangleBinPack {
+
 struct RectSize
 {
 	int width;
@@ -77,3 +79,5 @@ public:
 		return false;
 	}
 };
+
+}
