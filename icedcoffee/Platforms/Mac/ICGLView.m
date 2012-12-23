@@ -134,11 +134,16 @@
         // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
         CGLLockContext([openGLContext CGLContextObj]);
         
+        // Add an autorelease pool to avoid concurrent deallocation of autoreleased objects
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
         [self.hostViewController reshape:self.bounds.size];
         
         // avoid flicker
         [self.hostViewController drawScene];
         //[self setNeedsDisplay:YES];
+        
+        [pool release];
         
         CGLUnlockContext([openGLContext CGLContextObj]);
     }    
