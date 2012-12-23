@@ -28,7 +28,6 @@
 - (void)setUpScene
 {
     ICUIScene *scene = [ICUIScene scene];
-    [self runWithScene:scene];
     
     ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
     ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:150];
@@ -46,6 +45,8 @@
     ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"Hallo du da" font:font];
     [textRun setPositionY:100];
     [scene addChild:textRun];
+
+    [self runWithScene:scene];
 }
 
 @end
