@@ -65,8 +65,9 @@ using RectangleBinPack::SkylineBinPack;
 }
 
 - (ICTextureGlyph *)addGlyphBitmapData:(void *)bitmapData
-                              withSize:(CGSize)sizeInPixels
                               forGlyph:(ICGlyph)glyph
+                          sizeInPixels:(CGSize)sizeInPixels
+                          boundingRect:(CGRect)boundingRect
                                   font:(ICFont *)font
                      uploadImmediately:(BOOL)uploadImmediately
 {
@@ -154,6 +155,7 @@ using RectangleBinPack::SkylineBinPack;
     ICTextureGlyph *textureGlyph = [[[ICTextureGlyph alloc] initWithGlyphTextureAtlas:self
                                                                             texCoords:texCoords
                                                                                  size:kmVec2Make(sizeInPixels.width, sizeInPixels.height)
+                                                                         boundingRect:boundingRect
                                                                                 glyph:glyph
                                                                                  font:font] autorelease];
     return textureGlyph;

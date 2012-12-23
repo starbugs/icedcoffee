@@ -48,8 +48,8 @@
  @brief Adds the given glyph bitmap data to the receiver
  
  @param bitmapData Bitmap data conforming to the receiver's pixel format and the specified size
- @param sizeInPixels The size of the given bitmap data in pixels
  @param glyph An ICGlyph specifying the internal index of the glyph within its font
+ @param sizeInPixels The size of the given bitmap data in pixels
  @param font An ICFont object defining the font which the given glyph belongs to
  @param uploadImmediately A boolean flag indicating whether to upload the given data to the
  receiver's OpenGL texture immediately.
@@ -72,8 +72,9 @@
  allocate another ICGlyphTextureAtlas object with a suitable size to store the given glyph.
  */
 - (ICTextureGlyph *)addGlyphBitmapData:(void *)bitmapData
-                              withSize:(CGSize)sizeInPixels
                               forGlyph:(ICGlyph)glyph
+                          sizeInPixels:(CGSize)sizeInPixels
+                          boundingRect:(CGRect)boundingRect
                                   font:(ICFont *)font
                      uploadImmediately:(BOOL)uploadImmediately;
 

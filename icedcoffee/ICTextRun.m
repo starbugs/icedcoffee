@@ -120,8 +120,8 @@
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
         
-        //CGFloat ascent, descent;
-        //CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
+        CGFloat ascent, descent, leading;
+        CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading);
         
         CFIndex glyphCount = CTRunGetGlyphCount(run);
         
@@ -146,8 +146,8 @@
                 ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
                 
                 float x1, x2, y1, y2, z;
-                x1 = positions[glyphIndex].x;
-                y1 = positions[glyphIndex].y;
+                x1 = positions[glyphIndex].x + textureGlyph.boundingRect.origin.x;
+                y1 = positions[glyphIndex].y + textureGlyph.boundingRect.origin.y - textureGlyph.boundingRect.size.height + ascent;
                 x2 = x1 + textureGlyph.size.width;
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;

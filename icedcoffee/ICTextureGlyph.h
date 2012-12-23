@@ -35,11 +35,13 @@
     ICFont *_font;
     kmVec2 *_texCoords;
     kmVec2 _size;
+    CGRect _boundingRect;
 }
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
+                   boundingRect:(CGRect)boundingRect
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font;
 
@@ -52,5 +54,7 @@
 @property (nonatomic, readonly) kmVec2 *texCoords;
 
 @property (nonatomic, readonly) kmVec2 size;
+
+@property (nonatomic, readonly) CGRect boundingRect;
 
 @end

@@ -30,10 +30,12 @@
 @synthesize glyph = _glyph;
 @synthesize texCoords = _texCoords;
 @synthesize size = _size;
+@synthesize boundingRect = _boundingRect;
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
+                   boundingRect:(CGRect)boundingRect
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font
 {
@@ -43,6 +45,7 @@
         _glyph = glyph;
         _font = [font retain];
         _size = size;
+        _boundingRect = boundingRect;
     }
     return self;
 }

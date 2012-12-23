@@ -141,8 +141,9 @@
         
         ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
         ICTextureGlyph *textureGlyph = [textureAtlas addGlyphBitmapData:data
-                                                               withSize:CGSizeMake(w,h)
                                                                forGlyph:glyphs[i]
+                                                           sizeInPixels:CGSizeMake(w,h)
+                                                           boundingRect:boundingRects[i]
                                                                    font:font
                                                       uploadImmediately:NO];
         
@@ -150,8 +151,9 @@
             // No more space left in vacant texture atlas
             textureAtlas = [self newTextureAtlas];
             textureGlyph = [textureAtlas addGlyphBitmapData:data
-                                                   withSize:CGSizeMake(w, h)
                                                    forGlyph:glyphs[i]
+                                               sizeInPixels:CGSizeMake(w,h)
+                                               boundingRect:boundingRects[i]
                                                        font:font
                                           uploadImmediately:NO];
         }
