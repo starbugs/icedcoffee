@@ -28,8 +28,10 @@
 #import "ICGlyphTextureAtlas.h"
 #import "ICHostViewController.h"
 #import "ICTextureGlyph.h"
+#import "icMacros.h"
+#import "icConfig.h"
 
-#define TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
+#define TEXTURE_ATLAS_SIZE CGSizeMake(256, 256)
 
 @implementation ICGlyphCache
 
@@ -81,6 +83,16 @@
                                                   pixelFormat:ICPixelFormatA8
                                                resolutionType:bestResolutionType] autorelease];
     [_textures addObject:textureAtlas];
+
+#ifdef IC_ENABLE_DEBUG_GLYPH_CACHE
+    NSLog(@"Glyph cache: new texture atlas allocated");
+#ifdef __IC_PLATFORM_MAC
+    NSLog(@"Glyph cache: number of atlases in use: %ld", [_textures count]);
+#elif defined(__IC_PLATFORM_IOS)
+    NSLog(@"Glyph cache: number of atlases in use: %d", [_textures count]);
+#endif
+#endif
+    
     return textureAtlas;
 }
 

@@ -121,5 +121,9 @@
 #define IC_ENABLE_DEBUG_TEXTURE_CACHE 0
 #endif
 
+#ifndef IC_ENABLE_DEBUG_GLYPH_CACHE
+#define IC_ENABLE_DEBUG_GLYPH_CACHE 1
+#endif
+
 /** @} */
 
