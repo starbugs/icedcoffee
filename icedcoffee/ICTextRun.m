@@ -146,8 +146,10 @@
                 ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
                 
                 float x1, x2, y1, y2, z;
-                x1 = positions[glyphIndex].x + textureGlyph.boundingRect.origin.x;
-                y1 = positions[glyphIndex].y + textureGlyph.boundingRect.origin.y - textureGlyph.boundingRect.size.height + ascent;
+                float positionX = positions[glyphIndex].x;
+                float positionY = positions[glyphIndex].y;
+                x1 = positionX + textureGlyph.boundingRect.origin.x;
+                y1 = positionY - textureGlyph.size.height - ceilf(textureGlyph.boundingRect.origin.y) + ceilf(leading);
                 x2 = x1 + textureGlyph.size.width;
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;

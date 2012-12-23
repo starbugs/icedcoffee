@@ -113,8 +113,8 @@
     
     for (CFIndex i=0; i<count; i++) {
         CGRect *boundingRect = &boundingRects[i];
-        size_t w = ceilf(boundingRect->size.width) + ceilf(fabs(boundingRect->origin.x)) + 2;
-        size_t h = ceilf(boundingRect->size.height) + ceilf(fabs(boundingRect->origin.y)) + 2;
+        size_t w = ceilf(boundingRect->size.width) + 6;
+        size_t h = ceilf(boundingRect->size.height) + 6;
         
         void *data = calloc(h, w);
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
@@ -128,16 +128,20 @@
             return nil;
         }
         
-        float xOffset = boundingRect->origin.x < 0 ? -boundingRect->origin.x : 0;
-        float yOffset = boundingRect->origin.y < 0 ? -boundingRect->origin.y : 0;
+        float xOffset = -boundingRect->origin.x;
+        float yOffset = -boundingRect->origin.y;
         
         CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
         CGContextSetTextMatrix(context, CGAffineTransformIdentity);
         CGContextSetFont(context, cgFont);
         CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
         CGContextSetGrayFillColor(context, 1, 1);
-        CGContextShowGlyphsAtPoint(context, 1 + xOffset, 1 + yOffset, &glyphs[i], 1);
+        CGContextShowGlyphsAtPoint(context, 3 + xOffset, 3 + yOffset, &glyphs[i], 1);
         CFRelease(cgFont);
+        
+        /*CGContextSetLineWidth(context, 1);
+        CGContextSetGrayStrokeColor(context, 1, 1);
+        CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
         
         ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
         ICTextureGlyph *textureGlyph = [textureAtlas addGlyphBitmapData:data
