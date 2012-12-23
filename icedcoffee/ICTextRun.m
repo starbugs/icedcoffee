@@ -195,6 +195,8 @@
     
     CFRelease(line);
     [attributedString release];
+    
+    _buffersDirty = NO;
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
