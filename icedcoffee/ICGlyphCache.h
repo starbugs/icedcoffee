@@ -111,7 +111,12 @@
                                                       font:(ICFont *)font;
 
 
-/** @name Managing the Cache's Texture Atlases */
+/** @name Purging a Glyph Cache */
+
+- (void)purge;
+
+
+/** @name Managing a Cache's Texture Atlases */
 
 /**
  @brief An array of texture atlas objects the receiver currently uses to cache glyphs

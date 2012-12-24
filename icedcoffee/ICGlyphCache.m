@@ -312,4 +312,12 @@
     return glyphsByTexture;
 }
 
+- (void)purge
+{
+    [_textureGlyphs release];
+    _textureGlyphs = nil;
+    [_textures release];
+    _textures = nil;
+}
+
 @end
