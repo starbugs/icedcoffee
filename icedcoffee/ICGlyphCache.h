@@ -40,6 +40,8 @@
     CGSize _textureSize;
 }
 
+/** @name Retrieving/Initializing a Glyph Cache */
+
 /**
  @brief Retrieves or creates the glyph cache for the current OpenGL context
  */
@@ -50,26 +52,53 @@
  */
 - (id)init;
 
+
+/** @name Precaching Glyphs Manually */
+
 /**
- @brief Precaches all glyphcs from the given string and font
+ @brief Precaches all glyphs from the given string and font
+ 
+ @param string An ``NSString`` containing the characters whose glyphs should be cached
+ @param font An ICFont representing the font to extract glyphs from
  */
 - (void)cacheGlyphsWithString:(NSString *)string forFont:(ICFont *)font;
 
+
+/** @name Retrieving Texture Glyphs */
+
 /**
  @brief Retrieves a texture glyph for the given glyph and font
+
+ @param glyph An ICGlyph defining the glyph of which a texture glyph should be retrieved
+ @param font An ICFont representing the font to extract glyphs from
  
- If the glyph has not yet been cached, this method implicitly adds the given glyph to the receiver.
+ If a yet uncached glyph is requested, this method caches the given glyph before returning a result.
  */
 - (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
 
 /**
  @brief Retrieves a number of texture glyphs for the given glyphs and font
+
+ @param glyphs A C-array with ICGlyph values defining the glyphs of which texture glyphs
+ should be retrieved
+ @param count The number of ICGlyph values stored in the C-Array
+ @param font An ICFont representing the font to extract glyphs from
+
+ If one or more glyphs in the given array of glyphs is not yet cached, this method caches them
+ before returning a result.
+ 
+ @return Returns an ``NSArray`` containing ICTextureGlyph objects corresponding to ``glyphs``.
  */
 - (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font;
 
 /**
  @brief Retrieves a number of texture glyphs separated by texture for the given glyphs and font
- 
+
+ @param glyphs A C-array with ICGlyph values defining the glyphs of which texture glyphs
+ should be retrieved
+ @param count The number of ICGlyph values stored in the C-array
+ @param font An ICFont representing the font to extract glyphs from
+
  @return This method returns an ``NSDictionary`` containing ``NSValue`` keys each representing the
  pointer address of an ICGlyphTextureAtlas object pertaining to a texture atlas used to cache
  a list of corresponding texture glyphs. For those keys the dictionary contains ``NSArray`` values
@@ -81,6 +110,8 @@
                                                      count:(NSInteger)count
                                                       font:(ICFont *)font;
 
+
+/** @name Managing the Cache's Texture Atlases */
 
 /**
  @brief An array of texture atlas objects the receiver currently uses to cache glyphs
