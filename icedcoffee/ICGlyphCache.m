@@ -252,6 +252,10 @@
     NSMutableArray *resultTextureGlyphs = [NSMutableArray arrayWithCapacity:count];
     
     NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
+    if (!glyphsForFont) {
+        glyphsForFont = [NSMutableDictionary dictionaryWithCapacity:count];
+        [_textureGlyphs setObject:glyphsForFont forKey:font.name];
+    }
     NSNumber *notFoundMarker = [NSNumber numberWithInteger:NSNotFound];
     
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
