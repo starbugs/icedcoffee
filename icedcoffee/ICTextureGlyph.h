@@ -29,6 +29,9 @@
 @class ICGlyphTextureAtlas;
 @class ICFont;
 
+/**
+ @brief Represents a font glyph on a texture atlas
+ */
 @interface ICTextureGlyph : NSObject {
 @protected
     ICGlyphTextureAtlas *_textureAtlas; // weak

@@ -28,7 +28,18 @@
 @class ICTextureGlyph;
 
 /**
- @brief Represents a CoreText/OpenGL based glyph cache
+ @brief Implements a CoreText/OpenGL based font glyph cache
+ 
+ The ICGlyphCache class extracts font glyphs using CoreText, packs them in suitable texture
+ atlases and uploads them to OpenGL textures as required by the framework to draw text.
+ 
+ ICGlyphCache employs a Skyline-BL rectangle bin packing algorithm to pack glyphs into texture
+ atlases. The size of the textures storing those atlases may be controlled using the
+ ICGlyphCache::textureSize property. By default, ICGlyphCache will pack glyphs into 1024x1024
+ pixel textures.
+ 
+ If required, the cache can be purged at any time using the ICGlyphCache::purge method.
+ The framework will automatically recache glyphs as necessary for text drawing.
  */
 @interface ICGlyphCache : NSObject {
 @protected

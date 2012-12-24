@@ -25,6 +25,9 @@
 #import "ICNode.h"
 #import "ICFont.h"
 
+/**
+ @brief Represents a text run
+ */
 @interface ICTextRun : ICNode {
 @protected
     NSString *_text;
@@ -33,10 +36,19 @@
     NSMutableArray *_buffers;
 }
 
+/**
+ @brief Initializes the receiver with the given text and font
+ */
 - (id)initWithText:(NSString *)text font:(ICFont *)font;
 
+/**
+ @brief The receiver's text
+ */
 @property (nonatomic, copy) NSString *text;
 
+/**
+ @brief The receiver's font
+ */
 @property (nonatomic, retain) ICFont *font;
 
 @end
