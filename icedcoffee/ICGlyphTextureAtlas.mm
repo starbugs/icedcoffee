@@ -100,8 +100,14 @@ using RectangleBinPack::SkylineBinPack;
 
         // If we're not uploading immediately, allocate pixel data for the whole texture atlas if
         // not already available
-        if (!self.data)
+        if (!self.data) {
+            // Allocate new pixel data
             self.data = calloc((int)self.sizeInPixels.height, (int)self.sizeInPixels.width * stride);
+        } else {
+            // Pixel data already available; we will mutate it, so we need to set dataDirty to
+            // YES here manually
+            self.dataDirty = YES;
+        }
 
         // Copy bitmap data to texture pixel data
         int i;

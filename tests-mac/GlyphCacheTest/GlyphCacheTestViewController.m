@@ -29,10 +29,21 @@
 {
     ICUIScene *scene = [ICUIScene scene];
     
-    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-    ICFont *font = [[ICFont alloc] initWithName:@"Arial" size:50];
-    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:font];
+    ICFont *arial = [[ICFont alloc] initWithName:@"Arial" size:50];
+    ICFont *arialBold = [[ICFont alloc] initWithName:@"Arial Bold" size:50];
+
+    /*ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arialBold];*/
+
+    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arial];
+    [textRun setPositionY:10];
+    [scene addChild:textRun];
     
+    ICTextRun *textRun2 = [[ICTextRun alloc] initWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arialBold];
+    [textRun2 setPositionY:100];
+    [scene addChild:textRun2];
+
     /*ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
     if (textureAtlas.dataDirty)
         [textureAtlas upload];
@@ -42,9 +53,6 @@
     [sprite setColor:(icColor4B){0,0,0,255}];
     [scene addChild:sprite];*/
     
-    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"1234 The quick brown fox jumps over the lazy dog" font:font];
-    [textRun setPositionY:100];
-    [scene addChild:textRun];
 
     [self runWithScene:scene];
 }
