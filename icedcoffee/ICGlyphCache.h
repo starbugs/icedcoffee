@@ -113,6 +113,9 @@
 
 /** @name Purging a Glyph Cache */
 
+/**
+ @brief Purges the receiver's caches
+ */
 - (void)purge;
 
 
