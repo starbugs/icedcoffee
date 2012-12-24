@@ -160,7 +160,7 @@
         vertices[i].color = color4FFromColor4B(_color);
     }
     
-    // Note: as the Y axis is inverted by the IcedCoffe UI camera, we provide CCW indices
+    // Note: as the Y axis is inverted by the icedcoffee UI camera, we provide CCW indices
     // here so that OpenGL standard culling continues to work correctly
     GLushort indices[] = {
         // left-top (x1,y1,x2,y2)
