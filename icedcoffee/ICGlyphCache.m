@@ -31,11 +31,12 @@
 #import "icMacros.h"
 #import "icConfig.h"
 
-#define TEXTURE_ATLAS_SIZE CGSizeMake(256, 256)
+#define IC_DEFAULT_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
 
 @implementation ICGlyphCache
 
 @synthesize textures = _textures;
+@synthesize textureSize = _textureSize;
 
 + (id)currentGlyphCache
 {
@@ -53,6 +54,7 @@
     if ((self = [super init])) {
         _textureGlyphs = [[NSMutableDictionary alloc] init];
         _textures = [[NSMutableArray alloc] initWithCapacity:1];
+        _textureSize = IC_DEFAULT_TEXTURE_ATLAS_SIZE;
     }
     return self;
 }
@@ -79,7 +81,7 @@
     ICGlyphTextureAtlas *textureAtlas;
     ICResolutionType bestResolutionType = [[ICHostViewController currentHostViewController]
                                            bestResolutionTypeForCurrentScreen];
-    textureAtlas = [[[ICGlyphTextureAtlas alloc] initWithSize:TEXTURE_ATLAS_SIZE
+    textureAtlas = [[[ICGlyphTextureAtlas alloc] initWithSize:self.textureSize
                                                   pixelFormat:ICPixelFormatA8
                                                resolutionType:bestResolutionType] autorelease];
     [_textures addObject:textureAtlas];

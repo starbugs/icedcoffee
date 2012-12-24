@@ -36,6 +36,8 @@
     NSMutableDictionary *_textureGlyphs;
     // Textures used by the glyph cache
     NSMutableArray *_textures;
+    // Size to use when allocating new texture atlases
+    CGSize _textureSize;
 }
 
 /**
@@ -80,6 +82,17 @@
                                                       font:(ICFont *)font;
 
 
+/**
+ @brief An array of texture atlas objects the receiver currently uses to cache glyphs
+ 
+ @return Returns an ``NSArray`` containing ICGlyphTextureAtlas objects representing the glyph
+ cache's texture atlases.
+ */
 @property (nonatomic, readonly) NSArray *textures;
+
+/**
+ @brief The size used by the receiver to allocate new textures
+ */
+@property (nonatomic, readonly) CGSize textureSize;
 
 @end
