@@ -41,6 +41,11 @@
     CGRect _boundingRect;
 }
 
+/** @name Initialization */
+
+/**
+ @brief Initializes the receiver with information about the texture glyph to be represented
+ */
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
@@ -48,16 +53,37 @@
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font;
 
+
+/** @name Retrieving Texture Glyph Properties */
+
+/**
+ @brief The texture atlas on which the glyph is cached
+ */
 @property (nonatomic, readonly) ICGlyphTextureAtlas *textureAtlas;
 
+/**
+ @brief The font index of the glyph
+ */
 @property (nonatomic, readonly) ICGlyph glyph;
 
+/**
+ @brief The font from which this glyph was extracted
+ */
 @property (nonatomic, readonly) ICFont *font;
 
+/**
+ @brief The texture coordinates of the glyph on its texture atlas
+ */
 @property (nonatomic, readonly) kmVec2 *texCoords;
 
+/**
+ @brief The size of the glyph's retangle on its texture atlas
+ */
 @property (nonatomic, readonly) kmVec2 size;
 
+/**
+ @brief The bounding rect of the glyph
+ */
 @property (nonatomic, readonly) CGRect boundingRect;
 
 @end

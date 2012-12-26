@@ -24,6 +24,20 @@
 #import <Foundation/Foundation.h>
 #import "icFontTypes.h"
 
+/**
+ @brief The default size of texture atlases allocated by ICGlyphCache
+ */
+#define IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
+
+// FIXME: specify units (should be points)
+/**
+ @brief The size of the margin to add to each glyph's bounding box when extracting glyph textures
+ 
+ This value is used to compensate for glyph antialiasing. Shouldn't be lower than 3.
+ */
+#define IC_GLYPH_RECTANGLE_MARGIN 20
+
+
 @class ICFont;
 @class ICTextureGlyph;
 
@@ -50,6 +64,7 @@
     // Size to use when allocating new texture atlases
     CGSize _textureSize;
 }
+
 
 /** @name Retrieving/Initializing a Glyph Cache */
 
@@ -142,6 +157,8 @@
 
 /**
  @brief The size used by the receiver to allocate new textures
+ 
+ This property should be set before the receiver is used to cache glyph textures.
  */
 @property (nonatomic, readonly) CGSize textureSize;
 

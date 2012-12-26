@@ -30,17 +30,17 @@
     ICUIScene *scene = [ICUIScene scene];
     
     ICFont *arial = [[ICFont alloc] initWithName:@"Arial" size:50];
-    ICFont *arialBold = [[ICFont alloc] initWithName:@"Arial Bold" size:50];
+    ICFont *monaco = [[ICFont alloc] initWithName:@"Monaco" size:50];
 
     /*ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
     [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
     [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arialBold];*/
 
-    ICTextRun *textRun = [[ICTextRun alloc] initWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arial];
+    ICTextRun *textRun = [[ICTextRun textRunWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
     [textRun setPositionY:10];
     [scene addChild:textRun];
     
-    ICTextRun *textRun2 = [[ICTextRun alloc] initWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arialBold];
+    ICTextRun *textRun2 = [[ICTextRun textRunWithText:@"1234 The quick brown fox jumps over the lazy dog" font:monaco] precache];
     [textRun2 setPositionY:100];
     [scene addChild:textRun2];
 

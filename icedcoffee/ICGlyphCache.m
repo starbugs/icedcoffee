@@ -31,7 +31,14 @@
 #import "icMacros.h"
 #import "icConfig.h"
 
-#define IC_DEFAULT_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
+
+@interface ICGlyphCache ()
+- (ICGlyphTextureAtlas *)newTextureAtlas;
+- (ICGlyphTextureAtlas *)vacantTextureAtlas;
+- (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font;
+- (void)cacheGlyphsWithRun:(CTRunRef)run font:(ICFont *)font;
+- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font;
+@end
 
 @implementation ICGlyphCache
 
@@ -54,7 +61,7 @@
     if ((self = [super init])) {
         _textureGlyphs = [[NSMutableDictionary alloc] init];
         _textures = [[NSMutableArray alloc] initWithCapacity:1];
-        _textureSize = IC_DEFAULT_TEXTURE_ATLAS_SIZE;
+        _textureSize = IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE;
     }
     return self;
 }
@@ -118,6 +125,7 @@
     [glyphsForFont setObject:textureGlyph forKey:[NSNumber numberWithUnsignedShort:textureGlyph.glyph]];
 }
 
+// FIXME: do not cache spaces!?
 - (NSArray *)cacheGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
 {
     NSMutableArray *textureGlyphs = [NSMutableArray arrayWithCapacity:count];
@@ -126,63 +134,72 @@
     CTFontGetBoundingRectsForGlyphs(font.fontRef, kCTFontDefaultOrientation, glyphs, boundingRects, count);
     
     for (CFIndex i=0; i<count; i++) {
-        CGRect *boundingRect = &boundingRects[i];
-        size_t w = ceilf(boundingRect->size.width) + 6;
-        size_t h = ceilf(boundingRect->size.height) + 6;
+        ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyphs[i] font:font];
         
-        void *data = calloc(h, w);
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-        CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
-        CGColorSpaceRelease(colorSpace);
-        
-        NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
-        
-        if (!context) {
-            free(data);
-            return nil;
-        }
-        
-        float xOffset = -boundingRect->origin.x;
-        float yOffset = -boundingRect->origin.y;
-        
-        CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
-        CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-        CGContextSetFont(context, cgFont);
-        CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
-        CGContextSetGrayFillColor(context, 1, 1);
-        CGContextShowGlyphsAtPoint(context, 3 + xOffset, 3 + yOffset, &glyphs[i], 1);
-        CFRelease(cgFont);
-        
-        /*CGContextSetLineWidth(context, 1);
-        CGContextSetGrayStrokeColor(context, 1, 1);
-        CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
-        
-        ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
-        ICTextureGlyph *textureGlyph = [textureAtlas addGlyphBitmapData:data
-                                                               forGlyph:glyphs[i]
-                                                           sizeInPixels:CGSizeMake(w,h)
-                                                           boundingRect:boundingRects[i]
-                                                                   font:font
-                                                      uploadImmediately:NO];
-        
+        // Only extract new glyph texture if glyph has not already been cached
         if (!textureGlyph) {
-            // No more space left in vacant texture atlas
-            textureAtlas = [self newTextureAtlas];
+            CGRect *boundingRect = &boundingRects[i];
+            size_t w = ceilf(boundingRect->size.width) + IC_GLYPH_RECTANGLE_MARGIN * 2;
+            size_t h = ceilf(boundingRect->size.height) + IC_GLYPH_RECTANGLE_MARGIN * 2;
+            
+            void *data = calloc(h, w);
+            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
+            CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
+            CGColorSpaceRelease(colorSpace);
+            
+            NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
+            
+            if (!context) {
+                free(data);
+                return nil;
+            }
+            
+            float xOffset = -boundingRect->origin.x;
+            float yOffset = -boundingRect->origin.y;
+            
+            CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
+            CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+            CGContextSetFont(context, cgFont);
+            CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
+            CGContextSetGrayFillColor(context, 1, 1);
+            CGContextShowGlyphsAtPoint(context,
+                                       IC_GLYPH_RECTANGLE_MARGIN + xOffset,
+                                       IC_GLYPH_RECTANGLE_MARGIN + yOffset,
+                                       &glyphs[i], 1);
+            CFRelease(cgFont);
+            
+            CGContextSetLineWidth(context, 1);
+            CGContextSetGrayStrokeColor(context, 1, 1);
+            CGContextStrokeRect(context, CGRectMake(0, 0, w, h));
+            
+            ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
             textureGlyph = [textureAtlas addGlyphBitmapData:data
                                                    forGlyph:glyphs[i]
                                                sizeInPixels:CGSizeMake(w,h)
                                                boundingRect:boundingRects[i]
                                                        font:font
                                           uploadImmediately:NO];
+            
+            if (!textureGlyph) {
+                // No more space left in vacant texture atlas
+                textureAtlas = [self newTextureAtlas];
+                textureGlyph = [textureAtlas addGlyphBitmapData:data
+                                                       forGlyph:glyphs[i]
+                                                   sizeInPixels:CGSizeMake(w,h)
+                                                   boundingRect:boundingRects[i]
+                                                           font:font
+                                              uploadImmediately:NO];
+            }
+            
+            NSAssert(textureGlyph != nil, @"Something went terribly wrong here");
+            
+            [self cacheTextureGlyph:textureGlyph];
+            
+            CGContextRelease(context);
+            free(data);
         }
         
-        NSAssert(textureGlyph != nil, @"Something went terribly wrong here");
-        
-        [self cacheTextureGlyph:textureGlyph];
         [textureGlyphs addObject:textureGlyph];
-        
-        CGContextRelease(context);
-        free(data);
     }
     
     free(boundingRects);
@@ -227,12 +244,17 @@
     [attributedString release];
 }
 
+- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font
+{
+    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
+    return [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
+}
+
 // FIXME: caching lots of single glyphs using this method may be terribly inefficient
 // if data is kept by texture atlas (as it is currently)
 - (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font
 {
-    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
-    ICTextureGlyph *textureGlyph = [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
+    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font];
     
     // If glyph not already cached, cache it now
     if (!textureGlyph) {

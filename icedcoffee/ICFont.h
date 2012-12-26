@@ -23,6 +23,9 @@
 
 #import <Foundation/Foundation.h>
 
+/**
+ @brief Represents a font
+ */
 @interface ICFont : NSObject {
 @protected
     CTFontRef _fontRef;

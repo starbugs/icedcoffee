@@ -63,6 +63,12 @@
 
 @synthesize text = _text;
 @synthesize font = _font;
+@synthesize tracking = _tracking;
+
++ (id)textRunWithText:(NSString *)text font:(ICFont *)font
+{
+    return [[[[self class] alloc] initWithText:text font:font] autorelease];
+}
 
 - (id)initWithText:(NSString *)text font:(ICFont *)font
 {
@@ -90,6 +96,14 @@
     [_buffers release];
     
     [super dealloc];
+}
+
+- (id)precache
+{
+    NSAssert(self.font != nil && self.text != nil, @"Both text and font properties must be set");
+    
+    [[ICGlyphCache currentGlyphCache] cacheGlyphsWithString:self.text forFont:self.font];
+    return self;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -162,8 +176,10 @@
                 float x1, x2, y1, y2, z;
                 float positionX = positions[glyphIndex].x;
                 float positionY = positions[glyphIndex].y;
-                x1 = positionX + textureGlyph.boundingRect.origin.x;
-                y1 = positionY - textureGlyph.size.height - ceilf(textureGlyph.boundingRect.origin.y) + ceilf(ascent);
+                
+                // TODO: determine orientation of tracking/margin compensation
+                x1 = positionX + textureGlyph.boundingRect.origin.x + glyphIndex * self.tracking - IC_GLYPH_RECTANGLE_MARGIN;
+                y1 = positionY - textureGlyph.size.height - ceilf(textureGlyph.boundingRect.origin.y) + ceilf(ascent) + IC_GLYPH_RECTANGLE_MARGIN;
                 x2 = x1 + textureGlyph.size.width;
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;
