@@ -29,18 +29,18 @@
 {
     ICUIScene *scene = [ICUIScene scene];
     
-    ICFont *arial = [[ICFont alloc] initWithName:@"Arial" size:50];
+    ICFont *arial = [[ICFont alloc] initWithName:@"Arial Bold" size:50];
     ICFont *monaco = [[ICFont alloc] initWithName:@"Monaco" size:50];
 
-    /*ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
+    ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
     [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
-    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arialBold];*/
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:monaco];
 
-    ICGlyphRun *textRun = [[ICGlyphRun glyphRunWithText:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
+    ICGlyphRun *textRun = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
     [textRun setPositionY:10];
     [scene addChild:textRun];
     
-    ICGlyphRun *textRun2 = [[ICGlyphRun glyphRunWithText:@"1234 The quick brown fox jumps over the lazy dog" font:monaco] precache];
+    ICGlyphRun *textRun2 = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:monaco] precache];
     [textRun2 setPositionY:100];
     [scene addChild:textRun2];
 

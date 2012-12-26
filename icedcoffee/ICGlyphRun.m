@@ -61,22 +61,22 @@
 
 @implementation ICGlyphRun
 
-@synthesize text = _text;
+@synthesize string = _string;
 @synthesize font = _font;
 @synthesize tracking = _tracking;
 
-+ (id)glyphRunWithText:(NSString *)text font:(ICFont *)font
++ (id)glyphRunWithString:(NSString *)string font:(ICFont *)font
 {
-    return [[[[self class] alloc] initWithText:text font:font] autorelease];
+    return [[[[self class] alloc] initWithString:string font:font] autorelease];
 }
 
-- (id)initWithText:(NSString *)text font:(ICFont *)font
+- (id)initWithString:(NSString *)string font:(ICFont *)font
 {
     if ((self = [super init])) {
-        [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:nil];
         
-        self.text = text;
+        self.string = string;
         self.font = font;
         
         self.shaderProgram = [[ICShaderCache currentShaderCache]
@@ -87,10 +87,10 @@
 
 - (void)dealloc
 {
-    self.text = nil;
+    self.string = nil;
     self.font = nil;
     
-    [self removeObserver:self forKeyPath:@"text"];
+    [self removeObserver:self forKeyPath:@"string"];
     [self removeObserver:self forKeyPath:@"font"];
 
     [_buffers release];
@@ -100,9 +100,9 @@
 
 - (id)precache
 {
-    NSAssert(self.font != nil && self.text != nil, @"Both text and font properties must be set");
+    NSAssert(self.font != nil && self.string != nil, @"Both text and font properties must be set");
     
-    [[ICGlyphCache currentGlyphCache] cacheGlyphsWithString:self.text forFont:self.font];
+    [[ICGlyphCache currentGlyphCache] cacheGlyphsWithString:self.string forFont:self.font];
     return self;
 }
 
@@ -111,8 +111,8 @@
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (([keyPath isEqualToString:@"text"] && self.font != nil) ||
-        ([keyPath isEqualToString:@"font"] && self.text != nil)) {
+    if (([keyPath isEqualToString:@"string"] && self.font != nil) ||
+        ([keyPath isEqualToString:@"font"] && self.string != nil)) {
         _buffersDirty = YES;
     }
 }
@@ -126,7 +126,7 @@
     // Create a CoreText representation of the run
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.text
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.string
                                                                            attributes:attributes];
     CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);
     CFArrayRef runs = CTLineGetGlyphRuns(line);

@@ -25,11 +25,12 @@
 #import "ICNode.h"
 #import "ICFont.h"
 
+// FIXME: rename text to string
 /**
  @brief Represents a drawable glyph run
  
- The ICGlyphRun class draws a glyph run. The class attempts to minimize the number of VBOs and
- texture state changes required to display the glyphs of the run.
+ The ICGlyphRun class draws a glyph run using a given font. The class attempts to minimize the
+ number of VBOs and texture state changes required to display the glyphs of the run.
  
  By default, glyphs are retrieved from the current glyph cache (see ICGlyphCache) as required,
  on the fly, the first time the run is drawn. If the glyphs are not already loaded, the cache
@@ -41,7 +42,7 @@
  */
 @interface ICGlyphRun : ICNode {
 @protected
-    NSString *_text;
+    NSString *_string;
     ICFont *_font;
     BOOL _buffersDirty;
     NSMutableArray *_buffers;
@@ -53,12 +54,12 @@
 /**
  @brief Returns an autoreleased glyph run with the given text and font
  */
-+ (id)glyphRunWithText:(NSString *)text font:(ICFont *)font;
++ (id)glyphRunWithString:(NSString *)string font:(ICFont *)font;
 
 /**
  @brief Initializes the receiver with the given text and font
  */
-- (id)initWithText:(NSString *)text font:(ICFont *)font;
+- (id)initWithString:(NSString *)string font:(ICFont *)font;
 
 
 /** @name Precaching Font Glyphs */
@@ -77,9 +78,9 @@
 /** @name Text, Font and Run Metrics */
 
 /**
- @brief The receiver's text
+ @brief The receiver's string
  */
-@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy) NSString *string;
 
 /**
  @brief The font the receiver uses to draw its ICGlyphRun::text
