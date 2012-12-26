@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //
 
-#import "ICTextRun.h"
+#import "ICGlyphRun.h"
 #import "icTypes.h"
 #import "ICGlyphCache.h"
 #import "ICTextureGlyph.h"
@@ -55,17 +55,17 @@
 
 
 
-@interface ICTextRun ()
+@interface ICGlyphRun ()
 - (void)updateBuffers;
 @end
 
-@implementation ICTextRun
+@implementation ICGlyphRun
 
 @synthesize text = _text;
 @synthesize font = _font;
 @synthesize tracking = _tracking;
 
-+ (id)textRunWithText:(NSString *)text font:(ICFont *)font
++ (id)glyphRunWithText:(NSString *)text font:(ICFont *)font
 {
     return [[[[self class] alloc] initWithText:text font:font] autorelease];
 }

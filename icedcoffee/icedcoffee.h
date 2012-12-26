@@ -69,7 +69,7 @@
 #import "ICGlyphCache.h"
 #import "ICGlyphTextureAtlas.h"
 #import "ICTextureGlyph.h"
-#import "ICTextRun.h"
+#import "ICGlyphRun.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

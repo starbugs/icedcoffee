@@ -26,9 +26,9 @@
 #import "ICFont.h"
 
 /**
- @brief Represents a drawable text run
+ @brief Represents a drawable glyph run
  
- The ICTextRun class draws a text run. The class attempts to minimize the number of VBOs and
+ The ICGlyphRun class draws a glyph run. The class attempts to minimize the number of VBOs and
  texture state changes required to display the glyphs of the run.
  
  By default, glyphs are retrieved from the current glyph cache (see ICGlyphCache) as required,
@@ -36,10 +36,10 @@
  will load them when they are requested. Depending on the font, font size and amount of different
  characters contained in the run, glyph loading may be heavy and could lead to a decrease of your
  application's performance. If you require more control about the point in time the glyphs are
- loaded, rastered and cached, you may use the ICTextRun::precache method to precache all glyphs
+ loaded, rastered and cached, you may use the ICGlyphRun::precache method to precache all glyphs
  used by the run at a point in time of your convenience.
  */
-@interface ICTextRun : ICNode {
+@interface ICGlyphRun : ICNode {
 @protected
     NSString *_text;
     ICFont *_font;
@@ -51,9 +51,9 @@
 /** @name Initialization */
 
 /**
- @brief Returns an autoreleased text run with the given text and font
+ @brief Returns an autoreleased glyph run with the given text and font
  */
-+ (id)textRunWithText:(NSString *)text font:(ICFont *)font;
++ (id)glyphRunWithText:(NSString *)text font:(ICFont *)font;
 
 /**
  @brief Initializes the receiver with the given text and font
@@ -69,7 +69,7 @@
  This method immediately and synchronously precaches all glyphs required for drawing the receiver.
  
  @return Returns the receiver. This method is thought to be used in line with initialization, 
- e.g. ``[[ICTextRun textRunWithText:@"I love icedcoffee :)" font:arial] precache]``.
+ e.g. ``[[ICGlyphRun glyphRunWithText:@"I love icedcoffee :)" font:arial] precache]``.
  */
 - (id)precache;
 
@@ -82,7 +82,7 @@
 @property (nonatomic, copy) NSString *text;
 
 /**
- @brief The font the receiver uses to draw its ICTextRun::text
+ @brief The font the receiver uses to draw its ICGlyphRun::text
  */
 @property (nonatomic, retain) ICFont *font;
 

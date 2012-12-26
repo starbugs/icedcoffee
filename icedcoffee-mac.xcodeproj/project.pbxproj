@@ -53,8 +53,7 @@
 		A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */; };
 		A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */; };
 		A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633B21685D70200286AC0 /* ICTexture2D_Private.h */; };
-		A62633F71686088F00286AC0 /* ICTextRun.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633F51686088F00286AC0 /* ICTextRun.h */; };
-		A62633F81686088F00286AC0 /* ICTextRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F61686088F00286AC0 /* ICTextRun.m */; };
+		A62633F81686088F00286AC0 /* ICGlyphRun.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F61686088F00286AC0 /* ICGlyphRun.m */; };
 		A62633FB1686292F00286AC0 /* ICVertexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633F91686292E00286AC0 /* ICVertexBuffer.h */; };
 		A62633FC1686292F00286AC0 /* ICVertexBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633FA1686292F00286AC0 /* ICVertexBuffer.m */; };
 		A62633FF16862BBA00286AC0 /* ICGLBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633FD16862BBA00286AC0 /* ICGLBuffer.h */; };
@@ -63,6 +62,7 @@
 		A626340416862D2100286AC0 /* ICIndexBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A626340216862D2000286AC0 /* ICIndexBuffer.m */; };
 		A62634071686306000286AC0 /* ICCombinedVertexIndexBuffer.h in Headers */ = {isa = PBXBuildFile; fileRef = A62634051686305F00286AC0 /* ICCombinedVertexIndexBuffer.h */; };
 		A62634081686306000286AC0 /* ICCombinedVertexIndexBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A62634061686306000286AC0 /* ICCombinedVertexIndexBuffer.m */; };
+		A65D27A8168B02C5008D9E05 /* ICGlyphRun.h in Headers */ = {isa = PBXBuildFile; fileRef = A65D27A7168B02C5008D9E05 /* ICGlyphRun.h */; };
 		A67CC25F16330D570094014C /* ICLine2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A67CC25D16330D570094014C /* ICLine2D.h */; };
 		A67CC26016330D570094014C /* ICLine2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A67CC25E16330D570094014C /* ICLine2D.m */; };
 		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
@@ -247,8 +247,7 @@
 		A62633AE1685D6F600286AC0 /* ICMutableTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICMutableTexture2D.h; path = icedcoffee/ICMutableTexture2D.h; sourceTree = "<group>"; };
 		A62633AF1685D6F600286AC0 /* ICMutableTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICMutableTexture2D.m; path = icedcoffee/ICMutableTexture2D.m; sourceTree = "<group>"; };
 		A62633B21685D70200286AC0 /* ICTexture2D_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTexture2D_Private.h; path = icedcoffee/ICTexture2D_Private.h; sourceTree = "<group>"; };
-		A62633F51686088F00286AC0 /* ICTextRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextRun.h; path = icedcoffee/ICTextRun.h; sourceTree = "<group>"; };
-		A62633F61686088F00286AC0 /* ICTextRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextRun.m; path = icedcoffee/ICTextRun.m; sourceTree = "<group>"; };
+		A62633F61686088F00286AC0 /* ICGlyphRun.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGlyphRun.m; path = icedcoffee/ICGlyphRun.m; sourceTree = "<group>"; };
 		A62633F91686292E00286AC0 /* ICVertexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICVertexBuffer.h; path = icedcoffee/ICVertexBuffer.h; sourceTree = "<group>"; };
 		A62633FA1686292F00286AC0 /* ICVertexBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICVertexBuffer.m; path = icedcoffee/ICVertexBuffer.m; sourceTree = "<group>"; };
 		A62633FD16862BBA00286AC0 /* ICGLBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGLBuffer.h; path = icedcoffee/ICGLBuffer.h; sourceTree = "<group>"; };
@@ -258,6 +257,7 @@
 		A62634051686305F00286AC0 /* ICCombinedVertexIndexBuffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICCombinedVertexIndexBuffer.h; path = icedcoffee/ICCombinedVertexIndexBuffer.h; sourceTree = "<group>"; };
 		A62634061686306000286AC0 /* ICCombinedVertexIndexBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICCombinedVertexIndexBuffer.m; path = icedcoffee/ICCombinedVertexIndexBuffer.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
+		A65D27A7168B02C5008D9E05 /* ICGlyphRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphRun.h; path = icedcoffee/ICGlyphRun.h; sourceTree = "<group>"; };
 		A67CC25D16330D570094014C /* ICLine2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICLine2D.h; path = icedcoffee/ICLine2D.h; sourceTree = "<group>"; };
 		A67CC25E16330D570094014C /* ICLine2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICLine2D.m; path = icedcoffee/ICLine2D.m; sourceTree = "<group>"; };
 		A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeRef.h; path = icedcoffee/ICNodeRef.h; sourceTree = "<group>"; };
@@ -459,8 +459,8 @@
 				A62633A01685D6BC00286AC0 /* ICGlyphCache.m */,
 				A62633A11685D6BC00286AC0 /* ICGlyphTextureAtlas.h */,
 				A62633A21685D6BC00286AC0 /* ICGlyphTextureAtlas.mm */,
-				A62633F51686088F00286AC0 /* ICTextRun.h */,
-				A62633F61686088F00286AC0 /* ICTextRun.m */,
+				A65D27A7168B02C5008D9E05 /* ICGlyphRun.h */,
+				A62633F61686088F00286AC0 /* ICGlyphRun.m */,
 				A62633AA1685D6D100286AC0 /* ICTextureGlyph.h */,
 				A62633AB1685D6D100286AC0 /* ICTextureGlyph.m */,
 			);
@@ -888,11 +888,11 @@
 				A62633AC1685D6D100286AC0 /* ICTextureGlyph.h in Headers */,
 				A62633B01685D6F600286AC0 /* ICMutableTexture2D.h in Headers */,
 				A62633B31685D70200286AC0 /* ICTexture2D_Private.h in Headers */,
-				A62633F71686088F00286AC0 /* ICTextRun.h in Headers */,
 				A62633FB1686292F00286AC0 /* ICVertexBuffer.h in Headers */,
 				A62633FF16862BBA00286AC0 /* ICGLBuffer.h in Headers */,
 				A626340316862D2100286AC0 /* ICIndexBuffer.h in Headers */,
 				A62634071686306000286AC0 /* ICCombinedVertexIndexBuffer.h in Headers */,
+				A65D27A8168B02C5008D9E05 /* ICGlyphRun.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1028,7 +1028,7 @@
 				A62633A91685D6BC00286AC0 /* ICGlyphTextureAtlas.mm in Sources */,
 				A62633AD1685D6D100286AC0 /* ICTextureGlyph.m in Sources */,
 				A62633B11685D6F600286AC0 /* ICMutableTexture2D.m in Sources */,
-				A62633F81686088F00286AC0 /* ICTextRun.m in Sources */,
+				A62633F81686088F00286AC0 /* ICGlyphRun.m in Sources */,
 				A62633FC1686292F00286AC0 /* ICVertexBuffer.m in Sources */,
 				A626340016862BBA00286AC0 /* ICGLBuffer.m in Sources */,
 				A626340416862D2100286AC0 /* ICIndexBuffer.m in Sources */,
