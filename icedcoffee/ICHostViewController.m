@@ -59,6 +59,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize frameUpdateMode = _frameUpdateMode;
 @synthesize frameCount = _frameCount;
 @synthesize elapsedTime = _elapsedTime;
+@synthesize fps = _fps;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 @synthesize openGLContext = _openGLContext;
 
@@ -174,18 +175,17 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         _lastUpdate = now;
         _frameCount++;
         
+        // Calculate current framerate
+        _fpsDelta += _deltaTime;
+        _fpsNumFrames++;
+        if (_fpsDelta >= 1.0f) {
+            [self willChangeValueForKey:@"fps"];
+            _fps = (float)_fpsNumFrames / _fpsDelta;
+            [self didChangeValueForKey:@"fps"];
 #if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
-        // FIXME: this needs to be refactored so that it works generically and for multiple HVCs
-        static int numFrames = 0;
-        static float dtsum = 0.0f;
-        dtsum += _deltaTime;
-        numFrames++;
-        if (dtsum >= 1.0f) {
-            ICLog(@"FPS: %f", (float)numFrames / dtsum);
-            dtsum -= 1.0f;
-            numFrames = 0;
-        }
+            ICLog(@"FPS: %f", _fps);
 #endif
+        }
     }
 }
 
