@@ -64,18 +64,31 @@
 @synthesize string = _string;
 @synthesize font = _font;
 @synthesize tracking = _tracking;
+@synthesize color = _color;
 
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font
 {
     return [[[[self class] alloc] initWithString:string font:font] autorelease];
 }
 
++ (id)glyphRunWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color
+{
+    return [[[[self class] alloc] initWithString:string font:font color:color] autorelease];
+}
+
 - (id)initWithString:(NSString *)string font:(ICFont *)font
 {
+    return [self initWithString:string font:font color:(icColor4B){0,0,0,255}];
+}
+
+- (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color
+{
     if ((self = [super init])) {
+        [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:nil];
         
+        self.color = color;
         self.string = string;
         self.font = font;
         
@@ -90,6 +103,7 @@
     self.string = nil;
     self.font = nil;
     
+    [self removeObserver:self forKeyPath:@"color"];
     [self removeObserver:self forKeyPath:@"string"];
     [self removeObserver:self forKeyPath:@"font"];
 
@@ -112,8 +126,9 @@
                        context:(void *)context
 {
     if (object == self &&
-        (([keyPath isEqualToString:@"string"] && self.font != nil) ||
-        ([keyPath isEqualToString:@"font"] && self.string != nil))) {
+        ([keyPath isEqualToString:@"color"] ||
+         [keyPath isEqualToString:@"font"] ||
+         [keyPath isEqualToString:@"string"])) {
         _buffersDirty = YES;
     }
 }
@@ -198,7 +213,7 @@
                     // Assign texture coordinates and color
                     for (ushort k=0; k<4; k++) {
                         quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
-                        quads[j].vertices[k].color = icColor4FMake(0, 0, 0, 1);
+                        quads[j].vertices[k].color = color4FFromColor4B(self.color);
                     }
                     
                     // Calculate and assign indices

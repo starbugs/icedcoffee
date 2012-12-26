@@ -44,6 +44,7 @@
 @protected
     NSString *_string;
     ICFont *_font;
+    icColor4B _color;
     BOOL _buffersDirty;
     NSMutableArray *_buffers;
 }
@@ -57,9 +58,19 @@
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font;
 
 /**
+ @brief Returns an autoreleased glyph run with the given text, font and color
+ */
++ (id)glyphRunWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color;
+
+/**
  @brief Initializes the receiver with the given text and font
  */
 - (id)initWithString:(NSString *)string font:(ICFont *)font;
+
+/**
+ @brief Initializes the receiver with the given text, font and color
+ */
+- (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color;
 
 
 /** @name Precaching Font Glyphs */
@@ -83,9 +94,14 @@
 @property (nonatomic, copy) NSString *string;
 
 /**
- @brief The font the receiver uses to draw its ICGlyphRun::text
+ @brief The font the receiver uses to draw its ICGlyphRun::string
  */
 @property (nonatomic, retain) ICFont *font;
+
+/**
+ @brief The color the receiver uses to draw its ICGlyphRun::string
+ */
+@property (nonatomic, assign) icColor4B color;
 
 /**
  @brief The tracking of the letters drawn by the receiver
