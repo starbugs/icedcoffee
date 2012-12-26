@@ -168,9 +168,9 @@
                                        &glyphs[i], 1);
             CFRelease(cgFont);
             
-            CGContextSetLineWidth(context, 1);
+            /*CGContextSetLineWidth(context, 1);
             CGContextSetGrayStrokeColor(context, 1, 1);
-            CGContextStrokeRect(context, CGRectMake(0, 0, w, h));
+            CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
             
             ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
             textureGlyph = [textureAtlas addGlyphBitmapData:data
