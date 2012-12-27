@@ -57,7 +57,7 @@
     NSDictionary *attrs2 = [NSDictionary dictionaryWithObjectsAndKeys:monaco, ICFontAttributeName, nil];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"The quick brown fox jumps over the lazy dog"
                                                                                    attributes:attrs1];
-    [attrString addAttributes:attrs2 range:NSMakeRange(0, 9)];
+    [attrString addAttributes:attrs2 range:NSMakeRange(0, 10)];
     ICTextLine *line = [ICTextLine textLineWithAttributedString:attrString];
     [scene addChild:line];
 
