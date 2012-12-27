@@ -46,6 +46,7 @@
     CGGlyph *_glyphs;
     CGPoint *_positions;
     kmVec4 _boundingBox;
+    float _baseline;
 }
 
 - (id)initWithCoreTextRun:(CTRunRef)run;
@@ -57,6 +58,7 @@
 @property (nonatomic, readonly) CGGlyph *glyphs;
 @property (nonatomic, readonly) CGPoint *positions;
 @property (nonatomic, readonly) kmVec4 boundingBox;
+@property (nonatomic, readonly) float baseline;
 
 @end
 
@@ -89,17 +91,19 @@
             CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
             CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
 
+            float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
+            _baseline = ceilf(_ascent) + marginInPoints;
+            
             kmVec2 min = kmVec2Make(IC_HUGE, IC_HUGE);
             kmVec2 max = kmVec2Make(0, 0);
             CFIndex i=0;
             for (; i<_glyphCount; i++) {
-                float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
                 float textureGlyphHeight = boundingRects[i].size.height + marginInPoints * 2;
                 
                 // TODO: determine orientation of tracking/margin compensation
                 
                 _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
-                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + ceilf(_ascent) + marginInPoints;
+                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + _baseline;
                 
                 kmVec2 extent = kmVec2Make(boundingRects[i].size.width + marginInPoints * 2,
                                            textureGlyphHeight);
@@ -422,9 +426,8 @@
 #if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
     [self removeAllChildren];
     [_dbgBaseline release];
-    float dbgBaselineY = ceilf(self.metrics.ascent + ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN));
-    _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, dbgBaselineY, 0)
-                                     target:kmVec3Make(self.origin.x + self.size.width, dbgBaselineY, 0)
+    _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, [self baseline], 0)
+                                     target:kmVec3Make(self.origin.x + self.size.width, [self baseline], 0)
                                   lineWidth:1.f
                           antialiasStrength:0.f
                                       color:(icColor4B){0,0,255,255}] retain];
@@ -492,6 +495,11 @@
         glDisableVertexAttribArray(ICVertexAttribColor);
         glDisableVertexAttribArray(ICVertexAttribTexCoords);        
     }
+}
+
+- (float)baseline
+{
+    return self.metrics.baseline;
 }
 
 @end

@@ -24,7 +24,7 @@
 #import "ICTextLine.h"
 
 @interface ICTextLine ()
-- (void)updateRuns;
+- (void)updateLine;
 @property (nonatomic, retain) NSMutableArray *runs;
 @end
 
@@ -90,7 +90,7 @@
                        context:(void *)context
 {
     if (object == self && [keyPath isEqualToString:@"attributedString"]) {
-        [self updateRuns];
+        [self updateLine];
     }
 }
 
@@ -99,11 +99,12 @@
     return [self.attributedString string];
 }
 
-- (void)updateRuns
+- (void)updateLine
 {
     [self removeAllChildren];
     self.runs = [NSMutableArray arrayWithCapacity:1];
     
+    __block float maxBaseline = 0.f;
     [self.attributedString enumerateAttributesInRange:NSMakeRange(0, self.attributedString.length)
                                               options:0
                                            usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
@@ -117,7 +118,15 @@
         }
         [self.runs addObject:run];
         [self addChild:run];
+
+        if ([run baseline] > maxBaseline) {
+           maxBaseline = [run baseline];
+        }
     }];
+    
+    for (ICGlyphRun *run in self.runs) {
+        [run setPositionY:run.position.y + maxBaseline - [run baseline]];
+    }
 }
 
 @end

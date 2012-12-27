@@ -139,5 +139,7 @@
  */
 @property (nonatomic, assign) float tracking;
 
+- (float)baseline;
+
 
 @end
