@@ -475,6 +475,10 @@
         
         glBindTexture(GL_TEXTURE_2D, 0);
         IC_CHECK_GL_ERROR_DEBUG();
+        
+        glDisableVertexAttribArray(ICVertexAttribPosition);
+        glDisableVertexAttribArray(ICVertexAttribColor);
+        glDisableVertexAttribArray(ICVertexAttribTexCoords);        
     }
 }
 

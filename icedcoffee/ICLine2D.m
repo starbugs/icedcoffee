@@ -272,6 +272,10 @@
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);
+    
     kmGLPopMatrix();
 }
 
