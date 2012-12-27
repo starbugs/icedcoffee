@@ -95,6 +95,9 @@
             for (; i<_glyphCount; i++) {
                 float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
                 float textureGlyphHeight = boundingRects[i].size.height + marginInPoints * 2;
+                
+                // TODO: determine orientation of tracking/margin compensation
+                
                 _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
                 _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + ceilf(_ascent) + marginInPoints;
                 
@@ -176,7 +179,6 @@
 // ICGlyphRun
 //
 
-// TODO: split metrics from buffer update, set size + origin when text and font are set
 // TODO: find better solution for solid color (via shader), remove color from vertices?
 // TODO: retain texture glyphs or automatize re-caching in case cache was purged?
 
@@ -309,8 +311,13 @@
         
         // Calculate new metrics
         self.metrics = [[[ICGlyphRunMetrics alloc] initWithCoreTextRun:run] autorelease];
+        self.origin = kmVec3Make(self.metrics.boundingBox.x,
+                                 self.metrics.boundingBox.y, 0);
+        self.size = kmVec3Make(self.metrics.boundingBox.width,
+                               self.metrics.boundingBox.height, 0);
 
         CFRelease(line);
+        [attributedString release];
     }
 }
 
@@ -320,123 +327,96 @@
     [_buffers release];
     _buffers = nil;
     
+    NSAssert(self.metrics != nil, @"Metrics must have been computed at this point");
+    
     // We only create a new buffer if necessary (both string and font are non-nil)
-    if (self.string && self.font) {
+    if (self.string && self.font && self.metrics) {
         // Re-create buffers
         _buffers = [[NSMutableArray alloc] initWithCapacity:1];
-
-        // Create a CoreText representation of the run
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
-        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.string
-                                                                               attributes:attributes];
-        CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);
-        CFArrayRef runs = CTLineGetGlyphRuns(line);
-        CFIndex runCount = CFArrayGetCount(runs);
-        NSAssert(runCount == 1, @"Shouldn't be more than 1 run");
         
-        for (CFIndex i=0; i<runCount; i++) {
-            CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
+        CGGlyph *glyphs = self.metrics.glyphs;
+        CFIndex glyphCount = self.metrics.glyphCount;
+        CGPoint *positions = self.metrics.positions;
+        
+        // Get texture glyphs separated by texture. The idea here is to create distinct VBOs and
+        // index buffers for all relevant glyphs that are cached on the same texture so as to
+        // limit the number of texture state changes.
+        ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
+        NSDictionary *glyphsByTexture = [glyphCache textureGlyphsSeparatedByTextureForGlyphs:glyphs
+                                                                                       count:glyphCount
+                                                                                        font:self.font];
+        
+        // Iterate over each returned array of glyphs by distinct texture
+        for (NSValue *textureKey in glyphsByTexture) {
+            // Get glyph entries and glyph count
+            NSArray *glyphEntries = [glyphsByTexture objectForKey:textureKey];
+            NSInteger textureGlyphCount = [glyphEntries count];
             
-            CGFloat ascent, descent, leading;
-            CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, &leading);
+            // Allocate memory for upload to VBO
+            icV3F_C4F_T2F_Quad *quads = (icV3F_C4F_T2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_Quad) * textureGlyphCount);
+            icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * textureGlyphCount);
             
-            CFIndex glyphCount = CTRunGetGlyphCount(run);
-            
-            CGGlyph *glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * glyphCount);
-            CTRunGetGlyphs(run, CFRangeMake(0, glyphCount), glyphs);
-            CGPoint *positions = (CGPoint *)malloc(sizeof(CGPoint) * glyphCount);
-            CTRunGetPositions(run, CFRangeMake(0, glyphCount), positions);
-            
-            // Get texture glyphs separated by texture. The idea here is to create distinct VBOs and
-            // index buffers for all relevant glyphs that are cached on the same texture so as to
-            // limit the number of texture state changes.
-            ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-            NSDictionary *glyphsByTexture = [glyphCache textureGlyphsSeparatedByTextureForGlyphs:glyphs
-                                                                                           count:glyphCount
-                                                                                            font:self.font];
-            
-            // Iterate over each returned array of glyphs by distinct texture
-            for (NSValue *textureKey in glyphsByTexture) {
-                // Get glyph entries and glyph count
-                NSArray *glyphEntries = [glyphsByTexture objectForKey:textureKey];
-                NSInteger textureGlyphCount = [glyphEntries count];
+            // Iterate over all relevant glyph entries for this texture
+            CFIndex j = 0;
+            for (NSArray *glyphEntry in glyphEntries) {
+                // Get the glyph's index in the run
+                NSInteger glyphIndex = [[glyphEntry objectAtIndex:0] integerValue];
+                // .. and the texture glyph itself
+                ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
                 
-                // Allocate memory for upload to VBO
-                icV3F_C4F_T2F_Quad *quads = (icV3F_C4F_T2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_Quad) * textureGlyphCount);
-                icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * textureGlyphCount);
+                // Calculate and assign vertex positions
+                float x1, x2, y1, y2, z;
                 
-                // Iterate over all relevant glyph entries for this texture
-                CFIndex j = 0;
-                for (NSArray *glyphEntry in glyphEntries) {
-                    // Get the glyph's index in the run
-                    NSInteger glyphIndex = [[glyphEntry objectAtIndex:0] integerValue];
-                    // .. and the texture glyph itself
-                    ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
-                    
-                    // Calculate and assign vertex positions
-                    float x1, x2, y1, y2, z;
-                    float positionX = positions[glyphIndex].x;
-                    float positionY = positions[glyphIndex].y;
-                    
-                    // TODO: determine orientation of tracking/margin compensation
-                    x1 = positionX + textureGlyph.boundingRect.origin.x + glyphIndex * self.tracking - IC_GLYPH_RECTANGLE_MARGIN;
-                    y1 = positionY - textureGlyph.size.height - ceilf(textureGlyph.boundingRect.origin.y) + ceilf(ascent) + IC_GLYPH_RECTANGLE_MARGIN;
-                    x2 = x1 + textureGlyph.size.width;
-                    y2 = y1 + textureGlyph.size.height;
-                    z = 0;
-                    
-                    quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
-                    quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
-                    quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
-                    quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
-                    
-                    // Assign texture coordinates and color
-                    for (ushort k=0; k<4; k++) {
-                        quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
-                        quads[j].vertices[k].color = color4FFromColor4B(self.color);
-                    }
-                    
-                    // Calculate and assign indices
-                    GLushort offset = (GLushort)j * 4;
-                    GLushort indices[] = {
-                        offset+0, offset+1, offset+2,
-                        offset+3, offset+2, offset+1
-                    };
-                    memcpy(quadIndices[j].indices, indices, sizeof(GLushort) * 6);
-                    j++;
+                x1 = positions[glyphIndex].x;
+                y1 = positions[glyphIndex].y;
+                x2 = x1 + textureGlyph.size.width;
+                y2 = y1 + textureGlyph.size.height;
+                z = 0;
+                
+                quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
+                quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
+                quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
+                quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
+                
+                // Assign texture coordinates and color
+                for (ushort k=0; k<4; k++) {
+                    quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
+                    quads[j].vertices[k].color = color4FFromColor4B(self.color);
                 }
-        
-                // Create buffers for all relevant glyphs of this texture
-                ICVertexBuffer *vertexBuffer = [ICVertexBuffer vertexBufferWithVertices:quads
-                                                                                  count:(GLuint)textureGlyphCount * 4
-                                                                                 stride:sizeof(icV3F_C4F_T2F)
-                                                                                  usage:GL_STATIC_DRAW];
                 
-                ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
-                                                                             count:(GLuint)textureGlyphCount * 6
-                                                                            stride:sizeof(GLushort)
-                                                                             usage:GL_STATIC_DRAW];
-                
-                ICTextureGlyphBuffer *glyphBuffer = [[ICTextureGlyphBuffer alloc]
-                                                     initWithVertexBuffer:vertexBuffer
-                                                     indexBuffer:indexBuffer
-                                                     textureAtlas:[textureKey pointerValue]];
-                
-                // Add buffers
-                [_buffers addObject:glyphBuffer];
-                
-                [glyphBuffer release];
-                free(quads);
-                free(quadIndices);
+                // Calculate and assign indices
+                GLushort offset = (GLushort)j * 4;
+                GLushort indices[] = {
+                    offset+0, offset+1, offset+2,
+                    offset+3, offset+2, offset+1
+                };
+                memcpy(quadIndices[j].indices, indices, sizeof(GLushort) * 6);
+                j++;
             }
-
-            free(glyphs);
-            free(positions);
+    
+            // Create buffers for all relevant glyphs of this texture
+            ICVertexBuffer *vertexBuffer = [ICVertexBuffer vertexBufferWithVertices:quads
+                                                                              count:(GLuint)textureGlyphCount * 4
+                                                                             stride:sizeof(icV3F_C4F_T2F)
+                                                                              usage:GL_STATIC_DRAW];
+            
+            ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
+                                                                         count:(GLuint)textureGlyphCount * 6
+                                                                        stride:sizeof(GLushort)
+                                                                         usage:GL_STATIC_DRAW];
+            
+            ICTextureGlyphBuffer *glyphBuffer = [[ICTextureGlyphBuffer alloc]
+                                                 initWithVertexBuffer:vertexBuffer
+                                                 indexBuffer:indexBuffer
+                                                 textureAtlas:[textureKey pointerValue]];
+            
+            // Add buffers
+            [_buffers addObject:glyphBuffer];
+            
+            [glyphBuffer release];
+            free(quads);
+            free(quadIndices);
         }
-        
-        CFRelease(line);
-        [attributedString release];
     }
     
     _dirty = NO;
