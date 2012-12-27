@@ -419,6 +419,18 @@
         }
     }
     
+#if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
+    [self removeAllChildren];
+    [_dbgBaseline release];
+    float dbgBaselineY = ceilf(self.metrics.ascent + ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN));
+    _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, dbgBaselineY, 0)
+                                     target:kmVec3Make(self.origin.x + self.size.width, dbgBaselineY, 0)
+                                  lineWidth:1.f
+                          antialiasStrength:0.f
+                                      color:(icColor4B){0,0,255,255}] retain];
+    [self addChild:_dbgBaseline];
+#endif
+    
     _dirty = NO;
 }
 

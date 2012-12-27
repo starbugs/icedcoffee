@@ -22,8 +22,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "icConfig.h"
 #import "ICNode.h"
 #import "ICFont.h"
+
+#if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
+#import "ICLine2D.h"
+#endif
 
 
 #define IC_DEFAULT_GLYPH_RUN_COLOR (icColor4B){0,0,0,255}
@@ -52,6 +57,10 @@
     BOOL _dirty;
     NSMutableArray *_buffers;
     ICGlyphRunMetrics *_metrics;
+    
+#if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
+    ICLine2D *_dbgBaseline;
+#endif
 }
 
 

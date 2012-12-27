@@ -125,5 +125,9 @@
 #define IC_ENABLE_DEBUG_GLYPH_CACHE 1
 #endif
 
+#ifndef IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
+#define IC_ENABLE_DEBUG_GLYPH_RUN_METRICS 1
+#endif
+
 /** @} */
 
