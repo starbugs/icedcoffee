@@ -90,6 +90,8 @@
             CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
             CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
             CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
+            CGSize *advances = malloc(sizeof(CGSize) * _glyphCount);
+            CTFontGetAdvancesForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, advances, _glyphCount);
 
             float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
             _baseline = ceilf(_ascent) + marginInPoints;
@@ -100,12 +102,12 @@
             for (; i<_glyphCount; i++) {
                 float textureGlyphHeight = boundingRects[i].size.height + marginInPoints * 2;
                 
-                // TODO: determine orientation of tracking/margin compensation
+                // FIXME: determine orientation of tracking/margin compensation
                 
                 _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
                 _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + _baseline;
                 
-                kmVec2 extent = kmVec2Make(boundingRects[i].size.width + marginInPoints * 2,
+                kmVec2 extent = kmVec2Make(advances[i].width + marginInPoints * 2,
                                            textureGlyphHeight);
                 
                 if (_positions[i].x < min.x)
@@ -121,6 +123,7 @@
             _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);
             
             free(boundingRects);
+            free(advances);
         }
     }
     return self;
