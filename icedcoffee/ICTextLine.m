@@ -32,6 +32,7 @@
 
 @synthesize runs = _runs;
 @synthesize attributedString = _attributedString;
+@synthesize baseline = _baseline;
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font
 {
@@ -123,6 +124,10 @@
            maxBaseline = [run baseline];
         }
     }];
+    
+    [self willChangeValueForKey:@"baseline"];
+    _baseline = maxBaseline;
+    [self didChangeValueForKey:@"baseline"];
     
     for (ICGlyphRun *run in self.runs) {
         [run setPositionY:run.position.y + maxBaseline - [run baseline]];

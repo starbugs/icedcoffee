@@ -36,6 +36,7 @@
 @protected
     NSMutableArray *_runs;
     NSAttributedString *_string;
+    float _baseline;
 }
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font;
@@ -53,5 +54,7 @@
 @property (nonatomic, copy) NSAttributedString *attributedString;
 
 - (NSString *)string;
+
+@property (nonatomic, readonly) float baseline;
 
 @end
