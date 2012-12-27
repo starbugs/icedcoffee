@@ -109,7 +109,12 @@
                                            usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
         NSString *subString = [[self string] substringWithRange:range];
         ICGlyphRun *run = [ICGlyphRun glyphRunWithString:subString attributes:attrs];
-        // FIXME: glyph advance orientation could be non-X
+        ICGlyphRun *prevRun = [self.runs lastObject];
+        if (prevRun) {
+            // FIXME: glyph advance orientation could be non-X
+            kmAABB prevRunAABB = [prevRun aabb];
+            [run setPositionX:prevRunAABB.max.x];
+        }
         [self.runs addObject:run];
         [self addChild:run];
     }];
