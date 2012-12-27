@@ -33,13 +33,15 @@
 /**
  @brief The size of the margin to add to each glyph's bounding box when extracting glyph textures
  
- This value is used to compensate for glyph antialiasing. Shouldn't be lower than 3.
+ This value is used to compensate for glyph antialiasing.
  */
-#define IC_GLYPH_RECTANGLE_MARGIN 20
+#define IC_GLYPH_RECTANGLE_MARGIN 2
 
 
 @class ICFont;
 @class ICTextureGlyph;
+
+// TODO: asynchronous caching
 
 /**
  @brief Implements a CoreText/OpenGL based font glyph cache
@@ -51,9 +53,6 @@
  atlases. The size of the textures storing those atlases may be controlled using the
  ICGlyphCache::textureSize property. By default, ICGlyphCache will pack glyphs into 1024x1024
  pixel textures.
- 
- If required, the cache can be purged at any time using the ICGlyphCache::purge method.
- The framework will automatically recache glyphs as necessary for text drawing.
  */
 @interface ICGlyphCache : NSObject {
 @protected
@@ -140,7 +139,7 @@
 /** @name Purging a Glyph Cache */
 
 /**
- @brief Purges the receiver's caches
+ @brief Purges the receiver
  */
 - (void)purge;
 

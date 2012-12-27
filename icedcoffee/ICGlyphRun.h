@@ -28,7 +28,8 @@
 
 #define IC_DEFAULT_GLYPH_RUN_COLOR (icColor4B){0,0,0,255}
 
-// FIXME: rename text to string
+@class ICGlyphRunMetrics;
+
 /**
  @brief Represents a drawable glyph run
  
@@ -48,8 +49,9 @@
     NSString *_string;
     ICFont *_font;
     icColor4B _color;
-    BOOL _buffersDirty;
+    BOOL _dirty;
     NSMutableArray *_buffers;
+    ICGlyphRunMetrics *_metrics;
 }
 
 

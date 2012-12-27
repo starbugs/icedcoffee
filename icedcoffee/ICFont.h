@@ -22,6 +22,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
 
 /**
  @brief Represents a font

@@ -32,10 +32,118 @@
 #import "icGLState.h"
 #import "ICShaderCache.h"
 
+
+//
+// ICGlyphRunMetrics
+//
+
+@interface ICGlyphRunMetrics : NSObject {
+@protected
+    CGFloat _ascent;
+    CGFloat _descent;
+    CGFloat _leading;
+    CFIndex _glyphCount;
+    CGGlyph *_glyphs;
+    CGPoint *_positions;
+    kmVec4 _boundingBox;
+}
+
+- (id)initWithCoreTextRun:(CTRunRef)run;
+
+@property (nonatomic, readonly) CGFloat ascent;
+@property (nonatomic, readonly) CGFloat descent;
+@property (nonatomic, readonly) CGFloat leading;
+@property (nonatomic, readonly) CFIndex glyphCount;
+@property (nonatomic, readonly) CGGlyph *glyphs;
+@property (nonatomic, readonly) CGPoint *positions;
+@property (nonatomic, readonly) kmVec4 boundingBox;
+
+@end
+
+@implementation ICGlyphRunMetrics
+
+@synthesize ascent = _ascent;
+@synthesize descent = _descent;
+@synthesize leading = _leading;
+@synthesize glyphCount = _glyphCount;
+@synthesize glyphs = _glyphs;
+@synthesize positions = _positions;
+@synthesize boundingBox = _boundingBox;
+
+- (id)initWithCoreTextRun:(CTRunRef)run
+{
+    if ((self = [super init])) {
+        NSAssert(run != nil, @"A valid run must be given");
+        
+        // Get metrics from CoreText
+        CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &_ascent, &_descent, &_leading);
+        _glyphCount = CTRunGetGlyphCount(run);
+        
+        if (_glyphCount > 0) {
+            _glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * _glyphCount);
+            CTRunGetGlyphs(run, CFRangeMake(0, _glyphCount), _glyphs);
+            _positions = (CGPoint *)malloc(sizeof(CGPoint) * _glyphCount);
+            CTRunGetPositions(run, CFRangeMake(0, _glyphCount), _positions);
+            
+            CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
+            CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
+            CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
+
+            kmVec2 min = kmVec2Make(IC_HUGE, IC_HUGE);
+            kmVec2 max = kmVec2Make(0, 0);
+            CFIndex i=0;
+            for (; i<_glyphCount; i++) {
+                float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
+                float textureGlyphHeight = boundingRects[i].size.height + marginInPoints * 2;
+                _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
+                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + ceilf(_ascent) + marginInPoints;
+                
+                kmVec2 extent = kmVec2Make(boundingRects[i].size.width + marginInPoints * 2,
+                                           textureGlyphHeight);
+                
+                if (_positions[i].x < min.x)
+                    min.x = _positions[i].x;
+                if (_positions[i].y < min.y)
+                    min.y = _positions[i].y;
+                if (_positions[i].x + extent.width > max.x)
+                    max.x = _positions[i].x + extent.width;
+                if (_positions[i].y + extent.height > max.y)
+                    max.y = _positions[i].y + extent.height;
+            }
+            
+            _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);
+            
+            free(boundingRects);
+        }
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    if (_glyphs)
+        free(_glyphs);
+    if (_positions)
+        free(_positions);
+    
+    [super dealloc];
+}
+
+@end
+
+
+//
+// ICTextureGlyphBuffer
+//
+
 @interface ICTextureGlyphBuffer : ICCombinedVertexIndexBuffer {
 @protected
     ICGlyphTextureAtlas *_textureAtlas;
 }
+
+- (id)initWithVertexBuffer:(ICVertexBuffer *)vertexBuffer
+               indexBuffer:(ICIndexBuffer *)indexBuffer
+              textureAtlas:(ICGlyphTextureAtlas *)textureAtlas;
 
 @property (nonatomic, retain) ICGlyphTextureAtlas *textureAtlas;
 
@@ -44,6 +152,16 @@
 @implementation ICTextureGlyphBuffer
 
 @synthesize textureAtlas = _textureAtlas;
+
+- (id)initWithVertexBuffer:(ICVertexBuffer *)vertexBuffer
+               indexBuffer:(ICIndexBuffer *)indexBuffer
+              textureAtlas:(ICGlyphTextureAtlas *)textureAtlas
+{
+    if ((self = [super initWithVertexBuffer:vertexBuffer indexBuffer:indexBuffer])) {
+        self.textureAtlas = textureAtlas;
+    }
+    return self;
+}
 
 - (void)dealloc
 {
@@ -54,11 +172,18 @@
 @end
 
 
+//
+// ICGlyphRun
+//
+
 // TODO: split metrics from buffer update, set size + origin when text and font are set
-// TODO: find better solution for solid color (via shader)
+// TODO: find better solution for solid color (via shader), remove color from vertices?
+// TODO: retain texture glyphs or automatize re-caching in case cache was purged?
 
 @interface ICGlyphRun ()
+- (void)updateMetrics;
 - (void)updateBuffers;
+@property (nonatomic, retain) ICGlyphRunMetrics *metrics;
 @end
 
 @implementation ICGlyphRun
@@ -67,6 +192,7 @@
 @synthesize font = _font;
 @synthesize tracking = _tracking;
 @synthesize color = _color;
+@synthesize metrics = _metrics;
 
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font
 {
@@ -159,7 +285,32 @@
         ([keyPath isEqualToString:@"color"] ||
          [keyPath isEqualToString:@"font"] ||
          [keyPath isEqualToString:@"string"])) {
-        _buffersDirty = YES;
+        _dirty = YES;
+    }
+    
+    if (_dirty) {
+        [self updateMetrics];
+    }
+}
+
+- (void)updateMetrics
+{
+    if (self.string && self.font) {
+        // Create a CoreText representation of the run
+        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
+        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.string
+                                                                               attributes:attributes];
+        CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);
+        CFArrayRef runs = CTLineGetGlyphRuns(line);
+        CFIndex runCount = CFArrayGetCount(runs);
+        NSAssert(runCount == 1, @"Shouldn't be more than 1 run");
+        CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, 0);
+        
+        // Calculate new metrics
+        self.metrics = [[[ICGlyphRunMetrics alloc] initWithCoreTextRun:run] autorelease];
+
+        CFRelease(line);
     }
 }
 
@@ -261,18 +412,21 @@
                                                                                   count:(GLuint)textureGlyphCount * 4
                                                                                  stride:sizeof(icV3F_C4F_T2F)
                                                                                   usage:GL_STATIC_DRAW];
+                
                 ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
                                                                              count:(GLuint)textureGlyphCount * 6
                                                                             stride:sizeof(GLushort)
                                                                              usage:GL_STATIC_DRAW];
-                ICTextureGlyphBuffer *glyphBuffer =
-                    [ICTextureGlyphBuffer combinedVertexIndexBufferWithVertexBuffer:vertexBuffer
-                                                                        indexBuffer:indexBuffer];
-                glyphBuffer.textureAtlas = [textureKey pointerValue];
+                
+                ICTextureGlyphBuffer *glyphBuffer = [[ICTextureGlyphBuffer alloc]
+                                                     initWithVertexBuffer:vertexBuffer
+                                                     indexBuffer:indexBuffer
+                                                     textureAtlas:[textureKey pointerValue]];
                 
                 // Add buffers
                 [_buffers addObject:glyphBuffer];
-        
+                
+                [glyphBuffer release];
                 free(quads);
                 free(quadIndices);
             }
@@ -285,12 +439,12 @@
         [attributedString release];
     }
     
-    _buffersDirty = NO;
+    _dirty = NO;
 }
 
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
-    if (_buffersDirty) {
+    if (_dirty) {
         [self updateBuffers];
     }
     
