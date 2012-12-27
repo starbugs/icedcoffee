@@ -23,6 +23,7 @@
 
 #import "ICPlanarNode.h"
 
+// FIXME: uses textured vertices with PositionColor shader
 @interface ICLine2D : ICPlanarNode {
 @protected
     icColor4B   _color;
