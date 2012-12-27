@@ -25,6 +25,9 @@
 #import "ICNode.h"
 #import "ICFont.h"
 
+
+#define IC_DEFAULT_GLYPH_RUN_COLOR (icColor4B){0,0,0,255}
+
 // FIXME: rename text to string
 /**
  @brief Represents a drawable glyph run
@@ -53,24 +56,34 @@
 /** @name Initialization */
 
 /**
- @brief Returns an autoreleased glyph run with the given text and font
+ @brief Returns an autoreleased glyph run with the given string and font
  */
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font;
 
 /**
- @brief Returns an autoreleased glyph run with the given text, font and color
+ @brief Returns an autoreleased glyph run with the given string, font and color
  */
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color;
 
 /**
- @brief Initializes the receiver with the given text and font
+ @brief Returns an autoreleased glyph run with the given string and attributes
+ */
++ (id)glyphRunWithString:(NSString *)string attributes:(NSDictionary *)attributes;
+
+/**
+ @brief Initializes the receiver with the given string and font
  */
 - (id)initWithString:(NSString *)string font:(ICFont *)font;
 
 /**
- @brief Initializes the receiver with the given text, font and color
+ @brief Initializes the receiver with the given string, font and color
  */
 - (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color;
+
+/**
+ @brief Initializes the receiver with the given string and attributes
+ */
+- (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
 
 
 /** @name Precaching Font Glyphs */

@@ -54,6 +54,8 @@
 @end
 
 
+// TODO: split metrics from buffer update, set size + origin when text and font are set
+// TODO: find better solution for solid color (via shader)
 
 @interface ICGlyphRun ()
 - (void)updateBuffers;
@@ -76,9 +78,14 @@
     return [[[[self class] alloc] initWithString:string font:font color:color] autorelease];
 }
 
++ (id)glyphRunWithString:(NSString *)string attributes:(NSDictionary *)attributes
+{
+    return [[[[self class] alloc] initWithString:string attributes:attributes] autorelease];
+}
+
 - (id)initWithString:(NSString *)string font:(ICFont *)font
 {
-    return [self initWithString:string font:font color:(icColor4B){0,0,0,255}];
+    return [self initWithString:string font:font color:IC_DEFAULT_GLYPH_RUN_COLOR];
 }
 
 - (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color
@@ -96,6 +103,29 @@
                               shaderProgramForKey:kICShader_PositionTextureA8Color];
     }
     return self;
+}
+
+- (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes
+{
+    if (!attributes) {
+        [NSException raise:NSInvalidArgumentException format:@"attributes must be non-nil"];
+    }
+    
+    ICFont *font = [attributes objectForKey:ICFontAttributeName];
+    if (!font) {
+        [NSException raise:NSInternalInconsistencyException
+                    format:@"attributes dictionary must contain a font value"];
+    }
+    
+    NSValue *colorValue = [attributes objectForKey:ICColorAttributeName];
+    icColor4B color;
+    if (colorValue) {
+        [colorValue getValue:&color];
+    } else {
+        color = IC_DEFAULT_GLYPH_RUN_COLOR;
+    }
+    
+    return [self initWithString:string font:font color:color];
 }
 
 - (void)dealloc

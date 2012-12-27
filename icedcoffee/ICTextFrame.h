@@ -21,11 +21,13 @@
 //  SOFTWARE.
 //
 
-#pragma once
+#import "ICNode.h"
+#import "ICFont.h"
 
-#import <CoreGraphics/CoreGraphics.h>
+@interface ICTextFrame : ICNode
 
-typedef CGGlyph ICGlyph;
++ (id)textFrameWithString:(NSString *)string font:(ICFont *)font;
 
-#define ICFontAttributeName @"ICFont"
-#define ICColorAttributeName @"ICColor"
+- (id)initWithString:(NSString *)string font:(ICFont *)font;
+
+@end

@@ -21,11 +21,17 @@
 //  SOFTWARE.
 //
 
-#pragma once
+#import "ICTextFrame.h"
 
-#import <CoreGraphics/CoreGraphics.h>
+@implementation ICTextFrame
 
-typedef CGGlyph ICGlyph;
++ (id)textFrameWithString:(NSString *)string font:(ICFont *)font
+{
+    return [[[[self class] alloc] initWithString:string font:font] autorelease];
+}
 
-#define ICFontAttributeName @"ICFont"
-#define ICColorAttributeName @"ICColor"
+- (id)initWithString:(NSString *)string font:(ICFont *)font
+{
+}
+
+@end

@@ -21,11 +21,37 @@
 //  SOFTWARE.
 //
 
-#pragma once
+#import "ICNode.h"
+#import "icFontTypes.h"
+#import "ICFont.h"
+#import "ICGlyphRun.h"
 
-#import <CoreGraphics/CoreGraphics.h>
+/**
+ @brief Represents a drawable line of text
+ 
+ The ICTextLine class represents a drawable line of text consisting of one or more glyph runs
+ (see the ICGlyphRun class).
+ */
+@interface ICTextLine : ICNode {
+@protected
+    NSMutableArray *_runs;
+    NSAttributedString *_string;
+}
 
-typedef CGGlyph ICGlyph;
++ (id)textLineWithString:(NSString *)string font:(ICFont *)font;
 
-#define ICFontAttributeName @"ICFont"
-#define ICColorAttributeName @"ICColor"
++ (id)textLineWithString:(NSString *)string attributes:(NSDictionary *)attributes;
+
++ (id)textLineWithAttributedString:(NSAttributedString *)attributedString;
+
+- (id)initWithString:(NSString *)string font:(ICFont *)font;
+
+- (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
+
+- (id)initWithAttributedString:(NSAttributedString *)attributedString;
+
+@property (nonatomic, copy) NSAttributedString *attributedString;
+
+- (NSString *)string;
+
+@end
