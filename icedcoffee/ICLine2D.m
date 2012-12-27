@@ -96,7 +96,7 @@
         self.antialiasStrength = antialiasStrength;
         self.color = color;
         self.shaderProgram = [[ICShaderCache currentShaderCache]
-                              shaderProgramForKey:kICShader_PositionTextureColor];
+                              shaderProgramForKey:kICShader_PositionColor];
     }
     return self;
 }
