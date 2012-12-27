@@ -31,6 +31,7 @@
 #import "ICGlyphTextureAtlas.h"
 #import "icGLState.h"
 #import "ICShaderCache.h"
+#import "ICFontCache.h"
 
 
 //
@@ -263,6 +264,26 @@
     return [self initWithString:string font:font color:color];
 }
 
+- (id)initWithCoreTextRun:(CTRunRef)run
+{
+    if (!run) {
+        [NSException raise:NSInvalidArgumentException format:@"run argument may not be nil"];
+    }
+    
+    _ctRun = run;
+    
+    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:1];
+    
+    CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
+    ICFont *font = [[ICFontCache sharedFontCache] fontForCTFontRef:runFont];
+    NSAssert(font != nil, @"No icedcoffee font cached for the run's CTFontRef");
+    [attributes setObject:font forKey:ICFontAttributeName];
+    
+    // TODO: extract/convert color attribute
+    
+    return [self initWithString:nil attributes:attributes];
+}
+
 - (void)dealloc
 {
     self.string = nil;
@@ -304,17 +325,22 @@
 
 - (void)updateMetrics
 {
-    if (self.string && self.font) {
-        // Create a CoreText representation of the run
-        NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
-        NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:self.string
-                                                                               attributes:attributes];
-        CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);
-        CFArrayRef runs = CTLineGetGlyphRuns(line);
-        CFIndex runCount = CFArrayGetCount(runs);
-        NSAssert(runCount == 1, @"Shouldn't be more than 1 run");
-        CTRunRef run = (CTRunRef)CFArrayGetValueAtIndex(runs, 0);
+    if ((self.string || _ctRun) && self.font) {
+        CTLineRef line = nil;
+        CTRunRef run = _ctRun;
+        
+        if (!run) {
+            // Create a CoreText representation of the run
+            NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
+                                        (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
+            NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:self.string
+                                                                                    attributes:attributes] autorelease];
+            line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);
+            CFArrayRef runs = CTLineGetGlyphRuns(line);
+            CFIndex runCount = CFArrayGetCount(runs);
+            NSAssert(runCount == 1, @"Shouldn't be more than 1 run");
+            run = (CTRunRef)CFArrayGetValueAtIndex(runs, 0);
+        }
         
         // Calculate new metrics
         self.metrics = [[[ICGlyphRunMetrics alloc] initWithCoreTextRun:run] autorelease];
@@ -323,8 +349,9 @@
         self.size = kmVec3Make(self.metrics.boundingBox.width,
                                self.metrics.boundingBox.height, 0);
 
-        CFRelease(line);
-        [attributedString release];
+        if (line) {
+            CFRelease(line);
+        }
     }
 }
 
@@ -337,7 +364,7 @@
     NSAssert(self.metrics != nil, @"Metrics must have been computed at this point");
     
     // We only create a new buffer if necessary (both string and font are non-nil)
-    if (self.string && self.font && self.metrics) {
+    if (self.font && self.metrics) {
         // Re-create buffers
         _buffers = [[NSMutableArray alloc] initWithCapacity:1];
         
@@ -430,10 +457,10 @@
     [self removeAllChildren];
     [_dbgBaseline release];
     _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, [self baseline], 0)
-                                     target:kmVec3Make(self.origin.x + self.size.width, [self baseline], 0)
-                                  lineWidth:1.f
-                          antialiasStrength:0.f
-                                      color:(icColor4B){0,0,255,255}] retain];
+                                      target:kmVec3Make(self.origin.x + self.size.width, [self baseline], 0)
+                                   lineWidth:1.f
+                           antialiasStrength:0.f
+                                       color:(icColor4B){0,0,255,255}] retain];
     [self addChild:_dbgBaseline];
 #endif
     

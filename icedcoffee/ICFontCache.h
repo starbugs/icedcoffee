@@ -21,63 +21,23 @@
 //  SOFTWARE.
 //
 
-#import <CoreText/CoreText.h>
+#import <Foundation/Foundation.h>
 #import "ICFont.h"
-#import "ICFontCache.h"
 
-@interface ICFont ()
-
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size;
-- (void)setName:(NSString *)name;
-- (void)setSize:(CGFloat)size;
-
-@end
-
-@implementation ICFont
-
-@synthesize name = _name;
-@synthesize fontRef = _fontRef;
-@synthesize size = _size;
-
-+ (id)fontWithName:(NSString *)fontName size:(CGFloat)size
-{
-    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName];
-    if (!cachedFont) {
-        cachedFont = [[[[self class] alloc] initWithName:fontName size:(CGFloat)size] autorelease];
-    }
-    return cachedFont;
+@interface ICFontCache : NSObject {
+@protected
+    NSMutableDictionary *_fontsByName;
+    NSMutableDictionary *_fontsByCTFontRef;
 }
 
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size
-{
-    if ((self = [super init])) {
-        _fontRef = CTFontCreateWithName((CFStringRef)fontName, size, nil);
-        self.name = fontName;
-        self.size = size;
-        
-        // Register font upon initialization
-        [[ICFontCache sharedFontCache] registerFont:self];
-    }
-    return self;
-}
++ (id)sharedFontCache;
 
-- (void)dealloc
-{
-    CFRelease(_fontRef);
-    self.name = nil;
-    
-    [super dealloc];
-}
+- (id)init;
 
-- (void)setName:(NSString *)name
-{
-    [_name release];
-    _name = [name copy];
-}
+- (void)registerFont:(ICFont *)font;
 
-- (void)setSize:(CGFloat)size
-{
-    _size = size;
-}
+- (ICFont *)fontForCTFontRef:(CTFontRef)fontRef;
+
+- (ICFont *)fontForName:(NSString *)name;
 
 @end

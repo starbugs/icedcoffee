@@ -26,6 +26,9 @@
 
 /**
  @brief Represents a font
+ 
+ You don't create ICFont objects using the ``alloc`` and ``init`` methods. Instead, you use
+ ICFont::fontWithName:size: to retrieve a font from the framework.
  */
 @interface ICFont : NSObject {
 @protected
@@ -34,7 +37,7 @@
     CGFloat _size;
 }
 
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size;
++ (id)fontWithName:(NSString *)fontName size:(CGFloat)size;
 
 @property (nonatomic, readonly) NSString *name;
 

@@ -21,63 +21,56 @@
 //  SOFTWARE.
 //
 
-#import <CoreText/CoreText.h>
-#import "ICFont.h"
 #import "ICFontCache.h"
 
-@interface ICFont ()
+ICFontCache *g_sharedFontCache = nil;
 
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size;
-- (void)setName:(NSString *)name;
-- (void)setSize:(CGFloat)size;
+@implementation ICFontCache
 
-@end
-
-@implementation ICFont
-
-@synthesize name = _name;
-@synthesize fontRef = _fontRef;
-@synthesize size = _size;
-
-+ (id)fontWithName:(NSString *)fontName size:(CGFloat)size
++ (id)sharedFontCache
 {
-    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName];
-    if (!cachedFont) {
-        cachedFont = [[[[self class] alloc] initWithName:fontName size:(CGFloat)size] autorelease];
+    @synchronized (self) {
+        if (!g_sharedFontCache) {
+            g_sharedFontCache = [[[self class] alloc] init];
+        }
     }
-    return cachedFont;
+    return g_sharedFontCache;
 }
 
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size
+- (id)init
 {
     if ((self = [super init])) {
-        _fontRef = CTFontCreateWithName((CFStringRef)fontName, size, nil);
-        self.name = fontName;
-        self.size = size;
-        
-        // Register font upon initialization
-        [[ICFontCache sharedFontCache] registerFont:self];
+        _fontsByName = [[NSMutableDictionary alloc] init];
+        _fontsByCTFontRef = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
 
 - (void)dealloc
 {
-    CFRelease(_fontRef);
-    self.name = nil;
-    
+    [_fontsByName release];
+    [_fontsByCTFontRef release];
     [super dealloc];
 }
 
-- (void)setName:(NSString *)name
+- (void)registerFont:(ICFont *)font
 {
-    [_name release];
-    _name = [name copy];
+    if (![_fontsByName objectForKey:font.name]) {
+        [_fontsByName setObject:font forKey:font.name];
+        [_fontsByCTFontRef setObject:font forKey:[NSValue valueWithPointer:font.fontRef]];
+    } else {
+        NSLog(@"Warning: font cache already contains a font for name '%@'", font.name);
+    }
 }
 
-- (void)setSize:(CGFloat)size
+- (ICFont *)fontForCTFontRef:(CTFontRef)fontRef
 {
-    _size = size;
+    return [_fontsByCTFontRef objectForKey:[NSValue valueWithPointer:fontRef]];
+}
+
+- (ICFont *)fontForName:(NSString *)name
+{
+    return [_fontsByName objectForKey:name];
 }
 
 @end

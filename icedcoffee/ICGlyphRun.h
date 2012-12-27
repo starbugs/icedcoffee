@@ -57,6 +57,7 @@
     BOOL _dirty;
     NSMutableArray *_buffers;
     ICGlyphRunMetrics *_metrics;
+    CTRunRef _ctRun;
     
 #if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
     ICLine2D *_dbgBaseline;
@@ -95,6 +96,11 @@
  @brief Initializes the receiver with the given string and attributes
  */
 - (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
+
+/**
+ @brief Initializes the receiver with the given CoreText run
+ */
+- (id)initWithCoreTextRun:(CTRunRef)run;
 
 
 /** @name Precaching Font Glyphs */
