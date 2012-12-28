@@ -32,6 +32,7 @@
 #import "icGLState.h"
 #import "ICShaderCache.h"
 #import "ICFontCache.h"
+#import "icFontUtils.h"
 
 
 //
@@ -271,17 +272,15 @@
     }
     
     _ctRun = run;
+
+    NSDictionary *attributes = icCreateTextAttributesWithCTAttributes(
+        (NSDictionary *)CTRunGetAttributes(run)
+    );
     
-    NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithCapacity:1];
+    self = [self initWithString:nil attributes:attributes];
     
-    CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
-    ICFont *font = [[ICFontCache sharedFontCache] fontForCTFontRef:runFont];
-    NSAssert(font != nil, @"No icedcoffee font cached for the run's CTFontRef");
-    [attributes setObject:font forKey:ICFontAttributeName];
-    
-    // TODO: extract/convert color attribute
-    
-    return [self initWithString:nil attributes:attributes];
+    [attributes release];
+    return self;
 }
 
 - (void)dealloc
