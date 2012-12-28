@@ -116,7 +116,7 @@
         ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line];
         CGPoint origin = origins[i];
         origin.y += roundf([textLine ascent]);
-        NSLog(@"origin: %f", origin.y);
+        //NSLog(@"origin: %f", origin.y);
         [textLine setPositionY:self.size.height - origin.y];
         [self.lines addObject:textLine];
         [self addChild:textLine];
