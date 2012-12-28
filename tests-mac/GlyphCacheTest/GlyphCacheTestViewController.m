@@ -29,18 +29,18 @@
 {
     ICUIScene *scene = [ICUIScene scene];
     
-    ICFont *arial = [[ICFont alloc] initWithName:@"Arial Bold" size:50];
-    ICFont *monaco = [[ICFont alloc] initWithName:@"Monaco" size:50];
+    ICFont *arial = [ICFont fontWithName:@"Arial Bold" size:50];
+    ICFont *georgia = [ICFont fontWithName:@"Georgia" size:50];
 
     //ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
     //[glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
-    //[glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:monaco];
+    //[glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:georgia];
 
     /*ICGlyphRun *textRun = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
     [textRun setPositionY:10];
     [scene addChild:textRun];
     
-    ICGlyphRun *textRun2 = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:monaco] precache];
+    ICGlyphRun *textRun2 = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:georgia] precache];
     [textRun2 setPositionY:100];
     [scene addChild:textRun2];*/
 
@@ -54,7 +54,7 @@
     [scene addChild:sprite];*/
     
     NSDictionary *attrs1 = [NSDictionary dictionaryWithObjectsAndKeys:arial, ICFontAttributeName, nil];
-    NSDictionary *attrs2 = [NSDictionary dictionaryWithObjectsAndKeys:monaco, ICFontAttributeName, nil];
+    NSDictionary *attrs2 = [NSDictionary dictionaryWithObjectsAndKeys:georgia, ICFontAttributeName, nil];
     NSMutableAttributedString *attrString = [[NSMutableAttributedString alloc] initWithString:@"The quick brown fox jumps over the lazy dog"
                                                                                    attributes:attrs1];
     [attrString addAttributes:attrs2 range:NSMakeRange(0, 10)];
