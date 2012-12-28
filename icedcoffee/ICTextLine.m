@@ -136,6 +136,7 @@
         CFRetain(_ctLine);
 }
 
+// FIXME: must set bounds on self
 - (void)updateLine
 {
     [self removeAllChildren];

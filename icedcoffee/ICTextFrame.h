@@ -24,10 +24,20 @@
 #import "ICNode.h"
 #import "ICFont.h"
 
-@interface ICTextFrame : ICNode
+@interface ICTextFrame : ICNode {
+@protected
+    NSAttributedString *_attributedString;
+    NSMutableArray *_lines;
+}
 
-+ (id)textFrameWithString:(NSString *)string font:(ICFont *)font;
++ (id)textFrameWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
 
-- (id)initWithString:(NSString *)string font:(ICFont *)font;
+- (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
+
+- (id)initWithFrame:(kmVec4)frame string:(NSString *)string attributes:(NSDictionary *)attributes;
+
+- (id)initWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString;
+
+@property (nonatomic, copy) NSAttributedString *attributedString;
 
 @end

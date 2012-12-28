@@ -22,16 +22,108 @@
 //
 
 #import "ICTextFrame.h"
+#import "ICTextLine.h"
+#import "icFontTypes.h"
+#import "icFontUtils.h"
+
+@interface ICTextFrame ()
+- (void)updateFrame;
+@property (nonatomic, retain) NSMutableArray *lines;
+@end
 
 @implementation ICTextFrame
 
-+ (id)textFrameWithString:(NSString *)string font:(ICFont *)font
+@synthesize lines = _lines;
+@synthesize attributedString = _attributedString;
+
++ (id)textFrameWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font
 {
-    return [[[[self class] alloc] initWithString:string font:font] autorelease];
+    return [[[[self class] alloc] initWithFrame:frame string:string font:font] autorelease];
 }
 
-- (id)initWithString:(NSString *)string font:(ICFont *)font
+- (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font
 {
+    return [self initWithFrame:frame
+                        string:string
+                    attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                                font, ICFontAttributeName, nil]];
+}
+
+- (id)initWithFrame:(kmVec4)frame string:(NSString *)string attributes:(NSDictionary *)attributes
+{
+    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string
+                                                                           attributes:attributes];
+    self = [self initWithFrame:frame attributedString:attributedString];
+    [attributedString release];
+    return self;
+}
+
+- (id)initWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString
+{
+    if ((self = [super init])) {
+        [self addObserver:self
+               forKeyPath:@"attributedString"
+                  options:NSKeyValueObservingOptionNew
+                  context:nil];
+        self.position = kmVec3Make(frame.x, frame.y, 0);
+        self.size = kmVec3Make(frame.width, frame.height, 0);
+        self.attributedString = attributedString;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    self.attributedString = nil;
+    [super dealloc];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (object == self && [keyPath isEqualToString:@"attributedString"]) {
+        [self updateFrame];
+    }
+}
+
+// FIXME: must set bounds on self
+- (void)updateFrame
+{
+    [self removeAllChildren];
+    
+    CGRect frameRect = CGRectMake(self.origin.x, self.origin.y, self.size.width, self.size.height);
+    CGPathRef path = CGPathCreateWithRect(frameRect, NULL);
+    
+    NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)ctAttString);
+    CTFrameRef frame = CTFramesetterCreateFrame(framesetter, CFRangeMake(0, 0), path, NULL);
+
+    CFArrayRef lines = CTFrameGetLines(frame);
+    CFIndex lineCount = CFArrayGetCount(lines);
+    self.lines = [NSMutableArray arrayWithCapacity:lineCount];
+
+    CGPoint *origins = (CGPoint *)malloc(sizeof(CGPoint) * lineCount);
+    CTFrameGetLineOrigins(frame, CFRangeMake(0, 0), origins);
+
+    for (CFIndex i=0; i<lineCount; i++) {
+        CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, i);
+        ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line];
+        CGPoint origin = origins[i];
+        origin.y += roundf([textLine ascent]);
+        NSLog(@"origin: %f", origin.y);
+        [textLine setPositionY:self.size.height - origin.y];
+        [self.lines addObject:textLine];
+        [self addChild:textLine];
+        [textLine release];
+    }
+    
+    [ctAttString release];
+    free(origins);
+    CFRelease(path);
+    CFRelease(framesetter);
+    CFRelease(frame);
 }
 
 @end
