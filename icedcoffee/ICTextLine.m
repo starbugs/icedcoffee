@@ -141,7 +141,7 @@
 {
     [self removeAllChildren];
     
-    CTLineRef ctLine;
+    CTLineRef ctLine = nil;
     if (self.ctLine) {
         ctLine = self.ctLine;
         CFRetain(self.ctLine);
