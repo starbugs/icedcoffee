@@ -253,7 +253,7 @@
                     format:@"attributes dictionary must contain a font value"];
     }
     
-    NSValue *colorValue = [attributes objectForKey:ICColorAttributeName];
+    NSValue *colorValue = [attributes objectForKey:ICForegroundColorAttributeName];
     icColor4B color;
     if (colorValue) {
         [colorValue getValue:&color];

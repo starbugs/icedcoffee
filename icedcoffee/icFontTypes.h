@@ -28,4 +28,4 @@
 typedef CGGlyph ICGlyph;
 
 #define ICFontAttributeName @"ICFont"
-#define ICColorAttributeName @"ICColor"
+#define ICForegroundColorAttributeName @"ICForegroundColor"
