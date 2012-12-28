@@ -41,6 +41,11 @@
     return [[[[self class] alloc] initWithFrame:frame string:string font:font] autorelease];
 }
 
++ (id)textFrameWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString
+{
+    return [[[[self class] alloc] initWithFrame:frame attributedString:attributedString] autorelease];
+}
+
 - (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font
 {
     return [self initWithFrame:frame

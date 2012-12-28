@@ -32,6 +32,8 @@
 
 + (id)textFrameWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
 
++ (id)textFrameWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString;
+
 - (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
 
 - (id)initWithFrame:(kmVec4)frame string:(NSString *)string attributes:(NSDictionary *)attributes;
