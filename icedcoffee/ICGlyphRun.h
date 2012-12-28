@@ -143,9 +143,12 @@
  The default value for this property is 0, indicating that only the glyphs' font-defined advances
  should be used to typeset the run.
  */
+// FIXME: re-implement tracking via CoreText kerning attribute
 @property (nonatomic, assign) float tracking;
 
 - (float)baseline;
+
+- (float)ascent;
 
 
 @end

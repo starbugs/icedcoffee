@@ -22,6 +22,8 @@
 //
 
 #import "ICTextLine.h"
+#import "icFontUtils.h"
+#import "ICGlyphCache.h"
 
 @interface ICTextLine ()
 - (void)updateLine;
@@ -100,7 +102,7 @@
     return [self.attributedString string];
 }
 
-- (void)updateLine
+/*- (void)updateLine
 {
     [self removeAllChildren];
     self.runs = [NSMutableArray arrayWithCapacity:1];
@@ -132,6 +134,36 @@
     for (ICGlyphRun *run in self.runs) {
         [run setPositionY:run.position.y + maxBaseline - [run baseline]];
     }
+}*/
+
+- (void)updateLine
+{
+    [self removeAllChildren];
+    
+    NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
+    CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)ctAttString);
+    [ctAttString release];
+    
+    CFArrayRef runs = CTLineGetGlyphRuns(line);
+    CFIndex runCount = CFArrayGetCount(runs);
+    
+    CGFloat lineAscent;
+    CTLineGetTypographicBounds(line, &lineAscent, NULL, NULL);
+    float lineBaseline = ceilf(lineAscent) + IC_GLYPH_RECTANGLE_MARGIN;
+    
+    self.runs = [NSMutableArray arrayWithCapacity:runCount];
+    
+    for (CFIndex i=0; i<runCount; i++) {
+        CTRunRef ctRun = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
+        ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun];
+        float runBaseline = [run baseline];
+        [run setPositionY:lineBaseline - runBaseline];
+        [self.runs addObject:run];
+        [self addChild:run];
+        [run release];
+    }
+    
+    CFRelease(line);
 }
 
 @end

@@ -47,3 +47,36 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
     
     return ctAttrs;
 }
+
+NSAttributedString *icCreateAttributedStringWithCTAttributedString(NSAttributedString *ctAttString)
+{
+    __block NSMutableAttributedString *icAttString;
+    icAttString = [[NSMutableAttributedString alloc] initWithString:[ctAttString string]];
+
+    [ctAttString enumerateAttributesInRange:NSMakeRange(0, [ctAttString length])
+                                    options:0
+                                 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+        NSDictionary *icAttrs = icCreateTextAttributesWithCTAttributes(attrs);
+        [icAttString addAttributes:icAttrs range:range];
+        [icAttrs release];
+    }];
+    
+    return icAttString;
+}
+
+NSAttributedString *icCreateCTAttributedStringWithAttributedString(NSAttributedString *icAttString)
+{
+    __block NSMutableAttributedString *ctAttString;
+    ctAttString = [[NSMutableAttributedString alloc] initWithString:[icAttString string]];
+    
+    [icAttString enumerateAttributesInRange:NSMakeRange(0, [icAttString length])
+                                    options:0
+                                 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+        NSDictionary *ctAttrs = icCreateCTAttributesWithTextAttributes(attrs);
+        [ctAttString addAttributes:ctAttrs range:range];
+        [ctAttrs release];
+    }];
+    
+    return ctAttString;
+}
+

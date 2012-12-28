@@ -531,4 +531,9 @@
     return self.metrics.baseline;
 }
 
+- (float)ascent
+{
+    return (float)self.metrics.ascent;
+}
+
 @end

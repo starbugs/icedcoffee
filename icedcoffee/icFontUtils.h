@@ -40,6 +40,16 @@ extern "C" {
      @brief Creates a CoreText attributes dictionary from an icedcoffee text attributes dictionary
      */
     NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs);
+    
+    /**
+     @brief Creates an icedcoffee attributed string from a CoreText attributed string
+     */
+    NSAttributedString *icCreateAttributedStringWithCTAttributedString(NSAttributedString *ctAttString);
+    
+    /**
+     @brief Creates a CoreText attributed string from an icedcoffee attributed string
+     */
+    NSAttributedString *icCreateCTAttributedStringWithAttributedString(NSAttributedString *icAttString);
 
 #ifdef __cplusplus
 }
