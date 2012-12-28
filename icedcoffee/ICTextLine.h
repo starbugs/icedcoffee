@@ -34,6 +34,7 @@
  */
 @interface ICTextLine : ICNode {
 @protected
+    CTLineRef _ctLine;
     NSMutableArray *_runs;
     NSAttributedString *_string;
     CGFloat _ascent;
@@ -52,6 +53,8 @@
 - (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
 
 - (id)initWithAttributedString:(NSAttributedString *)attributedString;
+
+- (id)initWithCoreTextLine:(CTLineRef)ctLine;
 
 @property (nonatomic, copy) NSAttributedString *attributedString;
 

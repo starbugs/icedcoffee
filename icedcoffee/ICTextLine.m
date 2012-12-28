@@ -26,8 +26,15 @@
 #import "ICGlyphCache.h"
 
 @interface ICTextLine ()
+
+- (NSAttributedString *)coreTextAttributedString;
 - (void)updateLine;
+
 @property (nonatomic, retain) NSMutableArray *runs;
+
+- (CTLineRef)ctLine;
+- (void)setCtLine:(CTLineRef)ctLine;
+
 @end
 
 @implementation ICTextLine
@@ -78,8 +85,15 @@
     return self;
 }
 
+- (id)initWithCoreTextLine:(CTLineRef)ctLine
+{
+    self.ctLine = ctLine;
+    return [self initWithAttributedString:nil];
+}
+
 - (void)dealloc
 {
+    self.ctLine = nil;
     self.attributedString = nil;
     [self removeObserver:self forKeyPath:@"attributedString"];
 
@@ -101,18 +115,46 @@
     return [self.attributedString string];
 }
 
+- (NSAttributedString *)coreTextAttributedString
+{
+    NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
+    [ctAttString autorelease];
+    return ctAttString;
+}
+
+- (CTLineRef)ctLine
+{
+    return _ctLine;
+}
+
+- (void)setCtLine:(CTLineRef)ctLine
+{
+    if (_ctLine)
+        CFRelease(_ctLine);
+    _ctLine = ctLine;
+    if (_ctLine)
+        CFRetain(_ctLine);
+}
+
 - (void)updateLine
 {
     [self removeAllChildren];
     
-    NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
-    CTLineRef line = CTLineCreateWithAttributedString((CFAttributedStringRef)ctAttString);
-    [ctAttString release];
+    CTLineRef ctLine;
+    if (self.ctLine) {
+        ctLine = self.ctLine;
+        CFRetain(self.ctLine);
+    }
+    if (!ctLine) {
+        NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
+        ctLine = CTLineCreateWithAttributedString((CFAttributedStringRef)ctAttString);
+        [ctAttString release];
+    }
     
-    CFArrayRef runs = CTLineGetGlyphRuns(line);
+    CFArrayRef runs = CTLineGetGlyphRuns(ctLine);
     CFIndex runCount = CFArrayGetCount(runs);
     
-    CTLineGetTypographicBounds(line, &_ascent, &_descent, &_leading);
+    CTLineGetTypographicBounds(ctLine, &_ascent, &_descent, &_leading);
     float lineAscent = roundf(_ascent);
     
     self.runs = [NSMutableArray arrayWithCapacity:runCount];
@@ -127,7 +169,7 @@
         [run release];
     }
     
-    CFRelease(line);
+    CFRelease(ctLine);
 }
 
 - (float)ascent
