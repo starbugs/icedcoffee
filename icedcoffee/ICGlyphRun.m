@@ -271,6 +271,7 @@
     }
     
     _ctRun = run;
+    CFRetain(_ctRun);
 
     NSDictionary *attributes = icCreateTextAttributesWithCTAttributes(
         (NSDictionary *)CTRunGetAttributes(run)
@@ -292,6 +293,8 @@
     [self removeObserver:self forKeyPath:@"font"];
 
     [_buffers release];
+    
+    CFRelease(_ctRun);
     
     [super dealloc];
 }
