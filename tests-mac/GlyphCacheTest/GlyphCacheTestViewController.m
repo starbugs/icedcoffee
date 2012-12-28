@@ -68,7 +68,7 @@
                                                                                         attributes:frameAttrs];
     [frameAttrString addAttribute:ICFontAttributeName value:georgia range:NSMakeRange(0, 99)];
     [frameAttrString addAttribute:ICFontAttributeName value:monaco range:NSMakeRange(202, [frameAttrString length]-202)];
-    ICTextFrame *textFrame = [ICTextFrame textFrameWithFrame:kmVec4Make(0, 0, 200, 200)
+    ICTextFrame *textFrame = [ICTextFrame textFrameWithFrame:kmVec4Make(20, 20, 200, 200)
                                             attributedString:frameAttrString];
     [scene addChild:textFrame];
 
