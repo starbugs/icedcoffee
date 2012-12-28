@@ -105,7 +105,7 @@
                 // FIXME: determine orientation of tracking/margin compensation
                 
                 _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
-                _positions[i].y = _positions[i].y - textureGlyphHeight - roundf(boundingRects[i].origin.y) + roundf(_ascent);
+                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + roundf(_ascent);
                 
                 kmVec2 extent = kmVec2Make(advances[i].width + marginInPoints * 2,
                                            textureGlyphHeight);
