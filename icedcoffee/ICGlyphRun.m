@@ -60,7 +60,6 @@
 @property (nonatomic, readonly) CGGlyph *glyphs;
 @property (nonatomic, readonly) CGPoint *positions;
 @property (nonatomic, readonly) kmVec4 boundingBox;
-@property (nonatomic, readonly) float baseline;
 
 @end
 
@@ -96,18 +95,17 @@
             CTFontGetAdvancesForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, advances, _glyphCount);
 
             float marginInPoints = ICPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
-            _baseline = ceilf(_ascent) + marginInPoints;
             
             kmVec2 min = kmVec2Make(IC_HUGE, IC_HUGE);
             kmVec2 max = kmVec2Make(0, 0);
             CFIndex i=0;
             for (; i<_glyphCount; i++) {
-                float textureGlyphHeight = boundingRects[i].size.height + marginInPoints * 2;
+                float textureGlyphHeight = ceilf(boundingRects[i].size.height) + marginInPoints;
                 
                 // FIXME: determine orientation of tracking/margin compensation
                 
                 _positions[i].x = _positions[i].x + boundingRects[i].origin.x - marginInPoints;
-                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + _baseline;
+                _positions[i].y = _positions[i].y - textureGlyphHeight - roundf(boundingRects[i].origin.y) + roundf(_ascent);
                 
                 kmVec2 extent = kmVec2Make(advances[i].width + marginInPoints * 2,
                                            textureGlyphHeight);
@@ -455,8 +453,8 @@
 #if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
     [self removeAllChildren];
     [_dbgBaseline release];
-    _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, [self baseline], 0)
-                                      target:kmVec3Make(self.origin.x + self.size.width, [self baseline], 0)
+    _dbgBaseline = [[ICLine2D lineWithOrigin:kmVec3Make(self.origin.x, [self ascent], 0)
+                                      target:kmVec3Make(self.origin.x + self.size.width, [self ascent], 0)
                                    lineWidth:1.f
                            antialiasStrength:0.f
                                        color:(icColor4B){0,0,255,255}] retain];
@@ -526,14 +524,9 @@
     }
 }
 
-- (float)baseline
-{
-    return self.metrics.baseline;
-}
-
 - (float)ascent
 {
-    return (float)self.metrics.ascent;
+    return roundf((float)self.metrics.ascent);
 }
 
 @end

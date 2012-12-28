@@ -149,15 +149,15 @@
     
     CGFloat lineAscent;
     CTLineGetTypographicBounds(line, &lineAscent, NULL, NULL);
-    float lineBaseline = ceilf(lineAscent) + IC_GLYPH_RECTANGLE_MARGIN;
+    lineAscent = roundf(lineAscent);
     
     self.runs = [NSMutableArray arrayWithCapacity:runCount];
     
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef ctRun = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
         ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun];
-        float runBaseline = [run baseline];
-        [run setPositionY:lineBaseline - runBaseline];
+        float runAscent = [run ascent];
+        [run setPositionY:lineAscent - runAscent];
         [self.runs addObject:run];
         [self addChild:run];
         [run release];

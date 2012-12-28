@@ -146,8 +146,6 @@
 // FIXME: re-implement tracking via CoreText kerning attribute
 @property (nonatomic, assign) float tracking;
 
-- (float)baseline;
-
 - (float)ascent;
 
 
