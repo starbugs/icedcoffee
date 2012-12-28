@@ -39,6 +39,8 @@
 
 + (id)fontWithName:(NSString *)fontName size:(CGFloat)size;
 
++ (id)fontWithCoreTextFont:(CTFontRef)ctFont;
+
 @property (nonatomic, readonly) NSString *name;
 
 @property (nonatomic, readonly) CTFontRef fontRef;

@@ -28,15 +28,18 @@
 @interface ICFont ()
 
 - (id)initWithName:(NSString *)fontName size:(CGFloat)size;
+- (id)initWithCoreTextFont:(CTFontRef)ctFont;
 - (void)setName:(NSString *)name;
 - (void)setSize:(CGFloat)size;
+
+- (CTFontRef)fontRef;
+- (void)setFontRef:(CTFontRef)fontRef;
 
 @end
 
 @implementation ICFont
 
 @synthesize name = _name;
-@synthesize fontRef = _fontRef;
 @synthesize size = _size;
 
 + (id)fontWithName:(NSString *)fontName size:(CGFloat)size
@@ -48,25 +51,13 @@
     return cachedFont;
 }
 
-- (id)initWithName:(NSString *)fontName size:(CGFloat)size
++ (id)fontWithCoreTextFont:(CTFontRef)ctFont
 {
-    if ((self = [super init])) {
-        _fontRef = CTFontCreateWithName((CFStringRef)fontName, size, nil);
-        self.name = fontName;
-        self.size = size;
-        
-        // Register font upon initialization
-        [[ICFontCache sharedFontCache] registerFont:self];
+    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForCTFontRef:ctFont];
+    if (!cachedFont) {
+        cachedFont = [[[[self class] alloc] initWithCoreTextFont:ctFont] autorelease];
     }
-    return self;
-}
-
-- (void)dealloc
-{
-    CFRelease(_fontRef);
-    self.name = nil;
-    
-    [super dealloc];
+    return cachedFont;
 }
 
 - (void)setName:(NSString *)name
@@ -78,6 +69,56 @@
 - (void)setSize:(CGFloat)size
 {
     _size = size;
+}
+
+
+// Private
+
+- (id)initWithName:(NSString *)fontName size:(CGFloat)size
+{
+    CTFontRef ctFont = CTFontCreateWithName((CFStringRef)fontName, size, nil);
+    self = [self initWithCoreTextFont:ctFont];
+    CFRelease(ctFont);
+    return self;
+}
+
+- (id)initWithCoreTextFont:(CTFontRef)ctFont
+{
+    if ((self = [super init])) {
+        self.fontRef = ctFont;
+        
+        NSString *fontName = (NSString *)CTFontCopyDisplayName(self.fontRef);
+        self.name = fontName;
+        [fontName release];
+        
+        self.size = CTFontGetSize(self.fontRef);
+        
+        // Register font upon initialization
+        [[ICFontCache sharedFontCache] registerFont:self];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    self.fontRef = nil;
+    self.name = nil;
+    
+    [super dealloc];
+}
+
+- (CTFontRef)fontRef
+{
+    return _fontRef;
+}
+
+- (void)setFontRef:(CTFontRef)fontRef
+{
+    if (_fontRef)
+        CFRelease(_fontRef);
+    _fontRef = fontRef;
+    if (_fontRef)
+        CFRetain(_fontRef);
 }
 
 @end
