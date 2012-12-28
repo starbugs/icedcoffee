@@ -36,7 +36,9 @@
 @protected
     NSMutableArray *_runs;
     NSAttributedString *_string;
-    float _baseline;
+    CGFloat _ascent;
+    CGFloat _descent;
+    CGFloat _leading;
 }
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font;
@@ -55,6 +57,10 @@
 
 - (NSString *)string;
 
-@property (nonatomic, readonly) float baseline;
+- (float)ascent;
+
+- (float)descent;
+
+- (float)leading;
 
 @end

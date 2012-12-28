@@ -526,7 +526,17 @@
 
 - (float)ascent
 {
-    return roundf((float)self.metrics.ascent);
+    return (float)self.metrics.ascent;
+}
+
+- (float)descent
+{
+    return (float)self.metrics.descent;
+}
+
+- (float)leading
+{
+    return (float)self.metrics.leading;
 }
 
 @end

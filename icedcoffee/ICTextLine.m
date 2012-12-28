@@ -34,7 +34,6 @@
 
 @synthesize runs = _runs;
 @synthesize attributedString = _attributedString;
-@synthesize baseline = _baseline;
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font
 {
@@ -102,40 +101,6 @@
     return [self.attributedString string];
 }
 
-/*- (void)updateLine
-{
-    [self removeAllChildren];
-    self.runs = [NSMutableArray arrayWithCapacity:1];
-    
-    __block float maxBaseline = 0.f;
-    [self.attributedString enumerateAttributesInRange:NSMakeRange(0, self.attributedString.length)
-                                              options:0
-                                           usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
-        NSString *subString = [[self string] substringWithRange:range];
-        ICGlyphRun *run = [ICGlyphRun glyphRunWithString:subString attributes:attrs];
-        ICGlyphRun *prevRun = [self.runs lastObject];
-        if (prevRun) {
-            // FIXME: glyph advance orientation could be non-X
-            kmAABB prevRunAABB = [prevRun aabb];
-            [run setPositionX:prevRunAABB.max.x];
-        }
-        [self.runs addObject:run];
-        [self addChild:run];
-
-        if ([run baseline] > maxBaseline) {
-           maxBaseline = [run baseline];
-        }
-    }];
-    
-    [self willChangeValueForKey:@"baseline"];
-    _baseline = maxBaseline;
-    [self didChangeValueForKey:@"baseline"];
-    
-    for (ICGlyphRun *run in self.runs) {
-        [run setPositionY:run.position.y + maxBaseline - [run baseline]];
-    }
-}*/
-
 - (void)updateLine
 {
     [self removeAllChildren];
@@ -147,16 +112,15 @@
     CFArrayRef runs = CTLineGetGlyphRuns(line);
     CFIndex runCount = CFArrayGetCount(runs);
     
-    CGFloat lineAscent;
-    CTLineGetTypographicBounds(line, &lineAscent, NULL, NULL);
-    lineAscent = roundf(lineAscent);
+    CTLineGetTypographicBounds(line, &_ascent, &_descent, &_leading);
+    float lineAscent = roundf(_ascent);
     
     self.runs = [NSMutableArray arrayWithCapacity:runCount];
     
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef ctRun = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
         ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun];
-        float runAscent = [run ascent];
+        float runAscent = roundf([run ascent]);
         [run setPositionY:lineAscent - runAscent];
         [self.runs addObject:run];
         [self addChild:run];
@@ -164,6 +128,21 @@
     }
     
     CFRelease(line);
+}
+
+- (float)ascent
+{
+    return (float)_ascent;
+}
+
+- (float)descent
+{
+    return (float)_descent;
+}
+
+- (float)leading
+{
+    return (float)_leading;
 }
 
 @end

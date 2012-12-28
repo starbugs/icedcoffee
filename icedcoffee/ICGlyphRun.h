@@ -148,5 +148,8 @@
 
 - (float)ascent;
 
+- (float)descent;
+
+- (float)leading;
 
 @end
