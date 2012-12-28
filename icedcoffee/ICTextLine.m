@@ -24,6 +24,7 @@
 #import "ICTextLine.h"
 #import "icFontUtils.h"
 #import "ICGlyphCache.h"
+#import "icUtils.h"
 
 @interface ICTextLine ()
 
@@ -136,7 +137,6 @@
         CFRetain(_ctLine);
 }
 
-// FIXME: must set bounds on self
 - (void)updateLine
 {
     [self removeAllChildren];
@@ -171,6 +171,13 @@
     }
     
     CFRelease(ctLine);
+    
+    // Set line bounds
+    kmAABB aabb = icComputeAABBContainingAABBsOfNodes(self.runs);
+    kmVec3 size;
+    kmVec3Subtract(&size, &aabb.max, &aabb.min);
+    self.origin = aabb.min;
+    self.size = size;
 }
 
 - (float)ascent

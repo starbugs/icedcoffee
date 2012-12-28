@@ -25,6 +25,7 @@
 #import "ICTextLine.h"
 #import "icFontTypes.h"
 #import "icFontUtils.h"
+#import "icUtils.h"
 
 @interface ICTextFrame ()
 - (void)updateFrame;
@@ -49,9 +50,9 @@
 - (id)initWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font
 {
     return [self initWithSize:size
-                        string:string
-                    attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-                                font, ICFontAttributeName, nil]];
+                       string:string
+                   attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+                               font, ICFontAttributeName, nil]];
 }
 
 - (id)initWithSize:(kmVec2)size string:(NSString *)string attributes:(NSDictionary *)attributes
@@ -92,7 +93,6 @@
     }
 }
 
-// FIXME: must set bounds on self
 - (void)updateFrame
 {
     [self removeAllChildren];

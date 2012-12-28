@@ -108,6 +108,7 @@
 }
 
 // FIXME (negative min)
+// FIXME: replace with icComputeAABBContainingAABBsOfNodes()?
 - (void)calculateContentSize
 {
     _contentMin = kmNullVec3;

@@ -115,6 +115,17 @@ extern "C" {
     kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count);
     
     /**
+     @brief Computes an axis-aligned bounding box containg the given nodes' axis-aligned
+     bounding boxes
+     
+     @param nodes An ``NSArray`` containing ICNode objects
+     
+     @return Returns a ``kmAABB`` defining the axis-aligned bounding box containing the
+     axis-aligned bounding boxes of all given nodes
+     */
+    kmAABB icComputeAABBContainingAABBsOfNodes(NSArray *nodes);
+    
+    /**
      @brief Returns a timestamp for the current point in time for use with ``NSEvent``/``UIEvent``
      */
     NSTimeInterval icTimestamp();

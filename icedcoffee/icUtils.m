@@ -172,6 +172,21 @@ kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count)
     return (kmAABB){ aabbMin, aabbMax };   
 }
 
+kmAABB icComputeAABBContainingAABBsOfNodes(NSArray *nodes)
+{
+    kmAABB containerAABB = (kmAABB){kmNullVec3, kmNullVec3};
+    for (ICNode *node in nodes) {
+        kmAABB nodeAABB = [node aabb];
+        containerAABB.min.x = MIN(containerAABB.min.x, nodeAABB.min.x);
+        containerAABB.min.y = MIN(containerAABB.min.y, nodeAABB.min.y);
+        containerAABB.min.z = MIN(containerAABB.min.z, nodeAABB.min.z);
+        containerAABB.max.x = MAX(containerAABB.max.x, nodeAABB.max.x);
+        containerAABB.max.y = MAX(containerAABB.max.y, nodeAABB.max.y);
+        containerAABB.max.z = MAX(containerAABB.max.z, nodeAABB.max.z);
+    }
+    return containerAABB;
+}
+
 // Taken from http://stackoverflow.com/questions/2405832/uievent-has-timestamp-how-can-i-generate-an-equivalent-value-on-my-own
 NSTimeInterval icTimestamp()
 {
