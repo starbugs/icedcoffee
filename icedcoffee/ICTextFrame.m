@@ -36,42 +36,41 @@
 @synthesize lines = _lines;
 @synthesize attributedString = _attributedString;
 
-+ (id)textFrameWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font
++ (id)textFrameWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font
 {
-    return [[[[self class] alloc] initWithFrame:frame string:string font:font] autorelease];
+    return [[[[self class] alloc] initWithSize:size string:string font:font] autorelease];
 }
 
-+ (id)textFrameWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString
++ (id)textFrameWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString
 {
-    return [[[[self class] alloc] initWithFrame:frame attributedString:attributedString] autorelease];
+    return [[[[self class] alloc] initWithSize:size attributedString:attributedString] autorelease];
 }
 
-- (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font
+- (id)initWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font
 {
-    return [self initWithFrame:frame
+    return [self initWithSize:size
                         string:string
                     attributes:[NSDictionary dictionaryWithObjectsAndKeys:
                                 font, ICFontAttributeName, nil]];
 }
 
-- (id)initWithFrame:(kmVec4)frame string:(NSString *)string attributes:(NSDictionary *)attributes
+- (id)initWithSize:(kmVec2)size string:(NSString *)string attributes:(NSDictionary *)attributes
 {
     NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:string
                                                                            attributes:attributes];
-    self = [self initWithFrame:frame attributedString:attributedString];
+    self = [self initWithSize:size attributedString:attributedString];
     [attributedString release];
     return self;
 }
 
-- (id)initWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString
+- (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString
 {
     if ((self = [super init])) {
         [self addObserver:self
                forKeyPath:@"attributedString"
                   options:NSKeyValueObservingOptionNew
                   context:nil];
-        self.position = kmVec3Make(frame.x, frame.y, 0);
-        self.size = kmVec3Make(frame.width, frame.height, 0);
+        self.size = kmVec3Make(size.width, size.height, 0);
         self.attributedString = attributedString;
     }
     return self;

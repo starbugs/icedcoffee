@@ -30,15 +30,15 @@
     NSMutableArray *_lines;
 }
 
-+ (id)textFrameWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
++ (id)textFrameWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font;
 
-+ (id)textFrameWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString;
++ (id)textFrameWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
-- (id)initWithFrame:(kmVec4)frame string:(NSString *)string font:(ICFont *)font;
+- (id)initWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font;
 
-- (id)initWithFrame:(kmVec4)frame string:(NSString *)string attributes:(NSDictionary *)attributes;
+- (id)initWithSize:(kmVec2)size string:(NSString *)string attributes:(NSDictionary *)attributes;
 
-- (id)initWithFrame:(kmVec4)frame attributedString:(NSAttributedString *)attributedString;
+- (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
 @property (nonatomic, copy) NSAttributedString *attributedString;
 
