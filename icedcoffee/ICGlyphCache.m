@@ -140,8 +140,18 @@
         // Only extract new glyph texture if glyph has not already been cached
         if (!textureGlyph) {
             CGRect *boundingRect = &boundingRects[i];
-            size_t w = ceilf(boundingRect->size.width) + IC_GLYPH_RECTANGLE_MARGIN * 2;
-            size_t h = ceilf(boundingRect->size.height) + IC_GLYPH_RECTANGLE_MARGIN * 2;
+            
+            size_t deltaW = 0;
+            size_t deltaH = 0;
+            size_t brWidth = (size_t)ceilf(boundingRect->size.width);
+            size_t brHeight = (size_t)ceilf(boundingRect->size.height);
+            if (ICFontContentScaleFactor() == 2.f) {
+                deltaW = brWidth % 2;
+                deltaH = brHeight % 2;
+            }
+            
+            size_t w = brWidth + deltaW + IC_GLYPH_RECTANGLE_MARGIN * 2;
+            size_t h = brHeight + deltaH + IC_GLYPH_RECTANGLE_MARGIN * 2;
             
             CGColorSpaceRef colorSpace;
             CGImageAlphaInfo alphaInfo;

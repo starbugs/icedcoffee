@@ -105,21 +105,21 @@ NSString *__glyphFSH = IC_SHADER_STRING
         
         if( v_shift <= 0.333 )
         {
-            float z = v_shift/0.333;
+            float z = v_shift/0.333 * 0.5;
             r = mix(current.r, previous.b, z);
             g = mix(current.g, current.r,  z);
             b = mix(current.b, current.g,  z);
         }
         else if( v_shift <= 0.666 )
         {
-            float z = (v_shift-0.33)/0.333;
+            float z = (v_shift-0.33)/0.333 * 0.5;
             r = mix(previous.b, previous.g, z);
             g = mix(current.r,  previous.b, z);
             b = mix(current.g,  current.r,  z);
         }
         else if( v_shift < 1.0 )
         {
-            float z = (v_shift-0.66)/0.334;
+            float z = (v_shift-0.66)/0.334 * 0.5;
             r = mix(previous.g, previous.r, z);
             g = mix(previous.b, previous.g, z);
             b = mix(current.r,  previous.b, z);
@@ -202,7 +202,10 @@ NSString *__glyphFSH = IC_SHADER_STRING
             kmVec2 max = kmVec2Make(0, 0);
             CFIndex i=0;
             for (; i<_glyphCount; i++) {
-                float textureGlyphHeight = ICFontPixelsToPoints(ceilf(boundingRects[i].size.height)) + marginInPoints;
+                size_t tgHeight = (size_t)ceilf(boundingRects[i].size.height);
+                if (ICFontContentScaleFactor() == 2.)
+                    tgHeight += tgHeight % 2;
+                float textureGlyphHeight = ICFontPixelsToPoints((float)tgHeight) + marginInPoints;
                 
                 // FIXME: determine orientation of tracking/margin compensation
                 
@@ -550,7 +553,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 for (ushort k=0; k<4; k++) {
                     quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
                     quads[j].vertices[k].color = color4FFromColor4B(self.color);
-                    quads[j].vertices[k].gamma = 1.0f; // FIXME: implement gamma setting
+                    quads[j].vertices[k].gamma = 1.f; // FIXME: implement gamma setting
                     if (textureGlyph.rotated) {
                         quads[j].vertices[k].glyphDirection = kmVec2Make(0, 1);
                         //quads[j].vertices[k].color = icColor4FMake(1, 0, 0, 1);
