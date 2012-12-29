@@ -42,6 +42,8 @@
 #define ICAttributeNameGlyphDirection @"a_glyphDirection"
 
 
+#define SHIFT_STRENGTH 1.0
+
 NSString *__glyphVSH = IC_SHADER_STRING
 (
     attribute vec4 a_position;
@@ -105,21 +107,21 @@ NSString *__glyphFSH = IC_SHADER_STRING
         
         if( v_shift <= 0.333 )
         {
-            float z = v_shift/0.333 * 0.5;
+            float z = v_shift / 0.333 * SHIFT_STRENGTH;
             r = mix(current.r, previous.b, z);
             g = mix(current.g, current.r,  z);
             b = mix(current.b, current.g,  z);
         }
         else if( v_shift <= 0.666 )
         {
-            float z = (v_shift-0.33)/0.333 * 0.5;
+            float z = (v_shift)/0.666 * SHIFT_STRENGTH;
             r = mix(previous.b, previous.g, z);
             g = mix(current.r,  previous.b, z);
             b = mix(current.g,  current.r,  z);
         }
         else if( v_shift < 1.0 )
         {
-            float z = (v_shift-0.66)/0.334 * 0.5;
+            float z = (v_shift) * SHIFT_STRENGTH;
             r = mix(previous.g, previous.r, z);
             g = mix(previous.b, previous.g, z);
             b = mix(current.r,  previous.b, z);

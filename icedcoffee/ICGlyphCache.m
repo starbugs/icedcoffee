@@ -189,7 +189,7 @@
             //CGContextSetShouldAntialias(context, NO);
             CGContextSetAllowsFontSmoothing(context, NO);
             CGContextSetShouldSmoothFonts(context, NO);
-            CGContextSetShouldSubpixelPositionFonts(context, NO);
+            CGContextSetShouldSubpixelPositionFonts(context, YES);
             CGContextSetShouldSubpixelQuantizeFonts(context, YES);
             CGContextSetTextMatrix(context, CGAffineTransformIdentity);
             CGContextSetFont(context, cgFont);
