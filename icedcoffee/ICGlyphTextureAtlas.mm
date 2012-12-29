@@ -158,9 +158,11 @@ using RectangleBinPack::SkylineBinPack;
     }
     
     // Create ICTextureGlyph object
+    kmVec2 size = kmVec2Make(ICPixelsToPoints(sizeInPixels.width),
+                             ICPixelsToPoints(sizeInPixels.height));
     ICTextureGlyph *textureGlyph = [[[ICTextureGlyph alloc] initWithGlyphTextureAtlas:self
                                                                             texCoords:texCoords
-                                                                                 size:kmVec2Make(sizeInPixels.width, sizeInPixels.height)
+                                                                                 size:size
                                                                          boundingRect:boundingRect
                                                                                 glyph:glyph
                                                                                  font:font] autorelease];

@@ -24,6 +24,7 @@
 #import <CoreText/CoreText.h>
 #import "ICFont.h"
 #import "ICFontCache.h"
+#import "icMacros.h"
 
 @interface ICFont ()
 
@@ -46,7 +47,8 @@
 {
     ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName];
     if (!cachedFont) {
-        cachedFont = [[[[self class] alloc] initWithName:fontName size:(CGFloat)size] autorelease];
+        cachedFont = [[[[self class] alloc] initWithName:fontName
+                                                    size:ICPointsToPixels(size)] autorelease];
     }
     return cachedFont;
 }

@@ -26,8 +26,9 @@
 #import "ICTexture2D.h"
 #import "ICShaderCache.h"
 #import "ICShaderProgram.h"
+#import "ICTextLine.h"
 
-// FIXME: ICLabel support for 32-bit textures
+// FIXME: ICLabel support for 32-bit textures (?)
 
 @implementation ICLabel
 

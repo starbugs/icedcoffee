@@ -31,9 +31,11 @@
 
 // FIXME: specify units (should be points)
 /**
- @brief The size of the margin to add to each glyph's bounding box when extracting glyph textures
+ @brief The size in pixels of the margin to add to each glyph's bounding box when
+ extracting glyph textures
  
- This value is used to compensate for glyph antialiasing.
+ This value is used to compensate for glyph antialiasing. Should be divisible by 2 to work
+ correctly on retina displays.
  */
 #define IC_GLYPH_RECTANGLE_MARGIN 2
 

@@ -34,6 +34,8 @@
     [self runWithScene:scene];
 }
 
+// FIXME: retina display support, order of initialization, move this to ICHostViewControllerIOS
+// and use setUpScene?!
 - (void)viewDidLoad
 {
     [super viewDidLoad];

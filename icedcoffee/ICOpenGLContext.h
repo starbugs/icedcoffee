@@ -22,7 +22,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "icMacros.h"
+#import "icAvailability.h"
 
 @class ICTextureCache;
 @class ICShaderCache;

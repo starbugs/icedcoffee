@@ -156,6 +156,11 @@
     CFIndex runCount = CFArrayGetCount(runs);
     
     CTLineGetTypographicBounds(ctLine, &_ascent, &_descent, &_leading);
+    
+    _ascent = ICPixelsToPoints(_ascent);
+    _descent = ICPixelsToPoints(_descent);
+    _leading = ICPixelsToPoints(_leading);
+    
     float lineAscent = roundf(_ascent);
     
     self.runs = [NSMutableArray arrayWithCapacity:runCount];

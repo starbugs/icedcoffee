@@ -64,9 +64,10 @@
                                  multiSampling:NO
                                numberOfSamples:0];
     
+    [self.hostViewController enableRetinaDisplaySupport:YES];
+
     [glView setMultipleTouchEnabled:YES];
     [glView setHostViewController:self.hostViewController];
-    [self.hostViewController enableRetinaDisplaySupport:YES];
     
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.rootViewController = self.hostViewController;

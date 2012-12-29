@@ -78,6 +78,7 @@
 		A68DBFD416519D560035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD316519D560035E0B6 /* icedcoffee.h */; };
 		A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74551645E2F300CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */; };
+		A6D20566168E6216009D7811 /* icAvailability.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D20565168E6216009D7811 /* icAvailability.h */; };
 		A6D9B4F615430075008BF293 /* ICUpdatable.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D9B4F515430075008BF293 /* ICUpdatable.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A6EF8D82167488C5005B2605 /* aabb.c in Sources */ = {isa = PBXBuildFile; fileRef = A6EF8D67167488C5005B2605 /* aabb.c */; };
 		A6EF8D83167488C5005B2605 /* aabb.h in Headers */ = {isa = PBXBuildFile; fileRef = A6EF8D68167488C5005B2605 /* aabb.h */; };
@@ -281,6 +282,7 @@
 		A68DBFD316519D560035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
 		A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
+		A6D20565168E6216009D7811 /* icAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icAvailability.h; path = icedcoffee/icAvailability.h; sourceTree = "<group>"; };
 		A6D9B4F515430075008BF293 /* ICUpdatable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUpdatable.h; path = icedcoffee/ICUpdatable.h; sourceTree = "<group>"; };
 		A6EF8D67167488C5005B2605 /* aabb.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = aabb.c; sourceTree = "<group>"; };
 		A6EF8D68167488C5005B2605 /* aabb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = aabb.h; sourceTree = "<group>"; };
@@ -723,6 +725,7 @@
 		D2918D4E15887F8A0043C872 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				A6D20565168E6216009D7811 /* icAvailability.h */,
 				D24BAF4F14EDB142000E65AA /* icConfig.h */,
 				D24BAF5014EDB142000E65AA /* ICConfiguration.h */,
 				D24BAF5114EDB142000E65AA /* ICConfiguration.m */,
@@ -921,6 +924,7 @@
 				A65D27AF168B3892008D9E05 /* ICTextFrame.h in Headers */,
 				A62D6443168CCE4D00DA6C22 /* ICFontCache.h in Headers */,
 				A671C74E168DAB16002AD3EF /* icFontUtils.h in Headers */,
+				A6D20566168E6216009D7811 /* icAvailability.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

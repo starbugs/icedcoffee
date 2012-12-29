@@ -90,6 +90,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _frameUpdateMode = ICFrameUpdateModeSynchronized;
     _needsDisplay = YES;
     _didDrawFirstFrame = NO;
+    _desiredContentScaleFactor = 1.f;
     
     // Make current host view controller regardless of which initializer was called
     [self makeCurrentHostViewController];
@@ -302,7 +303,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 {
     // Override this method in your custom view controller to programatically instantiate
     // an ICGLView object. Overriding this method is not necessary if you're using a nib.
-    // You must call the [super loadView] in your override.
+    // You must call [super loadView] in your override.
     
 #ifdef __IC_PLATFORM_IOS
     // Let UIViewController load the view from its associated nib file, if applicable
@@ -328,6 +329,12 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     
     NSAssert(self.view != nil, @"view property must not be nil at this point");
     
+#ifdef __IC_PLATFORM_IOS
+    if ([self.view respondsToSelector:@selector(setContentScaleFactor:)]) {
+        [self.view setContentScaleFactor:[self contentScaleFactor]];
+    }
+#endif
+    
     // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
     // render context yet, create and register a new render context for it, so it's possible
     // for other components to retrieve it via the OpenGL context globally
@@ -345,6 +352,9 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
                                        autorelease];
     }
+    
+    // Set content scale factor before calling setUpScene
+    [self setContentScaleFactor:_desiredContentScaleFactor];
     
     // Allow subclasses to set up their custom scene
     [self setUpScene];
@@ -388,6 +398,11 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 {
     NSAssert(self.openGLContext != nil, @"Must have a valid OpenGL context at this point");
     self.openGLContext.contentScaleFactor = contentScaleFactor;
+    
+#ifdef __IC_PLATFORM_IOS
+    if ([[self view] respondsToSelector:@selector(setContentScaleFactor:)])
+        [[self view] setContentScaleFactor:[self contentScaleFactor]];
+#endif
 }
 
 - (BOOL)retinaDisplaySupportEnabled
@@ -398,18 +413,32 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (BOOL)enableRetinaDisplaySupport:(BOOL)retinaDisplayEnabled
 {
 #ifdef __IC_PLATFORM_IOS
-    if (![[self view] respondsToSelector:@selector(setContentScaleFactor:)]) {
-        return NO; // setContentScaleFactor not supported by software 
+    if ([self isViewLoaded]) {
+        // Warn that initialization via setUpScene might go wrong if the content scale factor
+        // isn't set before the view has been set or loaded
+        NSLog(@"Warning: enableRetinaDisplaySupport: should be called before " \
+               "setting a view on the host view controller!");
     }
-    
+
 	if ([[UIScreen mainScreen] scale] == 1.0)
 		return NO; // SD device
 
-    _retinaDisplayEnabled = retinaDisplayEnabled;
-    [self setContentScaleFactor:retinaDisplayEnabled ? IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR
-                                : IC_DEFAULT_CONTENT_SCALE_FACTOR];
+    UIView *probeView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,0,0)] autorelease];
+    if (![probeView respondsToSelector:@selector(setContentScaleFactor:)]) {
+        return NO; // setContentScaleFactor not supported by software 
+    }
     
-    [[self view] setContentScaleFactor:[self contentScaleFactor]];
+    // Note the desired content scale factor; viewDidLoad will pick this up and set it once the
+    // view is loaded
+    _desiredContentScaleFactor = retinaDisplayEnabled ?
+                                 IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR :
+                                 IC_DEFAULT_CONTENT_SCALE_FACTOR;
+    
+    _retinaDisplayEnabled = retinaDisplayEnabled;
+    
+    if ([self isViewLoaded])
+        [self setContentScaleFactor:_desiredContentScaleFactor];
+    
     return YES;
 #else
     // Retina display not supported on other platforms

@@ -82,6 +82,10 @@
         CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &_ascent, &_descent, &_leading);
         _glyphCount = CTRunGetGlyphCount(run);
         
+        _ascent = ICPixelsToPoints(_ascent);
+        _descent = ICPixelsToPoints(_descent);
+        _leading = ICPixelsToPoints(_leading);
+        
         if (_glyphCount > 0) {
             _glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * _glyphCount);
             CTRunGetGlyphs(run, CFRangeMake(0, _glyphCount), _glyphs);
@@ -100,16 +104,17 @@
             kmVec2 max = kmVec2Make(0, 0);
             CFIndex i=0;
             for (; i<_glyphCount; i++) {
-                float textureGlyphHeight = ceilf(boundingRects[i].size.height) + marginInPoints;
+                float textureGlyphHeight = ICPixelsToPoints(ceilf(boundingRects[i].size.height)) + marginInPoints;
                 
                 // FIXME: determine orientation of tracking/margin compensation
                 
-                _positions[i].x = roundf(_positions[i].x + boundingRects[i].origin.x - marginInPoints);
-                _positions[i].y = _positions[i].y - textureGlyphHeight - ceilf(boundingRects[i].origin.y) + roundf(_ascent);
+                _positions[i].x = ICPixelsToPoints(_positions[i].x) + ICPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
+                _positions[i].y = ICPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
                 //NSLog(@"Glyph position: (%f, %f)", _positions[i].x, _positions[i].y);
                 
-                kmVec2 extent = kmVec2Make(advances[i].width + marginInPoints * 2, textureGlyphHeight);
+                kmVec2 extent = kmVec2Make(ICPixelsToPoints(advances[i].width) + marginInPoints * 2,
+                                           textureGlyphHeight);
                 
                 if (_positions[i].x < min.x)
                     min.x = _positions[i].x;

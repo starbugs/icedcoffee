@@ -39,11 +39,11 @@
 
     /*ICGlyphRun *textRun = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
     [textRun setPositionY:10];
-    [scene addChild:textRun];
+    [scene.contentView addChild:textRun];
     
     ICGlyphRun *textRun2 = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:georgia] precache];
     [textRun2 setPositionY:100];
-    [scene addChild:textRun2];*/
+    [scene.contentView addChild:textRun2];*/
 
     /*ICGlyphTextureAtlas *textureAtlas = [[glyphCache textures] objectAtIndex:0];
     if (textureAtlas.dataDirty)
@@ -52,7 +52,7 @@
     [sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
     [sprite setShaderProgram:[[ICShaderCache currentShaderCache] shaderProgramForKey:kICShader_PositionTextureA8Color]];
     [sprite setColor:(icColor4B){0,0,0,255}];
-    [scene addChild:sprite];*/
+    [scene.contentView addChild:sprite];*/
     
     /*NSDictionary *attrs1 = [NSDictionary dictionaryWithObjectsAndKeys:arial, ICFontAttributeName, nil];
     NSDictionary *attrs2 = [NSDictionary dictionaryWithObjectsAndKeys:georgia, ICFontAttributeName, nil];
@@ -60,7 +60,7 @@
                                                                                    attributes:attrs1];
     [attrString addAttributes:attrs2 range:NSMakeRange(0, 10)];
     ICTextLine *line = [ICTextLine textLineWithAttributedString:attrString];
-    [scene addChild:line];*/
+    [scene.contentView addChild:line];*/
     
     NSDictionary *frameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:arial, ICFontAttributeName, nil];
     NSString *frameText = @"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,";
@@ -71,7 +71,7 @@
     ICTextFrame *textFrame = [ICTextFrame textFrameWithSize:kmVec2Make(200, 200)
                                            attributedString:frameAttrString];
     textFrame.position = kmVec3Make(20, 20, 0);
-    [scene addChild:textFrame];
+    [scene.contentView addChild:textFrame];
 
     [self runWithScene:scene];
 }

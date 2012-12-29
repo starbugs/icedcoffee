@@ -85,6 +85,7 @@
     ICResponder *_currentFirstResponder;
     
     BOOL _retinaDisplayEnabled;
+    float _desiredContentScaleFactor;
 
     BOOL _isRunning;
     NSThread *_thread;
