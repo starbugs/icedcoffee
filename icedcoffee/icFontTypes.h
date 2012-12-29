@@ -34,7 +34,7 @@ typedef CGGlyph ICGlyph;
 
 #define IC_USE_HIGH_RESOLTUON_FONTS YES
 
-#define ICFontContentScaleFactor (IC_USE_HIGH_RESOLTUON_FONTS ? 2.f : ICContentScaleFactor())
+#define ICFontContentScaleFactor() (IC_USE_HIGH_RESOLTUON_FONTS ? 2.f : ICContentScaleFactor())
 #define ICFontPointsToPixels(points) (points*ICFontContentScaleFactor())
 #define ICFontPixelsToPoints(pixels) (pixels/ICFontContentScaleFactor())
 

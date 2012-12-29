@@ -97,10 +97,10 @@
 {
     [self removeAllChildren];
     
-    CGRect frameRect = CGRectMake(ICPointsToPixels(self.origin.x),
-                                  ICPointsToPixels(self.origin.y),
-                                  ICPointsToPixels(self.size.width),
-                                  ICPointsToPixels(self.size.height));
+    CGRect frameRect = CGRectMake(ICFontPointsToPixels(self.origin.x),
+                                  ICFontPointsToPixels(self.origin.y),
+                                  ICFontPointsToPixels(self.size.width),
+                                  ICFontPointsToPixels(self.size.height));
     CGPathRef path = CGPathCreateWithRect(frameRect, NULL);
     
     NSAttributedString *ctAttString = icCreateCTAttributedStringWithAttributedString(self.attributedString);
@@ -118,8 +118,8 @@
         CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, i);
         ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line];
         CGPoint origin = origins[i];
-        origin.x = ICPixelsToPoints(origin.x);
-        origin.y = ICPixelsToPoints(origin.y);
+        origin.x = ICFontPixelsToPoints(origin.x);
+        origin.y = ICFontPixelsToPoints(origin.y);
         origin.y += roundf([textLine ascent]);
         //NSLog(@"origin: %f", origin.y);
         [textLine setPositionY:self.size.height - origin.y];

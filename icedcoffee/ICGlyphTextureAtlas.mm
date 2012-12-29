@@ -24,6 +24,7 @@
 #import "ICGlyphTextureAtlas.h"
 #import "ICHostViewController.h"
 #import "../3rd-party/RectangleBinPack/SkylineBinPack.h"
+#import "icFontTypes.h"
 #import "icTypes.h"
 
 using RectangleBinPack::SkylineBinPack;
@@ -158,8 +159,8 @@ using RectangleBinPack::SkylineBinPack;
     }
     
     // Create ICTextureGlyph object
-    kmVec2 size = kmVec2Make(ICPixelsToPoints(sizeInPixels.width),
-                             ICPixelsToPoints(sizeInPixels.height));
+    kmVec2 size = kmVec2Make(ICFontPixelsToPoints(sizeInPixels.width),
+                             ICFontPixelsToPoints(sizeInPixels.height));
     ICTextureGlyph *textureGlyph = [[[ICTextureGlyph alloc] initWithGlyphTextureAtlas:self
                                                                             texCoords:texCoords
                                                                                  size:size

@@ -22,6 +22,7 @@
 //
 
 #import "ICTextLine.h"
+#import "icFontTypes.h"
 #import "icFontUtils.h"
 #import "ICGlyphCache.h"
 #import "icUtils.h"
@@ -157,9 +158,9 @@
     
     CTLineGetTypographicBounds(ctLine, &_ascent, &_descent, &_leading);
     
-    _ascent = ICPixelsToPoints(_ascent);
-    _descent = ICPixelsToPoints(_descent);
-    _leading = ICPixelsToPoints(_leading);
+    _ascent = ICFontPixelsToPoints(_ascent);
+    _descent = ICFontPixelsToPoints(_descent);
+    _leading = ICFontPixelsToPoints(_leading);
     
     float lineAscent = roundf(_ascent);
     
