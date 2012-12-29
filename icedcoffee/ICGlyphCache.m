@@ -88,8 +88,9 @@
     ICGlyphTextureAtlas *textureAtlas;
     ICResolutionType bestResolutionType = [[ICHostViewController currentHostViewController]
                                            bestResolutionTypeForCurrentScreen];
+    ICPixelFormat pixelFormat = IC_GLYPH_CACHE_TEXTURE_DEPTH == 1 ? ICPixelFormatA8 : ICPixelFormatRGBA8888;
     textureAtlas = [[[ICGlyphTextureAtlas alloc] initWithSize:self.textureSize
-                                                  pixelFormat:ICPixelFormatA8
+                                                  pixelFormat:pixelFormat
                                                resolutionType:bestResolutionType] autorelease];
     [_textures addObject:textureAtlas];
 
@@ -142,9 +143,25 @@
             size_t w = ceilf(boundingRect->size.width) + IC_GLYPH_RECTANGLE_MARGIN * 2;
             size_t h = ceilf(boundingRect->size.height) + IC_GLYPH_RECTANGLE_MARGIN * 2;
             
-            void *data = calloc(h, w);
-            CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-            CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w, colorSpace, kCGImageAlphaNone);
+            CGColorSpaceRef colorSpace;
+            CGImageAlphaInfo alphaInfo;
+            
+            int depth = IC_GLYPH_CACHE_TEXTURE_DEPTH;
+            if (depth != 4 && depth != 1) {
+                NSLog(@"Only RGBA and alpha texture depths are supported, falling back to RGBA");
+                depth = 4;
+            }
+            
+            if (depth == 4) {
+                colorSpace = CGColorSpaceCreateDeviceRGB();
+                alphaInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
+            } else if (depth == 1) {
+                colorSpace = CGColorSpaceCreateDeviceGray();
+                alphaInfo = kCGImageAlphaNone;
+            }
+            
+            void *data = calloc(h, w * depth);
+            CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w * depth, colorSpace, alphaInfo);
             CGColorSpaceRelease(colorSpace);
             
             NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
@@ -158,6 +175,12 @@
             float yOffset = -boundingRect->origin.y;
             
             CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
+            //CGContextSetAllowsAntialiasing(context, NO);
+            //CGContextSetShouldAntialias(context, NO);
+            CGContextSetAllowsFontSmoothing(context, NO);
+            CGContextSetShouldSmoothFonts(context, NO);
+            CGContextSetShouldSubpixelPositionFonts(context, NO);
+            CGContextSetShouldSubpixelQuantizeFonts(context, YES);
             CGContextSetTextMatrix(context, CGAffineTransformIdentity);
             CGContextSetFont(context, cgFont);
             CGContextSetFontSize(context, CTFontGetSize(font.fontRef));

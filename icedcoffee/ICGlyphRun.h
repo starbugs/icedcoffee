@@ -30,6 +30,7 @@
 #import "ICLine2D.h"
 #endif
 
+#define ICShaderGlyph @"ShaderGlyph"
 
 #define IC_DEFAULT_GLYPH_RUN_COLOR (icColor4B){0,0,0,255}
 

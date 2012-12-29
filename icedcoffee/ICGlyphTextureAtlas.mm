@@ -127,7 +127,7 @@ using RectangleBinPack::SkylineBinPack;
                 for (j=0; j<bitmapWidth; j++) {
                     uint8_t *texturePixel = (uint8_t *)self.data + ((rect.y + j) * textureWidth * stride + (rect.x + i) * stride);
                     for (k=0; k<stride; k++) {
-                        texturePixel[k] = glyphRow[j+k];
+                        texturePixel[k] = glyphRow[j*stride+k];
                     }
                 }
             }
@@ -164,6 +164,7 @@ using RectangleBinPack::SkylineBinPack;
                                                                             texCoords:texCoords
                                                                                  size:size
                                                                          boundingRect:boundingRect
+                                                                              rotated:rotated
                                                                                 glyph:glyph
                                                                                  font:font] autorelease];
     return textureGlyph;

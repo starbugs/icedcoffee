@@ -209,6 +209,16 @@ typedef struct _icV3F_C4F_T2F {
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4F_T2F;
 
+// Used for font glyph rendering
+typedef struct _icV3F_C4F_T2F_D2F_SG2F {
+    kmVec3 vect;                // 12 bytes
+	icColor4F color;			// 16 bytes
+    kmVec2 texCoords;           // 8 bytes
+    kmVec2 glyphDirection;
+    GLfloat shift;
+    GLfloat gamma;
+} icV3F_C4F_T2F_D2F_SG2F;
+
 typedef struct _icV3F_C4B_T2F_Quad {
     icV3F_C4B_T2F vertices[4];
 } icV3F_C4B_T2F_Quad;
@@ -216,6 +226,10 @@ typedef struct _icV3F_C4B_T2F_Quad {
 typedef struct _icV3F_C4F_T2F_Quad {
     icV3F_C4F_T2F vertices[4];
 } icV3F_C4F_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_D2F_SG2F_Quad {
+    icV3F_C4F_T2F_D2F_SG2F vertices[4];
+} icV3F_C4F_T2F_D2F_SG2F_Quad;
 
 typedef struct _icUShort_QuadIndices {
     GLushort indices[6];

@@ -193,6 +193,7 @@ NSString *__positionTextureFSH = IC_SHADER_STRING
 
 
 // ICShaderPositionTexture_uColor
+// FIXME: missing shader impl
 
 
 // ICShaderPositionTextureA8Color

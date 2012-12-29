@@ -24,6 +24,9 @@
 #import <Foundation/Foundation.h>
 #import "icFontTypes.h"
 
+
+#define IC_GLYPH_CACHE_TEXTURE_DEPTH 4
+
 /**
  @brief The default size of texture atlases allocated by ICGlyphCache
  */

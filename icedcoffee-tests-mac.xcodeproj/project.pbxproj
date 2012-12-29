@@ -47,6 +47,13 @@
 		A68DBF95165064A70035E0B6 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
 		A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */; };
+		A693227B168F597D003DE913 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A693229D168F59AF003DE913 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6932293168F59AF003DE913 /* AppDelegate.m */; };
+		A693229F168F59AF003DE913 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6932296168F59AF003DE913 /* Credits.rtf */; };
+		A69322A0168F59AF003DE913 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6932298168F59AF003DE913 /* InfoPlist.strings */; };
+		A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A693229A168F59AF003DE913 /* MainMenu.xib */; };
+		A69322A2168F59AF003DE913 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A693229C168F59AF003DE913 /* main.m */; };
+		A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */; };
 		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
 		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
@@ -404,6 +411,17 @@
 		A68DBF91165063510035E0B6 /* ShaderPlaygroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderPlaygroundViewController.m; sourceTree = "<group>"; };
 		A68DBF991650688A0035E0B6 /* ShaderSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderSourceViewController.h; sourceTree = "<group>"; };
 		A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderSourceViewController.m; sourceTree = "<group>"; };
+		A6932279168F597D003DE913 /* CoreTextReferenceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreTextReferenceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6932292168F59AF003DE913 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A6932293168F59AF003DE913 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A6932294168F59AF003DE913 /* CoreTextReferenceTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CoreTextReferenceTest-Info.plist"; sourceTree = "<group>"; };
+		A6932295168F59AF003DE913 /* CoreTextReferenceTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreTextReferenceTest-Prefix.pch"; sourceTree = "<group>"; };
+		A6932297168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A6932299168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A693229B168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A693229C168F59AF003DE913 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A69322A3168F5A6D003DE913 /* CoreTextReferenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextReferenceView.h; sourceTree = "<group>"; };
+		A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextReferenceView.m; sourceTree = "<group>"; };
 		A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6CB74A61646D1EC00CDEEAC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -631,6 +649,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6932276168F597D003DE913 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693227B168F597D003DE913 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6CB748A1646D1AA00CDEEAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -854,6 +880,24 @@
 			);
 			name = ShaderPlayground;
 			path = "tests-mac/ShaderPlayground";
+			sourceTree = "<group>";
+		};
+		A6932291168F59AF003DE913 /* CoreTextReferenceTest */ = {
+			isa = PBXGroup;
+			children = (
+				A6932292168F59AF003DE913 /* AppDelegate.h */,
+				A6932293168F59AF003DE913 /* AppDelegate.m */,
+				A6932294168F59AF003DE913 /* CoreTextReferenceTest-Info.plist */,
+				A6932295168F59AF003DE913 /* CoreTextReferenceTest-Prefix.pch */,
+				A69322A3168F5A6D003DE913 /* CoreTextReferenceView.h */,
+				A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */,
+				A6932296168F59AF003DE913 /* Credits.rtf */,
+				A6932298168F59AF003DE913 /* InfoPlist.strings */,
+				A693229A168F59AF003DE913 /* MainMenu.xib */,
+				A693229C168F59AF003DE913 /* main.m */,
+			);
+			name = CoreTextReferenceTest;
+			path = "tests-mac/CoreTextReferenceTest";
 			sourceTree = "<group>";
 		};
 		A6CB74A51646D1EC00CDEEAC /* ShaderTest */ = {
@@ -1174,6 +1218,7 @@
 			children = (
 				D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */,
 				D2F34FD6151F09BF00DF2D5B /* AlphaBlendingTest */,
+				A6932291168F59AF003DE913 /* CoreTextReferenceTest */,
 				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
 				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
 				A61D6F4B15DC3AD1005AFDA5 /* IBIntegrationTest */,
@@ -1213,6 +1258,7 @@
 				A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */,
 				A68DBF66165062020035E0B6 /* ShaderPlayground.app */,
 				A62633B81685DA3600286AC0 /* GlyphCacheTest.app */,
+				A6932279168F597D003DE913 /* CoreTextReferenceTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1362,6 +1408,23 @@
 			name = ShaderPlayground;
 			productName = ShaderPlayground;
 			productReference = A68DBF66165062020035E0B6 /* ShaderPlayground.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A6932278168F597D003DE913 /* CoreTextReferenceTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A693228E168F597E003DE913 /* Build configuration list for PBXNativeTarget "CoreTextReferenceTest" */;
+			buildPhases = (
+				A6932275168F597D003DE913 /* Sources */,
+				A6932276168F597D003DE913 /* Frameworks */,
+				A6932277168F597D003DE913 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoreTextReferenceTest;
+			productName = CoreTextReferenceTest;
+			productReference = A6932279168F597D003DE913 /* CoreTextReferenceTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A6CB748C1646D1AA00CDEEAC /* ShaderTest */ = {
@@ -1643,6 +1706,7 @@
 				A6CB748C1646D1AA00CDEEAC /* ShaderTest */,
 				A68DBF65165062020035E0B6 /* ShaderPlayground */,
 				A62633B71685DA3600286AC0 /* GlyphCacheTest */,
+				A6932278168F597D003DE913 /* CoreTextReferenceTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1695,6 +1759,16 @@
 				A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */,
 				A68DBF8C1650621F0035E0B6 /* InfoPlist.strings in Resources */,
 				A68DBF8D1650621F0035E0B6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6932277168F597D003DE913 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693229F168F59AF003DE913 /* Credits.rtf in Resources */,
+				A69322A0168F59AF003DE913 /* InfoPlist.strings in Resources */,
+				A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1895,6 +1969,16 @@
 				A68DBF8E1650621F0035E0B6 /* main.m in Sources */,
 				A68DBF92165063510035E0B6 /* ShaderPlaygroundViewController.m in Sources */,
 				A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6932275168F597D003DE913 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693229D168F59AF003DE913 /* AppDelegate.m in Sources */,
+				A69322A2168F59AF003DE913 /* main.m in Sources */,
+				A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2179,6 +2263,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				A68DBF861650621F0035E0B6 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A6932296168F59AF003DE913 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6932297168F59AF003DE913 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A6932298168F59AF003DE913 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6932299168F59AF003DE913 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A693229A168F59AF003DE913 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A693229B168F59AF003DE913 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2578,6 +2686,42 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A693228F168F597E003DE913 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6932290168F597E003DE913 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -3035,6 +3179,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		A693228E168F597E003DE913 /* Build configuration list for PBXNativeTarget "CoreTextReferenceTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A693228F168F597E003DE913 /* Debug */,
+				A6932290168F597E003DE913 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 		A6CB74A21646D1AA00CDEEAC /* Build configuration list for PBXNativeTarget "ShaderTest" */ = {
 			isa = XCConfigurationList;

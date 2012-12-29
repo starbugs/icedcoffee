@@ -33,9 +33,9 @@
     ICFont *georgia = [ICFont fontWithName:@"Georgia" size:12];
     ICFont *monaco = [ICFont fontWithName:@"Monaco" size:12];
 
-    //ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
-    //[glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
-    //[glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:georgia];
+    /*ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
+    [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:georgia];*/
 
     /*ICGlyphRun *textRun = [[ICGlyphRun glyphRunWithString:@"1234 The quick brown fox jumps over the lazy dog" font:arial] precache];
     [textRun setPositionY:10];

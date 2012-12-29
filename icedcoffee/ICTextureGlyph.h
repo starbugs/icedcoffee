@@ -39,6 +39,7 @@
     kmVec2 *_texCoords;
     kmVec2 _size;
     CGRect _boundingRect;
+    BOOL _rotated;
 }
 
 /** @name Initialization */
@@ -50,6 +51,7 @@
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
                    boundingRect:(CGRect)boundingRect
+                        rotated:(BOOL)rotated
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font;
 
@@ -85,5 +87,10 @@
  @brief The bounding rect of the glyph
  */
 @property (nonatomic, readonly) CGRect boundingRect;
+
+/**
+ @brief Whether the glyph is stored rotated
+ */
+@property (nonatomic, readonly) BOOL rotated;
 
 @end

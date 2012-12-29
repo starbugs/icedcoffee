@@ -31,8 +31,106 @@
 #import "ICGlyphTextureAtlas.h"
 #import "icGLState.h"
 #import "ICShaderCache.h"
+#import "ICShaderProgram.h"
+#import "ICShaderValue.h"
 #import "ICFontCache.h"
 #import "icFontUtils.h"
+
+
+#define ICAttributeNameShift @"a_shift"
+#define ICAttributeNameGamma @"a_gamma"
+#define ICAttributeNameGlyphDirection @"a_glyphDirection"
+
+
+NSString *__glyphVSH = IC_SHADER_STRING
+(
+    attribute vec4 a_position;
+    attribute vec2 a_texCoord;
+    attribute vec4 a_color;
+    attribute vec2 a_glyphDirection;
+    attribute float a_shift;
+    attribute float a_gamma;
+
+    uniform mat4 u_MVPMatrix;
+
+    #ifdef GL_ES
+    varying lowp vec4 v_fragmentColor;
+    varying highp vec2 v_texCoord;
+    varying lowp vec2 v_glyphDirection;
+    varying highp float v_shift;
+    varying mediump float v_gamma;
+    #else
+    varying vec4 v_fragmentColor;
+    varying vec2 v_texCoord;
+    varying vec2 v_glyphDirection;
+    varying float v_shift;
+    varying float v_gamma;
+    #endif
+
+    void main()
+    {
+        gl_Position = u_MVPMatrix * a_position;
+        v_fragmentColor = a_color;
+        v_texCoord = a_texCoord;
+        v_glyphDirection = a_glyphDirection;
+        v_shift = a_shift;
+        v_gamma = a_gamma;
+    }
+);
+
+NSString *__glyphFSH = IC_SHADER_STRING
+(
+    #ifdef GL_ES
+    precision highp float;
+    #endif
+
+    varying vec4 v_fragmentColor;
+    varying vec2 v_texCoord;
+    varying vec2 v_glyphDirection;
+    varying float v_shift;
+    varying float v_gamma;
+    uniform sampler2D u_texture;
+    uniform vec3 u_pixel;
+
+    void main()
+    {
+        vec2 uv      = v_texCoord.xy;
+        vec4 current = texture2D(u_texture, uv);
+        vec4 previous= texture2D(u_texture, uv-v_glyphDirection*u_pixel.xy);
+        vec4 next    = texture2D(u_texture, uv+v_glyphDirection*u_pixel.xy);
+        
+        float r = current.r;
+        float g = current.g;
+        float b = current.b;
+        
+        if( v_shift <= 0.333 )
+        {
+            float z = v_shift/0.333;
+            r = mix(current.r, previous.b, z);
+            g = mix(current.g, current.r,  z);
+            b = mix(current.b, current.g,  z);
+        }
+        else if( v_shift <= 0.666 )
+        {
+            float z = (v_shift-0.33)/0.333;
+            r = mix(previous.b, previous.g, z);
+            g = mix(current.r,  previous.b, z);
+            b = mix(current.g,  current.r,  z);
+        }
+        else if( v_shift < 1.0 )
+        {
+            float z = (v_shift-0.66)/0.334;
+            r = mix(previous.g, previous.r, z);
+            g = mix(previous.b, previous.g, z);
+            b = mix(current.r,  previous.b, z);
+        }
+        
+        vec3 color = pow(vec3(r,g,b), vec3(1.0/v_gamma));
+        gl_FragColor = vec4(color * v_fragmentColor.rgb,
+                            (color.r+color.g+color.b)/3.0 * v_fragmentColor.a);
+    }
+);
+
 
 
 //
@@ -240,8 +338,30 @@
         self.string = string;
         self.font = font;
         
-        self.shaderProgram = [[ICShaderCache currentShaderCache]
-                              shaderProgramForKey:kICShader_PositionTextureA8Color];
+        /*self.shaderProgram = [[ICShaderCache currentShaderCache]
+                              shaderProgramForKey:kICShader_PositionTextureA8Color];*/
+        
+        ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
+        ICShaderProgram *p = [shaderCache shaderProgramForKey:ICShaderGlyph];
+        
+        if (!p) {
+            p = [ICShaderProgram shaderProgramWithName:ICShaderGlyph
+                                    vertexShaderString:__glyphVSH
+                                  fragmentShaderString:__glyphFSH];
+            [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
+            [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
+            [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
+            [p addAttribute:ICAttributeNameGlyphDirection index:ICVertexAttribTexCoords+1];
+            [p addAttribute:ICAttributeNameShift index:ICVertexAttribTexCoords+2];
+            [p addAttribute:ICAttributeNameGamma index:ICVertexAttribTexCoords+3];
+            
+            [p link];
+            [p updateUniforms];
+            
+            [shaderCache setShaderProgram:p forKey:ICShaderGlyph];
+        }
+        
+        self.shaderProgram = p;
     }
     return self;
 }
@@ -393,7 +513,7 @@
             NSInteger textureGlyphCount = [glyphEntries count];
             
             // Allocate memory for upload to VBO
-            icV3F_C4F_T2F_Quad *quads = (icV3F_C4F_T2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_Quad) * textureGlyphCount);
+            icV3F_C4F_T2F_D2F_SG2F_Quad *quads = (icV3F_C4F_T2F_D2F_SG2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_D2F_SG2F_Quad) * textureGlyphCount);
             icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * textureGlyphCount);
             
             // Iterate over all relevant glyph entries for this texture
@@ -405,7 +525,7 @@
                 ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
                 
                 // Calculate and assign vertex positions
-                float x1, x2, y1, y2, z;
+                float x1, x2, y1, y2, z, px1, px2;
                 
                 x1 = positions[glyphIndex].x;
                 y1 = positions[glyphIndex].y;
@@ -413,15 +533,30 @@
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;
                 
-                quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
-                quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
-                quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
-                quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
+                px1 = floorf(x1);
+                px2 = floorf(x2);
                 
-                // Assign texture coordinates and color
+                quads[j].vertices[0].vect = kmVec3Make(px1, y1, z);
+                quads[j].vertices[1].vect = kmVec3Make(px1, y2, z);
+                quads[j].vertices[2].vect = kmVec3Make(px2, y1, z);
+                quads[j].vertices[3].vect = kmVec3Make(px2, y2, z);
+
+                quads[j].vertices[0].shift = x1 - px1;
+                quads[j].vertices[1].shift = x2 - px2;
+                quads[j].vertices[2].shift = x1 - px1;
+                quads[j].vertices[3].shift = x2 - px2;
+
+                // Assign texture coordinates, color, shift and gamma
                 for (ushort k=0; k<4; k++) {
                     quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
                     quads[j].vertices[k].color = color4FFromColor4B(self.color);
+                    quads[j].vertices[k].gamma = 1.0f; // FIXME: implement gamma setting
+                    if (textureGlyph.rotated) {
+                        quads[j].vertices[k].glyphDirection = kmVec2Make(0, 1);
+                        //quads[j].vertices[k].color = icColor4FMake(1, 0, 0, 1);
+                    } else {
+                        quads[j].vertices[k].glyphDirection = kmVec2Make(1, 0);
+                    }
                 }
                 
                 // Calculate and assign indices
@@ -437,7 +572,7 @@
             // Create buffers for all relevant glyphs of this texture
             ICVertexBuffer *vertexBuffer = [ICVertexBuffer vertexBufferWithVertices:quads
                                                                               count:(GLuint)textureGlyphCount * 4
-                                                                             stride:sizeof(icV3F_C4F_T2F)
+                                                                             stride:sizeof(icV3F_C4F_T2F_D2F_SG2F)
                                                                               usage:GL_STATIC_DRAW];
             
             ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
@@ -479,14 +614,20 @@
         [self updateBuffers];
     }
     
-    // _buffers may be nil if there's nothing to draw currently; in this case don't do any setup
-    if (_buffers)
-        [self applyStandardDrawSetupWithVisitor:visitor];
-    
     // Draw each texture glyph buffer required to display the run
     for (ICTextureGlyphBuffer *buffer in _buffers) {
-        if (![visitor isKindOfClass:[ICNodeVisitorPicking class]])
+        if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) { // drawing node visitor
+            kmVec3 pixel = kmVec3Make(1.0f / buffer.textureAtlas.sizeInPixels.width,
+                                      1.0f / buffer.textureAtlas.sizeInPixels.height, 0);
+            [self.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec3:pixel]
+                                    forUniform:@"u_pixel"];
+        }
+        [self applyStandardDrawSetupWithVisitor:visitor];
+
+        if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             glBindTexture(GL_TEXTURE_2D, buffer.textureAtlas.name);
+            //[buffer.textureAtlas setAliasTexParameters];
+        }
         
         if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             icGLDisable(GL_BLEND);
@@ -499,24 +640,39 @@
         glEnableVertexAttribArray(ICVertexAttribPosition);
         glEnableVertexAttribArray(ICVertexAttribColor);
         glEnableVertexAttribArray(ICVertexAttribTexCoords);
+        glEnableVertexAttribArray(ICVertexAttribTexCoords+1);
+        glEnableVertexAttribArray(ICVertexAttribTexCoords+2);
+        glEnableVertexAttribArray(ICVertexAttribTexCoords+3);
         IC_CHECK_GL_ERROR_DEBUG();
         
         [buffer.vertexBuffer bind];
         [buffer.indexBuffer bind];
         
-#define kVertexSize sizeof(icV3F_C4F_T2F)
+#define kVertexSize sizeof(icV3F_C4F_T2F_D2F_SG2F)
         
         // vertex
-        NSInteger diff = offsetof(icV3F_C4F_T2F, vect);
+        NSInteger diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, vect);
         glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         // color
-        diff = offsetof(icV3F_C4F_T2F, color);
+        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, color);
         glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         // texCoords
-        diff = offsetof(icV3F_C4F_T2F, texCoords);
+        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, texCoords);
         glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+
+        // glyphDirection
+        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, glyphDirection);
+        glVertexAttribPointer(ICVertexAttribTexCoords+1, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+
+        // shift
+        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, shift);
+        glVertexAttribPointer(ICVertexAttribTexCoords+2, 1, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+
+        // gamma
+        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, gamma);
+        glVertexAttribPointer(ICVertexAttribTexCoords+3, 1, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         glDrawElements(GL_TRIANGLES, buffer.indexBuffer.count, GL_UNSIGNED_SHORT, NULL);
         IC_CHECK_GL_ERROR_DEBUG();
@@ -529,7 +685,12 @@
         
         glDisableVertexAttribArray(ICVertexAttribPosition);
         glDisableVertexAttribArray(ICVertexAttribColor);
-        glDisableVertexAttribArray(ICVertexAttribTexCoords);        
+        glDisableVertexAttribArray(ICVertexAttribTexCoords);
+        glDisableVertexAttribArray(ICVertexAttribTexCoords+1);
+        glDisableVertexAttribArray(ICVertexAttribTexCoords+2);
+        glDisableVertexAttribArray(ICVertexAttribTexCoords+3);
+
+        //[buffer.textureAtlas setAntiAliasTexParameters];
     }
 }
 

@@ -36,6 +36,7 @@
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
                    boundingRect:(CGRect)boundingRect
+                        rotated:(BOOL)rotated
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font
 {
@@ -46,6 +47,7 @@
         _font = [font retain];
         _size = size;
         _boundingRect = boundingRect;
+        _rotated = rotated;
     }
     return self;
 }
