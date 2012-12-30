@@ -136,4 +136,13 @@
     [self setNeedsDisplay];
 }
 
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    
+    for (ICTextLine *line in self.lines) {
+        [line setUserInteractionEnabled:userInteractionEnabled];
+    }
+}
+
 @end

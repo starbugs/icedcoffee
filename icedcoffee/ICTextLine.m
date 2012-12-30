@@ -203,4 +203,13 @@
     return (float)_leading;
 }
 
+- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
+{
+    [super setUserInteractionEnabled:userInteractionEnabled];
+    
+    for (ICGlyphRun *run in self.runs) {
+        [run setUserInteractionEnabled:userInteractionEnabled];
+    }
+}
+
 @end
