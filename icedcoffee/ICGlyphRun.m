@@ -337,7 +337,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
 {
     NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
         [NSValue valueWithBytes:&color objCType:@encode(icColor4B)], ICForegroundColorAttributeName,
-        font, ICFontAttributeName, nil
+        font, ICFontAttributeName,
+        nil
     ];
     self = [self initWithString:string attributes:attributes];
     [attributes release];
@@ -365,12 +366,15 @@ NSString *__glyphFSH = IC_SHADER_STRING
             color = IC_DEFAULT_GLYPH_RUN_COLOR;
         }
         
+        float gamma = [[attributes objectForKey:ICGammaAttributeName] floatValue];
+        
         [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"gamma" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:nil];
         
         self.color = color;
+        self.gamma = gamma;
         self.string = string;
         self.font = font;
         
@@ -403,6 +407,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
     return self;
 }
 
+// TODO: add extended attributes argument for attributes not supported by CoreText (gamma, etc.)
 - (id)initWithCoreTextRun:(CTRunRef)run
 {
     if (!run) {
@@ -452,15 +457,22 @@ NSString *__glyphFSH = IC_SHADER_STRING
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (object == self &&
-        ([keyPath isEqualToString:@"color"] ||
-         [keyPath isEqualToString:@"font"] ||
-         [keyPath isEqualToString:@"string"] ||
-         [keyPath isEqualToString:@"gamma"])) {
-        _dirty = YES;
-    }
+    BOOL metricsDirty = NO;
     
-    if (_dirty) {
+    if (object == self) {
+        if ([keyPath isEqualToString:@"color"] ||
+            [keyPath isEqualToString:@"font"] ||
+            [keyPath isEqualToString:@"string"] ||
+            [keyPath isEqualToString:@"gamma"]) {
+            _dirty = YES;
+        }
+        if ([keyPath isEqualToString:@"font"] ||
+            [keyPath isEqualToString:@"string"]) {
+            metricsDirty = YES;
+        }
+    }
+
+    if (metricsDirty) {
         [self updateMetrics];
     }
 }

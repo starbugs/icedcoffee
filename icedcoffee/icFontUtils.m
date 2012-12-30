@@ -23,12 +23,16 @@
 
 #import "icFontUtils.h"
 
+// TODO: add color attribute
+
 NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
 {
     if (!ctAttrs)
         return nil;
     
     NSMutableDictionary *icAttrs = [[NSMutableDictionary alloc] initWithCapacity:[ctAttrs count]];
+    
+    // Font
     CTFontRef ctFont = CFDictionaryGetValue((CFDictionaryRef)ctAttrs, kCTFontAttributeName);
     ICFont *font = [ICFont fontWithCoreTextFont:ctFont];
     [icAttrs setObject:font forKey:ICFontAttributeName];
@@ -42,6 +46,8 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
         return nil;
 
     NSMutableDictionary *ctAttrs = [[NSMutableDictionary alloc] initWithCapacity:[icAttrs count]];
+    
+    // Font
     ICFont *font = [icAttrs objectForKey:ICFontAttributeName];
     [ctAttrs setObject:(id)font.fontRef forKey:(NSString *)kCTFontAttributeName];
     
