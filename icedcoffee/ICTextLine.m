@@ -184,6 +184,8 @@
     kmVec3Subtract(&size, &aabb.max, &aabb.min);
     self.origin = aabb.min;
     self.size = size;
+    
+    [self setNeedsDisplay];
 }
 
 - (float)ascent

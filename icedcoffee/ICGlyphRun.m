@@ -483,6 +483,9 @@ NSString *__glyphFSH = IC_SHADER_STRING
         if (line) {
             CFRelease(line);
         }
+        
+        // Redraw the glyph run
+        [self setNeedsDisplay];
     }
 }
 

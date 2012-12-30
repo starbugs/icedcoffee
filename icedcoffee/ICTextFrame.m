@@ -132,6 +132,8 @@
     CFRelease(path);
     CFRelease(framesetter);
     CFRelease(frame);
+    
+    [self setNeedsDisplay];
 }
 
 @end
