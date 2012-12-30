@@ -21,8 +21,11 @@
 //  SOFTWARE.
 //  
 
-#import "icMacros.h"
+
 #pragma once
+
+
+#import "icMacros.h"
 
 /**
  @defgroup icedcoffee-configuration Icedcoffee Configuration
