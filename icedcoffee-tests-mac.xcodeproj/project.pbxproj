@@ -3187,6 +3187,7 @@
 				A6932290168F597E003DE913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		A6CB74A21646D1AA00CDEEAC /* Build configuration list for PBXNativeTarget "ShaderTest" */ = {
 			isa = XCConfigurationList;
