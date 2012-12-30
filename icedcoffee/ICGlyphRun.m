@@ -310,6 +310,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
 @synthesize font = _font;
 @synthesize tracking = _tracking;
 @synthesize color = _color;
+@synthesize gamma = _gamma;
 @synthesize metrics = _metrics;
 
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font
@@ -332,10 +333,12 @@ NSString *__glyphFSH = IC_SHADER_STRING
     return [self initWithString:string font:font color:IC_DEFAULT_GLYPH_RUN_COLOR];
 }
 
+// FIXME: this shouldn't be the designated initializer, should be initWithString:attributes:
 - (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color
 {
     if ((self = [super init])) {
         [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
+        [self addObserver:self forKeyPath:@"gamma" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:nil];
         
@@ -343,9 +346,9 @@ NSString *__glyphFSH = IC_SHADER_STRING
         self.string = string;
         self.font = font;
         
-        /*self.shaderProgram = [[ICShaderCache currentShaderCache]
-                              shaderProgramForKey:kICShader_PositionTextureA8Color];*/
+        self.gamma = 1.f;
         
+        // Set up shader
         ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
         ICShaderProgram *p = [shaderCache shaderProgramForKey:ICShaderGlyph];
         
@@ -418,6 +421,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
     self.string = nil;
     self.font = nil;
     
+    [self removeObserver:self forKeyPath:@"gamma"];
     [self removeObserver:self forKeyPath:@"color"];
     [self removeObserver:self forKeyPath:@"string"];
     [self removeObserver:self forKeyPath:@"font"];
@@ -445,7 +449,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
     if (object == self &&
         ([keyPath isEqualToString:@"color"] ||
          [keyPath isEqualToString:@"font"] ||
-         [keyPath isEqualToString:@"string"])) {
+         [keyPath isEqualToString:@"string"] ||
+         [keyPath isEqualToString:@"gamma"])) {
         _dirty = YES;
     }
     
@@ -558,7 +563,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 for (ushort k=0; k<4; k++) {
                     quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
                     quads[j].vertices[k].color = color4FFromColor4B(self.color);
-                    quads[j].vertices[k].gamma = 1.f; // FIXME: implement gamma setting
+                    quads[j].vertices[k].gamma = self.gamma;
                     if (textureGlyph.rotated) {
                         quads[j].vertices[k].glyphDirection = kmVec2Make(0, 1);
                         //quads[j].vertices[k].color = icColor4FMake(1, 0, 0, 1);

@@ -55,6 +55,7 @@
     NSString *_string;
     ICFont *_font;
     icColor4B _color;
+    float _gamma;
     BOOL _dirty;
     NSMutableArray *_buffers;
     ICGlyphRunMetrics *_metrics;
@@ -133,6 +134,13 @@
  @brief The color the receiver uses to draw its ICGlyphRun::string
  */
 @property (nonatomic, assign) icColor4B color;
+
+/**
+ @brief The gamma value the receiver uses to draw its ICGlyphRun::string
+ 
+ The default value of this property is 1.
+ */
+@property (nonatomic, assign) float gamma;
 
 /**
  @brief The tracking of the letters drawn by the receiver
