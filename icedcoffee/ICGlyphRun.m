@@ -631,7 +631,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
 
         if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             glBindTexture(GL_TEXTURE_2D, buffer.textureAtlas.name);
-            //[buffer.textureAtlas setAliasTexParameters];
         }
         
         if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
@@ -694,8 +693,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
         glDisableVertexAttribArray(ICVertexAttribTexCoords+1);
         glDisableVertexAttribArray(ICVertexAttribTexCoords+2);
         glDisableVertexAttribArray(ICVertexAttribTexCoords+3);
-
-        //[buffer.textureAtlas setAntiAliasTexParameters];
     }
 }
 
