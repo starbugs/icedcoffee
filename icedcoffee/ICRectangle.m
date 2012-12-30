@@ -65,7 +65,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         vec2 centroid = abs(texcoord-0.5)*2.0;
         
         centroid -= aspect;
-        aspect *= vec2( 1.0/(_u_size.y/_u_size.x), 1.0/(_u_size.x/_u_size.y));
+        aspect = vec2( 1.0/(_u_size.y/_u_size.x), 1.0/(_u_size.x/_u_size.y));
         centroid *= (1.0+(aspect));
         
         centroid = max(centroid, vec2(0,0));
@@ -119,7 +119,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         float x = v_texCoord.x;
         float y = v_texCoord.y;
         
-        float stop = 0.5;
+        float stop = 0.5 + u_borderWidth;
         float borderWidth = u_borderWidth; //u_borderWidth;
         
         vec2 _u_size = u_size;
@@ -134,6 +134,8 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         
         gl_FragColor = _u_borderColor * r0.y;//min(r0.y,r0.z);
         gl_FragColor += _u_innerColor * r0.x;
+        
+        //gl_FragColor = vec4(1.0,0.0,0.0,1.0);
         //	if(u_debug)
         //	{
         //		gl_FragColor *= 0.25;
@@ -163,8 +165,14 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         
         self.borderWidth = 1; // points
         
-        [_sprite setPosition:kmVec3Make(-(size.height/2.0), -size.height/2.0, 0.0)];//-((size.height/2.0)-_borderSize), -((size.height/2.0)-_borderSize), 0.0)];
-        [_sprite setSize: kmVec3Make(size.width+(size.height), size.height*2.0, 1.0)];// + (size.height*2.0), (size.height*2.0)-_borderSize, 0)];
+        float posDelta = -((size.height/2.0));
+        float roundedPosDelta = roundf(posDelta);
+        
+        //float dd = roundedPosDelta - posDelta;
+        
+        
+        [_sprite setPosition:kmVec3Make(roundedPosDelta, roundedPosDelta, 0.0)];//-((size.height/2.0)-_borderSize), -((size.height/2.0)-_borderSize), 0.0)];
+        [_sprite setSize: kmVec3Make(size.width+(size.height), (size.height*2.0), 1.0)];// + (size.height*2.0), (size.height*2.0)-_borderSize, 0)];
         [_sprite setBlendFunc:(icBlendFunc){GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA}];
         [self addChild:_sprite];
         
@@ -195,7 +203,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         
         _gradientStartColor = color4BFromKmVec4(kmVec4Make(1.0, 1.0, 1.0, 1.0));
         _gradientEndColor = color4BFromKmVec4(kmVec4Make(0.7, 0.7, 0.7, 1.0));
-        _borderColor = color4BFromKmVec4(kmVec4Make(0.0, 0.0, 0.0, 0.5));
+        _borderColor = color4BFromKmVec4(kmVec4Make(0.0, 0.0, 0.0, 1.0));
     }
     return self;
 }
@@ -217,7 +225,9 @@ NSString *__rectangleFSH = IC_SHADER_STRING
     
     [super drawWithVisitor:visitor];
     
-    float distOnePixel = 1.0/(self.size.height);
+    float distOnePixel = 1.0; ///(self.size.height);
+    
+    kmMat4 wtf = [self nodeToWorldTransform];
     
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:_borderWidth*distOnePixel] forUniform:@"u_borderWidth"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:0.4] forUniform:@"u_roundness"];

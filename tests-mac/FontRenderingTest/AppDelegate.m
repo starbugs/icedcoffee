@@ -77,7 +77,7 @@
     animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     animation.fromValue = [NSValue valueWithBytes:&startCenter objCType:@encode(kmVec3)];
     animation.toValue = [NSValue valueWithBytes:&center objCType:@encode(kmVec3)];
-    animation.duration = 1.0;
+    animation.duration = 10.0;
     [self.label addAnimation:animation];
     
     icColor4B startColor = (icColor4B){255,255,255,0};
@@ -86,13 +86,13 @@
     colorAnimation.keyPath = @"color";
     colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
     colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
-    colorAnimation.duration = 1.0;
+    colorAnimation.duration = 10.0;
     [self.label addAnimation:colorAnimation];
     
     ICBasicAnimation *rotationAnimation = [ICBasicAnimation animationWithKeyPath:@"rotationAngle"];
     rotationAnimation.fromValue = [NSNumber numberWithFloat:M_PI];
     rotationAnimation.toValue = [NSNumber numberWithFloat:0];
-    rotationAnimation.duration = 1.0;
+    rotationAnimation.duration = 10.0;
     [self.label addAnimation:rotationAnimation];
    
     ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];

@@ -29,9 +29,9 @@
 {
     ICUIScene *scene = [ICUIScene scene];
     
-    ICFont *arial = [ICFont fontWithName:@"Arial Bold" size:13];
-    ICFont *georgia = [ICFont fontWithName:@"Georgia" size:12];
-    ICFont *monaco = [ICFont fontWithName:@"Monaco" size:12];
+    ICFont *arial = [ICFont fontWithName:@"Arial Bold" size:8];
+    ICFont *georgia = [ICFont fontWithName:@"Georgia" size:8];
+    ICFont *monaco = [ICFont fontWithName:@"Monaco" size:8];
 
     /*ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
     [glyphCache cacheGlyphsWithString:@"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890" forFont:arial];
