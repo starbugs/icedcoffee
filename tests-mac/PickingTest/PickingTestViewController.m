@@ -198,7 +198,7 @@ enum {
     ICAutoResizingMaskRightMarginFlexible |
     ICAutoResizingMaskBottomMarginFlexible;
     
-    ICButton *backingSwitchButton = [ICButton viewWithSize:CGSizeMake(180, 180)];
+    ICButton *backingSwitchButton = [ICButton viewWithSize:CGSizeMake(180, 21)];
     [buttonPanel addChild:backingSwitchButton];
     ICButton *animateButton = [ICButton viewWithSize:CGSizeMake(120, 21)];
     [buttonPanel addChild:animateButton];

@@ -57,7 +57,7 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        //self.clipsChildren = YES;
+        self.clipsChildren = YES;
         
         _mouseButtonPressed = NO;
         _mixesBackgroundStates = YES;

@@ -65,7 +65,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         vec2 centroid = abs(texcoord-0.5)*2.0;
         
         centroid -= aspect;
-        aspect = vec2( 1.0/(_u_size.y/_u_size.x), 1.0/(_u_size.x/_u_size.y));
+        aspect *= vec2( 1.0/(_u_size.y/_u_size.x), 1.0/(_u_size.x/_u_size.y));
         centroid *= (1.0+(aspect));
         
         centroid = max(centroid, vec2(0,0));
@@ -90,10 +90,12 @@ NSString *__rectangleFSH = IC_SHADER_STRING
     {
         vec3 r = vec3(0.0, 0.0, 0.0);
         
+        
 #ifdef GL_ES
         float dd = 0.01;//fwidth(d)*0.5;
 #else
         float dd = fwidth(d)*0.5;
+        borderWidth *= 1.0/u_size.y;
 #endif
         if(d > stop+dd)
             r.x = 1.0;
@@ -119,8 +121,8 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         float x = v_texCoord.x;
         float y = v_texCoord.y;
         
-        float stop = 0.5 + u_borderWidth;
-        float borderWidth = u_borderWidth; //u_borderWidth;
+        float borderWidth = u_borderWidth * (1.0/u_size.y); //u_borderWidth;
+        float stop = 0.5 + borderWidth;
         
         vec2 _u_size = u_size;
         float _u_roundness = u_roundness;
@@ -130,7 +132,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         
         float s0 = 1.0-distanceGenerator(v_texCoord.xy, _u_size, _u_roundness);
         
-        vec3 r0 = colorFromDist(s0, stop, borderWidth);
+        vec3 r0 = colorFromDist(s0, stop, u_borderWidth);
         
         gl_FragColor = _u_borderColor * r0.y;//min(r0.y,r0.z);
         gl_FragColor += _u_innerColor * r0.x;
@@ -166,7 +168,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
         self.borderWidth = 1; // points
         
         float posDelta = -((size.height/2.0));
-        float roundedPosDelta = roundf(posDelta);
+        float roundedPosDelta = posDelta; // roundf(posDelta);
         
         //float dd = roundedPosDelta - posDelta;
         
@@ -225,9 +227,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
     
     [super drawWithVisitor:visitor];
     
-    float distOnePixel = 1.0; ///(self.size.height);
-    
-    kmMat4 wtf = [self nodeToWorldTransform];
+    float distOnePixel = 1.0;//(self.size.height);
     
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:_borderWidth*distOnePixel] forUniform:@"u_borderWidth"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:0.4] forUniform:@"u_roundness"];
