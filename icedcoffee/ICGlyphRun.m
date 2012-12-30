@@ -333,10 +333,38 @@ NSString *__glyphFSH = IC_SHADER_STRING
     return [self initWithString:string font:font color:IC_DEFAULT_GLYPH_RUN_COLOR];
 }
 
-// FIXME: this shouldn't be the designated initializer, should be initWithString:attributes:
 - (id)initWithString:(NSString *)string font:(ICFont *)font color:(icColor4B)color
 {
+    NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:
+        [NSValue valueWithBytes:&color objCType:@encode(icColor4B)], ICForegroundColorAttributeName,
+        font, ICFontAttributeName, nil
+    ];
+    self = [self initWithString:string attributes:attributes];
+    [attributes release];
+    return self;
+}
+
+- (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes
+{
     if ((self = [super init])) {
+        if (!attributes) {
+            [NSException raise:NSInvalidArgumentException format:@"attributes must be non-nil"];
+        }
+        
+        ICFont *font = [attributes objectForKey:ICFontAttributeName];
+        if (!font) {
+            [NSException raise:NSInternalInconsistencyException
+                        format:@"attributes dictionary must contain a font value"];
+        }
+        
+        NSValue *colorValue = [attributes objectForKey:ICForegroundColorAttributeName];
+        icColor4B color;
+        if (colorValue) {
+            [colorValue getValue:&color];
+        } else {
+            color = IC_DEFAULT_GLYPH_RUN_COLOR;
+        }
+        
         [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"gamma" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
@@ -369,32 +397,10 @@ NSString *__glyphFSH = IC_SHADER_STRING
             [shaderCache setShaderProgram:p forKey:ICShaderGlyph];
         }
         
-        self.shaderProgram = p;
+        self.shaderProgram = p;        
     }
+    
     return self;
-}
-
-- (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes
-{
-    if (!attributes) {
-        [NSException raise:NSInvalidArgumentException format:@"attributes must be non-nil"];
-    }
-    
-    ICFont *font = [attributes objectForKey:ICFontAttributeName];
-    if (!font) {
-        [NSException raise:NSInternalInconsistencyException
-                    format:@"attributes dictionary must contain a font value"];
-    }
-    
-    NSValue *colorValue = [attributes objectForKey:ICForegroundColorAttributeName];
-    icColor4B color;
-    if (colorValue) {
-        [colorValue getValue:&color];
-    } else {
-        color = IC_DEFAULT_GLYPH_RUN_COLOR;
-    }
-    
-    return [self initWithString:string font:font color:color];
 }
 
 - (id)initWithCoreTextRun:(CTRunRef)run
