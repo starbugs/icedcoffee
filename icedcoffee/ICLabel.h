@@ -24,6 +24,7 @@
 #import "ICView.h"
 
 @class ICSprite;
+@class ICTextFrame;
 
 #define ICLabelTextDidChange @"ICLabelTextDidChange"
 #define ICLabelFontDidChange @"ICLabelFontDidChange"
@@ -33,8 +34,9 @@
  */
 @interface ICLabel : ICView {
 @protected
-    ICSprite *_sprite;
-    NSString *_text;
+    ICTextFrame *_textFrame;
+    
+    NSAttributedString *_attributedText;
     NSString *_fontName;
     CGFloat _fontSize;
     icColor4B _color;
@@ -48,13 +50,18 @@
 
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
 
+- (id)initWithSize:(CGSize)size;
+
+- (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
+
 
 #pragma mark - Manipulating the Label's Text, Font and Color
 /** @name Manipulating the Label's Text, Font and Color */
 
 @property (nonatomic, assign) BOOL autoresizesToTextSize;
 
-@property (nonatomic, copy, setter=setText:) NSString *text;
+@property (nonatomic, copy) NSString *text;
+@property (nonatomic, copy, setter=setAttributedText:) NSAttributedString *attributedText;
 @property (nonatomic, copy, setter=setFontName:) NSString *fontName;
 @property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
 @property (nonatomic, assign, getter=color, setter=setColor:) icColor4B color;

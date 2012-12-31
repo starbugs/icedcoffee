@@ -54,6 +54,7 @@
 		A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A693229A168F59AF003DE913 /* MainMenu.xib */; };
 		A69322A2168F59AF003DE913 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A693229C168F59AF003DE913 /* main.m */; };
 		A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */; };
+		A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
 		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
@@ -794,6 +795,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */,
 				D2FD86A314F0ED95006A9A90 /* Carbon.framework in Frameworks */,
 				D2FD869C14F0ED24006A9A90 /* CoreVideo.framework in Frameworks */,
 				D2FD865014F0E79B006A9A90 /* libicedcoffee-mac.a in Frameworks */,

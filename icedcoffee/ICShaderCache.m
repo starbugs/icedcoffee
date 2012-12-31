@@ -38,11 +38,8 @@
 {
     ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
     NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
-    ICShaderCache *shaderCache = openGLContext.shaderCache;
-    if (!shaderCache) {
-        shaderCache = openGLContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
-    }
-    return shaderCache;
+    NSAssert(openGLContext.shaderCache != nil, @"No shader cache created yet for this context");
+    return openGLContext.shaderCache;
 }
 
 + (void)purgeCurrentShaderCache

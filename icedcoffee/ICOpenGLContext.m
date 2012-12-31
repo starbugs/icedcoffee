@@ -25,6 +25,8 @@
 #import "ICOpenGLContextManager.h"
 #import "icDefaults.h"
 
+// FIXME: ICOpenGLContext should observe property changes on share contexts to track changes
+
 @implementation ICOpenGLContext
 
 @synthesize nativeContext = _nativeContext;
@@ -59,6 +61,7 @@
         if (shareContext) {
             self.textureCache = shareContext.textureCache;
             self.shaderCache = shareContext.shaderCache;
+            self.glyphCache = shareContext.glyphCache;
             self.contentScaleFactor = shareContext.contentScaleFactor;
             for (id key in shareContext.customObjects) {
                 [self setCustomObject:[shareContext customObjectForKey:key] forKey:key];

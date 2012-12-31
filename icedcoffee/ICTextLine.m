@@ -145,6 +145,10 @@
 {
     [self removeAllChildren];
     
+    // Need either an attributed string or a CoreText line
+    if (!self.attributedString && !self.ctLine)
+        return;
+    
     CTLineRef ctLine = nil;
     if (self.ctLine) {
         ctLine = self.ctLine;

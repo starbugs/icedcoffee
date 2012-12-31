@@ -49,11 +49,8 @@
 {
     ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
     NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
-    ICGlyphCache *glyphCache = openGLContext.glyphCache;
-    if (!glyphCache) {
-        glyphCache = openGLContext.glyphCache = [[[ICGlyphCache alloc] init] autorelease];
-    }
-    return glyphCache;
+    NSAssert(openGLContext.glyphCache != nil, @"No glyph cache created yet for this context");
+    return openGLContext.glyphCache;
 }
 
 - (id)init

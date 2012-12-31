@@ -216,17 +216,16 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 
                 //NSLog(@"Glyph position: (%f, %f)", _positions[i].x, _positions[i].y);
                 
-                kmVec2 extent = kmVec2Make(ICFontPixelsToPoints(advances[i].width) + marginInPoints * 2,
-                                           textureGlyphHeight);
+                // FIXME: review this carefully (why do we need marginInPoints * 2?)
+                float advance = ICFontPixelsToPoints(advances[i].width) + marginInPoints * 2;
                 
                 if (_positions[i].x < min.x)
                     min.x = _positions[i].x;
-                if (_positions[i].y < min.y)
-                    min.y = _positions[i].y;
-                if (_positions[i].x + extent.width > max.x)
-                    max.x = _positions[i].x + extent.width;
-                if (_positions[i].y + extent.height > max.y)
-                    max.y = _positions[i].y + extent.height;
+                if (_positions[i].x + advance > max.x)
+                    max.x = _positions[i].x + advance;
+                
+                min.y = 0;
+                max.y = roundf(_ascent + _descent);
             }
             
             _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);

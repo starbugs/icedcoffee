@@ -26,6 +26,8 @@
 #import "ICScene.h"
 #import "ICRenderTexture.h"
 #import "ICTextureCache.h"
+#import "ICShaderCache.h"
+#import "ICGlyphCache.h"
 #import "ICScheduler.h"
 #import "ICCamera.h"
 #import "ICTargetActionDispatcher.h"
@@ -346,11 +348,16 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         [_openGLContext makeCurrentContext];
     }
     
-    // If not already existing, create a texture cache bound to our OpenGL context
+    // If not already existing, create a caches bound to our OpenGL context
     // (required for auxiliary OpenGL contexts)
-    if (!self.textureCache) {
-        _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
-                                       autorelease];
+    if (!_openGLContext.textureCache) {
+        _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
+    }
+    if (!_openGLContext.shaderCache) {
+        _openGLContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
+    }
+    if (!_openGLContext.glyphCache) {
+        _openGLContext.glyphCache = [[[ICGlyphCache alloc] init] autorelease];
     }
     
     // Set content scale factor before calling setUpScene
