@@ -366,7 +366,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
             color = IC_DEFAULT_GLYPH_RUN_COLOR;
         }
         
-        float gamma = [[attributes objectForKey:ICGammaAttributeName] floatValue];
+        NSNumber *gammaAttr = [attributes objectForKey:ICGammaAttributeName];
+        float gamma = gammaAttr ? [gammaAttr floatValue] : IC_DEFAULT_GLYPH_RUN_GAMMA;
         
         [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
         [self addObserver:self forKeyPath:@"gamma" options:NSKeyValueObservingOptionNew context:nil];
@@ -377,8 +378,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
         self.gamma = gamma;
         self.string = string;
         self.font = font;
-        
-        self.gamma = 1.f;
         
         // Set up shader
         ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
@@ -407,8 +406,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
     return self;
 }
 
-// TODO: add extended attributes argument for attributes not supported by CoreText (gamma, etc.)
-- (id)initWithCoreTextRun:(CTRunRef)run
+- (id)initWithCoreTextRun:(CTRunRef)run extendedAttributes:(NSDictionary *)extendedAttributes
 {
     if (!run) {
         [NSException raise:NSInvalidArgumentException format:@"run argument may not be nil"];
@@ -417,13 +415,24 @@ NSString *__glyphFSH = IC_SHADER_STRING
     _ctRun = run;
     CFRetain(_ctRun);
 
-    NSDictionary *attributes = icCreateTextAttributesWithCTAttributes(
+    NSDictionary *runAttributes = icCreateTextAttributesWithCTAttributes(
         (NSDictionary *)CTRunGetAttributes(run)
     );
+    
+    // Merge runAttributes with extendedAttributes
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:
+                                       [runAttributes count] + [extendedAttributes count]];
+    for (id key in runAttributes) {
+        [attributes setObject:[runAttributes objectForKey:key] forKey:key];
+    }
+    for (id key in extendedAttributes) {
+        [attributes setObject:[extendedAttributes objectForKey:key] forKey:key];
+    }
     
     self = [self initWithString:nil attributes:attributes];
     
     [attributes release];
+    [runAttributes release];
     return self;
 }
 

@@ -33,6 +33,7 @@
 #define ICShaderGlyph @"ShaderGlyph"
 
 #define IC_DEFAULT_GLYPH_RUN_COLOR (icColor4B){0,0,0,255}
+#define IC_DEFAULT_GLYPH_RUN_GAMMA 1.f
 
 @class ICGlyphRunMetrics;
 
@@ -100,9 +101,13 @@
 - (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
 
 /**
- @brief Initializes the receiver with the given CoreText run
+ @brief Initializes the receiver with the given CoreText run and extended attributes
+ 
+ @param run A ``CTRunRef`` identifiying the CoreText run to initialize the receiver with
+ @param extendedAttributes An ``NSDictionary`` containing extended attributes that are not
+ supported by CoreText
  */
-- (id)initWithCoreTextRun:(CTRunRef)run;
+- (id)initWithCoreTextRun:(CTRunRef)run extendedAttributes:(NSDictionary *)extendedAttributes;
 
 
 /** @name Precaching Font Glyphs */

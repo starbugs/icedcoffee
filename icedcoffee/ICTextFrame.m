@@ -116,7 +116,12 @@
 
     for (CFIndex i=0; i<lineCount; i++) {
         CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(lines, i);
-        ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line];
+        CFRange cfStringRange = CTLineGetStringRange(line);
+        NSRange stringRange = NSMakeRange(cfStringRange.location, cfStringRange.length);
+        NSAttributedString *attSubString = [self.attributedString attributedSubstringFromRange:stringRange];
+        ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line
+                                                     icAttributedString:attSubString
+                                                            stringRange:stringRange];
         CGPoint origin = origins[i];
         origin.x = ICFontPixelsToPoints(origin.x);
         origin.y = roundf(ICFontPixelsToPoints(origin.y)+[textLine ascent]);

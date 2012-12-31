@@ -35,7 +35,7 @@ extern "C" {
      @brief Creates an icedcoffee text attributes dictionary from a CoreText attributes dictionary
      */
     NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs);
-    
+
     /**
      @brief Creates a CoreText attributes dictionary from an icedcoffee text attributes dictionary
      */

@@ -88,9 +88,12 @@
 }
 
 - (id)initWithCoreTextLine:(CTLineRef)ctLine
+        icAttributedString:(NSAttributedString *)icAttString
+               stringRange:(NSRange)stringRange
 {
     self.ctLine = ctLine;
-    return [self initWithAttributedString:nil];
+    _stringRange = stringRange;
+    return [self initWithAttributedString:icAttString];
 }
 
 - (void)dealloc
@@ -168,12 +171,30 @@
     
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef ctRun = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
-        ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun];
+        
+        CFRange stringRange = CTRunGetStringRange(ctRun);
+        stringRange.location -= _stringRange.location;
+        
+        __block NSMutableDictionary *extendedAttrs = [[NSMutableDictionary alloc] init];
+        NSAttributedString *attSubString = [self.attributedString attributedSubstringFromRange:
+                                            NSMakeRange(stringRange.location, stringRange.length)];
+        [attSubString enumerateAttributesInRange:NSMakeRange(0, [attSubString length]) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+            for (NSString *attrName in attrs) {
+                if ([attrName isEqualToString:ICGammaAttributeName]) {
+                    [extendedAttrs setObject:[attrs objectForKey:attrName] forKey:attrName];
+                }
+            }
+        }];
+        
+        ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun
+                                               extendedAttributes:extendedAttrs];
         float runAscent = roundf([run ascent]);
         [run setPositionY:lineAscent - runAscent];
         [self.runs addObject:run];
         [self addChild:run];
         [run release];
+        
+        [extendedAttrs release];
     }
     
     CFRelease(ctLine);

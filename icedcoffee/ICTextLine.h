@@ -37,6 +37,7 @@
     CTLineRef _ctLine;
     NSMutableArray *_runs;
     NSAttributedString *_string;
+    NSRange _stringRange;
     CGFloat _ascent;
     CGFloat _descent;
     CGFloat _leading;
@@ -54,7 +55,9 @@
 
 - (id)initWithAttributedString:(NSAttributedString *)attributedString;
 
-- (id)initWithCoreTextLine:(CTLineRef)ctLine;
+- (id)initWithCoreTextLine:(CTLineRef)ctLine
+        icAttributedString:(NSAttributedString *)icAttString
+               stringRange:(NSRange)stringRange;
 
 @property (nonatomic, copy) NSAttributedString *attributedString;
 
