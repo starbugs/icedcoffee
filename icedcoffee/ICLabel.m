@@ -34,7 +34,7 @@
 // FIXME: ICLabel support for 32-bit textures (?)
 
 @interface ICLabel ()
-+ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font;
++ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font color:(icColor4B)color;
 + (void)measureTextForAutoresizing:(NSString *)text font:(ICFont *)font origin:(kmVec3 *)origin size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
@@ -73,6 +73,7 @@
         
         self.fontName = fontName;
         self.fontSize = fontSize;
+        self.color = (icColor4B){0,0,0,255};
         self.text = text;
     }
 
@@ -122,10 +123,12 @@
     if (object == self) {
         if ([keyPath isEqualToString:@"text"] ||
             [keyPath isEqualToString:@"fontName"] ||
-            [keyPath isEqualToString:@"fontSize"]) {
-            if (self.fontName && self.fontSize && self.text) {
+            [keyPath isEqualToString:@"fontSize"] ||
+            [keyPath isEqualToString:@"color"]) {
+            BOOL isNullColor = self.color.r == 0 && self.color.g == 0 && self.color.b == 0 && self.color.a == 0;
+            if (self.fontName && self.fontSize && self.text && !isNullColor) {
                 ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
-                self.attributedText = [[self class] attributedTextWithText:self.text font:font];
+                self.attributedText = [[self class] attributedTextWithText:self.text font:font color:self.color];
             }
         }
         if ([keyPath isEqualToString:@"attributedText"]) {
@@ -159,26 +162,18 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
 }
 
-- (icColor4B)color
-{
-    // FIXME: implement color
-    return (icColor4B){0,0,0,0};
-}
-
-- (void)setColor:(icColor4B)color
-{
-    // FIXME: implement color
-}
-
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
 {
     [self.textFrame setUserInteractionEnabled:userInteractionEnabled];
 }
 
-+ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font
++ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font color:(icColor4B)color
 {
+    NSValue *foregroundColorValue = [NSValue valueWithBytes:&color objCType:@encode(icColor4B)];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                font, ICFontAttributeName, nil];
+                                font, ICFontAttributeName,
+                                foregroundColorValue, ICForegroundColorAttributeName,
+                                nil];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
                                                                          attributes:attributes];
     return [attributedText autorelease];

@@ -22,8 +22,7 @@
 //
 
 #import "icFontUtils.h"
-
-// TODO: add color attribute
+#import "icTypes.h"
 
 NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
 {
@@ -32,10 +31,32 @@ NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
     
     NSMutableDictionary *icAttrs = [[NSMutableDictionary alloc] initWithCapacity:[ctAttrs count]];
     
+    
     // Font
+    
     CTFontRef ctFont = CFDictionaryGetValue((CFDictionaryRef)ctAttrs, kCTFontAttributeName);
-    ICFont *font = [ICFont fontWithCoreTextFont:ctFont];
-    [icAttrs setObject:font forKey:ICFontAttributeName];
+    if (ctFont) {
+        ICFont *font = [ICFont fontWithCoreTextFont:ctFont];
+        [icAttrs setObject:font forKey:ICFontAttributeName];
+    }
+    
+    
+    // Foreground color
+    
+    CGColorRef cgForegroundColor = (CGColorRef)CFDictionaryGetValue((CFDictionaryRef)ctAttrs,
+                                                                    kCTForegroundColorAttributeName);
+    if (cgForegroundColor) {
+        const CGFloat *components = CGColorGetComponents(cgForegroundColor);
+        icColor4B foregroundColor = (icColor4B){
+            (GLbyte)(components[0]*255.0f),
+            (GLbyte)(components[1]*255.0f),
+            (GLbyte)(components[2]*255.0f),
+            (GLbyte)(components[3]*255.0f),
+        };
+        [icAttrs setObject:[NSValue valueWithBytes:&foregroundColor objCType:@encode(icColor4B)]
+                    forKey:ICForegroundColorAttributeName];
+    }
+    
     
     return icAttrs;
 }
@@ -47,9 +68,29 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
 
     NSMutableDictionary *ctAttrs = [[NSMutableDictionary alloc] initWithCapacity:[icAttrs count]];
     
+    
     // Font
+    
     ICFont *font = [icAttrs objectForKey:ICFontAttributeName];
-    [ctAttrs setObject:(id)font.fontRef forKey:(NSString *)kCTFontAttributeName];
+    if (font) {
+        [ctAttrs setObject:(id)font.fontRef forKey:(NSString *)kCTFontAttributeName];
+    }
+    
+    
+    // Foreground color
+    
+    icColor4B foregroundColor;
+    NSValue *foregroundColorValue = [icAttrs objectForKey:ICForegroundColorAttributeName];
+    if (foregroundColorValue) {
+        [foregroundColorValue getValue:&foregroundColor];
+        CGColorRef cgForegroundColor = CGColorCreateGenericRGB((float)foregroundColor.r/255.0f,
+                                                               (float)foregroundColor.g/255.0f,
+                                                               (float)foregroundColor.b/255.0f,
+                                                               (float)foregroundColor.a/255.0f);
+        [ctAttrs setObject:(id)cgForegroundColor forKey:(NSString *)kCTForegroundColorAttributeName];
+        CFRelease(cgForegroundColor);
+    }
+    
     
     return ctAttrs;
 }

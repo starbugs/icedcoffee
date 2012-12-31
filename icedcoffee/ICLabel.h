@@ -64,6 +64,6 @@
 @property (nonatomic, copy, setter=setAttributedText:) NSAttributedString *attributedText;
 @property (nonatomic, copy, setter=setFontName:) NSString *fontName;
 @property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
-@property (nonatomic, assign, getter=color, setter=setColor:) icColor4B color;
+@property (nonatomic, assign) icColor4B color;
 
 @end
