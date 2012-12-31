@@ -47,6 +47,10 @@
  */
 + (id)fontWithCoreTextFont:(CTFontRef)ctFont;
 
+/** @cond */ // Exclude from docs
+- (id)init __attribute__((unavailable("Use fontWithName: instead.")));
+/** @endcond */
+
 /**
  @brief The name of the font represented by the receiver
  */
