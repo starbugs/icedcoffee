@@ -160,10 +160,19 @@
 // FIXME: re-implement tracking via CoreText kerning attribute
 @property (nonatomic, assign) float tracking;
 
+/**
+ @brief Returns the receiver's ascent in points
+ */
 - (float)ascent;
 
+/**
+ @brief Returns the receiver's descent in points
+ */
 - (float)descent;
 
+/**
+ @brief Returns the receiver's leading in points
+ */
 - (float)leading;
 
 @end
