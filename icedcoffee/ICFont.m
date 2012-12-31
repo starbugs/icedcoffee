@@ -73,6 +73,11 @@
     _size = size;
 }
 
+- (CGFloat)size
+{
+    return ICFontPixelsToPoints(_size);
+}
+
 
 // Private
 

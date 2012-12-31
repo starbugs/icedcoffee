@@ -37,14 +37,29 @@
     CGFloat _size;
 }
 
+/**
+ @brief Retrieves a font object for the given font name and size
+ */
 + (id)fontWithName:(NSString *)fontName size:(CGFloat)size;
 
+/**
+ @brief Retrieves a font object for the given CoreText font
+ */
 + (id)fontWithCoreTextFont:(CTFontRef)ctFont;
 
+/**
+ @brief The name of the font represented by the receiver
+ */
 @property (nonatomic, readonly) NSString *name;
 
-@property (nonatomic, readonly) CTFontRef fontRef;
-
+/**
+ @brief The size in points of the font represented by the receiver
+ */
 @property (nonatomic, readonly) CGFloat size;
+
+/**
+ @brief The CoreText font used by the receiver
+ */
+@property (nonatomic, readonly) CTFontRef fontRef;
 
 @end
