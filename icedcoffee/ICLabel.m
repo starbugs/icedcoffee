@@ -183,10 +183,11 @@
 {
     // Measure each text line contained in text
     NSArray *lines = [text componentsSeparatedByString:@"\n"];
-    NSMutableArray *textLines = [NSMutableArray arrayWithCapacity:[lines count]];
+    NSMutableArray *textLines = [[NSMutableArray alloc] initWithCapacity:[lines count]];
     for (NSString *line in lines) {
-        ICTextLine *textLine = [ICTextLine textLineWithString:line font:font];
+        ICTextLine *textLine = [[ICTextLine alloc] initWithString:line font:font];
         [textLines addObject:textLine];
+        [textLine release];
     }
     
     kmAABB aabb = icComputeAABBContainingAABBsOfNodes(textLines);
@@ -198,6 +199,8 @@
                            aabb.max.y - aabb.min.y,
                            aabb.max.z - aabb.min.z);
     }
+    
+    [textLines release];
 }
 
 - (void)autoresizeToText
@@ -216,9 +219,11 @@
     }
     
     if (!self.textFrame) {
-        self.textFrame = [ICTextFrame textFrameWithSize:kmVec2Make(self.size.width, self.size.height)
-                                       attributedString:self.attributedText];
-        [self addChild:self.textFrame];
+        ICTextFrame *textFrame = [[ICTextFrame alloc] initWithSize:kmVec2Make(self.size.width, self.size.height)
+                                                  attributedString:self.attributedText];
+        [self addChild:textFrame];
+        self.textFrame = textFrame;
+        [textFrame release];
     } else {
         self.textFrame.size = self.size;
         self.textFrame.attributedString = self.attributedText;
