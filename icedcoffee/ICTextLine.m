@@ -100,6 +100,7 @@
 {
     self.ctLine = nil;
     self.attributedString = nil;
+    self.runs = nil;
     [self removeObserver:self forKeyPath:@"attributedString"];
 
     [super dealloc];
@@ -171,7 +172,7 @@
     
     float lineAscent = roundf(_ascent);
     
-    self.runs = [NSMutableArray arrayWithCapacity:runCount];
+    NSMutableArray *glyphRuns = [[NSMutableArray alloc] initWithCapacity:runCount];
     
     for (CFIndex i=0; i<runCount; i++) {
         CTRunRef ctRun = (CTRunRef)CFArrayGetValueAtIndex(runs, i);
@@ -192,14 +193,18 @@
         
         ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun
                                                extendedAttributes:extendedAttrs];
+        [run setName:[attSubString string]];
         float runAscent = roundf([run ascent]);
         [run setPositionY:lineAscent - runAscent];
-        [self.runs addObject:run];
+        [glyphRuns addObject:run];
         [self addChild:run];
         [run release];
         
         [extendedAttrs release];
     }
+    
+    self.runs = glyphRuns;
+    [glyphRuns release];
     
     CFRelease(ctLine);
     

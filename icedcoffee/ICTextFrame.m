@@ -80,6 +80,10 @@
 - (void)dealloc
 {
     self.attributedString = nil;
+    self.lines = nil;
+    
+    [self removeObserver:self forKeyPath:@"attributedString"];
+    
     [super dealloc];
 }
 
@@ -149,5 +153,6 @@
         [line setUserInteractionEnabled:userInteractionEnabled];
     }
 }
+
 
 @end
