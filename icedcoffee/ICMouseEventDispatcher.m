@@ -281,7 +281,6 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     // If event is mouseDown, store mouse down node, last mouse location, and modifier flags
     if ([self isMouseDownEventType:[mouseEvent type]]) {
         self.lastMouseDownNode = deepestHitNode;
-        NSLog(@"last mouse down: %@", [self.lastMouseDownNode description]);
         _lastMouseLocation = location;
         _lastMouseModifierFlags = [mouseEvent modifierFlags];
     }
@@ -303,7 +302,6 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 
         [dispatchTarget release];
         dispatchTarget = [self.lastMouseDownNode retain];
-        NSLog(@"mouse up dispatch target: %@", [dispatchTarget description]);
         self.lastMouseDownNode = nil;
     }
 
