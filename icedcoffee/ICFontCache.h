@@ -24,6 +24,9 @@
 #import <Foundation/Foundation.h>
 #import "ICFont.h"
 
+NSString *icInternalFontNameForFontNameAndSize(NSString *name, CGFloat size);
+NSString *icInternalFontNameForFont(ICFont *font);
+
 @interface ICFontCache : NSObject {
 @protected
     NSMutableDictionary *_fontsByName;
@@ -38,6 +41,6 @@
 
 - (ICFont *)fontForCTFontRef:(CTFontRef)fontRef;
 
-- (ICFont *)fontForName:(NSString *)name;
+- (ICFont *)fontForName:(NSString *)name size:(CGFloat)size;
 
 @end

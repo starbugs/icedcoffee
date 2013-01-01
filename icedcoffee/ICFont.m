@@ -45,10 +45,10 @@
 
 + (id)fontWithName:(NSString *)fontName size:(CGFloat)size
 {
-    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName];
+    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName size:size];
     if (!cachedFont) {
         cachedFont = [[[[self class] alloc] initWithName:fontName
-                                                    size:ICFontPointsToPixels(size)] autorelease];
+                                                    size:size] autorelease];
     }
     return cachedFont;
 }
@@ -75,7 +75,12 @@
 
 - (CGFloat)size
 {
-    return ICFontPixelsToPoints(_size);
+    return _size;
+}
+
+- (CGFloat)sizeInPixels
+{
+    return ICFontPointsToPixels(_size);
 }
 
 
@@ -83,7 +88,7 @@
 
 - (id)initWithName:(NSString *)fontName size:(CGFloat)size
 {
-    CTFontRef ctFont = CTFontCreateWithName((CFStringRef)fontName, size, nil);
+    CTFontRef ctFont = CTFontCreateWithName((CFStringRef)fontName, ICFontPointsToPixels(size), nil);
     self = [self initWithCoreTextFont:ctFont];
     CFRelease(ctFont);
     return self;
@@ -98,7 +103,7 @@
         self.name = fontName;
         [fontName release];
         
-        self.size = CTFontGetSize(self.fontRef);
+        self.size = ICFontPixelsToPoints(CTFontGetSize(self.fontRef));
         
         // Register font upon initialization
         [[ICFontCache sharedFontCache] registerFont:self];

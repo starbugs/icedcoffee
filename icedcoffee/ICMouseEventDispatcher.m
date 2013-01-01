@@ -30,6 +30,8 @@
 #import "icUtils.h"
 
 
+// FIXME: need to retain _lastScrollNode, _lastMouseDownControl, local control vars
+
 #ifdef __IC_PLATFORM_MAC
 
 #import "ICHostViewControllerMac.h"

@@ -23,6 +23,19 @@
 
 #import "ICFontCache.h"
 
+
+NSString *icInternalFontNameForFontNameAndSize(NSString *name, CGFloat size)
+{
+    return [NSString stringWithFormat:@"%@@%f", name, size];
+}
+
+NSString *icInternalFontNameForFont(ICFont *font)
+{
+    return icInternalFontNameForFontNameAndSize(font.name, font.size);
+}
+
+
+
 ICFontCache *g_sharedFontCache = nil;
 
 @implementation ICFontCache
@@ -55,11 +68,12 @@ ICFontCache *g_sharedFontCache = nil;
 
 - (void)registerFont:(ICFont *)font
 {
-    if (![_fontsByName objectForKey:font.name]) {
-        [_fontsByName setObject:font forKey:font.name];
+    NSString *internalName = icInternalFontNameForFont(font);
+    if (![_fontsByName objectForKey:internalName]) {
+        [_fontsByName setObject:font forKey:internalName];
         [_fontsByCTFontRef setObject:font forKey:[NSValue valueWithPointer:font.fontRef]];
     } else {
-        NSLog(@"Warning: font cache already contains a font for name '%@'", font.name);
+        NSLog(@"Warning: font cache already contains a font for name '%@'", internalName);
     }
 }
 
@@ -68,9 +82,10 @@ ICFontCache *g_sharedFontCache = nil;
     return [_fontsByCTFontRef objectForKey:[NSValue valueWithPointer:fontRef]];
 }
 
-- (ICFont *)fontForName:(NSString *)name
+- (ICFont *)fontForName:(NSString *)name size:(CGFloat)size
 {
-    return [_fontsByName objectForKey:name];
+    NSString *internalName = icInternalFontNameForFontNameAndSize(name, size);
+    return [_fontsByName objectForKey:internalName];
 }
 
 @end

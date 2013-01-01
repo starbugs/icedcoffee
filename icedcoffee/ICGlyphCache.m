@@ -30,6 +30,7 @@
 #import "ICTextureGlyph.h"
 #import "icMacros.h"
 #import "icConfig.h"
+#import "ICFontCache.h"
 
 
 @interface ICGlyphCache ()
@@ -115,10 +116,11 @@
 
 - (void)cacheTextureGlyph:(ICTextureGlyph *)textureGlyph
 {
-    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:textureGlyph.font.name];
+    NSString *internalFontName = icInternalFontNameForFont(textureGlyph.font);
+    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:internalFontName];
     if (!glyphsForFont) {
         glyphsForFont = [NSMutableDictionary dictionaryWithCapacity:1];
-        [_textureGlyphs setObject:glyphsForFont forKey:textureGlyph.font.name];
+        [_textureGlyphs setObject:glyphsForFont forKey:internalFontName];
     }
     [glyphsForFont setObject:textureGlyph forKey:[NSNumber numberWithUnsignedShort:textureGlyph.glyph]];
 }
@@ -276,7 +278,8 @@
 
 - (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font
 {
-    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
+    NSString *internalFontName = icInternalFontNameForFont(font);
+    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:internalFontName];
     return [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
 }
 
@@ -303,10 +306,11 @@
 {
     NSMutableArray *resultTextureGlyphs = [NSMutableArray arrayWithCapacity:count];
     
-    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:font.name];
+    NSString *internalFontName = icInternalFontNameForFont(font);
+    NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:internalFontName];
     if (!glyphsForFont) {
         glyphsForFont = [NSMutableDictionary dictionaryWithCapacity:count];
-        [_textureGlyphs setObject:glyphsForFont forKey:font.name];
+        [_textureGlyphs setObject:glyphsForFont forKey:internalFontName];
     }
     NSNumber *notFoundMarker = [NSNumber numberWithInteger:NSNotFound];
     

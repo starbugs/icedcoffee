@@ -66,4 +66,6 @@
  */
 @property (nonatomic, readonly) CTFontRef fontRef;
 
+- (CGFloat)sizeInPixels;
+
 @end
