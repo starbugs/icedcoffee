@@ -49,7 +49,7 @@
         _lastMouseLocation = [[ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view] locationInHostView]; \
         _lastMouseModifierFlags = [event modifierFlags]; \
         ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view]; \
-        [_lastMouseDownNode eventMethod:mouseEvent]; \
+        [self.lastMouseDownNode eventMethod:mouseEvent]; \
     }
 
 ICAbstractMouseEventType ICAbstractMouseEventTypeFromEventType(ICOSXEventType eventType)
@@ -89,7 +89,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 }
 
 
-@interface ICMouseEventDispatcher (Private)
+@interface ICMouseEventDispatcher ()
+
 - (ICScene *)scene;
 - (CGPoint)locationFromEvent:(ICMouseEvent *)event;
 - (NSEvent *)enterExitEventWithType:(NSEventType)eventType;
@@ -102,11 +103,18 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
                                   deepestHitControl:(ICControl *)deepestHitControl
                               controlDispatchTarget:(ICControl *)controlDispatchTarget
                                               event:(ICMouseEvent *)event;
+
+@property (nonatomic, retain) ICNode *lastMouseDownNode;
+
 @end
 
 
 @implementation ICMouseEventDispatcher
 
+// private
+@synthesize lastMouseDownNode = _lastMouseDownNode;
+
+// public
 @synthesize acceptsMouseMovedEvents = _acceptsMouseMovedEvents;
 @synthesize updatesEnterExitEventsContinuously = _updatesEnterExitEventsContinuously;
 
@@ -128,6 +136,9 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 - (void)dealloc
 {
     [_overNodes release];
+    
+    self.lastMouseDownNode = nil;
+    
     [super dealloc];
 }
 
@@ -265,17 +276,18 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     NSArray *hitNodes = [_hostViewController hitTest:location];
 
     // Get the deepest node the mouse cursor is over
-    ICNode *deepestHitNode = (ICNode *)[hitNodes lastObject];
+    ICNode *deepestHitNode = (ICNode *)[[hitNodes lastObject] retain];
     
     // If event is mouseDown, store mouse down node, last mouse location, and modifier flags
     if ([self isMouseDownEventType:[mouseEvent type]]) {
-        _lastMouseDownNode = deepestHitNode;
+        self.lastMouseDownNode = deepestHitNode;
+        NSLog(@"last mouse down: %@", [self.lastMouseDownNode description]);
         _lastMouseLocation = location;
         _lastMouseModifierFlags = [mouseEvent modifierFlags];
     }
     
     // For the time being, set our dispatch target to the deepest hit node
-    ICNode *dispatchTarget = deepestHitNode;
+    ICNode *dispatchTarget = [deepestHitNode retain];
     
     // Assign new first responder via mouse down events
     if ([self isMouseDownEventType:[mouseEvent type]]) {        
@@ -288,10 +300,11 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     // Mouse up events are dispatched to the node that received the corresponding mouse
     // down event previously
     else if ([self isMouseUpEventType:[mouseEvent type]]) {
-        
-        dispatchTarget = _lastMouseDownNode;
-        // Reset _lastMouseDownNode, so it cannot produce side effects
-        _lastMouseDownNode = nil;
+
+        [dispatchTarget release];
+        dispatchTarget = [self.lastMouseDownNode retain];
+        NSLog(@"mouse up dispatch target: %@", [dispatchTarget description]);
+        self.lastMouseDownNode = nil;
     }
 
     // Peform event selector on dispatch target node
@@ -307,6 +320,10 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     [self dispatchControlEventWithEvent:mouseEvent
                       deepestHitControl:deepestHitControl
                   controlDispatchTarget:controlDispatchTarget];
+
+    // Release references to retained nodes
+    [deepestHitNode release];
+    [dispatchTarget release];
 }
 
 - (void)dispatchControlEventWithEvent:(ICMouseEvent *)event
