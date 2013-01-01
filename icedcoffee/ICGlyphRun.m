@@ -104,28 +104,31 @@ NSString *__glyphFSH = IC_SHADER_STRING
         float r = current.r;
         float g = current.g;
         float b = current.b;
-        
-        if( v_shift <= 0.333 )
+
+        /*if (v_shift != 0.0)
         {
-            float z = v_shift / 0.333 * SHIFT_STRENGTH;
-            r = mix(current.r, previous.b, z);
-            g = mix(current.g, current.r,  z);
-            b = mix(current.b, current.g,  z);
-        }
-        else if( v_shift <= 0.666 )
-        {
-            float z = (v_shift)/0.666 * SHIFT_STRENGTH;
-            r = mix(previous.b, previous.g, z);
-            g = mix(current.r,  previous.b, z);
-            b = mix(current.g,  current.r,  z);
-        }
-        else if( v_shift < 1.0 )
-        {
-            float z = (v_shift) * SHIFT_STRENGTH;
-            r = mix(previous.g, previous.r, z);
-            g = mix(previous.b, previous.g, z);
-            b = mix(current.r,  previous.b, z);
-        }
+            if( v_shift <= 0.333 )
+            {
+                float z = v_shift/0.333;
+                r = mix(current.r, previous.b, z);
+                g = mix(current.g, current.r,  z);
+                b = mix(current.b, current.g,  z);
+            }
+            else if( v_shift <= 0.666 )
+            {
+                float z = (v_shift-0.33)/0.333;
+                r = mix(previous.b, previous.g, z);
+                g = mix(current.r,  previous.b, z);
+                b = mix(current.g,  current.r,  z);
+            }
+            else if( v_shift < 1.0 )
+            {
+                float z = (v_shift-0.66)/0.334;
+                r = mix(previous.g, previous.r, z);
+                g = mix(previous.b, previous.g, z);
+                b = mix(current.r,  previous.b, z);
+            }
+        }*/
         
         vec3 color = pow(vec3(r,g,b), vec3(1.0/v_gamma));
         gl_FragColor = vec4(color * v_fragmentColor.rgb,
@@ -447,7 +450,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
 
     [_buffers release];
     
-    CFRelease(_ctRun);
+    if (_ctRun)
+        CFRelease(_ctRun);
     
     [super dealloc];
 }
@@ -572,8 +576,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;
                 
-                px1 = floorf(x1);
-                px2 = floorf(x2);
+                px1 = x1; //floorf(x1);
+                px2 = x2; //floorf(x2);
                 
                 quads[j].vertices[0].vect = kmVec3Make(px1, y1, z);
                 quads[j].vertices[1].vect = kmVec3Make(px1, y2, z);
@@ -670,7 +674,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
         if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             icGLDisable(GL_BLEND);
         } else {
-            icGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            icGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
             icGLEnable(IC_GL_BLEND);
         }
         
