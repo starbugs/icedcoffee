@@ -83,12 +83,16 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
     NSValue *foregroundColorValue = [icAttrs objectForKey:ICForegroundColorAttributeName];
     if (foregroundColorValue) {
         [foregroundColorValue getValue:&foregroundColor];
-        CGColorRef cgForegroundColor = CGColorCreateGenericRGB((float)foregroundColor.r/255.0f,
-                                                               (float)foregroundColor.g/255.0f,
-                                                               (float)foregroundColor.b/255.0f,
-                                                               (float)foregroundColor.a/255.0f);
+        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
+        CGFloat components[4];
+        components[0] = (CGFloat)foregroundColor.r/255.0f;
+        components[1] = (CGFloat)foregroundColor.g/255.0f;
+        components[2] = (CGFloat)foregroundColor.b/255.0f;
+        components[3] = (CGFloat)foregroundColor.a/255.0f;
+        CGColorRef cgForegroundColor = CGColorCreate(colorSpace, components);
         [ctAttrs setObject:(id)cgForegroundColor forKey:(NSString *)kCTForegroundColorAttributeName];
         CFRelease(cgForegroundColor);
+        CFRelease(colorSpace);
     }
     
     
