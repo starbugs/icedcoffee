@@ -137,6 +137,7 @@
 - (void)removeChild:(ICNode *)child
 {
     if (_children) {
+        [child setParent:nil];
         [(NSMutableArray *)_children removeObject:child];
     }
     _childrenSortedByZIndexDirty = YES;
@@ -145,6 +146,7 @@
 - (void)removeChildAtIndex:(uint)index
 {
     if (_children) {
+        [[_children objectAtIndex:index] setParent:nil];
         [(NSMutableArray *)_children removeObjectAtIndex:index];
     }
     _childrenSortedByZIndexDirty = YES;
@@ -153,6 +155,9 @@
 - (void)removeAllChildren
 {
     if (_children) {
+        for (ICNode *child in _children) {
+            [child setParent:nil];
+        }
         [(NSMutableArray *)_children removeAllObjects];
     }
     _childrenSortedByZIndexDirty = YES;
