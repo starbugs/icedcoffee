@@ -18,7 +18,6 @@
 		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
 		A62633BA1685DA3600286AC0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
-		A62633DC1685DA5700286AC0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633D21685DA5700286AC0 /* AppDelegate.m */; };
 		A62633DD1685DA5700286AC0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633D21685DA5700286AC0 /* AppDelegate.m */; };
 		A62633DE1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
 		A62633DF1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
@@ -27,7 +26,6 @@
 		A62633E21685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
 		A62633E31685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
 		A62633E41685DA5700286AC0 /* GlyphCacheTest-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */; };
-		A62633E61685DA5700286AC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633DB1685DA5700286AC0 /* main.m */; };
 		A62633E71685DA5700286AC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633DB1685DA5700286AC0 /* main.m */; };
 		A62633E81685DA8300286AC0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
 		A62633E91685DA8700286AC0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
@@ -55,6 +53,8 @@
 		A69322A2168F59AF003DE913 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A693229C168F59AF003DE913 /* main.m */; };
 		A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */; };
 		A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C6863D169200E400761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C6863E1692FFED00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
 		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
@@ -759,6 +759,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863D169200E400761BD5 /* libstdc++.dylib in Frameworks */,
 				D2F34FEE151F0A6D00DF2D5B /* libicedcoffee-mac.a in Frameworks */,
 				D2F34FE9151F0A5800DF2D5B /* Carbon.framework in Frameworks */,
 				D2F34FEA151F0A5B00DF2D5B /* CoreVideo.framework in Frameworks */,
@@ -783,6 +784,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863E1692FFED00761BD5 /* libstdc++.dylib in Frameworks */,
 				D24314A2151296C500E6AF37 /* libicedcoffee-mac.a in Frameworks */,
 				D24314A3151296CD00E6AF37 /* Carbon.framework in Frameworks */,
 				D24314A4151296CD00E6AF37 /* CoreVideo.framework in Frameworks */,
@@ -2064,8 +2066,6 @@
 			files = (
 				D2F34FE3151F09BF00DF2D5B /* AppDelegate.m in Sources */,
 				D2F34FE7151F09BF00DF2D5B /* main.m in Sources */,
-				A62633DC1685DA5700286AC0 /* AppDelegate.m in Sources */,
-				A62633E61685DA5700286AC0 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
