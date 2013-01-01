@@ -115,6 +115,7 @@
     }
 }
 
+// FIXME: this creates a new dictionary even if not required
 - (NSArray *)animationsForNode:(ICNode *)node
 {
     NSMutableArray *animations = [_animations objectForKey:[NSValue valueWithPointer:node]];
@@ -148,11 +149,13 @@
 
 - (void)processAnimations:(icTime)dt
 {
-    for (NSValue *nodeValue in _animations) {
-        NSArray *animations = [_animations objectForKey:nodeValue];
-        for (NSInteger i=[animations count] - 1; i>=0; i--) {
+    NSDictionary *animations = [_animations copy];
+    
+    for (NSValue *nodeValue in animations) {
+        NSArray *nodeAnimations = [[animations objectForKey:nodeValue] copy];
+        for (NSInteger i=[nodeAnimations count] - 1; i>=0; i--) {
             ICNode *node = (ICNode *)[nodeValue pointerValue];
-            ICAnimation *animation = [animations objectAtIndex:i];
+            ICAnimation *animation = [nodeAnimations objectAtIndex:i];
             [animation processAnimationWithTarget:node deltaTime:dt];
             if (animation.isFinished)
                 [node removeAnimation:animation];
