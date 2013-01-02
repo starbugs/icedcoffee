@@ -37,6 +37,7 @@
 @protected
     ICTextFrame *_textFrame;
     BOOL _shouldNotApplyPropertiesFromAttributedText;
+    BOOL _shouldNotApplyPropertiesFromBasicText;
     
     NSString *_text;
     NSAttributedString *_attributedText;

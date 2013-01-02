@@ -44,13 +44,15 @@
                             origin:(kmVec3 *)origin size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
-
 - (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText;
 - (void)updateAttributedTextWithBasicProperties;
+- (void)updateFontWithBasicFontProperties;
+- (void)updateBasicFontPropertiesWithFont;
 
 @property (nonatomic, retain) ICTextFrame *textFrame;
 
 @end
+
 
 @implementation ICLabel
 
@@ -71,17 +73,9 @@
 
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
-    // Retreive font for font name and size
-    ICFont *font = [ICFont fontWithName:fontName size:fontSize];
-    
-    kmVec3 origin, size;
-    [[self class] measureTextForAutoresizing:text font:font origin:&origin size:&size];
-
     // Initialize with designated initializer
-    if ((self = [self initWithSize:CGSizeMake(size.width, size.height)])) {
+    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
         self.autoresizesToTextSize = YES;
-        
-        self.origin = origin;
         
         self.fontName = fontName;
         self.fontSize = fontSize;
@@ -120,23 +114,24 @@
 
 - (void)updateAttributedTextWithBasicProperties
 {
-    BOOL isNullColor = self.color.r == 0 && self.color.g == 0 &&
-    self.color.b == 0 && self.color.a == 0;
-    
-    if (self.fontName && self.fontSize && self.text && !isNullColor) {
-        _shouldNotApplyPropertiesFromAttributedText = YES;
-        ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
-        self.attributedText = [[self class] attributedTextWithText:self.text
-                                                              font:font
-                                                             color:self.color
-                                                             gamma:self.gamma];
-        _shouldNotApplyPropertiesFromAttributedText = NO;
+    if (!_shouldNotApplyPropertiesFromBasicText) {
+        BOOL isNullColor = self.color.r == 0 && self.color.g == 0 &&
+        self.color.b == 0 && self.color.a == 0;
+        
+        if (self.font && self.text && !isNullColor) {
+            _shouldNotApplyPropertiesFromAttributedText = YES;
+            self.attributedText = [[self class] attributedTextWithText:self.text
+                                                                  font:self.font
+                                                                 color:self.color
+                                                                 gamma:self.gamma];
+            _shouldNotApplyPropertiesFromAttributedText = NO;
+        }
     }
 }
 
 - (void)setText:(NSString *)text
 {
-    [self setText:text updateAttributedText:YES];
+    [self setText:text updateAttributedText:!_shouldNotApplyPropertiesFromBasicText];
 }
 
 - (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText
@@ -188,6 +183,8 @@
             }
         }];
         
+        _shouldNotApplyPropertiesFromBasicText = YES;
+        
         if (font) {
             [self setFontName:font.name];
             [self setFontSize:font.size];
@@ -199,8 +196,9 @@
             self.gamma = gamma;
         }
         
-        [self setText:[self.attributedText string] updateAttributedText:NO];
+        [self setText:[self.attributedText string]];
         
+        _shouldNotApplyPropertiesFromBasicText = NO;
     }
 
     // Update internal text frame
@@ -211,12 +209,29 @@
     [self setNeedsDisplay];
 }
 
+- (void)updateFontWithBasicFontProperties
+{
+    if (self.fontName && self.fontSize && (![self.fontName isEqualToString:self.font.name] ||
+        self.fontSize != self.font.size)) {
+        self.font = [ICFont fontWithName:self.fontName size:self.fontSize];
+        [self updateBasicFontPropertiesWithFont];
+    }
+}
+
+- (void)updateBasicFontPropertiesWithFont
+{
+    if (![self.fontName isEqualToString:self.font.name])
+        self.fontName = self.font.name;
+    if (self.fontSize != self.font.size)
+        self.fontSize = self.font.size;
+}
+
 - (void)setFontName:(NSString *)fontName
 {
     [_fontName release];
     _fontName = [fontName copy];
     
-    [self updateAttributedTextWithBasicProperties];
+    [self updateFontWithBasicFontProperties];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];
 }
@@ -225,9 +240,18 @@
 {
     _fontSize = fontSize;
     
-    [self updateAttributedTextWithBasicProperties];
+    [self updateFontWithBasicFontProperties];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
+}
+
+- (void)setFont:(ICFont *)font
+{
+    [_font release];
+    _font = [font retain];
+    
+    [self updateBasicFontPropertiesWithFont];
+    [self updateAttributedTextWithBasicProperties];
 }
 
 - (void)setColor:(icColor4B)color
