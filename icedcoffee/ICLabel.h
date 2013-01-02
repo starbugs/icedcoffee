@@ -181,6 +181,13 @@
  */
 @property (nonatomic, copy, setter=setAttributedText:) NSAttributedString *attributedText;
 
+/**
+ @brief The font used by the receiver to display text
+
+ Setting a new font on a receiver that currently displays attributed text will rebuild the
+ receiver's attributed text using its current font, color and gamma properties. Information
+ stored in the attributed text to define rich text attributes will be lost.
+ */
 @property (nonatomic, retain, setter=setFont:) ICFont *font;
 
 /**
@@ -203,11 +210,19 @@
 
 /**
  @brief The color of the receiver's text
+
+ Setting a new color on a receiver that currently displays attributed text will rebuild the
+ receiver's attributed text using its current font, color and gamma properties. Information
+ stored in the attributed text to define rich text attributes will be lost.
  */
 @property (nonatomic, assign, setter=setColor:) icColor4B color;
 
 /**
  @brief The gamma value of the receiver's text
+ 
+ Setting a new gamma value on a receiver that currently displays attributed text will rebuild the
+ receiver's attributed text using its current font, color and gamma properties. Information
+ stored in the attributed text to define rich text attributes will be lost. 
  */
 @property (nonatomic, assign, setter=setGamma:) float gamma;
 
