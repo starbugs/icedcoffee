@@ -96,6 +96,11 @@
     return [[[[self class] alloc] initWithText:text fontName:fontName fontSize:fontSize] autorelease];
 }
 
+- (id)init
+{
+    return [super init];
+}
+
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
