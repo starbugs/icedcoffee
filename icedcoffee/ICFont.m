@@ -53,6 +53,14 @@
     return cachedFont;
 }
 
++ (id)systemFontWithSize:(CGFloat)size
+{
+    CTFontRef systemFont = CTFontCreateUIFontForLanguage(kCTFontSystemFontType, size, NULL);
+    ICFont * font = [[self class] fontWithCoreTextFont:systemFont];
+    CFRelease(systemFont);
+    return font;
+}
+
 + (id)fontWithCoreTextFont:(CTFontRef)ctFont
 {
     ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForCTFontRef:ctFont];

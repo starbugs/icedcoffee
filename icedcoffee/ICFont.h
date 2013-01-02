@@ -38,9 +38,14 @@
 }
 
 /**
- @brief Retrieves a font object for the given font name and size
+ @brief Retrieves a font object with the given font name and size
  */
 + (id)fontWithName:(NSString *)fontName size:(CGFloat)size;
+
+/**
+ @brief Retrieves the system font with the given size
+ */
++ (id)systemFontWithSize:(CGFloat)size;
 
 /**
  @brief Retrieves a font object for the given CoreText font
