@@ -24,6 +24,8 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
+#define IC_DEFAULT_SYSTEM_FONT_SIZE 12.0f
+
 /**
  @brief Represents a font
  
@@ -46,6 +48,11 @@
  @brief Retrieves the system font with the given size
  */
 + (id)systemFontWithSize:(CGFloat)size;
+
+/**
+ @brief Retrieves the system font with the default system font size
+ */
++ (id)systemFontWithDefaultSize;
 
 /**
  @brief Retrieves a font object for the given CoreText font

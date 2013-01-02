@@ -61,6 +61,11 @@
     return font;
 }
 
++ (id)systemFontWithDefaultSize
+{
+    return [[self class] systemFontWithSize:IC_DEFAULT_SYSTEM_FONT_SIZE];
+}
+
 + (id)fontWithCoreTextFont:(CTFontRef)ctFont
 {
     ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForCTFontRef:ctFont];
