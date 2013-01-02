@@ -30,8 +30,6 @@
 #import "icUtils.h"
 
 
-// FIXME: need to retain _lastScrollNode, _lastMouseDownControl, local control vars
-
 #ifdef __IC_PLATFORM_MAC
 
 #import "ICHostViewControllerMac.h"
@@ -107,6 +105,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
                                               event:(ICMouseEvent *)event;
 
 @property (nonatomic, retain) ICNode *lastMouseDownNode;
+@property (nonatomic, retain) ICNode *lastScrollNode;
+@property (nonatomic, retain) ICControl *lastMouseDownControl;
 
 @end
 
@@ -115,6 +115,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 
 // private
 @synthesize lastMouseDownNode = _lastMouseDownNode;
+@synthesize lastScrollNode = _lastScrollNode;
+@synthesize lastMouseDownControl = _lastMouseDownControl;
 
 // public
 @synthesize acceptsMouseMovedEvents = _acceptsMouseMovedEvents;
@@ -140,6 +142,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     [_overNodes release];
     
     self.lastMouseDownNode = nil;
+    self.lastScrollNode = nil;
+    self.lastMouseDownControl = nil;
     
     [super dealloc];
 }
@@ -201,13 +205,13 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
                         [_hostViewController hitTest:_lastMouseLocation];
     
     NSMutableArray *newOverNodes = [NSMutableArray array];
-    ICNode *deepest = [hitNodes lastObject];
+    ICNode *deepest = [[hitNodes lastObject] retain];
     
     if (deepest) {
-        _lastScrollNode = deepest;
+        self.lastScrollNode = deepest;
         [newOverNodes addObject:deepest];
     } else {
-        _lastScrollNode = nil;
+        self.lastScrollNode = nil;
     }
     
     NSArray *ancestors = [deepest ancestors];
@@ -250,6 +254,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     [_overNodes release];
     // Set new over nodes
     _overNodes = [newOverNodes retain];
+    
+    [deepest release];
 }
 
 - (ICScene *)scene
@@ -296,7 +302,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
         _hostViewController.currentFirstResponder = dispatchTarget;
         
         // Note last mouse down control
-        _lastMouseDownControl = ICControlForNode(dispatchTarget);
+        self.lastMouseDownControl = ICControlForNode(dispatchTarget);
     }        
     // Mouse up events are dispatched to the node that received the corresponding mouse
     // down event previously
@@ -316,10 +322,15 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     // Control event dispatch:
     // Get the control of the deepest hit node
     ICControl *deepestHitControl = ICControlForNode(deepestHitNode);
-    ICControl *controlDispatchTarget = _lastMouseDownControl;
+    ICControl *controlDispatchTarget = self.lastMouseDownControl;
     [self dispatchControlEventWithEvent:mouseEvent
                       deepestHitControl:deepestHitControl
                   controlDispatchTarget:controlDispatchTarget];
+    
+    if ([self isMouseUpEventType:[mouseEvent type]]) {
+        // Release last mouse down control if necessary
+        self.lastMouseDownControl = nil;
+    }
 
     // Release references to retained nodes
     [deepestHitNode release];
@@ -397,12 +408,12 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     _lastMouseModifierFlags = [event modifierFlags];
     
     if (self.acceptsMouseMovedEvents) {
-        if ([_lastScrollNode respondsToSelector:@selector(mouseMoved:)]) {
+        if ([self.lastScrollNode respondsToSelector:@selector(mouseMoved:)]) {
             // Convert NSEvent to ICMouseEvent
             ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event
                                                                  hostView:_hostViewController.view];
             // Dispatch event to the node the mouse is currently over
-            [_lastScrollNode mouseMoved:mouseEvent];
+            [self.lastScrollNode mouseMoved:mouseEvent];
         }
     }
 }
@@ -421,8 +432,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 {
     // Performance: as the window server potentially sends a flood of scroll events, use over
     // nodes determined in updateMouseOverState instead of performing a hit test for each event.
-    [_lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event
-                                                           hostView:_hostViewController.view]];
+    [self.lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event
+                                                               hostView:_hostViewController.view]];
 }
 
 // Dispatch dragged events to first responder, all other events go to the responder that
