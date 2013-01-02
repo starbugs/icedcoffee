@@ -54,7 +54,6 @@ ICFontCache *g_sharedFontCache = nil;
 {
     if ((self = [super init])) {
         _fontsByName = [[NSMutableDictionary alloc] init];
-        _fontsByCTFontRef = [[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -62,7 +61,6 @@ ICFontCache *g_sharedFontCache = nil;
 - (void)dealloc
 {
     [_fontsByName release];
-    [_fontsByCTFontRef release];
     [super dealloc];
 }
 
@@ -71,16 +69,10 @@ ICFontCache *g_sharedFontCache = nil;
     NSString *internalName = icInternalFontNameForFont(font);
     if (![_fontsByName objectForKey:internalName]) {
         [_fontsByName setObject:font forKey:internalName];
-        [_fontsByCTFontRef setObject:font forKey:[NSValue valueWithPointer:font.fontRef]];
     } else {
         NSAssert(nil, @"You probably instantiated an identical font twice");
         NSLog(@"Warning: font cache already contains a font for name '%@'", internalName);
     }
-}
-
-- (ICFont *)fontForCTFontRef:(CTFontRef)fontRef
-{
-    return [_fontsByCTFontRef objectForKey:[NSValue valueWithPointer:fontRef]];
 }
 
 - (ICFont *)fontForName:(NSString *)name size:(CGFloat)size

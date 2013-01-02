@@ -30,7 +30,6 @@ NSString *icInternalFontNameForFont(ICFont *font);
 @interface ICFontCache : NSObject {
 @protected
     NSMutableDictionary *_fontsByName;
-    NSMutableDictionary *_fontsByCTFontRef;
 }
 
 + (id)sharedFontCache;
@@ -38,8 +37,6 @@ NSString *icInternalFontNameForFont(ICFont *font);
 - (id)init;
 
 - (void)registerFont:(ICFont *)font;
-
-- (ICFont *)fontForCTFontRef:(CTFontRef)fontRef;
 
 - (ICFont *)fontForName:(NSString *)name size:(CGFloat)size;
 
