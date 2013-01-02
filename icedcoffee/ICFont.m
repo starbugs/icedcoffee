@@ -55,7 +55,7 @@
 
 + (id)systemFontWithSize:(CGFloat)size
 {
-    CTFontRef systemFont = CTFontCreateUIFontForLanguage(kCTFontSystemFontType, size, NULL);
+    CTFontRef systemFont = CTFontCreateUIFontForLanguage(kCTFontSystemFontType, ICFontPointsToPixels(size), NULL);
     ICFont * font = [[self class] fontWithCoreTextFont:systemFont];
     CFRelease(systemFont);
     return font;
@@ -68,7 +68,9 @@
 
 + (id)fontWithCoreTextFont:(CTFontRef)ctFont
 {
-    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForCTFontRef:ctFont];
+    NSString *fontName = (NSString *)CTFontCopyDisplayName(ctFont);
+    CGFloat size = ICFontPixelsToPoints(CTFontGetSize(ctFont));
+    ICFont *cachedFont = [[ICFontCache sharedFontCache] fontForName:fontName size:size];
     if (!cachedFont) {
         cachedFont = [[[[self class] alloc] initWithCoreTextFont:ctFont] autorelease];
     }

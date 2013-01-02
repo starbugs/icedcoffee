@@ -73,6 +73,7 @@ ICFontCache *g_sharedFontCache = nil;
         [_fontsByName setObject:font forKey:internalName];
         [_fontsByCTFontRef setObject:font forKey:[NSValue valueWithPointer:font.fontRef]];
     } else {
+        NSAssert(nil, @"You probably instantiated an identical font twice");
         NSLog(@"Warning: font cache already contains a font for name '%@'", internalName);
     }
 }

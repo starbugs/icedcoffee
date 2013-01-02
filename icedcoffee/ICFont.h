@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
-#define IC_DEFAULT_SYSTEM_FONT_SIZE 12.0f
+#define IC_DEFAULT_SYSTEM_FONT_SIZE 8.0f
 
 /**
  @brief Represents a font
