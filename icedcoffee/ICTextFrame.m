@@ -67,10 +67,6 @@
 - (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString
 {
     if ((self = [super init])) {
-        [self addObserver:self
-               forKeyPath:@"attributedString"
-                  options:NSKeyValueObservingOptionNew
-                  context:nil];
         self.size = kmVec3Make(size.width, size.height, 0);
         self.attributedString = attributedString;
     }
@@ -82,19 +78,14 @@
     self.attributedString = nil;
     self.lines = nil;
     
-    [self removeObserver:self forKeyPath:@"attributedString"];
-    
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void)setAttributedString:(NSAttributedString *)attributedString
 {
-    if (object == self && [keyPath isEqualToString:@"attributedString"]) {
-        [self updateFrame];
-    }
+    [_attributedString release];
+    _attributedString = [attributedString copy];
+    [self updateFrame];
 }
 
 - (void)updateFrame

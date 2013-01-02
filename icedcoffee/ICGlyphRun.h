@@ -128,24 +128,24 @@
 /**
  @brief The receiver's string
  */
-@property (nonatomic, copy) NSString *string;
+@property (nonatomic, copy, setter=setString:) NSString *string;
 
 /**
  @brief The font the receiver uses to draw its ICGlyphRun::string
  */
-@property (nonatomic, retain) ICFont *font;
+@property (nonatomic, retain, setter=setFont:) ICFont *font;
 
 /**
  @brief The color the receiver uses to draw its ICGlyphRun::string
  */
-@property (nonatomic, assign) icColor4B color;
+@property (nonatomic, assign, setter=setColor:) icColor4B color;
 
 /**
  @brief The gamma value the receiver uses to draw its ICGlyphRun::string
  
  The default value of this property is 1.
  */
-@property (nonatomic, assign) float gamma;
+@property (nonatomic, assign, setter=setGamma:) float gamma;
 
 /**
  @brief The tracking of the letters drawn by the receiver
@@ -158,7 +158,7 @@
  should be used to typeset the run.
  */
 // FIXME: re-implement tracking via CoreText kerning attribute
-@property (nonatomic, assign) float tracking;
+@property (nonatomic, assign, setter=setTracking:) float tracking;
 
 /**
  @brief Returns the receiver's ascent in points

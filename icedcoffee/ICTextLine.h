@@ -59,7 +59,7 @@
         icAttributedString:(NSAttributedString *)icAttString
                stringRange:(NSRange)stringRange;
 
-@property (nonatomic, copy) NSAttributedString *attributedString;
+@property (nonatomic, copy, setter=setAttributedString:) NSAttributedString *attributedString;
 
 - (NSString *)string;
 

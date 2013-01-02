@@ -40,6 +40,6 @@
 
 - (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
-@property (nonatomic, copy) NSAttributedString *attributedString;
+@property (nonatomic, copy, setter=setAttributedString:) NSAttributedString *attributedString;
 
 @end

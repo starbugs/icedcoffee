@@ -34,11 +34,22 @@
 // FIXME: ICLabel support for 32-bit textures (?)
 
 @interface ICLabel ()
-+ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font color:(icColor4B)color;
-+ (void)measureTextForAutoresizing:(NSString *)text font:(ICFont *)font origin:(kmVec3 *)origin size:(kmVec3 *)size;
+
++ (NSAttributedString *)attributedTextWithText:(NSString *)text
+                                          font:(ICFont *)font
+                                         color:(icColor4B)color
+                                         gamma:(float)gamma;
++ (void)measureTextForAutoresizing:(NSString *)text
+                              font:(ICFont *)font
+                            origin:(kmVec3 *)origin size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
+
+- (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText;
+- (void)updateAttributedTextWithBasicProperties;
+
 @property (nonatomic, retain) ICTextFrame *textFrame;
+
 @end
 
 @implementation ICLabel
@@ -47,6 +58,7 @@
 
 @synthesize text = _text;
 @synthesize attributedText = _attributedText;
+@synthesize font = _font;
 @synthesize fontName = _fontName;
 @synthesize fontSize = _fontSize;
 @synthesize color = _color;
@@ -74,6 +86,7 @@
         self.fontName = fontName;
         self.fontSize = fontSize;
         self.color = (icColor4B){0,0,0,255};
+        self.gamma = 1.0f;
         self.text = text;
     }
 
@@ -83,11 +96,6 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        [self addObserver:self forKeyPath:@"attributedText" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"text" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"fontName" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"fontSize" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
     }
     return self;
 }
@@ -102,45 +110,101 @@
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"attributedText"];
-    [self removeObserver:self forKeyPath:@"text"];
-    [self removeObserver:self forKeyPath:@"fontName"];
-    [self removeObserver:self forKeyPath:@"fontSize"];
-    [self removeObserver:self forKeyPath:@"color"];
-    
     self.textFrame = nil;
     self.attributedText = nil;
+    self.font = nil;
     self.fontName = nil;
     
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void)updateAttributedTextWithBasicProperties
 {
-    if (object == self) {
-        if ([keyPath isEqualToString:@"text"] ||
-            [keyPath isEqualToString:@"fontName"] ||
-            [keyPath isEqualToString:@"fontSize"] ||
-            [keyPath isEqualToString:@"color"]) {
-            BOOL isNullColor = self.color.r == 0 && self.color.g == 0 && self.color.b == 0 && self.color.a == 0;
-            if (self.fontName && self.fontSize && self.text && !isNullColor) {
-                ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
-                self.attributedText = [[self class] attributedTextWithText:self.text font:font color:self.color];
-            }
-        }
-        if ([keyPath isEqualToString:@"attributedText"]) {
-            [self updateFrame];
-        }
+    BOOL isNullColor = self.color.r == 0 && self.color.g == 0 &&
+    self.color.b == 0 && self.color.a == 0;
+    
+    if (self.fontName && self.fontSize && self.text && !isNullColor) {
+        _shouldNotApplyPropertiesFromAttributedText = YES;
+        ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
+        self.attributedText = [[self class] attributedTextWithText:self.text
+                                                              font:font
+                                                             color:self.color
+                                                             gamma:self.gamma];
+        _shouldNotApplyPropertiesFromAttributedText = NO;
     }
+}
+
+- (void)setText:(NSString *)text
+{
+    [self setText:text updateAttributedText:YES];
+}
+
+- (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText
+{
+    [_text release];
+    _text = [text copy];
+
+    if (updateAttributedText)
+        [self updateAttributedTextWithBasicProperties];
 }
 
 - (void)setAttributedText:(NSAttributedString *)attributedText
 {
     [_attributedText release];
     _attributedText = [attributedText copy];
+    
+    // Apply attributes to label properties if setting attributedText from outside
+    if (!_shouldNotApplyPropertiesFromAttributedText) {
+        
+        __block ICFont *font = nil;
+        __block BOOL colorSet = NO;
+        __block icColor4B color = self.color;
+        __block BOOL gammaSet = NO;
+        __block float gamma = self.gamma;
+        
+        // This is a potentially lossy conversion, i.e. the first attribute always wins
+        [self.attributedText enumerateAttributesInRange:NSMakeRange(0, [self.attributedText length])
+                                                options:0
+                                             usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+            if (!font) {
+                font = [attrs objectForKey:ICFontAttributeName];
+            }
+            if (!colorSet) {
+                NSValue *colorValue = [attrs objectForKey:ICForegroundColorAttributeName];
+                if (colorValue) {
+                    [colorValue getValue:&color];
+                    colorSet = YES;
+                }
+            }
+            if (!gammaSet) {
+                NSNumber *gammaNumber = [attrs objectForKey:ICGammaAttributeName];
+                if (gammaNumber) {
+                    gamma = [gammaNumber floatValue];
+                    gammaSet = YES;
+                }
+            }
+            if (font && colorSet && gammaSet) {
+                *stop = YES;
+            }
+        }];
+        
+        if (font) {
+            [self setFontName:font.name];
+            [self setFontSize:font.size];
+        }
+        if (colorSet) {
+            self.color = color;
+        }
+        if (gammaSet) {
+            self.gamma = gamma;
+        }
+        
+        [self setText:[self.attributedText string] updateAttributedText:NO];
+        
+    }
+
+    // Update internal text frame
+    [self updateFrame];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelTextDidChange object:self];
     
@@ -151,6 +215,8 @@
 {
     [_fontName release];
     _fontName = [fontName copy];
+    
+    [self updateAttributedTextWithBasicProperties];
 
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];
 }
@@ -159,7 +225,23 @@
 {
     _fontSize = fontSize;
     
+    [self updateAttributedTextWithBasicProperties];
+    
     [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
+}
+
+- (void)setColor:(icColor4B)color
+{
+    _color = color;
+    
+    [self updateAttributedTextWithBasicProperties];
+}
+
+- (void)setGamma:(float)gamma
+{
+    _gamma = gamma;
+    
+    [self updateAttributedTextWithBasicProperties];
 }
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
@@ -167,19 +249,26 @@
     [self.textFrame setUserInteractionEnabled:userInteractionEnabled];
 }
 
-+ (NSAttributedString *)attributedTextWithText:(NSString *)text font:(ICFont *)font color:(icColor4B)color
++ (NSAttributedString *)attributedTextWithText:(NSString *)text
+                                          font:(ICFont *)font
+                                         color:(icColor4B)color
+                                         gamma:(float)gamma
 {
     NSValue *foregroundColorValue = [NSValue valueWithBytes:&color objCType:@encode(icColor4B)];
     NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                 font, ICFontAttributeName,
                                 foregroundColorValue, ICForegroundColorAttributeName,
+                                [NSNumber numberWithFloat:gamma], ICGammaAttributeName,
                                 nil];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
                                                                          attributes:attributes];
     return [attributedText autorelease];
 }
 
-+ (void)measureTextForAutoresizing:(NSString *)text font:(ICFont *)font origin:(kmVec3 *)origin size:(kmVec3 *)size
++ (void)measureTextForAutoresizing:(NSString *)text
+                              font:(ICFont *)font
+                            origin:(kmVec3 *)origin
+                              size:(kmVec3 *)size
 {
     // Measure each text line contained in text
     NSArray *lines = [text componentsSeparatedByString:@"\n"];

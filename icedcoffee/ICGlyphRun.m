@@ -228,7 +228,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
                     max.x = _positions[i].x + advance;
                 
                 min.y = 0;
-                max.y = roundf(_ascent + _descent);
+                max.y = roundf(_ascent + _descent); // + 4; // iOS requires different frame then Mac wtf
             }
             
             _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);
@@ -371,11 +371,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
         NSNumber *gammaAttr = [attributes objectForKey:ICGammaAttributeName];
         float gamma = gammaAttr ? [gammaAttr floatValue] : IC_DEFAULT_GLYPH_RUN_GAMMA;
         
-        [self addObserver:self forKeyPath:@"color" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"gamma" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"string" options:NSKeyValueObservingOptionNew context:nil];
-        [self addObserver:self forKeyPath:@"font" options:NSKeyValueObservingOptionNew context:nil];
-        
         self.color = color;
         self.gamma = gamma;
         self.string = string;
@@ -443,11 +438,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
     self.string = nil;
     self.font = nil;
     
-    [self removeObserver:self forKeyPath:@"gamma"];
-    [self removeObserver:self forKeyPath:@"color"];
-    [self removeObserver:self forKeyPath:@"string"];
-    [self removeObserver:self forKeyPath:@"font"];
-
     [_buffers release];
     
     if (_ctRun)
@@ -464,29 +454,32 @@ NSString *__glyphFSH = IC_SHADER_STRING
     return self;
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void)setString:(NSString *)string
 {
-    BOOL metricsDirty = NO;
-    
-    if (object == self) {
-        if ([keyPath isEqualToString:@"color"] ||
-            [keyPath isEqualToString:@"font"] ||
-            [keyPath isEqualToString:@"string"] ||
-            [keyPath isEqualToString:@"gamma"]) {
-            _dirty = YES;
-        }
-        if ([keyPath isEqualToString:@"font"] ||
-            [keyPath isEqualToString:@"string"]) {
-            metricsDirty = YES;
-        }
-    }
+    [_string release];
+    _string = [string copy];
+    _dirty = YES;
+    [self updateMetrics];
+}
 
-    if (metricsDirty) {
-        [self updateMetrics];
-    }
+- (void)setFont:(ICFont *)font
+{
+    [_font release];
+    _font = [font retain];
+    _dirty = YES;
+    [self updateMetrics];
+}
+
+- (void)setColor:(icColor4B)color
+{
+    _color = color;
+    _dirty = YES;
+}
+
+- (void)setGamma:(float)gamma
+{
+    _gamma = gamma;
+    _dirty = YES;
 }
 
 - (void)updateMetrics

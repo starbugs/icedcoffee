@@ -78,10 +78,6 @@
 - (id)initWithAttributedString:(NSAttributedString *)attributedString
 {
     if ((self = [super init])) {
-        [self addObserver:self
-               forKeyPath:@"attributedString"
-                  options:NSKeyValueObservingOptionNew
-                  context:nil];
         self.attributedString = attributedString;
     }
     return self;
@@ -101,19 +97,15 @@
     self.ctLine = nil;
     self.attributedString = nil;
     self.runs = nil;
-    [self removeObserver:self forKeyPath:@"attributedString"];
 
     [super dealloc];
 }
 
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
+- (void)setAttributedString:(NSAttributedString *)attributedString
 {
-    if (object == self && [keyPath isEqualToString:@"attributedString"]) {
-        [self updateLine];
-    }
+    [_attributedString release];
+    _attributedString = [attributedString copy];
+    [self updateLine];
 }
 
 - (NSString *)string
@@ -183,7 +175,10 @@
         __block NSMutableDictionary *extendedAttrs = [[NSMutableDictionary alloc] init];
         NSAttributedString *attSubString = [self.attributedString attributedSubstringFromRange:
                                             NSMakeRange(stringRange.location, stringRange.length)];
-        [attSubString enumerateAttributesInRange:NSMakeRange(0, [attSubString length]) options:0 usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+        
+        [attSubString enumerateAttributesInRange:NSMakeRange(0, [attSubString length])
+                                         options:0
+                                      usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
             for (NSString *attrName in attrs) {
                 if ([attrName isEqualToString:ICGammaAttributeName]) {
                     [extendedAttrs setObject:[attrs objectForKey:attrName] forKey:attrName];
