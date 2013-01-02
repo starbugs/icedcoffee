@@ -46,6 +46,7 @@
     ICScene *_currentTestScene;
     ICUIScene *_testHostScene;
     ICTestButtonPanel *_buttonPanel;
+    ICLabel *_fpsLabel;
 }
 
 /**

@@ -66,30 +66,42 @@
 @synthesize color = _color;
 @synthesize autoresizesToTextSize = _autoresizesToTextSize;
 
++ (id)label
+{
+    return [[[[self class] alloc] init] autorelease];
+}
+
++ (id)labelWithSize:(CGSize)size
+{
+    return [[[[self class] alloc] initWithSize:size] autorelease];
+}
+
++ (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText
+{
+    return [[[[self class] alloc] initWithSize:size attributedText:attributedText] autorelease];
+}
+
++ (id)labelWithText:(NSString *)text
+{
+    return [[[[self class] alloc] initWithText:text] autorelease];
+}
+
++ (id)labelWithText:(NSString *)text font:(ICFont *)font
+{
+    return [[[[self class] alloc] initWithText:text font:font] autorelease];
+}
+
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
     return [[[[self class] alloc] initWithText:text fontName:fontName fontSize:fontSize] autorelease];
 }
 
-- (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
-{
-    // Initialize with designated initializer
-    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
-        self.autoresizesToTextSize = YES;
-        
-        self.fontName = fontName;
-        self.fontSize = fontSize;
-        self.color = (icColor4B){0,0,0,255};
-        self.gamma = 1.0f;
-        self.text = text;
-    }
-
-    return self;
-}
-
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
+        self.font = [ICFont systemFontWithDefaultSize];
+        self.color = (icColor4B){0,0,0,255};
+        self.gamma = 1.0f;
     }
     return self;
 }
@@ -99,6 +111,38 @@
     if ((self = [self initWithSize:size])) {
         self.attributedText = attributedText;
     }
+    return self;
+}
+
+- (id)initWithText:(NSString *)text
+{
+    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+        self.autoresizesToTextSize = YES;
+        self.text = text;
+    }
+    return self;
+}
+
+- (id)initWithText:(NSString *)text font:(ICFont *)font
+{
+    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+        self.autoresizesToTextSize = YES;
+        self.font = font;
+        self.text = text;
+    }
+    return self;
+}
+
+- (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
+{
+    // Initialize with designated initializer
+    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+        self.autoresizesToTextSize = YES;
+        self.fontName = fontName;
+        self.fontSize = fontSize;
+        self.text = text;
+    }
+    
     return self;
 }
 

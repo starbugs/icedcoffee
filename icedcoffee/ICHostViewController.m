@@ -185,6 +185,8 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
             [self willChangeValueForKey:@"fps"];
             _fps = (float)_fpsNumFrames / _fpsDelta;
             [self didChangeValueForKey:@"fps"];
+            _fpsDelta = 0;
+            _fpsNumFrames = 0;
 #if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
             ICLog(@"FPS: %f", _fps);
 #endif

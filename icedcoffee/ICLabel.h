@@ -52,6 +52,16 @@
 #pragma mark - Creating a Label
 /** @name Creating a Label */
 
++ (id)label;
+
++ (id)labelWithSize:(CGSize)size;
+
++ (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
+
++ (id)labelWithText:(NSString *)text;
+
++ (id)labelWithText:(NSString *)text font:(ICFont *)font;
+
 /**
  @brief Returns a new autoreleased label with the given text, using a font defined by
  the specified font name and size
@@ -66,6 +76,15 @@
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
 
 /**
+ @brief Initializes the receiver with the given size and attributed text
+ */
+- (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
+
+- (id)initWithText:(NSString *)text;
+
+- (id)initWithText:(NSString *)text font:(ICFont *)font;
+
+/**
  @brief Initializes the receiver with the given text and font defined by the specified font
  name and size
 
@@ -77,16 +96,6 @@
  ICLabel::autoresizesToTextSize property to ``YES``.
  */
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
-
-/**
- @brief Initializes the receiver with the given size
- */
-- (id)initWithSize:(CGSize)size;
-
-/**
- @brief Initializes the receiver with the given size and attributed text
- */
-- (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
 
 
 #pragma mark - Manipulating the Label's Text, Font and Color

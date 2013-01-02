@@ -195,8 +195,8 @@ enum {
     [buttonPanel setPositionY:20];
     [buttonPanel centerNodeHorizontallyRounded:YES];
     buttonPanel.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible |
-    ICAutoResizingMaskRightMarginFlexible |
-    ICAutoResizingMaskBottomMarginFlexible;
+                                   ICAutoResizingMaskRightMarginFlexible |
+                                   ICAutoResizingMaskBottomMarginFlexible;
     
     ICButton *backingSwitchButton = [ICButton viewWithSize:CGSizeMake(180, 21)];
     [buttonPanel addChild:backingSwitchButton];
