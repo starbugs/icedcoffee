@@ -52,36 +52,91 @@
 #pragma mark - Creating a Label
 /** @name Creating a Label */
 
+/**
+ @brief Returns a new autoreleased label
+
+ For details see ICLabel::init.
+ */
 + (id)label;
 
+/**
+ @brief Returns a new autoreleased label with the given size
+ 
+ For details see ICLabel::initWithSize:.
+ */
 + (id)labelWithSize:(CGSize)size;
 
+/**
+ @brief Returns a new autoreleased label with the given size and attributed text
+ 
+ For details see ICLabel::initWithSize:attributedText:.
+ */
 + (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
 
+/**
+ @brief Returns a new autoreleased label with the given text using the default system font
+ 
+ For details see ICLabel::initWithText:.
+ */
 + (id)labelWithText:(NSString *)text;
 
+/**
+ @brief Returns a new autoreleased label with the given text and font
+ 
+ For details see ICLabel::initWithText:font:.
+ */
 + (id)labelWithText:(NSString *)text font:(ICFont *)font;
 
 /**
  @brief Returns a new autoreleased label with the given text, using a font defined by
  the specified font name and size
  
- @param text The text displayed by the receiver
- @param fontName The name of the font used by the receiver
- @param fontSize The size in points of the font used by the receiver
-
- This method resizes the new label to the bounds of ``text`` and set's its
- ICLabel::autoresizesToTextSize property to ``YES``.
+ For details see ICLabel::initWithText:fontName:fontSize:.
  */
 + (id)labelWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
+
+/**
+ @brief Initializes the receiver with default values and empty text
+ 
+ This method initializes the receiver with size (0,0) and a ``nil`` text value. Default values for
+ font, color and gamma as described in ICLabel::initWithSize: are implied. In order to display
+ text on the receiver, you must set the ICLabel::text or ICLabel::attributedText property after
+ initialization is complete.
+ */
+- (id)init;
+
+/**
+ @brief Initializes the receiver with the given size
+ 
+ @param size The size to initialize the receiver with
+ 
+ In addition to the given size, this method initializes the receiver with a default system font
+ (using ICFont::systemFontWithDefaultSize) and default values for the color and gamma properties.
+ */
+- (id)initWithSize:(CGSize)size;
 
 /**
  @brief Initializes the receiver with the given size and attributed text
  */
 - (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
 
+/**
+ @brief Initializes the receiver with the given text
+ 
+ @param text The text displayed by the receiver
+ 
+ Default values for font, color and gamma as described in ICLabel::initWithSize: are implied.
+ */
 - (id)initWithText:(NSString *)text;
 
+/**
+ @brief Initializes the receiver with the given text and font
+ 
+ @param text The text displayed by the receiver
+ @param font An ICFont object defining the font to be used for displaying text
+ 
+ Default values for color and gamma as described in ICLabel::initWithSize: are implied.
+ */
 - (id)initWithText:(NSString *)text font:(ICFont *)font;
 
 /**
@@ -94,6 +149,8 @@
 
  This method resizes the receiver to the bounds of ``text`` and set's the receiver's
  ICLabel::autoresizesToTextSize property to ``YES``.
+
+ Default values for color and gamma as described in ICLabel::initWithSize: are implied.
  */
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize;
 
