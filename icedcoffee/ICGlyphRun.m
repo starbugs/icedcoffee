@@ -151,8 +151,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
             CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
             CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
             CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
-            //CGSize *advances = malloc(sizeof(CGSize) * _glyphCount);
-            //CTFontGetAdvancesForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, advances, _glyphCount);
 
             float marginInPoints = ICFontPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
             
@@ -170,7 +168,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 _positions[i].x = ICFontPixelsToPoints(_positions[i].x) + ICFontPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
                 _positions[i].y = ICFontPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICFontPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
-                //float advance = ceilf(ICFontPixelsToPoints(advances[i].width));
                 float advance = ICFontPixelsToPoints(boundingRects[i].size.width);
                 
                 if (_positions[i].x + marginInPoints < min.x)
@@ -181,15 +178,11 @@ NSString *__glyphFSH = IC_SHADER_STRING
                     min.y = _positions[i].y + marginInPoints;
                 if (_positions[i].y + textureGlyphHeight + marginInPoints > max.y)
                     max.y = _positions[i].y + textureGlyphHeight + marginInPoints;
-                
-                //min.y = 0;
-                //max.y = roundf(_ascent + _descent);// + 4; // iOS requires different frame then Mac wtf
             }
             
             _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);
             
             free(boundingRects);
-            //free(advances);
         }
     }
     return self;
