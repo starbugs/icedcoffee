@@ -148,4 +148,10 @@
         CFRetain(_fontRef);
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | size = %0.02f>",
+            [self class], (uint)self, self.name, self.size];
+}
+
 @end

@@ -379,7 +379,21 @@
         ICTextLine *textLine = [[ICTextLine alloc] initWithAttributedString:attrSubString];
         [textLines addObject:textLine];
                                                  
-        float lineHeight = [textLine ascent] + [textLine descent] + [textLine leading];
+        float leading = fabs([textLine leading]);
+        float ascent = fabs([textLine ascent]);
+        float descent = fabs([textLine descent]);
+
+        if (leading < 0) {
+            leading = 0;
+        }
+                                                 
+        float lineHeight = roundf(ascent) + roundf(descent) + leading;
+        float ascenderDelta = 0;
+        if (leading == 0) {
+            ascenderDelta = ceilf(0.2f * lineHeight);
+        }
+        lineHeight += ascenderDelta;
+
         maxHeight += lineHeight;
                                                  
         if ([textLine lineWidth] > maxLineWidth)
