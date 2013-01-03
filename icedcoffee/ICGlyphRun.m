@@ -80,20 +80,12 @@ NSString *__glyphFSH = IC_SHADER_STRING
     varying vec2 v_texCoord;
     varying float v_gamma;
     uniform sampler2D u_texture;
-    uniform vec3 u_pixel;
 
     void main()
     {
-        vec2 uv      = v_texCoord.xy;
-        vec4 current = texture2D(u_texture, uv);
-        
-        float r = current.r;
-        float g = current.g;
-        float b = current.b;
-        
-        vec3 color = pow(vec3(r,g,b), vec3(1.0/v_gamma));
-        gl_FragColor = vec4(color * v_fragmentColor.rgb,
-                            (color.r+color.g+color.b)/3.0 * v_fragmentColor.a);
+        vec4 c = texture2D(u_texture, v_texCoord);
+        vec3 gc = pow(vec3(c.r,c.g,c.b), vec3(1.0/v_gamma));
+        gl_FragColor = vec4(gc * v_fragmentColor.rgb, (gc.r+gc.g+gc.b)/3.0 * v_fragmentColor.a);
     }
 );
 
@@ -613,12 +605,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
     
     // Draw each texture glyph buffer required to display the run
     for (ICTextureGlyphBuffer *buffer in _buffers) {
-        if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) { // drawing node visitor
-            kmVec3 pixel = kmVec3Make(1.0f / buffer.textureAtlas.sizeInPixels.width,
-                                      1.0f / buffer.textureAtlas.sizeInPixels.height, 0);
-            [self.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec3:pixel]
-                                    forUniform:@"u_pixel"];
-        }
         [self applyStandardDrawSetupWithVisitor:visitor];
 
         if (![visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
