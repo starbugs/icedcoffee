@@ -37,9 +37,7 @@
 #import "icFontUtils.h"
 
 
-#define ICAttributeNameShift @"a_shift"
 #define ICAttributeNameGamma @"a_gamma"
-#define ICAttributeNameGlyphDirection @"a_glyphDirection"
 
 
 #define SHIFT_STRENGTH 1.0
@@ -49,8 +47,6 @@ NSString *__glyphVSH = IC_SHADER_STRING
     attribute vec4 a_position;
     attribute vec2 a_texCoord;
     attribute vec4 a_color;
-    attribute vec2 a_glyphDirection;
-    attribute float a_shift;
     attribute float a_gamma;
 
     uniform mat4 u_MVPMatrix;
@@ -58,14 +54,10 @@ NSString *__glyphVSH = IC_SHADER_STRING
     #ifdef GL_ES
     varying lowp vec4 v_fragmentColor;
     varying highp vec2 v_texCoord;
-    varying lowp vec2 v_glyphDirection;
-    varying highp float v_shift;
     varying mediump float v_gamma;
     #else
     varying vec4 v_fragmentColor;
     varying vec2 v_texCoord;
-    varying vec2 v_glyphDirection;
-    varying float v_shift;
     varying float v_gamma;
     #endif
 
@@ -74,8 +66,6 @@ NSString *__glyphVSH = IC_SHADER_STRING
         gl_Position = u_MVPMatrix * a_position;
         v_fragmentColor = a_color;
         v_texCoord = a_texCoord;
-        v_glyphDirection = a_glyphDirection;
-        v_shift = a_shift;
         v_gamma = a_gamma;
     }
 );
@@ -88,8 +78,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
 
     varying vec4 v_fragmentColor;
     varying vec2 v_texCoord;
-    varying vec2 v_glyphDirection;
-    varying float v_shift;
     varying float v_gamma;
     uniform sampler2D u_texture;
     uniform vec3 u_pixel;
@@ -98,37 +86,10 @@ NSString *__glyphFSH = IC_SHADER_STRING
     {
         vec2 uv      = v_texCoord.xy;
         vec4 current = texture2D(u_texture, uv);
-        vec4 previous= texture2D(u_texture, uv-v_glyphDirection*u_pixel.xy);
-        vec4 next    = texture2D(u_texture, uv+v_glyphDirection*u_pixel.xy);
         
         float r = current.r;
         float g = current.g;
         float b = current.b;
-
-        /*if (v_shift != 0.0)
-        {
-            if( v_shift <= 0.333 )
-            {
-                float z = v_shift/0.333;
-                r = mix(current.r, previous.b, z);
-                g = mix(current.g, current.r,  z);
-                b = mix(current.b, current.g,  z);
-            }
-            else if( v_shift <= 0.666 )
-            {
-                float z = (v_shift-0.33)/0.333;
-                r = mix(previous.b, previous.g, z);
-                g = mix(current.r,  previous.b, z);
-                b = mix(current.g,  current.r,  z);
-            }
-            else if( v_shift < 1.0 )
-            {
-                float z = (v_shift-0.66)/0.334;
-                r = mix(previous.g, previous.r, z);
-                g = mix(previous.b, previous.g, z);
-                b = mix(current.r,  previous.b, z);
-            }
-        }*/
         
         vec3 color = pow(vec3(r,g,b), vec3(1.0/v_gamma));
         gl_FragColor = vec4(color * v_fragmentColor.rgb,
@@ -393,9 +354,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
             [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
             [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
             [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
-            [p addAttribute:ICAttributeNameGlyphDirection index:ICVertexAttribTexCoords+1];
-            [p addAttribute:ICAttributeNameShift index:ICVertexAttribTexCoords+2];
-            [p addAttribute:ICAttributeNameGamma index:ICVertexAttribTexCoords+3];
+            [p addAttribute:ICAttributeNameGamma index:ICVertexAttribTexCoords+1];
             
             [p link];
             [p updateUniforms];
@@ -565,7 +524,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
             NSInteger textureGlyphCount = [glyphEntries count];
             
             // Allocate memory for upload to VBO
-            icV3F_C4F_T2F_D2F_SG2F_Quad *quads = (icV3F_C4F_T2F_D2F_SG2F_Quad *)malloc(sizeof(icV3F_C4F_T2F_D2F_SG2F_Quad) * textureGlyphCount);
+            icV3F_C4F_T2F_G1F_Quad *quads = (icV3F_C4F_T2F_G1F_Quad *)malloc(sizeof(icV3F_C4F_T2F_G1F_Quad) * textureGlyphCount);
             icUShort_QuadIndices *quadIndices = (icUShort_QuadIndices *)malloc(sizeof(icUShort_QuadIndices) * textureGlyphCount);
             
             // Iterate over all relevant glyph entries for this texture
@@ -577,7 +536,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 ICTextureGlyph *textureGlyph = [glyphEntry objectAtIndex:1];
                 
                 // Calculate and assign vertex positions
-                float x1, x2, y1, y2, z, px1, px2;
+                float x1, x2, y1, y2, z;
                 
                 x1 = positions[glyphIndex].x;
                 y1 = positions[glyphIndex].y;
@@ -585,30 +544,16 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 y2 = y1 + textureGlyph.size.height;
                 z = 0;
                 
-                px1 = x1; //floorf(x1);
-                px2 = x2; //floorf(x2);
-                
-                quads[j].vertices[0].vect = kmVec3Make(px1, y1, z);
-                quads[j].vertices[1].vect = kmVec3Make(px1, y2, z);
-                quads[j].vertices[2].vect = kmVec3Make(px2, y1, z);
-                quads[j].vertices[3].vect = kmVec3Make(px2, y2, z);
-
-                quads[j].vertices[0].shift = x1 - px1;
-                quads[j].vertices[1].shift = x2 - px2;
-                quads[j].vertices[2].shift = x1 - px1;
-                quads[j].vertices[3].shift = x2 - px2;
+                quads[j].vertices[0].vect = kmVec3Make(x1, y1, z);
+                quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
+                quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
+                quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
 
                 // Assign texture coordinates, color, shift and gamma
                 for (ushort k=0; k<4; k++) {
                     quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];
                     quads[j].vertices[k].color = color4FFromColor4B(self.color);
                     quads[j].vertices[k].gamma = self.gamma;
-                    if (textureGlyph.rotated) {
-                        quads[j].vertices[k].glyphDirection = kmVec2Make(0, 1);
-                        //quads[j].vertices[k].color = icColor4FMake(1, 0, 0, 1);
-                    } else {
-                        quads[j].vertices[k].glyphDirection = kmVec2Make(1, 0);
-                    }
                 }
                 
                 // Calculate and assign indices
@@ -624,7 +569,7 @@ NSString *__glyphFSH = IC_SHADER_STRING
             // Create buffers for all relevant glyphs of this texture
             ICVertexBuffer *vertexBuffer = [ICVertexBuffer vertexBufferWithVertices:quads
                                                                               count:(GLuint)textureGlyphCount * 4
-                                                                             stride:sizeof(icV3F_C4F_T2F_D2F_SG2F)
+                                                                             stride:sizeof(icV3F_C4F_T2F_G1F)
                                                                               usage:GL_STATIC_DRAW];
             
             ICIndexBuffer *indexBuffer = [ICIndexBuffer indexBufferWithIndices:quadIndices
@@ -692,38 +637,28 @@ NSString *__glyphFSH = IC_SHADER_STRING
         glEnableVertexAttribArray(ICVertexAttribColor);
         glEnableVertexAttribArray(ICVertexAttribTexCoords);
         glEnableVertexAttribArray(ICVertexAttribTexCoords+1);
-        glEnableVertexAttribArray(ICVertexAttribTexCoords+2);
-        glEnableVertexAttribArray(ICVertexAttribTexCoords+3);
         IC_CHECK_GL_ERROR_DEBUG();
         
         [buffer.vertexBuffer bind];
         [buffer.indexBuffer bind];
         
-#define kVertexSize sizeof(icV3F_C4F_T2F_D2F_SG2F)
+#define kVertexSize sizeof(icV3F_C4F_T2F_G1F)
         
         // vertex
-        NSInteger diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, vect);
+        NSInteger diff = offsetof(icV3F_C4F_T2F_G1F, vect);
         glVertexAttribPointer(ICVertexAttribPosition, 3, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         // color
-        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, color);
+        diff = offsetof(icV3F_C4F_T2F_G1F, color);
         glVertexAttribPointer(ICVertexAttribColor, 4, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         // texCoords
-        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, texCoords);
+        diff = offsetof(icV3F_C4F_T2F_G1F, texCoords);
         glVertexAttribPointer(ICVertexAttribTexCoords, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
 
-        // glyphDirection
-        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, glyphDirection);
-        glVertexAttribPointer(ICVertexAttribTexCoords+1, 2, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
-
-        // shift
-        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, shift);
-        glVertexAttribPointer(ICVertexAttribTexCoords+2, 1, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
-
         // gamma
-        diff = offsetof(icV3F_C4F_T2F_D2F_SG2F, gamma);
-        glVertexAttribPointer(ICVertexAttribTexCoords+3, 1, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
+        diff = offsetof(icV3F_C4F_T2F_G1F, gamma);
+        glVertexAttribPointer(ICVertexAttribTexCoords+1, 1, GL_FLOAT, GL_FALSE, kVertexSize, (void*)(diff));
         
         glDrawElements(GL_TRIANGLES, buffer.indexBuffer.count, GL_UNSIGNED_SHORT, NULL);
         IC_CHECK_GL_ERROR_DEBUG();
@@ -738,8 +673,6 @@ NSString *__glyphFSH = IC_SHADER_STRING
         glDisableVertexAttribArray(ICVertexAttribColor);
         glDisableVertexAttribArray(ICVertexAttribTexCoords);
         glDisableVertexAttribArray(ICVertexAttribTexCoords+1);
-        glDisableVertexAttribArray(ICVertexAttribTexCoords+2);
-        glDisableVertexAttribArray(ICVertexAttribTexCoords+3);
     }
     
     //[self debugDrawBoundingBox];
