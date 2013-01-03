@@ -70,7 +70,7 @@ NSString *__glyphVSH = IC_SHADER_STRING
     }
 );
 
-NSString *__glyphFSH = IC_SHADER_STRING
+NSString *__glyphRGBAFSH = IC_SHADER_STRING
 (
     #ifdef GL_ES
     precision highp float;
@@ -89,6 +89,24 @@ NSString *__glyphFSH = IC_SHADER_STRING
     }
 );
 
+NSString *__glyphAFSH = IC_SHADER_STRING
+(
+    #ifdef GL_ES
+    precision lowp float;
+    #endif
+
+    varying vec4 v_fragmentColor;
+    varying vec2 v_texCoord;
+    varying float v_gamma;
+    uniform sampler2D u_texture;
+
+    void main()
+    {
+        float glyphAlpha = pow(texture2D(u_texture, v_texCoord).a, 1.0/v_gamma);
+        gl_FragColor = vec4(v_fragmentColor.rgb * glyphAlpha,
+                            v_fragmentColor.a * glyphAlpha);
+    }
+);
 
 
 //
@@ -333,9 +351,10 @@ NSString *__glyphFSH = IC_SHADER_STRING
         ICShaderProgram *p = [shaderCache shaderProgramForKey:ICShaderGlyph];
         
         if (!p) {
+            NSString *glyphFSH = IC_GLYPH_CACHE_TEXTURE_DEPTH == 4 ? __glyphRGBAFSH : __glyphAFSH;
             p = [ICShaderProgram shaderProgramWithName:ICShaderGlyph
                                     vertexShaderString:__glyphVSH
-                                  fragmentShaderString:__glyphFSH];
+                                  fragmentShaderString:glyphFSH];
             [p addAttribute:ICAttributeNamePosition index:ICVertexAttribPosition];
             [p addAttribute:ICAttributeNameColor index:ICVertexAttribColor];
             [p addAttribute:ICAttributeNameTexCoord index:ICVertexAttribTexCoords];
