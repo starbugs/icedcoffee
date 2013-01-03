@@ -1126,6 +1126,10 @@
         kmVec3 center;
         [(NSValue *)value getValue:&center];
         [self setCenter:center rounded:YES];
+    } else if ([keyPath isEqualToString:@"center"]) {
+        kmVec3 center;
+        [(NSValue *)value getValue:&center];
+        [self setCenter:center rounded:NO];
     } else {
         [super setValue:value forKey:keyPath];
     }
