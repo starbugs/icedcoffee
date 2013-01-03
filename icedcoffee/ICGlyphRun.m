@@ -198,8 +198,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
             CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
             CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
             CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
-            CGSize *advances = malloc(sizeof(CGSize) * _glyphCount);
-            CTFontGetAdvancesForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, advances, _glyphCount);
+            //CGSize *advances = malloc(sizeof(CGSize) * _glyphCount);
+            //CTFontGetAdvancesForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, advances, _glyphCount);
 
             float marginInPoints = ICFontPixelsToPoints(IC_GLYPH_RECTANGLE_MARGIN);
             
@@ -217,24 +217,26 @@ NSString *__glyphFSH = IC_SHADER_STRING
                 _positions[i].x = ICFontPixelsToPoints(_positions[i].x) + ICFontPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
                 _positions[i].y = ICFontPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICFontPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
-                //NSLog(@"Glyph position: (%f, %f)", _positions[i].x, _positions[i].y);
+                //float advance = ceilf(ICFontPixelsToPoints(advances[i].width));
+                float advance = ICFontPixelsToPoints(boundingRects[i].size.width);
                 
-                // FIXME: review this carefully (why do we need marginInPoints * 2?)
-                float advance = ICFontPixelsToPoints(advances[i].width) + marginInPoints * 2;
+                if (_positions[i].x + marginInPoints < min.x)
+                    min.x = _positions[i].x + marginInPoints;
+                if (_positions[i].x + advance + marginInPoints > max.x)
+                    max.x = _positions[i].x + advance + marginInPoints;
+                if (_positions[i].y + marginInPoints < min.y)
+                    min.y = _positions[i].y + marginInPoints;
+                if (_positions[i].y + textureGlyphHeight + marginInPoints > max.y)
+                    max.y = _positions[i].y + textureGlyphHeight + marginInPoints;
                 
-                if (_positions[i].x < min.x)
-                    min.x = _positions[i].x;
-                if (_positions[i].x + advance > max.x)
-                    max.x = _positions[i].x + advance;
-                
-                min.y = 0;
-                max.y = roundf(_ascent + _descent); // + 4; // iOS requires different frame then Mac wtf
+                //min.y = 0;
+                //max.y = roundf(_ascent + _descent);// + 4; // iOS requires different frame then Mac wtf
             }
             
             _boundingBox = kmVec4Make(min.x, min.y, max.x - min.x, max.y - min.y);
             
             free(boundingRects);
-            free(advances);
+            //free(advances);
         }
     }
     return self;
@@ -739,6 +741,8 @@ NSString *__glyphFSH = IC_SHADER_STRING
         glDisableVertexAttribArray(ICVertexAttribTexCoords+2);
         glDisableVertexAttribArray(ICVertexAttribTexCoords+3);
     }
+    
+    //[self debugDrawBoundingBox];
 }
 
 - (float)ascent

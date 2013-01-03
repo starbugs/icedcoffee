@@ -92,7 +92,7 @@
                                                resolutionType:bestResolutionType] autorelease];
     [_textures addObject:textureAtlas];
 
-#ifdef IC_ENABLE_DEBUG_GLYPH_CACHE
+#if IC_ENABLE_DEBUG_GLYPH_CACHE
     NSLog(@"Glyph cache: new texture atlas allocated");
 #ifdef __IC_PLATFORM_MAC
     NSLog(@"Glyph cache: number of atlases in use: %ld", [_textures count]);
@@ -128,6 +128,19 @@
 // FIXME: do not cache spaces!?
 - (NSArray *)cacheGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
 {
+#if IC_ENABLE_DEBUG_GLYPH_CACHE
+    NSMutableString *glyphString = [[NSMutableString alloc] initWithCapacity:count];
+    CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
+    for (CFIndex i=0; i<count; i++) {
+        NSString *glyphName = (NSString *)CGFontCopyGlyphNameForGlyph(cgFont, glyphs[i]);
+        [glyphString appendString:glyphName];
+        [glyphName release];
+    }
+    CFRelease(cgFont);
+    NSLog(@"Caching glyphs '%@'", glyphString);
+    [glyphString release];
+#endif
+    
     NSMutableArray *textureGlyphs = [NSMutableArray arrayWithCapacity:count];
     
     CGRect *boundingRects = (CGRect *)malloc(sizeof(CGRect) * count);

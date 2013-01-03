@@ -1163,6 +1163,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  */
 - (void)debugLogBranch;
 
+- (void)debugDrawBoundingBox;
+
 #endif
 
 @end

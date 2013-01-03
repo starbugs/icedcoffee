@@ -40,6 +40,8 @@
 #import "ICAnimation.h"
 #import "ICScheduler.h"
 
+#import "ICDrawAPI.h"
+
 
 @interface ICNode (Private)
 - (void)setParent:(ICNode *)parent;
@@ -1082,6 +1084,13 @@
 - (void)debugLogBranch
 {
     [self debugLogBranchWithRoot:self node:self];
+}
+
+- (void)debugDrawBoundingBox
+{
+    icColor4B blueColor = (icColor4B){0,0,255,255};
+    kmVec4 boundingBox = kmVec4Make(self.origin.x, self.origin.y, self.size.width, self.size.height);
+    [ICDrawAPI drawRect2D:boundingBox z:0 color:blueColor lineWidth:1];
 }
 
 

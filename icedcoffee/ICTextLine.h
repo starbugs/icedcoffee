@@ -41,6 +41,7 @@
     CGFloat _ascent;
     CGFloat _descent;
     CGFloat _leading;
+    float _lineWidth;
 }
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font;
@@ -68,5 +69,7 @@
 - (float)descent;
 
 - (float)leading;
+
+- (float)lineWidth;
 
 @end

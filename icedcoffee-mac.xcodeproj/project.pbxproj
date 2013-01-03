@@ -76,6 +76,8 @@
 		A68DBF4C165010DC0035E0B6 /* ICNodeRef.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */; };
 		A68DBF4D165010DC0035E0B6 /* ICNodeRef.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */; };
 		A68DBFD416519D560035E0B6 /* icedcoffee.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBFD316519D560035E0B6 /* icedcoffee.h */; };
+		A6C6869A1695C12100761BD5 /* ICDrawAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = A6C686981695C12100761BD5 /* ICDrawAPI.h */; };
+		A6C6869B1695C12200761BD5 /* ICDrawAPI.m in Sources */ = {isa = PBXBuildFile; fileRef = A6C686991695C12100761BD5 /* ICDrawAPI.m */; };
 		A6CB74541645E2F300CDEEAC /* ICAnimatedShaderProgram.h in Headers */ = {isa = PBXBuildFile; fileRef = A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */; };
 		A6CB74551645E2F300CDEEAC /* ICAnimatedShaderProgram.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */; };
 		A6D20566168E6216009D7811 /* icAvailability.h in Headers */ = {isa = PBXBuildFile; fileRef = A6D20565168E6216009D7811 /* icAvailability.h */; };
@@ -280,6 +282,8 @@
 		A68DBF4A165010DC0035E0B6 /* ICNodeRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICNodeRef.h; path = icedcoffee/ICNodeRef.h; sourceTree = "<group>"; };
 		A68DBF4B165010DC0035E0B6 /* ICNodeRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICNodeRef.m; path = icedcoffee/ICNodeRef.m; sourceTree = "<group>"; };
 		A68DBFD316519D560035E0B6 /* icedcoffee.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icedcoffee.h; path = icedcoffee/icedcoffee.h; sourceTree = "<group>"; };
+		A6C686981695C12100761BD5 /* ICDrawAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICDrawAPI.h; path = icedcoffee/ICDrawAPI.h; sourceTree = "<group>"; };
+		A6C686991695C12100761BD5 /* ICDrawAPI.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICDrawAPI.m; path = icedcoffee/ICDrawAPI.m; sourceTree = "<group>"; };
 		A6CB74521645E2F300CDEEAC /* ICAnimatedShaderProgram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimatedShaderProgram.h; path = icedcoffee/ICAnimatedShaderProgram.h; sourceTree = "<group>"; };
 		A6CB74531645E2F300CDEEAC /* ICAnimatedShaderProgram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimatedShaderProgram.m; path = icedcoffee/ICAnimatedShaderProgram.m; sourceTree = "<group>"; };
 		A6D20565168E6216009D7811 /* icAvailability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icAvailability.h; path = icedcoffee/icAvailability.h; sourceTree = "<group>"; };
@@ -730,6 +734,8 @@
 				D24BAF5014EDB142000E65AA /* ICConfiguration.h */,
 				D24BAF5114EDB142000E65AA /* ICConfiguration.m */,
 				D24BAF5214EDB142000E65AA /* icDefaults.h */,
+				A6C686981695C12100761BD5 /* ICDrawAPI.h */,
+				A6C686991695C12100761BD5 /* ICDrawAPI.m */,
 				A62634051686305F00286AC0 /* ICCombinedVertexIndexBuffer.h */,
 				A62634061686306000286AC0 /* ICCombinedVertexIndexBuffer.m */,
 				A68DBFD316519D560035E0B6 /* icedcoffee.h */,
@@ -925,6 +931,7 @@
 				A62D6443168CCE4D00DA6C22 /* ICFontCache.h in Headers */,
 				A671C74E168DAB16002AD3EF /* icFontUtils.h in Headers */,
 				A6D20566168E6216009D7811 /* icAvailability.h in Headers */,
+				A6C6869A1695C12100761BD5 /* ICDrawAPI.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1069,6 +1076,7 @@
 				A65D27B0168B3892008D9E05 /* ICTextFrame.m in Sources */,
 				A62D6444168CCE4D00DA6C22 /* ICFontCache.m in Sources */,
 				A671C751168DAB3D002AD3EF /* icFontUtils.m in Sources */,
+				A6C6869B1695C12200761BD5 /* ICDrawAPI.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

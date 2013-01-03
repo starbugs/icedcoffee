@@ -32,7 +32,6 @@
  */
 #define IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
 
-// FIXME: specify units (should be points)
 /**
  @brief The size in pixels of the margin to add to each glyph's bounding box when
  extracting glyph textures

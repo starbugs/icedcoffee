@@ -40,11 +40,9 @@
                                       tracking:(float)tracking
                                          color:(icColor4B)color
                                          gamma:(float)gamma;
-+ (void)measureTextForAutoresizing:(NSString *)text
-                              font:(ICFont *)font
-                          tracking:(float)tracking
-                            origin:(kmVec3 *)origin
-                              size:(kmVec3 *)size;
++ (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
+                                      origin:(kmVec3 *)origin
+                                        size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
 - (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText;
@@ -362,30 +360,37 @@
     return [attributedText autorelease];
 }
 
-+ (void)measureTextForAutoresizing:(NSString *)text
-                              font:(ICFont *)font
-                          tracking:(float)tracking
-                            origin:(kmVec3 *)origin
-                              size:(kmVec3 *)size
++ (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
+                                      origin:(kmVec3 *)origin
+                                        size:(kmVec3 *)size
 {
     // Measure each text line contained in text
-    NSArray *lines = [text componentsSeparatedByString:@"\n"];
-    NSMutableArray *textLines = [[NSMutableArray alloc] initWithCapacity:[lines count]];
-    for (NSString *line in lines) {
-        ICTextLine *textLine = [[ICTextLine alloc] initWithString:line font:font];
+    __block float maxHeight = 0;
+    __block float maxLineWidth = 0;
+    __block NSMutableArray *textLines = [[NSMutableArray alloc] init];
+    [[attributedText string] enumerateSubstringsInRange:NSMakeRange(0, [[attributedText string] length])
+                                                options:NSStringEnumerationByLines
+                                             usingBlock:^(NSString *substring,
+                                                          NSRange substringRange,
+                                                          NSRange enclosingRange,
+                                                          BOOL *stop) {
+                                                 
+        NSAttributedString *attrSubString = [attributedText attributedSubstringFromRange:substringRange];
+        ICTextLine *textLine = [[ICTextLine alloc] initWithAttributedString:attrSubString];
         [textLines addObject:textLine];
+                                                 
+        float lineHeight = [textLine ascent] + [textLine descent] + [textLine leading];
+        maxHeight += lineHeight;
+                                                 
+        if ([textLine lineWidth] > maxLineWidth)
+            maxLineWidth = [textLine lineWidth];
+
         [textLine release];
-    }
+
+    }];
     
-    kmAABB aabb = icComputeAABBContainingAABBsOfNodes(textLines);
-    if (origin) {
-        *origin = aabb.min;
-    }
-    if (size) {
-        *size = kmVec3Make(aabb.max.x - aabb.min.x,
-                           aabb.max.y - aabb.min.y,
-                           aabb.max.z - aabb.min.z);
-    }
+    *origin = kmNullVec3;
+    *size = kmVec3Make(maxLineWidth, maxHeight, 0);
     
     [textLines release];
 }
@@ -393,9 +398,7 @@
 - (void)autoresizeToText
 {
     kmVec3 origin, size;
-    ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
-    [[self class] measureTextForAutoresizing:self.text font:font tracking:self.tracking
-                                      origin:&origin size:&size];
+    [[self class] measureAttributedTextForAutoresizing:self.attributedText origin:&origin size:&size];
     self.origin = origin;
     self.size = size;
 }
@@ -416,6 +419,12 @@
         self.textFrame.size = self.size;
         self.textFrame.attributedString = self.attributedText;
     }
+}
+
+- (void)drawWithVisitor:(ICNodeVisitor *)visitor
+{
+    [super drawWithVisitor:visitor];
+    //[self debugDrawBoundingBox];
 }
 
 @end

@@ -156,11 +156,12 @@
     CFArrayRef runs = CTLineGetGlyphRuns(ctLine);
     CFIndex runCount = CFArrayGetCount(runs);
     
-    CTLineGetTypographicBounds(ctLine, &_ascent, &_descent, &_leading);
+    double width = CTLineGetTypographicBounds(ctLine, &_ascent, &_descent, &_leading);
     
     _ascent = ICFontPixelsToPoints(_ascent);
     _descent = ICFontPixelsToPoints(_descent);
     _leading = ICFontPixelsToPoints(_leading);
+    _lineWidth = (float)ICFontPixelsToPoints(width);
     
     float lineAscent = roundf(_ascent);
     
@@ -226,6 +227,11 @@
 - (float)leading
 {
     return (float)_leading;
+}
+
+- (float)lineWidth
+{
+    return _lineWidth;
 }
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled

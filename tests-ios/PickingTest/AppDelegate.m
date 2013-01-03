@@ -67,7 +67,7 @@
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
     ICLine2D *line = [ICLine2D lineWithOrigin:kmVec3Make(150, 150, 0)
-                                       target:kmVec3Make(200, 250, 0)
+                                       target:kmVec3Make(150, 100, 0)
                                     lineWidth:1];
     [scene addChild:line];
     ICLine2D *line2 = [ICLine2D lineWithOrigin:kmVec3Make(250, 150, 0)

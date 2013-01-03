@@ -145,5 +145,11 @@
     }
 }
 
+- (void)drawWithVisitor:(ICNodeVisitor *)visitor
+{
+    [super drawWithVisitor:visitor];
+    //[self debugDrawBoundingBox];
+}
+
 
 @end
