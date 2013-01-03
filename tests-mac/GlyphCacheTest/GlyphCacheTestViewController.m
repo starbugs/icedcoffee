@@ -68,8 +68,8 @@
                                                                                         attributes:frameAttrs];
     //[frameAttrString addAttribute:ICGammaAttributeName value:[NSNumber numberWithFloat:0.5f] range:NSMakeRange(0, 120)];
     [frameAttrString addAttribute:ICFontAttributeName value:georgia range:NSMakeRange(0, 99)];
-    [frameAttrString addAttribute:ICTrackingAttributeName value:[NSNumber numberWithFloat:10] range:NSMakeRange(0, 99)];
-    //[frameAttrString addAttribute:ICFontAttributeName value:monaco range:NSMakeRange(202, [frameAttrString length]-202)];
+    //[frameAttrString addAttribute:ICTrackingAttributeName value:[NSNumber numberWithFloat:10] range:NSMakeRange(0, 99)];
+    [frameAttrString addAttribute:ICFontAttributeName value:monaco range:NSMakeRange(202, [frameAttrString length]-202)];
     ICTextFrame *textFrame = [ICTextFrame textFrameWithSize:kmVec2Make(200, 200)
                                            attributedString:frameAttrString];
     textFrame.position = kmVec3Make(20, 20, 0);
