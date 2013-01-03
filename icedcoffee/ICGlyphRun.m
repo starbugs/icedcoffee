@@ -371,8 +371,12 @@ NSString *__glyphFSH = IC_SHADER_STRING
         NSNumber *gammaAttr = [attributes objectForKey:ICGammaAttributeName];
         float gamma = gammaAttr ? [gammaAttr floatValue] : IC_DEFAULT_GLYPH_RUN_GAMMA;
         
+        NSNumber *trackingAttr = [attributes objectForKey:ICTrackingAttributeName];
+        float tracking = trackingAttr ? [trackingAttr floatValue] : 0;
+        
         self.color = color;
         self.gamma = gamma;
+        self.tracking = tracking;
         self.string = string;
         self.font = font;
         
@@ -482,6 +486,13 @@ NSString *__glyphFSH = IC_SHADER_STRING
     _dirty = YES;
 }
 
+- (void)setTracking:(float)tracking
+{
+    _tracking = tracking;
+    _dirty = YES;
+    [self updateMetrics];
+}
+
 - (void)updateMetrics
 {
     if ((self.string || _ctRun) && self.font) {
@@ -490,8 +501,11 @@ NSString *__glyphFSH = IC_SHADER_STRING
         
         if (!run) {
             // Create a CoreText representation of the run
+            NSNumber *trackingAttr = [NSNumber numberWithFloat:self.tracking];
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-                                        (id)self.font.fontRef, (NSString *)kCTFontAttributeName, nil];
+                                        (id)self.font.fontRef, (NSString *)kCTFontAttributeName,
+                                        (id)trackingAttr, (NSString *)kCTKernAttributeName,
+                                        nil];
             NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:self.string
                                                                                     attributes:attributes] autorelease];
             line = CTLineCreateWithAttributedString((CFAttributedStringRef)attributedString);

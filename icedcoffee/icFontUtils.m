@@ -58,6 +58,15 @@ NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
     }
     
     
+    // Tracking
+    
+    NSNumber *trackingNumber = (NSNumber *)CFDictionaryGetValue((CFDictionaryRef)ctAttrs,
+                                                                kCTKernAttributeName);
+    if (trackingNumber) {
+        [icAttrs setObject:trackingNumber forKey:ICTrackingAttributeName];
+    }
+    
+    
     return icAttrs;
 }
 
@@ -93,6 +102,14 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
         [ctAttrs setObject:(id)cgForegroundColor forKey:(NSString *)kCTForegroundColorAttributeName];
         CFRelease(cgForegroundColor);
         CFRelease(colorSpace);
+    }
+    
+    
+    // Tracking
+    
+    NSNumber *trackingNumber = [icAttrs objectForKey:ICTrackingAttributeName];
+    if (trackingNumber) {
+        [ctAttrs setObject:(id)trackingNumber forKey:(NSString *)kCTKernAttributeName];
     }
     
     

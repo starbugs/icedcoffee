@@ -33,6 +33,7 @@ typedef CGGlyph ICGlyph;
 #define ICFontAttributeName             @"ICFont"
 #define ICForegroundColorAttributeName  @"ICForegroundColor"
 #define ICGammaAttributeName            @"ICGamma"
+#define ICTrackingAttributeName         @"ICTracking"
 
 
 #define IC_USE_HIGH_RESOLUTION_FONTS YES
