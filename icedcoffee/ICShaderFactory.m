@@ -234,8 +234,8 @@ NSString *__positionTextureA8ColorFSH = IC_SHADER_STRING
 
     void main()
     {
-        gl_FragColor = vec4(v_fragmentColor.rgb,										// RGB from uniform
-                            v_fragmentColor.a * texture2D(u_texture, v_texCoord).a		// A from texture & uniform
+        gl_FragColor = vec4(v_fragmentColor.rgb,
+                            v_fragmentColor.a * texture2D(u_texture, v_texCoord).a
                             );
     }
 );
