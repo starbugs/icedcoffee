@@ -44,6 +44,7 @@
     ICFont *_font;
     NSString *_fontName;
     CGFloat _fontSize;
+    float _tracking;
     icColor4B _color;
     float _gamma;
     BOOL _autoresizesToTextSize;
@@ -207,6 +208,15 @@
  stored in the attributed text to define rich text attributes will be lost.
  */
 @property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
+
+/**
+ @brief The tracking of the receiver's text
+ 
+ Setting a new tracking value on a receiver that currently displays attributed text will rebuild the
+ receiver's attributed text using its current font, color and gamma properties. Information
+ stored in the attributed text to define rich text attributes will be lost.
+ */
+@property (nonatomic, assign, setter=setTracking:) float tracking;
 
 /**
  @brief The color of the receiver's text

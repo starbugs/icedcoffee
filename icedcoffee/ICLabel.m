@@ -37,11 +37,14 @@
 
 + (NSAttributedString *)attributedTextWithText:(NSString *)text
                                           font:(ICFont *)font
+                                      tracking:(float)tracking
                                          color:(icColor4B)color
                                          gamma:(float)gamma;
 + (void)measureTextForAutoresizing:(NSString *)text
                               font:(ICFont *)font
-                            origin:(kmVec3 *)origin size:(kmVec3 *)size;
+                          tracking:(float)tracking
+                            origin:(kmVec3 *)origin
+                              size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
 - (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText;
@@ -63,6 +66,7 @@
 @synthesize font = _font;
 @synthesize fontName = _fontName;
 @synthesize fontSize = _fontSize;
+@synthesize tracking = _tracking;
 @synthesize color = _color;
 @synthesize autoresizesToTextSize = _autoresizesToTextSize;
 
@@ -171,6 +175,7 @@
             _shouldNotApplyPropertiesFromAttributedText = YES;
             self.attributedText = [[self class] attributedTextWithText:self.text
                                                                   font:self.font
+                                                              tracking:self.tracking
                                                                  color:self.color
                                                                  gamma:self.gamma];
             _shouldNotApplyPropertiesFromAttributedText = NO;
@@ -205,6 +210,8 @@
         __block icColor4B color = self.color;
         __block BOOL gammaSet = NO;
         __block float gamma = self.gamma;
+        __block BOOL trackingSet = NO;
+        __block float tracking = self.tracking;
         
         // This is a potentially lossy conversion, i.e. the first attribute always wins
         [self.attributedText enumerateAttributesInRange:NSMakeRange(0, [self.attributedText length])
@@ -227,9 +234,14 @@
                     gammaSet = YES;
                 }
             }
-            if (font && colorSet && gammaSet) {
-                *stop = YES;
+            if (!trackingSet) {
+                NSNumber *trackingNumber = [attrs objectForKey:ICTrackingAttributeName];
+                if (trackingNumber) {
+                    tracking = [trackingNumber floatValue];
+                    trackingSet = YES;
+                }
             }
+            *stop = YES;
         }];
         
         _shouldNotApplyPropertiesFromBasicText = YES;
@@ -243,6 +255,9 @@
         }
         if (gammaSet) {
             self.gamma = gamma;
+        }
+        if (trackingSet) {
+            self.tracking = tracking;
         }
         
         [self setText:[self.attributedText string]];
@@ -303,6 +318,13 @@
     [self updateAttributedTextWithBasicProperties];
 }
 
+- (void)setTracking:(float)tracking
+{
+    _tracking = tracking;
+    
+    [self updateAttributedTextWithBasicProperties];
+}
+
 - (void)setColor:(icColor4B)color
 {
     _color = color;
@@ -324,6 +346,7 @@
 
 + (NSAttributedString *)attributedTextWithText:(NSString *)text
                                           font:(ICFont *)font
+                                      tracking:(float)tracking
                                          color:(icColor4B)color
                                          gamma:(float)gamma
 {
@@ -332,6 +355,7 @@
                                 font, ICFontAttributeName,
                                 foregroundColorValue, ICForegroundColorAttributeName,
                                 [NSNumber numberWithFloat:gamma], ICGammaAttributeName,
+                                [NSNumber numberWithFloat:tracking], ICTrackingAttributeName,
                                 nil];
     NSAttributedString *attributedText = [[NSAttributedString alloc] initWithString:text
                                                                          attributes:attributes];
@@ -340,6 +364,7 @@
 
 + (void)measureTextForAutoresizing:(NSString *)text
                               font:(ICFont *)font
+                          tracking:(float)tracking
                             origin:(kmVec3 *)origin
                               size:(kmVec3 *)size
 {
@@ -369,7 +394,8 @@
 {
     kmVec3 origin, size;
     ICFont *font = [ICFont fontWithName:self.fontName size:self.fontSize];
-    [[self class] measureTextForAutoresizing:self.text font:font origin:&origin size:&size];
+    [[self class] measureTextForAutoresizing:self.text font:font tracking:self.tracking
+                                      origin:&origin size:&size];
     self.origin = origin;
     self.size = size;
 }
