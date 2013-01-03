@@ -1,18 +1,21 @@
-Icedcoffee v0.6.8
-=================
+Icedcoffee v0.7
+===============
 
 Icedcoffee is a lightweight framework for building stunning, accelerated 2D and 3D user interfaces
 based on OpenGL ES 2. It is written in Objective-C and runs on iOS and Mac OS X. Among its most
 notable features are: perspective UI rendering, sophisticated shader-based picking and hit tests,
-buffering of views via OpenGL render textures and full event handling for all drawable objects.
-Icedcoffee essentially gives you full control of what's on the screen – it's a perfect match for
-every developer reaching the limits of UIKit and CoreAnimation.
+full event handling for all drawable objects, buffering of views via OpenGL render textures, and
+advanced font rendering and type setting using a crossover of CoreText and GL-backed glyph caches.
+
+Icedcoffee essentially gives you full control of what's on the screen by unlocking the power
+of graphics hardware without forcing you to deal with the details of OpenGL – it's a perfect match
+for every developer reaching the limits of UIKit and CoreAnimation.
 
 Icedcoffee is designed to be clean, minimalistic, consistent and reusable for different purposes.
 It may be used to build interfaces for games, full application frontends or to extend existing
-application frontends with new OpenGL-based components such as infinitely scrollable views,
-animated overlays, and so on. Icedcoffee emphasizes easy integration and doesn't hijack your
-application. Promised!
+applications with new OpenGL-based components such as infinitely scrollable views, animated
+overlays, and so on. Icedcoffee emphasizes easy integration and doesn't hijack your application.
+Promised!
 
 Icedcoffee is open source and free for both non-commercial and commercial use (MIT license).
 
@@ -53,7 +56,7 @@ Main Features
   * Perspective UI rendering via UI cameras (XY world plane matches the screen plane)
   * View hierarchy with stencil-based clipping, optionally backed by render textures
   * Target-action control event handling for user interface controls
-  * Font rendering via CoreGraphics
+  * Font rendering via CoreText and OpenGL-backed glyph caches
   * Convienent texture caching, asynchronous texture loading via GCD using shared OpenGL contexts
   * Rendering via display link, dedicated thread or main thread
   * Retina display support for all suitable iOS devices
