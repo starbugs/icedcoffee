@@ -24,6 +24,9 @@
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
 
+/**
+ @brief Defines the default system font size in points used by ICFont::systemFontWithDefaultSize
+ */
 #define IC_DEFAULT_SYSTEM_FONT_SIZE 12.0f
 
 /**

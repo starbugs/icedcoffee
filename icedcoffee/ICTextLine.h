@@ -30,7 +30,8 @@
  @brief Represents a drawable line of text
  
  The ICTextLine class represents a drawable line of text consisting of one or more glyph runs
- (see the ICGlyphRun class).
+ (see the ICGlyphRun class). It allows you to typeset a text line using an attributed string
+ providing font and formatting attributes.
  */
 @interface ICTextLine : ICNode {
 @protected
@@ -44,24 +45,51 @@
     float _lineWidth;
 }
 
+/**
+ @brief Returns a new autoreleased text line with the given string and font
+ */
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font;
 
+/**
+ @brief Returns a new autoreleased text line with the given string and text attributes
+ */
 + (id)textLineWithString:(NSString *)string attributes:(NSDictionary *)attributes;
 
+/**
+ @brief Returns a new autoreleased text line with the given attributed string
+ */
 + (id)textLineWithAttributedString:(NSAttributedString *)attributedString;
 
+/**
+ @brief Initializes the receiver with the given string and font
+ */
 - (id)initWithString:(NSString *)string font:(ICFont *)font;
 
+/**
+ @brief Initializes the receiver with the given string and text attributes
+ */
 - (id)initWithString:(NSString *)string attributes:(NSDictionary *)attributes;
 
+/**
+ @brief Initializes the receiver with the given attributed string.
+ */
 - (id)initWithAttributedString:(NSAttributedString *)attributedString;
 
+/**
+ @brief Initializes the receiver with the given CoreText line, attributed string and string range
+ */
 - (id)initWithCoreTextLine:(CTLineRef)ctLine
         icAttributedString:(NSAttributedString *)icAttString
                stringRange:(NSRange)stringRange;
 
+/**
+ @brief The attributed string containing formatted text displayed by the receiver
+ */
 @property (nonatomic, copy, setter=setAttributedString:) NSAttributedString *attributedString;
 
+/**
+ @brief The text (without formatting) displayed by the receiver
+ */
 - (NSString *)string;
 
 - (float)ascent;

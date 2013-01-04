@@ -24,22 +24,47 @@
 #import "ICNode.h"
 #import "ICFont.h"
 
+/**
+ @brief Implements a text frame
+ 
+ The ICTextFrame class implements a text frame consisting of one or multiple lines of text
+ (see the ICTextLine class). It allows you to typeset a text frame using an attributed string
+ providing font and formatting attributes.
+ */
 @interface ICTextFrame : ICNode {
 @protected
     NSAttributedString *_attributedString;
     NSMutableArray *_lines;
 }
 
+/**
+ @brief Returns a new autoreleased text frame with the given size, string and font
+ */
 + (id)textFrameWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font;
 
+/**
+ @brief Returns a new autoreleased text frame with the given size and attributed string
+ */
 + (id)textFrameWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
+/**
+ @brief Initializes the receiver with the given size, string and font
+ */
 - (id)initWithSize:(kmVec2)size string:(NSString *)string font:(ICFont *)font;
 
+/**
+ @brief Initializes the receiver with the given size, string and text attributes
+ */
 - (id)initWithSize:(kmVec2)size string:(NSString *)string attributes:(NSDictionary *)attributes;
 
+/**
+ @brief Initializes the receiver with the given size and attributed string
+ */
 - (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
+/**
+ @brief The attributed string used to represent the receiver's text
+ */
 @property (nonatomic, copy, setter=setAttributedString:) NSAttributedString *attributedString;
 
 @end

@@ -27,17 +27,31 @@
 NSString *icInternalFontNameForFontNameAndSize(NSString *name, CGFloat size);
 NSString *icInternalFontNameForFont(ICFont *font);
 
+/**
+ @brief Implements a font cache
+ 
+ You rarely work with font caches directly. Instead, you should use ICFont::fontWithName:size:
+ to retrieve fonts for your application. See the ICFont class for more information on how to work
+ with fonts in icedcoffee.
+ */
 @interface ICFontCache : NSObject {
 @protected
     NSMutableDictionary *_fontsByName;
 }
 
+/**
+ @brief Returns the globally shared font cache
+ */
 + (id)sharedFontCache;
 
-- (id)init;
-
+/**
+ @brief Registeres a font with the receiver
+ */
 - (void)registerFont:(ICFont *)font;
 
+/**
+ @brief Retrieves a font for the given name and size from the receiver
+ */
 - (ICFont *)fontForName:(NSString *)name size:(CGFloat)size;
 
 @end
