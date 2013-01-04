@@ -23,6 +23,7 @@
 
 #import "icFontUtils.h"
 #import "icTypes.h"
+#import "ICParagraphStyle.h"
 
 NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
 {
@@ -65,6 +66,21 @@ NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
     if (trackingNumber) {
         [icAttrs setObject:trackingNumber forKey:ICTrackingAttributeName];
     }
+    
+    
+    // Paragraph style
+    
+    CTParagraphStyleRef ctParagraphStyle = (CTParagraphStyleRef)CFDictionaryGetValue(
+        (CFDictionaryRef)ctAttrs, kCTParagraphStyleAttributeName
+    );
+    if (ctParagraphStyle) {
+        ICParagraphStyle *paragraphStyle = [[ICParagraphStyle alloc]
+                                            initWithCoreTextParagraphStyle:ctParagraphStyle];
+        [icAttrs setObject:paragraphStyle forKey:ICParagraphStyleAttributeName];
+        [paragraphStyle release];
+    }
+    if (ctParagraphStyle)
+        CFRelease(ctParagraphStyle);
     
     
     return icAttrs;
@@ -110,6 +126,14 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
     NSNumber *trackingNumber = [icAttrs objectForKey:ICTrackingAttributeName];
     if (trackingNumber) {
         [ctAttrs setObject:(id)trackingNumber forKey:(NSString *)kCTKernAttributeName];
+    }
+    
+    
+    // Paragraph style
+    ICParagraphStyle *paragraphStyle = [icAttrs objectForKey:ICParagraphStyleAttributeName];
+    if (paragraphStyle) {
+        [ctAttrs setObject:(id)[paragraphStyle ctParagraphStyle]
+                    forKey:(NSString *)kCTParagraphStyleAttributeName];
     }
     
     

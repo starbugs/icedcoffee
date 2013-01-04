@@ -96,6 +96,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 #import "Platforms/ICGL.h"
 #import "Platforms/ICNS.h"
 #import "icTypes.h"
+#import "ICParagraphStyle.h"
 
 
 typedef struct _ICTexParams {

@@ -21,25 +21,17 @@
 //  SOFTWARE.
 //
 
-#pragma once
+#import <Foundation/Foundation.h>
+#import "ICParagraphStyle.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-#import "icMacros.h"
+@interface ICTextTab : NSObject
 
++ (id)textTabWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location;
 
-typedef CGGlyph ICGlyph;
+- (id)initWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location;
 
+@property (nonatomic, assign) ICTextAlignment textAlignment;
 
-#define ICFontAttributeName             @"ICFont"
-#define ICForegroundColorAttributeName  @"ICForegroundColor"
-#define ICGammaAttributeName            @"ICGamma"
-#define ICTrackingAttributeName         @"ICTracking"
-#define ICParagraphStyleAttributeName   @"ICParagraphStyle"
+@property (nonatomic, assign) float location;
 
-
-#define IC_USE_HIGH_RESOLUTION_FONTS YES
-
-#define ICFontContentScaleFactor() (IC_USE_HIGH_RESOLUTION_FONTS ? 2.f : ICContentScaleFactor())
-#define ICFontPointsToPixels(points) (points*ICFontContentScaleFactor())
-#define ICFontPixelsToPoints(pixels) (pixels/ICFontContentScaleFactor())
-
+@end

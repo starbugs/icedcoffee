@@ -72,6 +72,8 @@
 #import "ICGlyphRun.h"
 #import "ICTextLine.h"
 #import "ICTextFrame.h"
+#import "ICParagraphStyle.h"
+#import "ICTextTab.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

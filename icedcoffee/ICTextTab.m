@@ -21,25 +21,25 @@
 //  SOFTWARE.
 //
 
-#pragma once
+#import "ICTextTab.h"
 
-#import <CoreGraphics/CoreGraphics.h>
-#import "icMacros.h"
+@implementation ICTextTab
 
+@synthesize textAlignment = _textAlignment;
+@synthesize location = _location;
 
-typedef CGGlyph ICGlyph;
++ (id)textTabWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location
+{
+    return [[[[self class] alloc] initWithTextAlignment:textAlignment location:location] autorelease];
+}
 
+- (id)initWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location
+{
+    if ((self = [super init])) {
+        self.textAlignment = textAlignment;
+        self.location = location;
+    }
+    return self;
+}
 
-#define ICFontAttributeName             @"ICFont"
-#define ICForegroundColorAttributeName  @"ICForegroundColor"
-#define ICGammaAttributeName            @"ICGamma"
-#define ICTrackingAttributeName         @"ICTracking"
-#define ICParagraphStyleAttributeName   @"ICParagraphStyle"
-
-
-#define IC_USE_HIGH_RESOLUTION_FONTS YES
-
-#define ICFontContentScaleFactor() (IC_USE_HIGH_RESOLUTION_FONTS ? 2.f : ICContentScaleFactor())
-#define ICFontPointsToPixels(points) (points*ICFontContentScaleFactor())
-#define ICFontPixelsToPoints(pixels) (pixels/ICFontContentScaleFactor())
-
+@end
