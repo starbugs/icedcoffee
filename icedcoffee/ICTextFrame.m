@@ -23,7 +23,7 @@
 
 #import "ICTextFrame.h"
 #import "ICTextLine.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 #import "icFontUtils.h"
 #import "icUtils.h"
 

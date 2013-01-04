@@ -25,7 +25,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ICFont.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 
 #ifdef __cplusplus
 extern "C" {

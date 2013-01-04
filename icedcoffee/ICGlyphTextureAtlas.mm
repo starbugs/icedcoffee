@@ -24,7 +24,7 @@
 #import "ICGlyphTextureAtlas.h"
 #import "ICHostViewController.h"
 #import "../3rd-party/RectangleBinPack/SkylineBinPack.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 #import "icTypes.h"
 
 using RectangleBinPack::SkylineBinPack;

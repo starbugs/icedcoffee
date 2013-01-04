@@ -22,7 +22,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 
 /**
  @brief The depth of textures used by the glyph cache to store glyphs

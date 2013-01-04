@@ -22,7 +22,7 @@
 //
 
 #import "ICNode.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 #import "ICFont.h"
 #import "ICGlyphRun.h"
 

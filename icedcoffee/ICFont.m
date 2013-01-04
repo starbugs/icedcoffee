@@ -24,7 +24,7 @@
 #import <CoreText/CoreText.h>
 #import "ICFont.h"
 #import "ICFontCache.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 
 @interface ICFont ()
 

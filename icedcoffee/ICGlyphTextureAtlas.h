@@ -22,7 +22,7 @@
 //
 
 #import "ICMutableTexture2D.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 #import "ICTextureGlyph.h"
 
 @class ICFont;

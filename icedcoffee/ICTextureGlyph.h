@@ -24,7 +24,7 @@
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
 #import "../3rd-party/kazmath/kazmath/kazmath.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 
 @class ICGlyphTextureAtlas;
 @class ICFont;

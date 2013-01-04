@@ -22,7 +22,7 @@
 //
 
 #import "ICTextLine.h"
-#import "icFontTypes.h"
+#import "icFontDefs.h"
 #import "icFontUtils.h"
 #import "ICGlyphCache.h"
 #import "icUtils.h"
