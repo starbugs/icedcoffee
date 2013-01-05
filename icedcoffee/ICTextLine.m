@@ -189,6 +189,7 @@
         
         ICGlyphRun *run = [[ICGlyphRun alloc] initWithCoreTextRun:ctRun
                                                extendedAttributes:extendedAttrs];
+        run.userInteractionEnabled = self.userInteractionEnabled;
         [run setName:[attSubString string]];
         float runAscent = roundf([run ascent]);
         [run setPositionY:lineAscent - runAscent];

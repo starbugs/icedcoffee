@@ -117,6 +117,7 @@
         ICTextLine *textLine = [[ICTextLine alloc] initWithCoreTextLine:line
                                                      icAttributedString:attSubString
                                                             stringRange:stringRange];
+        textLine.userInteractionEnabled = self.userInteractionEnabled;
         CGPoint origin = origins[i];
         origin.x = ICFontPixelsToPoints(origin.x);
         origin.y = roundf(ICFontPixelsToPoints(origin.y)+[textLine ascent]);
