@@ -350,7 +350,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         [_openGLContext makeCurrentContext];
     }
     
-    // If not already existing, create a caches bound to our OpenGL context
+    // If not already existing, create caches bound to our OpenGL context
     // (required for auxiliary OpenGL contexts)
     if (!_openGLContext.textureCache) {
         _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
