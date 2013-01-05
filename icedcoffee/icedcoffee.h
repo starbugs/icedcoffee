@@ -40,6 +40,7 @@
 #import "ICNodeVisitorDrawing.h"
 #import "ICButton.h"
 #import "ICLabel.h"
+#import "ICTextField.h"
 #import "ICScene.h"
 #import "ICUIScene.h"
 #import "ICShaderCache.h"

@@ -33,6 +33,7 @@
 		A62633EE1685DAA000286AC0 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
 		A62633F11685DBD100286AC0 /* GlyphCacheTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */; };
 		A62633F41685DE4D00286AC0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A682C1DE16988DB0004937B3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A68DBF8A1650621F0035E0B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF801650621F0035E0B6 /* AppDelegate.m */; };
 		A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF811650621F0035E0B6 /* Credits.rtf */; };
@@ -642,6 +643,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A682C1DE16988DB0004937B3 /* libstdc++.dylib in Frameworks */,
 				A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */,
 				A68DBF931650648C0035E0B6 /* Carbon.framework in Frameworks */,
 				A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */,

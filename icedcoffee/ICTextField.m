@@ -30,7 +30,9 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        self.label = [ICLabel labelWithText:@"" fontName:@"Arial" fontSize:12.0f];
+        self.label = [ICLabel labelWithSize:size];
+        self.label.userInteractionEnabled = NO;
+        self.label.text = @"Text field";
         [self addChild:self.label];
     }
     return self;
@@ -47,8 +49,9 @@
         unichar character = [[keyEvent characters] characterAtIndex:0];
         switch (character) {
             case NSDeleteCharacter: {
-                NSUInteger newLength = [self.label.text length] - 1;
-                self.label.text = [self.label.text substringWithRange:NSMakeRange(0, newLength)];
+                NSInteger newLength = [self.label.text length] - 1;
+                if (newLength >= 0)
+                    self.label.text = [self.label.text substringWithRange:NSMakeRange(0, newLength)];
                 break;
             }
             default: {

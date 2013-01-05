@@ -82,8 +82,7 @@
     
     icColor4B startColor = (icColor4B){255,255,255,0};
     icColor4B endColor = (icColor4B){255,255,255,255};
-    ICBasicAnimation *colorAnimation = [ICBasicAnimation animation];
-    colorAnimation.keyPath = @"color";
+    ICBasicAnimation *colorAnimation = [ICBasicAnimation animationWithKeyPath:@"color"];
     colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
     colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
     colorAnimation.duration = 5.0;
@@ -120,6 +119,12 @@
     
     [button addTarget:self action:@selector(buttonLeftMouseDown:) forControlEvents:ICControlEventLeftMouseDown];
     [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];
+    
+    ICTextField *textField = [[[ICTextField alloc] initWithSize:CGSizeMake(200, 100)] autorelease];
+    [textField setPositionY:300];
+    [textField.label setColor:(icColor4B){255,255,255,255}];
+    [scene addChild:textField];
+    [textField centerNodeHorizontallyRounded:YES];
     
     [self.hostViewController runWithScene:scene];
 }
