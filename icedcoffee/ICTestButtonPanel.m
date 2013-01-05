@@ -71,8 +71,8 @@
         [_hintLabel setPositionY:25];
         _hintLabel.autoresizesToTextSize = NO;
         _hintLabel.clipsChildren = YES;
-        _hintLabel.color = (icColor4B){255,255,255,160};
-        _hintLabel.gamma = 0.8f;
+        _hintLabel.color = (icColor4B){255,255,255,255};
+        _hintLabel.gamma = 0.9f;
     }
     return self;
 }

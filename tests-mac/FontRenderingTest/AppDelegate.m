@@ -77,7 +77,7 @@
     animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     animation.fromValue = [NSValue valueWithBytes:&startCenter objCType:@encode(kmVec3)];
     animation.toValue = [NSValue valueWithBytes:&center objCType:@encode(kmVec3)];
-    animation.duration = 10.0;
+    animation.duration = 5.0;
     [self.label addAnimation:animation];
     
     icColor4B startColor = (icColor4B){255,255,255,0};
@@ -86,14 +86,31 @@
     colorAnimation.keyPath = @"color";
     colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
     colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
-    colorAnimation.duration = 10.0;
+    colorAnimation.duration = 5.0;
     [self.label addAnimation:colorAnimation];
     
     ICBasicAnimation *rotationAnimation = [ICBasicAnimation animationWithKeyPath:@"rotationAngle"];
     rotationAnimation.fromValue = [NSNumber numberWithFloat:M_PI];
     rotationAnimation.toValue = [NSNumber numberWithFloat:0];
-    rotationAnimation.duration = 10.0;
+    rotationAnimation.duration = 5.0;
+    rotationAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     [self.label addAnimation:rotationAnimation];
+    
+    kmVec3 startScale = kmVec3Make(20, 20, 1);
+    kmVec3 endScale = kmVec3Make(1, 1, 1);
+    ICBasicAnimation *scaleAnimation = [ICBasicAnimation animationWithKeyPath:@"scale"];
+    scaleAnimation.fromValue = [NSValue valueWithBytes:&startScale objCType:@encode(kmVec3)];
+    scaleAnimation.toValue = [NSValue valueWithBytes:&endScale objCType:@encode(kmVec3)];
+    scaleAnimation.duration = 5.0;
+    scaleAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    [self.label addAnimation:scaleAnimation];
+    
+    ICBasicAnimation *trackingAnimation = [ICBasicAnimation animationWithKeyPath:@"tracking"];
+    trackingAnimation.fromValue = [NSNumber numberWithFloat:1000];
+    trackingAnimation.toValue = [NSNumber numberWithFloat:0];
+    trackingAnimation.duration = 5.0;
+    trackingAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    [self.label addAnimation:trackingAnimation];
    
     ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
     [button setPositionY:50];

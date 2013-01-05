@@ -85,7 +85,7 @@ NSString *__glyphRGBAFSH = IC_SHADER_STRING
     {
         vec4 c = texture2D(u_texture, v_texCoord);
         vec3 gc = pow(vec3(c.r,c.g,c.b), vec3(1.0/v_gamma));
-        gl_FragColor = vec4(gc * v_fragmentColor.rgb, (gc.r+gc.g+gc.b)/3.0 * v_fragmentColor.a);
+        gl_FragColor = vec4(v_fragmentColor.rgb, (gc.r+gc.g+gc.b)/3.0 * v_fragmentColor.a);
     }
 );
 
@@ -103,7 +103,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
     void main()
     {
         float glyphAlpha = pow(texture2D(u_texture, v_texCoord).a, 1.0/v_gamma);
-        gl_FragColor = vec4(v_fragmentColor.rgb * glyphAlpha,
+        gl_FragColor = vec4(v_fragmentColor.rgb,
                             v_fragmentColor.a * glyphAlpha);
     }
 );
@@ -626,7 +626,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         if ([visitor isKindOfClass:[ICNodeVisitorPicking class]]) {
             icGLDisable(GL_BLEND);
         } else {
-            icGLBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+            icGLBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
             icGLEnable(IC_GL_BLEND);
         }
         

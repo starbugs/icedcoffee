@@ -1139,6 +1139,10 @@
         kmVec3 center;
         [(NSValue *)value getValue:&center];
         [self setCenter:center rounded:NO];
+    } else if([keyPath isEqualToString:@"scale"]) {
+        kmVec3 scale;
+        [(NSValue *)value getValue:&scale];
+        [self setScale:scale];
     } else {
         [super setValue:value forKey:keyPath];
     }
