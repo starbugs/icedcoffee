@@ -32,6 +32,10 @@
 		A62D86E9168C79160025C421 /* ICVertexBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A62D86E1168C79160025C421 /* ICVertexBuffer.m */; };
 		A671C7C1168E5DDC002AD3EF /* ICFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A671C7BD168E5DDA002AD3EF /* ICFontCache.h */; };
 		A671C7C2168E5DDC002AD3EF /* ICFontCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A671C7BE168E5DDB002AD3EF /* ICFontCache.m */; };
+		A682C1D416986E89004937B3 /* ICParagraphStyle.h in Headers */ = {isa = PBXBuildFile; fileRef = A682C1D016986E89004937B3 /* ICParagraphStyle.h */; };
+		A682C1D516986E89004937B3 /* ICParagraphStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = A682C1D116986E89004937B3 /* ICParagraphStyle.m */; };
+		A682C1D616986E89004937B3 /* ICTextTab.h in Headers */ = {isa = PBXBuildFile; fileRef = A682C1D216986E89004937B3 /* ICTextTab.h */; };
+		A682C1D716986E89004937B3 /* ICTextTab.m in Sources */ = {isa = PBXBuildFile; fileRef = A682C1D316986E89004937B3 /* ICTextTab.m */; };
 		A68DBF5916505BEF0035E0B6 /* ICAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5016505BEF0035E0B6 /* ICAnimation.h */; };
 		A68DBF5A16505BEF0035E0B6 /* ICAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF5116505BEF0035E0B6 /* ICAnimation.m */; };
 		A68DBF5B16505BEF0035E0B6 /* ICAnimationDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A68DBF5216505BEF0035E0B6 /* ICAnimationDelegate.h */; };
@@ -233,6 +237,10 @@
 		A62D86E1168C79160025C421 /* ICVertexBuffer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICVertexBuffer.m; path = icedcoffee/ICVertexBuffer.m; sourceTree = "<group>"; };
 		A671C7BD168E5DDA002AD3EF /* ICFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFontCache.h; path = icedcoffee/ICFontCache.h; sourceTree = "<group>"; };
 		A671C7BE168E5DDB002AD3EF /* ICFontCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFontCache.m; path = icedcoffee/ICFontCache.m; sourceTree = "<group>"; };
+		A682C1D016986E89004937B3 /* ICParagraphStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICParagraphStyle.h; path = icedcoffee/ICParagraphStyle.h; sourceTree = "<group>"; };
+		A682C1D116986E89004937B3 /* ICParagraphStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICParagraphStyle.m; path = icedcoffee/ICParagraphStyle.m; sourceTree = "<group>"; };
+		A682C1D216986E89004937B3 /* ICTextTab.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextTab.h; path = icedcoffee/ICTextTab.h; sourceTree = "<group>"; };
+		A682C1D316986E89004937B3 /* ICTextTab.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextTab.m; path = icedcoffee/ICTextTab.m; sourceTree = "<group>"; };
 		A68DBF5016505BEF0035E0B6 /* ICAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimation.h; path = icedcoffee/ICAnimation.h; sourceTree = "<group>"; };
 		A68DBF5116505BEF0035E0B6 /* ICAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICAnimation.m; path = icedcoffee/ICAnimation.m; sourceTree = "<group>"; };
 		A68DBF5216505BEF0035E0B6 /* ICAnimationDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICAnimationDelegate.h; path = icedcoffee/ICAnimationDelegate.h; sourceTree = "<group>"; };
@@ -477,10 +485,14 @@
 				A62D86CE168C78D50025C421 /* ICGlyphRun.m */,
 				A6950D001684C9CD0046C6EF /* ICGlyphTextureAtlas.h */,
 				A6950D011684C9CD0046C6EF /* ICGlyphTextureAtlas.mm */,
+				A682C1D016986E89004937B3 /* ICParagraphStyle.h */,
+				A682C1D116986E89004937B3 /* ICParagraphStyle.m */,
 				A62D86CF168C78D50025C421 /* ICTextFrame.h */,
 				A62D86D0168C78D50025C421 /* ICTextFrame.m */,
 				A62D86D1168C78D50025C421 /* ICTextLine.h */,
 				A62D86D2168C78D60025C421 /* ICTextLine.m */,
+				A682C1D216986E89004937B3 /* ICTextTab.h */,
+				A682C1D316986E89004937B3 /* ICTextTab.m */,
 				A69CA55F1685025D00867068 /* ICTextureGlyph.h */,
 				A69CA5601685025D00867068 /* ICTextureGlyph.m */,
 			);
@@ -909,6 +921,8 @@
 				A6C6869F1695C79A00761BD5 /* ICDrawAPI.h in Headers */,
 				A6C686A41696E4C200761BD5 /* icFontUtils.h in Headers */,
 				A6C686AD1696E4F500761BD5 /* icFontDefs.h in Headers */,
+				A682C1D416986E89004937B3 /* ICParagraphStyle.h in Headers */,
+				A682C1D616986E89004937B3 /* ICTextTab.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1050,6 +1064,8 @@
 				A671C7C2168E5DDC002AD3EF /* ICFontCache.m in Sources */,
 				A6C686A01695C79A00761BD5 /* ICDrawAPI.m in Sources */,
 				A6C686A51696E4C200761BD5 /* icFontUtils.m in Sources */,
+				A682C1D516986E89004937B3 /* ICParagraphStyle.m in Sources */,
+				A682C1D716986E89004937B3 /* ICTextTab.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
