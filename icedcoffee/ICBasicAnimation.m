@@ -61,77 +61,81 @@
     
     _currentDeltaTime += dt;
     
-    if (_currentDeltaTime < _duration) {
-        if (!_isAnimating) {
-            if ([self.delegate respondsToSelector:@selector(animationDidStart:)])
-                [self.delegate animationDidStart:self];
-            _isAnimating = YES;
+    if (_currentDeltaTime > _duration)
+        _currentDeltaTime = _duration;
+    
+    if (!_isAnimating) {
+        if ([self.delegate respondsToSelector:@selector(animationDidStart:)])
+            [self.delegate animationDidStart:self];
+        _isAnimating = YES;
+    }
+    
+    double timeFactor = _currentDeltaTime / _duration;
+    if (self.timingFunction) {
+        timeFactor = [self.timingFunction timeFactor:timeFactor];
+    }
+
+    if ([self.fromValue isKindOfClass:[NSNumber class]] &&
+        [self.toValue isKindOfClass:[NSNumber class]]) {
+        
+        if (0 == strcmp([self.fromValue objCType], "f")) {
+            ANIMATE_NUMBER_PROPERTY(float, floatValue, numberWithFloat, timeFactor);
+        } else if (0 == strcmp([self.fromValue objCType], "d")) {
+            ANIMATE_NUMBER_PROPERTY(double, doubleValue, numberWithDouble, timeFactor);
         }
         
-        double timeFactor = _currentDeltaTime / _duration;
-        if (self.timingFunction) {
-            timeFactor = [self.timingFunction timeFactor:timeFactor];
-        }
-
-        if ([self.fromValue isKindOfClass:[NSNumber class]] &&
-            [self.toValue isKindOfClass:[NSNumber class]]) {
+    } else if ([self.fromValue isKindOfClass:[NSValue class]] &&
+               [self.toValue isKindOfClass:[NSValue class]]) {
+        
+        const char *objCType = [self.fromValue objCType];
+        const char *objCTypeTo = [self.toValue objCType];
+        NSAssert(0 == strcmp(objCType, objCTypeTo),
+                 @"objCType of fromValue and toValue must match");
+        
+        const char *vec2Type = @encode(kmVec2);
+        const char *vec3Type = @encode(kmVec3);
+        const char *color4BType = @encode(icColor4B);
+        
+        if (0 == strcmp(objCType, vec3Type)) {
             
-            if (0 == strcmp([self.fromValue objCType], "f")) {
-                ANIMATE_NUMBER_PROPERTY(float, floatValue, numberWithFloat, timeFactor);
-            } else if (0 == strcmp([self.fromValue objCType], "d")) {
-                ANIMATE_NUMBER_PROPERTY(double, doubleValue, numberWithDouble, timeFactor);
-            }
+            kmVec3 value, from, to;
+            [self.fromValue getValue:&from];
+            [self.toValue getValue:&to];
+            value.x = from.x + timeFactor * (to.x - from.x);
+            value.y = from.y + timeFactor * (to.y - from.y);
+            value.z = from.z + timeFactor * (to.z - from.z);
+            [target setValue:[NSValue valueWithBytes:&value objCType:vec3Type]
+                  forKeyPath:self.keyPath];
             
-        } else if ([self.fromValue isKindOfClass:[NSValue class]] &&
-                   [self.toValue isKindOfClass:[NSValue class]]) {
+        } else if(0 == strcmp(objCType, vec2Type)) {
             
-            const char *objCType = [self.fromValue objCType];
-            const char *objCTypeTo = [self.toValue objCType];
-            NSAssert(0 == strcmp(objCType, objCTypeTo),
-                     @"objCType of fromValue and toValue must match");
+            kmVec2 value, from, to;
+            [self.fromValue getValue:&from];
+            [self.toValue getValue:&to];
+            value.x = from.x + timeFactor * (to.x - from.x);
+            value.y = from.y + timeFactor * (to.y - from.y);
+            [target setValue:[NSValue valueWithBytes:&value objCType:vec2Type]
+                  forKeyPath:self.keyPath];
             
-            const char *vec2Type = @encode(kmVec2);
-            const char *vec3Type = @encode(kmVec3);
-            const char *color4BType = @encode(icColor4B);
+        } else if(0 == strcmp(objCType, color4BType)) {
             
-            if (0 == strcmp(objCType, vec3Type)) {
-                
-                kmVec3 value, from, to;
-                [self.fromValue getValue:&from];
-                [self.toValue getValue:&to];
-                value.x = from.x + timeFactor * (to.x - from.x);
-                value.y = from.y + timeFactor * (to.y - from.y);
-                value.z = from.z + timeFactor * (to.z - from.z);
-                [target setValue:[NSValue valueWithBytes:&value objCType:vec3Type]
-                      forKeyPath:self.keyPath];
-                
-            } else if(0 == strcmp(objCType, vec2Type)) {
-                
-                kmVec2 value, from, to;
-                [self.fromValue getValue:&from];
-                [self.toValue getValue:&to];
-                value.x = from.x + timeFactor * (to.x - from.x);
-                value.y = from.y + timeFactor * (to.y - from.y);
-                [target setValue:[NSValue valueWithBytes:&value objCType:vec2Type]
-                      forKeyPath:self.keyPath];
-                
-            } else if(0 == strcmp(objCType, color4BType)) {
-                
-                icColor4B value, from, to;
-                [self.fromValue getValue:&from];
-                [self.toValue getValue:&to];
-                value.r = (float)from.r + (float)timeFactor * (float)(to.r - from.r);
-                value.g = (float)from.g + (float)timeFactor * (float)(to.g - from.g);
-                value.b = (float)from.b + (float)timeFactor * (float)(to.b - from.b);
-                value.a = (float)from.a + (float)timeFactor * (float)(to.a - from.a);
-                [target setValue:[NSValue valueWithBytes:&value objCType:color4BType]
-                      forKeyPath:self.keyPath];
-                
-            }
+            icColor4B value, from, to;
+            [self.fromValue getValue:&from];
+            [self.toValue getValue:&to];
+            value.r = (float)from.r + (float)timeFactor * (float)(to.r - from.r);
+            value.g = (float)from.g + (float)timeFactor * (float)(to.g - from.g);
+            value.b = (float)from.b + (float)timeFactor * (float)(to.b - from.b);
+            value.a = (float)from.a + (float)timeFactor * (float)(to.a - from.a);
+            [target setValue:[NSValue valueWithBytes:&value objCType:color4BType]
+                  forKeyPath:self.keyPath];
             
         }
-    } else {
+        
+    }
+    
+    if (_currentDeltaTime >= _duration) {
         _isFinished = YES;
+        _isAnimating = NO;
         if ([self.delegate respondsToSelector:@selector(animationDidStop:finished:)])
             [self.delegate animationDidStop:self finished:YES];
     }
