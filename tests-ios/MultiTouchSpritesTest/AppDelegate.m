@@ -23,7 +23,6 @@
 
 
 #import "AppDelegate.h"
-#import "DraggableSprite.h"
 
 @implementation AppDelegate
 
@@ -36,25 +35,9 @@
     [super dealloc];
 }
 
-- (void)setUpScene
-{
-    ICScene *scene = [ICScene scene];
-    
-    NSString *filename = [[NSBundle mainBundle] pathForResource:@"thiswayup" ofType:@"png"];
-    ICTexture2D *texture = [[ICTextureCache currentTextureCache] loadTextureFromFile:filename];
-    
-    for (int i=0; i<10; i++) {
-        DraggableSprite *s = [DraggableSprite spriteWithTexture:texture];
-        [s setPosition:kmVec3Make(arc4random() % 300, arc4random() % 400, 0)];
-        [scene addChild:s];
-    }
-    
-    [self.hostViewController runWithScene:scene];
-}
-
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.hostViewController = [ICHostViewController platformSpecificHostViewController];
+    self.hostViewController = [MultiTouchSpritesTestViewController hostViewController];
     
     ICGLView *glView = [ICGLView viewWithFrame:[self.window bounds]
                                    pixelFormat:kEAGLColorFormatRGB565
@@ -72,8 +55,6 @@
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.rootViewController = self.hostViewController;
     [self.window makeKeyAndVisible];
-    
-    [self setUpScene];
     
     return YES;
 }

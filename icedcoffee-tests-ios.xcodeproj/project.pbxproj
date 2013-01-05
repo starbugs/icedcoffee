@@ -43,6 +43,9 @@
 		A671C7BC168E5DB7002AD3EF /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A67CC09C16262A290094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A682C1DB169876A1004937B3 /* MultiTouchSpritesTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */; };
+		A682C1DC1698772C004937B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
+		A682C1DD1698773A004937B3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A6C6863F1693524000761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A6C686401693525100761BD5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
 		A6CB76DC1649DA7800CDEEAC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
@@ -186,6 +189,8 @@
 		A671C7B4168E5B83002AD3EF /* FontRenderingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontRenderingTestViewController.m; sourceTree = "<group>"; };
 		A671C7B9168E5D9F002AD3EF /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libstdc++.dylib"; sourceTree = DEVELOPER_DIR; };
+		A682C1D9169876A1004937B3 /* MultiTouchSpritesTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchSpritesTestViewController.h; sourceTree = "<group>"; };
+		A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiTouchSpritesTestViewController.m; sourceTree = "<group>"; };
 		A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6EA1E2715CD65790007C4FF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6EA1E2815CD65790007C4FF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -314,7 +319,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A682C1DD1698773A004937B3 /* libstdc++.dylib in Frameworks */,
 				A6CB76DC1649DA7800CDEEAC /* CoreVideo.framework in Frameworks */,
+				A682C1DC1698772C004937B3 /* CoreText.framework in Frameworks */,
 				D29284FC15AA526C0086B12A /* Foundation.framework in Frameworks */,
 				D29284F615AA523A0086B12A /* CoreGraphics.framework in Frameworks */,
 				D29284F915AA524F0086B12A /* OpenGLES.framework in Frameworks */,
@@ -515,6 +522,8 @@
 				D2D4A25714FA1AF4000FCBA0 /* AppDelegate.m */,
 				D292850C15AA53840086B12A /* DraggableSprite.h */,
 				D292850D15AA53840086B12A /* DraggableSprite.m */,
+				A682C1D9169876A1004937B3 /* MultiTouchSpritesTestViewController.h */,
+				A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */,
 				D2D4A26214FA1B0F000FCBA0 /* Supporting Files */,
 			);
 			name = MultiTouchSpritesTest;
@@ -848,6 +857,7 @@
 				D2D4A25D14FA1AF4000FCBA0 /* AppDelegate.m in Sources */,
 				D2D4A25F14FA1AF4000FCBA0 /* main.m in Sources */,
 				D292850E15AA53840086B12A /* DraggableSprite.m in Sources */,
+				A682C1DB169876A1004937B3 /* MultiTouchSpritesTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
