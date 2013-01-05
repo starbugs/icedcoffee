@@ -31,8 +31,6 @@
 #import "ICTextFrame.h"
 #import "icUtils.h"
 
-// FIXME: ICLabel support for 32-bit textures (?)
-
 @interface ICLabel ()
 
 + (NSAttributedString *)attributedTextWithText:(NSString *)text

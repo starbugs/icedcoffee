@@ -62,7 +62,8 @@
     ICTextLine *line = [ICTextLine textLineWithAttributedString:attrString];
     [scene.contentView addChild:line];*/
 
-    ICParagraphStyle *paragraphStyle = [ICParagraphStyle paragraphStyleWithTextAlignment:ICTextAlignmentCenter];
+    ICParagraphStyle *paragraphStyle = [ICParagraphStyle paragraphStyleWithTextAlignment:ICTextAlignmentJustified];
+    paragraphStyle.lineSpacingAdjustment = 2.0f;
     NSDictionary *frameAttrs = [NSDictionary dictionaryWithObjectsAndKeys:
                                 arial, ICFontAttributeName,
                                 paragraphStyle, ICParagraphStyleAttributeName,

@@ -32,6 +32,30 @@
 
 /**
  @brief Implements a text view that cannot be edited by the user
+ 
+ The ICLabel class implements a non-editable text view which is capable of rendering attributed
+ text based on the ICTextFrame class. ICLabel objects can be employed in a wide range of font
+ rendering and typesetting applications, ranging from simple single line, single font user
+ interface labels to large multi line text frames containing formatted rich text, possibly with
+ different fonts, colors, gamma corrections, trackings, paragraph styles, and so on.
+ 
+ ICLabel objects may be initialized in two different ways, depending on the type of text view
+ you wish to create. The first group of initializers are suited to display simple UI labels.
+ These initializers do not require a predefined size and use simple non-attributed text.
+ ICLabel::initWithText: takes a simple ``NSString`` containing the text to be displayed and
+ automatically assigns the default system font to the label. ICLabel::initWithText:font:
+ adds the choice for a specific font. ICLabel::initWithText:fontName:fontSize: finally makes
+ it even more convenient to specify the desired font. These initializers attempt to automatically
+ determine a suitable text frame size by measuring the text lines contained in the given text.
+ All of them set the label's ICLabel::autoresizesToTextSize property to ``YES``.
+ 
+ The second group of initializers require a predefined size for the label's text frame. These
+ initializers are suited for laying out formatted text in a rectangular text container.
+ ICLabel::initWithSize: simply initializes a label with the given size, leaving it up to the
+ following calls whether the label is assigned a simple ICLabel::text or a formatted
+ ICLabel::attributedText. ICLabel::initWithSize:attributedText: also sets the attributed text
+ upon initialization. Labels initialized this way will not autoresize to their text content.
+ Instead, they will clip the text content to their frame. 
  */
 @interface ICLabel : ICView {
 @protected
