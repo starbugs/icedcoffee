@@ -23,6 +23,7 @@
 
 #import "ICParagraphStyle.h"
 #import "icTypes.h"
+#import "icFontDefs.h"
 #import "ICTextTab.h"
 
 
@@ -221,16 +222,17 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
         CGFloat firstLineHeadIndent;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierFirstLineHeadIndent,
                                              sizeof(CGFloat), &firstLineHeadIndent);
-        self.firstLineHeadIndent = (float)firstLineHeadIndent;
+        self.firstLineHeadIndent = (float)ICFontPixelsToPoints(firstLineHeadIndent);
         
         CGFloat headIndent;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierHeadIndent,
                                              sizeof(CGFloat), &headIndent);
-        self.headIndent = (float)headIndent;
+        self.headIndent = (float)ICFontPixelsToPoints(headIndent);
         
         CGFloat tailIndent;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierTailIndent,
                                              sizeof(CGFloat), &tailIndent);
+        self.tailIndent = (float)ICFontPixelsToPoints(tailIndent);
         
         CFArrayRef tabStops = nil;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierTabStops,
@@ -243,7 +245,7 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
         CGFloat defaultTapInterval;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierDefaultTabInterval,
                                              sizeof(CGFloat), &defaultTapInterval);
-        self.defaultTabInterval = (float)defaultTapInterval;
+        self.defaultTabInterval = (float)ICFontPixelsToPoints(defaultTapInterval);
         
         CGFloat lineHeightMultiple;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierLineHeightMultiple,
@@ -253,37 +255,37 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
         CGFloat maximumLineHeight;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierMaximumLineHeight,
                                              sizeof(CGFloat), &maximumLineHeight);
-        self.maximumLineHeight = (float)maximumLineHeight;
+        self.maximumLineHeight = (float)ICFontPixelsToPoints(maximumLineHeight);
         
         CGFloat minimumLineHeight;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierMinimumLineHeight,
                                              sizeof(CGFloat), &minimumLineHeight);
-        self.minimumLineHeight = (float)minimumLineHeight;
+        self.minimumLineHeight = (float)ICFontPixelsToPoints(minimumLineHeight);
         
         CGFloat paragraphSpacing;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierParagraphSpacing,
                                              sizeof(CGFloat), &paragraphSpacing);
-        self.paragraphSpacing = (float)paragraphSpacing;
+        self.paragraphSpacing = (float)ICFontPixelsToPoints(paragraphSpacing);
         
         CGFloat paragraphSpacingBefore;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierParagraphSpacingBefore,
                                              sizeof(CGFloat), &paragraphSpacingBefore);
-        self.paragraphSpacingBefore = (float)paragraphSpacingBefore;
+        self.paragraphSpacingBefore = (float)ICFontPixelsToPoints(paragraphSpacingBefore);
         
         CGFloat maximumLineSpacing;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierMaximumLineSpacing,
                                              sizeof(CGFloat), &maximumLineSpacing);
-        self.maximumLineSpacing = (float)maximumLineSpacing;
+        self.maximumLineSpacing = (float)ICFontPixelsToPoints(maximumLineSpacing);
         
         CGFloat minimumLineSpacing;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierMinimumLineSpacing,
                                              sizeof(CGFloat), &minimumLineSpacing);
-        self.minimumLineSpacing = (float)minimumLineSpacing;
+        self.minimumLineSpacing = (float)ICFontPixelsToPoints(minimumLineSpacing);
         
         CGFloat lineSpacingAdjustment;
         CTParagraphStyleGetValueForSpecifier(ctParagraphStyle, kCTParagraphStyleSpecifierLineSpacingAdjustment,
                                              sizeof(CGFloat), &lineSpacingAdjustment);
-        self.lineSpacingAdjustment = (float)lineSpacingAdjustment;
+        self.lineSpacingAdjustment = (float)ICFontPixelsToPoints(lineSpacingAdjustment);
     }
     return self;
 }
@@ -318,17 +320,17 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
             kCTParagraphStyleSpecifierBaseWritingDirection, sizeof(CTWritingDirection), &baseWritingDirection
         };
         
-        CGFloat firstLineHeadIndent = (CGFloat)self.firstLineHeadIndent;
+        CGFloat firstLineHeadIndent = (CGFloat)ICFontPointsToPixels(self.firstLineHeadIndent);
         CTParagraphStyleSetting firstLineHeadIndentSetting = {
             kCTParagraphStyleSpecifierFirstLineHeadIndent, sizeof(CGFloat), &firstLineHeadIndent
         };
 
-        CGFloat headIndent = (CGFloat)self.headIndent;
+        CGFloat headIndent = (CGFloat)ICFontPointsToPixels(self.headIndent);
         CTParagraphStyleSetting headIndentSetting = {
             kCTParagraphStyleSpecifierHeadIndent, sizeof(CGFloat), &headIndent
         };
         
-        CGFloat tailIndent = (CGFloat)self.tailIndent;
+        CGFloat tailIndent = (CGFloat)ICFontPointsToPixels(self.tailIndent);
         CTParagraphStyleSetting tailIndentSetting = {
             kCTParagraphStyleSpecifierTailIndent, sizeof(CGFloat), &tailIndent
         };
@@ -338,7 +340,7 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
             kCTParagraphStyleSpecifierTabStops, sizeof(CFArrayRef), &tabStops
         };
         
-        CGFloat defaultTabInterval = (CGFloat)self.defaultTabInterval;
+        CGFloat defaultTabInterval = (CGFloat)ICFontPointsToPixels(self.defaultTabInterval);
         CTParagraphStyleSetting defaultTabIntervalSetting = {
             kCTParagraphStyleSpecifierDefaultTabInterval, sizeof(CGFloat), &defaultTabInterval
         };
@@ -348,37 +350,37 @@ NSArray *ICCreateCTTextTabsFromICTextTabs(NSArray *icTextTabs)
             kCTParagraphStyleSpecifierLineHeightMultiple, sizeof(CGFloat), &lineHeightMultiple
         };
         
-        CGFloat maximumLineHeight = (CGFloat)self.maximumLineHeight;
+        CGFloat maximumLineHeight = (CGFloat)ICFontPointsToPixels(self.maximumLineHeight);
         CTParagraphStyleSetting maximumLineHeightSetting = {
             kCTParagraphStyleSpecifierMaximumLineHeight, sizeof(CGFloat), &maximumLineHeight
         };
 
-        CGFloat minimumLineHeight = (CGFloat)self.minimumLineHeight;
+        CGFloat minimumLineHeight = (CGFloat)ICFontPointsToPixels(self.minimumLineHeight);
         CTParagraphStyleSetting minimumLineHeightSetting = {
             kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minimumLineHeight
         };
 
-        CGFloat paragraphSpacing = (CGFloat)self.paragraphSpacing;
+        CGFloat paragraphSpacing = (CGFloat)ICFontPointsToPixels(self.paragraphSpacing);
         CTParagraphStyleSetting paragraphSpacingSetting = {
             kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &paragraphSpacing
         };
 
-        CGFloat paragraphSpacingBefore = (CGFloat)self.paragraphSpacingBefore;
+        CGFloat paragraphSpacingBefore = (CGFloat)ICFontPointsToPixels(self.paragraphSpacingBefore);
         CTParagraphStyleSetting paragraphSpacingBeforeSetting = {
             kCTParagraphStyleSpecifierParagraphSpacingBefore, sizeof(CGFloat), &paragraphSpacingBefore
         };
         
-        CGFloat maximumLineSpacing = (CGFloat)self.maximumLineSpacing;
+        CGFloat maximumLineSpacing = (CGFloat)ICFontPointsToPixels(self.maximumLineSpacing);
         CTParagraphStyleSetting maximumLineSpacingSetting = {
             kCTParagraphStyleSpecifierMaximumLineSpacing, sizeof(CGFloat), &maximumLineSpacing
         };        
 
-        CGFloat minimumLineSpacing = (CGFloat)self.minimumLineSpacing;
+        CGFloat minimumLineSpacing = (CGFloat)ICFontPointsToPixels(self.minimumLineSpacing);
         CTParagraphStyleSetting minimumLineSpacingSetting = {
             kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &minimumLineSpacing
         };
 
-        CGFloat lineSpacingAdjustment = (CGFloat)self.lineSpacingAdjustment;
+        CGFloat lineSpacingAdjustment = (CGFloat)ICFontPointsToPixels(self.lineSpacingAdjustment);
         CTParagraphStyleSetting lineSpacingAdjustmentSetting = {
             kCTParagraphStyleSpecifierLineSpacingAdjustment, sizeof(CGFloat), &lineSpacingAdjustment
         };
