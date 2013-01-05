@@ -194,7 +194,7 @@
         while (dispatchTargetRef = [dispatchTargetEnumerator nextObject]) {
             // Only dispatch control events if the given dispatch target is itself a control
             // or a descendant of a control
-            ICControl *dispatchTarget = ICControlForNode([dispatchTargetRef node]);
+            ICControl *dispatchTarget = [ICControlForNode([dispatchTargetRef node]) retain];
             if (dispatchTarget) {
                 // Iterate through all touches for the given control
                 NSDictionary *touchesDict = [convertedTouches objectForKey:dispatchTargetRef];
@@ -205,7 +205,7 @@
                     // This is to compute correct control events for touches that moved or ended
                     // over another control than the dispatch target.
                     ICNode *overNode = [self nodeForTouch:touch.nativeTouch];
-                    ICControl *overControl = ICControlForNode(overNode);
+                    ICControl *overControl = [ICControlForNode(overNode) retain];
                     
                     // Compute the appropriate control event
                     ICControlEvents controlEvent = 0;
@@ -251,8 +251,12 @@
                     
                     // Dispatch control event
                     [dispatchTarget sendActionsForControlEvent:controlEvent forEvent:touchEvent];
+                    
+                    [overControl release];
                 }
             }
+            
+            [dispatchTarget release];
         }
     }
 }
