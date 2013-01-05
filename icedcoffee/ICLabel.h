@@ -60,6 +60,7 @@
 @interface ICLabel : ICView {
 @protected
     ICTextFrame *_textFrame;
+    kmVec2 _textFrameSize;
     BOOL _shouldNotApplyPropertiesFromAttributedText;
     BOOL _shouldNotApplyPropertiesFromBasicText;
     

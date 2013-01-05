@@ -39,7 +39,7 @@
                                          color:(icColor4B)color
                                          gamma:(float)gamma;
 + (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
-                                      origin:(kmVec3 *)origin
+                               textFrameSize:(kmVec2 *)textFrameSize
                                         size:(kmVec3 *)size;
 - (void)autoresizeToText;
 - (void)updateFrame;
@@ -48,7 +48,10 @@
 - (void)updateFontWithBasicFontProperties;
 - (void)updateBasicFontPropertiesWithFont;
 
+- (void)setSize:(kmVec3)size adjustTextFrameSize:(BOOL)adjustTextFrameSize;
+
 @property (nonatomic, retain) ICTextFrame *textFrame;
+@property (nonatomic, assign) kmVec2 textFrameSize;
 
 @end
 
@@ -56,6 +59,7 @@
 @implementation ICLabel
 
 @synthesize textFrame = _textFrame;
+@synthesize textFrameSize = _textFrameSize;
 
 @synthesize text = _text;
 @synthesize attributedText = _attributedText;
@@ -354,11 +358,12 @@
 }
 
 + (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
-                                      origin:(kmVec3 *)origin
+                               textFrameSize:(kmVec2 *)textFrameSize
                                         size:(kmVec3 *)size
 {
     // Measure each text line contained in text
     __block float maxHeight = 0;
+    __block float maxLabelHeight = 0;
     __block float maxLineWidth = 0;
     __block NSMutableArray *textLines = [[NSMutableArray alloc] init];
     [[attributedText string] enumerateSubstringsInRange:NSMakeRange(0, [[attributedText string] length])
@@ -386,6 +391,7 @@
         if (leading == 0) {
             ascenderDelta = ceilf(0.2f * lineHeight);
         }
+        maxLabelHeight += lineHeight;
         lineHeight += ascenderDelta;
 
         maxHeight += lineHeight;
@@ -397,18 +403,32 @@
 
     }];
     
-    *origin = kmNullVec3;
-    *size = kmVec3Make(maxLineWidth, maxHeight, 0);
+    *textFrameSize = kmVec2Make(maxLineWidth, maxHeight);
+    *size = kmVec3Make(maxLineWidth, maxLabelHeight, 0);
     
     [textLines release];
 }
 
+- (void)setSize:(kmVec3)size adjustTextFrameSize:(BOOL)adjustTextFrameSize
+{
+    [super setSize:size];
+    if (adjustTextFrameSize)
+        self.textFrameSize = kmVec2Make(size.width, size.height);
+}
+
+- (void)setSize:(kmVec3)size
+{
+    [self setSize:size adjustTextFrameSize:YES];
+}
+
 - (void)autoresizeToText
 {
-    kmVec3 origin, size;
-    [[self class] measureAttributedTextForAutoresizing:self.attributedText origin:&origin size:&size];
-    self.origin = origin;
-    self.size = size;
+    kmVec2 textFrameSize;
+    kmVec3 size;
+    [[self class] measureAttributedTextForAutoresizing:self.attributedText
+                                         textFrameSize:&textFrameSize size:&size];
+    self.textFrameSize = textFrameSize;
+    [self setSize:size adjustTextFrameSize:NO];
 }
 
 - (void)updateFrame
@@ -418,14 +438,14 @@
     }
     
     if (!self.textFrame) {
-        ICTextFrame *textFrame = [[ICTextFrame alloc] initWithSize:kmVec2Make(self.size.width, self.size.height)
+        ICTextFrame *textFrame = [[ICTextFrame alloc] initWithSize:self.textFrameSize
                                                   attributedString:self.attributedText];
         textFrame.userInteractionEnabled = NO;
         [self addChild:textFrame];
         self.textFrame = textFrame;
         [textFrame release];
     } else {
-        self.textFrame.size = self.size;
+        self.textFrame.size = kmVec3Make(self.textFrameSize.width, self.textFrameSize.height, 0);
         self.textFrame.attributedString = self.attributedText;
     }
 }
