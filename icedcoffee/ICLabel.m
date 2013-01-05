@@ -335,11 +335,6 @@
     [self updateAttributedTextWithBasicProperties];
 }
 
-- (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled
-{
-    [self.textFrame setUserInteractionEnabled:userInteractionEnabled];
-}
-
 + (NSAttributedString *)attributedTextWithText:(NSString *)text
                                           font:(ICFont *)font
                                       tracking:(float)tracking
@@ -425,6 +420,7 @@
     if (!self.textFrame) {
         ICTextFrame *textFrame = [[ICTextFrame alloc] initWithSize:kmVec2Make(self.size.width, self.size.height)
                                                   attributedString:self.attributedText];
+        textFrame.userInteractionEnabled = NO;
         [self addChild:textFrame];
         self.textFrame = textFrame;
         [textFrame release];
