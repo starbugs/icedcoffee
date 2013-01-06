@@ -7,7 +7,7 @@ notable features are: perspective UI rendering, sophisticated shader-based picki
 full event handling for all drawable objects, buffering of views via OpenGL render textures, and
 advanced font rendering and type setting using a crossover of CoreText and GL-backed glyph caches.
 
-Icedcoffee essentially gives you full control of what's on the screen by unlocking the power
+Icedcoffee essentially gives you full control of what's on screen by unlocking the power
 of graphics hardware without forcing you to deal with the details of OpenGL – it's a perfect match
 for every developer reaching the limits of UIKit and CoreAnimation.
 
