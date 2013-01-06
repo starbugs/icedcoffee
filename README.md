@@ -69,7 +69,7 @@ Main Features
 Copyright and License
 ---------------------
 
-Copyright 2012 Tobias Lensing, Marcus Tillmanns
+Copyright 2013 Tobias Lensing, Marcus Tillmanns
 
 Licensed under an MIT license (see LICENSE_icedcoffee.txt for details).
 
@@ -77,11 +77,14 @@ Licensed under an MIT license (see LICENSE_icedcoffee.txt for details).
 Third-party Sources
 -------------------
 
-  * Portions of cocos2d's source code have been reused/refactored (see respective
-	  header files and LICENSE_cocos2d.txt for details).
   * The Kazmath project has been included to provide math structures and
 	  routines for IcedCoffee's linear algebra (see LICENSE_Kazmath.txt).
   * The GPUImage project has been included as an extension to provide live fideo filtering,
       access to the camera and movie files (see LICENSE_GPUImage.txt).
+  * The RectangleBinPack project has been included as a solution for computing texture atlases
+      in icedcoffee (RectangleBinPack is public domain, see the respective header files
+      for more information).
+  * Portions of cocos2d's source code have been reused/refactored (see respective
+	  header files and LICENSE_cocos2d.txt for details).
   * Creative Commons licensed images have been reused for demo purposes (see
 	  the respective license files in resource folders).
