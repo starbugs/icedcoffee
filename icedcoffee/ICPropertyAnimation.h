@@ -25,6 +25,15 @@
 
 @class ICNode;
 
+/**
+ @brief Abstract base class for property animations on nodes
+ 
+ ICPropertyAnimation is an abstract base class implementing support for managing a property
+ keypath on top of the ICAnimation superclass. The ICPropertyAnimation::keyPath property is
+ thought to be used with key value coding. Subclasses should be designed to animate a single
+ property defined by ICPropertyAnimation::keyPath. See the ICBasicAnimation class for an
+ exemplary implementation providing basic animations on ICNode objects.
+ */
 @interface ICPropertyAnimation : ICAnimation {
 @protected
     NSString *_keyPath;

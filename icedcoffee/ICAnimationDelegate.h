@@ -25,12 +25,24 @@
 
 @class ICAnimation;
 
+/**
+ @brief Defines a protocol for animation delegates
+ 
+ The ICAnimationDelegate protocol declares methods that may be implemented by delegates of
+ ICAnimation subclasses.
+ */
 @protocol ICAnimationDelegate <NSObject>
 
 @optional
 
+/**
+ @brief Called immediately after the animation has started
+ */
 - (void)animationDidStart:(ICAnimation *)animation;
 
+/**
+ @brief Called immediately after the animation has stopped
+ */
 - (void)animationDidStop:(ICAnimation *)animation finished:(BOOL)finished;
 
 @end

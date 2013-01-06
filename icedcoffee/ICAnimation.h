@@ -28,6 +28,15 @@
 
 @class ICNode;
 
+/**
+ @brief Abstract base class for node animations
+ 
+ ICAnimation is an abstract base class defining the basis for animations on ICNode objects in
+ the icedcoffee framework. You should use the ICBasicAnimation class if you wish to use the
+ built-in animation support shipped with the framework. If you don't find the animation
+ functionality you search for there, you should consider subclassing this class or
+ the ICPropertyAnimation class.
+ */
 @interface ICAnimation : NSObject {
 @protected
     BOOL _removedOnCompletion;
@@ -36,18 +45,46 @@
     BOOL _isFinished;
 }
 
+/**
+ @brief Whether the receiver will be removed from a node once the animation is completed
+ */
 @property (nonatomic, assign) BOOL removedOnCompletion;
 
+/**
+ @brief The timing function used by the receiver to compute its animation values
+ */
 @property (nonatomic, retain) ICAnimationTimingFunction *timingFunction;
 
+/**
+ @brief A delegate receiving messages about the beginning and ending of the animation
+ */
 @property (nonatomic, assign) id<ICAnimationDelegate> delegate;
 
+/**
+ @brief Whether the receiver's animation is finished
+ */
 @property (nonatomic, readonly) BOOL isFinished;
 
+/**
+ @brief Returns a new autoreleased ICAnimation object
+ */
 + (id)animation;
 
+/**
+ @brief Initializes the receiver
+ */
 - (id)init;
 
+/**
+ @brief Processes the receiver's animation on the given target node using the specified delta time
+ 
+ @param target An ICNode defining the target of the animation
+ @param deltaTime an icTime value defining the time elapsed since the receiver was called for
+ the last time
+ 
+ The default implementation of this method does nothing. Subclasses should override this method
+ to implement animation value processing.
+ */
 - (void)processAnimationWithTarget:(ICNode *)target deltaTime:(icTime)dt;
 
 @end
