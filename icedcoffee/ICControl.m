@@ -25,7 +25,6 @@
 #import "ICHostViewController.h"
 #import "ICTargetActionDispatcher.h"
 
-// FIXME: implement IOS control events
 #ifdef __IC_PLATFORM_MAC
 ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
                                        ICAbstractControlEvents abstractControlEvent)
