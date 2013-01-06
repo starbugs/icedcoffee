@@ -23,24 +23,83 @@
 
 #import "ICTextField.h"
 
+@interface ICTextField ()
+@property (nonatomic, retain) ICLabel *textLabel;
+@end
+
 @implementation ICTextField
 
-@synthesize label = _label;
+@synthesize textLabel = _textLabel;
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        self.label = [ICLabel labelWithSize:size];
-        self.label.userInteractionEnabled = NO;
-        self.label.text = @"Text field";
-        [self addChild:self.label];
+        self.textLabel = [ICLabel labelWithSize:size];
+        self.textLabel.userInteractionEnabled = NO;
+        [self addChild:self.textLabel];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    self.textLabel = nil;
+    [super dealloc];
 }
 
 - (BOOL)acceptsFirstResponder
 {
     return YES;
+}
+
+- (void)setAttributedText:(NSAttributedString *)attributedText
+{
+    self.textLabel.attributedText = attributedText;
+}
+
+- (NSAttributedString *)attributedText
+{
+    return self.textLabel.attributedText;
+}
+
+- (void)setText:(NSString *)text
+{
+    self.textLabel.text = text;
+}
+
+- (NSString *)text
+{
+    return self.textLabel.text;
+}
+
+- (void)setFont:(ICFont *)font
+{
+    self.textLabel.font = font;
+}
+
+- (ICFont *)font
+{
+    return self.textLabel.font;
+}
+
+- (void)setColor:(icColor4B)color
+{
+    self.textLabel.color = color;
+}
+
+- (icColor4B)color
+{
+    return self.textLabel.color;
+}
+
+- (void)setGamma:(float)gamma
+{
+    self.textLabel.gamma = gamma;
+}
+
+- (float)gamma
+{
+    return self.textLabel.gamma;
 }
 
 - (void)keyDown:(ICKeyEvent *)keyEvent
@@ -49,13 +108,13 @@
         unichar character = [[keyEvent characters] characterAtIndex:0];
         switch (character) {
             case NSDeleteCharacter: {
-                NSInteger newLength = [self.label.text length] - 1;
+                NSInteger newLength = [self.textLabel.text length] - 1;
                 if (newLength >= 0)
-                    self.label.text = [self.label.text substringWithRange:NSMakeRange(0, newLength)];
+                    self.textLabel.text = [self.textLabel.text substringWithRange:NSMakeRange(0, newLength)];
                 break;
             }
             default: {
-                self.label.text = [self.label.text stringByAppendingString:[keyEvent characters]];
+                self.textLabel.text = [self.textLabel.text stringByAppendingString:[keyEvent characters]];
                 break;
             }
         }

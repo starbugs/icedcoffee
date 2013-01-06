@@ -26,10 +26,18 @@
 
 @interface ICTextField : ICControl {
 @protected
-    ICLabel *_label;
+    ICLabel *_textLabel;
 }
 
-@property (nonatomic, retain) ICLabel *label;
+@property (nonatomic, copy) NSAttributedString *attributedText;
+
+@property (nonatomic, copy) NSString *text;
+
+@property (nonatomic, retain) ICFont *font;
+
+@property (nonatomic, assign) icColor4B color;
+
+@property (nonatomic, assign) float gamma;
 
 - (void)keyDown:(ICKeyEvent *)keyEvent;
 
