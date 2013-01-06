@@ -386,6 +386,7 @@
         }
                                               
         // Line height calculation adapted from http://stackoverflow.com/questions/5511830
+        // FIXME: I'm still not sure whether this is the correct solution
         float lineHeight = roundf(ascent) + roundf(descent) + leading;
         float ascenderDelta = 0;
         if (leading == 0) {
