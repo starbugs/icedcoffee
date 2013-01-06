@@ -68,6 +68,24 @@ NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
     }
     
     
+    // Superscript
+    
+    NSNumber *superscriptNumber = (NSNumber *)CFDictionaryGetValue((CFDictionaryRef)ctAttrs,
+                                                                   kCTSuperscriptAttributeName);
+    if (superscriptNumber) {
+        [icAttrs setObject:superscriptNumber forKey:ICSuperscriptAttributeName];
+    }
+    
+    
+    // Ligature
+    
+    NSNumber *ligatureNumber = (NSNumber *)CFDictionaryGetValue((CFDictionaryRef)ctAttrs,
+                                                                kCTLigatureAttributeName);
+    if (ligatureNumber) {
+        [icAttrs setObject:ligatureNumber forKey:ICLigatureAttributeName];
+    }
+    
+    
     // Paragraph style
     
     CTParagraphStyleRef ctParagraphStyle = (CTParagraphStyleRef)CFDictionaryGetValue(
@@ -129,7 +147,24 @@ NSDictionary *icCreateCTAttributesWithTextAttributes(NSDictionary *icAttrs)
     }
     
     
+    // Superscript
+    
+    NSNumber *superscriptNumber = [icAttrs objectForKey:ICSuperscriptAttributeName];
+    if (superscriptNumber) {
+        [ctAttrs setObject:(id)superscriptNumber forKey:(NSString *)kCTSuperscriptAttributeName];
+    }
+    
+    
+    // Ligature
+    
+    NSNumber *ligatureNumber = [icAttrs objectForKey:ICLigatureAttributeName];
+    if (ligatureNumber) {
+        [ctAttrs setObject:(id)ligatureNumber forKey:(NSString *)kCTLigatureAttributeName];
+    }
+    
+    
     // Paragraph style
+    
     ICParagraphStyle *paragraphStyle = [icAttrs objectForKey:ICParagraphStyleAttributeName];
     if (paragraphStyle) {
         [ctAttrs setObject:(id)[paragraphStyle ctParagraphStyle]

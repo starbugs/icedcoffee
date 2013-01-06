@@ -122,7 +122,8 @@
     
     ICTextField *textField = [[[ICTextField alloc] initWithSize:CGSizeMake(200, 100)] autorelease];
     [textField setPositionY:300];
-    [textField.label setColor:(icColor4B){255,255,255,255}];
+    [textField setText:@"Text field"];
+    [textField setColor:(icColor4B){255,255,255,255}];
     [scene addChild:textField];
     [textField centerNodeHorizontallyRounded:YES];
     

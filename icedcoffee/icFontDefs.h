@@ -30,10 +30,22 @@
 typedef CGGlyph ICGlyph;
 
 
+// FIXME: missing documentation
+// FIXME: move to separate header?
+
 #define ICFontAttributeName             @"ICFont"
+
 #define ICForegroundColorAttributeName  @"ICForegroundColor"
+
 #define ICGammaAttributeName            @"ICGamma"
+
 #define ICTrackingAttributeName         @"ICTracking"
+
+// Not supported yet
+#define ICSuperscriptAttributeName      @"ICSuperscript"
+
+#define ICLigatureAttributeName         @"ICLigature"
+
 #define ICParagraphStyleAttributeName   @"ICParagraphStyle"
 
 

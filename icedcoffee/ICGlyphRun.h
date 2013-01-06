@@ -165,6 +165,8 @@
  */
 @property (nonatomic, assign, setter=setTracking:) float tracking;
 
+@property (nonatomic, assign, setter=setSuperscript:) NSInteger superscript;
+
 /**
  @brief Returns the receiver's ascent in points
  */

@@ -37,6 +37,9 @@
 #import "icFontUtils.h"
 
 
+// FIXME: property changes do not rebuild run
+
+
 #define ICAttributeNameGamma @"a_gamma"
 
 
@@ -166,6 +169,8 @@ NSString *__glyphAFSH = IC_SHADER_STRING
             _positions = (CGPoint *)malloc(sizeof(CGPoint) * _glyphCount);
             CTRunGetPositions(run, CFRangeMake(0, _glyphCount), _positions);
             
+            //CGAffineTransform textMatrix = CTRunGetTextMatrix(run);
+            
             CTFontRef runFont = CFDictionaryGetValue(CTRunGetAttributes(run), kCTFontAttributeName);
             CGRect *boundingRects = malloc(sizeof(CGRect) * _glyphCount);
             CTFontGetBoundingRectsForGlyphs(runFont, kCTFontDefaultOrientation, _glyphs, boundingRects, _glyphCount);
@@ -279,6 +284,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
 @synthesize tracking = _tracking;
 @synthesize color = _color;
 @synthesize gamma = _gamma;
+@synthesize superscript = _superscript;
 @synthesize metrics = _metrics;
 
 + (id)glyphRunWithString:(NSString *)string font:(ICFont *)font
@@ -340,8 +346,12 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         NSNumber *trackingAttr = [attributes objectForKey:ICTrackingAttributeName];
         float tracking = trackingAttr ? [trackingAttr floatValue] : 0;
         
+        NSNumber *superscriptAttr = [attributes objectForKey:ICSuperscriptAttributeName];
+        NSInteger superscript = superscriptAttr ? [superscriptAttr integerValue] : 0;
+        
         self.color = color;
         self.gamma = gamma;
+        self.superscript = superscript;
         self.tracking = tracking;
         self.string = string;
         self.font = font;
@@ -381,9 +391,8 @@ NSString *__glyphAFSH = IC_SHADER_STRING
     _ctRun = run;
     CFRetain(_ctRun);
 
-    NSDictionary *runAttributes = icCreateTextAttributesWithCTAttributes(
-        (NSDictionary *)CTRunGetAttributes(run)
-    );
+    NSDictionary *ctRunAttributes = (NSDictionary *)CTRunGetAttributes(run);
+    NSDictionary *runAttributes = icCreateTextAttributesWithCTAttributes(ctRunAttributes);
     
     // Merge runAttributes with extendedAttributes
     NSMutableDictionary *attributes = [[NSMutableDictionary alloc] initWithCapacity:
@@ -458,6 +467,13 @@ NSString *__glyphAFSH = IC_SHADER_STRING
     [self updateMetrics];
 }
 
+- (void)setSuperscript:(NSInteger)superscript
+{
+    _superscript = superscript;
+    _dirty = YES;
+    [self updateMetrics];
+}
+
 - (void)updateMetrics
 {
     if ((self.string || _ctRun) && self.font) {
@@ -467,9 +483,11 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         if (!run) {
             // Create a CoreText representation of the run
             NSNumber *trackingAttr = [NSNumber numberWithFloat:self.tracking];
+            NSNumber *superscriptAttr = [NSNumber numberWithInteger:self.superscript];
             NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
                                         (id)self.font.fontRef, (NSString *)kCTFontAttributeName,
                                         (id)trackingAttr, (NSString *)kCTKernAttributeName,
+                                        (id)superscriptAttr, (NSString *)kCTSuperscriptAttributeName,
                                         nil];
             NSAttributedString *attributedString = [[[NSAttributedString alloc] initWithString:self.string
                                                                                     attributes:attributes] autorelease];
