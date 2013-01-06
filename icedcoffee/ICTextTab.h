@@ -24,14 +24,29 @@
 #import <Foundation/Foundation.h>
 #import "ICParagraphStyle.h"
 
+/**
+ @brief Represents a text tab used as a tabstop in icedcoffeee attributed strings
+ */
 @interface ICTextTab : NSObject
 
+/**
+ @brief Returns a new autoreleased text tab with the given text alignment and location
+ */
 + (id)textTabWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location;
 
+/**
+ @brief Initializes the receiver with the given text alignment and location
+ */
 - (id)initWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location;
 
+/**
+ @brief The text alignment
+ */
 @property (nonatomic, assign) ICTextAlignment textAlignment;
 
+/**
+ @brief The location
+ */
 @property (nonatomic, assign) float location;
 
 @end

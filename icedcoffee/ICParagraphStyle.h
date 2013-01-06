@@ -49,8 +49,6 @@ typedef enum {
 } ICWritingDirection;
 
 
-// FIXME: unit conversion
-
 /**
  @brief Defines a paragraph style used in icedcoffee attributed strings
  

@@ -23,7 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import "icConfig.h"
-#import "ICNode.h"
+#import "ICPlanarNode.h"
 #import "ICFont.h"
 
 #if IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
@@ -38,10 +38,11 @@
 @class ICGlyphRunMetrics;
 
 /**
- @brief Represents a drawable glyph run
+ @brief Represents a low-level node drawing a single glyph run
  
- The ICGlyphRun class draws a glyph run using a given font. The class attempts to minimize the
- number of VBOs and texture state changes required to display the glyphs of the run.
+ The ICGlyphRun class implements a low-level node for drawing a single glyph run using a given
+ font. The class attempts to minimize the number of VBOs and texture state changes required to
+ display the glyphs of the run.
  
  By default, glyphs are retrieved from the current glyph cache (see ICGlyphCache) as required,
  on the fly, the first time the run is drawn. If the glyphs are not already loaded, the cache
@@ -50,8 +51,13 @@
  application's performance. If you require more control about the point in time the glyphs are
  loaded, rastered and cached, you may use the ICGlyphRun::precache method to precache all glyphs
  used by the run at a point in time of your convenience.
+ 
+ ICGlyphRun is not designed to be used as a user interface control. Instead, it may be used to
+ implement user interface controls, views or composed nodes which need to display glyph runs
+ directly, without using the ICTextFrame or ICTextLine classes. If you're looking for a user
+ interface control for displaying text, see the ICLabel class.
  */
-@interface ICGlyphRun : ICNode {
+@interface ICGlyphRun : ICPlanarNode {
 @protected
     NSString *_string;
     ICFont *_font;

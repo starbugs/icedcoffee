@@ -21,17 +21,22 @@
 //  SOFTWARE.
 //
 
-#import "ICNode.h"
+#import "ICPlanarNode.h"
 #import "ICFont.h"
 
 /**
- @brief Implements a text frame
+ @brief Implements a low-level text frame node
  
- The ICTextFrame class implements a text frame consisting of one or multiple lines of text
- (see the ICTextLine class). It allows you to typeset a text frame using an attributed string
- providing font and formatting attributes.
+ The ICTextFrame class implements a low-level planar node representing a text frame consisting
+ of one or multiple lines of text (see the ICTextLine class). It allows you to typeset text in
+ a rectangular text frame using an attributed string providing font and formatting attributes.
+ 
+ ICTextFrame is not designed to be used as a text control in user interfaces. Instead, it should
+ be employed as a low-level element to realize such user interface controls, views or other
+ composed nodes which should display two-dimensional text frames. If you're looking for a
+ user interface control component for displaying text, see the ICLabel class.
  */
-@interface ICTextFrame : ICNode {
+@interface ICTextFrame : ICPlanarNode {
 @protected
     NSAttributedString *_attributedString;
     NSMutableArray *_lines;
