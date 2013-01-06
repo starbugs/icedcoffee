@@ -1139,7 +1139,7 @@
         kmVec3 center;
         [(NSValue *)value getValue:&center];
         [self setCenter:center rounded:NO];
-    } else if([keyPath isEqualToString:@"scale"]) {
+    } else if([keyPath isEqualToString:@"scale"]) { // FIXME: this shouldn't be required
         kmVec3 scale;
         [(NSValue *)value getValue:&scale];
         [self setScale:scale];
