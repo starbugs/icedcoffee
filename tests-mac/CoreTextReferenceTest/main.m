@@ -3,7 +3,7 @@
 //  CoreTextReferenceTest
 //
 //  Created by Tobias Lensing on 12/29/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
