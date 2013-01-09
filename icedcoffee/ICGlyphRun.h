@@ -156,7 +156,7 @@
 /**
  @brief The tracking of the letters drawn by the receiver
  
- The tracking (or letter spacing) determines the space, in points, that the receiver leaves blank
+ The tracking (or letter spacing) determines the space in points that the receiver leaves blank
  between each letter of the run in addition to the glyphs' natural advances. A negative tracking
  increases the density of the run whereas a positive tracking decreases it.
  
@@ -165,6 +165,9 @@
  */
 @property (nonatomic, assign, setter=setTracking:) float tracking;
 
+/**
+ @brief Not supported yet
+ */
 @property (nonatomic, assign, setter=setSuperscript:) NSInteger superscript;
 
 /**
