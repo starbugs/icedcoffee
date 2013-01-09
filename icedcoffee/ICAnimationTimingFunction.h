@@ -24,12 +24,22 @@
 #import <Foundation/Foundation.h>
 #import "icTypes.h"
 
-@interface ICAnimationTimingFunction : NSObject
+@interface ICAnimationTimingFunction : NSObject {
+@protected
+    kmVec2 _c0;
+    kmVec2 _c1;
+}
 
 + (id)linearTimingFunction;
 
++ (id)easeInTimingFunction;
+
 + (id)easeOutTimingFunction;
 
-- (icTime)timeFactor:(icTime)timeFactor;
++ (id)timingFunctionWithControlPoints:(kmVec2)c0 :(kmVec2)c1;
+
+- (id)initWithControlPoints:(kmVec2)c0 :(kmVec2)c1;
+
+- (icTime)timeFactor:(icTime)t;
 
 @end
