@@ -23,8 +23,49 @@
 
 #import "ICAnimationTimingFunction.h"
 
-// Some values taken from
+
+// Inspired by
 // http://blog.greweb.fr/2012/02/bezier-curve-based-easing-functions-from-concept-to-implementation/
+
+
+static float icTermA(float u, float v)
+{
+    return 1.f - 3.f * v + 3.f * u;
+}
+
+static float icTermB(float u, float v)
+{
+    return 3.f * v - 6.f * u;
+}
+
+static float icTermC(float u)
+{
+    return 3.f * u;
+}
+
+static float icBezier(float t, float u, float v)
+{
+    return ((icTermA(u, v)*t + icTermB(u, v))*t + icTermC(u))*t;
+}
+
+static float icSlope(float t, float u, float v)
+{
+    return 3.f * icTermA(u, v)*t*t + 2.f * icTermB(u, v) * t + icTermC(u);
+}
+
+static float icTForX(float x, kmVec2 c0, kmVec2 c1)
+{
+    float t = x;
+    for (int i=0; i<8; i++) {
+        float slope = icSlope(t, c0.x, c1.x);
+        if (slope == 0.f)
+            return t;
+        float currentX = icBezier(t, c0.x, c1.x) - x;
+        t -= currentX / slope;
+    }
+    return t;
+}
+
 
 @implementation ICAnimationTimingFunction
 
@@ -60,31 +101,19 @@
     return self;
 }
 
-- (icTime)timeFactor:(icTime)t
+- (icTime)timeFactor:(icTime)x
 {
-    // Adapted from http://devmag.org.za/2011/04/05/bzier-curves-a-tutorial/
+    if (_c0.x == _c0.y && _c1.x == _c1.y) {
+        return x; // linear
+    }
     
-    kmVec2 p0 = kmVec2Make(0, 0);
-    kmVec2 p1 = kmVec2Make(1, 1);
-    
-    float u = 1 - t;
-    float tt = t*t;
-    float uu = u*u;
-    float uuu = uu * u;
-    float ttt = tt * t;
-    
-    kmVec2 m, n, o, p;
-    kmVec2Scale(&p, &p0, uuu);
-    kmVec2Scale(&m, &_c0, 3 * uu * t);
-    kmVec2Add(&p, &p, &m);
-    kmVec2Scale(&n, &_c1, 3 * u * tt);
-    kmVec2Add(&p, &p, &n);
-    kmVec2Scale(&o, &p1, ttt);
-    kmVec2Add(&p, &p, &o);
-
-    //NSLog(@"t: %f tf:%f", t, p.y);
-
-    return p.y;
+    float t = icTForX(x, _c0, _c1);
+    if (t < 0 || t > 1) {
+        int brk = 1;
+    }
+    float y = icBezier(t, _c0.y, _c1.y);
+    //NSLog(@"y: %f", y);
+    return y;
 }
 
 @end

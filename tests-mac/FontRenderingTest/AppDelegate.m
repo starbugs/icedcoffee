@@ -63,35 +63,27 @@
     kmVec3 center = [scene localCenterRounded:YES];
     [self.label setCenterY:center.y];
     
-    /*ICBasicAnimation *animation = [ICBasicAnimation animation];
-    animation.keyPath = @"centerX";
-    animation.fromValue = [NSNumber numberWithFloat:-self.label.size.width];
-    animation.toValue = [NSNumber numberWithFloat:center.x];
-    animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
-    animation.duration = 1.0;
-    [self.label addAnimation:animation];*/
-    
     kmVec3 startCenter = kmVec3Make(-self.label.size.width, 0, 0);
     ICBasicAnimation *animation = [ICBasicAnimation animation];
     animation.keyPath = @"center";
     animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     animation.fromValue = [NSValue valueWithBytes:&startCenter objCType:@encode(kmVec3)];
     animation.toValue = [NSValue valueWithBytes:&center objCType:@encode(kmVec3)];
-    animation.duration = 5.0;
+    animation.duration = 2.0;
     [self.label addAnimation:animation];
     
-    icColor4B startColor = (icColor4B){255,255,255,0};
+    icColor4B startColor = (icColor4B){255,255,255,255};
     icColor4B endColor = (icColor4B){255,255,255,255};
     ICBasicAnimation *colorAnimation = [ICBasicAnimation animationWithKeyPath:@"color"];
     colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
     colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
-    colorAnimation.duration = 5.0;
+    colorAnimation.duration = 2.0;
     [self.label addAnimation:colorAnimation];
     
     ICBasicAnimation *rotationAnimation = [ICBasicAnimation animationWithKeyPath:@"rotationAngle"];
     rotationAnimation.fromValue = [NSNumber numberWithFloat:M_PI];
     rotationAnimation.toValue = [NSNumber numberWithFloat:0];
-    rotationAnimation.duration = 5.0;
+    rotationAnimation.duration = 2.0;
     rotationAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     [self.label addAnimation:rotationAnimation];
     
@@ -100,14 +92,14 @@
     ICBasicAnimation *scaleAnimation = [ICBasicAnimation animationWithKeyPath:@"scale"];
     scaleAnimation.fromValue = [NSValue valueWithBytes:&startScale objCType:@encode(kmVec3)];
     scaleAnimation.toValue = [NSValue valueWithBytes:&endScale objCType:@encode(kmVec3)];
-    scaleAnimation.duration = 5.0;
+    scaleAnimation.duration = 2.0;
     scaleAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     [self.label addAnimation:scaleAnimation];
     
     ICBasicAnimation *trackingAnimation = [ICBasicAnimation animationWithKeyPath:@"tracking"];
-    trackingAnimation.fromValue = [NSNumber numberWithFloat:1000];
+    trackingAnimation.fromValue = [NSNumber numberWithFloat:10];
     trackingAnimation.toValue = [NSNumber numberWithFloat:0];
-    trackingAnimation.duration = 5.0;
+    trackingAnimation.duration = 2.0;
     trackingAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     [self.label addAnimation:trackingAnimation];
    
