@@ -28,9 +28,19 @@
  @brief Implements an animation timing function
  
  The ICAnimationTimingFunction class implements an animation timing function based on a cubic
- bezier curve. The bezier curve is defined by two control points, ICAnimationTimingFunction::c0
- and ICAnimationTimingFunction::c1. The start and end points of the curve are always set to (0,0)
- and (1,1).
+ bezier curve, where the X axis is the time axis and the Y axis represents animation progression.
+ The timing function transforms input time factors ``x`` in range [0,1] to output time factors
+ ``y``, also in range [0,1], by computing the point at the given ``x`` coordinate on the curve
+ and returning its ``y`` coordinate value (see the ICAnimationTimingFunction::transform: method).
+ 
+ The function's bezier curve is defined by points (0,0), ICAnimationTimingFunction::c0,
+ ICAnimationTimingFunction::c1, and (1,1). The start and end points of the curve cannot be changed.
+ 
+ You may create a custom animation timing function using the
+ ICAnimationTimingFunction::timingFunctionWithControlPoints:: method. Additionally, there are
+ a couple of convenience methods to create common predefined timing functions such as
+ ICAnimationTimingFunction::linearTimingFunction, ICAnimationTimingFunction::easeInTimingFunction
+ or ICAnimationTimingFunction::easeOutTimingFunction.
  */
 @interface ICAnimationTimingFunction : NSObject {
 @protected
@@ -41,8 +51,8 @@
 /**
  @brief Returns a new autoreleased linear animation timing function
  
- Creates a linear animation timing curve, mapping input values ``x`` to identical output time
- factors.
+ Creates a linear animation timing curve, mapping input time factors ``x`` to identical
+ output time factors.
  */
 + (id)linearTimingFunction;
 
@@ -50,15 +60,15 @@
  @brief Returns a new autoreleased ease-in animation timing function
  
  Ease-in animations are slower in the beginning, then smoothly accelerate and continue
- nearly linearly for values of ``t > 0.5``.
+ nearly linearly for values of ``x > 0.5``.
  */
 + (id)easeInTimingFunction;
 
 /**
  @brief Returns a new autoreleased ease-out animation timing function
  
- Ease-out animations provide nearly linear animations for values of ``t < 0.5``, then decelerate
- smoothly for values of ``t`` approaching ``1.0``.
+ Ease-out animations provide nearly linear animations for values of ``x < 0.5``, then decelerate
+ smoothly for values of ``x`` approaching ``1.0``.
  */
 + (id)easeOutTimingFunction;
 
@@ -73,8 +83,8 @@
 - (id)initWithControlPoints:(kmVec2)c0 :(kmVec2)c1;
 
 /**
- @brief Returns the transformed time factor for a given input value ``x``
+ @brief Returns the transformed time factor ``y`` for a given input time factor ``x``
  */
-- (icTime)timeFactor:(icTime)x;
+- (icTime)transform:(icTime)x;
 
 @end

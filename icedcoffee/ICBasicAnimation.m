@@ -72,7 +72,7 @@
     
     double timeFactor = _currentDeltaTime / _duration;
     if (self.timingFunction) {
-        timeFactor = [self.timingFunction timeFactor:timeFactor];
+        timeFactor = [self.timingFunction transform:timeFactor];
     }
 
     if ([self.fromValue isKindOfClass:[NSNumber class]] &&

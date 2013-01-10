@@ -101,18 +101,14 @@ static float icTForX(float x, kmVec2 c0, kmVec2 c1)
     return self;
 }
 
-- (icTime)timeFactor:(icTime)x
+- (icTime)transform:(icTime)x
 {
     if (_c0.x == _c0.y && _c1.x == _c1.y) {
         return x; // linear
     }
     
     float t = icTForX(x, _c0, _c1);
-    if (t < 0 || t > 1) {
-        int brk = 1;
-    }
     float y = icBezier(t, _c0.y, _c1.y);
-    //NSLog(@"y: %f", y);
     return y;
 }
 
