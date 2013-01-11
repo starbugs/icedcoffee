@@ -71,7 +71,7 @@
  
  <h3>Sub Scenes</h3>
  
- In addition to the root scene, you may add furhter scenes to your existing scene graph.
+ In addition to the root scene, you may add further scenes to your existing scene graph.
  However, when doing so, you should take care of the following conventions:
  <ol>
     <li>Scenes may be added as an immediate child of another scene. In this case, the sub
