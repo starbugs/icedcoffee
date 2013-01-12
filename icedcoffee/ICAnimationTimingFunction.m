@@ -69,30 +69,32 @@ static float icTForX(float x, kmVec2 c0, kmVec2 c1)
 
 @implementation ICAnimationTimingFunction
 
+@synthesize c0=_c0, c1=_c1;
+
 + (id)linearTimingFunction
 {
-    return [[self class] timingFunctionWithControlPoints:kmVec2Make(0.f, 0.f)
-                                                        :kmVec2Make(1.f, 1.f)];
+    return [[self class] timingFunctionWithControlPointsC0:kmVec2Make(0.f, 0.f)
+                                                        c1:kmVec2Make(1.f, 1.f)];
 }
 
 + (id)easeInTimingFunction
 {
-    return [[self class] timingFunctionWithControlPoints:kmVec2Make(0.42f, 0.f)
-                                                        :kmVec2Make(1.f, 1.f)];
+    return [[self class] timingFunctionWithControlPointsC0:kmVec2Make(0.42f, 0.f)
+                                                        c1:kmVec2Make(1.f, 1.f)];
 }
 
 + (id)easeOutTimingFunction
 {
-    return [[self class] timingFunctionWithControlPoints:kmVec2Make(0.f, 0.f)
-                                                        :kmVec2Make(0.58f, 1.f)];
+    return [[self class] timingFunctionWithControlPointsC0:kmVec2Make(0.f, 0.f)
+                                                        c1:kmVec2Make(0.58f, 1.f)];
 }
 
-+ (id)timingFunctionWithControlPoints:(kmVec2)c0 :(kmVec2)c1
++ (id)timingFunctionWithControlPointsC0:(kmVec2)c0 c1:(kmVec2)c1
 {
-    return [[[[self class] alloc] initWithControlPoints:c0 :c1] autorelease];
+    return [[[[self class] alloc] initWithControlPointsC0:c0 c1:c1] autorelease];
 }
 
-- (id)initWithControlPoints:(kmVec2)c0 :(kmVec2)c1
+- (id)initWithControlPointsC0:(kmVec2)c0 c1:(kmVec2)c1
 {
     if ((self = [super init])) {
         _c0 = c0;

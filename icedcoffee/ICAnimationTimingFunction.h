@@ -37,7 +37,7 @@
  ICAnimationTimingFunction::c1, and (1,1). The start and end points of the curve cannot be changed.
  
  You may create a custom animation timing function using the
- ICAnimationTimingFunction::timingFunctionWithControlPoints:: method. Additionally, there are
+ ICAnimationTimingFunction::timingFunctionWithControlPointsC0:c1: method. Additionally, there are
  a couple of convenience methods to create common predefined timing functions such as
  ICAnimationTimingFunction::linearTimingFunction, ICAnimationTimingFunction::easeInTimingFunction
  or ICAnimationTimingFunction::easeOutTimingFunction.
@@ -75,16 +75,20 @@
 /**
  @brief Returns a new autoreleased animation timing function with the given control points
  */
-+ (id)timingFunctionWithControlPoints:(kmVec2)c0 :(kmVec2)c1;
++ (id)timingFunctionWithControlPointsC0:(kmVec2)c0 c1:(kmVec2)c1;
 
 /**
  @brief Initializes the receiver with the given control points
  */
-- (id)initWithControlPoints:(kmVec2)c0 :(kmVec2)c1;
+- (id)initWithControlPointsC0:(kmVec2)c0 c1:(kmVec2)c1;
 
 /**
  @brief Returns the transformed time factor ``y`` for a given input time factor ``x``
  */
 - (icTime)transform:(icTime)x;
+
+@property (nonatomic, assign) kmVec2 c0;
+
+@property (nonatomic, assign) kmVec2 c1;
 
 @end
