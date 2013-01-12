@@ -55,7 +55,7 @@
  
  <h3>Root Scenes</h3>
 
- Scenes play a central role in the Icedcoffee framework. In order to benefit from Icedcoffee's
+ Scenes play a central role in the icedcoffee framework. In order to benefit from icedcoffee's
  event handling and user interface rendering capabilities, your application must provide at least
  one scene, called the root scene. The root scene represents the origin of all contents that
  are drawn on the OpenGL framebuffer of the host view that is managed by your application's
@@ -80,7 +80,7 @@
     parent scene in this scenario. Nesting scenes directly in each other may be useful to
     animate the camera of the sub scene without influencing the appearance of the nodes
     rendered by the parent scene, for instance.</li>
-    <li>Scenes are used by ICRenderTexture to present sub scenes on a framebuffer backed
+    <li>Scenes may be used by ICRenderTexture to present sub scenes on a framebuffer backed
     by a render texture. It is important to note that such sub scenes are not part of the
     scene graph's node hierarchy as ICRenderTexture disconnects them from the normal drawing
     mechanism of its parent scene. Instead these scenes act as the root scene of the
@@ -144,7 +144,7 @@
     <li>ICScene's designated initializer is ICScene::initWithCamera:. You may override
     it to implement custom initialization. You may also set up predefined scene
     content in ICScene::initWithCamera:. However, remember that ICScene is initialized with zero
-    size, so automatic positioning behaviors implement in e.g. ICNode::centerNode will
+    size, so automatic positioning behaviors, implemented in e.g. ICNode::centerNode, will
     not work unless you define a size on your own.</li>
     <li>ICScene overrides ICNode::drawWithVisitor: to set up the scene for drawing or
     picking according to the type of the visitor that calls the method. Thus, you should
