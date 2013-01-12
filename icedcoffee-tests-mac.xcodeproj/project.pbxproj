@@ -78,6 +78,8 @@
 		A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A815DE9E5A00321D86 /* Rectangle.fsh */; };
 		A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A915DE9E5A00321D86 /* SpriteTextureMask.fsh */; };
 		A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048AA15DE9E5A00321D86 /* StencilMask.fsh */; };
+		A6FFA83116A16ADB00DCEB8D /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6FFA83216A16B7C00DCEB8D /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		D20FA8CA15A881CC003A2235 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D20FA8C915A881BE003A2235 /* Rectangle.fsh */; };
 		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
@@ -664,6 +666,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FFA83216A16B7C00DCEB8D /* libstdc++.dylib in Frameworks */,
 				A6CB74BC1646D81800CDEEAC /* libicedcoffee-mac.a in Frameworks */,
 				A6CB74B71646D7CD00CDEEAC /* Carbon.framework in Frameworks */,
 				A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */,
@@ -812,6 +815,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FFA83116A16ADB00DCEB8D /* libstdc++.dylib in Frameworks */,
 				D2FEE8601539DD6D004CFF62 /* libicedcoffee-mac.a in Frameworks */,
 				D2FEE8501539D816004CFF62 /* Carbon.framework in Frameworks */,
 				D2FEE8511539D819004CFF62 /* CoreVideo.framework in Frameworks */,
