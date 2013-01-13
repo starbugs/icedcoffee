@@ -23,6 +23,8 @@
 
 #import "ICTextField.h"
 
+#ifdef __IC_PLATFORM_MAC
+
 @interface ICTextField ()
 @property (nonatomic, retain) ICLabel *textLabel;
 @end
@@ -127,3 +129,5 @@
 }
 
 @end
+
+#endif

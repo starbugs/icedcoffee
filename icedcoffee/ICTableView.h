@@ -24,6 +24,8 @@
 #import "ICScrollView.h"
 #import "ICTableViewDataSource.h"
 
+// Work in progress
+
 @class ICTableViewCell;
 
 @interface ICTableView : ICScrollView {

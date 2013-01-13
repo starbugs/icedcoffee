@@ -24,6 +24,10 @@
 #import "ICControl.h"
 #import "ICLabel.h"
 
+// Work in progress - Mac only currently
+
+#ifdef __IC_PLATFORM_MAC
+
 @interface ICTextField : ICControl {
 @protected
     ICLabel *_textLabel;
@@ -44,3 +48,6 @@
 - (void)keyUp:(ICKeyEvent *)keyEvent;
 
 @end
+
+#endif
+

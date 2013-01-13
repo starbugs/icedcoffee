@@ -23,6 +23,8 @@
 
 #import "ICView.h"
 
+// Work in progress
+
 @class ICSprite;
 @class ICLabel;
 
