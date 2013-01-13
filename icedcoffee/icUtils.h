@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -113,6 +113,17 @@ extern "C" {
      @return Returns a ``kmAABB`` defining the axis-aligned bounding box containing the vertices.
      */
     kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count);
+    
+    /**
+     @brief Computes an axis-aligned bounding box containg the given nodes' axis-aligned
+     bounding boxes
+     
+     @param nodes An ``NSArray`` containing ICNode objects
+     
+     @return Returns a ``kmAABB`` defining the axis-aligned bounding box containing the
+     axis-aligned bounding boxes of all given nodes
+     */
+    kmAABB icComputeAABBContainingAABBsOfNodes(NSArray *nodes);
     
     /**
      @brief Returns a timestamp for the current point in time for use with ``NSEvent``/``UIEvent``

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -85,6 +85,7 @@
     ICResponder *_currentFirstResponder;
     
     BOOL _retinaDisplayEnabled;
+    float _desiredContentScaleFactor;
 
     BOOL _isRunning;
     NSThread *_thread;
@@ -94,6 +95,10 @@
     icTime _elapsedTime;
     struct timeval _lastUpdate;
     uint64_t _frameCount;
+    
+    icTime _fpsDelta;
+    uint _fpsNumFrames;
+    float _fps;
     
     ICFrameUpdateMode _frameUpdateMode;
     NSDate *_continuousFrameUpdateExpiryDate;
@@ -250,11 +255,26 @@
 @property (nonatomic, readonly) uint64_t frameCount;
 
 /**
+ @brief The number of frames per second currently presented by the receiver
+ 
+ If the receiver's ICHostViewController::frameUpdateMode is set to ICFrameUpdateModeSynchronized,
+ this property is updated approximately once a second. For other frame update modes, this property
+ might not report accurate results and should not be used.
+ 
+ If you want to refresh a user interface control displaying the current framerate, you should use
+ key-value observation to observe updates on this property.
+ 
+ Note that the receiver's framerate will never exceed the display's refresh rate, which typically
+ is 60 FPS on all modern displays.
+ */
+@property (nonatomic, readonly) float fps;
+
+/**
  @brief The frame update mode used to present the receiver's scene
  
- An ICFrameUpdateMode enumerated value defining when the host view controller should draw
+ An ICFrameUpdateMode enumerated value defining when the host view controller should redraw
  the scene's contents. Setting this property to ICFrameUpdateModeSynchronized lets the
- host view controller draw the scene's contents continuously, synchronized with the display
+ host view controller draw the scene's contents continuously, synchronized with the display's
  refresh rate. Setting it to ICFrameUpdateModeOnDemand lets the host view controller draw
  the scene's contents on demand only, when one or multiple nodes' ICNode::setNeedsDisplay
  method has been called.

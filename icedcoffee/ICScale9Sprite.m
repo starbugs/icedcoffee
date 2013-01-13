@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -160,7 +160,7 @@
         vertices[i].color = color4FFromColor4B(_color);
     }
     
-    // Note: as the Y axis is inverted by the IcedCoffe UI camera, we provide CCW indices
+    // Note: as the Y axis is inverted by the icedcoffee UI camera, we provide CCW indices
     // here so that OpenGL standard culling continues to work correctly
     GLushort indices[] = {
         // left-top (x1,y1,x2,y2)
@@ -293,6 +293,10 @@
     
     glBindTexture(GL_TEXTURE_2D, 0);
     IC_CHECK_GL_ERROR_DEBUG();
+    
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);    
 }
 
 @end

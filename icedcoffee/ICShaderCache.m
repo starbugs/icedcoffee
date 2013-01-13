@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -38,11 +38,8 @@
 {
     ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
     NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
-    ICShaderCache *shaderCache = openGLContext.shaderCache;
-    if (!shaderCache) {
-        shaderCache = openGLContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
-    }
-    return shaderCache;
+    NSAssert(openGLContext.shaderCache != nil, @"No shader cache created yet for this context");
+    return openGLContext.shaderCache;
 }
 
 + (void)purgeCurrentShaderCache

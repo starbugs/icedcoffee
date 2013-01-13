@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,22 +23,85 @@
 
 #import "ICTextField.h"
 
+#ifdef __IC_PLATFORM_MAC
+
+@interface ICTextField ()
+@property (nonatomic, retain) ICLabel *textLabel;
+@end
+
 @implementation ICTextField
 
-@synthesize label = _label;
+@synthesize textLabel = _textLabel;
 
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        self.label = [ICLabel labelWithText:@"" fontName:@"Arial" fontSize:12.0f];
-        [self addChild:self.label];
+        self.textLabel = [ICLabel labelWithSize:size];
+        self.textLabel.userInteractionEnabled = NO;
+        [self addChild:self.textLabel];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    self.textLabel = nil;
+    [super dealloc];
 }
 
 - (BOOL)acceptsFirstResponder
 {
     return YES;
+}
+
+- (void)setAttributedText:(NSAttributedString *)attributedText
+{
+    self.textLabel.attributedText = attributedText;
+}
+
+- (NSAttributedString *)attributedText
+{
+    return self.textLabel.attributedText;
+}
+
+- (void)setText:(NSString *)text
+{
+    self.textLabel.text = text;
+}
+
+- (NSString *)text
+{
+    return self.textLabel.text;
+}
+
+- (void)setFont:(ICFont *)font
+{
+    self.textLabel.font = font;
+}
+
+- (ICFont *)font
+{
+    return self.textLabel.font;
+}
+
+- (void)setColor:(icColor4B)color
+{
+    self.textLabel.color = color;
+}
+
+- (icColor4B)color
+{
+    return self.textLabel.color;
+}
+
+- (void)setGamma:(float)gamma
+{
+    self.textLabel.gamma = gamma;
+}
+
+- (float)gamma
+{
+    return self.textLabel.gamma;
 }
 
 - (void)keyDown:(ICKeyEvent *)keyEvent
@@ -47,12 +110,13 @@
         unichar character = [[keyEvent characters] characterAtIndex:0];
         switch (character) {
             case NSDeleteCharacter: {
-                NSUInteger newLength = [self.label.text length] - 1;
-                self.label.text = [self.label.text substringWithRange:NSMakeRange(0, newLength)];
+                NSInteger newLength = [self.textLabel.text length] - 1;
+                if (newLength >= 0)
+                    self.textLabel.text = [self.textLabel.text substringWithRange:NSMakeRange(0, newLength)];
                 break;
             }
             default: {
-                self.label.text = [self.label.text stringByAppendingString:[keyEvent characters]];
+                self.textLabel.text = [self.textLabel.text stringByAppendingString:[keyEvent characters]];
                 break;
             }
         }
@@ -65,3 +129,5 @@
 }
 
 @end
+
+#endif

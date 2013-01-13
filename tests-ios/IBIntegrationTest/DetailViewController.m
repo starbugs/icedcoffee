@@ -3,7 +3,7 @@
 //  IBIntegrationTest
 //
 //  Created by Tobias Lensing on 8/4/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "DetailViewController.h"
@@ -34,6 +34,8 @@
     [self runWithScene:scene];
 }
 
+// FIXME: retina display support, order of initialization, move this to ICHostViewControllerIOS
+// and use setUpScene?!
 - (void)viewDidLoad
 {
     [super viewDidLoad];

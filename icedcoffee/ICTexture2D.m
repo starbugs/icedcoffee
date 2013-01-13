@@ -152,6 +152,11 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (void)internalUploadData:(const void *)data
 {
+    if (!data) {
+        NSLog(@"Cannot upload nil data");
+        return;
+    }
+    
     if (!_name)
         glGenTextures(1, &_name);    
     glBindTexture(GL_TEXTURE_2D, _name);

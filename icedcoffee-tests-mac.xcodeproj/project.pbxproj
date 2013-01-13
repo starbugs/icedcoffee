@@ -17,6 +17,23 @@
 		A61D6F5F15DC3BE9005AFDA5 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A61D6F6015DC3BEE005AFDA5 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
 		A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A62633BA1685DA3600286AC0 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A62633DD1685DA5700286AC0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633D21685DA5700286AC0 /* AppDelegate.m */; };
+		A62633DE1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
+		A62633DF1685DA5700286AC0 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A62633D31685DA5700286AC0 /* Credits.rtf */; };
+		A62633E01685DA5700286AC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A62633D51685DA5700286AC0 /* InfoPlist.strings */; };
+		A62633E11685DA5700286AC0 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A62633D51685DA5700286AC0 /* InfoPlist.strings */; };
+		A62633E21685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
+		A62633E31685DA5700286AC0 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A62633D71685DA5700286AC0 /* MainMenu.xib */; };
+		A62633E41685DA5700286AC0 /* GlyphCacheTest-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */; };
+		A62633E71685DA5700286AC0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633DB1685DA5700286AC0 /* main.m */; };
+		A62633E81685DA8300286AC0 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD86A214F0ED95006A9A90 /* Carbon.framework */; };
+		A62633E91685DA8700286AC0 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
+		A62633EA1685DA8A00286AC0 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD865114F0E7AB006A9A90 /* OpenGL.framework */; };
+		A62633EE1685DAA000286AC0 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
+		A62633F11685DBD100286AC0 /* GlyphCacheTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */; };
+		A62633F41685DE4D00286AC0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A682C1DE16988DB0004937B3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A68DBF8A1650621F0035E0B6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF801650621F0035E0B6 /* AppDelegate.m */; };
 		A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A68DBF811650621F0035E0B6 /* Credits.rtf */; };
@@ -29,6 +46,24 @@
 		A68DBF95165064A70035E0B6 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */; };
 		A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD860114F0E5A5006A9A90 /* libicedcoffee-mac.a */; };
 		A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */; };
+		A693227B168F597D003DE913 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
+		A693229D168F59AF003DE913 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6932293168F59AF003DE913 /* AppDelegate.m */; };
+		A693229F168F59AF003DE913 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6932296168F59AF003DE913 /* Credits.rtf */; };
+		A69322A0168F59AF003DE913 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A6932298168F59AF003DE913 /* InfoPlist.strings */; };
+		A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A693229A168F59AF003DE913 /* MainMenu.xib */; };
+		A69322A2168F59AF003DE913 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A693229C168F59AF003DE913 /* main.m */; };
+		A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */; };
+		A6C4A99116A2F23C004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99216A2F277004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99316A2F29C004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99416A2F2BE004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99516A2F2CC004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99616A2F2F8004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99716A2F2FC004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99816A2F301004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C6863D169200E400761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C6863E1692FFED00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		A6CB74B11646D1EC00CDEEAC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */; };
 		A6CB74B21646D1EC00CDEEAC /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = A6CB74A81646D1EC00CDEEAC /* Credits.rtf */; };
@@ -51,6 +86,8 @@
 		A6F048B215DE9E5A00321D86 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A815DE9E5A00321D86 /* Rectangle.fsh */; };
 		A6F048B315DE9E5A00321D86 /* SpriteTextureMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048A915DE9E5A00321D86 /* SpriteTextureMask.fsh */; };
 		A6F048B415DE9E5A00321D86 /* StencilMask.fsh in Resources */ = {isa = PBXBuildFile; fileRef = A6F048AA15DE9E5A00321D86 /* StencilMask.fsh */; };
+		A6FFA83116A16ADB00DCEB8D /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6FFA83216A16B7C00DCEB8D /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		D20FA8CA15A881CC003A2235 /* Rectangle.fsh in Resources */ = {isa = PBXBuildFile; fileRef = D20FA8C915A881BE003A2235 /* Rectangle.fsh */; };
 		D21F88841533064B00E2496C /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD85D714F0E4A6006A9A90 /* Cocoa.framework */; };
 		D21F889B1533068E00E2496C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D21F88951533068E00E2496C /* InfoPlist.strings */; };
@@ -215,6 +252,13 @@
 			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
 			remoteInfo = "icedcoffee-mac";
 		};
+		A62633EC1685DA9C00286AC0 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D24BAF3114EDB05D000E65AA;
+			remoteInfo = "icedcoffee-mac";
+		};
 		A68DBF96165064B70035E0B6 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */;
@@ -354,6 +398,18 @@
 		A61D6F5415DC3AD1005AFDA5 /* IBIntegrationTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "IBIntegrationTest-Info.plist"; sourceTree = "<group>"; };
 		A61D6F5515DC3AD1005AFDA5 /* IBIntegrationTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "IBIntegrationTest-Prefix.pch"; sourceTree = "<group>"; };
 		A61D6F5615DC3AD1005AFDA5 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A62633B81685DA3600286AC0 /* GlyphCacheTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlyphCacheTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A62633D11685DA5700286AC0 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A62633D21685DA5700286AC0 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A62633D41685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A62633D61685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A62633D81685DA5700286AC0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GlyphCacheTest-Info.plist"; sourceTree = "<group>"; };
+		A62633DA1685DA5700286AC0 /* GlyphCacheTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "GlyphCacheTest-Prefix.pch"; sourceTree = "<group>"; };
+		A62633DB1685DA5700286AC0 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A62633EF1685DBD100286AC0 /* GlyphCacheTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GlyphCacheTestViewController.h; sourceTree = "<group>"; };
+		A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GlyphCacheTestViewController.m; sourceTree = "<group>"; };
+		A62633F21685DE2E00286AC0 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		A68DBF66165062020035E0B6 /* ShaderPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A68DBF7F1650621F0035E0B6 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A68DBF801650621F0035E0B6 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -367,6 +423,17 @@
 		A68DBF91165063510035E0B6 /* ShaderPlaygroundViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderPlaygroundViewController.m; sourceTree = "<group>"; };
 		A68DBF991650688A0035E0B6 /* ShaderSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShaderSourceViewController.h; sourceTree = "<group>"; };
 		A68DBF9A1650688A0035E0B6 /* ShaderSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShaderSourceViewController.m; sourceTree = "<group>"; };
+		A6932279168F597D003DE913 /* CoreTextReferenceTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CoreTextReferenceTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A6932292168F59AF003DE913 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A6932293168F59AF003DE913 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A6932294168F59AF003DE913 /* CoreTextReferenceTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "CoreTextReferenceTest-Info.plist"; sourceTree = "<group>"; };
+		A6932295168F59AF003DE913 /* CoreTextReferenceTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CoreTextReferenceTest-Prefix.pch"; sourceTree = "<group>"; };
+		A6932297168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		A6932299168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A693229B168F59AF003DE913 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		A693229C168F59AF003DE913 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A69322A3168F5A6D003DE913 /* CoreTextReferenceView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CoreTextReferenceView.h; sourceTree = "<group>"; };
+		A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CoreTextReferenceView.m; sourceTree = "<group>"; };
 		A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShaderTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6CB74A61646D1EC00CDEEAC /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6CB74A71646D1EC00CDEEAC /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -561,6 +628,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99516A2F2CC004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */,
 				A61D6F3515DC3A8E005AFDA5 /* Cocoa.framework in Frameworks */,
 				A61D6F5E15DC3BE6005AFDA5 /* Carbon.framework in Frameworks */,
@@ -569,10 +637,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A62633B51685DA3600286AC0 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633F41685DE4D00286AC0 /* libstdc++.dylib in Frameworks */,
+				A62633EE1685DAA000286AC0 /* libicedcoffee-mac.a in Frameworks */,
+				A62633E81685DA8300286AC0 /* Carbon.framework in Frameworks */,
+				A62633BA1685DA3600286AC0 /* Cocoa.framework in Frameworks */,
+				A62633E91685DA8700286AC0 /* CoreVideo.framework in Frameworks */,
+				A62633EA1685DA8A00286AC0 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A68DBF63165062020035E0B6 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A682C1DE16988DB0004937B3 /* libstdc++.dylib in Frameworks */,
 				A68DBF98165064BC0035E0B6 /* libicedcoffee-mac.a in Frameworks */,
 				A68DBF931650648C0035E0B6 /* Carbon.framework in Frameworks */,
 				A68DBF68165062020035E0B6 /* Cocoa.framework in Frameworks */,
@@ -581,10 +663,19 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A6932276168F597D003DE913 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693227B168F597D003DE913 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6CB748A1646D1AA00CDEEAC /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FFA83216A16B7C00DCEB8D /* libstdc++.dylib in Frameworks */,
 				A6CB74BC1646D81800CDEEAC /* libicedcoffee-mac.a in Frameworks */,
 				A6CB74B71646D7CD00CDEEAC /* Carbon.framework in Frameworks */,
 				A6CB748F1646D1AA00CDEEAC /* Cocoa.framework in Frameworks */,
@@ -610,6 +701,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99616A2F2F8004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D22F25861587D6990049268C /* libicedcoffee-mac.a in Frameworks */,
 				D22F25831587D6870049268C /* Carbon.framework in Frameworks */,
 				D22F255B1587D53B0049268C /* Cocoa.framework in Frameworks */,
@@ -622,6 +714,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99316A2F29C004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D253D9EC15663E510027DA6C /* libicedcoffee-mac.a in Frameworks */,
 				D253D9EB15663E450027DA6C /* Carbon.framework in Frameworks */,
 				D253D9C115663DE20027DA6C /* Cocoa.framework in Frameworks */,
@@ -634,11 +727,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99816A2F301004EC1A0 /* libstdc++.dylib in Frameworks */,
+				D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */,
 				D2735B701591273000216F1B /* Carbon.framework in Frameworks */,
 				D2735B45159126E200216F1B /* Cocoa.framework in Frameworks */,
 				D2735B721591273C00216F1B /* CoreVideo.framework in Frameworks */,
 				D2735B711591273300216F1B /* OpenGL.framework in Frameworks */,
-				D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +740,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99716A2F2FC004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D28504B0158B20DB00CD71ED /* Carbon.framework in Frameworks */,
 				D2850485158B204E00CD71ED /* Cocoa.framework in Frameworks */,
 				D28504B1158B20DD00CD71ED /* CoreVideo.framework in Frameworks */,
@@ -658,6 +753,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99116A2F23C004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2ADD004157EB4B500B6E519 /* libicedcoffee-mac.a in Frameworks */,
 				D2ADCFF2157EB38F00B6E519 /* Carbon.framework in Frameworks */,
 				D2ADCFC8157EB34A00B6E519 /* Cocoa.framework in Frameworks */,
@@ -670,6 +766,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99416A2F2BE004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2EDC3711572BC6400EBB417 /* libicedcoffee-mac.a in Frameworks */,
 				D2EDC36E1572BC4900EBB417 /* Carbon.framework in Frameworks */,
 				D2EDC3431572BB8A00EBB417 /* Cocoa.framework in Frameworks */,
@@ -682,6 +779,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863D169200E400761BD5 /* libstdc++.dylib in Frameworks */,
 				D2F34FEE151F0A6D00DF2D5B /* libicedcoffee-mac.a in Frameworks */,
 				D2F34FE9151F0A5800DF2D5B /* Carbon.framework in Frameworks */,
 				D2F34FEA151F0A5B00DF2D5B /* CoreVideo.framework in Frameworks */,
@@ -694,6 +792,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99216A2F277004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2F3503B15286A7700DF2D5B /* libicedcoffee-mac.a in Frameworks */,
 				D2F3503815286A6900DF2D5B /* Carbon.framework in Frameworks */,
 				D2F3503915286A6E00DF2D5B /* CoreVideo.framework in Frameworks */,
@@ -706,6 +805,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863E1692FFED00761BD5 /* libstdc++.dylib in Frameworks */,
 				D24314A2151296C500E6AF37 /* libicedcoffee-mac.a in Frameworks */,
 				D24314A3151296CD00E6AF37 /* Carbon.framework in Frameworks */,
 				D24314A4151296CD00E6AF37 /* CoreVideo.framework in Frameworks */,
@@ -718,6 +818,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */,
 				D2FD86A314F0ED95006A9A90 /* Carbon.framework in Frameworks */,
 				D2FD869C14F0ED24006A9A90 /* CoreVideo.framework in Frameworks */,
 				D2FD865014F0E79B006A9A90 /* libicedcoffee-mac.a in Frameworks */,
@@ -730,6 +831,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6FFA83116A16ADB00DCEB8D /* libstdc++.dylib in Frameworks */,
 				D2FEE8601539DD6D004CFF62 /* libicedcoffee-mac.a in Frameworks */,
 				D2FEE8501539D816004CFF62 /* Carbon.framework in Frameworks */,
 				D2FEE8511539D819004CFF62 /* CoreVideo.framework in Frameworks */,
@@ -768,6 +870,24 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		A62633D01685DA5700286AC0 /* GlyphCacheTest */ = {
+			isa = PBXGroup;
+			children = (
+				A62633D11685DA5700286AC0 /* AppDelegate.h */,
+				A62633D21685DA5700286AC0 /* AppDelegate.m */,
+				A62633D31685DA5700286AC0 /* Credits.rtf */,
+				A62633D51685DA5700286AC0 /* InfoPlist.strings */,
+				A62633D71685DA5700286AC0 /* MainMenu.xib */,
+				A62633EF1685DBD100286AC0 /* GlyphCacheTestViewController.h */,
+				A62633F01685DBD100286AC0 /* GlyphCacheTestViewController.m */,
+				A62633D91685DA5700286AC0 /* GlyphCacheTest-Info.plist */,
+				A62633DA1685DA5700286AC0 /* GlyphCacheTest-Prefix.pch */,
+				A62633DB1685DA5700286AC0 /* main.m */,
+			);
+			name = GlyphCacheTest;
+			path = "tests-mac/GlyphCacheTest";
+			sourceTree = "<group>";
+		};
 		A68DBF7E1650621F0035E0B6 /* ShaderPlayground */ = {
 			isa = PBXGroup;
 			children = (
@@ -786,6 +906,24 @@
 			);
 			name = ShaderPlayground;
 			path = "tests-mac/ShaderPlayground";
+			sourceTree = "<group>";
+		};
+		A6932291168F59AF003DE913 /* CoreTextReferenceTest */ = {
+			isa = PBXGroup;
+			children = (
+				A6932292168F59AF003DE913 /* AppDelegate.h */,
+				A6932293168F59AF003DE913 /* AppDelegate.m */,
+				A6932294168F59AF003DE913 /* CoreTextReferenceTest-Info.plist */,
+				A6932295168F59AF003DE913 /* CoreTextReferenceTest-Prefix.pch */,
+				A69322A3168F5A6D003DE913 /* CoreTextReferenceView.h */,
+				A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */,
+				A6932296168F59AF003DE913 /* Credits.rtf */,
+				A6932298168F59AF003DE913 /* InfoPlist.strings */,
+				A693229A168F59AF003DE913 /* MainMenu.xib */,
+				A693229C168F59AF003DE913 /* main.m */,
+			);
+			name = CoreTextReferenceTest;
+			path = "tests-mac/CoreTextReferenceTest";
 			sourceTree = "<group>";
 		};
 		A6CB74A51646D1EC00CDEEAC /* ShaderTest */ = {
@@ -1106,9 +1244,11 @@
 			children = (
 				D2FD85F914F0E5A5006A9A90 /* icedcoffee-mac.xcodeproj */,
 				D2F34FD6151F09BF00DF2D5B /* AlphaBlendingTest */,
+				A6932291168F59AF003DE913 /* CoreTextReferenceTest */,
 				D2FEE83C1539D7A3004CFF62 /* DepthBufferTest */,
 				D2F3509E151162CA00A56B8D /* FontRenderingTest */,
 				A61D6F4B15DC3AD1005AFDA5 /* IBIntegrationTest */,
+				A62633D01685DA5700286AC0 /* GlyphCacheTest */,
 				D21F88941533068E00E2496C /* KazmathTests */,
 				D2735B5B1591270100216F1B /* MultipleCocoaViewsTest */,
 				D2FD863B14F0E6C6006A9A90 /* PickingTest */,
@@ -1143,6 +1283,8 @@
 				A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */,
 				A6CB748D1646D1AA00CDEEAC /* ShaderTest.app */,
 				A68DBF66165062020035E0B6 /* ShaderPlayground.app */,
+				A62633B81685DA3600286AC0 /* GlyphCacheTest.app */,
+				A6932279168F597D003DE913 /* CoreTextReferenceTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1150,6 +1292,7 @@
 		D2FD85D614F0E4A6006A9A90 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A62633F21685DE2E00286AC0 /* libstdc++.dylib */,
 				D2FD86A214F0ED95006A9A90 /* Carbon.framework */,
 				D2FD869B14F0ED24006A9A90 /* CoreVideo.framework */,
 				D2FD865114F0E7AB006A9A90 /* OpenGL.framework */,
@@ -1257,6 +1400,24 @@
 			productReference = A61D6F3315DC3A8E005AFDA5 /* IBIntegrationTest.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A62633B71685DA3600286AC0 /* GlyphCacheTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A62633CD1685DA3600286AC0 /* Build configuration list for PBXNativeTarget "GlyphCacheTest" */;
+			buildPhases = (
+				A62633B41685DA3600286AC0 /* Sources */,
+				A62633B51685DA3600286AC0 /* Frameworks */,
+				A62633B61685DA3600286AC0 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A62633ED1685DA9C00286AC0 /* PBXTargetDependency */,
+			);
+			name = GlyphCacheTest;
+			productName = GlyphCacheTest;
+			productReference = A62633B81685DA3600286AC0 /* GlyphCacheTest.app */;
+			productType = "com.apple.product-type.application";
+		};
 		A68DBF65165062020035E0B6 /* ShaderPlayground */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */;
@@ -1273,6 +1434,23 @@
 			name = ShaderPlayground;
 			productName = ShaderPlayground;
 			productReference = A68DBF66165062020035E0B6 /* ShaderPlayground.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A6932278168F597D003DE913 /* CoreTextReferenceTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A693228E168F597E003DE913 /* Build configuration list for PBXNativeTarget "CoreTextReferenceTest" */;
+			buildPhases = (
+				A6932275168F597D003DE913 /* Sources */,
+				A6932276168F597D003DE913 /* Frameworks */,
+				A6932277168F597D003DE913 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CoreTextReferenceTest;
+			productName = CoreTextReferenceTest;
+			productReference = A6932279168F597D003DE913 /* CoreTextReferenceTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A6CB748C1646D1AA00CDEEAC /* ShaderTest */ = {
@@ -1553,6 +1731,8 @@
 				A61D6F3215DC3A8E005AFDA5 /* IBIntegrationTest */,
 				A6CB748C1646D1AA00CDEEAC /* ShaderTest */,
 				A68DBF65165062020035E0B6 /* ShaderPlayground */,
+				A62633B71685DA3600286AC0 /* GlyphCacheTest */,
+				A6932278168F597D003DE913 /* CoreTextReferenceTest */,
 			);
 		};
 /* End PBXProject section */
@@ -1588,6 +1768,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A62633B61685DA3600286AC0 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633DF1685DA5700286AC0 /* Credits.rtf in Resources */,
+				A62633E11685DA5700286AC0 /* InfoPlist.strings in Resources */,
+				A62633E31685DA5700286AC0 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A68DBF64165062020035E0B6 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1595,6 +1785,16 @@
 				A68DBF8B1650621F0035E0B6 /* Credits.rtf in Resources */,
 				A68DBF8C1650621F0035E0B6 /* InfoPlist.strings in Resources */,
 				A68DBF8D1650621F0035E0B6 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6932277168F597D003DE913 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693229F168F59AF003DE913 /* Credits.rtf in Resources */,
+				A69322A0168F59AF003DE913 /* InfoPlist.strings in Resources */,
+				A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1698,6 +1898,10 @@
 				D2F34FE6151F09BF00DF2D5B /* MainMenu.xib in Resources */,
 				D2F34FFA151F2FA100DF2D5B /* gradient-white-transparent.png in Resources */,
 				D2F35001151F563800DF2D5B /* iced-coffee-npot.png in Resources */,
+				A62633DE1685DA5700286AC0 /* Credits.rtf in Resources */,
+				A62633E01685DA5700286AC0 /* InfoPlist.strings in Resources */,
+				A62633E21685DA5700286AC0 /* MainMenu.xib in Resources */,
+				A62633E41685DA5700286AC0 /* GlyphCacheTest-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1773,6 +1977,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A62633B41685DA3600286AC0 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A62633DD1685DA5700286AC0 /* AppDelegate.m in Sources */,
+				A62633E71685DA5700286AC0 /* main.m in Sources */,
+				A62633F11685DBD100286AC0 /* GlyphCacheTestViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A68DBF62165062020035E0B6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1781,6 +1995,16 @@
 				A68DBF8E1650621F0035E0B6 /* main.m in Sources */,
 				A68DBF92165063510035E0B6 /* ShaderPlaygroundViewController.m in Sources */,
 				A68DBF9B1650688B0035E0B6 /* ShaderSourceViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A6932275168F597D003DE913 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A693229D168F59AF003DE913 /* AppDelegate.m in Sources */,
+				A69322A2168F59AF003DE913 /* main.m in Sources */,
+				A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1917,6 +2141,11 @@
 			name = "icedcoffee-mac";
 			targetProxy = A61D6F6115DC4120005AFDA5 /* PBXContainerItemProxy */;
 		};
+		A62633ED1685DA9C00286AC0 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "icedcoffee-mac";
+			targetProxy = A62633EC1685DA9C00286AC0 /* PBXContainerItemProxy */;
+		};
 		A68DBF97165064B70035E0B6 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "icedcoffee-mac";
@@ -2014,6 +2243,30 @@
 			name = MainMenu.xib;
 			sourceTree = "<group>";
 		};
+		A62633D31685DA5700286AC0 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D41685DA5700286AC0 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A62633D51685DA5700286AC0 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D61685DA5700286AC0 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A62633D71685DA5700286AC0 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A62633D81685DA5700286AC0 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
 		A68DBF811650621F0035E0B6 /* Credits.rtf */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -2034,6 +2287,30 @@
 			isa = PBXVariantGroup;
 			children = (
 				A68DBF861650621F0035E0B6 /* en */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		A6932296168F59AF003DE913 /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6932297168F59AF003DE913 /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		A6932298168F59AF003DE913 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A6932299168F59AF003DE913 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A693229A168F59AF003DE913 /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A693229B168F59AF003DE913 /* en */,
 			);
 			name = MainMenu.xib;
 			sourceTree = "<group>";
@@ -2355,6 +2632,52 @@
 			};
 			name = Release;
 		};
+		A62633CE1685DA3600286AC0 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/GlyphCacheTest/GlyphCacheTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A62633CF1685DA3600286AC0 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Library/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/GlyphCacheTest/GlyphCacheTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		A68DBF7C165062020035E0B6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2387,6 +2710,42 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A693228F168F597E003DE913 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
+				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A6932290168F597E003DE913 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
@@ -2827,11 +3186,29 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
+		A62633CD1685DA3600286AC0 /* Build configuration list for PBXNativeTarget "GlyphCacheTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A62633CE1685DA3600286AC0 /* Debug */,
+				A62633CF1685DA3600286AC0 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A68DBF7B165062020035E0B6 /* Build configuration list for PBXNativeTarget "ShaderPlayground" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A68DBF7C165062020035E0B6 /* Debug */,
 				A68DBF7D165062020035E0B6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A693228E168F597E003DE913 /* Build configuration list for PBXNativeTarget "CoreTextReferenceTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A693228F168F597E003DE913 /* Debug */,
+				A6932290168F597E003DE913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

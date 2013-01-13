@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -40,6 +40,7 @@
 #import "ICNodeVisitorDrawing.h"
 #import "ICButton.h"
 #import "ICLabel.h"
+#import "ICTextField.h"
 #import "ICScene.h"
 #import "ICUIScene.h"
 #import "ICShaderCache.h"
@@ -55,12 +56,25 @@
 #import "ICTableView.h"
 #import "ICTableViewCell.h"
 #import "ICTexture2D.h"
+#import "ICMutableTexture2D.h"
 #import "ICTextureCache.h"
 #import "ICTextureLoader.h"
 #import "ICView.h"
 #import "ICScrollView.h"
 #import "icTypes.h"
 #import "ICBasicAnimation.h"
+#import "ICCombinedVertexIndexBuffer.h"
+
+// Font rendering
+#import "ICFont.h"
+#import "ICGlyphCache.h"
+#import "ICGlyphTextureAtlas.h"
+#import "ICTextureGlyph.h"
+#import "ICGlyphRun.h"
+#import "ICTextLine.h"
+#import "ICTextFrame.h"
+#import "ICParagraphStyle.h"
+#import "ICTextTab.h"
 
 #ifdef __IC_PLATFORM_MAC
 #import "Platforms/Mac/ICGLView.h"

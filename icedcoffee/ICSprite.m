@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -205,6 +205,10 @@
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
     IC_CHECK_GL_ERROR_DEBUG();
+    
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);
 }
 
 - (void)setTexture:(ICTexture2D *)texture

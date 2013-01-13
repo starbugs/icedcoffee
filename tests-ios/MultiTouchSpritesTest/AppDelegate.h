@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,12 +23,12 @@
 
 
 #import <UIKit/UIKit.h>
-#import "icedcoffee/icedcoffee.h"
+#import "MultiTouchSpritesTestViewController.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) ICHostViewController *hostViewController;
+@property (strong, nonatomic) MultiTouchSpritesTestViewController *hostViewController;
 
 @end

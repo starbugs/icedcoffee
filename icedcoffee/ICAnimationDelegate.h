@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -25,12 +25,24 @@
 
 @class ICAnimation;
 
+/**
+ @brief Defines a protocol for animation delegates
+ 
+ The ICAnimationDelegate protocol declares methods that may be implemented by delegates of
+ ICAnimation subclasses.
+ */
 @protocol ICAnimationDelegate <NSObject>
 
 @optional
 
+/**
+ @brief Called immediately after the animation has started
+ */
 - (void)animationDidStart:(ICAnimation *)animation;
 
+/**
+ @brief Called immediately after the animation has stopped
+ */
 - (void)animationDidStop:(ICAnimation *)animation finished:(BOOL)finished;
 
 @end

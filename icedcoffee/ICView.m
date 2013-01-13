@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -215,17 +215,23 @@
     
     if (_backing && !renderTexture) {
         // Move render texture children back to self
-        for (ICNode *child in [self backingContentView].children) {
+        // Make a copy of the backing content view's children as removeAllChildren will
+        // unlink them from the tree
+        NSArray *children = [[self backingContentView].children copy];
+        [[self backingContentView] removeAllChildren];
+        for (ICNode *child in children) {
             [super addChild:child];
         }
-        [[self backingContentView] removeAllChildren];
     }
     
     if (!_backing && renderTexture) {
-        for (ICNode *child in _children) {
+        // Move own children to render texture
+        // Make a copy of the children as removeAllChildren will unlink them from the tree
+        NSArray *children = [_children copy];
+        [super removeAllChildren];
+        for (ICNode *child in children) {
             [((ICUIScene *)renderTexture.subScene).contentView addChild:child];
         }
-        [super removeAllChildren];
     }
     
     if (_backing) {

@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -37,6 +37,7 @@
 @protected
     void *_data;
     BOOL _ownsData;
+    BOOL _dataDirty;
 }
 
 /**
@@ -93,6 +94,12 @@
  ICMutableTexture2D::data is set to a new value.
  */
 @property (nonatomic, assign) BOOL ownsData;
+
+/**
+ @brief Whether the receiver's current ICMutableTexture2D::data is in a dirty state (has not
+ yet been uploaded to OpenGL)
+ */
+@property (nonatomic, assign) BOOL dataDirty;
 
 /**
  @brief Uploads the receiver's ICMutableTexture2D::data to OpenGL video memory

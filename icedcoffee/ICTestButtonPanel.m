@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -71,7 +71,8 @@
         [_hintLabel setPositionY:25];
         _hintLabel.autoresizesToTextSize = NO;
         _hintLabel.clipsChildren = YES;
-        _hintLabel.color = (icColor4B){255,255,255,160};
+        _hintLabel.color = (icColor4B){255,255,255,255};
+        _hintLabel.gamma = 0.9f;
     }
     return self;
 }

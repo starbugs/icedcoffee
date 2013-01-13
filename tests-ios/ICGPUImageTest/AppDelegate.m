@@ -3,7 +3,7 @@
 //  ICGPUImageTest
 //
 //  Created by Tobias Lensing on 10/7/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "AppDelegate.h"
@@ -35,8 +35,9 @@
                                            sharegroup:sharegroup
                                         multiSampling:NO
                                       numberOfSamples:0] autorelease];
-    [view setHostViewController:viewController];
+    
     [viewController enableRetinaDisplaySupport:YES];
+    [view setHostViewController:viewController];
     
     self.window.rootViewController = viewController;
     

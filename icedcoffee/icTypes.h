@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -208,6 +208,30 @@ typedef struct _icV3F_C4F_T2F {
 	icColor4F color;			// 16 bytes
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4F_T2F;
+
+// Used for font glyph rendering
+typedef struct _icV3F_C4F_T2F_G1F {
+    kmVec3 vect;                // 12 bytes
+	icColor4F color;			// 16 bytes
+    kmVec2 texCoords;           // 8 bytes
+    GLfloat gamma;
+} icV3F_C4F_T2F_G1F;
+
+typedef struct _icV3F_C4B_T2F_Quad {
+    icV3F_C4B_T2F vertices[4];
+} icV3F_C4B_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_Quad {
+    icV3F_C4F_T2F vertices[4];
+} icV3F_C4F_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_G1F_Quad {
+    icV3F_C4F_T2F_G1F vertices[4];
+} icV3F_C4F_T2F_G1F_Quad;
+
+typedef struct _icUShort_QuadIndices {
+    GLushort indices[6];
+} icUShort_QuadIndices;
 
 
 typedef struct _icRay3 {

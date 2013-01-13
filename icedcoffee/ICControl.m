@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -25,7 +25,6 @@
 #import "ICHostViewController.h"
 #import "ICTargetActionDispatcher.h"
 
-// FIXME: implement IOS control events
 #ifdef __IC_PLATFORM_MAC
 ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
                                        ICAbstractControlEvents abstractControlEvent)

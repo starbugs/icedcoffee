@@ -25,8 +25,32 @@
 		A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51E1620F72F008A1BDF /* CoreMedia.framework */; };
 		A6478F4E15FE7896003DB316 /* DraggableControl.m in Sources */ = {isa = PBXBuildFile; fileRef = A6478F4D15FE7896003DB316 /* DraggableControl.m */; };
+		A671C787168E5A6D002AD3EF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
+		A671C788168E5A6D002AD3EF /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284FA15AA52610086B12A /* Foundation.framework */; };
+		A671C789168E5A6D002AD3EF /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F415AA52300086B12A /* CoreGraphics.framework */; };
+		A671C7AB168E5A99002AD3EF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A671C7A2168E5A99002AD3EF /* AppDelegate.m */; };
+		A671C7AC168E5A99002AD3EF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A671C7A3168E5A99002AD3EF /* Default-568h@2x.png */; };
+		A671C7AD168E5A99002AD3EF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A671C7A4168E5A99002AD3EF /* Default.png */; };
+		A671C7AE168E5A99002AD3EF /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A671C7A5168E5A99002AD3EF /* Default@2x.png */; };
+		A671C7AF168E5A99002AD3EF /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A671C7A6168E5A99002AD3EF /* InfoPlist.strings */; };
+		A671C7B1168E5A99002AD3EF /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A671C7AA168E5A99002AD3EF /* main.m */; };
+		A671C7B2168E5AB6002AD3EF /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F715AA52460086B12A /* OpenGLES.framework */; };
+		A671C7B5168E5B83002AD3EF /* FontRenderingTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A671C7B4168E5B83002AD3EF /* FontRenderingTestViewController.m */; };
+		A671C7B6168E5BDB002AD3EF /* libicedcoffee-ios.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21C97DD14F301D10059BBBE /* libicedcoffee-ios.a */; };
+		A671C7B7168E5C10002AD3EF /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A671C7B8168E5C23002AD3EF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284F115AA521A0086B12A /* QuartzCore.framework */; };
+		A671C7BA168E5D9F002AD3EF /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
+		A671C7BC168E5DB7002AD3EF /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A67CC09C16262A290094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
+		A682C1DB169876A1004937B3 /* MultiTouchSpritesTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */; };
+		A682C1DC1698772C004937B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
+		A682C1DD1698773A004937B3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99916A30CC8004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99A16A30CCB004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99B16A30CCF004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C6863F1693524000761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C686401693525100761BD5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
 		A6CB76DC1649DA7800CDEEAC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A6CB76DD1649DB5D00CDEEAC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
 		A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D29284EE15AA51FC0086B12A /* UIKit.framework */; };
@@ -153,6 +177,23 @@
 		A61FD51E1620F72F008A1BDF /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreMedia.framework; sourceTree = DEVELOPER_DIR; };
 		A6478F4C15FE7896003DB316 /* DraggableControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DraggableControl.h; sourceTree = "<group>"; };
 		A6478F4D15FE7896003DB316 /* DraggableControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DraggableControl.m; sourceTree = "<group>"; };
+		A671C758168E5A05002AD3EF /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A671C785168E5A6D002AD3EF /* FontRenderingTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FontRenderingTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A671C7A1168E5A99002AD3EF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		A671C7A2168E5A99002AD3EF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		A671C7A3168E5A99002AD3EF /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A671C7A4168E5A99002AD3EF /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A671C7A5168E5A99002AD3EF /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A671C7A7168E5A99002AD3EF /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A671C7A8168E5A99002AD3EF /* FontRenderingTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "FontRenderingTest-Info.plist"; sourceTree = "<group>"; };
+		A671C7A9168E5A99002AD3EF /* FontRenderingTest-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "FontRenderingTest-Prefix.pch"; sourceTree = "<group>"; };
+		A671C7AA168E5A99002AD3EF /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A671C7B3168E5B83002AD3EF /* FontRenderingTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FontRenderingTestViewController.h; sourceTree = "<group>"; };
+		A671C7B4168E5B83002AD3EF /* FontRenderingTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FontRenderingTestViewController.m; sourceTree = "<group>"; };
+		A671C7B9168E5D9F002AD3EF /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
+		A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.0.sdk/usr/lib/libstdc++.dylib"; sourceTree = DEVELOPER_DIR; };
+		A682C1D9169876A1004937B3 /* MultiTouchSpritesTestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MultiTouchSpritesTestViewController.h; sourceTree = "<group>"; };
+		A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MultiTouchSpritesTestViewController.m; sourceTree = "<group>"; };
 		A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = IBIntegrationTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A6EA1E2715CD65790007C4FF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A6EA1E2815CD65790007C4FF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -218,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99B16A30CCF004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */,
 				A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */,
 				A61FD4F01620ED19008A1BDF /* AVFoundation.framework in Frameworks */,
@@ -231,10 +273,27 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A671C782168E5A6D002AD3EF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A671C7BC168E5DB7002AD3EF /* libstdc++.dylib in Frameworks */,
+				A671C7B6168E5BDB002AD3EF /* libicedcoffee-ios.a in Frameworks */,
+				A671C7B8168E5C23002AD3EF /* QuartzCore.framework in Frameworks */,
+				A671C7B2168E5AB6002AD3EF /* OpenGLES.framework in Frameworks */,
+				A671C787168E5A6D002AD3EF /* UIKit.framework in Frameworks */,
+				A671C788168E5A6D002AD3EF /* Foundation.framework in Frameworks */,
+				A671C789168E5A6D002AD3EF /* CoreGraphics.framework in Frameworks */,
+				A671C7BA168E5D9F002AD3EF /* CoreText.framework in Frameworks */,
+				A671C7B7168E5C10002AD3EF /* CoreVideo.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6EA1DFD15CD65110007C4FF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99A16A30CCB004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */,
 				A6CB76DD1649DB5D00CDEEAC /* CoreVideo.framework in Frameworks */,
 				A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */,
@@ -249,6 +308,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C6863F1693524000761BD5 /* libstdc++.dylib in Frameworks */,
+				A6C686401693525100761BD5 /* CoreText.framework in Frameworks */,
 				D29284FD15AA52AA0086B12A /* UIKit.framework in Frameworks */,
 				D29284FE15AA52AA0086B12A /* QuartzCore.framework in Frameworks */,
 				D29284FF15AA52AA0086B12A /* CoreGraphics.framework in Frameworks */,
@@ -263,7 +324,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A682C1DD1698773A004937B3 /* libstdc++.dylib in Frameworks */,
 				A6CB76DC1649DA7800CDEEAC /* CoreVideo.framework in Frameworks */,
+				A682C1DC1698772C004937B3 /* CoreText.framework in Frameworks */,
 				D29284FC15AA526C0086B12A /* Foundation.framework in Frameworks */,
 				D29284F615AA523A0086B12A /* CoreGraphics.framework in Frameworks */,
 				D29284F915AA524F0086B12A /* OpenGLES.framework in Frameworks */,
@@ -277,6 +340,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99916A30CC8004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2FEE88A153ABDDF004CFF62 /* libicedcoffee-ios.a in Frameworks */,
 				D292850715AA52B80086B12A /* UIKit.framework in Frameworks */,
 				A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */,
@@ -319,6 +383,25 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A671C7A0168E5A99002AD3EF /* FontRenderingTest */ = {
+			isa = PBXGroup;
+			children = (
+				A671C7A1168E5A99002AD3EF /* AppDelegate.h */,
+				A671C7A2168E5A99002AD3EF /* AppDelegate.m */,
+				A671C7A3168E5A99002AD3EF /* Default-568h@2x.png */,
+				A671C7A4168E5A99002AD3EF /* Default.png */,
+				A671C7A5168E5A99002AD3EF /* Default@2x.png */,
+				A671C7A6168E5A99002AD3EF /* InfoPlist.strings */,
+				A671C7A8168E5A99002AD3EF /* FontRenderingTest-Info.plist */,
+				A671C7A9168E5A99002AD3EF /* FontRenderingTest-Prefix.pch */,
+				A671C7B3168E5B83002AD3EF /* FontRenderingTestViewController.h */,
+				A671C7B4168E5B83002AD3EF /* FontRenderingTestViewController.m */,
+				A671C7AA168E5A99002AD3EF /* main.m */,
+			);
+			name = FontRenderingTest;
+			path = "tests-ios/FontRenderingTest";
+			sourceTree = "<group>";
+		};
 		A6EA1E2615CD65790007C4FF /* IBIntegrationTest */ = {
 			isa = PBXGroup;
 			children = (
@@ -348,6 +431,7 @@
 			children = (
 				D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */,
 				D2FEE879153ABD5B004CFF62 /* DepthBufferTest */,
+				A671C7A0168E5A99002AD3EF /* FontRenderingTest */,
 				D21C97FC14F302320059BBBE /* PickingTest */,
 				D2D4A25514FA1AF4000FCBA0 /* MultiTouchSpritesTest */,
 				A6EA1E2615CD65790007C4FF /* IBIntegrationTest */,
@@ -373,6 +457,7 @@
 				D2FEE865153ABD2A004CFF62 /* DepthBufferTest.app */,
 				A6EA1E0015CD65110007C4FF /* IBIntegrationTest.app */,
 				A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */,
+				A671C785168E5A6D002AD3EF /* FontRenderingTest.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -380,6 +465,8 @@
 		D21C97E614F302050059BBBE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */,
+				A671C7B9168E5D9F002AD3EF /* CoreText.framework */,
 				A61FD51E1620F72F008A1BDF /* CoreMedia.framework */,
 				A61FD51B1620F717008A1BDF /* CoreVideo.framework */,
 				A61FD4EE1620ED0E008A1BDF /* AVFoundation.framework */,
@@ -389,6 +476,7 @@
 				D29284F415AA52300086B12A /* CoreGraphics.framework */,
 				D29284F715AA52460086B12A /* OpenGLES.framework */,
 				D29284FA15AA52610086B12A /* Foundation.framework */,
+				A671C758168E5A05002AD3EF /* Cocoa.framework */,
 				D253D98815663D9F0027DA6C /* Other Frameworks */,
 			);
 			name = Frameworks;
@@ -440,6 +528,8 @@
 				D2D4A25714FA1AF4000FCBA0 /* AppDelegate.m */,
 				D292850C15AA53840086B12A /* DraggableSprite.h */,
 				D292850D15AA53840086B12A /* DraggableSprite.m */,
+				A682C1D9169876A1004937B3 /* MultiTouchSpritesTestViewController.h */,
+				A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */,
 				D2D4A26214FA1B0F000FCBA0 /* Supporting Files */,
 			);
 			name = MultiTouchSpritesTest;
@@ -502,6 +592,23 @@
 			name = ICGPUImageTest;
 			productName = ICGPUImageTest;
 			productReference = A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A671C784168E5A6D002AD3EF /* FontRenderingTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A671C79C168E5A6D002AD3EF /* Build configuration list for PBXNativeTarget "FontRenderingTest" */;
+			buildPhases = (
+				A671C781168E5A6D002AD3EF /* Sources */,
+				A671C782168E5A6D002AD3EF /* Frameworks */,
+				A671C783168E5A6D002AD3EF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = FontRenderingTest;
+			productName = FontRenderingTest;
+			productReference = A671C785168E5A6D002AD3EF /* FontRenderingTest.app */;
 			productType = "com.apple.product-type.application";
 		};
 		A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */ = {
@@ -611,6 +718,7 @@
 				D2FEE864153ABD2A004CFF62 /* DepthBufferTest */,
 				A6EA1DFF15CD65110007C4FF /* IBIntegrationTest */,
 				A61FD4BA1620ECB0008A1BDF /* ICGPUImageTest */,
+				A671C784168E5A6D002AD3EF /* FontRenderingTest */,
 			);
 		};
 /* End PBXProject section */
@@ -648,6 +756,17 @@
 				A61FD4E21620ECD9008A1BDF /* Default.png in Resources */,
 				A61FD4E31620ECD9008A1BDF /* Default@2x.png in Resources */,
 				A61FD4E41620ECD9008A1BDF /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A671C783168E5A6D002AD3EF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A671C7AC168E5A99002AD3EF /* Default-568h@2x.png in Resources */,
+				A671C7AD168E5A99002AD3EF /* Default.png in Resources */,
+				A671C7AE168E5A99002AD3EF /* Default@2x.png in Resources */,
+				A671C7AF168E5A99002AD3EF /* InfoPlist.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -703,6 +822,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A671C781168E5A6D002AD3EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A671C7AB168E5A99002AD3EF /* AppDelegate.m in Sources */,
+				A671C7B1168E5A99002AD3EF /* main.m in Sources */,
+				A671C7B5168E5B83002AD3EF /* FontRenderingTestViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A6EA1DFC15CD65110007C4FF /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -734,6 +863,7 @@
 				D2D4A25D14FA1AF4000FCBA0 /* AppDelegate.m in Sources */,
 				D2D4A25F14FA1AF4000FCBA0 /* main.m in Sources */,
 				D292850E15AA53840086B12A /* DraggableSprite.m in Sources */,
+				A682C1DB169876A1004937B3 /* MultiTouchSpritesTestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -777,6 +907,14 @@
 			isa = PBXVariantGroup;
 			children = (
 				A61FD4DC1620ECD8008A1BDF /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A671C7A6168E5A99002AD3EF /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A671C7A7168E5A99002AD3EF /* en */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -908,6 +1046,76 @@
 					extensions/GPUImage/framework/Source,
 				);
 				INFOPLIST_FILE = "tests-ios/ICGPUImageTest/ICGPUImageTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		A671C79D168E5A6D002AD3EF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/FontRenderingTest/FontRenderingTest-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-ios/FontRenderingTest/FontRenderingTest-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A671C79E168E5A6D002AD3EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_APPS_DIR)/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "tests-ios/FontRenderingTest/FontRenderingTest-Prefix.pch";
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = .;
+				INFOPLIST_FILE = "tests-ios/FontRenderingTest/FontRenderingTest-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1186,6 +1394,15 @@
 			buildConfigurations = (
 				A61FD4D31620ECB0008A1BDF /* Debug */,
 				A61FD4D41620ECB0008A1BDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A671C79C168E5A6D002AD3EF /* Build configuration list for PBXNativeTarget "FontRenderingTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A671C79D168E5A6D002AD3EF /* Debug */,
+				A671C79E168E5A6D002AD3EF /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

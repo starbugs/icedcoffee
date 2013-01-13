@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -21,8 +21,11 @@
 //  SOFTWARE.
 //  
 
-#import "icMacros.h"
+
 #pragma once
+
+
+#import "icMacros.h"
 
 /**
  @defgroup icedcoffee-configuration Icedcoffee Configuration
@@ -119,6 +122,14 @@
 
 #ifndef IC_ENABLE_DEBUG_TEXTURE_CACHE
 #define IC_ENABLE_DEBUG_TEXTURE_CACHE 0
+#endif
+
+#ifndef IC_ENABLE_DEBUG_GLYPH_CACHE
+#define IC_ENABLE_DEBUG_GLYPH_CACHE 0
+#endif
+
+#ifndef IC_ENABLE_DEBUG_GLYPH_RUN_METRICS
+#define IC_ENABLE_DEBUG_GLYPH_RUN_METRICS 0
 #endif
 
 /** @} */

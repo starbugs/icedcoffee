@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -28,50 +28,8 @@
 
 #pragma once
 
-#import <Availability.h>
-
-
-// Platform Macros
-
-/**
- @addtogroup platform-macros Platform Macros
- @{
- */
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-/**
- @brief Defined when compiled for the iOS platform
- */
-#define __IC_PLATFORM_IOS 1
-
-/**
- @brief Defined when compiled for a touch platform
- */
-#define __IC_PLATFORM_TOUCH 1
-
-/**
- @brief Defined when compiled for an OpenGL ES platform
- 
- This macro is thought to be used for built-in stringified shader sources
- */
-#define GL_ES 1
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-/**
- @brief Defined when compiled for the Mac platform
- */
-#define __IC_PLATFORM_MAC 1
-
-/**
- @brief Defined when compiled for a desktop platform
- */
-#define __IC_PLATFORM_DESKTOP 1
-
-#endif
-
-/** @} */
+#import "icAvailability.h"
+#import "ICOpenGLContext.h"
 
 
 // Constants

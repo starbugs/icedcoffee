@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -76,8 +76,9 @@ void main( void )
 - (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
-    [self runWithScene:scene];
-    
+
+    [scene addObserver:self forKeyPath:@"size" options:NSKeyValueObservingOptionNew context:nil];
+
     ICShaderCache *shaderCache = [ICShaderCache currentShaderCache];
     ICAnimatedShaderProgram *shader =
     [ICAnimatedShaderProgram shaderProgramWithName:@"CoolBackgroundShader"
@@ -93,9 +94,8 @@ void main( void )
     shaderSprite.shaderProgram = shader;
     shaderSprite.tag = 1;
     [scene addChild:shaderSprite];
-    [scene addObserver:self forKeyPath:@"size" options:NSKeyValueObservingOptionNew context:nil];
     
-    [scene addChild:shaderSprite];
+    [self runWithScene:scene];
 }
 
 @end

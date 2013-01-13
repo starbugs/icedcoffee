@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -24,15 +24,30 @@
 #import "ICControl.h"
 #import "ICLabel.h"
 
+// Work in progress - Mac only currently
+
+#ifdef __IC_PLATFORM_MAC
+
 @interface ICTextField : ICControl {
 @protected
-    ICLabel *_label;
+    ICLabel *_textLabel;
 }
 
-@property (nonatomic, retain) ICLabel *label;
+@property (nonatomic, copy) NSAttributedString *attributedText;
+
+@property (nonatomic, copy) NSString *text;
+
+@property (nonatomic, retain) ICFont *font;
+
+@property (nonatomic, assign) icColor4B color;
+
+@property (nonatomic, assign) float gamma;
 
 - (void)keyDown:(ICKeyEvent *)keyEvent;
 
 - (void)keyUp:(ICKeyEvent *)keyEvent;
 
 @end
+
+#endif
+

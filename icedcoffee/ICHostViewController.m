@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -26,6 +26,8 @@
 #import "ICScene.h"
 #import "ICRenderTexture.h"
 #import "ICTextureCache.h"
+#import "ICShaderCache.h"
+#import "ICGlyphCache.h"
 #import "ICScheduler.h"
 #import "ICCamera.h"
 #import "ICTargetActionDispatcher.h"
@@ -59,6 +61,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize frameUpdateMode = _frameUpdateMode;
 @synthesize frameCount = _frameCount;
 @synthesize elapsedTime = _elapsedTime;
+@synthesize fps = _fps;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 @synthesize openGLContext = _openGLContext;
 
@@ -89,6 +92,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     _frameUpdateMode = ICFrameUpdateModeSynchronized;
     _needsDisplay = YES;
     _didDrawFirstFrame = NO;
+    _desiredContentScaleFactor = 1.f;
     
     // Make current host view controller regardless of which initializer was called
     [self makeCurrentHostViewController];
@@ -174,18 +178,19 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         _lastUpdate = now;
         _frameCount++;
         
+        // Calculate current framerate
+        _fpsDelta += _deltaTime;
+        _fpsNumFrames++;
+        if (_fpsDelta >= 1.0f) {
+            [self willChangeValueForKey:@"fps"];
+            _fps = (float)_fpsNumFrames / _fpsDelta;
+            [self didChangeValueForKey:@"fps"];
+            _fpsDelta = 0;
+            _fpsNumFrames = 0;
 #if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
-        // FIXME: this needs to be refactored so that it works generically and for multiple HVCs
-        static int numFrames = 0;
-        static float dtsum = 0.0f;
-        dtsum += _deltaTime;
-        numFrames++;
-        if (dtsum >= 1.0f) {
-            ICLog(@"FPS: %f", (float)numFrames / dtsum);
-            dtsum -= 1.0f;
-            numFrames = 0;
-        }
+            ICLog(@"FPS: %f", _fps);
 #endif
+        }
     }
 }
 
@@ -302,7 +307,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 {
     // Override this method in your custom view controller to programatically instantiate
     // an ICGLView object. Overriding this method is not necessary if you're using a nib.
-    // You must call the [super loadView] in your override.
+    // You must call [super loadView] in your override.
     
 #ifdef __IC_PLATFORM_IOS
     // Let UIViewController load the view from its associated nib file, if applicable
@@ -328,6 +333,12 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     
     NSAssert(self.view != nil, @"view property must not be nil at this point");
     
+#ifdef __IC_PLATFORM_IOS
+    if ([self.view respondsToSelector:@selector(setContentScaleFactor:)]) {
+        [self.view setContentScaleFactor:[self contentScaleFactor]];
+    }
+#endif
+    
     // OpenGL context became available: if the view's OpenGL context doesn't have a corresponding
     // render context yet, create and register a new render context for it, so it's possible
     // for other components to retrieve it via the OpenGL context globally
@@ -339,12 +350,20 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         [_openGLContext makeCurrentContext];
     }
     
-    // If not already existing, create a texture cache bound to our OpenGL context
+    // If not already existing, create caches bound to our OpenGL context
     // (required for auxiliary OpenGL contexts)
-    if (!self.textureCache) {
-        _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self]
-                                       autorelease];
+    if (!_openGLContext.textureCache) {
+        _openGLContext.textureCache = [[[ICTextureCache alloc] initWithHostViewController:self] autorelease];
     }
+    if (!_openGLContext.shaderCache) {
+        _openGLContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
+    }
+    if (!_openGLContext.glyphCache) {
+        _openGLContext.glyphCache = [[[ICGlyphCache alloc] init] autorelease];
+    }
+    
+    // Set content scale factor before calling setUpScene
+    [self setContentScaleFactor:_desiredContentScaleFactor];
     
     // Allow subclasses to set up their custom scene
     [self setUpScene];
@@ -388,6 +407,11 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 {
     NSAssert(self.openGLContext != nil, @"Must have a valid OpenGL context at this point");
     self.openGLContext.contentScaleFactor = contentScaleFactor;
+    
+#ifdef __IC_PLATFORM_IOS
+    if ([[self view] respondsToSelector:@selector(setContentScaleFactor:)])
+        [[self view] setContentScaleFactor:[self contentScaleFactor]];
+#endif
 }
 
 - (BOOL)retinaDisplaySupportEnabled
@@ -398,18 +422,32 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (BOOL)enableRetinaDisplaySupport:(BOOL)retinaDisplayEnabled
 {
 #ifdef __IC_PLATFORM_IOS
-    if (![[self view] respondsToSelector:@selector(setContentScaleFactor:)]) {
-        return NO; // setContentScaleFactor not supported by software 
+    if ([self isViewLoaded]) {
+        // Warn that initialization via setUpScene might go wrong if the content scale factor
+        // isn't set before the view has been set or loaded
+        NSLog(@"Warning: enableRetinaDisplaySupport: should be called before " \
+               "setting a view on the host view controller!");
     }
-    
+
 	if ([[UIScreen mainScreen] scale] == 1.0)
 		return NO; // SD device
 
-    _retinaDisplayEnabled = retinaDisplayEnabled;
-    [self setContentScaleFactor:retinaDisplayEnabled ? IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR
-                                : IC_DEFAULT_CONTENT_SCALE_FACTOR];
+    UIView *probeView = [[[UIView alloc] initWithFrame:CGRectMake(0,0,0,0)] autorelease];
+    if (![probeView respondsToSelector:@selector(setContentScaleFactor:)]) {
+        return NO; // setContentScaleFactor not supported by software 
+    }
     
-    [[self view] setContentScaleFactor:[self contentScaleFactor]];
+    // Note the desired content scale factor; viewDidLoad will pick this up and set it once the
+    // view is loaded
+    _desiredContentScaleFactor = retinaDisplayEnabled ?
+                                 IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR :
+                                 IC_DEFAULT_CONTENT_SCALE_FACTOR;
+    
+    _retinaDisplayEnabled = retinaDisplayEnabled;
+    
+    if ([self isViewLoaded])
+        [self setContentScaleFactor:_desiredContentScaleFactor];
+    
     return YES;
 #else
     // Retina display not supported on other platforms

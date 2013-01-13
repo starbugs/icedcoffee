@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -69,7 +69,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  Nodes provide the basis for user interaction event handling for mice, touch, and keyboard
  devices. Event handling is implemented on top of the scene graph in the ICScene, ICResponder, and
  ICHostViewController classes amongst others.
-
+ 
  ### Subclassing ###
  
  ICNode may be subclassed to implement custom nodes. Most likely, you will want to implement
@@ -225,7 +225,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Adds a child node to the receiver's children array
  
- @param child A reference to a valid ICNode object. When added, the object is retained.
+ @param child A reference to a valid ICNode object defining the child to be added
+ 
+ This method implicitly retains ``child``.
  
  @sa
     - insertChild:atIndex:
@@ -237,9 +239,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Inserts a child node at a specific index in the receiver's children array
  
- @param child A reference to a valid ICNode object. When inserted, the object is retained.
- @param index An int specifying an index position into the node's children array.
- 
+ @param child A reference to a valid ICNode object defining the child to be inserted
+ @param index An ``uint`` specifying an index position into the node's children array.
+
+ This method implicitly retains ``child``.
+
  @sa
     - addChild:
     - children
@@ -249,7 +253,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Removes a child node from the receiver's children array
  
- @param child A reference to a valid ICNode object. When removed, the object is released.
+ @param child A reference to a valid ICNode object defining the child to remove from the receiver.
+ 
+ This method sets the ICNode::parent property of ``child`` to ``nil``, then removes ``child``
+ from the receiver's internal children array. ``child`` is implicitly released by this method.
  
  @sa
     - removeChildAtIndex:
@@ -261,9 +268,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Removes a child node specified by an index into the receiver's children array
  
- @param index An int specifying the index of the child node to be removed. When removed,
- the object will be released.
- 
+ @param index An ``uint`` specifying the index of the child node to be removed from the receiver.
+
+ This method sets the ICNode::parent property of the child node to ``nil``, then removes it
+ from the receiver's internal children array. The child node is implicitly released by this method.
+
  @sa
     - removeChild:
     - removeAllChildren:
@@ -273,6 +282,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 /**
  @brief Removes all children from the receiver
+ 
+ This method sets the ICNode::parent property of all children of the receiver to ``nil``, then
+ removes all children from the receiver's internal children array. All child nodes are implicitly
+ released by this method.
  
  @sa
     - removeChild:
@@ -1149,6 +1162,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief Prints a debug log of the node's branch on the console (only available in debug mode)
  */
 - (void)debugLogBranch;
+
+- (void)debugDrawBoundingBox;
 
 #endif
 
