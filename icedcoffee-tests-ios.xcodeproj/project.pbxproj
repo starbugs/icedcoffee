@@ -46,6 +46,9 @@
 		A682C1DB169876A1004937B3 /* MultiTouchSpritesTestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A682C1DA169876A1004937B3 /* MultiTouchSpritesTestViewController.m */; };
 		A682C1DC1698772C004937B3 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
 		A682C1DD1698773A004937B3 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99916A30CC8004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99A16A30CCB004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
+		A6C4A99B16A30CCF004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A6C6863F1693524000761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7BB168E5DB6002AD3EF /* libstdc++.dylib */; };
 		A6C686401693525100761BD5 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A671C7B9168E5D9F002AD3EF /* CoreText.framework */; };
 		A6CB76DC1649DA7800CDEEAC /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61FD51B1620F717008A1BDF /* CoreVideo.framework */; };
@@ -256,6 +259,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99B16A30CCF004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */,
 				A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */,
 				A61FD4F01620ED19008A1BDF /* AVFoundation.framework in Frameworks */,
@@ -289,6 +293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99A16A30CCB004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */,
 				A6CB76DD1649DB5D00CDEEAC /* CoreVideo.framework in Frameworks */,
 				A6EA1E0215CD65110007C4FF /* UIKit.framework in Frameworks */,
@@ -335,6 +340,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99916A30CC8004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2FEE88A153ABDDF004CFF62 /* libicedcoffee-ios.a in Frameworks */,
 				D292850715AA52B80086B12A /* UIKit.framework in Frameworks */,
 				A67CC120162A32110094014C /* CoreVideo.framework in Frameworks */,
