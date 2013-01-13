@@ -53,6 +53,14 @@
 		A69322A1168F59AF003DE913 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = A693229A168F59AF003DE913 /* MainMenu.xib */; };
 		A69322A2168F59AF003DE913 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A693229C168F59AF003DE913 /* main.m */; };
 		A69322A5168F5A6D003DE913 /* CoreTextReferenceView.m in Sources */ = {isa = PBXBuildFile; fileRef = A69322A4168F5A6D003DE913 /* CoreTextReferenceView.m */; };
+		A6C4A99116A2F23C004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99216A2F277004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99316A2F29C004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99416A2F2BE004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99516A2F2CC004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99616A2F2F8004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99716A2F2FC004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
+		A6C4A99816A2F301004EC1A0 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6C6863C1691C90F00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6C6863D169200E400761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
 		A6C6863E1692FFED00761BD5 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A62633F21685DE2E00286AC0 /* libstdc++.dylib */; };
@@ -620,6 +628,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99516A2F2CC004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A61D6F6315DC4125005AFDA5 /* libicedcoffee-mac.a in Frameworks */,
 				A61D6F3515DC3A8E005AFDA5 /* Cocoa.framework in Frameworks */,
 				A61D6F5E15DC3BE6005AFDA5 /* Carbon.framework in Frameworks */,
@@ -692,6 +701,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99616A2F2F8004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D22F25861587D6990049268C /* libicedcoffee-mac.a in Frameworks */,
 				D22F25831587D6870049268C /* Carbon.framework in Frameworks */,
 				D22F255B1587D53B0049268C /* Cocoa.framework in Frameworks */,
@@ -704,6 +714,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99316A2F29C004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D253D9EC15663E510027DA6C /* libicedcoffee-mac.a in Frameworks */,
 				D253D9EB15663E450027DA6C /* Carbon.framework in Frameworks */,
 				D253D9C115663DE20027DA6C /* Cocoa.framework in Frameworks */,
@@ -716,11 +727,12 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99816A2F301004EC1A0 /* libstdc++.dylib in Frameworks */,
+				D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */,
 				D2735B701591273000216F1B /* Carbon.framework in Frameworks */,
 				D2735B45159126E200216F1B /* Cocoa.framework in Frameworks */,
 				D2735B721591273C00216F1B /* CoreVideo.framework in Frameworks */,
 				D2735B711591273300216F1B /* OpenGL.framework in Frameworks */,
-				D2735B731591275D00216F1B /* libicedcoffee-mac.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -728,6 +740,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99716A2F2FC004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D28504B0158B20DB00CD71ED /* Carbon.framework in Frameworks */,
 				D2850485158B204E00CD71ED /* Cocoa.framework in Frameworks */,
 				D28504B1158B20DD00CD71ED /* CoreVideo.framework in Frameworks */,
@@ -740,6 +753,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99116A2F23C004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2ADD004157EB4B500B6E519 /* libicedcoffee-mac.a in Frameworks */,
 				D2ADCFF2157EB38F00B6E519 /* Carbon.framework in Frameworks */,
 				D2ADCFC8157EB34A00B6E519 /* Cocoa.framework in Frameworks */,
@@ -752,6 +766,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99416A2F2BE004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2EDC3711572BC6400EBB417 /* libicedcoffee-mac.a in Frameworks */,
 				D2EDC36E1572BC4900EBB417 /* Carbon.framework in Frameworks */,
 				D2EDC3431572BB8A00EBB417 /* Cocoa.framework in Frameworks */,
@@ -777,6 +792,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A6C4A99216A2F277004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2F3503B15286A7700DF2D5B /* libicedcoffee-mac.a in Frameworks */,
 				D2F3503815286A6900DF2D5B /* Carbon.framework in Frameworks */,
 				D2F3503915286A6E00DF2D5B /* CoreVideo.framework in Frameworks */,
