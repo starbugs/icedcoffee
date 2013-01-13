@@ -69,7 +69,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  Nodes provide the basis for user interaction event handling for mice, touch, and keyboard
  devices. Event handling is implemented on top of the scene graph in the ICScene, ICResponder, and
  ICHostViewController classes amongst others.
-
+ 
  ### Subclassing ###
  
  ICNode may be subclassed to implement custom nodes. Most likely, you will want to implement
