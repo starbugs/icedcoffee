@@ -25,6 +25,13 @@
 #import "icMacros.h"
 #import "icTypes.h"
 
+/**
+ @brief Drawing API for debugging purposes
+ 
+ The ICDrawAPI class provides class methods for drawing simple shapes for debugging purposes.
+ Note that these methods currently exhibit bad performance and are really only suitable for
+ debug drawing.
+ */
 @interface ICDrawAPI : NSObject
 
 + (void)drawLine2DFrom:(kmVec3)from to:(kmVec3)to color:(icColor4B)color lineWidth:(float)lineWidth;

@@ -42,6 +42,8 @@
     NSMutableArray *_lines;
 }
 
+/** @name Initialization */
+
 /**
  @brief Returns a new autoreleased text frame with the given size, string and font
  */
@@ -66,6 +68,9 @@
  @brief Initializes the receiver with the given size and attributed string
  */
 - (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
+
+
+/** @name Setting Attributed Text */
 
 /**
  @brief The attributed string used to represent the receiver's text

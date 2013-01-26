@@ -51,6 +51,8 @@
     float _lineWidth;
 }
 
+/** @name Initialization */
+
 /**
  @brief Returns a new autoreleased text line with the given string and font
  */
@@ -88,6 +90,9 @@
         icAttributedString:(NSAttributedString *)icAttString
                stringRange:(NSRange)stringRange;
 
+
+/** @name Managing the Line's String */
+
 /**
  @brief The attributed string containing formatted text displayed by the receiver
  */
@@ -97,6 +102,9 @@
  @brief The text (without formatting) displayed by the receiver
  */
 - (NSString *)string;
+
+
+/** @name Retrieving Typographic Metrics */
 
 - (float)ascent;
 

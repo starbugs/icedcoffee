@@ -81,6 +81,8 @@ typedef enum {
     CTParagraphStyleRef _ctParagraphStyle;
 }
 
+/** @name Initialization */
+
 /**
  @brief Returns an autoreleased paragraph style initialized with default properties
  
@@ -123,6 +125,9 @@ typedef enum {
  the receiver.
  */
 - (id)initWithCoreTextParagraphStyle:(CTParagraphStyleRef)ctParagraphStyle;
+
+
+/** @name Defining Paragraph Style Properties */
 
 /**
  @brief The text alignment (natural, left, center, right)

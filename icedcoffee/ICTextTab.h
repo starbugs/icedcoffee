@@ -29,6 +29,8 @@
  */
 @interface ICTextTab : NSObject
 
+/** @name Initialization */
+
 /**
  @brief Returns a new autoreleased text tab with the given text alignment and location
  */
@@ -38,6 +40,9 @@
  @brief Initializes the receiver with the given text alignment and location
  */
 - (id)initWithTextAlignment:(ICTextAlignment)textAlignment location:(float)location;
+
+
+/** @name Setting the Text Tab's Properties */
 
 /**
  @brief The text alignment
