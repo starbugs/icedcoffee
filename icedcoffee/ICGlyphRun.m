@@ -191,6 +191,10 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 _positions[i].x = ICFontPixelsToPoints(_positions[i].x) + ICFontPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
                 _positions[i].y = ICFontPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICFontPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
+#if IC_ROUND_GLYPH_X_POSITIONS == YES
+                _positions[i].x = roundf(_positions[i].x);
+#endif
+                
                 float advance = ICFontPixelsToPoints(boundingRects[i].size.width);
                 
                 if (_positions[i].x + marginInPoints < min.x)
