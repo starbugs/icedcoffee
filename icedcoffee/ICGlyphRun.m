@@ -217,6 +217,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                     _offsets[i] = 0;
                 }
                 //NSLog(@"Final pos: %f (%f)", _positions[i].x + _offsets[i], orig);
+                //NSLog(@"GPU pos: %f", _positions[i].x);
 #elif IC_ROUND_GLYPH_X_POSITIONS
                 _positions[i].x = roundf(_positions[i].x);
                 _offsets[i] = 0.f;
