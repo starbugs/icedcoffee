@@ -124,6 +124,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
     CFIndex _glyphCount;
     CGGlyph *_glyphs;
     CGPoint *_positions;
+    float *_offsets;
     kmVec4 _boundingBox;
     float _baseline;
 }
@@ -136,6 +137,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
 @property (nonatomic, readonly) CFIndex glyphCount;
 @property (nonatomic, readonly) CGGlyph *glyphs;
 @property (nonatomic, readonly) CGPoint *positions;
+@property (nonatomic, readonly) float *offsets;
 @property (nonatomic, readonly) kmVec4 boundingBox;
 
 @end
@@ -148,6 +150,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
 @synthesize glyphCount = _glyphCount;
 @synthesize glyphs = _glyphs;
 @synthesize positions = _positions;
+@synthesize offsets = _offsets;
 @synthesize boundingBox = _boundingBox;
 
 - (id)initWithCoreTextRun:(CTRunRef)run
@@ -166,8 +169,11 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         if (_glyphCount > 0) {
             _glyphs = (CGGlyph *)malloc(sizeof(CGGlyph) * _glyphCount);
             CTRunGetGlyphs(run, CFRangeMake(0, _glyphCount), _glyphs);
+            
             _positions = (CGPoint *)malloc(sizeof(CGPoint) * _glyphCount);
             CTRunGetPositions(run, CFRangeMake(0, _glyphCount), _positions);
+            
+            _offsets = (float *)malloc(sizeof(float) * _glyphCount);
             
             //CGAffineTransform textMatrix = CTRunGetTextMatrix(run);
             
@@ -191,8 +197,29 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 _positions[i].x = ICFontPixelsToPoints(_positions[i].x) + ICFontPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
                 _positions[i].y = ICFontPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICFontPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
-#if IC_ROUND_GLYPH_X_POSITIONS == YES
+#if IC_ROUND_GLYPH_X_POSITIONS
                 _positions[i].x = roundf(_positions[i].x);
+                _offsets[i] = 0.f;
+#else
+                //float orig = _positions[i].x;
+                _offsets[i] = _positions[i].x - floorf(_positions[i].x);
+                if (_offsets[i] > 0.8f) {
+                    // Move glyphs with subpixel offset > 0.8 one pixel right
+                    _positions[i].x = ceilf(_positions[i].x);
+                    _offsets[i] = 0;
+                } else if (_offsets[i] >= 0.5f) {
+                    // Use 0.66 offset rasterization for subpixel offsets > 0.33
+                    _positions[i].x = floorf(_positions[i].x);
+                    _offsets[i] = 0.66f;
+                } else if (_offsets[i] >= 0.2f) {
+                    // Use 0.33 offset rasterization for subpixel offsets > 0.33
+                    _positions[i].x = floorf(_positions[i].x);
+                    _offsets[i] = 0.33f;
+                } else {
+                    _positions[i].x = floorf(_positions[i].x);
+                    _offsets[i] = 0;
+                }
+                //NSLog(@"Final pos: %f (%f)", _positions[i].x + _offsets[i], orig);
 #endif
                 
                 float advance = ICFontPixelsToPoints(boundingRects[i].size.width);
@@ -221,6 +248,8 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         free(_glyphs);
     if (_positions)
         free(_positions);
+    if (_offsets)
+        free(_offsets);
     
     [super dealloc];
 }
@@ -534,12 +563,14 @@ NSString *__glyphAFSH = IC_SHADER_STRING
         CGGlyph *glyphs = self.metrics.glyphs;
         CFIndex glyphCount = self.metrics.glyphCount;
         CGPoint *positions = self.metrics.positions;
+        float *offsets = self.metrics.offsets;
         
         // Get texture glyphs separated by texture. The idea here is to create distinct VBOs and
         // index buffers for all relevant glyphs that are cached on the same texture so as to
         // limit the number of texture state changes.
         ICGlyphCache *glyphCache = [ICGlyphCache currentGlyphCache];
         NSDictionary *glyphsByTexture = [glyphCache textureGlyphsSeparatedByTextureForGlyphs:glyphs
+                                                                                     offsets:offsets
                                                                                        count:glyphCount
                                                                                         font:self.font];
         

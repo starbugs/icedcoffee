@@ -107,7 +107,7 @@
  
  If a yet uncached glyph is requested, this method caches the given glyph before returning a result.
  */
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font;
+- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph offset:(float)offset font:(ICFont *)font;
 
 /**
  @brief Retrieves a number of texture glyphs for the given glyphs and font
@@ -122,7 +122,10 @@
  
  @return Returns an ``NSArray`` containing ICTextureGlyph objects corresponding to ``glyphs``.
  */
-- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font;
+- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs
+                            offsets:(float *)offsets
+                              count:(NSInteger)count
+                               font:(ICFont *)font;
 
 /**
  @brief Retrieves a number of texture glyphs separated by texture for the given glyphs and font
@@ -140,6 +143,7 @@
  ICTextureGlyph object defining the corresponding texture glyph.
  */
 - (NSDictionary *)textureGlyphsSeparatedByTextureForGlyphs:(ICGlyph *)glyphs
+                                                   offsets:(float *)offsets
                                                      count:(NSInteger)count
                                                       font:(ICFont *)font;
 

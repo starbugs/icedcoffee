@@ -33,12 +33,64 @@
 #import "ICFontCache.h"
 
 
+@interface ICGlyphKey : NSObject <NSCopying> {
+@protected
+    ICGlyph _glyph;
+    float _offset;
+}
+
++ (id)glyphKeyWithGlyph:(ICGlyph)glyph offset:(float)offset;
+- (id)initWithGlyph:(ICGlyph)glyph offset:(float)offset;
+
+@property (nonatomic, readonly) ICGlyph glyph;
+@property (nonatomic, readonly) float offset;
+
+@end
+
+@implementation ICGlyphKey
+
+@synthesize glyph = _glyph;
+@synthesize offset = _offset;
+
++ (id)glyphKeyWithGlyph:(ICGlyph)glyph offset:(float)offset
+{
+    return [[[[self class] alloc] initWithGlyph:glyph offset:offset] autorelease];
+}
+
+- (id)initWithGlyph:(ICGlyph)glyph offset:(float)offset
+{
+    if ((self = [super init])) {
+        _glyph = glyph;
+        _offset = offset;
+    }
+    return self;
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return [[ICGlyphKey allocWithZone:zone] initWithGlyph:_glyph offset:_offset];
+}
+
+- (BOOL)isEqual:(id)object
+{
+    ICGlyphKey *key = (ICGlyphKey *)object;
+    return (_glyph == [key glyph] && _offset == [key offset]);
+}
+
+- (NSUInteger)hash
+{
+    return _glyph + (int)(_offset * 2.f);
+}
+
+@end
+
+
 @interface ICGlyphCache ()
 - (ICGlyphTextureAtlas *)newTextureAtlas;
 - (ICGlyphTextureAtlas *)vacantTextureAtlas;
 - (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font;
 - (void)cacheGlyphsWithRun:(CTRunRef)run font:(ICFont *)font;
-- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font;
+- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font offset:(float)offset;
 @end
 
 @implementation ICGlyphCache
@@ -122,7 +174,9 @@
         glyphsForFont = [NSMutableDictionary dictionaryWithCapacity:1];
         [_textureGlyphs setObject:glyphsForFont forKey:internalFontName];
     }
-    [glyphsForFont setObject:textureGlyph forKey:[NSNumber numberWithUnsignedShort:textureGlyph.glyph]];
+    [glyphsForFont setObject:textureGlyph
+                      forKey:[ICGlyphKey glyphKeyWithGlyph:textureGlyph.glyph
+                                                    offset:textureGlyph.offset]];
 }
 
 - (void)rasterizeGlyph:(ICGlyph)glyph
@@ -134,8 +188,8 @@
     CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
     //CGContextSetAllowsAntialiasing(context, NO);
     //CGContextSetShouldAntialias(context, NO);
-    CGContextSetAllowsFontSmoothing(context, NO);
-    CGContextSetShouldSmoothFonts(context, NO);
+    //CGContextSetAllowsFontSmoothing(context, NO);
+    //CGContextSetShouldSmoothFonts(context, NO);
     CGContextSetShouldSubpixelPositionFonts(context, YES);
     CGContextSetShouldSubpixelQuantizeFonts(context, YES);
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
@@ -153,9 +207,12 @@
      CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
 }
 
-- (ICTextureGlyph *)rasterizeAndCacheGlyph:(ICGlyph)glyph boundingRect:(CGRect *)boundingRect font:(ICFont *)font
+- (ICTextureGlyph *)rasterizeAndCacheGlyph:(ICGlyph)glyph
+                              boundingRect:(CGRect *)boundingRect
+                                    offset:(float)offset
+                                      font:(ICFont *)font
 {
-    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font];
+    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font offset:offset];
     
     // Only extract new glyph texture if glyph has not already been cached
     if (!textureGlyph) {
@@ -200,7 +257,7 @@
             return nil;
         }
         
-        float xOffset = -boundingRect->origin.x;
+        float xOffset = -boundingRect->origin.x + offset;
         float yOffset = -boundingRect->origin.y;
         
         [self rasterizeGlyph:glyph font:font xOffset:xOffset yOffset:yOffset context:context];
@@ -210,7 +267,7 @@
                                                forGlyph:glyph
                                            sizeInPixels:CGSizeMake(w,h)
                                            boundingRect:*boundingRect
-                                                 offset:0.0f
+                                                 offset:offset
                                                    font:font
                                       uploadImmediately:NO];
         
@@ -221,7 +278,7 @@
                                                    forGlyph:glyph
                                                sizeInPixels:CGSizeMake(w,h)
                                                boundingRect:*boundingRect
-                                                     offset:0.0f
+                                                     offset:offset
                                                        font:font
                                           uploadImmediately:NO];
         }
@@ -261,6 +318,15 @@
     for (CFIndex i=0; i<count; i++) {
         [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
                                                  boundingRect:&boundingRects[i]
+                                                       offset:0.f
+                                                         font:font]];
+        [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
+                                                 boundingRect:&boundingRects[i]
+                                                       offset:0.33f
+                                                         font:font]];
+        [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
+                                                 boundingRect:&boundingRects[i]
+                                                       offset:0.66f
                                                          font:font]];
     }
     
@@ -306,18 +372,18 @@
     [attributedString release];
 }
 
-- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font
+- (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font offset:(float)offset
 {
     NSString *internalFontName = icInternalFontNameForFont(font);
     NSMutableDictionary *glyphsForFont = [_textureGlyphs objectForKey:internalFontName];
-    return [glyphsForFont objectForKey:[NSNumber numberWithUnsignedShort:glyph]];
+    return [glyphsForFont objectForKey:[ICGlyphKey glyphKeyWithGlyph:glyph offset:offset]];
 }
 
 // FIXME: caching lots of single glyphs using this method may be terribly inefficient
 // if data is kept by texture atlas (as it is currently)
-- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph font:(ICFont *)font
+- (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph offset:(float)offset font:(ICFont *)font
 {
-    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font];
+    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font offset:offset];
     
     // If glyph not already cached, cache it now
     if (!textureGlyph) {
@@ -332,7 +398,10 @@
     return textureGlyph;
 }
 
-- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
+- (NSArray *)textureGlyphsForGlyphs:(ICGlyph *)glyphs
+                            offsets:(float *)offsets
+                              count:(NSInteger)count
+                               font:(ICFont *)font
 {
     NSMutableArray *resultTextureGlyphs = [NSMutableArray arrayWithCapacity:count];
     
@@ -347,7 +416,7 @@
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
     NSInteger i=0;
     for (; i<count; i++) {
-        [keys addObject:[NSNumber numberWithUnsignedShort:glyphs[i]]];
+        [keys addObject:[ICGlyphKey glyphKeyWithGlyph:glyphs[i] offset:offsets[i]]];
     }
     
     i = 0;
@@ -377,12 +446,13 @@
 }
 
 - (NSDictionary *)textureGlyphsSeparatedByTextureForGlyphs:(ICGlyph *)glyphs
+                                                   offsets:(float *)offsets
                                                      count:(NSInteger)count
                                                       font:(ICFont *)font
 {
     NSInteger i = 0;
     NSMutableDictionary *glyphsByTexture = [NSMutableDictionary dictionary];
-    NSArray *textureGlyphs = [self textureGlyphsForGlyphs:glyphs count:count font:font];
+    NSArray *textureGlyphs = [self textureGlyphsForGlyphs:glyphs offsets:offsets count:count font:font];
     for (ICTextureGlyph *textureGlyph in textureGlyphs) {
         NSValue *textureKey = [NSValue valueWithPointer:textureGlyph.textureAtlas];
         NSMutableArray *glyphsForTexture = [glyphsByTexture objectForKey:textureKey];

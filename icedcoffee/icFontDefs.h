@@ -49,9 +49,9 @@ typedef CGGlyph ICGlyph;
 #define ICParagraphStyleAttributeName   @"ICParagraphStyle"
 
 
-#define IC_USE_HIGH_RESOLUTION_FONTS    YES
+#define IC_USE_HIGH_RESOLUTION_FONTS    0
 
-#define IC_ROUND_GLYPH_X_POSITIONS      YES
+#define IC_ROUND_GLYPH_X_POSITIONS      0
 
 
 #define ICFontContentScaleFactor() (IC_USE_HIGH_RESOLUTION_FONTS ? 2.f : ICContentScaleFactor())
