@@ -24,27 +24,6 @@
 #import <Foundation/Foundation.h>
 #import "icFontDefs.h"
 
-/**
- @brief The depth of textures used by the glyph cache to store glyphs
- 
- Valid values are 1 for alpha only textures or 4 for RGBA textures.
- */
-#define IC_GLYPH_CACHE_TEXTURE_DEPTH 1
-
-/**
- @brief The default size of texture atlases allocated by ICGlyphCache
- */
-#define IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
-
-/**
- @brief The size in pixels of the margin to add to each glyph's bounding box when
- extracting glyph textures
- 
- This value is used to compensate for glyph antialiasing. Should be divisible by 2 to work
- correctly on retina displays.
- */
-#define IC_GLYPH_RECTANGLE_MARGIN 2
-
 
 @class ICFont;
 @class ICTextureGlyph;

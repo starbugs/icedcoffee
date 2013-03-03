@@ -33,6 +33,18 @@
 #import "ICFontCache.h"
 
 
+float icValidateSubpixelOffset(float offset)
+{
+#if IC_USE_EXTRA_SUBPIXEL_GLYPHS
+    // Legal offset values are 0.33, 0.66 and 0
+    return (offset != 0.33f && offset != 0.66f && offset != 0.f) ? 0.0f : offset;
+#else
+    // If extra glyphs are turned off, the only legal offset value is 0
+    return 0;
+#endif
+}
+
+
 @interface ICGlyphKey : NSObject <NSCopying> {
 @protected
     ICGlyph _glyph;
@@ -320,14 +332,18 @@
                                                  boundingRect:&boundingRects[i]
                                                        offset:0.f
                                                          font:font]];
-        [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
-                                                 boundingRect:&boundingRects[i]
-                                                       offset:0.33f
-                                                         font:font]];
-        [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
-                                                 boundingRect:&boundingRects[i]
-                                                       offset:0.66f
-                                                         font:font]];
+#if IC_USE_EXTRA_SUBPIXEL_GLYPHS
+        if (ICContentScaleFactor() == 1.f) {
+            [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
+                                                     boundingRect:&boundingRects[i]
+                                                           offset:0.33f
+                                                             font:font]];
+            [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
+                                                     boundingRect:&boundingRects[i]
+                                                           offset:0.66f
+                                                             font:font]];
+        }
+#endif
     }
     
     free(boundingRects);
@@ -383,6 +399,7 @@
 // if data is kept by texture atlas (as it is currently)
 - (ICTextureGlyph *)textureGlyphForGlyph:(ICGlyph)glyph offset:(float)offset font:(ICFont *)font
 {
+    offset = icValidateSubpixelOffset(offset);
     ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font offset:offset];
     
     // If glyph not already cached, cache it now
@@ -416,7 +433,9 @@
     NSMutableArray *keys = [NSMutableArray arrayWithCapacity:count];
     NSInteger i=0;
     for (; i<count; i++) {
-        [keys addObject:[ICGlyphKey glyphKeyWithGlyph:glyphs[i] offset:offsets[i]]];
+        float offset = offsets[i];
+        offset = icValidateSubpixelOffset(offset);
+        [keys addObject:[ICGlyphKey glyphKeyWithGlyph:glyphs[i] offset:offset]];
     }
     
     i = 0;

@@ -23,33 +23,40 @@
 
 #pragma once
 
-#import <CoreGraphics/CoreGraphics.h>
-#import "icFontConfig.h"
+#import "icMacros.h"
 
+/**
+ @brief Use high resolution fonts regardless of display type
+ */
+#define IC_USE_HIGH_RESOLUTION_FONTS    0
 
-typedef CGGlyph ICGlyph;
+/**
+ @brief On SD displays, optimize subpixel accuracy by using multiple bitmaps per glyph
+ */
+#define IC_USE_EXTRA_SUBPIXEL_GLYPHS    1
 
+/**
+ @brief Round X positions of glyphs (if not using extra subpixel glyphs)
+ */
+#define IC_ROUND_GLYPH_X_POSITIONS      0
 
-// FIXME: missing documentation
-// FIXME: move to separate header?
+/**
+ @brief The depth of textures used by the glyph cache to store glyphs
+ 
+ Valid values are 1 for alpha only textures or 4 for RGBA textures.
+ */
+#define IC_GLYPH_CACHE_TEXTURE_DEPTH 1
 
-#define ICFontAttributeName             @"ICFont"
+/**
+ @brief The default size of texture atlases allocated by ICGlyphCache
+ */
+#define IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
 
-#define ICForegroundColorAttributeName  @"ICForegroundColor"
-
-#define ICGammaAttributeName            @"ICGamma"
-
-#define ICTrackingAttributeName         @"ICTracking"
-
-// Not supported yet
-#define ICSuperscriptAttributeName      @"ICSuperscript"
-
-#define ICLigatureAttributeName         @"ICLigature"
-
-#define ICParagraphStyleAttributeName   @"ICParagraphStyle"
-
-
-#define ICFontContentScaleFactor() (IC_USE_HIGH_RESOLUTION_FONTS ? 2.f : ICContentScaleFactor())
-#define ICFontPointsToPixels(points) (points*ICFontContentScaleFactor())
-#define ICFontPixelsToPoints(pixels) (pixels/ICFontContentScaleFactor())
-
+/**
+ @brief The size in pixels of the margin to add to each glyph's bounding box when
+ extracting glyph textures
+ 
+ This value is used to compensate for glyph antialiasing. Should be divisible by 2 to work
+ correctly on retina displays.
+ */
+#define IC_GLYPH_RECTANGLE_MARGIN 2

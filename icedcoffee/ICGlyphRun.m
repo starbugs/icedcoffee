@@ -197,10 +197,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 _positions[i].x = ICFontPixelsToPoints(_positions[i].x) + ICFontPixelsToPoints(boundingRects[i].origin.x) - marginInPoints;
                 _positions[i].y = ICFontPixelsToPoints(_positions[i].y) - textureGlyphHeight - ICFontPixelsToPoints(ceilf(boundingRects[i].origin.y)) + roundf(_ascent);
                 
-#if IC_ROUND_GLYPH_X_POSITIONS
-                _positions[i].x = roundf(_positions[i].x);
-                _offsets[i] = 0.f;
-#else
+#if IC_USE_EXTRA_SUBPIXEL_GLYPHS
                 //float orig = _positions[i].x;
                 _offsets[i] = _positions[i].x - floorf(_positions[i].x);
                 if (_offsets[i] > 0.8f) {
@@ -220,6 +217,9 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                     _offsets[i] = 0;
                 }
                 //NSLog(@"Final pos: %f (%f)", _positions[i].x + _offsets[i], orig);
+#elif IC_ROUND_GLYPH_X_POSITIONS
+                _positions[i].x = roundf(_positions[i].x);
+                _offsets[i] = 0.f;
 #endif
                 
                 float advance = ICFontPixelsToPoints(boundingRects[i].size.width);
