@@ -32,6 +32,8 @@
 
 /**
  @brief On SD displays, optimize subpixel accuracy by using multiple bitmaps per glyph
+ 
+ This has no effect when rendering with retina support on high resolution displays.
  */
 #define IC_USE_EXTRA_SUBPIXEL_GLYPHS    1
 

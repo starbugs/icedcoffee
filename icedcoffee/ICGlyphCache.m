@@ -36,8 +36,11 @@
 float icValidateSubpixelOffset(float offset)
 {
 #if IC_USE_EXTRA_SUBPIXEL_GLYPHS
-    // Legal offset values are 0.33, 0.66 and 0
-    return (offset != 0.33f && offset != 0.66f && offset != 0.f) ? 0.0f : offset;
+    if (ICContentScaleFactor() == 1.f) {
+        // Legal offset values for SD displays are 0.33, 0.66 and 0
+        return (offset != 0.33f && offset != 0.66f && offset != 0.f) ? 0.0f : offset;
+    }
+    return 0;
 #else
     // If extra glyphs are turned off, the only legal offset value is 0
     return 0;
