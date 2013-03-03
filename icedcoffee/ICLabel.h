@@ -92,6 +92,8 @@
  */
 + (id)labelWithSize:(CGSize)size;
 
++ (id)labelWithSize:(CGSize)size font:(ICFont *)font;
+
 /**
  @brief Returns a new autoreleased label with the given size and attributed text
  
@@ -140,6 +142,8 @@
  (using ICFont::systemFontWithDefaultSize) and default values for the color and gamma properties.
  */
 - (id)initWithSize:(CGSize)size;
+
+- (id)initWithSize:(CGSize)size font:(ICFont *)font;
 
 /**
  @brief Initializes the receiver with the given size and attributed text
