@@ -30,7 +30,7 @@
 @class ICFont;
 
 /**
- @brief Represents a font glyph on a texture atlas
+ @brief Represents a single font glyph on a texture atlas
  */
 @interface ICTextureGlyph : NSObject {
 @protected
@@ -40,18 +40,30 @@
     kmVec2 _size;
     CGRect _boundingRect;
     BOOL _rotated;
+    float _offset;
 }
 
 /** @name Initialization */
 
 /**
  @brief Initializes the receiver with information about the texture glyph to be represented
+ 
+ @param textureAtlas The texture atlas used to store the glyph
+ @param texCoords A C-array of kmVec2 objects representing the texture coordinates of the glyph
+ @param size The size of the glyph in points
+ @param boundingRect A CGRect defining the bounding rect of the glyph in pixels
+ @param rotated A BOOL indicating whether the glyph has been rotated for storage on the texture
+ atlas
+ @param offset A float defining the subpixel offset of the rasterized glyph
+ @param glyph An ICGlyph value identifying the glyph
+ @param font An ICFont object representing the font which the glyph was extracted from
  */
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
                    boundingRect:(CGRect)boundingRect
                         rotated:(BOOL)rotated
+                         offset:(float)offset
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font;
 
@@ -92,5 +104,10 @@
  @brief Whether the glyph is stored rotated
  */
 @property (nonatomic, readonly) BOOL rotated;
+
+/**
+ @brief Subpixel offset of the rasterized glyph
+ */
+@property (nonatomic, readonly) float offset;
 
 @end

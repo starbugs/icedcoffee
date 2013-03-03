@@ -125,6 +125,118 @@
     [glyphsForFont setObject:textureGlyph forKey:[NSNumber numberWithUnsignedShort:textureGlyph.glyph]];
 }
 
+- (void)rasterizeGlyph:(ICGlyph)glyph
+                  font:(ICFont *)font
+               xOffset:(float)xOffset
+               yOffset:(float)yOffset
+               context:(CGContextRef)context
+{
+    CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
+    //CGContextSetAllowsAntialiasing(context, NO);
+    //CGContextSetShouldAntialias(context, NO);
+    CGContextSetAllowsFontSmoothing(context, NO);
+    CGContextSetShouldSmoothFonts(context, NO);
+    CGContextSetShouldSubpixelPositionFonts(context, YES);
+    CGContextSetShouldSubpixelQuantizeFonts(context, YES);
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    CGContextSetFont(context, cgFont);
+    CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
+    CGContextSetGrayFillColor(context, 1, 1);
+    CGContextShowGlyphsAtPoint(context,
+                               IC_GLYPH_RECTANGLE_MARGIN + xOffset,
+                               IC_GLYPH_RECTANGLE_MARGIN + yOffset,
+                               &glyph, 1);
+    CFRelease(cgFont);
+    
+    /*CGContextSetLineWidth(context, 1);
+     CGContextSetGrayStrokeColor(context, 1, 1);
+     CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
+}
+
+- (ICTextureGlyph *)rasterizeAndCacheGlyph:(ICGlyph)glyph boundingRect:(CGRect *)boundingRect font:(ICFont *)font
+{
+    ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyph font:font];
+    
+    // Only extract new glyph texture if glyph has not already been cached
+    if (!textureGlyph) {
+        size_t deltaW = 0;
+        size_t deltaH = 0;
+        size_t brWidth = (size_t)ceilf(boundingRect->size.width);
+        size_t brHeight = (size_t)ceilf(boundingRect->size.height);
+        if (ICFontContentScaleFactor() == 2.f) {
+            deltaW = brWidth % 2;
+            deltaH = brHeight % 2;
+        }
+        
+        size_t w = brWidth + deltaW + IC_GLYPH_RECTANGLE_MARGIN * 2;
+        size_t h = brHeight + deltaH + IC_GLYPH_RECTANGLE_MARGIN * 2;
+        
+        CGColorSpaceRef colorSpace;
+        CGImageAlphaInfo alphaInfo;
+        
+        int depth = IC_GLYPH_CACHE_TEXTURE_DEPTH;
+        if (depth != 4 && depth != 1) {
+            NSLog(@"Only RGBA and alpha texture depths are supported, falling back to RGBA");
+            depth = 4;
+        }
+        
+        if (depth == 4) {
+            colorSpace = CGColorSpaceCreateDeviceRGB();
+            alphaInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
+        } else if (depth == 1) {
+            colorSpace = CGColorSpaceCreateDeviceGray();
+            alphaInfo = kCGImageAlphaNone;
+        }
+        
+        void *data = calloc(h, w * depth);
+        CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w * depth, colorSpace, alphaInfo);
+        CGColorSpaceRelease(colorSpace);
+        
+        NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
+        
+        if (!context) {
+            free(data);
+            [NSException raise:NSInternalInconsistencyException format:@"Invalid bitmap context"];
+            return nil;
+        }
+        
+        float xOffset = -boundingRect->origin.x;
+        float yOffset = -boundingRect->origin.y;
+        
+        [self rasterizeGlyph:glyph font:font xOffset:xOffset yOffset:yOffset context:context];
+        
+        ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
+        textureGlyph = [textureAtlas addGlyphBitmapData:data
+                                               forGlyph:glyph
+                                           sizeInPixels:CGSizeMake(w,h)
+                                           boundingRect:*boundingRect
+                                                 offset:0.0f
+                                                   font:font
+                                      uploadImmediately:NO];
+        
+        if (!textureGlyph) {
+            // No more space left in vacant texture atlas
+            textureAtlas = [self newTextureAtlas];
+            textureGlyph = [textureAtlas addGlyphBitmapData:data
+                                                   forGlyph:glyph
+                                               sizeInPixels:CGSizeMake(w,h)
+                                               boundingRect:*boundingRect
+                                                     offset:0.0f
+                                                       font:font
+                                          uploadImmediately:NO];
+        }
+        
+        NSAssert(textureGlyph != nil, @"Something went terribly wrong here");
+        
+        [self cacheTextureGlyph:textureGlyph];
+        
+        CGContextRelease(context);
+        free(data);
+    }
+    
+    return textureGlyph;
+}
+
 // FIXME: do not cache spaces!?
 - (NSArray *)cacheGlyphs:(ICGlyph *)glyphs count:(NSInteger)count font:(ICFont *)font
 {
@@ -147,104 +259,9 @@
     CTFontGetBoundingRectsForGlyphs(font.fontRef, kCTFontDefaultOrientation, glyphs, boundingRects, count);
     
     for (CFIndex i=0; i<count; i++) {
-        ICTextureGlyph *textureGlyph = [self retrieveCachedTextureGlyph:glyphs[i] font:font];
-        
-        // Only extract new glyph texture if glyph has not already been cached
-        if (!textureGlyph) {
-            CGRect *boundingRect = &boundingRects[i];
-            
-            size_t deltaW = 0;
-            size_t deltaH = 0;
-            size_t brWidth = (size_t)ceilf(boundingRect->size.width);
-            size_t brHeight = (size_t)ceilf(boundingRect->size.height);
-            if (ICFontContentScaleFactor() == 2.f) {
-                deltaW = brWidth % 2;
-                deltaH = brHeight % 2;
-            }
-            
-            size_t w = brWidth + deltaW + IC_GLYPH_RECTANGLE_MARGIN * 2;
-            size_t h = brHeight + deltaH + IC_GLYPH_RECTANGLE_MARGIN * 2;
-            
-            CGColorSpaceRef colorSpace;
-            CGImageAlphaInfo alphaInfo;
-            
-            int depth = IC_GLYPH_CACHE_TEXTURE_DEPTH;
-            if (depth != 4 && depth != 1) {
-                NSLog(@"Only RGBA and alpha texture depths are supported, falling back to RGBA");
-                depth = 4;
-            }
-            
-            if (depth == 4) {
-                colorSpace = CGColorSpaceCreateDeviceRGB();
-                alphaInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
-            } else if (depth == 1) {
-                colorSpace = CGColorSpaceCreateDeviceGray();
-                alphaInfo = kCGImageAlphaNone;
-            }
-            
-            void *data = calloc(h, w * depth);
-            CGContextRef context = CGBitmapContextCreate(data, w, h, 8, w * depth, colorSpace, alphaInfo);
-            CGColorSpaceRelease(colorSpace);
-            
-            NSAssert(context != nil, @"Unable to create CoreGraphics bitmap context");
-            
-            if (!context) {
-                free(data);
-                return nil;
-            }
-            
-            float xOffset = -boundingRect->origin.x;
-            float yOffset = -boundingRect->origin.y;
-            
-            CGFontRef cgFont = CTFontCopyGraphicsFont(font.fontRef, NULL);
-            //CGContextSetAllowsAntialiasing(context, NO);
-            //CGContextSetShouldAntialias(context, NO);
-            CGContextSetAllowsFontSmoothing(context, NO);
-            CGContextSetShouldSmoothFonts(context, NO);
-            CGContextSetShouldSubpixelPositionFonts(context, YES);
-            CGContextSetShouldSubpixelQuantizeFonts(context, YES);
-            CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-            CGContextSetFont(context, cgFont);
-            CGContextSetFontSize(context, CTFontGetSize(font.fontRef));
-            CGContextSetGrayFillColor(context, 1, 1);
-            CGContextShowGlyphsAtPoint(context,
-                                       IC_GLYPH_RECTANGLE_MARGIN + xOffset,
-                                       IC_GLYPH_RECTANGLE_MARGIN + yOffset,
-                                       &glyphs[i], 1);
-            CFRelease(cgFont);
-            
-            /*CGContextSetLineWidth(context, 1);
-            CGContextSetGrayStrokeColor(context, 1, 1);
-            CGContextStrokeRect(context, CGRectMake(0, 0, w, h));*/
-            
-            ICGlyphTextureAtlas *textureAtlas = [self vacantTextureAtlas];
-            textureGlyph = [textureAtlas addGlyphBitmapData:data
-                                                   forGlyph:glyphs[i]
-                                               sizeInPixels:CGSizeMake(w,h)
-                                               boundingRect:boundingRects[i]
-                                                       font:font
-                                          uploadImmediately:NO];
-            
-            if (!textureGlyph) {
-                // No more space left in vacant texture atlas
-                textureAtlas = [self newTextureAtlas];
-                textureGlyph = [textureAtlas addGlyphBitmapData:data
-                                                       forGlyph:glyphs[i]
-                                                   sizeInPixels:CGSizeMake(w,h)
-                                                   boundingRect:boundingRects[i]
-                                                           font:font
-                                              uploadImmediately:NO];
-            }
-            
-            NSAssert(textureGlyph != nil, @"Something went terribly wrong here");
-            
-            [self cacheTextureGlyph:textureGlyph];
-            
-            CGContextRelease(context);
-            free(data);
-        }
-        
-        [textureGlyphs addObject:textureGlyph];
+        [textureGlyphs addObject:[self rasterizeAndCacheGlyph:glyphs[i]
+                                                 boundingRect:&boundingRects[i]
+                                                         font:font]];
     }
     
     free(boundingRects);

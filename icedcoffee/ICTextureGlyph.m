@@ -31,12 +31,14 @@
 @synthesize texCoords = _texCoords;
 @synthesize size = _size;
 @synthesize boundingRect = _boundingRect;
+@synthesize offset = _offset;
 
 - (id)initWithGlyphTextureAtlas:(ICGlyphTextureAtlas *)textureAtlas
                       texCoords:(kmVec2 *)texCoords
                            size:(kmVec2)size
                    boundingRect:(CGRect)boundingRect
                         rotated:(BOOL)rotated
+                         offset:(float)offset
                           glyph:(ICGlyph)glyph
                            font:(ICFont *)font
 {
@@ -48,6 +50,7 @@
         _size = size;
         _boundingRect = boundingRect;
         _rotated = rotated;
+        _offset = offset;
     }
     return self;
 }

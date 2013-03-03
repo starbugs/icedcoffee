@@ -69,6 +69,7 @@ using RectangleBinPack::SkylineBinPack;
                               forGlyph:(ICGlyph)glyph
                           sizeInPixels:(CGSize)sizeInPixels
                           boundingRect:(CGRect)boundingRect
+                                offset:(float)offset
                                   font:(ICFont *)font
                      uploadImmediately:(BOOL)uploadImmediately
 {
@@ -166,6 +167,7 @@ using RectangleBinPack::SkylineBinPack;
                                                                                  size:size
                                                                          boundingRect:boundingRect
                                                                               rotated:rotated
+                                                                               offset:offset
                                                                                 glyph:glyph
                                                                                  font:font] autorelease];
     return textureGlyph;
