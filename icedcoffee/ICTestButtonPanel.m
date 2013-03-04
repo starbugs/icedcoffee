@@ -34,8 +34,7 @@
 - (id)initWithSize:(CGSize)size
 {
     if ((self = [super initWithSize:size])) {
-        self.autoresizingMask = ICAutoResizingMaskWidthSizable |
-        ICAutoResizingMaskTopMarginFlexible;
+        self.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
         self.drawsBackground = YES;
         self.background.color = (icColor4B){0,0,0,180};
         
