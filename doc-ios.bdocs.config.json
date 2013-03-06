@@ -1,7 +1,7 @@
 {
 	"doxyfilePath": "~/github/icedcoffee/Doxyfile-iOS",
 	"doxygenOutputPath": "~/github/icedcoffee/docs-iOS",
-	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"websiteRootPath": "~/Projects/icedcoffee-meta/website/",
 	"relativeOutputPath": "content/reference/ios/",
 
 	"executeDoxygen": true,

@@ -1,7 +1,7 @@
 {
 	"doxyfilePath": "~/github/icedcoffee/Doxyfile-Mac",
 	"doxygenOutputPath": "~/github/icedcoffee/docs-Mac",
-	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"websiteRootPath": "~/Projects/icedcoffee-meta/website/",
 	"relativeOutputPath": "content/reference/osx/",
 
 	"executeDoxygen": true,

@@ -47,7 +47,7 @@
  
  Valid values are 1 for alpha only textures or 4 for RGBA textures.
  */
-#define IC_GLYPH_CACHE_TEXTURE_DEPTH 1
+#define IC_GLYPH_CACHE_TEXTURE_DEPTH    1
 
 /**
  @brief The default size of texture atlases allocated by ICGlyphCache

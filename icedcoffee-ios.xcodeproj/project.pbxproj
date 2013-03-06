@@ -13,6 +13,7 @@
 		018C88671593D9C40086319E /* ICShaderUniform.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C88631593D9C40086319E /* ICShaderUniform.m */; };
 		018C88681593D9C40086319E /* ICShaderValue.h in Headers */ = {isa = PBXBuildFile; fileRef = 018C88641593D9C40086319E /* ICShaderValue.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		018C88691593D9C40086319E /* ICShaderValue.m in Sources */ = {isa = PBXBuildFile; fileRef = 018C88651593D9C40086319E /* ICShaderValue.m */; };
+		A602941616E5637D000C00C7 /* icFontConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = A602941516E5637D000C00C7 /* icFontConfig.h */; };
 		A61FD5231620F775008A1BDF /* ICGPUImageTexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */; };
 		A61FD5241620F775008A1BDF /* ICGPUImageTexture2D.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */; };
 		A61FD5A71621C150008A1BDF /* ICGPUImageTexture2DDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = A61FD5A61621C150008A1BDF /* ICGPUImageTexture2DDelegate.h */; };
@@ -218,6 +219,7 @@
 		018C88631593D9C40086319E /* ICShaderUniform.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderUniform.m; path = icedcoffee/ICShaderUniform.m; sourceTree = "<group>"; };
 		018C88641593D9C40086319E /* ICShaderValue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICShaderValue.h; path = icedcoffee/ICShaderValue.h; sourceTree = "<group>"; };
 		018C88651593D9C40086319E /* ICShaderValue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICShaderValue.m; path = icedcoffee/ICShaderValue.m; sourceTree = "<group>"; };
+		A602941516E5637D000C00C7 /* icFontConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = icFontConfig.h; path = icedcoffee/icFontConfig.h; sourceTree = "<group>"; };
 		A61FD5211620F775008A1BDF /* ICGPUImageTexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGPUImageTexture2D.h; path = extensions/GPUImage/ICGPUImageTexture2D.h; sourceTree = "<group>"; };
 		A61FD5221620F775008A1BDF /* ICGPUImageTexture2D.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICGPUImageTexture2D.m; path = extensions/GPUImage/ICGPUImageTexture2D.m; sourceTree = "<group>"; };
 		A61FD5A61621C150008A1BDF /* ICGPUImageTexture2DDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGPUImageTexture2DDelegate.h; path = extensions/GPUImage/ICGPUImageTexture2DDelegate.h; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 				A6950CFC1684C9CD0046C6EF /* ICFont.m */,
 				A671C7BD168E5DDA002AD3EF /* ICFontCache.h */,
 				A671C7BE168E5DDB002AD3EF /* ICFontCache.m */,
+				A602941516E5637D000C00C7 /* icFontConfig.h */,
 				A6C686AC1696E4F400761BD5 /* icFontDefs.h */,
 				A6C686A21696E4C000761BD5 /* icFontUtils.h */,
 				A6C686A31696E4C100761BD5 /* icFontUtils.m */,
@@ -923,6 +926,7 @@
 				A6C686AD1696E4F500761BD5 /* icFontDefs.h in Headers */,
 				A682C1D416986E89004937B3 /* ICParagraphStyle.h in Headers */,
 				A682C1D616986E89004937B3 /* ICTextTab.h in Headers */,
+				A602941616E5637D000C00C7 /* icFontConfig.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
