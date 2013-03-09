@@ -51,6 +51,9 @@
 
 /**
  @brief The default size of texture atlases allocated by ICGlyphCache
+ 
+ Performance is likely better if this is set to a large value, avoiding too many
+ texture state changes.
  */
 #define IC_DEFAULT_GLYPH_TEXTURE_ATLAS_SIZE CGSizeMake(1024, 1024)
 

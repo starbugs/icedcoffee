@@ -199,27 +199,32 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 
 #if IC_USE_EXTRA_SUBPIXEL_GLYPHS
                 //float orig = _positions[i].x;
-                _offsets[i] = _positions[i].x - floorf(_positions[i].x);
-                if (_offsets[i] > 0.8f) {
+                CGPoint pixelPosition = CGPointMake(ICPointsToPixels(_positions[i].x),
+                                                    ICPointsToPixels(_positions[i].y));
+                float pixelOffset;
+                pixelOffset = pixelPosition.x - floorf(pixelPosition.x);
+                if (pixelOffset > 0.8f) {
                     // Move glyphs with subpixel offset > 0.8 one pixel right
-                    _positions[i].x = ceilf(_positions[i].x);
-                    _offsets[i] = 0;
-                } else if (_offsets[i] >= 0.5f) {
+                    pixelPosition.x = ceilf(pixelPosition.x);
+                    pixelOffset = 0;
+                } else if (pixelOffset >= 0.5f) {
                     // Use 0.66 offset rasterization for subpixel offsets > 0.33
-                    _positions[i].x = floorf(_positions[i].x);
-                    _offsets[i] = 0.66f;
-                } else if (_offsets[i] >= 0.2f) {
+                    pixelPosition.x = floorf(pixelPosition.x);
+                    pixelOffset = 0.66f;
+                } else if (pixelOffset >= 0.2f) {
                     // Use 0.33 offset rasterization for subpixel offsets > 0.33
-                    _positions[i].x = floorf(_positions[i].x);
-                    _offsets[i] = 0.33f;
+                    pixelPosition.x = floorf(pixelPosition.x);
+                    pixelOffset = 0.33f;
                 } else {
-                    _positions[i].x = floorf(_positions[i].x);
-                    _offsets[i] = 0;
+                    pixelPosition.x = floorf(pixelPosition.x);
+                    pixelOffset = 0.f;
                 }
+                _positions[i].x = ICPixelsToPoints(pixelPosition.x);
+                _offsets[i] = ICPixelsToPoints(pixelOffset);
                 //NSLog(@"Final pos: %f (%f)", _positions[i].x + _offsets[i], orig);
                 //NSLog(@"GPU pos: %f", _positions[i].x);
 #elif IC_ROUND_GLYPH_X_POSITIONS
-                _positions[i].x = roundf(_positions[i].x);
+                _positions[i].x = ICPixelsToPoints(roundf(ICPointsToPixels(_positions[i].x)));
                 _offsets[i] = 0.f;
 #endif
                 
