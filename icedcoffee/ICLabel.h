@@ -92,7 +92,19 @@
  */
 + (id)labelWithSize:(CGSize)size;
 
+/**
+ @brief Returns a new autoreleased label with the given size and font
+
+ For details see ICLabel::initWithSize:font:
+ */
 + (id)labelWithSize:(CGSize)size font:(ICFont *)font;
+
+/**
+ @brief Returns a new autoreleased label with the given size and text
+ 
+ For details see ICLabel::initWithSize:text:
+ */
++ (id)labelWithSize:(CGSize)size text:(NSString *)text;
 
 /**
  @brief Returns a new autoreleased label with the given size and attributed text
@@ -143,7 +155,25 @@
  */
 - (id)initWithSize:(CGSize)size;
 
+/**
+ @brief Initializes the receiver with the given size and font
+ 
+ @param size The size to initialize the receiver with
+ @param font An ICFont object defining the font to be used for displaying text
+
+ Default values for color and gamma as described in ICLabel::initWithSize: are implied.
+*/
 - (id)initWithSize:(CGSize)size font:(ICFont *)font;
+
+/**
+ @brief Initializes the receiver with the given size and text
+
+ @param size The size to initialize the receiver with
+ @param text The text displayed by the receiver
+ 
+ Default values for font, color and gamma as described in ICLabel::initWithSize: are implied.
+*/
+- (id)initWithSize:(CGSize)size text:(NSString *)text;
 
 /**
  @brief Initializes the receiver with the given size and attributed text

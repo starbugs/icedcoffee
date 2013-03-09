@@ -85,6 +85,11 @@
     return [[[[self class] alloc] initWithSize:size font:font] autorelease];
 }
 
++ (id)labelWithSize:(CGSize)size text:(NSString *)text
+{
+    return [[[[self class] alloc] initWithSize:size text:text] autorelease];
+}
+
 + (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText
 {
     return [[[[self class] alloc] initWithSize:size attributedText:attributedText] autorelease];
@@ -121,6 +126,14 @@
         self.font = font;
         self.color = (icColor4B){0,0,0,255};
         self.gamma = 1.0f;
+    }
+    return self;
+}
+
+- (id)initWithSize:(CGSize)size text:(NSString *)text
+{
+    if ((self = [super initWithSize:size])) {
+        self.text = text;
     }
     return self;
 }
