@@ -35,8 +35,6 @@
 /**
  @brief Camera base class providing standard 3D projection and model-view transforms
  
- <b>Overview</b>
- 
  This class implements a basic camera performing OpenGL projection and model-view transforms
  based on a number of parameters specified by the user:
  
@@ -56,7 +54,7 @@
  look-at matrices. Whenever a parameter is changed, the look-at and/or projection matrices
  will be recalculated the next time ICCamera::apply is called.
  
- <b>Setup</b>
+ ###Setup###
 
  ICCamera should be initialized using the
  ICCamera::initWithEye:lookAt:upVector:fov:aspect:zNear:zFar:viewport: method. The ICScene
@@ -64,7 +62,7 @@
  you need a different camera, instanciate your own ICCamera object and initialize ICScene
  using ICScene::initWithHostViewController:camera:.
  
- <b>Subclassing</b>
+ ###Subclassing###
  
  The ICCamera class may be used as a base class for specialized camera classes. The designated
  initializer for ICCamera is ICCamera::initWithEye:lookAt:upVector:fov:aspect:zNear:zFar:viewport:
