@@ -162,7 +162,7 @@
        y2  A+----C+----------E+----G+
      */
     
-    float hw = (2*_antialiasStrength + _lineWidth)/2;
+    float hw = _antialiasStrength ? (2*_antialiasStrength + _lineWidth)/2 : 0;
     float x1 = -hw;
     float x2 = -hw + _antialiasStrength;
     float x3 = -hw +_antialiasStrength + _lineWidth;
