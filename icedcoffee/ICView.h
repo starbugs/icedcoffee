@@ -123,14 +123,14 @@ typedef NSUInteger ICAutoResizingMask;
  
  @sa initWithSize:
  */
-+ (id)viewWithSize:(CGSize)size;
++ (id)viewWithSize:(kmVec3)size;
 
 /**
  @brief Initializes a view with the given size
  
  @param size A CGSize value defining the size of the view in points
   */
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - Clipping the View's Contents

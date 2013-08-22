@@ -137,7 +137,7 @@
     [_testHostScene.contentView addChild:_fpsLabel];
     [self addObserver:self forKeyPath:@"fps" options:NSKeyValueObservingOptionNew context:nil];
     
-    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:CGSizeMake(_testHostScene.size.width, 50)];
+    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:kmVec3Make(_testHostScene.size.width, 50, 0)];
     _buttonPanel.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
     [_buttonPanel setPositionY:_testHostScene.size.height - _buttonPanel.size.height];
     [_testHostScene.contentView addChild:_buttonPanel];

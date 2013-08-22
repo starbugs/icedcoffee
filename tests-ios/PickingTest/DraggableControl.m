@@ -10,7 +10,7 @@
 
 @implementation DraggableControl
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         ICRectangle *rectangle = [ICRectangle viewWithSize:size];

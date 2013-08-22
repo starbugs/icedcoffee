@@ -75,22 +75,22 @@
     return [[[[self class] alloc] init] autorelease];
 }
 
-+ (id)labelWithSize:(CGSize)size
++ (id)labelWithSize:(kmVec3)size
 {
-    return [[[[self class] alloc] initWithSize:size] autorelease];
+    return [[(ICView *)[[self class] alloc] initWithSize:size] autorelease];
 }
 
-+ (id)labelWithSize:(CGSize)size font:(ICFont *)font
++ (id)labelWithSize:(kmVec3)size font:(ICFont *)font
 {
     return [[[[self class] alloc] initWithSize:size font:font] autorelease];
 }
 
-+ (id)labelWithSize:(CGSize)size text:(NSString *)text
++ (id)labelWithSize:(kmVec3)size text:(NSString *)text
 {
     return [[[[self class] alloc] initWithSize:size text:text] autorelease];
 }
 
-+ (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText
++ (id)labelWithSize:(kmVec3)size attributedText:(NSAttributedString *)attributedText
 {
     return [[[[self class] alloc] initWithSize:size attributedText:attributedText] autorelease];
 }
@@ -115,12 +115,12 @@
     return [super init];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     return [self initWithSize:size font:[ICFont systemFontWithDefaultSize]];
 }
 
-- (id)initWithSize:(CGSize)size font:(ICFont *)font
+- (id)initWithSize:(kmVec3)size font:(ICFont *)font
 {
     if ((self = [super initWithSize:size])) {
         self.font = font;
@@ -130,7 +130,7 @@
     return self;
 }
 
-- (id)initWithSize:(CGSize)size text:(NSString *)text
+- (id)initWithSize:(kmVec3)size text:(NSString *)text
 {
     if ((self = [super initWithSize:size])) {
         self.text = text;
@@ -138,7 +138,7 @@
     return self;
 }
 
-- (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText
+- (id)initWithSize:(kmVec3)size attributedText:(NSAttributedString *)attributedText
 {
     if ((self = [self initWithSize:size])) {
         self.attributedText = attributedText;
@@ -148,7 +148,7 @@
 
 - (id)initWithText:(NSString *)text
 {
-    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+    if ((self = [self initWithSize:kmVec3Make(0, 0, 0)])) {
         self.autoresizesToTextSize = YES;
         self.text = text;
     }
@@ -157,7 +157,7 @@
 
 - (id)initWithText:(NSString *)text font:(ICFont *)font
 {
-    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+    if ((self = [self initWithSize:kmVec3Make(0, 0, 0)])) {
         self.autoresizesToTextSize = YES;
         self.font = font;
         self.text = text;
@@ -168,7 +168,7 @@
 - (id)initWithText:(NSString *)text fontName:(NSString *)fontName fontSize:(CGFloat)fontSize
 {
     // Initialize with designated initializer
-    if ((self = [self initWithSize:CGSizeMake(0, 0)])) {
+    if ((self = [self initWithSize:kmVec3Make(0, 0, 0)])) {
         self.autoresizesToTextSize = YES;
         self.fontName = fontName;
         self.fontSize = fontSize;

@@ -90,28 +90,28 @@
  
  For details see ICLabel::initWithSize:.
  */
-+ (id)labelWithSize:(CGSize)size;
++ (id)labelWithSize:(kmVec3)size;
 
 /**
  @brief Returns a new autoreleased label with the given size and font
 
  For details see ICLabel::initWithSize:font:
  */
-+ (id)labelWithSize:(CGSize)size font:(ICFont *)font;
++ (id)labelWithSize:(kmVec3)size font:(ICFont *)font;
 
 /**
  @brief Returns a new autoreleased label with the given size and text
  
  For details see ICLabel::initWithSize:text:
  */
-+ (id)labelWithSize:(CGSize)size text:(NSString *)text;
++ (id)labelWithSize:(kmVec3)size text:(NSString *)text;
 
 /**
  @brief Returns a new autoreleased label with the given size and attributed text
  
  For details see ICLabel::initWithSize:attributedText:.
  */
-+ (id)labelWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
++ (id)labelWithSize:(kmVec3)size attributedText:(NSAttributedString *)attributedText;
 
 /**
  @brief Returns a new autoreleased label with the given text using the default system font
@@ -153,7 +153,7 @@
  In addition to the given size, this method initializes the receiver with a default system font
  (using ICFont::systemFontWithDefaultSize) and default values for the color and gamma properties.
  */
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 /**
  @brief Initializes the receiver with the given size and font
@@ -163,7 +163,7 @@
 
  Default values for color and gamma as described in ICLabel::initWithSize: are implied.
 */
-- (id)initWithSize:(CGSize)size font:(ICFont *)font;
+- (id)initWithSize:(kmVec3)size font:(ICFont *)font;
 
 /**
  @brief Initializes the receiver with the given size and text
@@ -173,12 +173,12 @@
  
  Default values for font, color and gamma as described in ICLabel::initWithSize: are implied.
 */
-- (id)initWithSize:(CGSize)size text:(NSString *)text;
+- (id)initWithSize:(kmVec3)size text:(NSString *)text;
 
 /**
  @brief Initializes the receiver with the given size and attributed text
  */
-- (id)initWithSize:(CGSize)size attributedText:(NSAttributedString *)attributedText;
+- (id)initWithSize:(kmVec3)size attributedText:(NSAttributedString *)attributedText;
 
 /**
  @brief Initializes the receiver with the given text

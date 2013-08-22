@@ -47,7 +47,7 @@
 /**
  @brief Initializes the receiver with the given size
  */
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - Working with the Content View

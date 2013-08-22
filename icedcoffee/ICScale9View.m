@@ -28,7 +28,7 @@
 
 @synthesize sprite = _sprite;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         self.sprite = [ICScale9Sprite sprite];

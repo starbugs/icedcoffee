@@ -28,7 +28,7 @@
 - (void)setUpScene
 {
     ICUIScene *scene = [ICUIScene scene];
-    ICButton *button = [ICButton buttonWithSize:CGSizeMake(140, 21)];
+    ICButton *button = [ICButton buttonWithSize:icSizeMake(140, 21)];
     [scene addChild:button];
     [self runWithScene:scene];
 }

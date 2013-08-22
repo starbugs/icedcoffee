@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A61AEA8E17C684AA002BE9B6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61AEA8D17C684AA002BE9B6 /* CoreText.framework */; };
+		A61AEA9217C68510002BE9B6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61AEA8D17C684AA002BE9B6 /* CoreText.framework */; };
+		A61AEA9317C68558002BE9B6 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A61AEA8D17C684AA002BE9B6 /* CoreText.framework */; };
 		A61FD4E01620ECD9008A1BDF /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A61FD4D71620ECD8008A1BDF /* AppDelegate.m */; };
 		A61FD4E11620ECD9008A1BDF /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4D81620ECD8008A1BDF /* Default-568h@2x.png */; };
 		A61FD4E21620ECD9008A1BDF /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A61FD4D91620ECD8008A1BDF /* Default.png */; };
@@ -158,6 +161,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A61AEA8D17C684AA002BE9B6 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreText.framework; sourceTree = DEVELOPER_DIR; };
 		A61FD4BB1620ECB0008A1BDF /* ICGPUImageTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ICGPUImageTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A61FD4D61620ECD8008A1BDF /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		A61FD4D71620ECD8008A1BDF /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61AEA8E17C684AA002BE9B6 /* CoreText.framework in Frameworks */,
 				A6C4A99B16A30CCF004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A61FD5201620F737008A1BDF /* CoreMedia.framework in Frameworks */,
 				A61FD51D1620F728008A1BDF /* CoreVideo.framework in Frameworks */,
@@ -293,6 +298,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61AEA9317C68558002BE9B6 /* CoreText.framework in Frameworks */,
 				A6C4A99A16A30CCB004EC1A0 /* libstdc++.dylib in Frameworks */,
 				A6EA1E4615CD677F0007C4FF /* libicedcoffee-ios.a in Frameworks */,
 				A6CB76DD1649DB5D00CDEEAC /* CoreVideo.framework in Frameworks */,
@@ -340,6 +346,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A61AEA9217C68510002BE9B6 /* CoreText.framework in Frameworks */,
 				A6C4A99916A30CC8004EC1A0 /* libstdc++.dylib in Frameworks */,
 				D2FEE88A153ABDDF004CFF62 /* libicedcoffee-ios.a in Frameworks */,
 				D292850715AA52B80086B12A /* UIKit.framework in Frameworks */,
@@ -429,6 +436,7 @@
 		D21C97C914F301A70059BBBE = {
 			isa = PBXGroup;
 			children = (
+				A61AEA8D17C684AA002BE9B6 /* CoreText.framework */,
 				D21C97D514F301D10059BBBE /* icedcoffee-ios.xcodeproj */,
 				D2FEE879153ABD5B004CFF62 /* DepthBufferTest */,
 				A671C7A0168E5A99002AD3EF /* FontRenderingTest */,

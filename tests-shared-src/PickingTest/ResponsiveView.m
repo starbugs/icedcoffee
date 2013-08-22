@@ -26,7 +26,7 @@
 
 @implementation ResponsiveView
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         //[self setWantsRenderTextureBacking:YES];

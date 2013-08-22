@@ -30,10 +30,10 @@
 
 - (id)init
 {
-    return [self initWithSize:CGSizeMake(400, 300)];
+    return [self initWithSize:kmVec3Make(400, 300, 0)];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super init])) {
         self.contentView = [ICView viewWithSize:size];

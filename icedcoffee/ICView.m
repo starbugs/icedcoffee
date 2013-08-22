@@ -42,17 +42,17 @@
     return [[[[self class] alloc] init] autorelease];
 }
 
-+ (id)viewWithSize:(CGSize)size
++ (id)viewWithSize:(kmVec3)size
 {
-    return [[[[self class] alloc] initWithSize:size] autorelease];
+    return [[(ICView *)[[self class] alloc] initWithSize:size] autorelease];
 }
 
 - (id)init
 {
-    return [self initWithSize:CGSizeMake(0, 0)];
+    return [self initWithSize:kmVec3Make(0, 0, 0)];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super init])) {
         self.background = [ICSprite sprite];

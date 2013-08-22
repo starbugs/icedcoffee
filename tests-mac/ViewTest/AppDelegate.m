@@ -38,7 +38,7 @@
 {
     ICUIScene *rootScene = [ICUIScene scene];
 
-    ICView *subSceneView = [ICView viewWithSize:CGSizeMake(300, 200)];    
+    ICView *subSceneView = [ICView viewWithSize:icSizeMake(300, 200)];
     [rootScene.contentView addChild:subSceneView];
     [subSceneView setClipsChildren:YES];
     [subSceneView centerNodeRounded:YES];

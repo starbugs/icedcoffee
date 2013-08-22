@@ -75,7 +75,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 
 @implementation ICControl
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _actions = [[NSMutableDictionary alloc] init];

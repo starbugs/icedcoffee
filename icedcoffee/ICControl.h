@@ -174,7 +174,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 #pragma mark - ICControl: Initializing a Control
 /** @name Initializing a Control */
 
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - ICControl: Sending Actions

@@ -38,7 +38,7 @@
 {
     ICUIScene *rootScene = [ICUIScene scene];
     rootScene.name = @"Root Scene 1";
-    ICButton *button = [ICButton viewWithSize:CGSizeMake(120, 21)];
+    ICButton *button = [ICButton viewWithSize:icSizeMake(120, 21)];
     [rootScene.contentView addChild:button];
     button.label.text = @"Button 1";
     [button centerNode];
@@ -52,7 +52,7 @@
 {
     ICUIScene *rootScene = [ICUIScene scene];
     rootScene.name = @"Root Scene 2";
-    ICButton *button = [ICButton viewWithSize:CGSizeMake(120, 21)];
+    ICButton *button = [ICButton viewWithSize:icSizeMake(120, 21)];
     [rootScene.contentView addChild:button];
     button.label.text = @"Button 2";
     [button centerNode];

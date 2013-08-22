@@ -155,7 +155,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
 @synthesize gradientStartColor = _gradientStartColor;
 @synthesize gradientEndColor = _gradientEndColor;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _sprite = [ICSprite sprite];

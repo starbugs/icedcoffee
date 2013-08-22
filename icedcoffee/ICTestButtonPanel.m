@@ -31,19 +31,19 @@
 @synthesize statusLabel = _statusLabel;
 @synthesize hintLabel = _hintLabel;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         self.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
         self.drawsBackground = YES;
         self.background.color = (icColor4B){0,0,0,180};
         
-        _nextSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
+        _nextSceneButton = [[ICButton buttonWithSize:kmVec3Make(80, 21, 0)] retain];
         _nextSceneButton.label.text = @"Next";
         _nextSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
         [_nextSceneButton setPositionX:self.size.width - _nextSceneButton.size.width - 25];
 
-        _previousSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
+        _previousSceneButton = [[ICButton buttonWithSize:kmVec3Make(80, 21, 0)] retain];
         _previousSceneButton.label.text = @"Previous";
         _previousSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
         [_previousSceneButton setPositionX:_nextSceneButton.position.x - _previousSceneButton.size.width - 10];

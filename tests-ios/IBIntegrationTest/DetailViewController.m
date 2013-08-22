@@ -27,7 +27,7 @@
 - (void)configureView
 {
     ICScene *scene = [ICScene scene];
-    ICButton *testButton = [ICButton buttonWithSize:CGSizeMake(120, 21)];
+    ICButton *testButton = [ICButton buttonWithSize:icSizeMake(120, 21)];
     testButton.label.text = @"Test";
     testButton.position = kmVec3Make(10, 10, 0);
     [scene addChild:testButton];

@@ -62,7 +62,7 @@
 - (void)setUpScene
 {
     ICScene *scene = [ICScene scene];
-    ICTableView *tableView = [ICTableView viewWithSize:CGSizeMake(300, 400)];
+    ICTableView *tableView = [ICTableView viewWithSize:icSizeMake(300, 400)];
     tableView.dataSource = self;
     [scene addChild:tableView];
     

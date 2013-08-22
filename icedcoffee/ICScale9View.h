@@ -35,7 +35,7 @@
 #pragma mark - Creating a Scale-9 View
 /** @name Creating a Scale-9 View */
 
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - Accessing the View's Scale-9 Sprite

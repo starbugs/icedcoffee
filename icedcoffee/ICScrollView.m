@@ -35,7 +35,7 @@
 @synthesize contentOffset = _contentOffset;
 @synthesize automaticallyCalculatesContentSize = _automaticallyCalculatesContentSize;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         self.clipsChildren = YES;
@@ -57,7 +57,7 @@
     }
     
     if (!_contentView) {
-        _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.width, self.size.height)];
+        _contentView = [[ICView alloc] initWithSize:self.size];
         _contentView.name = @"Content view";
         [super addChild:_contentView];
     }

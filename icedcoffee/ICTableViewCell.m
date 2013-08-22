@@ -38,13 +38,13 @@
 
 - (id)initWithIdentifier:(NSString *)identifier
 {
-    if ((self = [self initWithSize:CGSizeMake(100, 30)])) {
+    if ((self = [self initWithSize:kmVec3Make(100, 30, 0)])) {
         _identifier = [identifier copy];
     }
     return self;
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         // Set up label

@@ -110,59 +110,59 @@ enum {
     [overlapRS setPositionY:10.0f];
     [combinedScene.contentView addChild:overlapRS];
     
-    ResponsiveView *rv = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
+    ResponsiveView *rv = [[[ResponsiveView alloc] initWithSize:icSizeMake(128, 128)] autorelease];
     [rv setName:@"Simple View"];
     [rv setPositionX:150];
     [combinedScene.contentView addChild:rv];
     
-    ResponsiveView *nestedRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
+    ResponsiveView *nestedRV = [[[ResponsiveView alloc] initWithSize:icSizeMake(128, 128)] autorelease];
     [nestedRV setName:@"Superview of nested views (left-bottom)"];
     [nestedRV setPositionY:150];
     [combinedScene.contentView addChild:nestedRV];
     
-    ResponsiveView *innerRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
+    ResponsiveView *innerRV = [[[ResponsiveView alloc] initWithSize:icSizeMake(48, 48)] autorelease];
     [innerRV setName:@"Inner view (left top)"];
     [innerRV setPositionX:10];
     [innerRV setPositionY:10];
     [nestedRV addChild:innerRV];
     
-    ResponsiveView *innerRV2 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
+    ResponsiveView *innerRV2 = [[[ResponsiveView alloc] initWithSize:icSizeMake(48, 48)] autorelease];
     [innerRV2 setName:@"Inner view (right top)"];
     [innerRV2 setPositionX:70];
     [innerRV2 setPositionY:10];
     [nestedRV addChild:innerRV2];
     
-    ResponsiveView *innerRV3 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
+    ResponsiveView *innerRV3 = [[[ResponsiveView alloc] initWithSize:icSizeMake(48, 48)] autorelease];
     [innerRV3 setName:@"Inner view (left bottom)"];
     [innerRV3 setPositionX:10];
     [innerRV3 setPositionY:70];
     [nestedRV addChild:innerRV3];
     
-    ResponsiveView *innerRV4 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(48, 48)] autorelease];
+    ResponsiveView *innerRV4 = [[[ResponsiveView alloc] initWithSize:icSizeMake(48, 48)] autorelease];
     [innerRV4 setName:@"Inner view (right bottom)"];
     [innerRV4 setPositionX:70];
     [innerRV4 setPositionY:70];
     [nestedRV addChild:innerRV4];
     
-    ResponsiveView *innerInnerRV = [[[ResponsiveView alloc] initWithSize:CGSizeMake(12, 12)] autorelease];
+    ResponsiveView *innerInnerRV = [[[ResponsiveView alloc] initWithSize:icSizeMake(12, 12)] autorelease];
     [innerInnerRV setName:@"Little guy"];
     [innerInnerRV setPositionX:4];
     [innerInnerRV setPositionY:4];
     [innerRV4 addChild:innerInnerRV];
     
-    ResponsiveView *nestedRV2 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(128, 128)] autorelease];
+    ResponsiveView *nestedRV2 = [[[ResponsiveView alloc] initWithSize:icSizeMake(128, 128)] autorelease];
     [nestedRV2 setName:@"Superview of nested views (bottom right)"];
     [nestedRV2 setPositionX:150];
     [nestedRV2 setPositionY:150];
     [combinedScene.contentView addChild:nestedRV2];
     
-    ResponsiveView *innerRV5 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(108, 108)] autorelease];
+    ResponsiveView *innerRV5 = [[[ResponsiveView alloc] initWithSize:icSizeMake(108, 108)] autorelease];
     [innerRV5 setName:@"Inner view centered 1"];
     [innerRV5 setPositionX:10];
     [innerRV5 setPositionY:10];
     [nestedRV2 addChild:innerRV5];
     
-    ResponsiveView *innerRV6 = [[[ResponsiveView alloc] initWithSize:CGSizeMake(88, 88)] autorelease];
+    ResponsiveView *innerRV6 = [[[ResponsiveView alloc] initWithSize:icSizeMake(88, 88)] autorelease];
     [innerRV6 setName:@"Inner view centered 2"];
     [innerRV6 setPositionX:10];
     [innerRV6 setPositionY:10];
@@ -188,7 +188,7 @@ enum {
     [self setUpTestScenes];
     
     // Set up user interface controls for the test
-    ICView *buttonPanel = [ICView viewWithSize:CGSizeMake(310, 21)];
+    ICView *buttonPanel = [ICView viewWithSize:icSizeMake(310, 21)];
     buttonPanel.isVisible = NO;
     buttonPanel.tag = CombinedTestButtonPanelTag;
     [self.testHostScene.contentView addChild:buttonPanel];
@@ -198,9 +198,9 @@ enum {
                                    ICAutoResizingMaskRightMarginFlexible |
                                    ICAutoResizingMaskBottomMarginFlexible;
     
-    ICButton *backingSwitchButton = [ICButton viewWithSize:CGSizeMake(180, 21)];
+    ICButton *backingSwitchButton = [ICButton viewWithSize:icSizeMake(180, 21)];
     [buttonPanel addChild:backingSwitchButton];
-    ICButton *animateButton = [ICButton viewWithSize:CGSizeMake(120, 21)];
+    ICButton *animateButton = [ICButton viewWithSize:icSizeMake(120, 21)];
     [buttonPanel addChild:animateButton];
     
     backingSwitchButton.label.text = @"Without Render Textures";

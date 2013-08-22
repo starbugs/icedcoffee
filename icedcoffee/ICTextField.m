@@ -33,7 +33,7 @@
 
 @synthesize textLabel = _textLabel;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         self.textLabel = [ICLabel labelWithSize:size];

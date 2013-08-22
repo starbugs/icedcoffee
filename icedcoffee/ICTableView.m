@@ -28,7 +28,7 @@
 
 @synthesize dataSource = _dataSource;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _reusableCells = [[NSMutableDictionary alloc] initWithCapacity:1];

@@ -103,7 +103,7 @@
     trackingAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
     [self.label addAnimation:trackingAnimation];
    
-    ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
+    ICButton *button = [[[ICButton alloc] initWithSize:icSizeMake(160, 21)] autorelease];
     [button setPositionY:50];
     button.label.text = @"Test Button";
     [scene addChild:button];
@@ -112,7 +112,7 @@
     [button addTarget:self action:@selector(buttonLeftMouseDown:) forControlEvents:ICControlEventLeftMouseDown];
     [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];
     
-    ICTextField *textField = [[[ICTextField alloc] initWithSize:CGSizeMake(200, 100)] autorelease];
+    ICTextField *textField = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
     [textField setPositionY:300];
     [textField setText:@"Text field"];
     [textField setColor:(icColor4B){255,255,255,255}];
