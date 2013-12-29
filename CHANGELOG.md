@@ -74,6 +74,7 @@ Fixes:
 
 * Fixed a bug that could cause shader definitions to be released too early (ICShaderFactory.m).
 * Fixed wrong display of colors with ICLine2D.
+* Fixed a missing retain in ICHostViewControllerMac which could cause a crash bug.
 
 
 v0.6.8
