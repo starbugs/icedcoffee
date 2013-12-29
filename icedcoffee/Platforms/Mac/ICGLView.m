@@ -162,14 +162,6 @@
     return YES;
 }
 
-/*- (void)mouseDown:(NSEvent *)theEvent
-{
-    NSArray *nodes = [self.hostViewController hitTest:[theEvent locationInWindow]];
-    for (ICNode *node in nodes) {
-        NSLog(@"%@", [node description]);
-    }
-}*/
-
 DISPATCH_EVENT(mouseDown)
 DISPATCH_EVENT(mouseUp)
 DISPATCH_EVENT(mouseDragged)

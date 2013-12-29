@@ -128,10 +128,15 @@
 // Animation and Drawing
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
+// Only used with display link drawing
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime
 {
-	if (!self.thread)
-		self.thread = [NSThread currentThread];
+    // It appears as if current thread may change on a running display link as of OS X 10.9
+    NSThread *currentThread = [NSThread currentThread];
+	if (self.thread != currentThread) {
+        // Use display link thread as host view controller's thread
+		self.thread = currentThread;
+    }
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
@@ -139,7 +144,7 @@
     
 	// Process timers and other events
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
-    
+
 	[pool release];
         
     return kCVReturnSuccess;
