@@ -130,8 +130,8 @@
 
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime
 {
-	if (!_thread)
-		_thread = [NSThread currentThread];
+	if (!self.thread)
+		self.thread = [NSThread currentThread];
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
