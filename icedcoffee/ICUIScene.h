@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -47,7 +47,7 @@
 /**
  @brief Initializes the receiver with the given size
  */
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - Working with the Content View

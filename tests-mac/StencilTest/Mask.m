@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -22,9 +22,9 @@
 //  
 
 #import "Mask.h"
-#import "ICShaderProgram.h"
-#import "ICShaderCache.h"
-#import "icMacros.h"
+#import "icedcoffee/ICShaderProgram.h"
+#import "icedcoffee/ICShaderCache.h"
+#import "icedcoffee/icMacros.h"
 
 
 NSString *__stencilMaskFSH = IC_SHADER_STRING

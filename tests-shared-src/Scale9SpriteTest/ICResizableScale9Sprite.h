@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -21,7 +21,7 @@
 //  SOFTWARE.
 //  
 
-#import "ICScale9Sprite.h"
+#import "icedcoffee/ICScale9Sprite.h"
 
 @interface ICResizableScale9Sprite : ICScale9Sprite {
     uint _resizeEdge;

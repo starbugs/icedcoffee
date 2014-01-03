@@ -255,7 +255,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 - (void)dealloc
 {
-	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"icedcoffee: deallocing %@", self);
 
 	[renderer_ release];
 	[super dealloc];
@@ -326,7 +326,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
     // FIXME: this sometimes runs into a bad access when rotating the device
 	if(![context_ presentRenderbuffer:GL_RENDERBUFFER])
-		ICLog(@"IcedCoffee: Failed to swap renderbuffer in %s\n", __FUNCTION__);
+		ICLog(@"icedcoffee: Failed to swap renderbuffer in %s\n", __FUNCTION__);
 
 	IC_CHECK_GL_ERROR_DEBUG();
 

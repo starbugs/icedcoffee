@@ -4,6 +4,7 @@
 
 #import "icUtils.h"
 #import "icMacros.h"
+#import "Platforms/icGL.h"
 #import "kazmath/kazmath.h"
 #import "kazmath/GL/matrix.h"
 
@@ -18,22 +19,27 @@
 #import "Platforms/iOS/ICGLView.h"
 #endif
 
+ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
+{
 #ifdef __IC_PLATFORM_MAC
-NSOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
-{
     NSOpenGLPixelFormat *pixelFormat = [view pixelFormat];
-    NSOpenGLContext *shareContext = share ? [view openGLContext] : nil;
-    return [[NSOpenGLContext alloc] initWithFormat:pixelFormat shareContext:shareContext];    
-}
+    NSOpenGLContext *nativeShareContext = share ? [view openGLContext] : nil;
+    NSOpenGLContext *nativeContext = [[NSOpenGLContext alloc] initWithFormat:pixelFormat
+                                                                shareContext:nativeShareContext];
+    ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
+                                            openGLContextForNativeOpenGLContext:[view openGLContext]]
+                                         : nil;
 #elif defined(__IC_PLATFORM_IOS)
-EAGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
-{
     EAGLSharegroup *sharegroup = share ? [[view context] sharegroup] : nil;
-    return [[EAGLContext alloc]
-            initWithAPI:kEAGLRenderingAPIOpenGLES2
-            sharegroup:sharegroup];    
-}
+    EAGLContext *nativeContext = [[EAGLContext alloc] initWithAPI:kEAGLRenderingAPIOpenGLES2
+                                                       sharegroup:sharegroup];
+    ICOpenGLContext *viewContext = share ? [[ICOpenGLContextManager defaultOpenGLContextManager]
+                                            openGLContextForNativeOpenGLContext:[view context]]
+                                         : nil;
 #endif
+    return [[ICOpenGLContext openGLContextWithNativeOpenGLContext:nativeContext
+                                                     shareContext:viewContext] registerContext];
+}
 
 unsigned long icNextPOT(unsigned long x)
 {
@@ -164,6 +170,21 @@ kmAABB icComputeAABBFromVertices(kmVec3 *vertices, int count)
     }
     
     return (kmAABB){ aabbMin, aabbMax };   
+}
+
+kmAABB icComputeAABBContainingAABBsOfNodes(NSArray *nodes)
+{
+    kmAABB containerAABB = (kmAABB){kmNullVec3, kmNullVec3};
+    for (ICNode *node in nodes) {
+        kmAABB nodeAABB = [node aabb];
+        containerAABB.min.x = MIN(containerAABB.min.x, nodeAABB.min.x);
+        containerAABB.min.y = MIN(containerAABB.min.y, nodeAABB.min.y);
+        containerAABB.min.z = MIN(containerAABB.min.z, nodeAABB.min.z);
+        containerAABB.max.x = MAX(containerAABB.max.x, nodeAABB.max.x);
+        containerAABB.max.y = MAX(containerAABB.max.y, nodeAABB.max.y);
+        containerAABB.max.z = MAX(containerAABB.max.z, nodeAABB.max.z);
+    }
+    return containerAABB;
 }
 
 // Taken from http://stackoverflow.com/questions/2405832/uievent-has-timestamp-how-can-i-generate-an-equivalent-value-on-my-own

@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -96,7 +96,7 @@
         self.antialiasStrength = antialiasStrength;
         self.color = color;
         self.shaderProgram = [[ICShaderCache currentShaderCache]
-                              shaderProgramForKey:kICShader_PositionTextureColor];
+                              shaderProgramForKey:kICShader_PositionColor];
     }
     return self;
 }
@@ -162,7 +162,7 @@
        y2  A+----C+----------E+----G+
      */
     
-    float hw = (2*_antialiasStrength + _lineWidth)/2;
+    float hw = _antialiasStrength ? (2*_antialiasStrength + _lineWidth)/2 : 0;
     float x1 = -hw;
     float x2 = -hw + _antialiasStrength;
     float x3 = -hw +_antialiasStrength + _lineWidth;
@@ -271,6 +271,10 @@
     IC_CHECK_GL_ERROR_DEBUG();
     
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);
     
     kmGLPopMatrix();
 }

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -35,7 +35,7 @@
 @synthesize contentOffset = _contentOffset;
 @synthesize automaticallyCalculatesContentSize = _automaticallyCalculatesContentSize;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         self.clipsChildren = YES;
@@ -57,7 +57,7 @@
     }
     
     if (!_contentView) {
-        _contentView = [[ICView alloc] initWithSize:CGSizeMake(self.size.x, self.size.y)];
+        _contentView = [[ICView alloc] initWithSize:self.size];
         _contentView.name = @"Content view";
         [super addChild:_contentView];
     }
@@ -76,9 +76,9 @@
 
 - (void)setContentOffset:(kmVec3)contentOffset
 {
-    kmVec3 offsetMax = kmVec3Make(-_contentMax.x + _size.x,
-                                  -_contentMax.y + _size.y,
-                                  -_contentMax.z + _size.z);
+    kmVec3 offsetMax = kmVec3Make(-_contentMax.x + _size.width,
+                                  -_contentMax.y + _size.height,
+                                  -_contentMax.z + _size.depth);
     contentOffset.x = MAX(offsetMax.x, contentOffset.x);
     contentOffset.y = MAX(offsetMax.y, contentOffset.y);
     contentOffset.z = MAX(offsetMax.z, contentOffset.z);
@@ -108,6 +108,7 @@
 }
 
 // FIXME (negative min)
+// FIXME: replace with icComputeAABBContainingAABBsOfNodes()?
 - (void)calculateContentSize
 {
     _contentMin = kmNullVec3;

@@ -1,15 +1,15 @@
 {
-	"doxyfilePath": "~/github/icedcoffee/Doxyfile-Mac",
-	"doxygenOutputPath": "~/github/icedcoffee/docs-Mac",
-	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"doxyfilePath": "./Doxyfile-Mac",
+	"doxygenOutputPath": "./docs-Mac",
+	"websiteRootPath": "~/Projects/icedcoffee-meta/website/",
 	"relativeOutputPath": "content/reference/osx/",
 
 	"executeDoxygen": true,
 	"executeNanoc": true,
-	"cleanIntermediates": false,
+	"cleanIntermediates": true,
 
 	"mainTitle": "Icedcoffee OS X API Reference",
-	"version": "0.6.8",
+	"version": "0.7",
 	
 	"classPrefix": "IC",
 	"macroPrefix": "IC_",

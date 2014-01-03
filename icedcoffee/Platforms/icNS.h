@@ -43,10 +43,6 @@
 #define ICNSSizeToCGSize
 #define ICNSRectToCGRect
 #define ICNSPointToCGPoint
-#define ICTextAlignment				UITextAlignment
-#define ICTextAlignmentCenter		UITextAlignmentCenter
-#define ICTextAlignmentLeft			UITextAlignmentLeft
-#define ICTextAlignmentRight		UITextAlignmentRight
 
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
@@ -57,10 +53,6 @@
 #define ICNSSizeToCGSize			NSSizeToCGSize
 #define ICNSRectToCGRect			NSRectToCGRect
 #define ICNSPointToCGPoint			NSPointToCGPoint
-#define ICTextAlignment				NSTextAlignment
-#define ICTextAlignmentCenter		NSCenterTextAlignment
-#define ICTextAlignmentLeft			NSLeftTextAlignment
-#define ICTextAlignmentRight		NSRightTextAlignment
 
 #endif
 

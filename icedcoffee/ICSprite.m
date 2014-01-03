@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -93,9 +93,9 @@
 - (void)updateQuadPositionsWithVertices:(icV3F_C4F_T2F *)vertices
 {
     float x1 = 0.0f;
-    float x2 = _size.x;
+    float x2 = _size.width;
     float y1 = 0.0f;
-    float y2 = _size.y;
+    float y2 = _size.height;
     
     // Note: Y-axis inverted by icedcoffee UI camera, so we need to do this in CCW order
     kmVec3Fill(&vertices[0].vect, x1, y2, 0);
@@ -205,6 +205,10 @@
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, 0);
     IC_CHECK_GL_ERROR_DEBUG();
+    
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);
 }
 
 - (void)setTexture:(ICTexture2D *)texture
@@ -236,7 +240,7 @@
 
 - (void)setSize:(kmVec3)size
 {
-    if (_size.x != size.x || _size.y != size.y || _size.z != size.z) {
+    if (_size.width != size.width || _size.height != size.height || _size.depth != size.depth) {
         [super setSize:size];
         [self updateQuad];
     }
@@ -298,7 +302,8 @@
 
 - (BOOL)acceptsFirstResponder
 {
-    return YES;
+    [[self nextResponder] makeFirstResponder];
+    return NO;
 }
 
 @end

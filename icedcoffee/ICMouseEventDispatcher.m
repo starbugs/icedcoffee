@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -49,7 +49,7 @@
         _lastMouseLocation = [[ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view] locationInHostView]; \
         _lastMouseModifierFlags = [event modifierFlags]; \
         ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view]; \
-        [_lastMouseDownNode eventMethod:mouseEvent]; \
+        [self.lastMouseDownNode eventMethod:mouseEvent]; \
     }
 
 ICAbstractMouseEventType ICAbstractMouseEventTypeFromEventType(ICOSXEventType eventType)
@@ -89,7 +89,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 }
 
 
-@interface ICMouseEventDispatcher (Private)
+@interface ICMouseEventDispatcher ()
+
 - (ICScene *)scene;
 - (CGPoint)locationFromEvent:(ICMouseEvent *)event;
 - (NSEvent *)enterExitEventWithType:(NSEventType)eventType;
@@ -102,11 +103,22 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
                                   deepestHitControl:(ICControl *)deepestHitControl
                               controlDispatchTarget:(ICControl *)controlDispatchTarget
                                               event:(ICMouseEvent *)event;
+
+@property (nonatomic, retain) ICNode *lastMouseDownNode;
+@property (nonatomic, retain) ICNode *lastScrollNode;
+@property (nonatomic, retain) ICControl *lastMouseDownControl;
+
 @end
 
 
 @implementation ICMouseEventDispatcher
 
+// private
+@synthesize lastMouseDownNode = _lastMouseDownNode;
+@synthesize lastScrollNode = _lastScrollNode;
+@synthesize lastMouseDownControl = _lastMouseDownControl;
+
+// public
 @synthesize acceptsMouseMovedEvents = _acceptsMouseMovedEvents;
 @synthesize updatesEnterExitEventsContinuously = _updatesEnterExitEventsContinuously;
 
@@ -128,6 +140,11 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 - (void)dealloc
 {
     [_overNodes release];
+    
+    self.lastMouseDownNode = nil;
+    self.lastScrollNode = nil;
+    self.lastMouseDownControl = nil;
+    
     [super dealloc];
 }
 
@@ -188,13 +205,13 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
                         [_hostViewController hitTest:_lastMouseLocation];
     
     NSMutableArray *newOverNodes = [NSMutableArray array];
-    ICNode *deepest = [hitNodes lastObject];
+    ICNode *deepest = [[hitNodes lastObject] retain];
     
     if (deepest) {
-        _lastScrollNode = deepest;
+        self.lastScrollNode = deepest;
         [newOverNodes addObject:deepest];
     } else {
-        _lastScrollNode = nil;
+        self.lastScrollNode = nil;
     }
     
     NSArray *ancestors = [deepest ancestors];
@@ -237,6 +254,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     [_overNodes release];
     // Set new over nodes
     _overNodes = [newOverNodes retain];
+    
+    [deepest release];
 }
 
 - (ICScene *)scene
@@ -265,46 +284,33 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     NSArray *hitNodes = [_hostViewController hitTest:location];
 
     // Get the deepest node the mouse cursor is over
-    ICNode *deepestHitNode = (ICNode *)[hitNodes lastObject];
+    ICNode *deepestHitNode = (ICNode *)[[hitNodes lastObject] retain];
     
     // If event is mouseDown, store mouse down node, last mouse location, and modifier flags
     if ([self isMouseDownEventType:[mouseEvent type]]) {
-        _lastMouseDownNode = deepestHitNode;
+        self.lastMouseDownNode = deepestHitNode;
         _lastMouseLocation = location;
         _lastMouseModifierFlags = [mouseEvent modifierFlags];
     }
     
     // For the time being, set our dispatch target to the deepest hit node
-    ICNode *dispatchTarget = deepestHitNode;
+    ICNode *dispatchTarget = [deepestHitNode retain];
     
     // Assign new first responder via mouse down events
-    if ([self isMouseDownEventType:[mouseEvent type]]) {
-        
-        if ([dispatchTarget acceptsFirstResponder]) {
-            // Make the dispatch target the current first responder
-            _hostViewController.currentFirstResponder = dispatchTarget;
-        } else {
-            // Make the first ancestor of the dispatch target accepting first responder
-            // the new current first responder
-            NSArray *ancestors = [dispatchTarget ancestors];
-            for (ICNode *ancestor in ancestors) {
-                if ([ancestor acceptsFirstResponder]) {
-                    _hostViewController.currentFirstResponder = ancestor;
-                    break;
-                }
-            }
-        }
+    if ([self isMouseDownEventType:[mouseEvent type]]) {        
+        // Make the dispatch target the current first responder
+        _hostViewController.currentFirstResponder = dispatchTarget;
         
         // Note last mouse down control
-        _lastMouseDownControl = ICControlForNode(dispatchTarget);
+        self.lastMouseDownControl = ICControlForNode(dispatchTarget);
     }        
     // Mouse up events are dispatched to the node that received the corresponding mouse
     // down event previously
     else if ([self isMouseUpEventType:[mouseEvent type]]) {
-        
-        dispatchTarget = _lastMouseDownNode;
-        // Reset _lastMouseDownNode, so it cannot produce side effects
-        _lastMouseDownNode = nil;
+
+        [dispatchTarget release];
+        dispatchTarget = [self.lastMouseDownNode retain];
+        self.lastMouseDownNode = nil;
     }
 
     // Peform event selector on dispatch target node
@@ -316,10 +322,19 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     // Control event dispatch:
     // Get the control of the deepest hit node
     ICControl *deepestHitControl = ICControlForNode(deepestHitNode);
-    ICControl *controlDispatchTarget = _lastMouseDownControl;
+    ICControl *controlDispatchTarget = self.lastMouseDownControl;
     [self dispatchControlEventWithEvent:mouseEvent
                       deepestHitControl:deepestHitControl
                   controlDispatchTarget:controlDispatchTarget];
+    
+    if ([self isMouseUpEventType:[mouseEvent type]]) {
+        // Release last mouse down control if necessary
+        self.lastMouseDownControl = nil;
+    }
+
+    // Release references to retained nodes
+    [deepestHitNode release];
+    [dispatchTarget release];
 }
 
 - (void)dispatchControlEventWithEvent:(ICMouseEvent *)event
@@ -393,12 +408,12 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     _lastMouseModifierFlags = [event modifierFlags];
     
     if (self.acceptsMouseMovedEvents) {
-        if ([_lastScrollNode respondsToSelector:@selector(mouseMoved:)]) {
+        if ([self.lastScrollNode respondsToSelector:@selector(mouseMoved:)]) {
             // Convert NSEvent to ICMouseEvent
             ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event
                                                                  hostView:_hostViewController.view];
             // Dispatch event to the node the mouse is currently over
-            [_lastScrollNode mouseMoved:mouseEvent];
+            [self.lastScrollNode mouseMoved:mouseEvent];
         }
     }
 }
@@ -417,8 +432,8 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 {
     // Performance: as the window server potentially sends a flood of scroll events, use over
     // nodes determined in updateMouseOverState instead of performing a hit test for each event.
-    [_lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event
-                                                           hostView:_hostViewController.view]];
+    [self.lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event
+                                                               hostView:_hostViewController.view]];
 }
 
 // Dispatch dragged events to first responder, all other events go to the responder that

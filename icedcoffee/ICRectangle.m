@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -155,7 +155,7 @@ NSString *__rectangleFSH = IC_SHADER_STRING
 @synthesize gradientStartColor = _gradientStartColor;
 @synthesize gradientEndColor = _gradientEndColor;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _sprite = [ICSprite sprite];
@@ -217,11 +217,11 @@ NSString *__rectangleFSH = IC_SHADER_STRING
     
     [super drawWithVisitor:visitor];
     
-    float distOnePixel = 1.0/(self.size.y);
+    float distOnePixel = 1.0/(self.size.height);
     
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:_borderWidth*distOnePixel] forUniform:@"u_borderWidth"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithFloat:0.4] forUniform:@"u_roundness"];
-    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(_sprite.size.x, _sprite.size.y)] forUniform:@"u_size"];
+    [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec2:kmVec2Make(_sprite.size.width, _sprite.size.height)] forUniform:@"u_size"];
 
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(_gradientStartColor)] forUniform:@"u_innerColor"];
     [_sprite.shaderProgram setShaderValue:[ICShaderValue shaderValueWithVec4:kmVec4FromColor4B(_gradientEndColor)] forUniform:@"u_innerColor2"];

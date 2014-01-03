@@ -73,6 +73,7 @@ Copyright (C) 2008 Apple Inc. All Rights Reserved.
 
 
 #import "ICTexture2D.h"
+#import "ICTexture2D_Private.h"
 #import "icMacros.h"
 #import "icUtils.h"
 
@@ -120,55 +121,17 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
        textureSize:(CGSize)textureSizeInPixels
        contentSize:(CGSize)contentSizeInPixels
     resolutionType:(ICResolutionType)resolutionType
-{
-    GLsizei width = textureSizeInPixels.width;
-    GLsizei height = textureSizeInPixels.height;
-        
+{        
 	if((self = [super init])) {
-		glGenTextures(1, &_name);
-		glBindTexture(GL_TEXTURE_2D, _name);
-        
-        [self setAntiAliasTexParameters];
-        
-		// Specify OpenGL texture image
-		
-		switch(pixelFormat)
-		{
-			case ICPixelFormatRGBA8888:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_BYTE, data);
-				break;
-			case ICPixelFormatRGBA4444:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
-				break;
-			case ICPixelFormatRGB5A1:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
-				break;
-			case ICPixelFormatRGB565:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height,
-                             0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
-				break;
-			case ICPixelFormatA8:
-				glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height,
-                             0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
-				break;
-			default:
-				[NSException raise:NSInternalInconsistencyException format:@""];
-				
-		}
-        
-        IC_CHECK_GL_ERROR_DEBUG();
-        
 		_contentSizeInPixels = contentSizeInPixels;
         _sizeInPixels = textureSizeInPixels;
 		_format = pixelFormat;
-		_maxS = contentSizeInPixels.width / (float)width;
-		_maxT = contentSizeInPixels.height / (float)height;
+		_maxS = contentSizeInPixels.width / textureSizeInPixels.width;
+		_maxT = contentSizeInPixels.height / textureSizeInPixels.height;
         _resolutionType = resolutionType;
-        
 		_hasPremultipliedAlpha = NO;
+        
+        [self internalUploadData:data];
 	}
     
 	return self;    
@@ -185,6 +148,52 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
                   textureSize:CGSizeMake(width, height)
                   contentSize:contentSizeInPixels
                resolutionType:ICResolutionTypeUnknown];
+}
+
+- (void)internalUploadData:(const void *)data
+{
+    if (!data) {
+        NSLog(@"Cannot upload nil data");
+        return;
+    }
+    
+    if (!_name)
+        glGenTextures(1, &_name);    
+    glBindTexture(GL_TEXTURE_2D, _name);
+    
+    [self setAntiAliasTexParameters];
+    
+    GLsizei width = self.sizeInPixels.width;
+    GLsizei height = self.sizeInPixels.height;
+    
+    switch(_format)
+    {
+        case ICPixelFormatRGBA8888:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+            break;
+        case ICPixelFormatRGBA4444:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_SHORT_4_4_4_4, data);
+            break;
+        case ICPixelFormatRGB5A1:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGBA, GL_UNSIGNED_SHORT_5_5_5_1, data);
+            break;
+        case ICPixelFormatRGB565:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, (GLsizei)width, (GLsizei)height,
+                         0, GL_RGB, GL_UNSIGNED_SHORT_5_6_5, data);
+            break;
+        case ICPixelFormatA8:
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_ALPHA, (GLsizei)width, (GLsizei)height,
+                         0, GL_ALPHA, GL_UNSIGNED_BYTE, data);
+            break;
+        default:
+            [NSException raise:NSInternalInconsistencyException format:@""];
+            
+    }
+    
+    IC_CHECK_GL_ERROR_DEBUG();
 }
 
 #if defined(__IC_PLATFORM_IOS)
@@ -302,7 +311,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	ICPixelFormat	pixelFormat;
     
 	if(cgImage == NULL) {
-		ICLog(@"IcedCoffee: ICTexture2D. Can't create Texture. cgImage is nil");
+		ICLog(@"icedcoffee: ICTexture2D. Can't create Texture. cgImage is nil");
 		[self release];
 		return nil;
 	}
@@ -322,7 +331,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
     
 	NSUInteger maxTextureSize = [conf maxTextureSize];
 	if( POTHigh > maxTextureSize || POTWide > maxTextureSize ) {
-		ICLog(@"IcedCoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
+		ICLog(@"icedcoffee: WARNING: Image (%lu x %lu) is bigger than the supported %ld x %ld",
 			  (long)POTWide, (long)POTHigh,
 			  (long)maxTextureSize, (long)maxTextureSize);
 		[self release];
@@ -339,12 +348,12 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		if(hasAlpha || bpp >= 8)
 			pixelFormat = defaultAlphaPixel_format;
 		else {
-			ICLog(@"IcedCoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
+			ICLog(@"icedcoffee: ICTexture2D: Using RGB565 texture since image has no alpha");
 			pixelFormat = ICPixelFormatRGB565;
 		}
 	} else {
 		// NOTE: No colorspace means a mask image
-		ICLog(@"IcedCoffee: ICTexture2D: Using A8 texture since image is a mask");
+		ICLog(@"icedcoffee: ICTexture2D: Using A8 texture since image is a mask");
 		pixelFormat = ICPixelFormatA8;
 	}
     
@@ -612,7 +621,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 		dim = [string sizeWithFont:font];
 	
 	if( ! font ) {
-		NSLog(@"IcedCoffee: Unable to load font %@", name);
+		NSLog(@"icedcoffee: Unable to load font %@", name);
 		[self release];
 		return nil;
 	}
@@ -661,7 +670,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 	uifont = [UIFont fontWithName:name size:size];
     
 	if( ! uifont ) {
-		NSLog(@"IcedCoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
+		NSLog(@"icedcoffee: Texture2d: Invalid Font: %@. Verify the .ttf name", name);
 		[self release];
 		return nil;
 	}
@@ -700,7 +709,7 @@ static ICPixelFormat defaultAlphaPixel_format = ICPixelFormatDefault;
 
 - (void)dealloc
 {
-	ICLogDealloc(@"IcedCoffee: deallocing %@", self);
+	ICLogDealloc(@"icedcoffee: deallocing %@", self);
     
 	if(_name && !_wrapsForeignOpenGLTexture) {
         // FIXME: Texture can only be deleted on main thread currently

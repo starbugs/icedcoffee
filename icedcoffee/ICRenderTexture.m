@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Adapted and extended for IcedCoffee
+ * Adapted and extended for icedcoffee
  */
 
 #import "ICRenderTexture.h"
@@ -200,11 +200,11 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (void)setSize:(kmVec3)size
 {
-    float w = size.x;
-    float h = size.y;
+    float w = size.width;
+    float h = size.height;
 
-    if (w == _size.x &&
-        h == _size.y)
+    if (w == _size.width &&
+        h == _size.height)
         return; // content size not changed -- do nothing
     
     [super setSize:size];
@@ -345,7 +345,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (CGSize)textureSizeInPixels
 {
-    return CGSizeMake(ICPointsToPixels(_size.x), ICPointsToPixels(_size.y));
+    return CGSizeMake(ICPointsToPixels(_size.width), ICPointsToPixels(_size.height));
 }
 
 - (void)pushRenderTextureMatrices

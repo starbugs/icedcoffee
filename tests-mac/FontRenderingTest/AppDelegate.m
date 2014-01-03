@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -58,9 +58,52 @@
                                fontSize:16];
     [self.label setColor:(icColor4B){255,255,255,255}];
     [scene addChild:self.label];
-    [self.label centerNodeOpticallyRounded:YES];
+    
+    //[self.label centerNodeOpticallyRounded:YES];
+    kmVec3 center = [scene localCenterRounded:YES];
+    [self.label setCenterY:center.y];
+    
+    kmVec3 startCenter = kmVec3Make(-self.label.size.width, 0, 0);
+    ICBasicAnimation *animation = [ICBasicAnimation animation];
+    animation.keyPath = @"center";
+    animation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    animation.fromValue = [NSValue valueWithBytes:&startCenter objCType:@encode(kmVec3)];
+    animation.toValue = [NSValue valueWithBytes:&center objCType:@encode(kmVec3)];
+    animation.duration = 2.0;
+    [self.label addAnimation:animation];
+    
+    icColor4B startColor = (icColor4B){255,255,255,255};
+    icColor4B endColor = (icColor4B){255,255,255,255};
+    ICBasicAnimation *colorAnimation = [ICBasicAnimation animationWithKeyPath:@"color"];
+    colorAnimation.fromValue = [NSValue valueWithBytes:&startColor objCType:@encode(icColor4B)];
+    colorAnimation.toValue = [NSValue valueWithBytes:&endColor objCType:@encode(icColor4B)];
+    colorAnimation.duration = 2.0;
+    [self.label addAnimation:colorAnimation];
+    
+    ICBasicAnimation *rotationAnimation = [ICBasicAnimation animationWithKeyPath:@"rotationAngle"];
+    rotationAnimation.fromValue = [NSNumber numberWithFloat:M_PI];
+    rotationAnimation.toValue = [NSNumber numberWithFloat:0];
+    rotationAnimation.duration = 2.0;
+    rotationAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    [self.label addAnimation:rotationAnimation];
+    
+    kmVec3 startScale = kmVec3Make(20, 20, 1);
+    kmVec3 endScale = kmVec3Make(1, 1, 1);
+    ICBasicAnimation *scaleAnimation = [ICBasicAnimation animationWithKeyPath:@"scale"];
+    scaleAnimation.fromValue = [NSValue valueWithBytes:&startScale objCType:@encode(kmVec3)];
+    scaleAnimation.toValue = [NSValue valueWithBytes:&endScale objCType:@encode(kmVec3)];
+    scaleAnimation.duration = 2.0;
+    scaleAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    [self.label addAnimation:scaleAnimation];
+    
+    ICBasicAnimation *trackingAnimation = [ICBasicAnimation animationWithKeyPath:@"tracking"];
+    trackingAnimation.fromValue = [NSNumber numberWithFloat:10];
+    trackingAnimation.toValue = [NSNumber numberWithFloat:0];
+    trackingAnimation.duration = 2.0;
+    trackingAnimation.timingFunction = [ICAnimationTimingFunction easeOutTimingFunction];
+    [self.label addAnimation:trackingAnimation];
    
-    ICButton *button = [[[ICButton alloc] initWithSize:CGSizeMake(160, 21)] autorelease];
+    ICButton *button = [[[ICButton alloc] initWithSize:icSizeMake(160, 21)] autorelease];
     [button setPositionY:50];
     button.label.text = @"Test Button";
     [scene addChild:button];
@@ -68,6 +111,13 @@
     
     [button addTarget:self action:@selector(buttonLeftMouseDown:) forControlEvents:ICControlEventLeftMouseDown];
     [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];
+    
+    ICTextField *textField = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
+    [textField setPositionY:300];
+    [textField setText:@"Text field"];
+    [textField setColor:(icColor4B){255,255,255,255}];
+    [scene addChild:textField];
+    [textField centerNodeHorizontallyRounded:YES];
     
     [self.hostViewController runWithScene:scene];
 }

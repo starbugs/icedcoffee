@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -22,9 +22,9 @@
 //  
 
 #import "ICResizableScale9Sprite.h"
-#import "ICHostViewController.h"
-#import "Platforms/Mac/ICGLView.h"
-#import "ICLabel.h"
+#import "icedcoffee/ICHostViewController.h"
+#import "icedcoffee/Platforms/Mac/ICGLView.h"
+#import "icedcoffee/ICLabel.h"
 
 #define RESIZE_BAR_THICKNESS 10
 
@@ -61,13 +61,13 @@ enum {
     if (localLocation.x < RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeLeft;
     } 
-    if (localLocation.x >= self.size.x - RESIZE_BAR_THICKNESS) {
+    if (localLocation.x >= self.size.width - RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeRight;
     } 
     if (localLocation.y < RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeTop;
     }
-    if (localLocation.y >= self.size.y - RESIZE_BAR_THICKNESS) {
+    if (localLocation.y >= self.size.height - RESIZE_BAR_THICKNESS) {
         resizeEdge |= ResizeEdgeBottom;
     }
     return resizeEdge;
@@ -195,15 +195,15 @@ enum {
     [self setPositionY:_dragStartPosition.y + dragOffset.y];
     
     kmVec3 newsize = kmNullVec3;
-    newsize.x = _dragStartsize.x + sizeOffset.x;
-    newsize.y = _dragStartsize.y + sizeOffset.y;
+    newsize.width = _dragStartsize.width + sizeOffset.x;
+    newsize.height = _dragStartsize.height + sizeOffset.y;
     [self setSize:newsize];
     
     NSLog(@"%@", kmVec3Description(self.size));
     
     [_dropShadowSprite setPositionX:self.position.x - 22];
     [_dropShadowSprite setPositionY:self.position.y - 22];
-    [_dropShadowSprite setSize:(kmVec3){self.size.x + 44, self.size.y + 44, 0}];
+    [_dropShadowSprite setSize:(kmVec3){self.size.width + 44, self.size.height + 44, 0}];
 }
 
 @end

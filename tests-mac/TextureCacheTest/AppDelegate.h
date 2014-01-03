@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -22,7 +22,7 @@
 //  
 
 #import <Cocoa/Cocoa.h>
-#import "IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 
 #define MAX_WIDTH 128
 #define MAX_HEIGHT MAX_WIDTH

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -24,14 +24,14 @@
 
 /**
  @file icTypes.h
- @brief IcedCoffee types
+ @brief icedcoffee types
  */
 
 #pragma once
 
 #import "Platforms/icGL.h"
-#import "kazmath/kazmath.h"
-#import "kazmath/vec4.h"
+#import "../3rd-party/kazmath/kazmath/kazmath.h"
+#import "../3rd-party/kazmath/kazmath/vec4.h"
 
 
 /**
@@ -58,6 +58,10 @@
      (m).mat[3], (m).mat[7], (m).mat[11], (m).mat[15]])
 #define kmVec4FromColor4B(c) ((kmVec4){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
 #define kmVec4FromColor4F(c) ((kmVec4){c.r,c.g,c.b,c.a})
+
+#define icSize2Make(w,h) (kmVec3Make(w,h,0.0f))
+#define icSize3Make(w,h,d) (kmVec3Make(w,h,d))
+#define icSizeMake(w,h) (icSize2Make(w,h))
 #define icColor4FMake(r,g,b,a) ((icColor4F){r,g,b,a})
 #define color4BFromKmVec4(v) ((icColor4B){((GLubyte)(v.x*255.0f)),((GLubyte)(v.y*255.0f)),((GLubyte)(v.z*255.0f)),((GLubyte)(v.w*255.0f))})
 #define color4FFromColor4B(c) ((icColor4F){(float)c.r/255.0f,(float)c.g/255.0f,(float)c.b/255.0f,(float)c.a/255.0f})
@@ -208,6 +212,30 @@ typedef struct _icV3F_C4F_T2F {
 	icColor4F color;			// 16 bytes
     kmVec2 texCoords;           // 8 bytes
 } icV3F_C4F_T2F;
+
+// Used for font glyph rendering
+typedef struct _icV3F_C4F_T2F_G1F {
+    kmVec3 vect;                // 12 bytes
+	icColor4F color;			// 16 bytes
+    kmVec2 texCoords;           // 8 bytes
+    GLfloat gamma;
+} icV3F_C4F_T2F_G1F;
+
+typedef struct _icV3F_C4B_T2F_Quad {
+    icV3F_C4B_T2F vertices[4];
+} icV3F_C4B_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_Quad {
+    icV3F_C4F_T2F vertices[4];
+} icV3F_C4F_T2F_Quad;
+
+typedef struct _icV3F_C4F_T2F_G1F_Quad {
+    icV3F_C4F_T2F_G1F vertices[4];
+} icV3F_C4F_T2F_G1F_Quad;
+
+typedef struct _icUShort_QuadIndices {
+    GLushort indices[6];
+} icUShort_QuadIndices;
 
 
 typedef struct _icRay3 {

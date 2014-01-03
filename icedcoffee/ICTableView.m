@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -28,7 +28,7 @@
 
 @synthesize dataSource = _dataSource;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _reusableCells = [[NSMutableDictionary alloc] initWithCapacity:1];
@@ -62,8 +62,8 @@
         for (NSInteger i=0; i<numRows; i++) {
             ICTableViewCell *cell = [_dataSource tableView:self cellForRowAtIndex:i];
             [self addChild:cell];
-            [cell setPositionY:i * cell.size.y];
-            [cell setSize:kmVec3Make(self.size.x, cell.size.y, 0)];
+            [cell setPositionY:i * cell.size.height];
+            [cell setSize:kmVec3Make(self.size.width, cell.size.height, 0)];
         }
         [self setNeedsDisplay];
     }

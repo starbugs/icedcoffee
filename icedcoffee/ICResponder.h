@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -27,7 +27,8 @@
 
 #if __IC_PLATFORM_DESKTOP
 #import "ICMouseResponder.h"
-#define EVENT_PROTOCOLS ICMouseResponder
+#import "ICKeyResponder.h"
+#define EVENT_PROTOCOLS ICMouseResponder, ICKeyResponder
 #elif __IC_PLATFORM_TOUCH
 #import "ICTouchResponder.h"
 #define EVENT_PROTOCOLS ICTouchResponder
@@ -53,25 +54,59 @@
 /**
  @brief The next responder in the responder chain
  */
-@property (nonatomic, assign) ICResponder *nextResponder;
+@property (nonatomic, assign, getter=nextResponder) ICResponder *nextResponder;
 
 /**
- @brief Overriding sub classes should return YES when the receiver accepts to become first responder
+ @brief Called by the framework to ask whether the receiver accepts to become first responder
  
- The default implementation returns NO.
+ The default implementation returns ``NO`` indicating that the receiver does not agree to become
+ first responder. Overriding sub classes should return ``YES`` if the receiver should accept
+ to become first responder.
  */
 - (BOOL)acceptsFirstResponder;
 
 /**
- @brief Called by the framework when the receiver is about to become the first responder
+ @brief Called by the framework when the receiver is about to become first responder
+ 
+ The default implementation returns ``YES`` to signal that the receiver accepts to become
+ first responder. Subclases may override this method to change state or perform some action
+ and/or return ``NO`` refusing to become first responder.
  */
-- (void)becomeFirstResponder;
+- (BOOL)becomeFirstResponder;
 
 /**
- @brief Called by the framework when another object is about to become the first responder
+ @brief Called by the framework when the receiver is asked to resign first responder status
+ 
+ The default implementation returns ``YES`` indicating that the receiver resigns first responder
+ status. Overriding subclasses may return ``NO`` refusing to resign first responder status.
  */
-- (void)resignFirstResponder;
+- (BOOL)resignFirstResponder;
 
+/**
+ @brief Attempts to make the receiver the new first responder of its associated host view controller
+ 
+ The default implementation does nothing. This method is overridden by ICNode as the associated
+ host view controller is unknown for the ICResponder class.
+ 
+ @return Returns ``YES`` if the receiver became first responder or ``NO`` otherwise.
+ */
+- (BOOL)makeFirstResponder;
+
+#if __IC_PLATFORM_DESKTOP
+/**
+ @brief Handles events or action messages falling off the end of the responder chain
+ 
+ The default implementation does nothing. This method is overridden by ICNode as the associated
+ host view controller is required to implement the standard behavior (beeping if the event
+ selector is ``keyDown:``).
+ 
+ Note that ``selector`` must define a Cocoa event selector rather than an icedcoffee event
+ selector.
+ 
+ @param selector The event selector of the unhandled event.
+ */
+- (void)noResponderFor:(SEL)selector;
+#endif // __IC_PLATFORM_DESKTOP
 
 #if __IC_PLATFORM_DESKTOP
 
@@ -137,6 +172,14 @@
  @brief Called by the framework when the user scrolls using the mouse's scroll wheel
  */
 - (void)scrollWheel:(ICMouseEvent *)event;
+
+
+#pragma mark - Handling Key Events
+/** @name Handling Key Events */
+
+- (void)keyDown:(ICKeyEvent *)keyEvent;
+
+- (void)keyUp:(ICKeyEvent *)keyEvent;
 
 #endif // __IC_PLATFORM_DESKTOP
 

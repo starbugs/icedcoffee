@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -25,8 +25,6 @@
 #import "ICShaderCache.h"
 #import "ICShaderFactory.h"
 #import "ICShaderProgram.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
 
 @interface ICShaderCache (Private)
 - (void)loadDefaultShaderPrograms;
@@ -38,14 +36,10 @@
 
 + (id)currentShaderCache
 {
-    ICRenderContext *renderContext = [[ICContextManager defaultContextManager]
-                                      renderContextForCurrentOpenGLContext];
-    NSAssert(renderContext != nil, @"No render context available for current OpenGL context");
-    ICShaderCache *shaderCache = renderContext.shaderCache;
-    if (!shaderCache) {
-        shaderCache = renderContext.shaderCache = [[[ICShaderCache alloc] init] autorelease];
-    }
-    return shaderCache;
+    ICOpenGLContext *openGLContext = [ICOpenGLContext currentContext];
+    NSAssert(openGLContext != nil, @"No OpenGL context available for current native OpenGL context");
+    NSAssert(openGLContext.shaderCache != nil, @"No shader cache created yet for this context");
+    return openGLContext.shaderCache;
 }
 
 + (void)purgeCurrentShaderCache
@@ -99,7 +93,7 @@
     for (id key in keys) {
         id value = [_programs objectForKey:key];
         if ([value retainCount] == 1) {
-            ICLog(@"IcedCoffee: ICShaderCache: removing unused shader program: %@", key);
+            ICLog(@"icedcoffee: ICShaderCache: removing unused shader program: %@", key);
             [_programs removeObjectForKey:key];
         }
     }

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -30,7 +30,7 @@
 @class ICNode;
 
 /**
- @brief Represents a touch in an IcedCoffee scene on iOS
+ @brief Represents a touch in an icedcoffee scene on iOS
  */
 @interface ICTouch : NSObject {
 @protected

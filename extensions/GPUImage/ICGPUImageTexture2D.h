@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -21,9 +21,9 @@
 //  SOFTWARE.
 //
 
-#import "ICTexture2D.h"
+#import "../../icedcoffee/ICTexture2D.h"
 #import "ICGPUImageTexture2DDelegate.h"
-#import "GPUImage/framework/Source/GPUImageTextureOutput.h"
+#import "framework/Source/GPUImageTextureOutput.h"
 
 @interface ICGPUImageTexture2D : ICTexture2D <GPUImageTextureOutputDelegate> {
 @protected

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -49,7 +49,7 @@ typedef NSUInteger ICOSXEventType;
  @brief Base class for Mac OS X events
  
  The ICOSXEvent class aggregates NSEvent, binds it to a given host view and serves as a base
- class for implementing IcedCoffee-specific event handling.
+ class for implementing icedcoffee-specific event handling.
  */
 @interface ICOSXEvent : NSObject {
 @protected

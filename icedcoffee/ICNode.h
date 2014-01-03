@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -22,7 +22,8 @@
 //  
 
 #import <Foundation/Foundation.h>
-#import "kazmath/kazmath.h"
+
+#import "../3rd-party/kazmath/kazmath/kazmath.h"
 #import "Platforms/icGL.h"
 
 #import "ICResponder.h"
@@ -35,6 +36,7 @@
 @class ICShaderProgram;
 @class ICScene;
 @class ICHostViewController;
+@class ICAnimation;
 
 /**
  @brief Block type for filtering nodes
@@ -61,13 +63,13 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  ICNodeVisitorDrawing for drawing nodes on screen and ICNodeVisitorPicking for drawing nodes
  on an invisible framebuffer for picking.
  
- Since IcedCoffee is based on GLES2, each node uses shader programs for drawing. Shader programs
+ Since icedcoffee is based on GLES2, each node uses shader programs for drawing. Shader programs
  are managed using the ICShaderProgram and ICShaderCache classes.
  
  Nodes provide the basis for user interaction event handling for mice, touch, and keyboard
  devices. Event handling is implemented on top of the scene graph in the ICScene, ICResponder, and
  ICHostViewController classes amongst others.
-
+ 
  ### Subclassing ###
  
  ICNode may be subclassed to implement custom nodes. Most likely, you will want to implement
@@ -82,7 +84,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     a framebuffer. It is used for both drawing and picking.
   - When you override ICNode::drawWithVisitor:, first check whether the node is visible and
     skip any drawing if it is not.
-  - IcedCoffee does by default provide two different visitors. ICNodeVisitorDrawing is
+  - icedcoffee does by default provide two different visitors. ICNodeVisitorDrawing is
     used for rendering objects on screen while ICNodeVisitorPicking is used to draw objects
     on an internal picking framebuffer. ICNode provides a standard way of setting up shaders
     for drawing and picking. Hence, after checking for visibility, you should call
@@ -223,7 +225,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Adds a child node to the receiver's children array
  
- @param child A reference to a valid ICNode object. When added, the object is retained.
+ @param child A reference to a valid ICNode object defining the child to be added
+ 
+ This method implicitly retains ``child``.
  
  @sa
     - insertChild:atIndex:
@@ -235,9 +239,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Inserts a child node at a specific index in the receiver's children array
  
- @param child A reference to a valid ICNode object. When inserted, the object is retained.
- @param index An int specifying an index position into the node's children array.
- 
+ @param child A reference to a valid ICNode object defining the child to be inserted
+ @param index An ``uint`` specifying an index position into the node's children array.
+
+ This method implicitly retains ``child``.
+
  @sa
     - addChild:
     - children
@@ -247,7 +253,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Removes a child node from the receiver's children array
  
- @param child A reference to a valid ICNode object. When removed, the object is released.
+ @param child A reference to a valid ICNode object defining the child to remove from the receiver.
+ 
+ This method sets the ICNode::parent property of ``child`` to ``nil``, then removes ``child``
+ from the receiver's internal children array. ``child`` is implicitly released by this method.
  
  @sa
     - removeChildAtIndex:
@@ -259,9 +268,11 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 /**
  @brief Removes a child node specified by an index into the receiver's children array
  
- @param index An int specifying the index of the child node to be removed. When removed,
- the object will be released.
- 
+ @param index An ``uint`` specifying the index of the child node to be removed from the receiver.
+
+ This method sets the ICNode::parent property of the child node to ``nil``, then removes it
+ from the receiver's internal children array. The child node is implicitly released by this method.
+
  @sa
     - removeChild:
     - removeAllChildren:
@@ -271,6 +282,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 /**
  @brief Removes all children from the receiver
+ 
+ This method sets the ICNode::parent property of all children of the receiver to ``nil``, then
+ removes all children from the receiver's internal children array. All child nodes are implicitly
+ released by this method.
  
  @sa
     - removeChild:
@@ -552,7 +567,7 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  parent, until an ICScene object's parent (or nil) is reached. It invokes nodeToParentTransform
  on all ancestor nodes to retrieve their updated transform matrices.
  
- Note that in IcedCoffee the world space of a given node is represented by its nearest ICScene
+ Note that in icedcoffee the world space of a given node is represented by its nearest ICScene
  ancestor's local coordinate space. This is done to ensure that nested scenes are represented
  as nested worlds, each having its own world coordinate space.
  */
@@ -851,6 +866,16 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)setScaleZ:(float)scaleZ;
 
 /**
+ @brief The rotation angle of the receiver
+ */
+@property (nonatomic, assign, setter=setRotationAngle:) float rotationAngle;
+
+/**
+ @brief The rotation axis of the receiver
+ */
+@property (nonatomic, assign, setter=setRotationAxis:) kmVec3 rotationAxis;
+
+/**
  @brief Sets the rotation angle and axis of the receiver
  */
 - (void)setRotationAngle:(float)angle axis:(kmVec3)axis;
@@ -1099,12 +1124,34 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  disable user interaction by default by overriding ICNode::init.
  
  @note Even if ICNode::userInteractionEnabled is set to NO, the node may still receive events
- indirectly as a result of the responder chain implemented in IcedCoffee's event processing
+ indirectly as a result of the responder chain implemented in icedcoffee's event processing
  system. The default ICResponder implementation will forward events to the next responder if they
  are not handled by the node itself. Event forwarding as part of the responder chain is not
  influenced by the ICNode::userInteractionEnabled property.
  */
 @property (nonatomic, assign) BOOL userInteractionEnabled;
+
+
+#pragma mark - Animating a Node
+/** @name Animating a Node */
+
+/**
+ @brief Adds the given animation to the receiver
+ 
+ The animation is started automatically once it has been added.
+ */
+- (void)addAnimation:(ICAnimation *)animation;
+
+/**
+ @brief Removes the given animation from the receiver
+ */
+- (void)removeAnimation:(ICAnimation *)animation;
+
+/**
+ @brief Removes all animations from the receiver
+ */
+- (void)removeAllAnimations;
+
 
 #ifdef DEBUG
 
@@ -1115,6 +1162,8 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
  @brief Prints a debug log of the node's branch on the console (only available in debug mode)
  */
 - (void)debugLogBranch;
+
+- (void)debugDrawBoundingBox;
 
 #endif
 

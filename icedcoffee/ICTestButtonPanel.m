@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -31,23 +31,22 @@
 @synthesize statusLabel = _statusLabel;
 @synthesize hintLabel = _hintLabel;
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
-        self.autoresizingMask = ICAutoResizingMaskWidthSizable |
-        ICAutoResizingMaskTopMarginFlexible;
+        self.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
         self.drawsBackground = YES;
         self.background.color = (icColor4B){0,0,0,180};
         
-        _nextSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
+        _nextSceneButton = [[ICButton buttonWithSize:kmVec3Make(80, 21, 0)] retain];
         _nextSceneButton.label.text = @"Next";
         _nextSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
-        [_nextSceneButton setPositionX:self.size.x - _nextSceneButton.size.x - 25];
+        [_nextSceneButton setPositionX:self.size.width - _nextSceneButton.size.width - 25];
 
-        _previousSceneButton = [[ICButton buttonWithSize:CGSizeMake(80, 21)] retain];
+        _previousSceneButton = [[ICButton buttonWithSize:kmVec3Make(80, 21, 0)] retain];
         _previousSceneButton.label.text = @"Previous";
         _previousSceneButton.autoresizingMask = ICAutoResizingMaskLeftMarginFlexible;
-        [_previousSceneButton setPositionX:_nextSceneButton.position.x - _previousSceneButton.size.x - 10];
+        [_previousSceneButton setPositionX:_nextSceneButton.position.x - _previousSceneButton.size.width - 10];
         
         [self addChild:_previousSceneButton];
         [self addChild:_nextSceneButton];
@@ -71,7 +70,8 @@
         [_hintLabel setPositionY:25];
         _hintLabel.autoresizesToTextSize = NO;
         _hintLabel.clipsChildren = YES;
-        _hintLabel.color = (icColor4B){255,255,255,160};
+        _hintLabel.color = (icColor4B){255,255,255,255};
+        _hintLabel.gamma = 0.9f;
     }
     return self;
 }
@@ -88,8 +88,8 @@
 - (void)setSize:(kmVec3)size
 {
     [super setSize:size];
-    [_statusLabel setWidth:self.size.x - (_previousSceneButton.size.x + _nextSceneButton.size.x + 70)];
-    [_hintLabel setWidth:self.size.x - (_previousSceneButton.size.x + _nextSceneButton.size.x + 70)];
+    [_statusLabel setWidth:self.size.width - (_previousSceneButton.size.width + _nextSceneButton.size.width + 70)];
+    [_hintLabel setWidth:self.size.width - (_previousSceneButton.size.width + _nextSceneButton.size.width + 70)];
 }
 
 @end

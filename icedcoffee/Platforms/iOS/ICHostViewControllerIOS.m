@@ -1,5 +1,5 @@
 //  
-// Copyright (C) 2012 Tobias Lensing
+// Copyright (C) 2013 Tobias Lensing
 //  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -131,7 +131,7 @@
     if (_openGLReady && !self.isRunning) {
         _isRunning = YES;
     
-        ICLog(@"IcedCoffee: animation started");
+        ICLog(@"icedcoffee: animation started");
         
         _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(mainLoop:)];
 
@@ -147,7 +147,7 @@
     if (self.isRunning) {
         _isRunning = NO;
         
-        ICLog(@"IcedCoffee: animation stopped");
+        ICLog(@"icedcoffee: animation stopped");
         
         [self.thread cancel];
         self.thread = nil;
@@ -197,7 +197,7 @@
      return; // depth buffer not ready
      }*/
     
-	[EAGLContext setCurrentContext:[openGLview context]];
+	[self.openGLContext makeCurrentContext];
 
     [super drawScene];
     
@@ -227,18 +227,12 @@
 - (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
     NSArray *resultNodeStack;
-    
-	ICGLView *openGLview = (ICGLView*)self.view;
-	[EAGLContext setCurrentContext: [openGLview context]];
+
+    [self.openGLContext makeCurrentContext];
 
     resultNodeStack = [self.scene hitTest:point deferredReadback:deferredReadback];
     
     return resultNodeStack;
-}
-
-- (void)setContentScaleFactor:(float)contentScaleFactor
-{
-    [super setContentScaleFactor:contentScaleFactor];
 }
 
 - (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
@@ -250,8 +244,7 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
-    ICGLView *openGLview = (ICGLView*)self.view;
-	[EAGLContext setCurrentContext:[openGLview context]];
+    [self.openGLContext makeCurrentContext];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesBegan:touches withEvent:event];
 }
@@ -265,8 +258,7 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
-    ICGLView *openGLview = (ICGLView*)self.view;
-	[EAGLContext setCurrentContext:[openGLview context]];
+    [self.openGLContext makeCurrentContext];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesCancelled:touches withEvent:event];
 }
@@ -280,8 +272,7 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
-    ICGLView *openGLview = (ICGLView*)self.view;
-	[EAGLContext setCurrentContext:[openGLview context]];
+    [self.openGLContext makeCurrentContext];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesEnded:touches withEvent:event];
 }
@@ -295,8 +286,7 @@
         NSLog(@"No touch event dispatcher available in %@ %@",
               NSStringFromClass([self class]), NSStringFromSelector(_cmd));
     }
-    ICGLView *openGLview = (ICGLView*)self.view;
-	[EAGLContext setCurrentContext:[openGLview context]];
+    [self.openGLContext makeCurrentContext];
     [self makeCurrentHostViewController];
     [_touchEventDispatcher touchesMoved:touches withEvent:event];
 }

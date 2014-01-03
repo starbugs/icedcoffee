@@ -1,15 +1,15 @@
 {
-	"doxyfilePath": "~/github/icedcoffee/Doxyfile-iOS",
-	"doxygenOutputPath": "~/github/icedcoffee/docs-iOS",
-	"websiteRootPath": "~/Projects/icedcoffee/website/",
+	"doxyfilePath": "./Doxyfile-iOS",
+	"doxygenOutputPath": "./docs-iOS",
+	"websiteRootPath": "~/Projects/icedcoffee-meta/website/",
 	"relativeOutputPath": "content/reference/ios/",
 
 	"executeDoxygen": true,
 	"executeNanoc": true,
-	"cleanIntermediates": false,
+	"cleanIntermediates": true,
 
 	"mainTitle": "Icedcoffee iOS API Reference",
-	"version": "0.6.8",
+	"version": "0.7",
 	
 	"classPrefix": "IC",
 	"macroPrefix": "IC_",

@@ -1,5 +1,5 @@
 //
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -193,6 +193,7 @@ NSString *__positionTextureFSH = IC_SHADER_STRING
 
 
 // ICShaderPositionTexture_uColor
+// FIXME: missing shader impl
 
 
 // ICShaderPositionTextureA8Color
@@ -233,9 +234,8 @@ NSString *__positionTextureA8ColorFSH = IC_SHADER_STRING
 
     void main()
     {
-        gl_FragColor = vec4(v_fragmentColor.rgb,										// RGB from uniform
-                            v_fragmentColor.a * texture2D(u_texture, v_texCoord).a		// A from texture & uniform
-                            );
+        gl_FragColor = vec4(v_fragmentColor.rgb,
+                            v_fragmentColor.a * texture2D(u_texture, v_texCoord).a);
     }
 );
 
@@ -340,7 +340,7 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
                          __spriteTextureMaskFSH,
                          positionTextureColorAttributes);
         
-        _shaderDefinitions = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+        _shaderDefinitions = [[NSMutableDictionary dictionaryWithObjectsAndKeys:
                               positionTextureColorDef, ICShaderPositionTextureColor,
                               positionTextureA8ColorDef, ICShaderPositionTextureA8Color,
                               positionTextureColorAlphaTestDef, ICShaderPositionTextureColorAlphaTest,
@@ -348,9 +348,15 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
                               positionColorDef, ICShaderPositionColor,
                               pickingDef, ICShaderPicking,
                               spriteTextureMaskDef, ICShaderSpriteTextureMask,
-                              nil];
+                              nil] retain];
     }
     return self;
+}
+
+- (void)dealloc
+{
+    [_shaderDefinitions release];
+    [super dealloc];
 }
 
 - (ICShaderProgram *)setupShaderProgramWithName:(NSString *)name
@@ -394,12 +400,14 @@ NSString *__spriteTextureMaskFSH = IC_SHADER_STRING
 
 - (NSString *)vertexShaderStringForKey:(NSString *)key
 {
-    return [[_shaderDefinitions objectForKey:key] objectForKey:@"vshString"];
+    NSDictionary *shaderDef = [_shaderDefinitions objectForKey:key];
+    return [shaderDef objectForKey:@"vshString"];
 }
 
 - (NSString *)fragmentShaderStringForKey:(NSString *)key
 {
-    return [[_shaderDefinitions objectForKey:key] objectForKey:@"fshString"];
+    NSDictionary *shaderDef = [_shaderDefinitions objectForKey:key];
+    return [shaderDef objectForKey:@"fshString"];
 }
 
 @end

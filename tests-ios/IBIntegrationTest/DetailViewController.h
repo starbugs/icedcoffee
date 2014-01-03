@@ -3,11 +3,11 @@
 //  IBIntegrationTest
 //
 //  Created by Tobias Lensing on 8/4/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
-#import <IcedCoffee.h>
+#import "icedcoffee/icedcoffee.h"
 
 @interface DetailViewController : ICHostViewControllerIOS <UISplitViewControllerDelegate>
 

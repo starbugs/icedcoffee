@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -43,7 +43,7 @@
  
  @code
  // Create a new autoreleased ICButtton object
- ICButton *myButton = [ICButton buttonWithSize:CGSizeMake(160,21)];
+ ICButton *myButton = [ICButton buttonWithSize:kmVec2Make(160,21,0)];
  // Set the title of the button to some custom string
  myButton.label.text = @"My Button Title";
  // Add the button to our scene (assuming that scene is a valid ICScene object)
@@ -66,7 +66,7 @@
 #pragma mark - Creating a Button
 /** @name Creating a Button */
 
-+ (id)buttonWithSize:(CGSize)size;
++ (id)buttonWithSize:(kmVec3)size;
 
 
 #pragma mark - Changing the Button's Label

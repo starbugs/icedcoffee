@@ -1,5 +1,5 @@
 //  
-// Copyright (C) 2012 Tobias Lensing
+// Copyright (C) 2013 Tobias Lensing
 //  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -45,11 +45,12 @@
  * THE SOFTWARE.
  */
 
-#import "ICHostViewController.h"
-#import "ICMouseResponder.h"
-#import "ICMouseEventDispatcher.h"
+#import "../../ICHostViewController.h"
+#import "../../ICMouseResponder.h"
+#import "../../ICMouseEventDispatcher.h"
+#import "../../ICKeyEventDispatcher.h"
+#import "../../icMacros.h"
 #import "ICGLView.h"
-#import "icMacros.h"
 #import <QuartzCore/CVDisplayLink.h>
 
 #ifdef __IC_PLATFORM_MAC
@@ -60,20 +61,21 @@
  @brief Host view controller for the Mac OS X platform
  
  ICHostViewControllerMac specializes and extends ICHostViewController to implement view management
- for the Mac OS X platform. Each Cocoa view that should display an IcedCoffee scene in your
+ for the Mac OS X platform. Each Cocoa view that should display an icedcoffee scene in your
  application must have a distinct host view controller.
  
- When creating an IcedCoffee-based application or integrating an IcedCoffee-based OpenGL view
+ When creating an icedcoffee-based application or integrating an icedcoffee-based OpenGL view
  into an existing Cocoa application on the Mac, it is recommended to subclass
  ICHostViewControllerMac in order to implement a specialized view controller for each
- application view that should display an IcedCoffee scene.
+ application view that should display an icedcoffee scene.
  */
-@interface ICHostViewControllerMac : ICHostViewController <ICMouseResponder>
+@interface ICHostViewControllerMac : ICHostViewController
 {
 @protected
     CVDisplayLinkRef _displayLink;
     ICGLView *_view;
     ICMouseEventDispatcher *_mouseEventDispatcher;
+    ICKeyEventDispatcher *_keyEventDispatcher;
     BOOL _usesDisplayLink;
     BOOL _drawsConcurrently;
     BOOL _isThreadOwner;

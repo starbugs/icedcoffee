@@ -1,6 +1,82 @@
 Changelog
 =========
 
+v0.7
+----
+
+New Features:
+
+* Glyph caching, framesetting and accelerated font rendering backed by CoreText
+  * Icedcoffe now has a sophisticated font rendering subsystem consisting of the following classes:
+    * ICFont represents a font with a specific face and size throughout the framework.
+    * ICFontCache implicitly caches font objects for reuse.
+    * ICGlyphCache implements a CoreGraphics-backed glyph cache, making typographic glyphs
+      available as textures for accelerated rendering.
+    * ICGlyphTextureAtlas implements a texture atlas for typographic glyphs employing a skyline
+      bin packing algorithm (based on RectangleBinPack.)
+    * ICTextureGlyph represents a single glyph on an ICGlyphTextureAtlas and provides a couple
+      of properties to display cached glyphs on screen.
+    * ICGlyphRun represents a single glyph run. All glyphs in a run share the same font attributes.
+    * ICTextLine represents a single line of text consisting of one or multiple glyph runs.
+    * ICTextFrame represents a text frame consisting of one or multiple text lines. It employs
+      the CoreText framesetter to layout text and convert it to text lines and glyph runs. The
+      final result is a sub scene graph consisting of text frame, text line and glyph run nodes.
+    * ICParagraphStyle represents an icedcoffee paragraph style similar to CTParagraphStyle.
+    * ICTextTab represents a text tab (or tab stop) which can be used to layout text in a text
+      frame.
+  * ICLabel has been completely reworked to use the new font rendering subsystem. It does now
+    allow for attributed text and provides full framesetting support.
+* Property animations
+  * Icedcoffee now comes with a number of animation classes. These classes can be used to
+    conveniently implement property animations on ICNode properties.
+    * ICAnimation is a generic base class for all animations.
+    * ICAnimationDelegate is a protocol allowing objects to be informed about animation progress.
+    * ICAnimationTimingFunction implements a timing function based on cubic bezier curves.
+    * ICBasicAnimation allows for convenient basic animations of properties.
+    * ICPropertyAnimation is a base class allowing for structured handling of property animations.
+  * Property animations are based on Objective-C key-value observation (KVC). The ICNode class
+    has been extended to support this for most of its properties.
+* Support for multithreaded matrix stacks (using multiple OpenGL contexts):
+  * We contributed a patch to the kazmath project allowing icedcoffee to finally perform
+    multithreaded rendering using the kazmath matrix stack functions. E.g., icedcoffee can now be
+    configured to simultaneously draw to an Airplay display and the computer's screen.
+  * Icedcoffee's OpenGL context handling has been rewritten to better support multithreaded
+    environments. See the "Changes and Improvements" section for details.
+    
+Changes and Improvements:
+
+* Vector types are now unions instead of structs, allowing for nicer syntax with different
+  semantics for the x/y/z/w members. The following constructs are now possible:
+  * kmVec2 size; size.width = 20; size.height = 30;
+  * kmVec3 size; size.width = 20; size.height = 30; size.depth = 10;
+  * kmVec4 color; color.r = 0.5f; color.g = 0.0f; color.b = 0.0f; color.a = 1.0f;
+  * kmVec4 rect; rect.x = 10; rect.y = 20; rect.width = 100; rect.height = 120;
+* Reorganized header search paths; it is no longer necessary to include kazmath or other 3rd-party
+  source code explicitly in the header search paths of an icedcoffee project. Instead, only the
+  icedcoffee project folder has to be included as a header search path in the project settings.
+* An early version of key event handling is now available in icedcoffee on OS X.
+  * Added the ICKeyEvent class representing a key event on OS X.
+  * Added the ICKeyEventDispatcher class responsible for dispatching key events with
+    ICHostViewController.
+  * Added the ICKeyResponder protocol.
+  * Added keyDown: and keyUp: event methods to ICResponder.
+* Added the ICMutableTexture2D class which allows for mutating textures (completely or partially.)
+* OpenGL context management has been rewritten to support multiple kazmath OpenGL contexts.
+  IMPORTANT: it is now required to set the current OpenGL context using the ICOpenGLContext class.
+  It is no longer valid to use NSOpenGLContext or EAGLContext directly. The following classes
+  have been removed/added:
+  * Removed the ICRenderContext and ICContextManager classes.
+  * Added the ICOpenGLContext class as a replacement for the former render context class.
+  * Added the ICOpenGLContextManager class as a replacement for the former ICContextManager class.
+  * Refactored all dependent code to use ICOpenGLContext instead of ICRenderContext.
+  
+Fixes:
+
+* Fixed a bug that could cause shader definitions to be released too early (ICShaderFactory.m).
+* Fixed wrong display of colors with ICLine2D.
+* Fixed a missing retain in ICHostViewControllerMac which could cause a crash bug.
+
+
 v0.6.8
 ------
 

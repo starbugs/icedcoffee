@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -37,7 +37,6 @@
 @class ICResponder;
 @class ICScheduler;
 @class ICTargetActionDispatcher;
-@class ICRenderContext;
 
 
 #if defined(__IC_PLATFORM_MAC)
@@ -79,13 +78,14 @@
 @protected
     ICScene *_scene;
 
-    ICRenderContext *_renderContext;
+    ICOpenGLContext *_openGLContext;
     ICScheduler *_scheduler;
     ICTargetActionDispatcher *_targetActionDispatcher;
     
     ICResponder *_currentFirstResponder;
     
     BOOL _retinaDisplayEnabled;
+    float _desiredContentScaleFactor;
 
     BOOL _isRunning;
     NSThread *_thread;
@@ -95,6 +95,10 @@
     icTime _elapsedTime;
     struct timeval _lastUpdate;
     uint64_t _frameCount;
+    
+    icTime _fpsDelta;
+    uint _fpsNumFrames;
+    float _fps;
     
     ICFrameUpdateMode _frameUpdateMode;
     NSDate *_continuousFrameUpdateExpiryDate;
@@ -180,7 +184,7 @@
  appropriate situations. For example, this method is called automatically at the end of
  ICHostViewController initialization (before ICHostViewController::setupScene is called), before a
  scene is drawn in ICHostViewController::drawScene, and before an event is dispatched. This way,
- framework or user code written to set up, draw or interact in an IcedCoffee scene is usually
+ framework or user code written to set up, draw or interact in an icedcoffee scene is usually
  guaranteed to retrieve the correct current host view controller via
  ICHostViewController::currentHostViewController.
  
@@ -196,17 +200,35 @@
 
 /**
  @brief The receiver's current first responder
+ 
+ Setting this property to an ICResponder object will first check whether that object accepts
+ first responder status by calling ICResponder::acceptsFirstResponder. If so, the setter checks
+ whether the current first responder is willing to resign first responder status by sending it
+ an ICResponder::resignFirstResponder message. If the current first responder resigns first
+ responder, the setter finally sets the given responder as new current first responder of the
+ receiver.
  */
 @property (nonatomic, retain, setter=setCurrentFirstResponder:) ICResponder *currentFirstResponder;
+
+/**
+ @brief Attempts to make the given responder new current first responder of the receiver
+ 
+ This method sets the ICHostViewController::currentFirstResponder property to the given responder
+ on the receiver.
+ 
+ @return If setting the given responder as the new first responder succeeds, the method
+ returns ``YES``. Otherwise ``NO`` is returned.
+ */
+- (BOOL)makeFirstResponder:(ICResponder *)newFirstResponder;
 
 
 #pragma mark - Obtaining Caches and Contexts
 /** @name Obtaining Caches and Contexts */
 
 /**
- @brief The receiver's render context
+ @brief The receiver's OpenGL context
  */
-@property (nonatomic, readonly) ICRenderContext *renderContext;
+@property (nonatomic, readonly) ICOpenGLContext *openGLContext;
 
 /**
  @brief The ICTextureCache object associated with the receiver
@@ -233,11 +255,26 @@
 @property (nonatomic, readonly) uint64_t frameCount;
 
 /**
+ @brief The number of frames per second currently presented by the receiver
+ 
+ If the receiver's ICHostViewController::frameUpdateMode is set to ICFrameUpdateModeSynchronized,
+ this property is updated approximately once a second. For other frame update modes, this property
+ might not report accurate results and should not be used.
+ 
+ If you want to refresh a user interface control displaying the current framerate, you should use
+ key-value observation to observe updates on this property.
+ 
+ Note that the receiver's framerate will never exceed the display's refresh rate, which typically
+ is 60 FPS on all modern displays.
+ */
+@property (nonatomic, readonly) float fps;
+
+/**
  @brief The frame update mode used to present the receiver's scene
  
- An ICFrameUpdateMode enumerated value defining when the host view controller should draw
+ An ICFrameUpdateMode enumerated value defining when the host view controller should redraw
  the scene's contents. Setting this property to ICFrameUpdateModeSynchronized lets the
- host view controller draw the scene's contents continuously, synchronized with the display
+ host view controller draw the scene's contents continuously, synchronized with the display's
  refresh rate. Setting it to ICFrameUpdateModeOnDemand lets the host view controller draw
  the scene's contents on demand only, when one or multiple nodes' ICNode::setNeedsDisplay
  method has been called.
@@ -356,9 +393,9 @@
 - (void)viewDidLoad;
 
 #ifdef __IC_PLATFORM_IOS
-- (EAGLContext *)openGLContext;
+- (EAGLContext *)nativeOpenGLContext;
 #elif defined(__IC_PLATFORM_MAC)
-- (NSOpenGLContext *)openGLContext;
+- (NSOpenGLContext *)nativeOpenGLContext;
 #endif
 
 

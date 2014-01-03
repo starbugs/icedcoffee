@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,58 +23,13 @@
 
 /**
  @file icMacros.h
- @brief Preprocessor macros commonly used in IcedCoffee
+ @brief Preprocessor macros commonly used in icedcoffee
  */
 
 #pragma once
 
-#import <Availability.h>
-
-
-// Platform Macros
-
-/**
- @addtogroup platform-macros Platform Macros
- @{
- */
-
-#ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-
-/**
- @brief Defined when compiled for the iOS platform
- */
-#define __IC_PLATFORM_IOS 1
-
-/**
- @brief Defined when compiled for a touch platform
- */
-#define __IC_PLATFORM_TOUCH 1
-
-/**
- @brief Defined when compiled for an OpenGL ES platform
- 
- This macro is thought to be used for built-in stringified shader sources
- */
-#define GL_ES 1
-
-#elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-
-/**
- @brief Defined when compiled for the Mac platform
- */
-#define __IC_PLATFORM_MAC 1
-
-/**
- @brief Defined when compiled for a desktop platform
- */
-#define __IC_PLATFORM_DESKTOP 1
-
-#endif
-
-/** @} */
-
-
-#import "icGLState.h"
+#import "icAvailability.h"
+#import "ICOpenGLContext.h"
 
 
 // Constants
@@ -83,8 +38,6 @@
 
 
 // Retina display support
-
-extern float g_icContentScaleFactor;
 
 /**
  @defgroup retina-display-support-macros Retina Display Support Macros
@@ -106,7 +59,7 @@ extern float g_icContentScaleFactor;
  The default content scale factors are defined in #IC_DEFAULT_CONTENT_SCALE_FACTOR
  and #IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR.
  */
-#define ICContentScaleFactor() g_icContentScaleFactor
+#define ICContentScaleFactor() ([[ICOpenGLContext currentContext] contentScaleFactor])
 
 /**
  @brief Converts the given value from points to pixels
@@ -172,7 +125,7 @@ extern float g_icContentScaleFactor;
 #define ICLogDealloc(...) do {} while(0)
 #endif // IC_LOG_DEALLOCATIONS
 
-// Macro for general IcedCoffee logging
+// Macro for general icedcoffee logging
 #define ICLog(...) NSLog(__VA_ARGS__)
 
 #else

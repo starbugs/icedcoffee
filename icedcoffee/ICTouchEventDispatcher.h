@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,6 +23,7 @@
 
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
+#import "Platforms/icGL.h"
 
 #ifdef __IC_PLATFORM_IOS
 
@@ -31,7 +32,7 @@
 /**
  @brief Multitouch event dispatcher for iOS
  
- ICTouchEventDispatcher dispatches incoming touches to ICNode objects in an IcedCoffee scene.
+ ICTouchEventDispatcher dispatches incoming touches to ICNode objects in an icedcoffee scene.
  ICNode objects receive corresponding ICResponder::touchesBegan:withTouchEvent:,
  ICResponder::touchesMoved:withTouchEvent:, ICResponder::touchesEnded:withTouchEvent:, and
  ICResponder::touchesCancelled:withTouchEvent: messages.
@@ -54,7 +55,7 @@
  change. In other words, the object on which a given touch began continuously receives events
  for that touch until the user releases her corresponding finger from the surface.
  
- @note As of v0.6.3, IcedCoffee converts UIEvent and UITouch objects to ICTouchEvent and
+ @note As of v0.6.3, icedcoffee converts UIEvent and UITouch objects to ICTouchEvent and
  ICTouch objects.
  */
 @interface ICTouchEventDispatcher : NSObject

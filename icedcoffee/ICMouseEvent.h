@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -75,7 +75,7 @@
  @brief The event's location inside the host view
  
  @return Returns a CGPoint defining the location of the event relative to the host view's frame.
- Note that the returned location conforms to IcedCoffee's coordinate space, that is, the upper
+ Note that the returned location conforms to icedcoffee's coordinate space, that is, the upper
  left corner of the host view is the origin of the coordinate space.
  */
 - (CGPoint)locationInHostView;

@@ -3,7 +3,7 @@
 //  IBIntegrationTest
 //
 //  Created by Tobias Lensing on 8/4/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "DetailViewController.h"
@@ -27,13 +27,15 @@
 - (void)configureView
 {
     ICScene *scene = [ICScene scene];
-    ICButton *testButton = [ICButton buttonWithSize:CGSizeMake(120, 21)];
+    ICButton *testButton = [ICButton buttonWithSize:icSizeMake(120, 21)];
     testButton.label.text = @"Test";
     testButton.position = kmVec3Make(10, 10, 0);
     [scene addChild:testButton];
     [self runWithScene:scene];
 }
 
+// FIXME: retina display support, order of initialization, move this to ICHostViewControllerIOS
+// and use setUpScene?!
 - (void)viewDidLoad
 {
     [super viewDidLoad];

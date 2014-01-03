@@ -86,10 +86,10 @@ static char * glExtensions;
 		// Obtain OS version
 		_OSVersion = 0;
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
-		NSLog(@"IcedCoffee on iOS");        
+		NSLog(@"icedcoffee on iOS");        
 		NSString *OSVer = [[UIDevice currentDevice] systemVersion];
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
-		NSLog(@"IcedCoffee on OS X");        
+		NSLog(@"icedcoffee on OS X");        
 		NSString *OSVer = [self getMacVersion];
 #endif
 		NSArray *arr = [OSVer componentsSeparatedByString:@"."];		
@@ -99,11 +99,11 @@ static char * glExtensions;
 			_OSVersion += value * idx;
 			idx = idx >> 8;
 		}
-		NSLog(@"IcedCoffee: OS version: %@ (0x%08x)", OSVer, _OSVersion);
+		NSLog(@"icedcoffee: OS version: %@ (0x%08x)", OSVer, _OSVersion);
 		
-		NSLog(@"IcedCoffee: GL_VENDOR:   %s", glGetString(GL_VENDOR));
-		NSLog(@"IcedCoffee: GL_RENDERER: %s", glGetString(GL_RENDERER));
-		NSLog(@"IcedCoffee: GL_VERSION:  %s", glGetString(GL_VERSION));
+		NSLog(@"icedcoffee: GL_VENDOR:   %s", glGetString(GL_VENDOR));
+		NSLog(@"icedcoffee: GL_RENDERER: %s", glGetString(GL_RENDERER));
+		NSLog(@"icedcoffee: GL_VERSION:  %s", glGetString(GL_VERSION));
 		
 		glExtensions = (char *)glGetString(GL_EXTENSIONS);
 		
@@ -138,13 +138,13 @@ static char * glExtensions;
         
         _supportsPixelBufferObject = [self checkForGLExtension:@"GL_ARB_pixel_buffer_object"];
         
-		NSLog(@"IcedCoffee: GL_MAX_TEXTURE_SIZE: %d", _maxTextureSize);
-		NSLog(@"IcedCoffee: GL_MAX_SAMPLES: %d", _maxSamplesAllowed);
-		NSLog(@"IcedCoffee: GL supports PVRTC: %s", (_supportsPVRTC ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports BGRA8888 textures: %s", (_supportsBGRA8888 ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports NPOT textures: %s", (_supportsNPOT ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports discard_framebuffer: %s", (_supportsDiscardFramebuffer ? "YES" : "NO") );
-		NSLog(@"IcedCoffee: GL supports ARB_pixel_buffer_object: %s", (_supportsPixelBufferObject ? "YES" : "NO") );
+		NSLog(@"icedcoffee: GL_MAX_TEXTURE_SIZE: %d", _maxTextureSize);
+		NSLog(@"icedcoffee: GL_MAX_SAMPLES: %d", _maxSamplesAllowed);
+		NSLog(@"icedcoffee: GL supports PVRTC: %s", (_supportsPVRTC ? "YES" : "NO") );
+		NSLog(@"icedcoffee: GL supports BGRA8888 textures: %s", (_supportsBGRA8888 ? "YES" : "NO") );
+		NSLog(@"icedcoffee: GL supports NPOT textures: %s", (_supportsNPOT ? "YES" : "NO") );
+		NSLog(@"icedcoffee: GL supports discard_framebuffer: %s", (_supportsDiscardFramebuffer ? "YES" : "NO") );
+		NSLog(@"icedcoffee: GL supports ARB_pixel_buffer_object: %s", (_supportsPixelBufferObject ? "YES" : "NO") );
 		
 		IC_CHECK_GL_ERROR_DEBUG();
 	}

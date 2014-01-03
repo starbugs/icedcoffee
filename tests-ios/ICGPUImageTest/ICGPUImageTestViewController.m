@@ -3,7 +3,7 @@
 //  icedcoffee-tests-ios
 //
 //  Created by Tobias Lensing on 10/7/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "ICGPUImageTestViewController.h"
@@ -62,7 +62,7 @@
     
     [self.camera startCameraCapture];
     
-    [EAGLContext setCurrentContext:self.openGLContext];
+    [self.openGLContext makeCurrentContext];
     
     ICUIScene *scene = [ICUIScene scene];
     ICSprite *sprite = [ICSprite spriteWithTexture:self.texture];

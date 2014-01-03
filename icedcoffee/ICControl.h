@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -174,7 +174,7 @@ ICControlEvents ICConcreteControlEvent(ICMouseButton mouseButton,
 #pragma mark - ICControl: Initializing a Control
 /** @name Initializing a Control */
 
-- (id)initWithSize:(CGSize)size;
+- (id)initWithSize:(kmVec3)size;
 
 
 #pragma mark - ICControl: Sending Actions

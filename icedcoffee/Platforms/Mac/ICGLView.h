@@ -26,7 +26,7 @@
 // ICGLView for Mac
 
 #import <Cocoa/Cocoa.h>
-#import "icMacros.h"
+#import "../../icMacros.h"
 
 #ifdef __IC_PLATFORM_MAC
 

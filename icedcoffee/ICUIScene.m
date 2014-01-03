@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -30,10 +30,10 @@
 
 - (id)init
 {
-    return [self initWithSize:CGSizeMake(400, 300)];
+    return [self initWithSize:kmVec3Make(400, 300, 0)];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super init])) {
         self.contentView = [ICView viewWithSize:size];

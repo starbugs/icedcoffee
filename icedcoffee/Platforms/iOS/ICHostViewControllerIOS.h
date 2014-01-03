@@ -1,5 +1,5 @@
 //  
-// Copyright (C) 2012 Tobias Lensing
+// Copyright (C) 2013 Tobias Lensing
 //  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -45,11 +45,11 @@
  * THE SOFTWARE.
  */
 
-#import "icMacros.h"
+#import "../../icMacros.h"
 
 #ifdef __IC_PLATFORM_IOS
 
-#import "ICHostViewController.h"
+#import "../../ICHostViewController.h"
 #import "ICGLView.h"
 
 @class ICTouchEventDispatcher;

@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -24,21 +24,31 @@
 #import "ICResponder.h"
 #import "icMacros.h"
 
-#define FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(eventMethod) \
-    - (void)eventMethod:(ICMouseEvent *)event \
+#define FORWARD_OSXEVENT_TO_NEXT_RESPONDER(eventMethod, eventClass) \
+    - (void)eventMethod:(eventClass *)event \
     { \
-        [[self nextResponder] eventMethod:event]; \
+        ICResponder *nextResponder = [self nextResponder]; \
+        if (nextResponder) \
+            [nextResponder eventMethod:event]; \
+        else \
+            [self noResponderFor:@selector(eventMethod:)]; \
     }
 
 #define FORWARD_TOUCHEVENT_TO_NEXT_RESPONDER(eventMethod) \
     - (void)eventMethod:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event \
     { \
-        [[self nextResponder] eventMethod:touches withTouchEvent:event]; \
+        ICResponder *nextResponder = [self nextResponder]; \
+        [nextResponder eventMethod:touches withTouchEvent:event]; \
     }
 
 @implementation ICResponder
 
 @synthesize nextResponder = _nextResponder;
+
+- (ICResponder *)nextResponder
+{
+    return _nextResponder;
+}
 
 - (BOOL)acceptsFirstResponder
 {
@@ -46,15 +56,30 @@
     return NO;
 }
 
-- (void)becomeFirstResponder
+- (BOOL)becomeFirstResponder
 {
     // Override in subclass
+    return YES;
 }
 
-- (void)resignFirstResponder
+- (BOOL)resignFirstResponder
+{
+    // Override in subclass
+    return YES;
+}
+
+- (BOOL)makeFirstResponder
+{
+    // Override in subclass
+    return NO;
+}
+
+#ifdef __IC_PLATFORM_DESKTOP
+- (void)noResponderFor:(SEL)selector
 {
     // Override in subclass
 }
+#endif // __IC_PLATFORM_DESKTOP
 
 #if __IC_PLATFORM_DESKTOP
 
@@ -63,25 +88,28 @@
 - (void)mouseEntered:(ICMouseEvent *)event {} // not forwarded
 - (void)mouseExited:(ICMouseEvent *)event {} // not forwarded
 
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseDown)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseDragged)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUp)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUpInside)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(mouseUpOutside)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(mouseDown, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(mouseDragged, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(mouseUp, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(mouseUpInside, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(mouseUpOutside, ICMouseEvent)
 
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseDown)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseDragged)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUp)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUpInside)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(rightMouseUpOutside)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(rightMouseDown, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(rightMouseDragged, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(rightMouseUp, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(rightMouseUpInside, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(rightMouseUpOutside, ICMouseEvent)
 
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseDown)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseDragged)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUp)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUpInside)
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(otherMouseUpOutside)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(otherMouseDown, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(otherMouseDragged, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(otherMouseUp, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(otherMouseUpInside, ICMouseEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(otherMouseUpOutside, ICMouseEvent)
 
-FORWARD_MOUSEEVENT_TO_NEXT_RESPONDER(scrollWheel)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(scrollWheel, ICMouseEvent)
+
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(keyDown, ICKeyEvent)
+FORWARD_OSXEVENT_TO_NEXT_RESPONDER(keyUp, ICKeyEvent)
 
 #endif // __IC_PLATFORM_DESKTOP
 

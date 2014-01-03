@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -38,7 +38,7 @@
 {
     ICUIScene *rootScene = [ICUIScene scene];
 
-    ICView *subSceneView = [ICView viewWithSize:CGSizeMake(300, 200)];    
+    ICView *subSceneView = [ICView viewWithSize:icSizeMake(300, 200)];
     [rootScene.contentView addChild:subSceneView];
     [subSceneView setClipsChildren:YES];
     [subSceneView centerNodeRounded:YES];

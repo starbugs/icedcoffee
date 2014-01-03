@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -83,6 +83,9 @@
 
 /**
  @brief Returns the shader cache associated with the current OpenGL context
+ 
+ If no shader cache has been set for the current OpenGL context, this method will create
+ and assign a new one.
  */
 + (id)currentShaderCache;
 
@@ -117,7 +120,7 @@
  @param program An ICShaderProgram instance representing the shader program to set
  @param key An arbitrary key identifying the shader program for later retrieval
  
- @remarks It is recommended to use NSString keys. The default keys available in IcedCoffee
+ @remarks It is recommended to use NSString keys. The default keys available in icedcoffee
  are defined in ICShaderProgram.h.
  */
 - (void)setShaderProgram:(ICShaderProgram *)program forKey:(id)key;

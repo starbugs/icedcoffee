@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -29,8 +29,6 @@
 #import "icConfig.h"
 #import "ICConfiguration.h"
 #import "icUtils.h"
-#import "ICContextManager.h"
-#import "ICRenderContext.h"
 #import "ICScene.h"
 #import "ICCamera.h"
 
@@ -84,13 +82,6 @@ enum {
             // Create an auxiliary OpenGL context which will be used for writing pick colors
             // to a render texture and performing readbacks
             _auxGLContext = icCreateAuxGLContextForView((ICGLView *)hostViewController.view, YES);
-            
-            // Create a render context for our auxiliary OpenGL context
-            _renderContext = [[ICRenderContext alloc] initWithShareContext:hostViewController.renderContext];
-            
-            // Register the render context
-            ICContextManager *contextManager = [ICContextManager defaultContextManager];
-            [contextManager registerRenderContext:_renderContext forOpenGLContext:_auxGLContext];
         }
     }
     return self;
@@ -98,7 +89,7 @@ enum {
 
 - (void)dealloc
 {
-    [_auxGLContext release];
+    [[_auxGLContext unregisterContext] release];
     _auxGLContext = nil;
     
     [_renderTexture release];
@@ -232,19 +223,10 @@ enum {
 {
     NSArray *hitNodes = nil;
     
-#ifdef __IC_PLATFORM_MAC
-    NSOpenGLContext *oldContext = nil;
-#elif defined(__IC_PLATFORM_IOS)
-    EAGLContext *oldContext = nil;
-#endif
+    ICOpenGLContext *oldContext = nil;
     if (_usesAuxiliaryOpenGLContext) {
-#ifdef __IC_PLATFORM_MAC
-        oldContext = [NSOpenGLContext currentContext];
+        oldContext = [ICOpenGLContext currentContext];
         [_auxGLContext makeCurrentContext];
-#elif defined(__IC_PLATFORM_IOS)
-        oldContext = [EAGLContext currentContext];
-        [EAGLContext setCurrentContext:_auxGLContext];
-#endif
     }
     
     if ([node isKindOfClass:[ICScene class]]) {
@@ -263,8 +245,8 @@ enum {
         hitNodes = [self hitNodes];
     } else {
 #ifdef __IC_PLATFORM_MAC
-        uint pboMemorySize = ICPointsToPixels(_renderTexture.size.x) *
-                             ICPointsToPixels(_renderTexture.size.y) * 4;
+        uint pboMemorySize = ICPointsToPixels(_renderTexture.size.width) *
+                             ICPointsToPixels(_renderTexture.size.height) * 4;
         if (!_pbo) {
             glGenBuffers(1, &_pbo);
             glBindBuffer(GL_PIXEL_PACK_BUFFER, _pbo);
@@ -274,8 +256,8 @@ enum {
         }
         glBindBuffer(GL_PIXEL_PACK_BUFFER, _pbo);
         glReadPixels(0, 0,
-                     ICPointsToPixels(_renderTexture.size.x),
-                     ICPointsToPixels(_renderTexture.size.y),
+                     ICPointsToPixels(_renderTexture.size.width),
+                     ICPointsToPixels(_renderTexture.size.height),
                      GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, 0);
         glBindBuffer(GL_PIXEL_PACK_BUFFER, 0);
         IC_CHECK_GL_ERROR_DEBUG();
@@ -290,14 +272,10 @@ enum {
     [self popPickContext];
     
     if (_usesAuxiliaryOpenGLContext) {
-#ifdef __IC_PLATFORM_MAC
         if (oldContext)
             [oldContext makeCurrentContext];
         else
-            [NSOpenGLContext clearCurrentContext];
-#elif defined(__IC_PLATFORM_IOS)
-        [EAGLContext setCurrentContext:oldContext];
-#endif
+            [ICOpenGLContext clearCurrentContext];
     }
     
     return hitNodes;
@@ -590,7 +568,7 @@ enum {
 
 - (CGPoint)pixelLocationForNodeIndex:(uint32_t)nodeIndex
 {
-    float width = ICPointsToPixels(_renderTexture.size.x);
+    float width = ICPointsToPixels(_renderTexture.size.width);
     int row = nodeIndex / width;
     int column = nodeIndex - row * width;
     return CGPointMake(column, row);

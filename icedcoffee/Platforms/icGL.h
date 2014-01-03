@@ -32,31 +32,24 @@
 #import <Availability.h>
 
 #ifdef __IPHONE_OS_VERSION_MAX_ALLOWED
+
 #import <OpenGLES/ES2/gl.h>
 #import <OpenGLES/ES2/glext.h>
 #import <OpenGLES/EAGL.h>
 #import "iOS/ICGLView.h"
 
 #elif defined(__MAC_OS_X_VERSION_MAX_ALLOWED)
+
 #import <OpenGL/gl.h>
 #import <OpenGL/glu.h>
 #import <Cocoa/Cocoa.h>	// needed for NSOpenGLView
+
 #endif
 
-#import "icMacros.h"
-#import "icConfig.h"
-#import "kazmath/GL/matrix.h"
-
-/**
- @addtogroup platform-macros Platform Macros
- @{
- */
-
-#ifdef __IC_PLATFORM_MAC
-#define IC_PLATFORM_GL_CONTEXT NSOpenGLContext
-#elif defined(__IC_PLATFORM_IOS)
-#define IC_PLATFORM_GL_CONTEXT EAGLContext
-#endif
+#import "../icMacros.h"
+#import "../icConfig.h"
+#import "../../3rd-party/kazmath/kazmath/GL/matrix.h"
+#import "../ICOpenGLContextManager.h"
 
 /** @} */
 

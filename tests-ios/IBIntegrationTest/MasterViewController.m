@@ -3,7 +3,7 @@
 //  IBIntegrationTest
 //
 //  Created by Tobias Lensing on 8/4/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "MasterViewController.h"
@@ -27,7 +27,7 @@
             self.contentSizeForViewInPopover = CGSizeMake(320.0, 600.0);
         }
         _objects = [[NSMutableArray alloc] init];
-        [_objects addObject:@"IcedCoffee Detail VC"];
+        [_objects addObject:@"icedcoffee Detail VC"];
     }
     return self;
 }

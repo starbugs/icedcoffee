@@ -134,11 +134,16 @@
         // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
         CGLLockContext([openGLContext CGLContextObj]);
         
+        // Add an autorelease pool to avoid concurrent deallocation of autoreleased objects
+        NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+        
         [self.hostViewController reshape:self.bounds.size];
         
         // avoid flicker
         [self.hostViewController drawScene];
         //[self setNeedsDisplay:YES];
+        
+        [pool release];
         
         CGLUnlockContext([openGLContext CGLContextObj]);
     }    
@@ -157,14 +162,6 @@
     return YES;
 }
 
-/*- (void)mouseDown:(NSEvent *)theEvent
-{
-    NSArray *nodes = [self.hostViewController hitTest:[theEvent locationInWindow]];
-    for (ICNode *node in nodes) {
-        NSLog(@"%@", [node description]);
-    }
-}*/
-
 DISPATCH_EVENT(mouseDown)
 DISPATCH_EVENT(mouseUp)
 DISPATCH_EVENT(mouseDragged)
@@ -179,6 +176,9 @@ DISPATCH_EVENT(otherMouseUp)
 DISPATCH_EVENT(otherMouseDragged)
 
 DISPATCH_EVENT(scrollWheel)
+
+DISPATCH_EVENT(keyDown)
+DISPATCH_EVENT(keyUp)
 
 - (void)setCursor:(NSCursor *)cursor
 {

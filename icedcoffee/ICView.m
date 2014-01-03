@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,17 +42,17 @@
     return [[[[self class] alloc] init] autorelease];
 }
 
-+ (id)viewWithSize:(CGSize)size
++ (id)viewWithSize:(kmVec3)size
 {
-    return [[[[self class] alloc] initWithSize:size] autorelease];
+    return [[(ICView *)[[self class] alloc] initWithSize:size] autorelease];
 }
 
 - (id)init
 {
-    return [self initWithSize:CGSizeMake(0, 0)];
+    return [self initWithSize:kmVec3Make(0, 0, 0)];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super init])) {
         self.background = [ICSprite sprite];
@@ -89,7 +89,7 @@
 // FIXME: test this thoroughly
 - (void)resizeWithOldSuperViewSize:(kmVec3)oldSuperviewSize
 {
-    if (oldSuperviewSize.x == 0 || oldSuperviewSize.y == 0)
+    if (oldSuperviewSize.width == 0 || oldSuperviewSize.height == 0)
         return;
 
     NSUInteger autoresizingMask = self.autoresizingMask;
@@ -98,57 +98,57 @@
         kmVec3 leftTop = kmNullVec3, rightBottom = kmNullVec3, newSize = kmNullVec3;
         
         if (autoresizingMask & ICAutoResizingMaskLeftMarginFlexible) {
-            leftTop.x = self.position.x / oldSuperviewSize.x * newSuperviewSize.x;
+            leftTop.x = self.position.x / oldSuperviewSize.width * newSuperviewSize.width;
         } else {
             leftTop.x = self.position.x;
         }
         
         if (autoresizingMask & ICAutoResizingMaskTopMarginFlexible) {
-            leftTop.y = self.position.y / oldSuperviewSize.y * newSuperviewSize.y;
+            leftTop.y = self.position.y / oldSuperviewSize.height * newSuperviewSize.height;
         } else {
             leftTop.y = self.position.y;
         }
 
         if (autoresizingMask & ICAutoResizingMaskRightMarginFlexible) {
-            rightBottom.x = (self.position.x + self.size.x) / oldSuperviewSize.x * newSuperviewSize.x;
+            rightBottom.x = (self.position.x + self.size.width) / oldSuperviewSize.width * newSuperviewSize.width;
         } else {
-            rightBottom.x = newSuperviewSize.x - (oldSuperviewSize.x - (self.position.x + self.size.x));
+            rightBottom.x = newSuperviewSize.width - (oldSuperviewSize.width - (self.position.x + self.size.width));
         }
 
         if (autoresizingMask & ICAutoResizingMaskBottomMarginFlexible) {
-            rightBottom.y = (self.position.y + self.size.y) / oldSuperviewSize.y * newSuperviewSize.y;
+            rightBottom.y = (self.position.y + self.size.height) / oldSuperviewSize.height * newSuperviewSize.height;
         } else {
-            rightBottom.y = newSuperviewSize.y - (oldSuperviewSize.y - (self.position.y + self.size.y));
+            rightBottom.y = newSuperviewSize.height - (oldSuperviewSize.height - (self.position.y + self.size.height));
         }
         
         if (autoresizingMask & ICAutoResizingMaskWidthSizable) {
-            newSize.x = rightBottom.x - leftTop.x;
+            newSize.width = rightBottom.x - leftTop.x;
         } else {
-            newSize.x = self.size.x;
+            newSize.width = self.size.width;
             if (autoresizingMask & ICAutoResizingMaskLeftMarginFlexible &&
                 autoresizingMask & ICAutoResizingMaskRightMarginFlexible)
-                leftTop.x = leftTop.x + (rightBottom.x - leftTop.x) / 2 - self.size.x / 2;
+                leftTop.x = leftTop.x + (rightBottom.x - leftTop.x) / 2 - self.size.width / 2;
             else if (autoresizingMask & ICAutoResizingMaskLeftMarginFlexible &&
                      !(autoresizingMask & ICAutoResizingMaskRightMarginFlexible))
-                leftTop.x = newSuperviewSize.x - (oldSuperviewSize.x - self.position.x);
+                leftTop.x = newSuperviewSize.width - (oldSuperviewSize.width - self.position.x);
         }
         
         if (autoresizingMask & ICAutoResizingMaskHeightSizable) {
-            newSize.y = rightBottom.y - leftTop.y;
+            newSize.height = rightBottom.y - leftTop.y;
         } else {
-            newSize.y = self.size.y;
+            newSize.height = self.size.height;
             if (autoresizingMask & ICAutoResizingMaskTopMarginFlexible &&
                 autoresizingMask & ICAutoResizingMaskBottomMarginFlexible)
-                leftTop.y = leftTop.y + (rightBottom.y - leftTop.y) / 2 - self.size.y / 2;
+                leftTop.y = leftTop.y + (rightBottom.y - leftTop.y) / 2 - self.size.height / 2;
             else if (autoresizingMask & ICAutoResizingMaskTopMarginFlexible &&
                      !(autoresizingMask & ICAutoResizingMaskBottomMarginFlexible))
-                leftTop.y = newSuperviewSize.y - (oldSuperviewSize.y - self.position.y);
+                leftTop.y = newSuperviewSize.height - (oldSuperviewSize.height - self.position.y);
         }
         
         leftTop.x = roundf(leftTop.x);
         leftTop.y = roundf(leftTop.y);
-        newSize.x = roundf(newSize.x);
-        newSize.y = roundf(newSize.y);
+        newSize.width = roundf(newSize.width);
+        newSize.height = roundf(newSize.height);
 
         [self setPosition:leftTop];
         [self setSize:newSize];
@@ -164,7 +164,7 @@
 
 - (void)setSize:(kmVec3)size
 {
-    if (size.x != self.size.x || size.y != self.size.y || size.z != self.size.z) {    
+    if (size.width != self.size.width || size.height != self.size.height || size.depth != self.size.depth) {
         kmVec3 oldSize = self.size;
         
         // Update the view's size
@@ -185,8 +185,8 @@
 - (void)setWantsRenderTextureBacking:(BOOL)wantsRenderTextureBacking
 {
     if (wantsRenderTextureBacking) {
-        [self setBacking:[ICRenderTexture renderTextureWithWidth:self.size.x
-                                                          height:self.size.y
+        [self setBacking:[ICRenderTexture renderTextureWithWidth:self.size.width
+                                                          height:self.size.height
                                                      pixelFormat:ICPixelFormatDefault
                                                depthBufferFormat:ICDepthBufferFormatDefault
                                              stencilBufferFormat:ICStencilBufferFormatDefault]];
@@ -215,17 +215,23 @@
     
     if (_backing && !renderTexture) {
         // Move render texture children back to self
-        for (ICNode *child in [self backingContentView].children) {
+        // Make a copy of the backing content view's children as removeAllChildren will
+        // unlink them from the tree
+        NSArray *children = [[self backingContentView].children copy];
+        [[self backingContentView] removeAllChildren];
+        for (ICNode *child in children) {
             [super addChild:child];
         }
-        [[self backingContentView] removeAllChildren];
     }
     
     if (!_backing && renderTexture) {
-        for (ICNode *child in _children) {
+        // Move own children to render texture
+        // Make a copy of the children as removeAllChildren will unlink them from the tree
+        NSArray *children = [_children copy];
+        [super removeAllChildren];
+        for (ICNode *child in children) {
             [((ICUIScene *)renderTexture.subScene).contentView addChild:child];
         }
-        [super removeAllChildren];
     }
     
     if (_backing) {

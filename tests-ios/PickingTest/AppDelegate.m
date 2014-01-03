@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -54,11 +54,11 @@
     ResponsiveSprite *rs = [ResponsiveSprite spriteWithTexture:texture];
     [scene addChild:rs];
     
-    ResponsiveView *rv = [ResponsiveView viewWithSize:CGSizeMake(128, 128)];
+    ResponsiveView *rv = [ResponsiveView viewWithSize:icSizeMake(128, 128)];
     [rv setPositionY:150];
     [scene addChild:rv];
     
-    ICButton *button = [ICButton buttonWithSize:CGSizeMake(150, 32)];
+    ICButton *button = [ICButton buttonWithSize:icSizeMake(150, 32)];
     button.label.fontSize = 14.f;
     button.label.text = @"Test Button";
     [button setPositionY:300];
@@ -67,7 +67,7 @@
     [button addTarget:self action:@selector(buttonPressed) forControlEvents:ICControlEventTouchDragExit];
     
     ICLine2D *line = [ICLine2D lineWithOrigin:kmVec3Make(150, 150, 0)
-                                       target:kmVec3Make(200, 250, 0)
+                                       target:kmVec3Make(150, 100, 0)
                                     lineWidth:1];
     [scene addChild:line];
     ICLine2D *line2 = [ICLine2D lineWithOrigin:kmVec3Make(250, 150, 0)
@@ -80,7 +80,7 @@
     [scene addChild:line3];
     
     // FIXME: remove this
-    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:CGSizeMake(50, 50)] autorelease];
+    DraggableControl *draggableControl = [[[DraggableControl alloc] initWithSize:icSizeMake(50, 50)] autorelease];
     [draggableControl setPosition:kmVec3Make(200, 200, 0)];
     [scene addChild:draggableControl];
     
@@ -99,9 +99,10 @@
                                  multiSampling:NO
                                numberOfSamples:0];
 
+    [self.hostViewController enableRetinaDisplaySupport:YES];
+    
     [glView setMultipleTouchEnabled:YES];
     [glView setHostViewController:self.hostViewController];
-    [self.hostViewController enableRetinaDisplaySupport:YES];
 
     self.window = [[[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]] autorelease];
     self.window.rootViewController = self.hostViewController;

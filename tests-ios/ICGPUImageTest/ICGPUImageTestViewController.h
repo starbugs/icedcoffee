@@ -3,10 +3,10 @@
 //  icedcoffee-tests-ios
 //
 //  Created by Tobias Lensing on 10/7/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
-#import "IcedCoffee.h"
+#import "icedcoffee/icedcoffee.h"
 #import "GPUImage.h"
 
 @interface ICGPUImageTestViewController : ICHostViewControllerIOS {

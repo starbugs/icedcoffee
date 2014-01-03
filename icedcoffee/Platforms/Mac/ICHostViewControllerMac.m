@@ -1,5 +1,5 @@
 //  
-// Copyright (C) 2012 Tobias Lensing
+// Copyright (C) 2013 Tobias Lensing
 //  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of
 // this software and associated documentation files (the "Software"), to deal in
@@ -63,6 +63,12 @@
         [_mouseEventDispatcher eventMethod:event]; \
     }
 
+#define DISPATCH_KEY_EVENT(eventMethod) \
+    - (void)eventMethod:(NSEvent *)event { \
+        [self makeCurrentHostViewController]; \
+        [_keyEventDispatcher eventMethod:event]; \
+    }
+
 
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
@@ -94,6 +100,7 @@
     [super commonInit];
     
     _mouseEventDispatcher = [[ICMouseEventDispatcher alloc] initWithHostViewController:self];
+    _keyEventDispatcher = [[ICKeyEventDispatcher alloc] initWithHostViewController:self];
     _usesDisplayLink = YES;
     _drawsConcurrently = YES;
     
@@ -106,6 +113,7 @@
 {
     [self stopAnimation];
     [_mouseEventDispatcher release];
+    [_keyEventDispatcher release];
     
     if (_thread && _isThreadOwner) {
         [self.thread cancel];
@@ -120,10 +128,15 @@
 // Animation and Drawing
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
+// Only used with display link drawing
 - (CVReturn)getFrameForTime:(const CVTimeStamp*)outputTime
 {
-	if (!_thread)
-		_thread = [NSThread currentThread];
+    // It appears as if current thread may change on a running display link as of OS X 10.9
+    NSThread *currentThread = [NSThread currentThread];
+	if (self.thread != currentThread) {
+        // Use display link thread as host view controller's thread
+		self.thread = currentThread;
+    }
     
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
@@ -131,7 +144,7 @@
     
 	// Process timers and other events
 	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
-    
+
 	[pool release];
         
     return kCVReturnSuccess;
@@ -248,8 +261,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
     
     ICGLView *openGLview = (ICGLView*)self.view;
-    CGLLockContext([[openGLview openGLContext] CGLContextObj]);
-    [[openGLview openGLContext] makeCurrentContext];
+    CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
+    [self.openGLContext makeCurrentContext];
         
     [super drawScene];
     
@@ -294,16 +307,16 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         }        
     }
     
-    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
+    CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);
 }
 
 - (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback
 {
     NSArray *resultNodeStack;
     
-	ICGLView *openGLview = (ICGLView*)self.view;
-	CGLLockContext([[openGLview openGLContext] CGLContextObj]);
-	[[openGLview openGLContext] makeCurrentContext];
+    ICGLView *openGLview = (ICGLView*)self.view;    
+    CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
+    [self.openGLContext makeCurrentContext];
 
 	glViewport(0, 0,
                ICPointsToPixels(openGLview.bounds.size.width),
@@ -311,7 +324,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     
     resultNodeStack = [self.scene hitTest:point deferredReadback:deferredReadback];
     
-    CGLUnlockContext([[openGLview openGLContext] CGLContextObj]);
+    CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);
     
     return resultNodeStack;
 }
@@ -370,6 +383,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     [super setView:view];
 }
 
+
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 // ICMouseResponder Protocol Implementation
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -390,6 +404,14 @@ DISPATCH_MOUSE_EVENT(otherMouseDragged)
 DISPATCH_MOUSE_EVENT(otherMouseUp)
 
 DISPATCH_MOUSE_EVENT(scrollWheel)
+
+
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// ICKeyResponder Protocol Implementation
+//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+DISPATCH_KEY_EVENT(keyDown)
+DISPATCH_KEY_EVENT(keyUp)
 
 @end
 

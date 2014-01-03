@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -67,9 +67,12 @@
 
 - (void)dealloc
 {
+    [self removeObserver:self forKeyPath:@"fps"];
+    
     [_buttonPanel release];
     [_testScenes release];
     [_hints release];
+    
     [super dealloc];
 }
 
@@ -123,11 +126,20 @@
 - (void)setUpScene
 {
     _testHostScene = [ICUIScene scene];
-    [self runWithScene:_testHostScene]; // retained by super in self.scene
     
-    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:CGSizeMake(_testHostScene.size.x, 50)];
+    // This is required to automatically resize the scene to the host view's size
+    self.scene = _testHostScene;
+    self.scene.hostViewController = self;
+    
+    _fpsLabel = [[ICLabel alloc] initWithText:@"FPS: --.--"];
+    _fpsLabel.autoresizesToTextSize = YES;
+    _fpsLabel.position = kmVec3Make(10, 10, 0);
+    [_testHostScene.contentView addChild:_fpsLabel];
+    [self addObserver:self forKeyPath:@"fps" options:NSKeyValueObservingOptionNew context:nil];
+    
+    _buttonPanel = [[ICTestButtonPanel alloc] initWithSize:kmVec3Make(_testHostScene.size.width, 50, 0)];
     _buttonPanel.autoresizingMask = ICAutoResizingMaskWidthSizable | ICAutoResizingMaskTopMarginFlexible;
-    [_buttonPanel setPositionY:_testHostScene.size.y - _buttonPanel.size.y];
+    [_buttonPanel setPositionY:_testHostScene.size.height - _buttonPanel.size.height];
     [_testHostScene.contentView addChild:_buttonPanel];
 
     [_buttonPanel.previousSceneButton addTarget:self
@@ -137,6 +149,14 @@
                                      action:@selector(showNextScene)
                            forControlEvents:BUTTON_CONTROL_EVENT];
 
+    [self runWithScene:_testHostScene]; // retained by super in self.scene
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (object == self && [keyPath isEqualToString:@"fps"]) {
+        _fpsLabel.text = [NSString stringWithFormat:@"FPS: %0.02f", self.fps];
+    }
 }
 
 @end

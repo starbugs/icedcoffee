@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -23,10 +23,9 @@
 
 #import <Foundation/Foundation.h>
 #import "icMacros.h"
+#import "Platforms/icGL.h"
 
 #ifdef __IC_PLATFORM_MAC
-
-#import "ICMouseResponder.h"
 
 enum {
     ICMouseDown     = 1 << 0,
@@ -44,7 +43,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 /**
  @brief Dispatches mouse events into the icedcoffee responder chain
  */
-@interface ICMouseEventDispatcher : NSObject <ICMouseResponder>
+@interface ICMouseEventDispatcher : NSObject
 {
 @private
     ICHostViewController *_hostViewController;

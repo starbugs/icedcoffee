@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -49,12 +49,12 @@
 @synthesize label = _label;
 @synthesize mixesBackgroundStates = _mixesBackgroundStates;
 
-+ (id)buttonWithSize:(CGSize)size
++ (id)buttonWithSize:(kmVec3)size
 {
-    return [[[[self class] alloc] initWithSize:size] autorelease];
+    return [[(ICView *)[[self class] alloc] initWithSize:size] autorelease];
 }
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         _mouseButtonPressed = NO;

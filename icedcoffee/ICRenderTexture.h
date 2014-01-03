@@ -21,7 +21,7 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * Adapted and extended for IcedCoffee by Tobias Lensing, mail@tlensing.org
+ * Adapted and extended for icedcoffee by Tobias Lensing, mail@tlensing.org
  */
 
 #import "ICPlanarNode.h"
@@ -84,7 +84,7 @@
  <h3>Conditional Drawing</h3>
  
  ICRenderTexture adds functionality for conditional drawing (framebuffer updates on demand only)
- to the IcedCoffee scene graph. Conditional drawing can be configured using the
+ to the icedcoffee scene graph. Conditional drawing can be configured using the
  ICRenderTexture::frameUpdateMode property. If ICRenderTexture::frameUpdateMode is set to
  <code>ICFrameUpdateModeOnDemand</code>, the visitation system will draw the sub scene of
  the render texture only if ICNode::setNeedsDisplay was called within the current run loop

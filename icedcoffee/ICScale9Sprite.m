@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -24,6 +24,7 @@
 #import "ICScale9Sprite.h"
 #import "ICTexture2D.h"
 #import "ICNodeVisitorPicking.h"
+#import "icGLState.h"
 
 @interface ICScale9Sprite (Private)
 - (void)updateMultiQuad;
@@ -71,7 +72,7 @@
 
 - (void)updateMultiQuad
 {
-    if (_size.x == 0 && _size.y == 0)
+    if (_size.width == 0 && _size.height == 0)
         return;
     if (_scale9Rect.origin.x == 0 && _scale9Rect.origin.y == 0 &&
         _scale9Rect.size.width == 0 && _scale9Rect.size.height == 0)
@@ -99,13 +100,13 @@
     float y1 = 0;
     float x2 = _scale9Rect.origin.x;
     float y2 = _scale9Rect.origin.y;
-    float x3 = _size.x - (textureDisplaySize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
-    float y3 = _size.y - (textureDisplaySize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
-    float x4 = _size.x;
-    float y4 = _size.y;
+    float x3 = _size.width - (textureDisplaySize.width - _scale9Rect.origin.x - _scale9Rect.size.width);
+    float y3 = _size.height - (textureDisplaySize.height - _scale9Rect.origin.y - _scale9Rect.size.height);
+    float x4 = _size.width;
+    float y4 = _size.height;
     float z = 0;
     
-    // IcedCoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
+    // icedcoffee's UI camera inverts the Y axis, so the texture must be flipped vertically
     float tx4 = 0;
     float ty4 = 1.0f;
     float tx3 = _scale9Rect.origin.x / textureDisplaySize.width;
@@ -159,7 +160,7 @@
         vertices[i].color = color4FFromColor4B(_color);
     }
     
-    // Note: as the Y axis is inverted by the IcedCoffe UI camera, we provide CCW indices
+    // Note: as the Y axis is inverted by the icedcoffee UI camera, we provide CCW indices
     // here so that OpenGL standard culling continues to work correctly
     GLushort indices[] = {
         // left-top (x1,y1,x2,y2)
@@ -292,6 +293,10 @@
     
     glBindTexture(GL_TEXTURE_2D, 0);
     IC_CHECK_GL_ERROR_DEBUG();
+    
+    glDisableVertexAttribArray(ICVertexAttribPosition);
+    glDisableVertexAttribArray(ICVertexAttribColor);
+    glDisableVertexAttribArray(ICVertexAttribTexCoords);    
 }
 
 @end

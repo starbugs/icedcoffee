@@ -3,14 +3,14 @@
 //  icedcoffee-tests-ios
 //
 //  Created by Tobias Lensing on 9/10/12.
-//  Copyright (c) 2012 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
 //
 
 #import "DraggableControl.h"
 
 @implementation DraggableControl
 
-- (id)initWithSize:(CGSize)size
+- (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
         ICRectangle *rectangle = [ICRectangle viewWithSize:size];

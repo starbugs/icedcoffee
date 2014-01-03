@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -64,7 +64,7 @@
     theTan 			= tanf(halfFov);
     float eyeZ 		= eyeY / theTan;
     float nearDist 	= eyeZ / 10.0;
-    float farDist 	= eyeZ * 100.0;
+    float farDist 	= eyeZ * 10.0;
     aspectRatio 	= (float)w/(float)h;
     
     kmVec3 eye, lookAt, upVector;

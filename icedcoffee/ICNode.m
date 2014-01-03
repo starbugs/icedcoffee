@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -37,6 +37,10 @@
 #import "ICNodeVisitorPicking.h"
 #import "ICHostViewController.h"
 #import "ICRenderTexture.h"
+#import "ICAnimation.h"
+#import "ICScheduler.h"
+
+#import "ICDrawAPI.h"
 
 
 @interface ICNode (Private)
@@ -97,6 +101,7 @@
 {
     self.children = nil;
     [_childrenSortedByZIndex release];
+    [self removeAllAnimations];
     
     [super dealloc];
 }
@@ -134,6 +139,7 @@
 - (void)removeChild:(ICNode *)child
 {
     if (_children) {
+        [child setParent:nil];
         [(NSMutableArray *)_children removeObject:child];
     }
     _childrenSortedByZIndexDirty = YES;
@@ -142,6 +148,7 @@
 - (void)removeChildAtIndex:(uint)index
 {
     if (_children) {
+        [[_children objectAtIndex:index] setParent:nil];
         [(NSMutableArray *)_children removeObjectAtIndex:index];
     }
     _childrenSortedByZIndexDirty = YES;
@@ -150,6 +157,9 @@
 - (void)removeAllChildren
 {
     if (_children) {
+        for (ICNode *child in _children) {
+            [child setParent:nil];
+        }
         [(NSMutableArray *)_children removeAllObjects];
     }
     _childrenSortedByZIndexDirty = YES;
@@ -493,8 +503,10 @@
 
 - (void)setPosition:(kmVec3)position
 {
+    [self willChangeValueForKey:@"position"];
     _position = position;
     _transformDirty = YES;
+    [self didChangeValueForKey:@"position"];
 }
 
 - (void)setPositionX:(float)positionX
@@ -688,8 +700,10 @@
 
 - (void)setAnchorPoint:(kmVec3)anchorPoint
 {
+    [self willChangeValueForKey:@"anchorPoint"];
     _anchorPoint = anchorPoint;
     _transformDirty = YES;
+    [self didChangeValueForKey:@"anchorPoint"];
 }
 
 - (void)centerAnchorPoint
@@ -706,7 +720,10 @@
 
 - (void)setSize:(kmVec3)size
 {
+    [self willChangeValueForKey:@"size"];
     _size = size;
+    [self didChangeValueForKey:@"size"];
+    
     if (_autoCenterAnchorPoint) {
         [self centerAnchorPoint];
     }
@@ -719,23 +736,25 @@
 
 - (void)setWidth:(float)width
 {
-    [self setSize:kmVec3Make(width, _size.y, _size.z)];
+    [self setSize:kmVec3Make(width, _size.height, _size.depth)];
 }
 
 - (void)setHeight:(float)height
 {
-    [self setSize:kmVec3Make(_size.x, height, _size.z)];
+    [self setSize:kmVec3Make(_size.width, height, _size.depth)];
 }
 
 - (void)setDepth:(float)depth
 {
-    [self setSize:kmVec3Make(_size.x, _size.y, depth)];
+    [self setSize:kmVec3Make(_size.width, _size.height, depth)];
 }
 
 - (void)setScale:(kmVec3)scale
 {
+    [self willChangeValueForKey:@"scale"];
     _scale = scale;
     _transformDirty = YES;
+    [self didChangeValueForKey:@"scale"];
 }
 
 - (void)setScaleX:(float)scaleX
@@ -767,10 +786,27 @@
     return _scale;
 }
 
+@synthesize rotationAngle = _rotationAngle;
+@synthesize rotationAxis = _rotationAxis;
+
+- (void)setRotationAngle:(float)angle
+{
+    _rotationAngle = angle;
+    _transformDirty = YES;
+}
+
+- (void)setRotationAxis:(kmVec3)axis
+{
+    [self willChangeValueForKey:@"rotationAxis"];
+    _rotationAxis = axis;
+    _transformDirty = YES;
+    [self didChangeValueForKey:@"rotationAxis"];
+}
+
 - (void)setRotationAngle:(float)angle axis:(kmVec3)axis
 {
-    _rotationAxis = axis;
-    _rotationAngle = angle;
+    self.rotationAxis = axis;
+    self.rotationAngle = angle;
     _transformDirty = YES;
 }
 
@@ -889,9 +925,9 @@
 {
     return (kmAABB){
         _origin,
-        kmVec3Make(_origin.x+_size.x,
-                   _origin.y+_size.y,
-                   _origin.z+_size.z)
+        kmVec3Make(_origin.x+_size.width,
+                   _origin.y+_size.height,
+                   _origin.z+_size.depth)
     };
 }
 
@@ -913,13 +949,13 @@
     kmVec3 world[8], view[8];
     
     world[0] = _position;
-    world[1] = (kmVec3){_position.x + _size.x, _position.y, _position.z};
-    world[2] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z};
-    world[3] = (kmVec3){_position.x + _size.x, _position.y + _size.y, _position.z + _size.z};
-    world[4] = (kmVec3){_position.x, _position.y + _size.y, _position.z};
-    world[5] = (kmVec3){_position.x, _position.y + _size.y, _position.z + _size.z};
+    world[1] = (kmVec3){_position.x + _size.width, _position.y, _position.z};
+    world[2] = (kmVec3){_position.x + _size.width, _position.y + _size.height, _position.z};
+    world[3] = (kmVec3){_position.x + _size.width, _position.y + _size.height, _position.z + _size.z};
+    world[4] = (kmVec3){_position.x, _position.y + _size.height, _position.z};
+    world[5] = (kmVec3){_position.x, _position.y + _size.height, _position.z + _size.z};
     world[6] = (kmVec3){_position.x, _position.y, _position.z + _size.z};
-    world[7] = (kmVec3){_position.x + _size.x, _position.y, _position.z + _size.z};
+    world[7] = (kmVec3){_position.x + _size.width, _position.y, _position.z + _size.z};
 
     ICScene *scene = [self parentScene];
     if (!scene && [self isKindOfClass:[ICScene class]] && !_parent) {
@@ -1000,6 +1036,40 @@
 @synthesize userInteractionEnabled = _userInteractionEnabled;
 
 
+#pragma mark - Animations
+
+- (void)addAnimation:(ICAnimation *)animation
+{
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    [hvc.scheduler addAnimation:animation forNode:self];
+}
+
+- (void)removeAnimation:(ICAnimation *)animation
+{
+    NSAssert(animation != nil, @"animation must not be nil");
+    
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    [hvc.scheduler removeAnimation:animation forNode:self];
+}
+
+- (void)removeAllAnimations
+{
+    ICHostViewController *hvc = self.hostViewController;
+    if (!hvc)
+        hvc = [ICHostViewController currentHostViewController];
+    NSArray *animations = [hvc.scheduler animationsForNode:self];
+    for (ICAnimation *animation in animations) {
+        [hvc.scheduler removeAnimation:animation forNode:self];
+    }
+}
+
+
 #pragma mark - Debugging
 
 - (NSString *)description
@@ -1025,6 +1095,124 @@
 - (void)debugLogBranch
 {
     [self debugLogBranchWithRoot:self node:self];
+}
+
+- (void)debugDrawBoundingBox
+{
+    icColor4B blueColor = (icColor4B){0,0,255,255};
+    kmVec4 boundingBox = kmVec4Make(self.origin.x, self.origin.y, self.size.width, self.size.height);
+    [ICDrawAPI drawRect2D:boundingBox z:0 color:blueColor lineWidth:1];
+}
+
+
+#pragma mark - ICResponder Overrides
+
+- (BOOL)makeFirstResponder
+{
+    return [self.hostViewController makeFirstResponder:self];
+}
+
+#ifdef __IC_PLATFORM_DESKTOP
+- (void)noResponderFor:(SEL)selector
+{
+    [self.hostViewController.view noResponderFor:selector];
+}
+#endif // __IC_PLATFORM_DESKTOP
+
+
+#pragma mark - NSObject KVO/KVC Overrides
+
+// Automatic KVO broken for C unions, see http://stackoverflow.com/questions/14295505
+
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"position"] ||
+        [key isEqualToString:@"size"] ||
+        [key isEqualToString:@"origin"] ||
+        [key isEqualToString:@"anchorPoint"] ||
+        [key isEqualToString:@"scale"] ||
+        [key isEqualToString:@"rotationAxis"]) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)setValue:(id)value forKeyPath:(NSString *)keyPath
+{
+    if ([keyPath isEqualToString:@"positionX"]) {
+        [self setPositionX:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"positionY"]) {
+        [self setPositionY:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"positionZ"]) {
+        [self setPositionZ:[(NSNumber *)value floatValue]];
+    } else if([keyPath isEqualToString:@"position"]) {
+        kmVec3 position;
+        [(NSValue *)value getValue:&position];
+        [self setPosition:position];
+        
+    } else if([keyPath isEqualToString:@"size"]) {
+        kmVec3 size;
+        [(NSValue *)value getValue:&size];
+        [self setSize:size];
+
+    } else if([keyPath isEqualToString:@"origin"]) {
+        kmVec3 origin;
+        [(NSValue *)value getValue:&origin];
+        [self setScale:origin];
+        
+    } else if ([keyPath isEqualToString:@"centerX"]) {
+        [self setCenterX:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerY"]) {
+        [self setCenterY:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"centerZ"]) {
+        [self setCenterZ:[(NSNumber *)value floatValue]];
+    } else if ([keyPath isEqualToString:@"center"]) {
+        kmVec3 center;
+        [(NSValue *)value getValue:&center];
+        [self setCenter:center rounded:NO];
+    
+    } else if ([keyPath isEqualToString:@"centerXRounded"]) {
+        [self setCenterX:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerYRounded"]) {
+        [self setCenterY:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerZRounded"]) {
+        [self setCenterZ:[(NSNumber *)value floatValue] rounded:YES];
+    } else if ([keyPath isEqualToString:@"centerRounded"]) {
+        kmVec3 center;
+        [(NSValue *)value getValue:&center];
+        [self setCenter:center rounded:YES];
+
+    } else if([keyPath isEqualToString:@"anchorPoint"]) {
+        kmVec3 anchorPoint;
+        [(NSValue *)value getValue:&anchorPoint];
+        [self setScale:anchorPoint];
+        
+    } else if([keyPath isEqualToString:@"scale"]) {
+        kmVec3 scale;
+        [(NSValue *)value getValue:&scale];
+        [self setScale:scale];
+    
+    } else {
+        [super setValue:value forKey:keyPath];
+    }
+}
+
+- (id)valueForKey:(NSString *)key
+{
+    if ([key isEqualToString:@"position"]) {
+        return [NSValue valueWithBytes:&_position objCType:@encode(kmVec3)];
+    } else if ([key isEqualToString:@"size"]) {
+        return [NSValue valueWithBytes:&_size objCType:@encode(kmVec3)];
+    } else if ([key isEqualToString:@"origin"]) {
+        return [NSValue valueWithBytes:&_origin objCType:@encode(kmVec3)];
+    } else if ([key isEqualToString:@"anchorPoint"]) {
+        return [NSValue valueWithBytes:&_anchorPoint objCType:@encode(kmVec3)];
+    } else if ([key isEqualToString:@"scale"]) {
+        return [NSValue valueWithBytes:&_scale objCType:@encode(kmVec3)];
+    } else if ([key isEqualToString:@"rotationAxis"]) {
+        return [NSValue valueWithBytes:&_rotationAxis objCType:@encode(kmVec3)];
+    }
+    return [super valueForKey:key];
 }
 
 

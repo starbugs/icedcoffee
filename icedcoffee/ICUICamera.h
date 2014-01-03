@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -22,7 +22,7 @@
 //  
 
 #import "ICCamera.h"
-#import "kazmath/kazmath.h"
+#import "../3rd-party/kazmath/kazmath/kazmath.h"
 
 /**
  @brief Camara mapping world coordinates in points to framebuffer coordinates in pixels

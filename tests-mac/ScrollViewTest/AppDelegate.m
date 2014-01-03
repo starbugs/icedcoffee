@@ -1,5 +1,5 @@
 //  
-//  Copyright (C) 2012 Tobias Lensing, Marcus Tillmanns
+//  Copyright (C) 2013 Tobias Lensing, Marcus Tillmanns
 //  http://icedcoffee-framework.org
 //  
 //  Permission is hereby granted, free of charge, to any person obtaining a copy of
@@ -42,7 +42,7 @@
 
     ICSprite *scrollableSprite = [ICSprite spriteWithTexture:texture];
     [scrollableSprite setName:@"sprite1"];
-    ICScrollView *scrollView = [ICScrollView viewWithSize:CGSizeMake(300, 400)];
+    ICScrollView *scrollView = [ICScrollView viewWithSize:icSizeMake(300, 400)];
     [scrollView setName:@"scrollView1"];
     [scrollableSprite setPosition:(kmVec3){-200,-200,0}];
     [scrollView addChild:scrollableSprite];
@@ -50,7 +50,7 @@
 
     ICSprite *scrollableSprite2 = [ICSprite spriteWithTexture:texture];    
     [scrollableSprite2 setName:@"sprite2"];
-    ICScrollView *scrollView2 = [ICScrollView viewWithSize:CGSizeMake(300, 400)];
+    ICScrollView *scrollView2 = [ICScrollView viewWithSize:icSizeMake(300, 400)];
     [scrollView2 setName:@"scrollView2"];
     [scrollView2 addChild:scrollableSprite2];
     [scrollView2 setPositionX:350];
