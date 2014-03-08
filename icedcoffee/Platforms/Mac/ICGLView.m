@@ -72,6 +72,9 @@
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
         NSOpenGLPFAStencilSize, 8,
+        // https://developer.apple.com/library/mac/qa/qa1734/_index.html
+        // https://developer.apple.com/library/mac/technotes/tn2229/_index.html
+        NSOpenGLPFAAllowOfflineRenderers, // needed for running on integrated GPU on Macs with multiple GPUs
 		0
     };
     
