@@ -2,10 +2,11 @@ icedcoffee Todos
 ================
 
 Immediate:
+* Support GPU switching during runtime
 * Rename AutoResizingMask to AutoresizingMask in ICView
 * Fix missing composition overrides in ICView and ICScrollView
 * Fix issues with depth testing an ICView
-* Remove large image assets from workspace, host those on icedcoffee-framework.org
+* Remove large image assets from workspace, host those on icedcoffee-framework.org?
 
 Near term:
 * icedcoffee project templates for Xcode
@@ -16,7 +17,6 @@ Near term:
 * Full featured ICScrollView implementation (bouncing, gestures, etc.)
 * Enable ICUICamera to do orthogonal projection if perspective is not desired
 * Texture loading convenience (+ @2x retina display support)
-* Prepare/check for retina display support on Mac
 * Full blown scheduler tests (including priorities)
 
 Medium term:
@@ -36,3 +36,4 @@ Known Bugs
 ==========
 
 * When window is closed on Mac, renderer continues, gets crazy (0x506 OpenGL error)
+  => This should be solved, check?
