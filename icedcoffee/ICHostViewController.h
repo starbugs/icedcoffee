@@ -287,7 +287,7 @@
  will only be sent when a frame is acutally drawn, that is, you cannot rely on ICScheduler
  for scheduling animation updates in this case.
  */
-@property (nonatomic, assign) ICFrameUpdateMode frameUpdateMode;
+@property (nonatomic, assign, getter=frameUpdateMode, setter=setFrameUpdateMode:) ICFrameUpdateMode frameUpdateMode;
 
 - (void)continuouslyUpdateFramesUntilDate:(NSDate *)date;
 

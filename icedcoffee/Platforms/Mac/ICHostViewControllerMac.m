@@ -55,7 +55,8 @@
 
 #ifdef __IC_PLATFORM_MAC
 
-#define IC_HVC_TIME_INTERVAL 0.001
+#define IC_HVC_TIME_INTERVAL_CONTINUOUS 0.001
+#define IC_HVC_TIME_INTERVAL_IDLE 10.0
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event { \
@@ -193,7 +194,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)scheduleRenderTimer
 {
-    _renderTimer = [[NSTimer timerWithTimeInterval:IC_HVC_TIME_INTERVAL
+    double suitableTimeInterval = _frameUpdateMode == ICFrameUpdateModeSynchronized ? IC_HVC_TIME_INTERVAL_CONTINUOUS : IC_HVC_TIME_INTERVAL_IDLE;
+    _renderTimer = [[NSTimer timerWithTimeInterval:suitableTimeInterval
                                             target:self
                                           selector:@selector(timerFired:)
                                           userInfo:nil
@@ -202,12 +204,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
    [[NSRunLoop currentRunLoop] addTimer:_renderTimer 
                                 forMode:NSDefaultRunLoopMode];
    [[NSRunLoop currentRunLoop] addTimer:_renderTimer 
-                                forMode:NSEventTrackingRunLoopMode]; // Ensure timer fires during resize    
+                                forMode:NSEventTrackingRunLoopMode]; // Ensure timer fires during resize
 }
 
+// TODO: restart animation/schedule render timer when switching from on demand
+// to continuous drawing during runtime
 - (void)startAnimation
 {
-    if (_usesDisplayLink) {
+    if (_frameUpdateMode == ICFrameUpdateModeSynchronized && _usesDisplayLink) {
         [self setupDisplayLink];
     } else {
         if (!_thread) {
@@ -248,7 +252,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 }
 
 - (void)drawScene
-{    
+{
+    // FIXME
     if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
         !_needsDisplay &&
         (!_continuousFrameUpdateExpiryDate ||
@@ -256,6 +261,7 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         ) {
         return; // nothing to draw
     }
+    
     // We draw on a secondary thread through the display link
     // When resizing the view, -reshape is called automatically on the main thread
     // Add a mutex around to avoid the threads accessing the context simultaneously when resizing

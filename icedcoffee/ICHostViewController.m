@@ -58,7 +58,6 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize currentFirstResponder = _currentFirstResponder;
 @synthesize scheduler = _scheduler;
 @synthesize targetActionDispatcher = _targetActionDispatcher;
-@synthesize frameUpdateMode = _frameUpdateMode;
 @synthesize frameCount = _frameCount;
 @synthesize elapsedTime = _elapsedTime;
 @synthesize fps = _fps;
@@ -208,6 +207,10 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (void)setNeedsDisplay
 {
     _needsDisplay = YES;
+    
+    // NEW
+    if (self.frameUpdateMode == ICFrameUpdateModeOnDemand)
+        [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO];
 }
 
 - (void)willDrawFirstFrame
@@ -531,5 +534,14 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     return [[ICConfiguration sharedConfiguration] supportsPixelBufferObject];
 }
 
+- (void)setFrameUpdateMode:(ICFrameUpdateMode)frameUpdateMode
+{
+    _frameUpdateMode = frameUpdateMode;
+}
+
+- (ICFrameUpdateMode)frameUpdateMode
+{
+    return _frameUpdateMode;
+}
 
 @end

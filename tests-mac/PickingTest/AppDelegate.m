@@ -43,7 +43,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.viewController = [PickingTestViewController hostViewController];
-    self.viewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
+    self.viewController.frameUpdateMode = ICFrameUpdateModeOnDemand;
     [self.viewController setAcceptsMouseMovedEvents:YES];
     [self.viewController setUpdatesMouseEnterExitEventsContinuously:YES];
 

@@ -1,6 +1,16 @@
 Changelog
 =========
 
+v0.7.1
+
+New Features:
+* Retina display support on OS X
+
+Improvements:
+* Improved energy impact on OS X when using on demand frame update mode
+* Improved energy impact on OS X by supporting automatic graphics switching to integrated GPU
+  (see https://developer.apple.com/library/mac/qa/qa1734/_index.html)
+
 v0.7
 ----
 
