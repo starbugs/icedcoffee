@@ -74,6 +74,7 @@
     if (!cachedFont) {
         cachedFont = [[[[self class] alloc] initWithCoreTextFont:ctFont] autorelease];
     }
+    [fontName release];
     return cachedFont;
 }
 
