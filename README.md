@@ -58,7 +58,7 @@ Main Features
   * Scale9 sprites for scaling background images and sprite textures
   * Asynchronous texture loading
   * Rendering via display link or timers (dedicated thread or main thread)
-  * Retina display support (iOS only)
+  * Retina display support
   * GPUImage integration for efficiently displaying and filtering camera inputs and movie files
   * View/view controller architecture for easy integration with Cocoa/CocoaTouch
   * Drawing to multiple AppKit/UIKit host views using multiple OpenGL contexts
