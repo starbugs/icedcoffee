@@ -83,6 +83,8 @@
 	if ((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]])) {
 //        [self.hostViewController reshape:self.bounds.size];
         
+        [self setWantsBestResolutionOpenGLSurface:hostViewController.retinaDisplaySupportEnabled];
+        
 		if (shareContext) {
             NSOpenGLContext *context = [[NSOpenGLContext alloc] initWithFormat:pixelFormat
                                                                   shareContext:shareContext];

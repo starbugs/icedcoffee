@@ -333,6 +333,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     
     NSAssert(self.view != nil, @"view property must not be nil at this point");
     
+    // FIXME: duplicate code? => [self setContentScaleFactor:]
 #ifdef __IC_PLATFORM_IOS
     if ([self.view respondsToSelector:@selector(setContentScaleFactor:)]) {
         [self.view setContentScaleFactor:[self contentScaleFactor]];
@@ -443,6 +444,25 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
                                  IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR :
                                  IC_DEFAULT_CONTENT_SCALE_FACTOR;
     
+    _retinaDisplayEnabled = retinaDisplayEnabled;
+    
+    if ([self isViewLoaded])
+        [self setContentScaleFactor:_desiredContentScaleFactor];
+    
+    return YES;
+#elif __IC_PLATFORM_MAC
+    NSView *probeView = [[[NSView alloc] initWithFrame:NSMakeRect(0, 0, 8, 8)] autorelease];
+    [probeView setWantsBestResolutionOpenGLSurface:YES];
+    NSRect bounds = [probeView convertRectFromBacking:[probeView bounds]];
+    if (bounds.size.width == 8) {
+        _retinaDisplayEnabled = NO;
+        _desiredContentScaleFactor = 1.0f;
+        return NO; // retina display not supported
+    }
+    
+    _desiredContentScaleFactor = retinaDisplayEnabled ?
+                                 IC_DEFAULT_RETINA_CONTENT_SCALE_FACTOR :
+                                 IC_DEFAULT_CONTENT_SCALE_FACTOR;
     _retinaDisplayEnabled = retinaDisplayEnabled;
     
     if ([self isViewLoaded])

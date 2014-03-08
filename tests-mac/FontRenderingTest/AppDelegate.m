@@ -126,10 +126,13 @@
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
-    
+
+    [self.hostViewController enableRetinaDisplaySupport:YES];
+
     ICGLView *glView = [[ICGLView alloc] initWithFrame:self.window.frame
                                           shareContext:nil
                                     hostViewController:self.hostViewController];
+    
     
     self.window.contentView = glView;
     [self.window setAcceptsMouseMovedEvents:YES];
