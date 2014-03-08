@@ -2,6 +2,7 @@ Changelog
 =========
 
 v0.7.1
+------
 
 New Features:
 * Retina display support on OS X
