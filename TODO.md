@@ -20,7 +20,6 @@ Near term:
 * Full blown scheduler tests (including priorities)
 
 Medium term:
-* GPU-based glyph caching, using CoreText metrics for efficient type setting
 * icedcoffee view controllers
 * Simple widgets:
   * Slider
