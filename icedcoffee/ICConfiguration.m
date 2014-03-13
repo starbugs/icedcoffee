@@ -34,6 +34,7 @@
 #import "ICConfiguration.h"
 #import "icConfig.h"
 
+// FIXME: ICConfiguration should be re-run when GPU is being switched
 @implementation ICConfiguration
 
 @synthesize maxTextureSize = _maxTextureSize;
