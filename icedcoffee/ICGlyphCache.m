@@ -104,6 +104,7 @@ float icValidateSubpixelOffset(float offset)
 - (ICGlyphTextureAtlas *)newTextureAtlas;
 - (ICGlyphTextureAtlas *)vacantTextureAtlas;
 - (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font;
+- (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font offset:(float)offset;
 - (void)cacheGlyphsWithRun:(CTRunRef)run font:(ICFont *)font;
 - (ICTextureGlyph *)retrieveCachedTextureGlyph:(ICGlyph)glyph font:(ICFont *)font offset:(float)offset;
 @end
@@ -359,8 +360,16 @@ float icValidateSubpixelOffset(float offset)
 
 - (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font
 {
+    return [self cacheGlyph:glyph font:font offset:0];
+}
+
+- (ICTextureGlyph *)cacheGlyph:(ICGlyph)glyph font:(ICFont *)font offset:(float)offset
+{
     NSArray *textureGlyphs = [self cacheGlyphs:&glyph count:1 font:font];
-    if ([textureGlyphs count] > 0) {
+    if ([textureGlyphs count] > 1) {
+        int index = offset == 0.f ? 0 : offset == 0.33f ? 1 : 2;
+        return [textureGlyphs objectAtIndex:index];
+    } else if ([textureGlyphs count] > 0) {
         return [textureGlyphs objectAtIndex:0];
     }
     return nil;
@@ -407,7 +416,7 @@ float icValidateSubpixelOffset(float offset)
     
     // If glyph not already cached, cache it now
     if (!textureGlyph) {
-        textureGlyph = [self cacheGlyph:glyph font:font];
+        textureGlyph = [self cacheGlyph:glyph font:font offset:offset];
     }
     
     // Upload texture if data is dirty
@@ -449,7 +458,7 @@ float icValidateSubpixelOffset(float offset)
         if ([object isKindOfClass:[NSNumber class]] &&
             [object integerValue] == NSNotFound) {
             // Hit a not found marker -- this glyph has not been cached yet, so cache it
-            textureGlyph = [self cacheGlyph:glyphs[i] font:font];
+            textureGlyph = [self cacheGlyph:glyphs[i] font:font offset:offsets[i]];
         }
         
         [resultTextureGlyphs addObject:textureGlyph];

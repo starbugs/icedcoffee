@@ -201,7 +201,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 //float orig = _positions[i].x;
                 CGPoint pixelPosition = CGPointMake(ICPointsToPixels(_positions[i].x),
                                                     ICPointsToPixels(_positions[i].y));
-                float pixelOffset;
+                float pixelOffset = 0;
                 pixelOffset = pixelPosition.x - floorf(pixelPosition.x);
                 if (pixelOffset > 0.8f) {
                     // Move glyphs with subpixel offset > 0.8 one pixel right
@@ -221,8 +221,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 }
                 _positions[i].x = ICPixelsToPoints(pixelPosition.x);
                 _offsets[i] = ICPixelsToPoints(pixelOffset);
-                //NSLog(@"Final pos: %f (%f)", _positions[i].x + _offsets[i], orig);
-                //NSLog(@"GPU pos: %f", _positions[i].x);
+                //NSLog(@"pos: %f orig: %f offset: %f", _positions[i].x, orig, _offsets[i]);
 #elif IC_ROUND_GLYPH_X_POSITIONS
                 _positions[i].x = ICPixelsToPoints(roundf(ICPointsToPixels(_positions[i].x)));
                 _offsets[i] = 0.f;
@@ -611,7 +610,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                 quads[j].vertices[1].vect = kmVec3Make(x1, y2, z);
                 quads[j].vertices[2].vect = kmVec3Make(x2, y1, z);
                 quads[j].vertices[3].vect = kmVec3Make(x2, y2, z);
-
+                
                 // Assign texture coordinates, color, shift and gamma
                 for (ushort k=0; k<4; k++) {
                     quads[j].vertices[k].texCoords = textureGlyph.texCoords[k];

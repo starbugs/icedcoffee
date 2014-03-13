@@ -12,6 +12,10 @@ Improvements:
 * Improved energy impact on OS X by supporting automatic graphics switching to integrated GPU
   (see https://developer.apple.com/library/mac/qa/qa1734/_index.html)
 
+Fixes:
+* Fixed a bug in ICGlyphCache that would return texture glyphs with wrong subpixel positioning
+  upon first cache access
+
 v0.7
 ----
 
