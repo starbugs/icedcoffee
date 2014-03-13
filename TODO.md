@@ -2,7 +2,6 @@ icedcoffee Todos
 ================
 
 Immediate:
-* Support GPU switching during runtime
 * Rename AutoResizingMask to AutoresizingMask in ICView
 * Fix missing composition overrides in ICView and ICScrollView
 * Fix issues with depth testing an ICView
@@ -29,10 +28,3 @@ Medium term:
 * Bullet Physics integration
 * Model loader integration (Open Asset Import?)
 * What to do with partial GL state management/caching inherited from cocos2d (?)
-
-
-Known Bugs
-==========
-
-* When window is closed on Mac, renderer continues, gets crazy (0x506 OpenGL error)
-  => This should be solved, check?
