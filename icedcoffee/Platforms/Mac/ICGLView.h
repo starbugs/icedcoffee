@@ -40,7 +40,12 @@
 @private
     ICHostViewController *_hostViewController;
     NSCursor *_cursor;
+    NSTextView *_textViewHelper;
 }
+
+
+@property (nonatomic, retain) NSTextView *textViewHelper;
+
 
 #pragma mark - Initializing a View
 /** @name Initializing a View */

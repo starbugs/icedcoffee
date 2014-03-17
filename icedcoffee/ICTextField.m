@@ -22,6 +22,9 @@
 //
 
 #import "ICTextField.h"
+#import "ICHostViewController.h"
+#import "ICGLView.h"
+#import "icUtils.h"
 
 #ifdef __IC_PLATFORM_MAC
 
@@ -106,6 +109,24 @@
 
 - (void)keyDown:(ICKeyEvent *)keyEvent
 {
+    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
+    icRunOnMainQueueWithoutDeadlocking(^{
+        [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
+    });
+    self.textLabel.text = [[textViewHelper textStorage] string];
+}
+
+- (BOOL)becomeFirstResponder
+{
+    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    [[textViewHelper textStorage] replaceCharactersInRange:NSMakeRange(0, [[textViewHelper textStorage] length]) withAttributedString:self.attributedText];
+    return [super becomeFirstResponder];
+}
+
+/*
+- (void)keyDown:(ICKeyEvent *)keyEvent
+{
     if ([[keyEvent characters] length]) {
         unichar character = [[keyEvent characters] characterAtIndex:0];
         switch (character) {
@@ -126,7 +147,7 @@
 - (void)keyUp:(ICKeyEvent *)keyEvent
 {
     
-}
+}*/
 
 @end
 

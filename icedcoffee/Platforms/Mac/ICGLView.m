@@ -54,6 +54,8 @@
 
 @synthesize hostViewController = _hostViewController;
 
+@synthesize textViewHelper = _textViewHelper;
+
 // Used to initialize the view when instantiated from nib
 - (id)initWithFrame:(NSRect)frameRect
 {
@@ -109,6 +111,8 @@
         
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
+        
+        self.textViewHelper = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)];
 	}
     
 	return self;
@@ -117,6 +121,9 @@
 - (void)dealloc
 {
     [_hostViewController release];
+    
+    [_textViewHelper release];
+    
     [super dealloc];
 }
 

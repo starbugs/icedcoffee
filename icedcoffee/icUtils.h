@@ -137,6 +137,9 @@ extern "C" {
      this method retrieves the first ancestor of ``node`` that is kind of ICControl.
      */
     ICControl *ICControlForNode(ICNode *node);
+
+    // TODO: documentation
+    void icRunOnMainQueueWithoutDeadlocking(void (^block)(void));
     
     /** @} */
     

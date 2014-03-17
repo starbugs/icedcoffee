@@ -118,7 +118,14 @@
     [textField setColor:(icColor4B){255,255,255,255}];
     [scene addChild:textField];
     [textField centerNodeHorizontallyRounded:YES];
-    
+
+    ICTextField *textField2 = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
+    [textField2 setPositionY:330];
+    [textField2 setText:@"Text field"];
+    [textField2 setColor:(icColor4B){255,255,255,255}];
+    [scene addChild:textField2];
+    [textField2 centerNodeHorizontallyRounded:YES];
+
     [self.hostViewController runWithScene:scene];
 }
 

@@ -219,3 +219,12 @@ ICControl *ICControlForNode(ICNode *node)
     }
     return nil; // no control found for given node
 }
+
+void icRunOnMainQueueWithoutDeadlocking(void (^block)(void))
+{
+	if ([NSThread isMainThread]) {
+		block();
+	} else {
+		dispatch_sync(dispatch_get_main_queue(), block);
+	}
+}
