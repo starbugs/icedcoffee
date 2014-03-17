@@ -114,7 +114,7 @@
     icRunOnMainQueueWithoutDeadlocking(^{
         [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
     });
-    self.textLabel.text = [[textViewHelper textStorage] string];
+    self.textLabel.attributedText = [textViewHelper textStorage];
 }
 
 - (BOOL)becomeFirstResponder
