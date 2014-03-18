@@ -114,6 +114,9 @@
 
 - (float)lineWidth;
 
+
+/** @name Caret Handling */
+
 - (NSInteger)stringIndexForPosition:(kmVec2)point;
 
 - (float)offsetForStringIndex:(NSInteger)stringIndex;
