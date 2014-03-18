@@ -103,6 +103,14 @@
  */
 - (NSString *)string;
 
+/**
+ @brief The string range associated with the receiver
+ 
+ The string range defines the range of characters from the original attributed string to use
+ for the text line when initializing the receiver.
+ */
+@property (nonatomic, readonly) NSRange stringRange;
+
 
 /** @name Retrieving Typographic Metrics */
 

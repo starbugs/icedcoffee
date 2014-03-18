@@ -43,6 +43,7 @@
 
 @synthesize runs = _runs;
 @synthesize attributedString = _attributedString;
+@synthesize stringRange = _stringRange;
 
 + (id)textLineWithString:(NSString *)string font:(ICFont *)font
 {

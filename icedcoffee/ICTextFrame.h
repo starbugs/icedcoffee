@@ -77,4 +77,11 @@
  */
 @property (nonatomic, copy, setter=setAttributedString:) NSAttributedString *attributedString;
 
+
+/** @name Caret Handling */
+
+- (NSInteger)stringIndexForPosition:(kmVec2)point;
+
+- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex;
+
 @end

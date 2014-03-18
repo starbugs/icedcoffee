@@ -153,5 +153,36 @@
     //[self debugDrawBoundingBox];
 }
 
+- (NSInteger)stringIndexForPosition:(kmVec2)point
+{
+    ICTextLine *selectedLine = nil;
+    for (ICTextLine *line in self.lines) {
+        if (point.y > line.position.y - line.ascent &&
+            point.y < line.position.y + line.descent) {
+            selectedLine = line;
+            break;
+        }
+    }
+    
+    if (selectedLine) {
+        kmVec2 linePoint = kmVec2Make(point.x - selectedLine.position.x, point.y - selectedLine.position.y);
+        return selectedLine.stringRange.location + [selectedLine stringIndexForPosition:linePoint];
+    }
+    
+    return 0; // fail
+}
+
+- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex
+{
+    for (ICTextLine *line in self.lines) {
+        if (stringIndex >= line.stringRange.location &&
+            stringIndex < line.stringRange.location + line.stringRange.length) {
+            float offset = [line offsetForStringIndex:stringIndex - line.stringRange.location];
+            return kmVec2Make(offset, line.position.y - line.ascent);
+        }
+    }
+    
+    return kmVec2Make(0, 0); // fail
+}
 
 @end
