@@ -114,4 +114,8 @@
 
 - (float)lineWidth;
 
+- (NSInteger)stringIndexForPosition:(kmVec2)point;
+
+- (float)offsetForStringIndex:(NSInteger)stringIndex;
+
 @end
