@@ -21,36 +21,16 @@
 //  SOFTWARE.
 //
 
-#import "ICControl.h"
-#import "ICLabel.h"
-#import "ICCaret.h"
+#import "ICNode.h"
+#import "ICLine2D.h"
 
-// Work in progress - Mac only currently
-
-#ifdef __IC_PLATFORM_MAC
-
-@interface ICTextField : ICControl {
+@interface ICCaret : ICNode {
 @protected
-    ICLabel *_textLabel;
-    ICCaret *_caret;
-    NSInteger _caretIndex;
+    ICLine2D *_line;
 }
 
-@property (nonatomic, copy) NSAttributedString *attributedText;
+- (id)init;
 
-@property (nonatomic, copy) NSString *text;
-
-@property (nonatomic, retain) ICFont *font;
-
-@property (nonatomic, assign) icColor4B color;
-
-@property (nonatomic, assign) float gamma;
-
-- (void)keyDown:(ICKeyEvent *)keyEvent;
-
-- (void)keyUp:(ICKeyEvent *)keyEvent;
+- (id)initWithSize:(kmVec3)size;
 
 @end
-
-#endif
-

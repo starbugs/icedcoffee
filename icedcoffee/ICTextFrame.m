@@ -158,7 +158,8 @@
     ICTextLine *selectedLine = nil;
     for (ICTextLine *line in self.lines) {
         if (point.y > line.position.y - line.ascent &&
-            point.y < line.position.y + line.descent) {
+            point.y < line.position.y + line.descent)
+        {
             selectedLine = line;
             break;
         }
@@ -172,13 +173,16 @@
     return 0; // fail
 }
 
-- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex
+- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)outLine
 {
     for (ICTextLine *line in self.lines) {
         if (stringIndex >= line.stringRange.location &&
-            stringIndex < line.stringRange.location + line.stringRange.length) {
+            stringIndex < line.stringRange.location + line.stringRange.length)
+        {
+            if (outLine)
+                *outLine = line;
             float offset = [line offsetForStringIndex:stringIndex - line.stringRange.location];
-            return kmVec2Make(offset, line.position.y - line.ascent);
+            return kmVec2Make(offset, line.position.y);
         }
     }
     

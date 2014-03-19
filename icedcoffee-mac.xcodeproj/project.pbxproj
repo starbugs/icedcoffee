@@ -31,6 +31,8 @@
 		A6050201164F0F9700A51A3A /* ICPropertyAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */; };
 		A6050204164F15CC00A51A3A /* ICBasicAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = A6050202164F15CB00A51A3A /* ICBasicAnimation.h */; };
 		A6050205164F15CC00A51A3A /* ICBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A6050203164F15CB00A51A3A /* ICBasicAnimation.m */; };
+		A60B415718DA26E9001D0192 /* ICCaret.h in Headers */ = {isa = PBXBuildFile; fileRef = A60B415518DA26E9001D0192 /* ICCaret.h */; };
+		A60B415818DA26E9001D0192 /* ICCaret.m in Sources */ = {isa = PBXBuildFile; fileRef = A60B415618DA26E9001D0192 /* ICCaret.m */; };
 		A62633901685D67500286AC0 /* GuillotineBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633861685D67500286AC0 /* GuillotineBinPack.cpp */; };
 		A62633911685D67500286AC0 /* GuillotineBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633871685D67500286AC0 /* GuillotineBinPack.h */; };
 		A62633921685D67500286AC0 /* MaxRectsBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */; };
@@ -241,6 +243,8 @@
 		A60501FF164F0F9700A51A3A /* ICPropertyAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICPropertyAnimation.m; path = icedcoffee/ICPropertyAnimation.m; sourceTree = "<group>"; };
 		A6050202164F15CB00A51A3A /* ICBasicAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICBasicAnimation.h; path = icedcoffee/ICBasicAnimation.h; sourceTree = "<group>"; };
 		A6050203164F15CB00A51A3A /* ICBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICBasicAnimation.m; path = icedcoffee/ICBasicAnimation.m; sourceTree = "<group>"; };
+		A60B415518DA26E9001D0192 /* ICCaret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICCaret.h; path = icedcoffee/ICCaret.h; sourceTree = "<group>"; };
+		A60B415618DA26E9001D0192 /* ICCaret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICCaret.m; path = icedcoffee/ICCaret.m; sourceTree = "<group>"; };
 		A62633861685D67500286AC0 /* GuillotineBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuillotineBinPack.cpp; sourceTree = "<group>"; };
 		A62633871685D67500286AC0 /* GuillotineBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuillotineBinPack.h; sourceTree = "<group>"; };
 		A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaxRectsBinPack.cpp; sourceTree = "<group>"; };
@@ -726,6 +730,8 @@
 				A60501F0164ECAEC00A51A3A /* ICTextField.m */,
 				D2E6488F15042F3700D71A6D /* ICView.h */,
 				D2E6489015042F3700D71A6D /* ICView.m */,
+				A60B415518DA26E9001D0192 /* ICCaret.h */,
+				A60B415618DA26E9001D0192 /* ICCaret.m */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -843,6 +849,7 @@
 				D24BAF9214EDB142000E65AA /* ICConfiguration.h in Headers */,
 				D24BAF9414EDB142000E65AA /* icDefaults.h in Headers */,
 				D24BAF9714EDB142000E65AA /* icGLState.h in Headers */,
+				A60B415718DA26E9001D0192 /* ICCaret.h in Headers */,
 				D24BAF9914EDB142000E65AA /* ICHostViewController.h in Headers */,
 				D24BAF9B14EDB142000E65AA /* ICIdentifiable.h in Headers */,
 				D24BAF9D14EDB142000E65AA /* icMacros.h in Headers */,
@@ -1013,6 +1020,7 @@
 				D24BAFA214EDB142000E65AA /* ICNode.m in Sources */,
 				D24BAFA414EDB142000E65AA /* ICNodeVisitor.m in Sources */,
 				D24BAFA614EDB142000E65AA /* ICNodeVisitorDrawing.m in Sources */,
+				A60B415818DA26E9001D0192 /* ICCaret.m in Sources */,
 				D24BAFA814EDB142000E65AA /* ICNodeVisitorPicking.m in Sources */,
 				D24BAFAA14EDB142000E65AA /* ICRenderTexture.m in Sources */,
 				D24BAFAC14EDB142000E65AA /* ICResponder.m in Sources */,

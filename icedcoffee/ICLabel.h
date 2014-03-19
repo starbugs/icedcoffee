@@ -295,4 +295,5 @@
  */
 @property (nonatomic, assign, setter=setGamma:) float gamma;
 
+
 @end

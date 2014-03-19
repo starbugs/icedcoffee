@@ -239,13 +239,13 @@
 - (NSInteger)stringIndexForPosition:(kmVec2)point
 {
     NSAssert(self.ctLine != nil, @"CTLine object not initialized when calling stringIndexForPosition:");
-    return CTLineGetStringIndexForPosition(self.ctLine, CGPointMake(point.x, point.y));
+    return CTLineGetStringIndexForPosition(self.ctLine, CGPointMake(ICPointsToPixels(point.x), ICPointsToPixels(point.y)));
 }
 
 - (float)offsetForStringIndex:(NSInteger)stringIndex
 {
     NSAssert(self.ctLine != nil, @"CTLine object not initialized when calling stringIndexForPosition:");
-    return CTLineGetOffsetForStringIndex(self.ctLine, stringIndex, NULL);
+    return ICPixelsToPoints(CTLineGetOffsetForStringIndex(self.ctLine, stringIndex, NULL));
 }
 
 - (void)setUserInteractionEnabled:(BOOL)userInteractionEnabled

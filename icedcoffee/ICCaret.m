@@ -21,36 +21,42 @@
 //  SOFTWARE.
 //
 
-#import "ICControl.h"
-#import "ICLabel.h"
 #import "ICCaret.h"
 
-// Work in progress - Mac only currently
+@implementation ICCaret
 
-#ifdef __IC_PLATFORM_MAC
-
-@interface ICTextField : ICControl {
-@protected
-    ICLabel *_textLabel;
-    ICCaret *_caret;
-    NSInteger _caretIndex;
+- (id)init
+{
+    return [self initWithSize:kmNullVec3];
 }
 
-@property (nonatomic, copy) NSAttributedString *attributedText;
+- (id)initWithSize:(kmVec3)size
+{
+    if ((self = [super init])) {
+        _line = nil;
+        self.size = size;
+        return self;
+    }
+    return nil;
+}
 
-@property (nonatomic, copy) NSString *text;
+- (void)dealloc
+{
+    [_line release];
+    [super dealloc];
+}
 
-@property (nonatomic, retain) ICFont *font;
-
-@property (nonatomic, assign) icColor4B color;
-
-@property (nonatomic, assign) float gamma;
-
-- (void)keyDown:(ICKeyEvent *)keyEvent;
-
-- (void)keyUp:(ICKeyEvent *)keyEvent;
+- (void)setSize:(kmVec3)size
+{
+    if (!_line) {
+        _line = [[ICLine2D lineWithOrigin:kmNullVec3
+                                   target:kmNullVec3
+                                lineWidth:1
+                        antialiasStrength:0
+                                    color:(icColor4B){255,255,255,255}] retain];
+        [self addChild:_line];
+    }
+    _line.lineTarget = size;
+}
 
 @end
-
-#endif
-

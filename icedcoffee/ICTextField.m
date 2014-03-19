@@ -22,11 +22,17 @@
 //
 
 #import "ICTextField.h"
+#import "ICTextFrame.h"
+#import "ICTextLine.h"
 #import "ICHostViewController.h"
 #import "ICGLView.h"
 #import "icUtils.h"
 
 #ifdef __IC_PLATFORM_MAC
+
+@interface ICLabel ()
+@property (nonatomic, retain) ICTextFrame *textFrame;
+@end
 
 @interface ICTextField ()
 @property (nonatomic, retain) ICLabel *textLabel;
@@ -42,12 +48,17 @@
         self.textLabel = [ICLabel labelWithSize:size];
         self.textLabel.userInteractionEnabled = NO;
         [self addChild:self.textLabel];
+        
+        _caretIndex = 0;
+        _caret = [[ICCaret alloc] init];
+        [self addChild:_caret];
     }
     return self;
 }
 
 - (void)dealloc
 {
+    [_caret release];
     self.textLabel = nil;
     [super dealloc];
 }
@@ -110,11 +121,41 @@
 - (void)keyDown:(ICKeyEvent *)keyEvent
 {
     NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
-    // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
-    icRunOnMainQueueWithoutDeadlocking(^{
-        [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
-    });
-    self.textLabel.attributedText = [textViewHelper textStorage];
+    
+    unsigned char keyCode = [keyEvent keyCode];
+    switch (keyCode) {
+        case 123:
+            _caretIndex--;
+            icRunOnMainQueueWithoutDeadlocking(^{
+                [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
+            });
+            break;
+        case 124:
+            _caretIndex++;
+            icRunOnMainQueueWithoutDeadlocking(^{
+                [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
+            });
+            break;
+        default:
+            // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
+            icRunOnMainQueueWithoutDeadlocking(^{
+                [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
+                _caretIndex = [textViewHelper selectedRange].location;
+            });
+            
+            self.textLabel.attributedText = [textViewHelper textStorage];
+            break;
+    }
+    
+    ICTextLine *line = nil;
+    kmVec2 offset = [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
+    _caret.position = kmVec3Make(offset.x, offset.y, 0);
+    _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
+}
+
+- (void)keyUp:(ICKeyEvent *)keyEvent
+{
+    
 }
 
 - (BOOL)becomeFirstResponder
@@ -122,6 +163,16 @@
     NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
     [[textViewHelper textStorage] replaceCharactersInRange:NSMakeRange(0, [[textViewHelper textStorage] length]) withAttributedString:self.attributedText];
     return [super becomeFirstResponder];
+}
+
+- (void)mouseDown:(ICMouseEvent *)event
+{
+    ICTextLine *line = nil;
+    kmVec3 location = [event locationInNode:self];
+    _caretIndex = [self.textLabel.textFrame stringIndexForPosition:kmVec2Make(location.x, -location.y)];
+    kmVec2 offset = [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
+    _caret.position = kmVec3Make(offset.x, offset.y, 0);
+    _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
 }
 
 /*

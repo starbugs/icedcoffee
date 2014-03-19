@@ -24,6 +24,8 @@
 #import "ICPlanarNode.h"
 #import "ICFont.h"
 
+@class ICTextLine;
+
 /**
  @brief Implements a low-level text frame node
  
@@ -82,6 +84,6 @@
 
 - (NSInteger)stringIndexForPosition:(kmVec2)point;
 
-- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex;
+- (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)line;
 
 @end
