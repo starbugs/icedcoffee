@@ -499,6 +499,7 @@ stencilBufferFormat:(ICStencilBufferFormat)stencilBufferFormat
 
 - (void)setSubScene:(ICScene *)subScene
 {
+    _subScene.parent = nil;
     [_subScene release];
     _subScene = [subScene retain];
     
