@@ -93,15 +93,26 @@
         self.zIndex = ICZIndexUndefined;
         
         _childrenSortedByZIndexDirty = YES;
+#if defined(DEBUG) && IC_DEBUG_ICNODE_PARENTS
+        _dbgParentInfo = nil;
+#endif
     }
     return self;
 }
 
 - (void)dealloc
 {
+    for (ICNode *child in self.children) {
+        child.parent = nil;
+    }
+    
     self.children = nil;
     [_childrenSortedByZIndex release];
     [self removeAllAnimations];
+    
+#if defined(DEBUG) && IC_DEBUG_ICNODE_PARENTS
+    [_dbgParentInfo release];
+#endif
     
     [super dealloc];
 }
@@ -1222,6 +1233,12 @@
 {
     _parent = parent;
     self.nextResponder = parent;
+    
+#if defined(DEBUG) && IC_DEBUG_ICNODE_PARENTS
+    // Debugging
+    [_dbgParentInfo release];
+    _dbgParentInfo = [[_parent description] copy];
+#endif
 }
 
 - (void)setChildren:(NSMutableArray *)children
@@ -1229,5 +1246,12 @@
     [_children release];
     _children = [children retain];
 }
+
+#if defined(DEBUG) && IC_DEBUG_ICNODE_PARENTS
+- (NSString *)dbgParentInfo
+{
+    return _dbgParentInfo;
+}
+#endif
 
 @end

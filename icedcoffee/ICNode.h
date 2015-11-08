@@ -146,6 +146,9 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
     
     // User interaction support
     BOOL _userInteractionEnabled;
+    
+    // Debugging
+    NSString *_dbgParentInfo;
 }
 
 
@@ -1165,6 +1168,10 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 
 - (void)debugDrawBoundingBox;
 
+#if IC_DEBUG_ICNODE_PARENTS
+- (NSString *)dbgParentInfo;
 #endif
+
+#endif // DEBUG
 
 @end

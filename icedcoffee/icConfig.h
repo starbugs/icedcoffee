@@ -71,6 +71,10 @@
 
 // Logging and Debugging
 
+#ifndef IC_DEBUG_ICNODE_PARENTS
+#define IC_DEBUG_ICNODE_PARENTS 0
+#endif
+
 #ifndef IC_BREAK_ON_GL_ERRORS
 /**
  @brief Activate to break on GL errors when debugging
