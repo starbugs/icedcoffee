@@ -31,6 +31,8 @@
 
 - (void)dealloc
 {
+    self.hostViewController = nil;
+    
     [super dealloc];
 }
 

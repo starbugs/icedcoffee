@@ -486,13 +486,14 @@ float icValidateSubpixelOffset(float offset)
     NSArray *textureGlyphs = [self textureGlyphsForGlyphs:glyphs offsets:offsets count:count font:font];
     for (ICTextureGlyph *textureGlyph in textureGlyphs) {
         NSValue *textureKey = [NSValue valueWithPointer:textureGlyph.textureAtlas];
-        NSMutableArray *glyphsForTexture = [glyphsByTexture objectForKey:textureKey];
+        NSMutableArray *glyphsForTexture = [[glyphsByTexture objectForKey:textureKey] retain];
         if (!glyphsForTexture) {
             glyphsForTexture = [[NSMutableArray alloc] initWithCapacity:1];
             [glyphsByTexture setObject:glyphsForTexture forKey:textureKey];
         }
         NSArray *glyphEntry = [NSArray arrayWithObjects:[NSNumber numberWithInteger:i], textureGlyph, nil];
         [glyphsForTexture addObject:glyphEntry];
+        [glyphsForTexture release];
         i++;
     }
     

@@ -453,6 +453,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
 {
     self.string = nil;
     self.font = nil;
+    self.metrics = nil;
     
     [_buffers release];
     

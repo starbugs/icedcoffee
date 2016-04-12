@@ -160,7 +160,10 @@
             if (animation.isFinished)
                 [node removeAnimation:animation];
         }
+        [nodeAnimations release];
     }
+    
+    [animations release];
 }
 
 @end
