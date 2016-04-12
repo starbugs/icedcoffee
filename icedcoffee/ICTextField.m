@@ -36,11 +36,15 @@
 
 @interface ICTextField ()
 @property (nonatomic, retain) ICLabel *textLabel;
+@property (nonatomic, assign) BOOL isHandlingCircumflex;
+- (void)updateTextLabelWithTextViewHelperStorage;
+- (void)interpretKeyEvent:(ICKeyEvent *)keyEvent;
 @end
 
 @implementation ICTextField
 
 @synthesize textLabel = _textLabel;
+@synthesize isHandlingCircumflex = _isHandlingCircumflex;
 
 - (id)initWithSize:(kmVec3)size
 {
@@ -124,27 +128,38 @@
     
     unsigned char keyCode = [keyEvent keyCode];
     switch (keyCode) {
-        case 123:
-            _caretIndex--;
+        case 123:   // Left cursor
+        {
+            if (_caretIndex > 0)
+                _caretIndex--;
             icRunOnMainQueueWithoutDeadlocking(^{
                 [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
             });
             break;
-        case 124:
+        }
+        case 124:   // Right cursor
+        {
             _caretIndex++;
             icRunOnMainQueueWithoutDeadlocking(^{
                 [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
             });
             break;
+        }
         default:
-            // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
-            icRunOnMainQueueWithoutDeadlocking(^{
-                [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
-                _caretIndex = [textViewHelper selectedRange].location;
-            });
+        {
+            [self interpretKeyEvent:keyEvent];
             
-            self.textLabel.attributedText = [textViewHelper textStorage];
+            if (keyCode == 10) {
+                self.textLabel.text = [self.text stringByAppendingString:@"^"];
+                self.isHandlingCircumflex = YES;
+            } else {
+                [self updateTextLabelWithTextViewHelperStorage];
+                if (self.isHandlingCircumflex) {
+                    self.isHandlingCircumflex = NO;
+                }
+            }
             break;
+        }
     }
     
     ICTextLine *line = nil;
@@ -173,6 +188,27 @@
     kmVec2 offset = [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
     _caret.position = kmVec3Make(offset.x, offset.y, 0);
     _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
+
+    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
+}
+
+- (void)updateTextLabelWithTextViewHelperStorage
+{
+    NSTextStorage *textStorage = [self.hostViewController.view.textViewHelper textStorage];
+    //NSLog(@"%@", [textStorage string]);
+    self.textLabel.attributedText = textStorage;
+}
+
+- (void)interpretKeyEvent:(ICKeyEvent *)keyEvent
+{
+    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    
+    // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
+    icRunOnMainQueueWithoutDeadlocking(^{
+        [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
+        _caretIndex = [textViewHelper selectedRange].location;
+    });
 }
 
 /*

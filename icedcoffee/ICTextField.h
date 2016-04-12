@@ -34,6 +34,7 @@
     ICLabel *_textLabel;
     ICCaret *_caret;
     NSInteger _caretIndex;
+    BOOL _isHandlingCircumflex;
 }
 
 @property (nonatomic, copy) NSAttributedString *attributedText;
