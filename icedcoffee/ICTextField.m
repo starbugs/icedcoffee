@@ -124,7 +124,7 @@
 {
     unsigned char keyCode = [keyEvent keyCode];
     switch (keyCode) {
-        case 51:
+        case 51:    // Backspace
         {
             [self deleteAtCaret];
             break;
@@ -139,6 +139,30 @@
         {
             if (_caretIndex < [self.text length])
                 _caretIndex++;
+            break;
+        }
+        case 125:   // Down cursor
+        {
+            ICTextLine *line = nil, *nextLine = nil;
+            [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
+            NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
+            if (lineIndex < [self.textLabel.textFrame.lines count] - 1) {
+                nextLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex+1];
+                _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:nextLine];
+            }
+            break;
+        }
+        case 126:   // Up cursor
+        {
+            ICTextLine *line = nil, *prevLine = nil;
+            [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
+            NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
+            if (lineIndex > 0) {
+                prevLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex-1];
+                _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:prevLine];
+                if (_caretIndex > 0 && [[prevLine.string substringFromIndex:_caretIndex-1] isEqualToString:@"\n"])
+                    _caretIndex--;
+            }
             break;
         }
         default:

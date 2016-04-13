@@ -29,7 +29,6 @@
 
 @interface ICTextFrame ()
 - (void)updateFrame;
-@property (nonatomic, retain) NSMutableArray *lines;
 @end
 
 @implementation ICTextFrame
@@ -124,7 +123,7 @@
         //NSLog(@"origin: %f", origin.y);
         [textLine setPositionX:origin.x];
         [textLine setPositionY:self.size.height - origin.y];
-        [self.lines addObject:textLine];
+        [(NSMutableArray *)self.lines addObject:textLine];
         [self addChild:textLine];
         [textLine release];
     }
@@ -172,6 +171,12 @@
     }
     
     return 0; // fail
+}
+
+- (NSInteger)stringIndexForHorizontalOffset:(float)offset inLine:(ICTextLine *)line
+{
+    kmVec2 linePoint = kmVec2Make(offset - line.position.x, 0);
+    return [line stringIndexForPosition:linePoint];
 }
 
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)outLine

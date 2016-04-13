@@ -72,6 +72,11 @@
 - (id)initWithSize:(kmVec2)size attributedString:(NSAttributedString *)attributedString;
 
 
+/** @name Accessing Lines */
+
+@property (nonatomic, retain) NSArray *lines;
+
+
 /** @name Setting Attributed Text */
 
 /**
@@ -83,6 +88,8 @@
 /** @name Caret Handling */
 
 - (NSInteger)stringIndexForPosition:(kmVec2)point;
+
+- (NSInteger)stringIndexForHorizontalOffset:(float)offset inLine:(ICTextLine *)line;
 
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)line;
 
