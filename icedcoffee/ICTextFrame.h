@@ -35,7 +35,7 @@
  
  ICTextFrame is not designed to be used as a text control in user interfaces. Instead, it should
  be employed as a low-level element to realize such user interface controls, views or other
- composed nodes which should display two-dimensional text frames. If you're looking for a
+ composed nodes which should display two-dimensional text frames. If you are looking for a
  user interface control component for displaying text, see the ICLabel class.
  */
 @interface ICTextFrame : ICPlanarNode {

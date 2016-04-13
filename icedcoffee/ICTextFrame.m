@@ -157,8 +157,8 @@
 {
     ICTextLine *selectedLine = nil;
     for (ICTextLine *line in self.lines) {
-        if (point.y > line.position.y - line.ascent &&
-            point.y < line.position.y + line.descent)
+        if (point.y > line.position.y &&
+            point.y < line.position.y + line.descent + line.ascent)
         {
             selectedLine = line;
             break;
@@ -167,7 +167,8 @@
     
     if (selectedLine) {
         kmVec2 linePoint = kmVec2Make(point.x - selectedLine.position.x, point.y - selectedLine.position.y);
-        return selectedLine.stringRange.location + [selectedLine stringIndexForPosition:linePoint];
+        //return selectedLine.stringRange.location + [selectedLine stringIndexForPosition:linePoint];
+        return [selectedLine stringIndexForPosition:linePoint];
     }
     
     return 0; // fail
@@ -176,17 +177,25 @@
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)outLine
 {
     for (ICTextLine *line in self.lines) {
-        if (stringIndex >= line.stringRange.location &&
-            stringIndex < line.stringRange.location + line.stringRange.length)
+        NSUInteger location = line.stringRange.location;
+        NSUInteger length;
+        if ([[line.string substringFromIndex:[line.string length]-1] isEqualToString:@"\n"]) {
+            length = line.stringRange.length - 1;
+        } else {
+            length = line.stringRange.length;
+        }
+        
+        if (stringIndex >= location &&
+            stringIndex <= location + length)
         {
             if (outLine)
                 *outLine = line;
-            float offset = [line offsetForStringIndex:stringIndex - line.stringRange.location];
+            float offset = [line offsetForStringIndex:stringIndex];
             return kmVec2Make(offset, line.position.y);
         }
     }
     
-    return kmVec2Make(0, 0); // fail
+    return kmVec2Make(0, 0);
 }
 
 @end

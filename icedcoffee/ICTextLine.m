@@ -257,4 +257,10 @@
     }
 }
 
+- (NSString *)description
+{
+    return [NSString stringWithFormat:@"<%@ = %08X | name = %@ | parent = %@ (%@) | string = \"%@\">",
+            [self class], (uint)self, self.name, [_parent class], [_parent name], [self string]];
+}
+
 @end

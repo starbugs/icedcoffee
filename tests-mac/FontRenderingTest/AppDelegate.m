@@ -116,17 +116,17 @@
     
     ICTextField *textField = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
     [textField setPositionY:300];
-    [textField setText:@"Text field"];
+    [textField setText:@"Text field\nwith multiple lines"];
     [textField setColor:(icColor4B){255,255,255,255}];
     [scene addChild:textField];
     [textField centerNodeHorizontallyRounded:YES];
 
-    ICTextField *textField2 = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
+    /*ICTextField *textField2 = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
     [textField2 setPositionY:330];
     [textField2 setText:@"Text field"];
     [textField2 setColor:(icColor4B){255,255,255,255}];
     [scene addChild:textField2];
-    [textField2 centerNodeHorizontallyRounded:YES];
+    [textField2 centerNodeHorizontallyRounded:YES];*/
 
     [self.hostViewController runWithScene:scene];
 }
@@ -134,6 +134,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
+    self.hostViewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
 
     [self.hostViewController enableRetinaDisplaySupport:YES];

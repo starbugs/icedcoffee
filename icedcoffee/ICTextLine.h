@@ -34,7 +34,7 @@
  line using an attributed string providing font and formatting attributes.
  
  ICTextLine is not designed to be used as a user interface control. Instead, it may be used as
- a low-level element to implement user interface controls, view or composed nodes which need to
+ a low-level element to implement user interface controls, views or composed nodes which need to
  display a single line of text. In most cases, it is a better choice to use ICTextFrame instead
  of ICTextLine to realize text displays. If you're looking for a user interface control to display
  text, see the ICLabel class.
