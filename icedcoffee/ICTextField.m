@@ -188,22 +188,15 @@
 
 - (void)interpretKeyEvent:(ICKeyEvent *)keyEvent
 {
-    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
-    
     // Looks as if Apple's text input construct wants to be run on the main thread only for some reason
     icRunOnMainQueueWithoutDeadlocking(^{
-        //NSLog(@"%@", [[keyEvent nativeEvent] description]);
-        //NSLog(@"%@", [keyEvent characters]);
-        [textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
-        [self insertAtCaret:[keyEvent characters]];
-        //[textViewHelper flushBufferedKeyEvents];
-        //_caretIndex = [textViewHelper selectedRange].location;
+        [self.hostViewController.view.textViewHelper interpretKeyEvents:@[[keyEvent nativeEvent]]];
     });
+    [self insertAtCaret:[keyEvent characters]];
 }
 
 - (void)insertAtCaret:(NSString *)characters
 {
-    //NSLog(@"%@", characters);
     NSString *before = [self.text substringWithRange:NSMakeRange(0, _caretIndex)];
     NSString *after = [self.text substringWithRange:NSMakeRange(_caretIndex, [self.text length] - _caretIndex)];
     self.text = [[before stringByAppendingString:characters] stringByAppendingString:after];
