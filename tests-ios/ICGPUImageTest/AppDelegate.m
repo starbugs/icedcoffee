@@ -3,7 +3,7 @@
 //  ICGPUImageTest
 //
 //  Created by Tobias Lensing on 10/7/12.
-//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2016 Tobias Lensing. All rights reserved.
 //
 
 #import "AppDelegate.h"

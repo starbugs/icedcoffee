@@ -3,7 +3,7 @@
 //  ShaderTest
 //
 //  Created by Tobias Lensing on 11/4/12.
-//  Copyright (C) 2013 Tobias Lensing. All rights reserved.
+//  Copyright (C) 2016 Tobias Lensing. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>
