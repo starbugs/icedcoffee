@@ -154,6 +154,9 @@
             if ([self.textLabel.textFrame.lines count] > 1 && lineIndex < [self.textLabel.textFrame.lines count] - 1) {
                 nextLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex+1];
                 _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:nextLine];
+                if ([self.textLabel.textFrame lineEndsWithLineBreak:nextLine]) {
+                    _caretIndex--;
+                }
             }
             break;
         }

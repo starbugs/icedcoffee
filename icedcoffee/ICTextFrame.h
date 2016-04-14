@@ -93,4 +93,6 @@
 
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)line;
 
+- (BOOL)lineEndsWithLineBreak:(ICTextLine *)line;
+
 @end
