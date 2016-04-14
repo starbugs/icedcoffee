@@ -116,7 +116,7 @@
     
     ICTextField *textField = [[[ICTextField alloc] initWithSize:icSizeMake(200, 100)] autorelease];
     [textField setPositionY:300];
-    [textField setText:@"Text field\nwith multiple lines"];
+    [textField setText:@"Text field\nTest\nwith multiple lines"];
     [textField setColor:(icColor4B){255,255,255,255}];
     [scene addChild:textField];
     [textField centerNodeHorizontallyRounded:YES];

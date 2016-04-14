@@ -124,6 +124,11 @@
 {
     unsigned char keyCode = [keyEvent keyCode];
     switch (keyCode) {
+        case 36:    // Carriage return
+        {
+            [self insertAtCaret:@"\n"];
+            break;
+        }
         case 51:    // Backspace
         {
             [self deleteAtCaret];
@@ -146,7 +151,7 @@
             ICTextLine *line = nil, *nextLine = nil;
             [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
             NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
-            if (lineIndex < [self.textLabel.textFrame.lines count] - 1) {
+            if ([self.textLabel.textFrame.lines count] > 1 && lineIndex < [self.textLabel.textFrame.lines count] - 1) {
                 nextLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex+1];
                 _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:nextLine];
             }
@@ -157,10 +162,10 @@
             ICTextLine *line = nil, *prevLine = nil;
             [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
             NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
-            if (lineIndex > 0) {
+            if (lineIndex > 0 && [self.textLabel.textFrame.lines count] > 1) {
                 prevLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex-1];
                 _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:prevLine];
-                if (_caretIndex > 0 && [[prevLine.string substringFromIndex:_caretIndex-1] isEqualToString:@"\n"])
+                if (_caretIndex > prevLine.stringRange.location && [[prevLine.string substringFromIndex:_caretIndex-1-prevLine.stringRange.location] isEqualToString:@"\n"])
                     _caretIndex--;
             }
             break;

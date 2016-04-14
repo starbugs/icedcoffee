@@ -195,8 +195,18 @@
         {
             if (outLine)
                 *outLine = line;
-            float offset = [line offsetForStringIndex:stringIndex];
-            return kmVec2Make(offset, line.position.y);
+            
+            float offsetX;
+            float offsetY;
+            if (stringIndex > line.stringRange.location && [[line.string substringFromIndex:stringIndex - line.stringRange.location - 1] isEqualToString:@"\n"]) {
+                offsetX = 0;
+                offsetY = line.position.y + line.size.height;
+            } else {
+                offsetX = [line offsetForStringIndex:stringIndex];
+                offsetY = line.position.y;
+            }
+            
+            return kmVec2Make(offsetX, offsetY);
         }
     }
     
