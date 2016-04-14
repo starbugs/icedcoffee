@@ -181,6 +181,7 @@
 
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)outLine
 {
+    int i = 0;
     for (ICTextLine *line in self.lines) {
         NSUInteger location = line.stringRange.location;
         BOOL lineEndsWithLineBreak = [self lineEndsWithLineBreak:line];
@@ -193,16 +194,23 @@
             
             float offsetX;
             float offsetY;
-            if (stringIndex > line.stringRange.location && [[line.string substringFromIndex:stringIndex - line.stringRange.location - 1] isEqualToString:@"\n"]) {
-                offsetX = 0;
-                offsetY = line.position.y + line.size.height;
-            } else {
-                offsetX = [line offsetForStringIndex:stringIndex];
-                offsetY = line.position.y;
-            }
-            
+            offsetX = [line offsetForStringIndex:stringIndex];
+            offsetY = line.position.y;
+            return kmVec2Make(offsetX, offsetY);
+        } else if (i == [self.lines count] - 1 &&
+                   stringIndex > location &&
+                   lineEndsWithLineBreak && stringIndex == location + line.stringRange.length)
+        {
+            if (outLine)
+                *outLine = line;
+
+            float offsetX;
+            float offsetY;
+            offsetX = 0;
+            offsetY = line.position.y + line.size.height;
             return kmVec2Make(offsetX, offsetY);
         }
+        i++;
     }
     
     return kmVec2Make(0, 0);
