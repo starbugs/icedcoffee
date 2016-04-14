@@ -183,15 +183,8 @@
 {
     for (ICTextLine *line in self.lines) {
         NSUInteger location = line.stringRange.location;
-        NSUInteger length;
-        if ([[line.string substringFromIndex:[line.string length]-1] isEqualToString:@"\n"]) {
-            length = line.stringRange.length - 1;
-        } else {
-            length = line.stringRange.length;
-        }
-        
         if (stringIndex >= location &&
-            stringIndex <= location + length)
+            stringIndex <= location + line.stringRange.length)
         {
             if (outLine)
                 *outLine = line;
