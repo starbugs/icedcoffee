@@ -183,8 +183,10 @@
 {
     for (ICTextLine *line in self.lines) {
         NSUInteger location = line.stringRange.location;
+        BOOL lineEndsWithLineBreak = [self lineEndsWithLineBreak:line];
         if (stringIndex >= location &&
-            stringIndex <= location + line.stringRange.length)
+            ((lineEndsWithLineBreak && stringIndex <= location + line.stringRange.length - 1) ||
+            (!lineEndsWithLineBreak && stringIndex <= location + line.stringRange.length)))
         {
             if (outLine)
                 *outLine = line;
@@ -204,6 +206,11 @@
     }
     
     return kmVec2Make(0, 0);
+}
+
+- (BOOL)lineEndsWithLineBreak:(ICTextLine *)line
+{
+    return line.string && [line.string length] > 1 && [[line.string substringFromIndex:line.string.length - 1] isEqualToString:@"\n"];
 }
 
 @end
