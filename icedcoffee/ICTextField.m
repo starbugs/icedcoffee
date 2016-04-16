@@ -151,12 +151,17 @@
             ICTextLine *line = nil, *nextLine = nil;
             [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
             NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
-            if ([self.textLabel.textFrame.lines count] > 1 && lineIndex < [self.textLabel.textFrame.lines count] - 1) {
+            NSUInteger linesCount = [self.textLabel.textFrame.lines count];
+            if (linesCount > 1 && lineIndex < linesCount - 1) {
+                // Cursor will move down within existing lines
                 nextLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex+1];
                 _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:nextLine];
                 if (_caretIndex == nextLine.stringRange.location + nextLine.stringRange.length && [self.textLabel.textFrame lineEndsWithLineBreak:nextLine]) {
                     _caretIndex--;
                 }
+            } else {
+                // Cursor will move down behind existing lines
+                _caretIndex = [self.text length];
             }
             break;
         }
@@ -164,12 +169,15 @@
         {
             ICTextLine *line = nil, *prevLine = nil;
             [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
-            NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
-            if (lineIndex > 0 && [self.textLabel.textFrame.lines count] > 1) {
-                prevLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex-1];
-                _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:prevLine];
-                if (_caretIndex > prevLine.stringRange.location && [[prevLine.string substringFromIndex:_caretIndex-1-prevLine.stringRange.location] isEqualToString:@"\n"])
-                    _caretIndex--;
+            NSAssert(line != nil, @"Line must be non-nil.");
+            if (line) {
+                NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
+                if (lineIndex > 0 && [self.textLabel.textFrame.lines count] > 1) {
+                    prevLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex-1];
+                    _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:prevLine];
+                    if (_caretIndex > prevLine.stringRange.location && [[prevLine.string substringFromIndex:_caretIndex-1-prevLine.stringRange.location] isEqualToString:@"\n"])
+                        _caretIndex--;
+                }
             }
             break;
         }

@@ -218,7 +218,7 @@
 
 - (BOOL)lineEndsWithLineBreak:(ICTextLine *)line
 {
-    return line.string && [line.string length] > 1 && [[line.string substringFromIndex:line.string.length - 1] isEqualToString:@"\n"];
+    return line.string && [line.string length] > 0 && [[line.string substringFromIndex:line.string.length - 1] isEqualToString:@"\n"];
 }
 
 @end
