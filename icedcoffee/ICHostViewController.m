@@ -395,7 +395,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
                 [_currentFirstResponder release];
                 _currentFirstResponder = [currentFirstResponder retain];
             }
-        } else {
+        } else if (currentFirstResponder) {
             // The new first responder didn't accept first responder status.
             // Try the next responder.
             self.currentFirstResponder = [currentFirstResponder nextResponder];
