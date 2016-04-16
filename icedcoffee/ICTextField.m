@@ -59,7 +59,9 @@
         _caretIndex = 0;
         _caret = [[ICCaret alloc] init];
         [self.scrollView addChild:_caret];
-
+    
+        self.drawsBackground = YES;
+        self.background.color = (icColor4B){40,40,40,255};        
         [self addChild:self.scrollView];
 }
     return self;
