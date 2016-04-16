@@ -169,15 +169,18 @@
         {
             ICTextLine *line = nil, *prevLine = nil;
             [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
-            NSAssert(line != nil, @"Line must be non-nil.");
             if (line) {
                 NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
                 if (lineIndex > 0 && [self.textLabel.textFrame.lines count] > 1) {
                     prevLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex-1];
                     _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:prevLine];
-                    if (_caretIndex > prevLine.stringRange.location && [[prevLine.string substringFromIndex:_caretIndex-1-prevLine.stringRange.location] isEqualToString:@"\n"])
+                    if (_caretIndex > prevLine.stringRange.location && [[prevLine.string substringFromIndex:_caretIndex-1-prevLine.stringRange.location] isEqualToString:@"\n"]) {
                         _caretIndex--;
+                    }
                 }
+            } else {
+                // Move up from past end of last line
+                _caretIndex--;
             }
             break;
         }

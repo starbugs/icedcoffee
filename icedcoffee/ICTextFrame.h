@@ -87,12 +87,25 @@
 
 /** @name Caret Handling */
 
+/**
+ @brief Returns the string index for a given position within the receiver's bounds
+ */
 - (NSInteger)stringIndexForPosition:(kmVec2)point;
 
+// FIXME: move to ICTextLine?
 - (NSInteger)stringIndexForHorizontalOffset:(float)offset inLine:(ICTextLine *)line;
 
+/**
+ @brief Returns the offset of the caret for the character identified by the given string index
+ 
+ @param stringIndex the index of the character within the string to return the offset for
+ @param line A pointer to which the address of the ICTextLine object identifying the resulting
+ line will be written to. If stringIndex points past the end of the last line, this value will
+ be set to nil.
+ */
 - (kmVec2)offsetForStringIndex:(NSInteger)stringIndex line:(ICTextLine **)line;
 
+// FIXME: move to ICTextLine?
 - (BOOL)lineEndsWithLineBreak:(ICTextLine *)line;
 
 @end

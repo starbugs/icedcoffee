@@ -189,6 +189,7 @@
             ((lineEndsWithLineBreak && stringIndex <= location + line.stringRange.length - 1) ||
             (!lineEndsWithLineBreak && stringIndex <= location + line.stringRange.length)))
         {
+            // Within existing line
             if (outLine)
                 *outLine = line;
             
@@ -201,8 +202,9 @@
                    stringIndex > location &&
                    lineEndsWithLineBreak && stringIndex == location + line.stringRange.length)
         {
+            // Past end of last line
             if (outLine)
-                *outLine = line;
+                *outLine = nil;
 
             float offsetX;
             float offsetY;
