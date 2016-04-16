@@ -387,12 +387,19 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (void)setCurrentFirstResponder:(ICResponder *)currentFirstResponder
 {
-    if ([currentFirstResponder acceptsFirstResponder] &&
-        (!_currentFirstResponder || [_currentFirstResponder resignFirstResponder]) &&
-        [currentFirstResponder becomeFirstResponder])
-    {
-        [_currentFirstResponder release];
-        _currentFirstResponder = [currentFirstResponder retain];
+    if (!_currentFirstResponder || [_currentFirstResponder resignFirstResponder]) {
+        if ([currentFirstResponder acceptsFirstResponder]) {
+            // Check if the potential new first responder accepts to become first responder
+            if ([currentFirstResponder becomeFirstResponder]) {
+                // Make currentFirstResponder the new first responder
+                [_currentFirstResponder release];
+                _currentFirstResponder = [currentFirstResponder retain];
+            }
+        } else {
+            // The new first responder didn't accept first responder status.
+            // Try the next responder.
+            self.currentFirstResponder = [currentFirstResponder nextResponder];
+        }
     }
 }
 

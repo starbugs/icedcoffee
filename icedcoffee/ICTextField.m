@@ -36,6 +36,7 @@
 
 @interface ICTextField ()
 @property (nonatomic, retain) ICLabel *textLabel;
+@property (nonatomic, retain) ICScrollView *scrollView;
 - (void)updateTextLabelWithTextViewHelperStorage;
 - (void)interpretKeyEvent:(ICKeyEvent *)keyEvent;
 @end
@@ -43,18 +44,24 @@
 @implementation ICTextField
 
 @synthesize textLabel = _textLabel;
+@synthesize scrollView = _scrollView;
 
 - (id)initWithSize:(kmVec3)size
 {
     if ((self = [super initWithSize:size])) {
+        self.scrollView = [ICScrollView viewWithSize:size];
+        
         self.textLabel = [ICLabel labelWithSize:size];
         self.textLabel.userInteractionEnabled = NO;
-        [self addChild:self.textLabel];
+        self.textLabel.autoresizesToTextSize = YES;
+        [self.scrollView addChild:self.textLabel];
         
         _caretIndex = 0;
         _caret = [[ICCaret alloc] init];
-        [self addChild:_caret];
-    }
+        [self.scrollView addChild:_caret];
+
+        [self addChild:self.scrollView];
+}
     return self;
 }
 
@@ -62,6 +69,8 @@
 {
     [_caret release];
     self.textLabel = nil;
+    self.scrollView = nil;
+    
     [super dealloc];
 }
 
@@ -197,6 +206,8 @@
     if (line) {
         _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
     }
+    
+    self.scrollView.contentSize = self.textLabel.size;
 }
 
 - (void)keyUp:(ICKeyEvent *)keyEvent

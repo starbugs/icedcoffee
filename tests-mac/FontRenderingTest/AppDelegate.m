@@ -135,7 +135,7 @@
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
     self.hostViewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
-    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:NO];
+    [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
 
     [self.hostViewController enableRetinaDisplaySupport:YES];
 

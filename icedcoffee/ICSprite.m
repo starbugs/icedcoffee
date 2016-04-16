@@ -302,7 +302,7 @@
 
 - (BOOL)acceptsFirstResponder
 {
-    [[self nextResponder] makeFirstResponder];
+    [[self nextResponder] makeFirstResponder]; // FIXME
     return NO;
 }
 

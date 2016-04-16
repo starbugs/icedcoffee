@@ -24,6 +24,7 @@
 #import "ICControl.h"
 #import "ICLabel.h"
 #import "ICCaret.h"
+#import "ICScrollView.h"
 
 // Work in progress - Mac only currently
 
@@ -31,6 +32,7 @@
 
 @interface ICTextField : ICControl {
 @protected
+    ICScrollView *_scrollView;
     ICLabel *_textLabel;
     ICCaret *_caret;
     NSInteger _caretIndex;
