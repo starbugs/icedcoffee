@@ -228,7 +228,7 @@
 {
     ICTextLine *line = nil;
     kmVec3 location = [event locationInNode:self];
-    _caretIndex = [self.textLabel.textFrame stringIndexForPosition:kmVec2Make(location.x, location.y)];
+    _caretIndex = [self.textLabel.textFrame stringIndexForPosition:kmVec2Make(-self.scrollView.contentOffset.x + location.x, -self.scrollView.contentOffset.y + location.y)];
     kmVec2 offset = [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
     _caret.position = kmVec3Make(offset.x, offset.y, 0);
     _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
