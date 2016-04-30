@@ -1,4 +1,4 @@
-Icedcoffee v0.7.1
+Icedcoffee v0.7.2
 =================
 
 Icedcoffee is a lightweight framework for building stunning, accelerated 2D and 3D user interfaces
@@ -71,7 +71,7 @@ Main Features
 Copyright and License
 ---------------------
 
-Copyright 2014 Tobias Lensing, Marcus Tillmanns
+Copyright 2013–2016 Tobias Lensing, Marcus Tillmanns
 
 Licensed under an MIT license (see LICENSE_icedcoffee.txt for details).
 
