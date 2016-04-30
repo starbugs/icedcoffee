@@ -45,8 +45,6 @@
 - (void)updateFrame;
 - (void)setText:(NSString *)text updateAttributedText:(BOOL)updateAttributedText;
 - (void)updateAttributedTextWithBasicProperties;
-- (void)updateFontWithBasicFontProperties;
-- (void)updateBasicFontPropertiesWithFont;
 
 - (void)setSize:(kmVec3)size adjustTextFrameSize:(BOOL)adjustTextFrameSize;
 
@@ -64,8 +62,6 @@
 @synthesize text = _text;
 @synthesize attributedText = _attributedText;
 @synthesize font = _font;
-@synthesize fontName = _fontName;
-@synthesize fontSize = _fontSize;
 @synthesize tracking = _tracking;
 @synthesize color = _color;
 @synthesize autoresizesToTextSize = _autoresizesToTextSize;
@@ -170,8 +166,7 @@
     // Initialize with designated initializer
     if ((self = [self initWithSize:kmVec3Make(0, 0, 0)])) {
         self.autoresizesToTextSize = YES;
-        self.fontName = fontName;
-        self.fontSize = fontSize;
+        self.font = [ICFont fontWithName:fontName size:fontSize];
         self.text = text;
     }
     
@@ -183,7 +178,6 @@
     self.textFrame = nil;
     self.attributedText = nil;
     self.font = nil;
-    self.fontName = nil;
     
     [super dealloc];
 }
@@ -270,8 +264,7 @@
         _shouldNotApplyPropertiesFromBasicText = YES;
         
         if (font) {
-            [self setFontName:font.name];
-            [self setFontSize:font.size];
+            [self setFont:font];
         }
         if (colorSet) {
             self.color = color;
@@ -296,49 +289,12 @@
     [self setNeedsDisplay];
 }
 
-- (void)updateFontWithBasicFontProperties
-{
-    if (self.fontName && self.fontSize && (![self.fontName isEqualToString:self.font.name] ||
-        self.fontSize != self.font.size)) {
-        self.font = [ICFont fontWithName:self.fontName size:self.fontSize];
-        [self updateBasicFontPropertiesWithFont];
-    }
-}
-
-- (void)updateBasicFontPropertiesWithFont
-{
-    if (![self.fontName isEqualToString:self.font.name])
-        self.fontName = self.font.name;
-    if (self.fontSize != self.font.size)
-        self.fontSize = self.font.size;
-}
-
-- (void)setFontName:(NSString *)fontName
-{
-    [_fontName release];
-    _fontName = [fontName copy];
-    
-    [self updateFontWithBasicFontProperties];
-
-    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];
-}
-
-- (void)setFontSize:(CGFloat)fontSize
-{
-    _fontSize = fontSize;
-    
-    [self updateFontWithBasicFontProperties];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];    
-}
-
 - (void)setFont:(ICFont *)font
 {
     [_font release];
     _font = [font retain];
     
-    [self updateBasicFontPropertiesWithFont];
-    [self updateAttributedTextWithBasicProperties];
+    [[NSNotificationCenter defaultCenter] postNotificationName:ICLabelFontDidChange object:self];
 }
 
 - (void)setTracking:(float)tracking

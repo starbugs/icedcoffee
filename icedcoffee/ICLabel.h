@@ -251,24 +251,6 @@
 @property (nonatomic, retain, setter=setFont:) ICFont *font;
 
 /**
- @brief The name of the font used by the receiver to display text
- 
- Setting a new font on a receiver that currently displays attributed text will rebuild the
- receiver's attributed text using its current font, color and gamma properties. Information
- stored in the attributed text to define rich text attributes will be lost.
- */
-@property (nonatomic, copy, setter=setFontName:) NSString *fontName;
-
-/**
- @brief The size in points of the font used by the receiver to display text
-
- Setting a new font on a receiver that currently displays attributed text will rebuild the
- receiver's attributed text using its current font, color and gamma properties. Information
- stored in the attributed text to define rich text attributes will be lost.
- */
-@property (nonatomic, assign, setter=setFontSize:) CGFloat fontSize;
-
-/**
  @brief The tracking of the receiver's text
  
  Setting a new tracking value on a receiver that currently displays attributed text will rebuild the
