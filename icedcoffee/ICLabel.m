@@ -380,6 +380,7 @@
     return [attributedText autorelease];
 }
 
+// FIXME: This should probably not be tied to ICLabel as its functionality is too generic – Move to ICTextFrame?
 + (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
                                textFrameSize:(kmVec2 *)textFrameSize
                                         size:(kmVec3 *)size
@@ -394,27 +395,35 @@
                                              usingBlock:^(NSString *substring,
                                                           NSRange substringRange,
                                                           NSRange enclosingRange,
-                                                          BOOL *stop) {
-                                                 
-        NSAttributedString *attrSubString = [attributedText attributedSubstringFromRange:substringRange];
+                                                          BOOL *stop)
+    {
+        NSAttributedString *attrSubString = [attributedText attributedSubstringFromRange:enclosingRange];
         ICTextLine *textLine = [[ICTextLine alloc] initWithAttributedString:attrSubString];
         [textLines addObject:textLine];
                                                  
         float leading = fabs([textLine leading]);
         float ascent = fabs([textLine ascent]);
         float descent = fabs([textLine descent]);
-
+                                              
+        // Line height calculation adapted from http://stackoverflow.com/questions/5511830
+        // FIXME: still unsure whether this works correctly in all cases. An alternative would be creating
+        // a reasonably large test frame and collect origins from that. Experiments with the
+        // CTFramesetterSuggestFrameSizeWithConstraints yielded unusable size suggestions unfortunately.
+        // See also: http://www.cocoabuilder.com/archive/cocoa/328261-ctframesettersuggestframesizewithconstraints-cuts-off-text.html
+        
+        leading = floor(leading + 0.5);
+        
         if (leading < 0) {
             leading = 0;
         }
-                                              
-        // Line height calculation adapted from http://stackoverflow.com/questions/5511830
-        // FIXME: I'm still not sure whether this is the correct solution
+
         float lineHeight = roundf(ascent) + roundf(descent) + leading;
         float ascenderDelta = 0;
-        if (leading == 0) {
-            ascenderDelta = ceilf(0.2f * lineHeight);
-        }
+        if (leading > 0)
+            ascenderDelta = 0;
+        else
+            ascenderDelta = floor(0.2 * lineHeight + 0.5);
+        
         maxLabelHeight += lineHeight;
         lineHeight += ascenderDelta;
 
@@ -453,6 +462,10 @@
                                          textFrameSize:&textFrameSize size:&size];
     self.textFrameSize = textFrameSize;
     [self setSize:size adjustTextFrameSize:NO];
+    
+    /*kmVec2 size = [_textFrame suggestFrameSize];
+    self.textFrameSize = size;
+    [self setSize:kmVec3Make(size.width, size.height, 0) adjustTextFrameSize:NO];*/
 }
 
 - (void)updateFrame
