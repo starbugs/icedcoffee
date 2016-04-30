@@ -115,6 +115,7 @@
     [button addTarget:self action:@selector(buttonLeftMouseUpInside:) forControlEvents:ICControlEventLeftMouseUpInside];
     
     ICTextField *textField = [[[ICTextField alloc] initWithSize:icSizeMake(200, 200)] autorelease];
+    [textField setFont:[ICFont fontWithName:@"Arial" size:13]];
     [textField setPositionY:300];
     [textField setText:@"Text field\nTest\nwith multiple lines"];
     [textField setColor:(icColor4B){255,255,255,255}];

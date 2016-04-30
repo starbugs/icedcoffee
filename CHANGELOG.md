@@ -11,10 +11,17 @@ Improvements:
 * Improved energy impact on OS X when using on demand frame update mode
 * Improved energy impact on OS X by supporting automatic graphics switching to integrated GPU
   (see https://developer.apple.com/library/mac/qa/qa1734/_index.html)
+* Made ICTextField capable of scrolling (OS X only for now) (work in progress)
+* Vastly improved text editing and caret handling on OS X (but still work in progress)
+
+Removals:
+* Removed fontName and fontSize properties from ICLabel. Use the font property instead.
 
 Fixes:
 * Fixed a bug in ICGlyphCache that would return texture glyphs with wrong subpixel positioning
   upon first cache access
+* Fixed a bug with ICLabel that would ignore the font size on updates of a label's font property.
+* Fixed line height calculation for measuring text frames in the ICLabel class
 
 v0.7
 ----
