@@ -51,6 +51,7 @@
     kmVec3 _contentMax;
     ICView *_contentView;
     BOOL _automaticallyCalculatesContentSize;
+    kmVec3 _scrollMovement;
 }
 
 #pragma mark - Working with the Scroll View's Content Size and Offset

@@ -15,6 +15,8 @@ Fixes:
   set to ICFrameUpdateModeOnDemand.
 * Fixed ICMouseEventDispatcher and ICHostViewControllerMac to correctly handle mouse moved
   events when the host view controller's frame update mode is set to ICFrameUpdateModeOnDemand.
+* A couple of smaller fixes:
+  * ICHostViewControllerMac: NSRunLoop now called with proper limitDate instead of nil
 
 v0.7.1
 ------

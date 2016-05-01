@@ -145,7 +145,7 @@
 	[self drawScene];
     
 	// Process timers and other events
-	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:nil];
+	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
 
 	[pool release];
         

@@ -65,6 +65,9 @@
 		A62634081686306000286AC0 /* ICCombinedVertexIndexBuffer.m in Sources */ = {isa = PBXBuildFile; fileRef = A62634061686306000286AC0 /* ICCombinedVertexIndexBuffer.m */; };
 		A62D6443168CCE4D00DA6C22 /* ICFontCache.h in Headers */ = {isa = PBXBuildFile; fileRef = A62D6441168CCE4D00DA6C22 /* ICFontCache.h */; };
 		A62D6444168CCE4D00DA6C22 /* ICFontCache.m in Sources */ = {isa = PBXBuildFile; fileRef = A62D6442168CCE4D00DA6C22 /* ICFontCache.m */; };
+		A65465521CD6B01100F79950 /* ICTextViewHelper.h in Headers */ = {isa = PBXBuildFile; fileRef = A65465501CD6B01100F79950 /* ICTextViewHelper.h */; };
+		A65465531CD6B01100F79950 /* ICTextViewHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = A65465511CD6B01100F79950 /* ICTextViewHelper.m */; };
+		A65465551CD6B4C500F79950 /* ICUserInterfaceValidations.h in Headers */ = {isa = PBXBuildFile; fileRef = A65465541CD6B4C500F79950 /* ICUserInterfaceValidations.h */; };
 		A65D27A8168B02C5008D9E05 /* ICGlyphRun.h in Headers */ = {isa = PBXBuildFile; fileRef = A65D27A7168B02C5008D9E05 /* ICGlyphRun.h */; };
 		A65D27AB168B0563008D9E05 /* ICTextLine.h in Headers */ = {isa = PBXBuildFile; fileRef = A65D27A9168B0562008D9E05 /* ICTextLine.h */; };
 		A65D27AC168B0563008D9E05 /* ICTextLine.m in Sources */ = {isa = PBXBuildFile; fileRef = A65D27AA168B0563008D9E05 /* ICTextLine.m */; };
@@ -278,6 +281,9 @@
 		A62D6441168CCE4D00DA6C22 /* ICFontCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICFontCache.h; path = icedcoffee/ICFontCache.h; sourceTree = "<group>"; };
 		A62D6442168CCE4D00DA6C22 /* ICFontCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICFontCache.m; path = icedcoffee/ICFontCache.m; sourceTree = "<group>"; };
 		A630B50115D45FB900EF7437 /* RELEASE-NOTES.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "RELEASE-NOTES.md"; sourceTree = "<group>"; };
+		A65465501CD6B01100F79950 /* ICTextViewHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ICTextViewHelper.h; sourceTree = "<group>"; };
+		A65465511CD6B01100F79950 /* ICTextViewHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ICTextViewHelper.m; sourceTree = "<group>"; };
+		A65465541CD6B4C500F79950 /* ICUserInterfaceValidations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICUserInterfaceValidations.h; path = icedcoffee/ICUserInterfaceValidations.h; sourceTree = "<group>"; };
 		A65D27A7168B02C5008D9E05 /* ICGlyphRun.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICGlyphRun.h; path = icedcoffee/ICGlyphRun.h; sourceTree = "<group>"; };
 		A65D27A9168B0562008D9E05 /* ICTextLine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTextLine.h; path = icedcoffee/ICTextLine.h; sourceTree = "<group>"; };
 		A65D27AA168B0563008D9E05 /* ICTextLine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTextLine.m; path = icedcoffee/ICTextLine.m; sourceTree = "<group>"; };
@@ -635,6 +641,8 @@
 				D24BAF8A14EDB142000E65AA /* ICGLView.m */,
 				D24BAF8B14EDB142000E65AA /* ICHostViewControllerMac.h */,
 				D24BAF8C14EDB142000E65AA /* ICHostViewControllerMac.m */,
+				A65465501CD6B01100F79950 /* ICTextViewHelper.h */,
+				A65465511CD6B01100F79950 /* ICTextViewHelper.m */,
 			);
 			path = Mac;
 			sourceTree = "<group>";
@@ -711,6 +719,8 @@
 				D292851A15AC50660086B12A /* Testing */,
 				D24BAB90155067D0003BCF94 /* ICButton.h */,
 				D24BAB91155067D0003BCF94 /* ICButton.m */,
+				A60B415518DA26E9001D0192 /* ICCaret.h */,
+				A60B415618DA26E9001D0192 /* ICCaret.m */,
 				D216CC8B154FDC29009FCDC4 /* ICControl.h */,
 				D216CC8C154FDC29009FCDC4 /* ICControl.m */,
 				D2F34FFB151F3E0900DF2D5B /* ICLabel.h */,
@@ -730,8 +740,7 @@
 				A60501F0164ECAEC00A51A3A /* ICTextField.m */,
 				D2E6488F15042F3700D71A6D /* ICView.h */,
 				D2E6489015042F3700D71A6D /* ICView.m */,
-				A60B415518DA26E9001D0192 /* ICCaret.h */,
-				A60B415618DA26E9001D0192 /* ICCaret.m */,
+				A65465541CD6B4C500F79950 /* ICUserInterfaceValidations.h */,
 			);
 			name = "User Interface";
 			sourceTree = "<group>";
@@ -856,6 +865,7 @@
 				D24BAF9E14EDB142000E65AA /* ICMouseEventDispatcher.h in Headers */,
 				D24BAFA014EDB142000E65AA /* ICMouseResponder.h in Headers */,
 				D24BAFA114EDB142000E65AA /* ICNode.h in Headers */,
+				A65465521CD6B01100F79950 /* ICTextViewHelper.h in Headers */,
 				D24BAFA314EDB142000E65AA /* ICNodeVisitor.h in Headers */,
 				D24BAFA514EDB142000E65AA /* ICNodeVisitorDrawing.h in Headers */,
 				D24BAFA714EDB142000E65AA /* ICNodeVisitorPicking.h in Headers */,
@@ -865,6 +875,7 @@
 				D24BAFAF14EDB142000E65AA /* ICShaderCache.h in Headers */,
 				D24BAFB114EDB142000E65AA /* ICShaderProgram.h in Headers */,
 				D24BAFB314EDB142000E65AA /* ICSprite.h in Headers */,
+				A65465551CD6B4C500F79950 /* ICUserInterfaceValidations.h in Headers */,
 				D24BAFB514EDB142000E65AA /* ICTexture2D.h in Headers */,
 				D24BAFB714EDB142000E65AA /* ICTextureCache.h in Headers */,
 				D24BAFB914EDB142000E65AA /* ICTextureLoader.h in Headers */,
@@ -1071,6 +1082,7 @@
 				A68DBF4D165010DC0035E0B6 /* ICNodeRef.m in Sources */,
 				A6EF8D82167488C5005B2605 /* aabb.c in Sources */,
 				A6EF8D84167488C5005B2605 /* mat4stack.c in Sources */,
+				A65465531CD6B01100F79950 /* ICTextViewHelper.m in Sources */,
 				A6EF8D86167488C5005B2605 /* matrix.c in Sources */,
 				A6EF8D89167488C5005B2605 /* mat3.c in Sources */,
 				A6EF8D8B167488C5005B2605 /* mat4.c in Sources */,

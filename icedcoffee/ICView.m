@@ -447,4 +447,9 @@
     // Override in subclass
 }
 
++ (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector
+{
+    return [[self class] instanceMethodSignatureForSelector:aSelector];
+}
+
 @end

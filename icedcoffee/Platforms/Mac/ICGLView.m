@@ -37,7 +37,9 @@
 
 #import "ICGLView.h"
 #import "ICHostViewController.h"
+#import "ICTextViewHelper.h"
 #import "ICNode.h"
+#import "ICUserInterfaceValidations.h"
 
 
 #define DISPATCH_EVENT(eventMethod) \
@@ -53,7 +55,6 @@
 @implementation ICGLView
 
 @synthesize hostViewController = _hostViewController;
-
 @synthesize textViewHelper = _textViewHelper;
 
 // Used to initialize the view when instantiated from nib
@@ -65,7 +66,7 @@
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController
-{
+{    
     // FIXME: make this configurable?
     NSOpenGLPixelFormatAttribute attribs[] =
     {
@@ -87,6 +88,8 @@
     
 	if ((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]])) {
 //        [self.hostViewController reshape:self.bounds.size];
+        
+        //[self setAcceptsTouchEvents:YES];
         
         [self setWantsBestResolutionOpenGLSurface:hostViewController.retinaDisplaySupportEnabled];
         
@@ -112,7 +115,7 @@
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
         
-        self.textViewHelper = [[NSTextView alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)];
+        self.textViewHelper = [[ICTextViewHelper alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)];
 	}
     
 	return self;
@@ -174,6 +177,40 @@
     return YES;
 }
 
+- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector {
+    NSMethodSignature *signature = [ICGLView instanceMethodSignatureForSelector:aSelector];
+    if (!signature) {
+        signature = [[_hostViewController.currentFirstResponder class] methodSignatureForSelector:aSelector];
+    }
+    return signature;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    if ([_hostViewController.currentFirstResponder respondsToSelector:[anInvocation selector]]) {
+        [anInvocation invokeWithTarget:_hostViewController.currentFirstResponder];
+    } else {
+        [super forwardInvocation:anInvocation];
+    }
+}
+
+- (BOOL)respondsToSelector:(SEL)aSelector
+{
+    if ([super respondsToSelector:aSelector])
+        return YES;
+    return [_hostViewController.currentFirstResponder respondsToSelector:aSelector];
+}
+
+- (BOOL)validateUserInterfaceItem:(id<NSValidatedUserInterfaceItem>)anItem
+{
+    if ([_hostViewController.currentFirstResponder respondsToSelector:@selector(validateUserInterfaceItem:)]) {
+        id <ICUserInterfaceValidations> firstResponder = (id <ICUserInterfaceValidations>)_hostViewController.currentFirstResponder;
+        return [firstResponder validateUserInterfaceItem:(id <ICValidatedUserInterfaceItem>)anItem];
+    }
+    
+    return YES;
+}
+
 DISPATCH_EVENT(mouseDown)
 DISPATCH_EVENT(mouseUp)
 DISPATCH_EVENT(mouseDragged)
@@ -188,6 +225,10 @@ DISPATCH_EVENT(otherMouseUp)
 DISPATCH_EVENT(otherMouseDragged)
 
 DISPATCH_EVENT(scrollWheel)
+DISPATCH_EVENT(touchesBeganWithEvent)
+DISPATCH_EVENT(touchesMovedWithEvent)
+DISPATCH_EVENT(touchesEndedWithEvent)
+DISPATCH_EVENT(touchesCancelledWithEvent)
 
 DISPATCH_EVENT(keyDown)
 DISPATCH_EVENT(keyUp)

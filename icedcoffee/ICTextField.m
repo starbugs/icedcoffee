@@ -236,8 +236,9 @@
     _caret.position = kmVec3Make(offset.x, offset.y, 0);
     _caret.size = kmVec3Make(0, line.ascent + line.descent, 0);
 
-    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
-    [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
+    // FIXME?
+    /*NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];*/
     
     [self setNeedsDisplay];
 }
@@ -273,6 +274,20 @@
         NSString *after = [self.text substringWithRange:NSMakeRange(_caretIndex, [self.text length] - _caretIndex)];
         self.text = [before stringByAppendingString:after];
         _caretIndex--;
+    }
+}
+
+- (void)paste:(id)sender
+{
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSArray *classArray = [NSArray arrayWithObject:[NSString class]];
+    NSDictionary *options = [NSDictionary dictionary];
+    
+    BOOL ok = [pasteboard canReadObjectForClasses:classArray options:options];
+    if (ok) {
+        NSArray *objectsToPaste = [pasteboard readObjectsForClasses:classArray options:options];
+        NSString *text = [objectsToPaste objectAtIndex:0];
+        [self insertAtCaret:text];
     }
 }
 

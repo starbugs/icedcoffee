@@ -444,6 +444,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 
 - (void)scrollWheel:(NSEvent *)event
 {
+    NSLog(@"dx: %f dy: %f", [event deltaX], [event deltaY]);
     // Performance: as the window server potentially sends a flood of scroll events, use over
     // nodes determined in updateMouseOverState instead of performing a hit test for each event.
     [self.lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event

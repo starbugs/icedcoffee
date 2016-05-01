@@ -2,6 +2,7 @@ icedcoffee Todos
 ================
 
 Immediate:
+* Support touch events on Mac and implement proper scrolling in ICScrollView
 * Rename AutoResizingMask to AutoresizingMask in ICView
 * Fix missing composition overrides in ICView and ICScrollView
 * Fix issues with depth testing an ICView

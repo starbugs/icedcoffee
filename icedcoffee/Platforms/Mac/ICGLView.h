@@ -31,20 +31,21 @@
 #ifdef __IC_PLATFORM_MAC
 
 @class ICHostViewController;
+@class ICTextViewHelper;
 
 /**
  @brief Implements an icedcoffee OpenGL view in AppKit
  */
-@interface ICGLView : NSOpenGLView
+@interface ICGLView : NSOpenGLView <NSUserInterfaceValidations>
 {
 @private
     ICHostViewController *_hostViewController;
     NSCursor *_cursor;
-    NSTextView *_textViewHelper;
+    ICTextViewHelper *_textViewHelper;
 }
 
 
-@property (nonatomic, retain) NSTextView *textViewHelper;
+@property (nonatomic, retain) ICTextViewHelper *textViewHelper;
 
 
 #pragma mark - Initializing a View

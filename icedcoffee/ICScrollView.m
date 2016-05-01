@@ -40,6 +40,7 @@
     if ((self = [super initWithSize:size])) {
         self.clipsChildren = YES;
         self.automaticallyCalculatesContentSize = YES;
+        _scrollMovement = kmNullVec3;
     }
     return self;
 }
@@ -68,8 +69,14 @@
 #ifdef __IC_PLATFORM_MAC
 - (void)scrollWheel:(ICMouseEvent *)event
 {
-    [self setContentOffset:kmVec3Make(_contentOffset.x + [event deltaX],
-                                      _contentOffset.y + [event deltaY],
+#define MULTIPLIER 2.0f
+    float deltaX = [event deltaX] * MULTIPLIER;
+    float deltaY = [event deltaY] * MULTIPLIER;
+    _scrollMovement.x += deltaX - _scrollMovement.x/1.5f;
+    _scrollMovement.y += deltaY - _scrollMovement.y/1.5f;
+    //NSLog(@"smx: %f smy: %f", _scrollMovement.x, _scrollMovement.y);
+    [self setContentOffset:kmVec3Make(_contentOffset.x + _scrollMovement.x,
+                                      _contentOffset.y + _scrollMovement.y,
                                       0)];
 }
 #endif
