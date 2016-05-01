@@ -337,6 +337,7 @@
 }
 
 // FIXME: This should probably not be tied to ICLabel as its functionality is too generic – Move to ICTextFrame?
+// FIXME: This appears to be a real CPU heater
 + (void)measureAttributedTextForAutoresizing:(NSAttributedString *)attributedText
                                textFrameSize:(kmVec2 *)textFrameSize
                                         size:(kmVec3 *)size
@@ -345,7 +346,7 @@
     __block float maxHeight = 0;
     __block float maxLabelHeight = 0;
     __block float maxLineWidth = 0;
-    __block NSMutableArray *textLines = [[NSMutableArray alloc] init];
+    __block NSMutableArray *textLines = [[NSMutableArray alloc] init]; // why?
     [[attributedText string] enumerateSubstringsInRange:NSMakeRange(0, [[attributedText string] length])
                                                 options:NSStringEnumerationByLines
                                              usingBlock:^(NSString *substring,
@@ -355,7 +356,7 @@
     {
         NSAttributedString *attrSubString = [attributedText attributedSubstringFromRange:enclosingRange];
         ICTextLine *textLine = [[ICTextLine alloc] initWithAttributedString:attrSubString];
-        [textLines addObject:textLine];
+        [textLines addObject:textLine]; // why?
                                                  
         float leading = fabs([textLine leading]);
         float ascent = fabs([textLine ascent]);
