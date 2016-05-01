@@ -36,6 +36,7 @@
     ICLabel *_textLabel;
     ICCaret *_caret;
     NSInteger _caretIndex;
+    float _maintainedCaretX;
 }
 
 @property (nonatomic, copy) NSAttributedString *attributedText;

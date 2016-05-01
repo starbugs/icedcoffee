@@ -57,6 +57,7 @@
         [self.scrollView addChild:self.textLabel];
         
         _caretIndex = 0;
+        _maintainedCaretX = 0;
         _caret = [[ICCaret alloc] init];
         [self.scrollView addChild:_caret];
     
@@ -164,7 +165,8 @@
             NSInteger lineIndex = [self.textLabel.textFrame.lines indexOfObject:line];
             NSUInteger linesCount = [self.textLabel.textFrame.lines count];
             if (linesCount > 1 && lineIndex < linesCount - 1) {
-                // Cursor will move down within existing lines
+                // Cursor will move down within existing lines. Find caret index corresponding to the current
+                // caret's x position in the next line.
                 nextLine = [self.textLabel.textFrame.lines objectAtIndex:lineIndex+1];
                 _caretIndex = [self.textLabel.textFrame stringIndexForHorizontalOffset:_caret.position.x inLine:nextLine];
                 if (_caretIndex == nextLine.stringRange.location + nextLine.stringRange.length && [self.textLabel.textFrame lineEndsWithLineBreak:nextLine]) {
@@ -202,6 +204,7 @@
         }
     }
     
+    // Update caret position for current caret index
     ICTextLine *line = nil;
     kmVec2 offset = [self.textLabel.textFrame offsetForStringIndex:_caretIndex line:&line];
     _caret.position = kmVec3Make(offset.x, offset.y, 0);
@@ -235,6 +238,8 @@
 
     NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
     [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];
+    
+    [self setNeedsDisplay];
 }
 
 - (void)updateTextLabelWithTextViewHelperStorage
@@ -270,6 +275,7 @@
         _caretIndex--;
     }
 }
+
 
 /*
 - (void)keyDown:(ICKeyEvent *)keyEvent
