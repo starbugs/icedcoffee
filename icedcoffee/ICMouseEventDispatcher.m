@@ -23,7 +23,7 @@
 
 #import "ICMouseEventDispatcher.h"
 #import "ICMouseEvent.h"
-#import "ICHostViewController.h"
+#import "Platforms/Mac/ICHostViewControllerMac.h"
 #import "ICResponder.h"
 #import "ICScene.h"
 #import "ICControl.h"
@@ -35,6 +35,7 @@
 #import "ICHostViewControllerMac.h"
 #import "Carbon/Carbon.h"
 #import "Platforms/Mac/ICGLView.h"
+
 
 
 #define DISPATCH_UPDOWN_EVENT(eventMethod) \
@@ -122,7 +123,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 @synthesize acceptsMouseMovedEvents = _acceptsMouseMovedEvents;
 @synthesize updatesEnterExitEventsContinuously = _updatesEnterExitEventsContinuously;
 
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController
+- (id)initWithHostViewController:(ICHostViewControllerMac *)hostViewController
 {
     if ((self = [super init])) {
         _hostViewController = hostViewController;
@@ -399,6 +400,19 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 }
 
 - (void)mouseMoved:(NSEvent *)event
+{
+    if (_hostViewController.frameUpdateMode == ICFrameUpdateModeSynchronized) {
+        // For synchronized frame updates, we can just handle mouse events as the current mouse over
+        // node and scroll nodes have been determined already
+        [self handleMouseMoved:event];
+    } else {
+        // For on demand frame updates, we have to perform picking first
+        [_hostViewController handlePendingMouseMovedEventOnNextFrameUpdate:event];
+        [_hostViewController setNeedsDisplay];
+    }
+}
+
+- (void)handleMouseMoved:(NSEvent *)event
 {
     // On mouse moved, note mouse location and current modifier flags; this will be used
     // in updateMouseOverState, which is called repeatedly when the scene is drawn to

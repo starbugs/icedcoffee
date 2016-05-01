@@ -35,7 +35,7 @@ enum {
 typedef NSUInteger ICAbstractMouseEventType;
 
 
-@class ICHostViewController;
+@class ICHostViewControllerMac;
 @class ICResponder;
 @class ICNode;
 @class ICControl;
@@ -46,7 +46,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 @interface ICMouseEventDispatcher : NSObject
 {
 @private
-    ICHostViewController *_hostViewController;
+    ICHostViewControllerMac *_hostViewController;
     NSMutableArray *_overNodes;
     CGPoint _previousMouseLocation;
     CGPoint _lastMouseLocation;
@@ -64,7 +64,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 #pragma mark - Initializing an Event Dispatcher
 /** @name Initializing an Event Dispatcher */
 
-- (id)initWithHostViewController:(ICHostViewController *)hostViewController;
+- (id)initWithHostViewController:(ICHostViewControllerMac *)hostViewController;
 
 
 #pragma mark - Tracking the Mouse Movement
@@ -84,6 +84,7 @@ typedef NSUInteger ICAbstractMouseEventType;
 - (void)mouseEntered:(NSEvent *)event;
 - (void)mouseExited:(NSEvent *)event;
 - (void)mouseMoved:(NSEvent *)event;
+- (void)handleMouseMoved:(NSEvent *)event;
 - (void)mouseUp:(NSEvent *)event;
 
 - (void)rightMouseDown:(NSEvent *)event;

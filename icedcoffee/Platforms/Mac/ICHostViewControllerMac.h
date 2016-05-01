@@ -81,6 +81,7 @@
     BOOL _isThreadOwner;
     NSTimer *_renderTimer;
     icTime _mouseOverStateDeltaTime;
+    NSEvent *_pendingMouseMovedEvent;
 }
 
 #pragma mark - Managing the Controller's View
@@ -105,6 +106,8 @@
 - (void)setUpdatesMouseEnterExitEventsContinuously:(BOOL)updatesMouseEnterExitEventsContinuously;
 
 - (BOOL)updatesMouseEnterExitEventsContinuously;
+
+- (void)handlePendingMouseMovedEventOnNextFrameUpdate:(NSEvent *)event;
 
 @end
 

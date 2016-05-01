@@ -104,6 +104,7 @@
     _keyEventDispatcher = [[ICKeyEventDispatcher alloc] initWithHostViewController:self];
     _usesDisplayLink = YES;
     _drawsConcurrently = YES;
+    _pendingMouseMovedEvent = nil;
     
     // Ensure ICGLView is linked when using nib files
     // See http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
@@ -282,7 +283,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     ICGLView *openGLview = (ICGLView*)self.view;
     CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
     [self.openGLContext makeCurrentContext];
-        
+    
+    // Base only prepares drawing, does not perform any actual drawing
     [super drawScene];
     
     [self calculateDeltaTime];
@@ -315,12 +317,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
             }
         }
         
-        // Render final scene
-        [self.scene visit];  
+        // Render scene
+        [self.scene visit];
         
         if (performUpdateMouseOverState) {
             // Let mouse event dispatcher update state for mouseEntered/mouseExited events
             [_mouseEventDispatcher updateMouseOverState:performDeferredReadback];
+        }
+        
+        // Handle pending mouse moved event for on demand frame updates
+        if (_pendingMouseMovedEvent) {
+            [_mouseEventDispatcher handleMouseMoved:_pendingMouseMovedEvent];
+            [_pendingMouseMovedEvent release];
+            _pendingMouseMovedEvent = nil;
         }
         
         // Flush OpenGL buffer
@@ -372,6 +381,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 - (BOOL)updatesMouseEnterExitEventsContinuously
 {
     return [_mouseEventDispatcher updatesEnterExitEventsContinuously];
+}
+
+- (void)handlePendingMouseMovedEventOnNextFrameUpdate:(NSEvent *)event
+{
+    _pendingMouseMovedEvent = [event retain];
 }
 
 // Issue #3: Interface Builder integration
