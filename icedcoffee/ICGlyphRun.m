@@ -661,7 +661,7 @@ NSString *__glyphAFSH = IC_SHADER_STRING
                                       target:kmVec3Make(self.origin.x + self.size.width, [self ascent], 0)
                                    lineWidth:1.f
                            antialiasStrength:0.f
-                                       color:(icColor4B){0,0,255,255}] retain];
+                                       color:(icColor4B){255,0,255,255}] retain];
     [self addChild:_dbgBaseline];
 #endif
     
