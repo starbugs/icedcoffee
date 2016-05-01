@@ -149,15 +149,18 @@
 - (void)drawWithVisitor:(ICNodeVisitor *)visitor
 {
     [super drawWithVisitor:visitor];
-    //[self debugDrawBoundingBox];
+    
+#if IC_ENABLE_DEBUG_TEXTFRAME_DRAW_BOUNDING_BOX
+    [self debugDrawBoundingBox];
+#endif
 }
 
 - (NSInteger)stringIndexForPosition:(kmVec2)point
 {
     ICTextLine *selectedLine = nil;
     for (ICTextLine *line in self.lines) {
-        if (point.y > line.position.y &&
-            point.y < line.position.y + line.descent + line.ascent)
+        if (point.y >= line.position.y &&
+            point.y < line.position.y + line.descent + line.ascent + line.leading) // FIXME
         {
             selectedLine = line;
             break;
@@ -167,10 +170,22 @@
     if (selectedLine) {
         kmVec2 linePoint = kmVec2Make(point.x - selectedLine.position.x, point.y - selectedLine.position.y);
         //return selectedLine.stringRange.location + [selectedLine stringIndexForPosition:linePoint];
-        return [selectedLine stringIndexForPosition:linePoint];
+        NSInteger stringIndex = [selectedLine stringIndexForPosition:linePoint];
+        if (stringIndex > 0 && [[[self.attributedString string] substringWithRange:NSMakeRange(stringIndex-1, 1)] isEqualToString:@"\n"])
+            stringIndex--;
+        return stringIndex;
     }
     
-    return 0; // fail
+    if ([self.lines count] > 0) {
+        ICTextLine *firstLine = [self.lines objectAtIndex:0];
+        if (point.y < firstLine.position.y) {
+            // Cursor before first character
+            return 0;
+        }
+    }
+    
+    // Cursor at end of string
+    return [self.attributedString length];
 }
 
 - (NSInteger)stringIndexForHorizontalOffset:(float)offset inLine:(ICTextLine *)line
@@ -209,7 +224,7 @@
             float offsetX;
             float offsetY;
             offsetX = 0;
-            offsetY = line.position.y + line.size.height;
+            offsetY = line.position.y + line.ascent + line.descent + line.leading;
             return kmVec2Make(offsetX, offsetY);
         }
         i++;
