@@ -63,6 +63,7 @@
     
     //[self.label centerNodeOpticallyRounded:YES];
     kmVec3 center = [scene localCenterRounded:YES];
+    center.y -= 100;
     [self.label setCenterY:center.y];
     
     kmVec3 startCenter = kmVec3Make(-self.label.size.width, 0, 0);
