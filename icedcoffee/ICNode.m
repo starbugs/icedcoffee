@@ -1110,9 +1110,9 @@
 
 - (void)debugDrawBoundingBox
 {
-    icColor4B blueColor = (icColor4B){0,0,255,255};
+    icColor4B magentaColor = (icColor4B){255,0,255,255};
     kmVec4 boundingBox = kmVec4Make(self.origin.x, self.origin.y, self.size.width, self.size.height);
-    [ICDrawAPI drawRect2D:boundingBox z:0 color:blueColor lineWidth:1];
+    [ICDrawAPI drawRect2D:boundingBox z:0 color:magentaColor lineWidth:1];
 }
 
 
