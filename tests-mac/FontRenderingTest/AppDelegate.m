@@ -135,7 +135,7 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.hostViewController = [ICHostViewController platformSpecificHostViewController];
-    self.hostViewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
+    self.hostViewController.frameUpdateMode = ICFrameUpdateModeOnDemand;
     [(ICHostViewControllerMac *)self.hostViewController setAcceptsMouseMovedEvents:YES];
 
     [self.hostViewController enableRetinaDisplaySupport:YES];
