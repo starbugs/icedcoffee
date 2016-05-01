@@ -157,6 +157,7 @@
             ICNode *node = (ICNode *)[nodeValue pointerValue];
             ICAnimation *animation = [nodeAnimations objectAtIndex:i];
             [animation processAnimationWithTarget:node deltaTime:dt];
+            [node setNeedsDisplay];
             if (animation.isFinished)
                 [node removeAnimation:animation];
         }

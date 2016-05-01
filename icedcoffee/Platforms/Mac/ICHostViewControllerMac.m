@@ -55,8 +55,8 @@
 
 #ifdef __IC_PLATFORM_MAC
 
-#define IC_HVC_TIME_INTERVAL_CONTINUOUS 0.001
-#define IC_HVC_TIME_INTERVAL_IDLE 10.0
+#define IC_HVC_TIME_INTERVAL_CONTINUOUS 0.001       // display rate ensured via vsync
+#define IC_HVC_TIME_INTERVAL_IDLE DBL_MAX           // prevent runloop from exiting
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event { \
@@ -194,7 +194,19 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)scheduleRenderTimer
 {
-    double suitableTimeInterval = _frameUpdateMode == ICFrameUpdateModeSynchronized ? IC_HVC_TIME_INTERVAL_CONTINUOUS : IC_HVC_TIME_INTERVAL_IDLE;
+    double suitableTimeInterval;
+    
+    // Set the render timer's time interval based on the receiver's frame update mode.
+    if (_frameUpdateMode == ICFrameUpdateModeSynchronized) {
+        // Continuous frame updates use a very low time interval. Vsync ensures that the timer will
+        // fire in sync with the display framerate.
+        suitableTimeInterval = IC_HVC_TIME_INTERVAL_CONTINUOUS;
+    } else {
+        // On demand frame updates do not require a render timer, but we need to prevent the runloop
+        // from exiting, so we set up a timer with a really large time interval (DBL_MAX)
+        suitableTimeInterval = IC_HVC_TIME_INTERVAL_IDLE;
+    }
+    
     _renderTimer = [[NSTimer timerWithTimeInterval:suitableTimeInterval
                                             target:self
                                           selector:@selector(timerFired:)
@@ -254,13 +266,14 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 - (void)drawScene
 {
     // FIXME
-    if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
+    /*if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
         !_needsDisplay &&
         (!_continuousFrameUpdateExpiryDate ||
          [_continuousFrameUpdateExpiryDate compare:[NSDate date]] == NSOrderedAscending)
         ) {
+        //NSLog(@"Nothing to draw, needsDisplay: %d", _needsDisplay);
         return; // nothing to draw
-    }
+    }*/
     
     // We draw on a secondary thread through the display link
     // When resizing the view, -reshape is called automatically on the main thread
@@ -275,6 +288,11 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     [self calculateDeltaTime];
     
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
+        if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
+            _needsDisplay = NO;
+        }
+        
+        //NSLog(@"Scheduler update");
         [[self scheduler] update:_deltaTime];    
 
         glViewport(0, 0,
@@ -307,10 +325,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         
         // Flush OpenGL buffer
         [[openGLview openGLContext] flushBuffer];
-        
-        if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
-            _needsDisplay = NO;
-        }        
     }
     
     CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);

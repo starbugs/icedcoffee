@@ -193,6 +193,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     }
 }
 
+// FIXME: remove?
 - (void)continuouslyUpdateFramesUntilDate:(NSDate *)date
 {
     if (!_continuousFrameUpdateExpiryDate ||
@@ -206,11 +207,13 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 
 - (void)setNeedsDisplay
 {
-    _needsDisplay = YES;
-    
-    // NEW
-    if (self.frameUpdateMode == ICFrameUpdateModeOnDemand)
-        [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO];
+    if (!_needsDisplay) {
+        _needsDisplay = YES;
+
+        // Redraw scene on next runloop slice
+        if (self.frameUpdateMode == ICFrameUpdateModeOnDemand)
+            [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO];
+    }
 }
 
 - (void)willDrawFirstFrame
