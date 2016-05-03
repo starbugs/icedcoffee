@@ -37,7 +37,6 @@
 @interface ICTextField ()
 @property (nonatomic, retain) ICLabel *textLabel;
 @property (nonatomic, retain) ICScrollView *scrollView;
-- (void)updateTextLabelWithTextViewHelperStorage;
 - (void)interpretKeyEvent:(ICKeyEvent *)keyEvent;
 @end
 
@@ -241,13 +240,6 @@
     [textViewHelper setSelectedRange:NSMakeRange(_caretIndex, 0)];*/
     
     [self setNeedsDisplay];
-}
-
-- (void)updateTextLabelWithTextViewHelperStorage
-{
-    NSTextStorage *textStorage = [self.hostViewController.view.textViewHelper textStorage];
-    NSLog(@"%@", [textStorage string]);
-    self.textLabel.attributedText = textStorage;
 }
 
 - (void)interpretKeyEvent:(ICKeyEvent *)keyEvent
