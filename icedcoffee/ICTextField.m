@@ -222,7 +222,7 @@
 
 - (BOOL)becomeFirstResponder
 {
-    NSTextView *textViewHelper = self.hostViewController.view.textViewHelper;
+    ICTextViewHelper *textViewHelper = self.hostViewController.view.textViewHelper;
     [[textViewHelper textStorage] replaceCharactersInRange:NSMakeRange(0, [[textViewHelper textStorage] length]) withAttributedString:self.attributedText];
     return [super becomeFirstResponder];
 }

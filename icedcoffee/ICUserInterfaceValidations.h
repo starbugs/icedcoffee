@@ -29,5 +29,5 @@
 @end
 
 @protocol ICUserInterfaceValidations <NSObject>
-- (BOOL)validateUserInterfaceItem:(id <ICValidatedUserInterfaceItem>)item;
+- (BOOL)validateUserInterfaceItem:(nonnull id <ICValidatedUserInterfaceItem>)item;
 @end

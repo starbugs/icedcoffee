@@ -252,11 +252,16 @@ float icValidateSubpixelOffset(float offset)
             NSLog(@"Only RGBA and alpha texture depths are supported, falling back to RGBA");
             depth = 4;
         }
+      
+        NSAssert(depth == 4 || depth == 1, @"Invalid value for depth");
         
         if (depth == 4) {
             colorSpace = CGColorSpaceCreateDeviceRGB();
             alphaInfo = kCGImageAlphaPremultipliedLast | kCGBitmapByteOrder32Big;
         } else if (depth == 1) {
+            colorSpace = CGColorSpaceCreateDeviceGray();
+            alphaInfo = kCGImageAlphaNone;
+        } else {
             colorSpace = CGColorSpaceCreateDeviceGray();
             alphaInfo = kCGImageAlphaNone;
         }
