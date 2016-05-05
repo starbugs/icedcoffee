@@ -51,7 +51,7 @@
     if ((self = [super initWithSize:size])) {
         self.scrollView = [ICScrollView viewWithSize:size];
         
-        self.textLabel = [ICLabel labelWithSize:size];
+        self.textLabel = [ICLabel labelWithSize:size]; //kmVec3Make(400, 1000, 0)];//size];
         self.textLabel.userInteractionEnabled = NO;
         self.textLabel.autoresizesToTextSize = YES;
         [self.scrollView addChild:self.textLabel];
