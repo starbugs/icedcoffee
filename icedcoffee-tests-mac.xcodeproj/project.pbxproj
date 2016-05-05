@@ -1695,8 +1695,8 @@
 		D2FD85CA14F0E4A5006A9A90 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastTestingUpgradeCheck = 0710;
-				LastUpgradeCheck = 0460;
+				LastTestingUpgradeCheck = 0730;
+				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Tobias Lensing";
 			};
 			buildConfigurationList = D2FD85CD14F0E4A6006A9A90 /* Build configuration list for PBXProject "icedcoffee-tests-mac" */;
@@ -2611,6 +2611,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.icedcoffee.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2628,6 +2629,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/IBIntegrationTest/IBIntegrationTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.icedcoffee.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2651,6 +2653,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2674,6 +2677,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/GlyphCacheTest/GlyphCacheTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2693,6 +2697,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2712,6 +2717,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderPlayground/ShaderPlayground-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2730,6 +2736,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2748,6 +2755,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				INFOPLIST_FILE = "tests-mac/CoreTextReferenceTest/CoreTextReferenceTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2767,6 +2775,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2786,6 +2795,7 @@
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ShaderTest/ShaderTest-Info.plist";
 				MACOSX_DEPLOYMENT_TARGET = 10.8;
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2800,6 +2810,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -2814,6 +2825,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/KazmathTests/KazmathTests-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/KazmathTests/KazmathTests-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = octest;
 			};
@@ -2832,6 +2844,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
 				WRAPPER_EXTENSION = app;
@@ -2847,6 +2860,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TableViewTest/TableViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PUBLIC_HEADERS_FOLDER_PATH = "tests-mac/TableViewTest/TableViewTest-Info.plist";
 				WRAPPER_EXTENSION = app;
@@ -2862,6 +2876,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2876,6 +2891,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/Scale9SpriteTest/Scale9SpriteTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2890,6 +2906,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2904,6 +2921,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/MultipleCocoaViewsTest/MultipleCocoaViewsTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2918,6 +2936,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2932,6 +2951,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ViewTest/ViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2951,6 +2971,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2965,6 +2986,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/ScrollViewTest/ScrollViewTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2979,6 +3001,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/StencilTest/StencilTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -2993,6 +3016,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/StencilTest/StencilTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3006,6 +3030,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3019,6 +3044,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/AlphaBlendingTest/AlphaBlendingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3032,6 +3058,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3045,6 +3072,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/TextureCacheTest/TextureCacheTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/TextureCacheTest/TextureCacheTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3058,6 +3086,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/FontRenderingTest/FontRenderingTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3072,6 +3101,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = "";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/FontRenderingTest/FontRenderingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3081,11 +3111,20 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -3096,6 +3135,9 @@
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				ONLY_ACTIVE_ARCH = YES;
@@ -3107,15 +3149,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
 				SDKROOT = macosx;
@@ -3131,6 +3184,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3145,6 +3199,7 @@
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/PickingTest/PickingTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.tlensing.${PRODUCT_NAME:rfc1034identifier}";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3158,6 +3213,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.tlensing.ICTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -3171,6 +3227,7 @@
 				GCC_PREFIX_HEADER = "tests-mac/DepthBufferTest/DepthBufferTest-Prefix.pch";
 				HEADER_SEARCH_PATHS = .;
 				INFOPLIST_FILE = "tests-mac/DepthBufferTest/DepthBufferTest-Info.plist";
+				PRODUCT_BUNDLE_IDENTIFIER = org.tlensing.ICTest;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
