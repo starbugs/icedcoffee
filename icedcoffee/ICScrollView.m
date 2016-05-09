@@ -24,9 +24,12 @@
 #import "ICScrollView.h"
 #import "ICScene.h"
 #import "ICCamera.h"
+#import "ICScheduler.h"
 
 @interface ICScrollView (Private)
 - (ICView *)contentView;
+- (void)releaseTouches;
+- (void)cancelTracking;
 @end
 
 @implementation ICScrollView
@@ -40,7 +43,13 @@
     if ((self = [super initWithSize:size])) {
         self.clipsChildren = YES;
         self.automaticallyCalculatesContentSize = YES;
-        _scrollMovement = kmNullVec3;
+        _scrollVelocity = kmNullVec3;
+        
+#ifdef __IC_PLATFORM_MAC
+        memset(_initialTouches, 0, sizeof(NSTouch *)*2);
+        memset(_currentTouches, 0, sizeof(NSTouch *)*2);
+        _isTracking = NO;
+#endif
     }
     return self;
 }
@@ -48,6 +57,12 @@
 - (void)dealloc
 {
     [_contentView release];
+    [_positionBuffer release];
+    
+#ifdef __IC_PLATFORM_MAC
+    [self releaseTouches];
+#endif
+    
     [super dealloc];
 }
 
@@ -69,15 +84,147 @@
 #ifdef __IC_PLATFORM_MAC
 - (void)scrollWheel:(ICMouseEvent *)event
 {
-#define MULTIPLIER 2.0f
-    float deltaX = [event deltaX] * MULTIPLIER;
-    float deltaY = [event deltaY] * MULTIPLIER;
-    _scrollMovement.x += deltaX - _scrollMovement.x/1.5f;
-    _scrollMovement.y += deltaY - _scrollMovement.y/1.5f;
     //NSLog(@"smx: %f smy: %f", _scrollMovement.x, _scrollMovement.y);
-    [self setContentOffset:kmVec3Make(_contentOffset.x + _scrollMovement.x,
-                                      _contentOffset.y + _scrollMovement.y,
-                                      0)];
+    // Do not handle touch events as scroll events
+    if (!event.nativeEvent.hasPreciseScrollingDeltas) {
+        [self setContentOffset:kmVec3Make(_contentOffset.x + [event deltaX],
+                                          _contentOffset.y + [event deltaY],
+                                          0)];
+    }
+}
+
+- (void)touchesBeganWithEvent:(ICTouchEvent *)event
+{
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching];
+    
+    if ([touches count] == 2) {
+        NSLog(@"BEGIN");
+        [[ICScheduler currentScheduler] unscheduleUpdateForTarget:self];
+
+        [_positionBuffer release];
+        _positionBuffer = [[NSMutableArray alloc] initWithCapacity:10];
+
+        NSArray *array = [touches allObjects];
+        _initialTouches[0] = [[array objectAtIndex:0] retain];
+        _initialTouches[1] = [[array objectAtIndex:1] retain];
+        _currentTouches[0] = [_initialTouches[0] retain];
+        _currentTouches[1] = [_initialTouches[1] retain];
+        
+        _scrollVelocity = kmNullVec3;
+        _initialOffset = self.contentOffset;
+        _lastNormalizedPosition = kmVec3Make([_initialTouches[0] normalizedPosition].x, [_initialTouches[0] normalizedPosition].y, 0);
+        _restingPosition = _lastNormalizedPosition;
+        [_positionBuffer addObject:[NSData dataWithBytes:&_lastNormalizedPosition length:sizeof(kmVec3)]];
+        
+        _isTracking = YES;
+    } else {
+        [self releaseTouches];
+    }
+}
+
+- (void)touchesMovedWithEvent:(ICTouchEvent *)event
+{
+    NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching];
+    if (touches.count == 2 && _initialTouches[0]) {
+        NSArray<NSTouch *> *array = [touches allObjects];
+        [_currentTouches[0] release];
+        [_currentTouches[1] release];
+        
+        NSTouch *touch;
+        touch = [array objectAtIndex:0];
+        if ([touch.identity isEqual:_initialTouches[0].identity]) {
+            _currentTouches[0] = [touch retain];
+        } else {
+            _currentTouches[1] = [touch retain];
+        }
+        touch = [array objectAtIndex:1];
+        if ([touch.identity isEqual:_initialTouches[0].identity]) {
+            _currentTouches[0] = [touch retain];
+        } else {
+            _currentTouches[1] = [touch retain];
+        }
+        
+        kmVec3 initialPosition = kmVec3Make([_initialTouches[0] normalizedPosition].x, [_initialTouches[0] normalizedPosition].y, 0);
+        kmVec3 normalizedPosition = kmVec3Make([_currentTouches[0] normalizedPosition].x, [_currentTouches[0] normalizedPosition].y, 0.0f);
+        
+        kmVec3 direction;
+        kmVec3Subtract(&direction, &normalizedPosition, &initialPosition);
+        kmVec3Scale(&direction, &direction, 400);
+        direction.x *= -1; // flip horizontal access for natural scrolling
+        
+        kmVec3 contentOffset;
+        kmVec3Subtract(&contentOffset, &_initialOffset, &direction);
+        self.contentOffset = contentOffset;
+
+        kmVec3 diff;
+        kmVec3Subtract(&diff, &normalizedPosition, &_lastNormalizedPosition);
+        kmVec3Scale(&diff, &diff, 100);
+        diff.x *= -1;
+        [_positionBuffer addObject:[NSData dataWithBytes:&diff length:sizeof(kmVec3)]];
+        _lastNormalizedPosition = normalizedPosition;
+        if ([_positionBuffer count] > 9) {
+            [_positionBuffer removeObjectAtIndex:0];
+        }
+    }
+}
+
+- (void)touchesEndedWithEvent:(ICTouchEvent *)event
+{
+    if ([_positionBuffer count] > 0) {
+        kmVec3 scrollVelocity = kmNullVec3;
+        NSLog(@"PosBuf count: %lu", (unsigned long)[_positionBuffer count]);
+        for (NSData *vectorData in _positionBuffer) {
+            kmVec3 vec;
+            [vectorData getBytes:&vec];
+            kmVec3Add(&scrollVelocity, &scrollVelocity, &vec);
+            NSLog(@"%@", kmVec3Description(scrollVelocity));
+        }
+        _scrollVelocity = scrollVelocity;
+        float d = kmVec3Length(&_scrollVelocity);
+        kmVec3Scale(&_scrollVelocity, &_scrollVelocity, d/((float)([_positionBuffer count])));
+        [_positionBuffer removeAllObjects];
+    }
+    
+    //_scrollVelocity.x *= -1;
+    
+    NSLog(@"END");
+    [[ICScheduler currentScheduler] scheduleUpdateForTarget:self];
+    [self setNeedsDisplay];
+    NSLog(@"%@", kmVec3Description(_scrollVelocity));
+    _isMoving = YES;
+    [self releaseTouches];
+}
+
+- (void)touchesCancelledWithEvent:(ICTouchEvent *)event
+{
+    NSLog(@"CANCEL");
+}
+
+- (void)update:(icTime)dt
+{
+    //NSLog(@"Upd");
+    kmVec3 contentOffset = self.contentOffset;
+    kmVec3Subtract(&contentOffset, &contentOffset, &_scrollVelocity);
+    kmVec3Scale(&_scrollVelocity, &_scrollVelocity, 0.96f);
+    self.contentOffset = contentOffset;
+    [self setNeedsDisplay];
+}
+
+- (void)releaseTouches
+{
+    [_initialTouches[0] release];
+    [_initialTouches[1] release];
+    [_currentTouches[0] release];
+    [_currentTouches[1] release];
+    
+    memset(_initialTouches, 0, sizeof(NSTouch *)*2);
+    memset(_currentTouches, 0, sizeof(NSTouch *)*2);
+}
+
+- (void)cancelTracking
+{
+    _isTracking = NO;
+    [self releaseTouches];
 }
 #endif
 

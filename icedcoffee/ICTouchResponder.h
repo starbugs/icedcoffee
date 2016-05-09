@@ -21,9 +21,30 @@
 //  SOFTWARE.
 //  
 
-#import <UIKit/UIKit.h>
+#import "icAvailability.h"
 
-@class ICTouchEvent;
+#ifdef __IC_PLATFORM_MAC
+
+#import "ICTouchEvent.h"
+
+/**
+ @brief Defines touch event messages
+ */
+@protocol ICTouchResponder <NSObject>
+
+@optional
+
+- (void)touchesBeganWithEvent:(ICTouchEvent *)event;
+- (void)touchesMovedWithEvent:(ICTouchEvent *)event;
+- (void)touchesEndedWithEvent:(ICTouchEvent *)event;
+- (void)touchesCancelledWithEvent:(ICTouchEvent *)event;
+
+@end
+
+#else
+
+#import <UIKit/UIKit.h>
+#import "ICTouchEvent.h"
 
 /**
  @brief Defines touch event messages
@@ -38,3 +59,5 @@
 - (void)touchesCancelled:(NSSet *)touches withTouchEvent:(ICTouchEvent *)event;
 
 @end
+
+#endif

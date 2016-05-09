@@ -70,7 +70,6 @@
         [_keyEventDispatcher eventMethod:event]; \
     }
 
-
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
 - (void)scheduleRenderTimer;
@@ -438,7 +437,10 @@ DISPATCH_MOUSE_EVENT(otherMouseDragged)
 DISPATCH_MOUSE_EVENT(otherMouseUp)
 
 DISPATCH_MOUSE_EVENT(scrollWheel)
-
+DISPATCH_MOUSE_EVENT(touchesBeganWithEvent)
+DISPATCH_MOUSE_EVENT(touchesMovedWithEvent)
+DISPATCH_MOUSE_EVENT(touchesEndedWithEvent)
+DISPATCH_MOUSE_EVENT(touchesCancelledWithEvent)
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // ICKeyResponder Protocol Implementation

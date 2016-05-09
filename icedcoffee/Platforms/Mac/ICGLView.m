@@ -89,7 +89,7 @@
 	if ((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]])) {
 //        [self.hostViewController reshape:self.bounds.size];
         
-        //[self setAcceptsTouchEvents:YES];
+        [self setAcceptsTouchEvents:YES];
         
         [self setWantsBestResolutionOpenGLSurface:hostViewController.retinaDisplaySupportEnabled];
         

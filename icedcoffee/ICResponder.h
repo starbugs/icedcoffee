@@ -28,7 +28,8 @@
 #if __IC_PLATFORM_DESKTOP
 #import "ICMouseResponder.h"
 #import "ICKeyResponder.h"
-#define EVENT_PROTOCOLS ICMouseResponder, ICKeyResponder
+#import "ICTouchResponder.h"
+#define EVENT_PROTOCOLS ICMouseResponder, ICKeyResponder, ICTouchResponder
 #elif __IC_PLATFORM_TOUCH
 #import "ICTouchResponder.h"
 #define EVENT_PROTOCOLS ICTouchResponder
@@ -173,6 +174,10 @@
  */
 - (void)scrollWheel:(ICMouseEvent *)event;
 
+- (void)touchesBeganWithEvent:(ICTouchEvent *)event;
+- (void)touchesMovedWithEvent:(ICTouchEvent *)event;
+- (void)touchesEndedWithEvent:(ICTouchEvent *)event;
+- (void)touchesCancelledWithEvent:(ICTouchEvent *)event;
 
 #pragma mark - Handling Key Events
 /** @name Handling Key Events */

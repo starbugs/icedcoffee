@@ -21,11 +21,11 @@
 //  SOFTWARE.
 //  
 
+#ifdef __IC_PLATFORM_IOS
+
 #import "UIKit/UIKit.h"
 #import "ICTouchEvent.h"
 #import "ICNodeRef.h"
-
-#ifdef __IC_PLATFORM_IOS
 
 @implementation ICTouchEvent
 
@@ -67,6 +67,19 @@
 - (NSSet *)touchesForNode:(ICNode *)node
 {
     return [NSSet setWithArray:[_touchesForNodes objectForKey:[ICNodeRef refWithNode:node]]];
+}
+
+@end
+
+#else // Mac
+
+#include "ICTouchEvent.h"
+
+@implementation ICTouchEvent
+
+- (NSSet<NSTouch *> *)touchesMatchingPhase:(NSTouchPhase)phase
+{
+    return [self.nativeEvent touchesMatchingPhase:phase inView:self.hostView];
 }
 
 @end
