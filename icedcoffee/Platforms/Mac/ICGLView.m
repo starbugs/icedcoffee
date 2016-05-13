@@ -144,7 +144,6 @@
 - (void)reshape
 {
     NSOpenGLContext *openGLContext = [self openGLContext];
-    [[self openGLContext] update];
     
     NSAssert(openGLContext, @"openGLContext must not be nil");
     
@@ -153,6 +152,7 @@
         // When resizing the view, -reshape is called automatically on the main thread
         // Add a mutex around to avoid the threads accessing the context simultaneously when resizing
         CGLLockContext([openGLContext CGLContextObj]);
+        [[self openGLContext] update];
         
         // Add an autorelease pool to avoid concurrent deallocation of autoreleased objects
         NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
