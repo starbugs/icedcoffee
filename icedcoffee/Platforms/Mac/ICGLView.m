@@ -73,7 +73,7 @@
     NSOpenGLPixelFormatAttribute attribs[] =
     {
 		NSOpenGLPFAAccelerated,
-		NSOpenGLPFANoRecovery,
+		//NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
         NSOpenGLPFAStencilSize, 8,
