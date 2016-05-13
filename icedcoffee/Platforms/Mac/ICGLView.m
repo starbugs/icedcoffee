@@ -197,7 +197,8 @@
 - (void)forwardInvocation:(NSInvocation *)anInvocation
 {
     if ([_hostViewController.currentFirstResponder respondsToSelector:[anInvocation selector]]) {
-        [anInvocation invokeWithTarget:_hostViewController.currentFirstResponder];
+        //[anInvocation invokeWithTarget:_hostViewController.currentFirstResponder];
+        [anInvocation performSelector:@selector(invokeWithTarget:) onThread:self.hostViewController.thread withObject:self.hostViewController.currentFirstResponder waitUntilDone:NO];
     } else {
         [super forwardInvocation:anInvocation];
     }
