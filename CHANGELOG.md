@@ -4,17 +4,26 @@ Changelog
 v0.7.2
 ------
 
-Fixes:
+New Features:
+* Added trackpad event handling on OS X and improved ICScrollView to handle trackpad events correctly.
+
+Fixes (tested on OS X only):
 * Added NDEBUG to icedcoffee-mac target (fixes issue with assert in RectangleBinPack)
 * Fixed setNeedsDisplay in HostViewController so as to not issue a redraw call for each call
   of setNeedsDisplay when frameUpdateMode is set to ICFrameUpdateModeOnDemand.
-* Fixed ICScheduler to call setNeedsDisplay on animated nodes ins processAnimations:.
+* Fixed ICScheduler to call setNeedsDisplay on animated nodes in processAnimations:.
 * Fixed on demand frame update render timer to not fire until DBL_MAX is reached, so in
   practice the timer will never fire. It's used only to prevent the runloop from exiting.
 * Animations now work correctly when the host view controller's frameUpdateMode property is
   set to ICFrameUpdateModeOnDemand.
 * Fixed ICMouseEventDispatcher and ICHostViewControllerMac to correctly handle mouse moved
   events when the host view controller's frame update mode is set to ICFrameUpdateModeOnDemand.
+* Fixed an issue with ICHostViewController's setNeedsDisplay: that would lead to lagging event
+  handling and dissolving textures due to stacking up of drawScene calls on the HVC thread
+  when reshaping under certain conditions.
+* Fixed an issue with removal of node animations from ICScheduler that would cause memory leaks
+  and high CPU usage on animation processing. ICNode now uses ICScheduler's removeAllAnimationsForNode:
+  to remove animations on deallocation.
 * A couple of smaller fixes:
   * ICHostViewControllerMac: NSRunLoop now called with proper limitDate instead of nil
 

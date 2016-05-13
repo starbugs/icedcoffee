@@ -417,7 +417,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     } else {
         // For on demand frame updates, we have to perform picking first
         [_hostViewController handlePendingMouseMovedEventOnNextFrameUpdate:event];
-        [_hostViewController setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
+        //[_hostViewController setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
     }
 }
 

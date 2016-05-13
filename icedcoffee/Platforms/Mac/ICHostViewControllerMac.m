@@ -55,7 +55,7 @@
 
 #ifdef __IC_PLATFORM_MAC
 
-#define IC_HVC_TIME_INTERVAL_CONTINUOUS 0.001       // display rate ensured via vsync
+#define IC_HVC_TIME_INTERVAL_CONTINUOUS 0.01666     // display rate ensured via vsync
 #define IC_HVC_TIME_INTERVAL_IDLE DBL_MAX           // prevent runloop from exiting
 
 #define DISPATCH_MOUSE_EVENT(eventMethod) \
@@ -144,7 +144,7 @@
 	[self drawScene];
     
 	// Process timers and other events
-	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantFuture]];
+	[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
 
 	[pool release];
         
@@ -265,6 +265,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 - (void)drawScene
 {
+    //NSLog(@"drawScene");
+    
     // FIXME
     /*if (_frameUpdateMode == ICFrameUpdateModeOnDemand &&
         !_needsDisplay &&
@@ -282,6 +284,8 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     ICGLView *openGLview = (ICGLView*)self.view;
     CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
     [self.openGLContext makeCurrentContext];
+    
+    //NSLog(@"drawScene on thread: %s, w: %f", dispatch_queue_get_label(dispatch_get_current_queue()), openGLview.bounds.size.width);
     
     // Base only prepares drawing, does not perform any actual drawing
     [super drawScene];
@@ -335,7 +339,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         [[openGLview openGLContext] flushBuffer];
     }
     
+    if (!_didDrawFirstFrame) {
+        _didDrawFirstFrame = YES;
+    }
+    
     CGLUnlockContext([self.nativeOpenGLContext CGLContextObj]);
+    
+    //NSLog(@"END drawScene on thread: %s", dispatch_queue_get_label(dispatch_get_current_queue()));
 }
 
 - (NSArray *)hitTest:(CGPoint)point deferredReadback:(BOOL)deferredReadback

@@ -198,16 +198,17 @@
 - (void)touchesCancelledWithEvent:(ICTouchEvent *)event
 {
     NSLog(@"CANCEL");
+    [self releaseTouches];
 }
 
 - (void)update:(icTime)dt
 {
-    //NSLog(@"Upd");
+    //NSLog(@"Upd %f", dt);
     kmVec3 contentOffset = self.contentOffset;
     kmVec3Subtract(&contentOffset, &contentOffset, &_scrollVelocity);
     kmVec3Scale(&_scrollVelocity, &_scrollVelocity, 0.96f);
     self.contentOffset = contentOffset;
-    [self setNeedsDisplay];
+    //[self setNeedsDisplay];
 }
 
 - (void)releaseTouches

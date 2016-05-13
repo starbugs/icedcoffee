@@ -63,6 +63,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 @synthesize fps = _fps;
 @synthesize didAlreadyCallViewDidLoad = _didAlreadyCallViewDidLoad;
 @synthesize openGLContext = _openGLContext;
+@synthesize needsDisplay = _needsDisplay;
 
 + (id)platformSpecificHostViewController
 {
@@ -210,9 +211,12 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     if (!_needsDisplay) {
         _needsDisplay = YES;
 
-        // Redraw scene on next runloop slice
-        if (self.frameUpdateMode == ICFrameUpdateModeOnDemand)
-            [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO];
+        // Redraw scene on next runloop slice when in on demand frame update mode 
+        if (self.frameUpdateMode == ICFrameUpdateModeOnDemand && (!_didDrawFirstFrame || [NSThread currentThread] == self.thread)) {
+            // Schedule display update on HVC thread only if first frame has not been drawn yet or when on HVC thread.
+            // This is to avoid stacking up calls to drawScene on the HVC thread's runloop when reshaping.
+            [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+        }
     }
 }
 
@@ -229,8 +233,8 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
     [self makeCurrentHostViewController];
     
     if (!_didDrawFirstFrame) {
-        _didDrawFirstFrame = YES;
         [self willDrawFirstFrame];
+        // Overriding class must set _didDrawFirstFrame to YES after first frame was drawn
     }
 }
 

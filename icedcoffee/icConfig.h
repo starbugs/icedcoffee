@@ -86,7 +86,7 @@
 /**
  @brief Activate to output an FPS log message to the console once per second
  */
-#define IC_DEBUG_OUTPUT_FPS_ON_CONSOLE 0
+#define IC_DEBUG_OUTPUT_FPS_ON_CONSOLE 1
 #endif
 
 #ifndef IC_ENABLE_DEBUG_HITTEST

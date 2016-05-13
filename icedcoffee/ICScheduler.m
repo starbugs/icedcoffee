@@ -72,7 +72,8 @@
     
     switch (priority) {
         case kICSchedulerPriority_Default:
-            [_targets addObject:target];
+            if (![_targets containsObject:target])
+                [_targets addObject:target];
             break;
         case kICSchedulerPriority_Low:
             [_targetsWithLowPriority addObject:target];
@@ -100,6 +101,7 @@
 
 - (void)update:(icTime)dt
 {
+    //NSLog(@"update");
     [self processAnimations:dt];
     
     for (id<ICUpdatable> target in _targetsWithHighPriority) {
@@ -128,7 +130,7 @@
 
 - (void)addAnimation:(ICAnimation *)animation forNode:(ICNode *)node
 {
-    NSAssert(node != nil, @"target must not be nil");
+    NSAssert(node != nil, @"node must not be nil");
     NSAssert(animation != nil, @"animation must not be nil");
     
     NSMutableArray *animations = (NSMutableArray *)[self animationsForNode:node];
@@ -137,7 +139,7 @@
 
 - (void)removeAnimation:(ICAnimation *)animation forNode:(ICNode *)node
 {
-    NSAssert(node != nil, @"target must not be nil");
+    NSAssert(node != nil, @"node must not be nil");
     NSAssert(animation != nil, @"animation must not be nil");
     
     NSMutableArray *animations = (NSMutableArray *)[self animationsForNode:node];
@@ -145,6 +147,12 @@
     if ([animation.delegate respondsToSelector:@selector(animationDidStop:finished:)]) {
         [animation.delegate animationDidStop:animation finished:NO];
     }
+}
+
+- (void)removeAllAnimationsForNode:(ICNode *)node
+{
+    NSAssert(node != nil, @"node must not be nil");
+    [_animations removeObjectForKey:[NSValue valueWithPointer:node]];
 }
 
 - (void)processAnimations:(icTime)dt
