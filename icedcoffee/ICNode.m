@@ -1074,10 +1074,7 @@
     ICHostViewController *hvc = self.hostViewController;
     if (!hvc)
         hvc = [ICHostViewController currentHostViewController];
-    NSArray *animations = [hvc.scheduler animationsForNode:self];
-    for (ICAnimation *animation in animations) {
-        [hvc.scheduler removeAnimation:animation forNode:self];
-    }
+    [hvc.scheduler removeAllAnimationsForNode:self];
 }
 
 

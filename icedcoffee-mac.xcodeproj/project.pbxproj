@@ -33,6 +33,9 @@
 		A6050205164F15CC00A51A3A /* ICBasicAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = A6050203164F15CB00A51A3A /* ICBasicAnimation.m */; };
 		A60B415718DA26E9001D0192 /* ICCaret.h in Headers */ = {isa = PBXBuildFile; fileRef = A60B415518DA26E9001D0192 /* ICCaret.h */; };
 		A60B415818DA26E9001D0192 /* ICCaret.m in Sources */ = {isa = PBXBuildFile; fileRef = A60B415618DA26E9001D0192 /* ICCaret.m */; };
+		A615FCC51CDBFA9B00AF88E4 /* ICTouchResponder.h in Headers */ = {isa = PBXBuildFile; fileRef = A615FCC41CDBFA9B00AF88E4 /* ICTouchResponder.h */; };
+		A615FCCC1CDC003200AF88E4 /* ICTouchEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = A615FCCA1CDC003200AF88E4 /* ICTouchEvent.h */; };
+		A615FCCD1CDC003200AF88E4 /* ICTouchEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = A615FCCB1CDC003200AF88E4 /* ICTouchEvent.m */; };
 		A62633901685D67500286AC0 /* GuillotineBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633861685D67500286AC0 /* GuillotineBinPack.cpp */; };
 		A62633911685D67500286AC0 /* GuillotineBinPack.h in Headers */ = {isa = PBXBuildFile; fileRef = A62633871685D67500286AC0 /* GuillotineBinPack.h */; };
 		A62633921685D67500286AC0 /* MaxRectsBinPack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */; };
@@ -248,6 +251,9 @@
 		A6050203164F15CB00A51A3A /* ICBasicAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICBasicAnimation.m; path = icedcoffee/ICBasicAnimation.m; sourceTree = "<group>"; };
 		A60B415518DA26E9001D0192 /* ICCaret.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICCaret.h; path = icedcoffee/ICCaret.h; sourceTree = "<group>"; };
 		A60B415618DA26E9001D0192 /* ICCaret.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICCaret.m; path = icedcoffee/ICCaret.m; sourceTree = "<group>"; };
+		A615FCC41CDBFA9B00AF88E4 /* ICTouchResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTouchResponder.h; path = icedcoffee/ICTouchResponder.h; sourceTree = "<group>"; };
+		A615FCCA1CDC003200AF88E4 /* ICTouchEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ICTouchEvent.h; path = icedcoffee/ICTouchEvent.h; sourceTree = "<group>"; };
+		A615FCCB1CDC003200AF88E4 /* ICTouchEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ICTouchEvent.m; path = icedcoffee/ICTouchEvent.m; sourceTree = "<group>"; };
 		A62633861685D67500286AC0 /* GuillotineBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GuillotineBinPack.cpp; sourceTree = "<group>"; };
 		A62633871685D67500286AC0 /* GuillotineBinPack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GuillotineBinPack.h; sourceTree = "<group>"; };
 		A62633881685D67500286AC0 /* MaxRectsBinPack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MaxRectsBinPack.cpp; sourceTree = "<group>"; };
@@ -816,6 +822,9 @@
 				D2FEE81715338B74004CFF62 /* ICScheduler.m */,
 				D24BAB8615503BA4003BCF94 /* ICTargetActionDispatcher.h */,
 				D24BAB8715503BA4003BCF94 /* ICTargetActionDispatcher.m */,
+				A615FCCA1CDC003200AF88E4 /* ICTouchEvent.h */,
+				A615FCCB1CDC003200AF88E4 /* ICTouchEvent.m */,
+				A615FCC41CDBFA9B00AF88E4 /* ICTouchResponder.h */,
 				D24BAF7A14EDB142000E65AA /* icTypes.h */,
 				A6D9B4F515430075008BF293 /* ICUpdatable.h */,
 				D24BAF7B14EDB142000E65AA /* icUtils.h */,
@@ -910,6 +919,7 @@
 				D23CB57E15A76B2600E2370D /* ICProjectionTransforms.h in Headers */,
 				D23CB58215A76DB100E2370D /* ICFramebufferProvider.h in Headers */,
 				D292851815AB82600086B12A /* ICTestHostViewController.h in Headers */,
+				A615FCC51CDBFA9B00AF88E4 /* ICTouchResponder.h in Headers */,
 				D292851D15AC50A40086B12A /* ICTestButtonPanel.h in Headers */,
 				D2FB3E3415B340C1007169B1 /* ICPickContext.h in Headers */,
 				D20F5EA315B6223E0023B1C9 /* ICFramebuffer.h in Headers */,
@@ -947,6 +957,7 @@
 				A62633951685D67500286AC0 /* Rect.h in Headers */,
 				A62633971685D67500286AC0 /* ShelfBinPack.h in Headers */,
 				A62633991685D67500286AC0 /* SkylineBinPack.h in Headers */,
+				A615FCCC1CDC003200AF88E4 /* ICTouchEvent.h in Headers */,
 				A62633A31685D6BC00286AC0 /* ICFont.h in Headers */,
 				A62633A61685D6BC00286AC0 /* ICGlyphCache.h in Headers */,
 				A62633A81685D6BC00286AC0 /* ICGlyphTextureAtlas.h in Headers */,
@@ -1112,6 +1123,7 @@
 				A62634081686306000286AC0 /* ICCombinedVertexIndexBuffer.m in Sources */,
 				A65D27AC168B0563008D9E05 /* ICTextLine.m in Sources */,
 				A65D27B0168B3892008D9E05 /* ICTextFrame.m in Sources */,
+				A615FCCD1CDC003200AF88E4 /* ICTouchEvent.m in Sources */,
 				A62D6444168CCE4D00DA6C22 /* ICFontCache.m in Sources */,
 				A6C6869B1695C12200761BD5 /* ICDrawAPI.m in Sources */,
 				A6C686A91696E4D200761BD5 /* icFontUtils.m in Sources */,

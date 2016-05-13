@@ -41,6 +41,7 @@
 #import "ICNode.h"
 #import "ICUserInterfaceValidations.h"
 
+// NSLog(@"event: %@", [event description]); \
 
 #define DISPATCH_EVENT(eventMethod) \
     - (void)eventMethod:(NSEvent *)event \
@@ -48,7 +49,8 @@
         [self.hostViewController performSelector:@selector(eventMethod:) \
                                         onThread:self.hostViewController.thread \
                                       withObject:event \
-                                   waitUntilDone:NO]; \
+                                   waitUntilDone:NO \
+                                           modes:@[NSDefaultRunLoopMode]]; \
     }
 
 
@@ -89,7 +91,7 @@
 	if ((self = [super initWithFrame:frameRect pixelFormat:[pixelFormat autorelease]])) {
 //        [self.hostViewController reshape:self.bounds.size];
         
-        //[self setAcceptsTouchEvents:YES];
+        [self setAcceptsTouchEvents:YES];
         
         [self setWantsBestResolutionOpenGLSurface:hostViewController.retinaDisplaySupportEnabled];
         
@@ -142,6 +144,9 @@
 - (void)reshape
 {
     NSOpenGLContext *openGLContext = [self openGLContext];
+    [[self openGLContext] update];
+    
+    NSAssert(openGLContext, @"openGLContext must not be nil");
     
     if (openGLContext) {
         // We draw on a secondary thread through the display link
@@ -155,13 +160,17 @@
         [self.hostViewController reshape:self.bounds.size];
         
         // avoid flicker
+        /*if (!self.hostViewController.willPerformDisplayUpdate) {
+            //NSLog(@"Draw due to reshape");
+            [self.hostViewController drawScene];
+        }*/
         [self.hostViewController drawScene];
         //[self setNeedsDisplay:YES];
         
         [pool release];
-        
+                
         CGLUnlockContext([openGLContext CGLContextObj]);
-    }    
+    }
 }
 
 

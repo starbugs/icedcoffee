@@ -145,4 +145,6 @@ typedef enum _ICSchedulerPriority {
  */
 - (void)removeAnimation:(ICAnimation *)animation forNode:(ICNode *)node;
 
+- (void)removeAllAnimationsForNode:(ICNode *)node;
+
 @end

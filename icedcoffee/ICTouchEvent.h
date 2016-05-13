@@ -51,4 +51,14 @@
 
 @end
 
+#else // Mac
+
+#import "ICOSXEvent.h"
+
+@interface ICTouchEvent : ICOSXEvent
+
+- (NSSet<NSTouch *> *)touchesMatchingPhase:(NSTouchPhase)phase;
+
+@end
+
 #endif // __IC_PLATFORM_IOS

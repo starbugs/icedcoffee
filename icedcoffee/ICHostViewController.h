@@ -296,6 +296,10 @@
  */
 - (void)setNeedsDisplay;
 
+@property (nonatomic, readonly) BOOL needsDisplay;
+
+@property (nonatomic, readonly) BOOL willPerformDisplayUpdate;
+
 /**
  @brief The thread used to draw the receiver's scene and process HID events
  */

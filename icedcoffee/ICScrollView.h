@@ -22,6 +22,7 @@
 //  
 
 #import "ICView.h"
+#import "ICUpdatable.h"
 #import "../3rd-party/kazmath/kazmath/kazmath.h"
 
 /**
@@ -43,7 +44,7 @@
  user interface events like scroll wheel or touch gestures. What is more, it does not yet display
  scrollers or other means to let the user interact with the scroll view itself.
  */
-@interface ICScrollView : ICView {
+@interface ICScrollView : ICView <ICUpdatable> {
 @protected
     kmVec3 _contentSize;
     kmVec3 _contentOffset;
@@ -51,7 +52,18 @@
     kmVec3 _contentMax;
     ICView *_contentView;
     BOOL _automaticallyCalculatesContentSize;
-    kmVec3 _scrollMovement;
+    
+#ifdef __IC_PLATFORM_MAC
+    NSTouch *_initialTouches[2];
+    NSTouch *_currentTouches[2];
+    BOOL _isTracking;
+    NSMutableArray *_positionBuffer;
+    kmVec3 _initialOffset;
+    kmVec3 _lastNormalizedPosition;
+    kmVec3 _restingPosition;
+    kmVec3 _scrollVelocity;
+    BOOL _isMoving;
+#endif
 }
 
 #pragma mark - Working with the Scroll View's Content Size and Offset

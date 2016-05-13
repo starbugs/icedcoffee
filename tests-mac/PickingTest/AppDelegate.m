@@ -44,6 +44,8 @@
 {
     self.viewController = [PickingTestViewController hostViewController];
     self.viewController.frameUpdateMode = ICFrameUpdateModeSynchronized;
+    //[self.viewController setUsesDisplayLink:NO];
+    //[self.viewController setDrawsConcurrently:NO];
     [self.viewController enableRetinaDisplaySupport:YES];
     [self.viewController setAcceptsMouseMovedEvents:YES];
     [self.viewController setUpdatesMouseEnterExitEventsContinuously:YES];

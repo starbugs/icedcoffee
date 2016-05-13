@@ -30,4 +30,9 @@
     NSLog(@"insertText: %@", insertString);
 }*/
 
+- (void)moveToBeginningOfLine:(id)sender
+{
+    NSLog(@"moveToBeginningOfLine");
+}
+
 @end

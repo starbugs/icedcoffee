@@ -21,16 +21,18 @@
 //  SOFTWARE.
 //  
 
+#import "icAvailability.h"
+
+#ifdef __IC_PLATFORM_MAC
+
 #import "ICMouseEventDispatcher.h"
 #import "ICMouseEvent.h"
+#import "ICTouchEvent.h"
 #import "Platforms/Mac/ICHostViewControllerMac.h"
 #import "ICResponder.h"
 #import "ICScene.h"
 #import "ICControl.h"
 #import "icUtils.h"
-
-
-#ifdef __IC_PLATFORM_MAC
 
 #import "ICHostViewControllerMac.h"
 #import "Carbon/Carbon.h"
@@ -51,6 +53,13 @@
         _lastMouseModifierFlags = [event modifierFlags]; \
         ICMouseEvent *mouseEvent = [ICMouseEvent eventWithNativeEvent:event hostView:_hostViewController.view]; \
         [self.lastMouseDownNode eventMethod:mouseEvent]; \
+    }
+
+#define DISPATCH_TOUCH_EVENT(eventMethod) \
+    - (void)eventMethod:(NSEvent *)event \
+    { \
+        ICTouchEvent *touchEvent = [ICTouchEvent eventWithNativeEvent:event hostView:_hostViewController.view]; \
+        [self.lastScrollNode eventMethod:touchEvent];\
     }
 
 ICAbstractMouseEventType ICAbstractMouseEventTypeFromEventType(ICOSXEventType eventType)
@@ -408,7 +417,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     } else {
         // For on demand frame updates, we have to perform picking first
         [_hostViewController handlePendingMouseMovedEventOnNextFrameUpdate:event];
-        [_hostViewController setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
+        //[_hostViewController setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
     }
 }
 
@@ -444,7 +453,7 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
 
 - (void)scrollWheel:(NSEvent *)event
 {
-    NSLog(@"dx: %f dy: %f", [event deltaX], [event deltaY]);
+    //NSLog(@"dx: %f dy: %f", [event deltaX], [event deltaY]);
     // Performance: as the window server potentially sends a flood of scroll events, use over
     // nodes determined in updateMouseOverState instead of performing a hit test for each event.
     [self.lastScrollNode scrollWheel:[ICMouseEvent eventWithNativeEvent:event
@@ -473,6 +482,11 @@ DISPATCH_UPDOWN_EVENT(otherMouseUp)
 DISPATCH_DRAGGED_EVENT(mouseDragged)
 DISPATCH_DRAGGED_EVENT(rightMouseDragged)
 DISPATCH_DRAGGED_EVENT(otherMouseDragged)
+
+DISPATCH_TOUCH_EVENT(touchesBeganWithEvent)
+DISPATCH_TOUCH_EVENT(touchesMovedWithEvent)
+DISPATCH_TOUCH_EVENT(touchesEndedWithEvent)
+DISPATCH_TOUCH_EVENT(touchesCancelledWithEvent)
 
 @end
 

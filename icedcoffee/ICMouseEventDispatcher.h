@@ -27,6 +27,8 @@
 
 #ifdef __IC_PLATFORM_MAC
 
+#import "ICTouchEvent.h"
+
 enum {
     ICMouseDown     = 1 << 0,
     ICMouseUp       = 1 << 1,
@@ -96,6 +98,11 @@ typedef NSUInteger ICAbstractMouseEventType;
 - (void)otherMouseUp:(NSEvent *)event;
 
 - (void)scrollWheel:(NSEvent *)event;
+
+- (void)touchesBeganWithEvent:(NSEvent *)event;
+- (void)touchesMovedWithEvent:(NSEvent *)event;
+- (void)touchesEndedWithEvent:(NSEvent *)event;
+- (void)touchesCancelledWithEvent:(NSEvent *)event;
 
 @end
 
