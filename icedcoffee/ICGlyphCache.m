@@ -155,9 +155,9 @@ float icValidateSubpixelOffset(float offset)
     ICResolutionType bestResolutionType = [[ICHostViewController currentHostViewController]
                                            bestResolutionTypeForCurrentScreen];
     ICPixelFormat pixelFormat = IC_GLYPH_CACHE_TEXTURE_DEPTH == 1 ? ICPixelFormatA8 : ICPixelFormatRGBA8888;
-    textureAtlas = [[[ICGlyphTextureAtlas alloc] initWithSize:self.textureSize
+    textureAtlas = [[ICGlyphTextureAtlas alloc] initWithSize:self.textureSize
                                                   pixelFormat:pixelFormat
-                                               resolutionType:bestResolutionType] autorelease];
+                                               resolutionType:bestResolutionType];
     [_textures addObject:textureAtlas];
 
 #if IC_ENABLE_DEBUG_GLYPH_CACHE
@@ -176,7 +176,7 @@ float icValidateSubpixelOffset(float offset)
 {
     ICGlyphTextureAtlas *candidate = [_textures lastObject];
     if (!candidate) {
-        candidate = [self newTextureAtlas];
+        candidate = [[self newTextureAtlas] autorelease];
     }
     
     return candidate;
@@ -302,6 +302,7 @@ float icValidateSubpixelOffset(float offset)
                                                      offset:offset
                                                        font:font
                                           uploadImmediately:NO];
+            [textureAtlas release];
         }
         
         NSAssert(textureGlyph != nil, @"Something went terribly wrong here");

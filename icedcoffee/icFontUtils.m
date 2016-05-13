@@ -96,10 +96,7 @@ NSDictionary *icCreateTextAttributesWithCTAttributes(NSDictionary *ctAttrs)
                                             initWithCoreTextParagraphStyle:ctParagraphStyle];
         [icAttrs setObject:paragraphStyle forKey:ICParagraphStyleAttributeName];
         [paragraphStyle release];
-    }
-    if (ctParagraphStyle)
-        CFRelease(ctParagraphStyle);
-    
+    }    
     
     return icAttrs;
 }

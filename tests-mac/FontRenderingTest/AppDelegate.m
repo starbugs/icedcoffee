@@ -151,6 +151,8 @@
     [self.window makeFirstResponder:self.window.contentView];
     
     [self setUpScene];
+    
+    [glView release];
 }
 
 @end

@@ -89,7 +89,8 @@ enum {
 
 - (void)dealloc
 {
-    [[_auxGLContext unregisterContext] release];
+    [_auxGLContext unregisterContext];
+    [_auxGLContext release];
     _auxGLContext = nil;
     
     [_renderTexture release];
