@@ -37,8 +37,10 @@ ICOpenGLContext *icCreateAuxGLContextForView(ICGLView *view, BOOL share)
                                             openGLContextForNativeOpenGLContext:[view context]]
                                          : nil;
 #endif
-    return [[ICOpenGLContext openGLContextWithNativeOpenGLContext:nativeContext
-                                                     shareContext:viewContext] registerContext];
+    ICOpenGLContext *context = [[ICOpenGLContext openGLContextWithNativeOpenGLContext:nativeContext
+                                                                         shareContext:viewContext] registerContext];
+    [nativeContext release];
+    return context;
 }
 
 unsigned long icNextPOT(unsigned long x)

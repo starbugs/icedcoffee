@@ -222,6 +222,7 @@
         for (ICNode *child in children) {
             [super addChild:child];
         }
+        [children release];
     }
     
     if (!_backing && renderTexture) {
@@ -232,6 +233,7 @@
         for (ICNode *child in children) {
             [((ICUIScene *)renderTexture.subScene).contentView addChild:child];
         }
+        [children release];
     }
     
     if (_backing) {

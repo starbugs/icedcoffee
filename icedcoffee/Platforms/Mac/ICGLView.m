@@ -115,7 +115,7 @@
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];
         
-        self.textViewHelper = [[ICTextViewHelper alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)];
+        self.textViewHelper = [[[ICTextViewHelper alloc] initWithFrame:NSMakeRect(0, 0, 0, 0)] autorelease];
 	}
     
 	return self;

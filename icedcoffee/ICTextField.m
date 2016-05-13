@@ -28,7 +28,37 @@
 #import "ICGLView.h"
 #import "icUtils.h"
 
+// Mac only currently
 #ifdef __IC_PLATFORM_MAC
+
+@interface ICTextSelection : ICView {
+@protected
+    NSMutableArray *_sprites;
+}
+@property (nonatomic, retain) NSMutableArray *sprites;
+@end
+
+@implementation ICTextSelection
+
+@synthesize sprites = _sprites;
+
+- (id)initWithSize:(kmVec3)size
+{
+    if ((self = [super initWithSize:size])) {
+        self.sprites = [NSMutableArray array];
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    self.sprites = nil;
+    
+    [super dealloc];
+}
+
+@end
+
 
 @interface ICLabel ()
 @property (nonatomic, retain) ICTextFrame *textFrame;
