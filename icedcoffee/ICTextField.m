@@ -287,6 +287,8 @@
     NSString *after = [self.text substringWithRange:NSMakeRange(_caretIndex, [self.text length] - _caretIndex)];
     self.text = [[before stringByAppendingString:characters] stringByAppendingString:after];
     _caretIndex += [characters length];
+    
+    self.scrollView.contentSize = self.textLabel.size;
 }
 
 - (void)deleteAtCaret

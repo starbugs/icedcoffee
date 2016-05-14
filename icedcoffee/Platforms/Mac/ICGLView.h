@@ -42,6 +42,7 @@
     ICHostViewController *_hostViewController;
     NSCursor *_cursor;
     ICTextViewHelper *_textViewHelper;
+    NSTrackingArea *_trackingArea;
 }
 
 

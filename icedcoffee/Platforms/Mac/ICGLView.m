@@ -68,7 +68,9 @@
 - (id)initWithFrame:(NSRect)frameRect
        shareContext:(NSOpenGLContext*)shareContext
  hostViewController:(ICHostViewController *)hostViewController
-{    
+{
+    _trackingArea = nil;
+    
     // FIXME: make this configurable?
     NSOpenGLPixelFormatAttribute attribs[] =
     {
@@ -125,6 +127,12 @@
 
 - (void)dealloc
 {
+    if(_trackingArea != nil) {
+        [self removeTrackingArea:_trackingArea];
+        [_trackingArea release];
+        _trackingArea = nil;
+    }
+    
     [_hostViewController release];
     
     [_textViewHelper release];
@@ -225,6 +233,8 @@ DISPATCH_EVENT(mouseDown)
 DISPATCH_EVENT(mouseUp)
 DISPATCH_EVENT(mouseDragged)
 DISPATCH_EVENT(mouseMoved)
+DISPATCH_EVENT(mouseEntered)
+DISPATCH_EVENT(mouseExited)
 
 DISPATCH_EVENT(rightMouseDown)
 DISPATCH_EVENT(rightMouseUp)
@@ -242,6 +252,21 @@ DISPATCH_EVENT(touchesCancelledWithEvent)
 
 DISPATCH_EVENT(keyDown)
 DISPATCH_EVENT(keyUp)
+
+- (void)updateTrackingAreas
+{
+    if(_trackingArea != nil) {
+        [self removeTrackingArea:_trackingArea];
+        [_trackingArea release];
+    }
+    
+    int opts = (NSTrackingMouseEnteredAndExited | NSTrackingActiveAlways);
+    _trackingArea = [ [NSTrackingArea alloc] initWithRect:[self bounds]
+                                                  options:opts
+                                                    owner:self
+                                                 userInfo:nil];
+    [self addTrackingArea:_trackingArea];
+}
 
 - (void)setCursor:(NSCursor *)cursor
 {

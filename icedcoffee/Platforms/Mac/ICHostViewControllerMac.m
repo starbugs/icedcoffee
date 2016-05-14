@@ -107,6 +107,7 @@
     _usesDisplayLink = YES;
     _drawsConcurrently = YES;
     _pendingMouseMovedEvent = nil;
+    _isMouseOverView = NO;
     
     // Ensure ICGLView is linked when using nib files
     // See http://stackoverflow.com/questions/1725881/unknown-class-myclass-in-interface-builder-file-error-at-runtime
@@ -345,17 +346,25 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
         BOOL performUpdateMouseOverState = NO;
         BOOL performDeferredReadback = NO;
-        if ([NSThread currentThread] == self.thread) {
-            _mouseOverStateDeltaTime += _deltaTime;
-            if (_mouseOverStateDeltaTime > 0.033f) {
-                if ([self canPerformDeferredReadbacks]) {
-                    // Prepare deferred readback for hit test in mouse event dispatcher's
-                    // updateMouseOverState
-                    [_mouseEventDispatcher prepareUpdateMouseOverState];
-                    performDeferredReadback = YES;
+        if (_isMouseOverView && self.view.window.occlusionState & NSWindowOcclusionStateVisible && [NSThread currentThread] == self.thread) {
+            // Only perform mouse over state updates when window is not occluded and on HVC's render thread
+            if ([self canPerformDeferredReadbacks])
+                performDeferredReadback = YES;
+            
+            if (self.frameUpdateMode == ICFrameUpdateModeSynchronized) {
+                // In synchronized mode, perform mouse over state updates only @ 30 FPS to save processing power
+                _mouseOverStateDeltaTime += _deltaTime;
+                if (_mouseOverStateDeltaTime > 0.033f) {
+                    if (performDeferredReadback)
+                        [_mouseEventDispatcher prepareUpdateMouseOverState]; // prepare deferred readback
+                    performUpdateMouseOverState = YES;
+                    _mouseOverStateDeltaTime = 0;
                 }
+            } else {
+                // In on-demand frame update mode, perform mouse over update states immediately on each frame drawn.
+                if (performDeferredReadback)
+                    [_mouseEventDispatcher prepareUpdateMouseOverState]; // prepare deferred readback
                 performUpdateMouseOverState = YES;
-                _mouseOverStateDeltaTime = 0;
             }
         }
         
@@ -363,12 +372,13 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
         [self.scene visit];
         
         if (performUpdateMouseOverState) {
-            // Let mouse event dispatcher update state for mouseEntered/mouseExited events
+            // Let mouse event dispatcher update state for mouseEntered/mouseExited events on nodes computed via mouseMoved
             [_mouseEventDispatcher updateMouseOverState:performDeferredReadback];
         }
         
         // Handle pending mouse moved event for on demand frame updates
         if (_pendingMouseMovedEvent) {
+            NSAssert(self.frameUpdateMode == ICFrameUpdateModeOnDemand, @"Should only be reached in on-demand frame update mode");
             [_mouseEventDispatcher handleMouseMoved:_pendingMouseMovedEvent];
             [_pendingMouseMovedEvent release];
             _pendingMouseMovedEvent = nil;
@@ -496,9 +506,6 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 
 DISPATCH_MOUSE_EVENT(mouseDown)
 DISPATCH_MOUSE_EVENT(mouseDragged)
-DISPATCH_MOUSE_EVENT(mouseEntered)
-DISPATCH_MOUSE_EVENT(mouseExited)
-DISPATCH_MOUSE_EVENT(mouseMoved)
 DISPATCH_MOUSE_EVENT(mouseUp)
 
 DISPATCH_MOUSE_EVENT(rightMouseDown)
@@ -514,6 +521,31 @@ DISPATCH_MOUSE_EVENT(touchesBeganWithEvent)
 DISPATCH_MOUSE_EVENT(touchesMovedWithEvent)
 DISPATCH_MOUSE_EVENT(touchesEndedWithEvent)
 DISPATCH_MOUSE_EVENT(touchesCancelledWithEvent)
+
+- (void)mouseMoved:(NSEvent *)event
+{
+    if (_isMouseOverView) {
+        if (self.frameUpdateMode == ICFrameUpdateModeSynchronized) {
+            // For synchronized frame updates, we can just handle mouse events as the current mouse over
+            // node and scroll nodes have been determined already
+            [_mouseEventDispatcher handleMouseMoved:event];
+        } else {
+            // For on demand frame updates, we have to perform picking first
+            [self handlePendingMouseMovedEventOnNextFrameUpdate:event];
+            [self setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
+        }
+    }
+}
+
+- (void)mouseEntered:(NSEvent *)event
+{
+    _isMouseOverView = YES;
+}
+
+- (void)mouseExited:(NSEvent *)event
+{
+    _isMouseOverView = NO;
+}
 
 //- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 // ICKeyResponder Protocol Implementation

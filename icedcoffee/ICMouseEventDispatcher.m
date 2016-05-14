@@ -408,19 +408,6 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
     return controlEvent;
 }
 
-- (void)mouseMoved:(NSEvent *)event
-{
-    if (_hostViewController.frameUpdateMode == ICFrameUpdateModeSynchronized) {
-        // For synchronized frame updates, we can just handle mouse events as the current mouse over
-        // node and scroll nodes have been determined already
-        [self handleMouseMoved:event];
-    } else {
-        // For on demand frame updates, we have to perform picking first
-        [_hostViewController handlePendingMouseMovedEventOnNextFrameUpdate:event];
-        //[_hostViewController setNeedsDisplay]; // FIXME: this essentially redraws the scene even if not necessary
-    }
-}
-
 - (void)handleMouseMoved:(NSEvent *)event
 {
     // On mouse moved, note mouse location and current modifier flags; this will be used
@@ -439,16 +426,6 @@ ICMouseButton ICMouseButtonFromEventType(ICOSXEventType eventType)
             [self.lastScrollNode mouseMoved:mouseEvent];
         }
     }
-}
-
-- (void)mouseEntered:(NSEvent *)event
-{
-    // TODO: track gl view
-}
-
-- (void)mouseExited:(NSEvent *)event
-{
-    // TODO: track gl view
 }
 
 - (void)scrollWheel:(NSEvent *)event

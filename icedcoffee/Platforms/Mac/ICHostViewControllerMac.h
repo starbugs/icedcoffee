@@ -82,6 +82,7 @@
     NSTimer *_renderTimer;
     icTime _mouseOverStateDeltaTime;
     NSEvent *_pendingMouseMovedEvent;
+    BOOL _isMouseOverView;
 }
 
 #pragma mark - Managing the Controller's View

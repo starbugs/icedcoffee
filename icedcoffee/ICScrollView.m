@@ -98,7 +98,7 @@
     NSSet *touches = [event touchesMatchingPhase:NSTouchPhaseTouching];
     
     if ([touches count] == 2) {
-        NSLog(@"BEGIN");
+        //NSLog(@"BEGIN");
         [[ICScheduler currentScheduler] unscheduleUpdateForTarget:self];
 
         [_positionBuffer release];
@@ -172,12 +172,12 @@
 {
     if ([_positionBuffer count] > 0) {
         kmVec3 scrollVelocity = kmNullVec3;
-        NSLog(@"PosBuf count: %lu", (unsigned long)[_positionBuffer count]);
+        //NSLog(@"PosBuf count: %lu", (unsigned long)[_positionBuffer count]);
         for (NSData *vectorData in _positionBuffer) {
             kmVec3 vec;
             [vectorData getBytes:&vec];
             kmVec3Add(&scrollVelocity, &scrollVelocity, &vec);
-            NSLog(@"%@", kmVec3Description(scrollVelocity));
+            //NSLog(@"%@", kmVec3Description(scrollVelocity));
         }
         _scrollVelocity = scrollVelocity;
         float d = kmVec3Length(&_scrollVelocity);
@@ -187,10 +187,10 @@
     
     //_scrollVelocity.x *= -1;
     
-    NSLog(@"END");
+    //NSLog(@"END");
     [[ICScheduler currentScheduler] scheduleUpdateForTarget:self];
     [self setNeedsDisplay];
-    NSLog(@"%@", kmVec3Description(_scrollVelocity));
+    //NSLog(@"%@", kmVec3Description(_scrollVelocity));
     _isMoving = YES;
     [self releaseTouches];
 }
@@ -208,6 +208,10 @@
     kmVec3Subtract(&contentOffset, &contentOffset, &_scrollVelocity);
     kmVec3Scale(&_scrollVelocity, &_scrollVelocity, 0.96f);
     self.contentOffset = contentOffset;
+    
+    if (kmVec3Length(&_scrollVelocity) <= 0.01) {
+        [[ICScheduler currentScheduler] unscheduleUpdateForTarget:self];
+    }
 }
 
 - (void)releaseTouches
