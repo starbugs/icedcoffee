@@ -24,6 +24,8 @@ Fixes (tested on OS X only):
 * Fixed an issue with removal of node animations from ICScheduler that would cause memory leaks
   and high CPU usage on animation processing. ICNode now uses ICScheduler's removeAllAnimationsForNode:
   to remove animations on deallocation.
+* Framerate is now limited to 60 FPS by default in on-demand frame update mode (if continuous updates
+  are scheduled via ICScheduler/ICAnimation)
 * A couple of smaller fixes:
   * ICHostViewControllerMac: NSRunLoop now called with proper limitDate instead of nil
 
