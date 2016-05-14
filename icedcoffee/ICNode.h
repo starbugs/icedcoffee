@@ -1156,8 +1156,6 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (void)removeAllAnimations;
 
 
-#ifdef DEBUG
-
 #pragma mark - Debugging
 /** @name Debugging */
 
@@ -1172,6 +1170,5 @@ typedef BOOL(^ICNodeFilterBlockType)(ICNode *node, BOOL *stop);
 - (NSString *)dbgParentInfo;
 #endif
 
-#endif // DEBUG
 
 @end

@@ -293,12 +293,12 @@
 
 /**
  @brief Called by the framework to signal that the receiver's view contents need to be redrawn
+ 
+ This method should not be called directly. Use ICNode::setNeedsDisplay instead.
  */
 - (void)setNeedsDisplay;
 
 @property (nonatomic, readonly) BOOL needsDisplay;
-
-@property (nonatomic, readonly) BOOL willPerformDisplayUpdate;
 
 /**
  @brief The thread used to draw the receiver's scene and process HID events

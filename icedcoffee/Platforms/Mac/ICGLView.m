@@ -73,7 +73,6 @@
     NSOpenGLPixelFormatAttribute attribs[] =
     {
 		NSOpenGLPFAAccelerated,
-		//NSOpenGLPFANoRecovery,
 		NSOpenGLPFADoubleBuffer,
 		NSOpenGLPFADepthSize, 24,
         NSOpenGLPFAStencilSize, 8,
@@ -111,8 +110,9 @@
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
         //glPixelStorei(GL_PACK_ALIGNMENT, 1);
 
-        if (hostViewController)
+        if (hostViewController) {
             self.hostViewController = hostViewController;
+        }
         
         //		GLint order = -1;
         //		[[self openGLContext] setValues:&order forParameter:NSOpenGLCPSurfaceOrder];

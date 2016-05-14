@@ -35,6 +35,11 @@
 
 // General Configuration
 
+// Framerate limiting in on-demand frame update mode (FPS)
+#ifndef IC_ONDEMAND_FRAME_UPDATE_FRAMERATE_LIMIT
+#define IC_ONDEMAND_FRAME_UPDATE_FRAMERATE_LIMIT 60.0
+#endif
+
 // GL state cache (incomplete)
 #ifndef IC_ENABLE_GL_STATE_CACHE
 #define IC_ENABLE_GL_STATE_CACHE 1

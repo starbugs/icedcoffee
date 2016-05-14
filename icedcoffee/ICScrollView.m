@@ -208,7 +208,6 @@
     kmVec3Subtract(&contentOffset, &contentOffset, &_scrollVelocity);
     kmVec3Scale(&_scrollVelocity, &_scrollVelocity, 0.96f);
     self.contentOffset = contentOffset;
-    //[self setNeedsDisplay];
 }
 
 - (void)releaseTouches

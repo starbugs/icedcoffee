@@ -51,6 +51,7 @@
 #import "icGL.h"
 #import "ICScheduler.h"
 #import "icConfig.h"
+#import "sys/time.h"
 
 
 #ifdef __IC_PLATFORM_MAC
@@ -73,6 +74,8 @@
 @interface ICHostViewControllerMac (Private)
 - (void)setIsRunning:(BOOL)isRunning;
 - (void)scheduleRenderTimer;
+- (void)windowDidChangeOcclusionState:(NSNotification *)notification;
+- (void)requestFrameUpdate;
 @end
 
 
@@ -115,6 +118,8 @@
     [self stopAnimation];
     [_mouseEventDispatcher release];
     [_keyEventDispatcher release];
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     
     if (_thread && _isThreadOwner) {
         [self.thread cancel];
@@ -263,6 +268,40 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     }
 }
 
+- (void)requestFrameUpdate
+{
+    NSAssert(self.frameUpdateMode == ICFrameUpdateModeOnDemand && [NSThread currentThread] == self.thread,
+             @"This method must only be called in on-demand frame update mode and on the HVC's thread!");
+    
+    struct timeval now;
+    if (gettimeofday(&now, NULL) != 0) {
+        ICLog(@"icedcoffee: error occurred in gettimeofday");
+        NSAssert(nil, @"Something went wrong getting the current time");
+    }
+    
+    // Calculate time since last frame update
+    double maxDeltaTime = 1.0 / IC_ONDEMAND_FRAME_UPDATE_FRAMERATE_LIMIT;
+    double deltaTime = (now.tv_sec - _lastUpdate.tv_sec) + (now.tv_usec - _lastUpdate.tv_usec) / 1000000.0;
+    double timeDiff = maxDeltaTime - deltaTime > 0.0 ? maxDeltaTime - deltaTime : 0.0;
+
+    [self performSelector:@selector(drawScene) withObject:nil afterDelay:timeDiff];
+
+    /*if (timeDiff > 0.0f) {
+        //NSLog(@"Time diff: %f", timeDiff);
+        NSTimer *timer = [NSTimer timerWithTimeInterval:timeDiff
+                                                  target:self
+                                                selector:@selector(timerFired:)
+                                                userInfo:nil
+                                                 repeats:NO];
+        [[NSRunLoop currentRunLoop] addTimer:timer
+                                     forMode:NSDefaultRunLoopMode];
+    } else {
+        // Dispatch call to drawScene immediately
+        [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+    }*/
+
+}
+
 - (void)drawScene
 {
     //NSLog(@"drawScene");
@@ -285,12 +324,12 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
     CGLLockContext([self.nativeOpenGLContext CGLContextObj]);
     [self.openGLContext makeCurrentContext];
     
+    [self calculateDeltaTime];
+    
     //NSLog(@"drawScene on thread: %s, w: %f", dispatch_queue_get_label(dispatch_get_current_queue()), openGLview.bounds.size.width);
     
     // Base only prepares drawing, does not perform any actual drawing
     [super drawScene];
-    
-    [self calculateDeltaTime];
     
     if (glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE) {
         if (_frameUpdateMode == ICFrameUpdateModeOnDemand) {
@@ -416,14 +455,38 @@ static CVReturn MyDisplayLinkCallback(CVDisplayLinkRef displayLink,
 - (void)setView:(ICGLView *)view
 {
     if (_view != view) {
+        if (_view) {
+            [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                            name:NSWindowDidChangeOcclusionStateNotification
+                                                          object:nil];
+        }
         [_view release];
+        
         _view = [view retain];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(windowDidChangeOcclusionState:)
+                                                     name:NSWindowDidChangeOcclusionStateNotification
+                                                   object:nil];
         
         // Issue #3: make sure we don't run into stack overflows with old style view instantiation
         _didAlreadyCallViewDidLoad = NO;
     }
     
     [super setView:view];
+}
+
+- (void)windowDidChangeOcclusionState:(NSNotification *)notification
+{
+    //NSLog(@"occlusion state changed");
+    NSWindow *window = [notification object];
+    if (window && window == _view.window) {
+        NSWindowOcclusionState occlusionState = [window occlusionState];
+        if (occlusionState & NSWindowOcclusionStateVisible) {
+            NSLog(@"Window visible");
+        } else {
+            NSLog(@"Window invisible");
+        }
+    }
 }
 
 

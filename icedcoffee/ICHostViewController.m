@@ -46,6 +46,7 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
 - (void)setScene:(ICScene *)scene;
 - (void)setIsRunning:(BOOL)isRunning;
 - (void)setViewSize:(CGSize)viewSize;
+- (void)requestFrameUpdate;
 @end
 
 
@@ -188,13 +189,13 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
             _fpsDelta = 0;
             _fpsNumFrames = 0;
 #if IC_DEBUG_OUTPUT_FPS_ON_CONSOLE
-            ICLog(@"FPS: %f", _fps);
+            NSLog(@"FPS: %f", _fps);
 #endif
         }
     }
 }
 
-// FIXME: remove?
+// FIXME: remove
 - (void)continuouslyUpdateFramesUntilDate:(NSDate *)date
 {
     if (!_continuousFrameUpdateExpiryDate ||
@@ -215,9 +216,14 @@ NSLock *g_hvcDictLock = nil; // lazy allocation
         if (self.frameUpdateMode == ICFrameUpdateModeOnDemand && (!_didDrawFirstFrame || [NSThread currentThread] == self.thread)) {
             // Schedule display update on HVC thread only if first frame has not been drawn yet or when on HVC thread.
             // This is to avoid stacking up calls to drawScene on the HVC thread's runloop when reshaping.
-            [self performSelector:@selector(drawScene) onThread:self.thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
+            [self performSelector:@selector(requestFrameUpdate) onThread:self.thread withObject:nil waitUntilDone:NO modes:@[NSDefaultRunLoopMode]];
         }
     }
+}
+
+- (void)requestFrameUpdate
+{
+    // Override in platform-specific HVC
 }
 
 - (void)willDrawFirstFrame

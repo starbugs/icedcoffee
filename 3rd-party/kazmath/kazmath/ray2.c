@@ -259,4 +259,5 @@ kmVec2* intersection, kmVec2* normal_out) {
 
 kmBool kmRay2IntersectCircle(const kmRay2* ray, const kmVec2 centre, const kmScalar radius, kmVec2* intersection) {
     assert(0 && "Not implemented");
+    return 0;
 }
