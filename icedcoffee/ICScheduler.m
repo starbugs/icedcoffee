@@ -76,10 +76,12 @@
                 [_targets addObject:target];
             break;
         case kICSchedulerPriority_Low:
-            [_targetsWithLowPriority addObject:target];
+            if (![_targetsWithLowPriority containsObject:target])
+                [_targetsWithLowPriority addObject:target];
             break;
         case kICSchedulerPriority_High:
-            [_targetsWithHighPriority addObject:target];
+            if (![_targetsWithLowPriority containsObject:target])
+                [_targetsWithHighPriority addObject:target];
             break;
             
         default:
@@ -101,7 +103,6 @@
 
 - (void)update:(icTime)dt
 {
-    //NSLog(@"update");
     [self processAnimations:dt];
     
     for (id<ICUpdatable> target in _targetsWithHighPriority) {
