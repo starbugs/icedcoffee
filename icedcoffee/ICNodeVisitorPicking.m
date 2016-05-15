@@ -272,6 +272,11 @@ enum {
     // Pop the pick context
     [self popPickContext];
     
+    if ([node isKindOfClass:[ICScene class]]) {
+        // Compute initial ray for ray-based hit testing
+        [self popRay];
+    }
+    
     if (_usesAuxiliaryOpenGLContext) {
         if (oldContext)
             [oldContext makeCurrentContext];
