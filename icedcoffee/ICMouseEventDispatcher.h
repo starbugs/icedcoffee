@@ -83,9 +83,6 @@ typedef NSUInteger ICAbstractMouseEventType;
 
 - (void)mouseDown:(NSEvent *)event;
 - (void)mouseDragged:(NSEvent *)event;
-- (void)mouseEntered:(NSEvent *)event;
-- (void)mouseExited:(NSEvent *)event;
-- (void)mouseMoved:(NSEvent *)event;
 - (void)handleMouseMoved:(NSEvent *)event;
 - (void)mouseUp:(NSEvent *)event;
 

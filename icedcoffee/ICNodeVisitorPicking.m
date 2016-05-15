@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //  
 
+#import "icConfig.h"
 #import "ICNodeVisitorPicking.h"
 #import "ICNode.h"
 #import "ICHostViewController.h"
@@ -34,7 +35,7 @@
 
 enum {
     InternalModeSingleNodes = 1,
-    InternalModeContainers = 2,
+    InternalModeContainers = 2,     // FIXME: unused - really needed?
     InternalModeFinalNode = 3
 };
 
@@ -106,6 +107,9 @@ enum {
 
 - (void)pushRay:(icRay3)ray
 {
+#if !defined(IC_ENABLE_RAY_BASED_HIT_TESTS) || !IC_ENABLE_RAY_BASED_HIT_TESTS
+    NSAssert(nil, @"pushRay called even though IC_ENABLE_RAY_BASED_HIT_TESTS not set to 1");
+#endif
     icRay3 *rayToPush = malloc(sizeof(icRay3));
     memcpy(rayToPush, &ray, sizeof(icRay3));
     [_rayStack addObject:[NSValue valueWithPointer:rayToPush]];
@@ -113,6 +117,9 @@ enum {
 
 - (void)popRay
 {
+#if !defined(IC_ENABLE_RAY_BASED_HIT_TESTS) || !IC_ENABLE_RAY_BASED_HIT_TESTS
+    NSAssert(nil, @"popRay called even though IC_ENABLE_RAY_BASED_HIT_TESTS not set to 1");
+#endif
     icRay3 *rayToPop = [self currentRay];
     if (rayToPop) {
         free(rayToPop);
@@ -122,6 +129,9 @@ enum {
 
 - (icRay3 *)currentRay
 {
+#if !defined(IC_ENABLE_RAY_BASED_HIT_TESTS) || !IC_ENABLE_RAY_BASED_HIT_TESTS
+    NSAssert(nil, @"currentRay called even though IC_ENABLE_RAY_BASED_HIT_TESTS not set to 1");
+#endif
     return [[_rayStack lastObject] pointerValue];
 }
 
@@ -230,10 +240,12 @@ enum {
         [_auxGLContext makeCurrentContext];
     }
     
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
     if ([node isKindOfClass:[ICScene class]]) {
         // Compute initial ray for ray-based hit testing
         [self pushRay:[((ICScene *)node) worldRayFromFramebufferLocation:point]];
     }
+#endif
     
     // Push a pick context consisting of the given point and viewport
     [self pushPickContext:[ICPickContext pickContextWithPoint:point viewport:viewport]];
@@ -272,10 +284,12 @@ enum {
     // Pop the pick context
     [self popPickContext];
     
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
     if ([node isKindOfClass:[ICScene class]]) {
         // Compute initial ray for ray-based hit testing
         [self popRay];
     }
+#endif
     
     if (_usesAuxiliaryOpenGLContext) {
         if (oldContext)
@@ -352,6 +366,8 @@ enum {
 #if IC_ENABLE_DEBUG_PICKING
             if (hitTestResult == ICHitTestFailed) {
                 ICLog(@"Picking visitor ray hit test failed for node: %@", [node description]);
+            } else if (hitTestResult == ICHitTestHit) {
+                ICLog(@"Picking visitor ray hit test hit for node: %@", [node description]);
             }
 #endif // IC_ENABLE_DEBUG_PICKING
         }

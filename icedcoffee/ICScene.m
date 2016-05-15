@@ -21,6 +21,7 @@
 //  SOFTWARE.
 //  
 
+#import "icConfig.h"
 #import "ICScene.h"
 #import "icDefaults.h"
 #import "ICHostViewController.h"
@@ -241,8 +242,10 @@
         
     }
     
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
     icRay3 worldRay = [self worldRayFromFramebufferLocation:point];
     [((ICNodeVisitorPicking *)visitor) pushRay:worldRay];
+#endif
     
     point.y = [self framebufferSize].height - point.y;
     
@@ -281,7 +284,9 @@
         NSAssert([visitor currentPickContext] != nil, @"Popped too many pick contexts");
     }
     
-    [visitor popRay];    
+#if IC_ENABLE_RAY_BASED_HIT_TESTS
+    [visitor popRay];
+#endif
 }
 
 - (void)visit
